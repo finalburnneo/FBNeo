@@ -17,6 +17,7 @@
 #define GBA_LCD_H							160
 #define GBA_SWAPCHAIN_SIZE					4
 #define GBA_AUDIO_DMA_ACTIVATE_THRESHOLD	12
+#define GBA_RAW_STATE_VERSION			0x000002
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // MMIO Register listing from GBATEK (https://problemkaputt.de/gbatek.htm#gbamemorymap) //
@@ -27,36 +28,36 @@
 #define  GBA_DISPSTAT	0x4000004	/* R/W General LCD Status (STAT,LYC) */
 #define  GBA_VCOUNT		0x4000006	/* R   Vertical Counter (LY) */
 #define  GBA_BG0CNT		0x4000008	/* R/W BG0 Control */
-#define  GBA_BG1CNT		0x400000A	/* R/W BG1 Control */
-#define  GBA_BG2CNT		0x400000C	/* R/W BG2 Control */
-#define  GBA_BG3CNT		0x400000E	/* R/W BG3 Control */
+#define  GBA_BG1CNT		0x400000a	/* R/W BG1 Control */
+#define  GBA_BG2CNT		0x400000c	/* R/W BG2 Control */
+#define  GBA_BG3CNT		0x400000e	/* R/W BG3 Control */
 #define  GBA_BG0HOFS	0x4000010	/* W   BG0 X-Offset */
 #define  GBA_BG0VOFS	0x4000012	/* W   BG0 Y-Offset */
 #define  GBA_BG1HOFS	0x4000014	/* W   BG1 X-Offset */
 #define  GBA_BG1VOFS	0x4000016	/* W   BG1 Y-Offset */
 #define  GBA_BG2HOFS	0x4000018	/* W   BG2 X-Offset */
-#define  GBA_BG2VOFS	0x400001A	/* W   BG2 Y-Offset */
-#define  GBA_BG3HOFS	0x400001C	/* W   BG3 X-Offset */
-#define  GBA_BG3VOFS	0x400001E	/* W   BG3 Y-Offset */
+#define  GBA_BG2VOFS	0x400001a	/* W   BG2 Y-Offset */
+#define  GBA_BG3HOFS	0x400001c	/* W   BG3 X-Offset */
+#define  GBA_BG3VOFS	0x400001e	/* W   BG3 Y-Offset */
 #define  GBA_BG2PA		0x4000020	/* W   BG2 Rotation/Scaling Parameter A (dx) */
 #define  GBA_BG2PB		0x4000022	/* W   BG2 Rotation/Scaling Parameter B (dmx) */
 #define  GBA_BG2PC		0x4000024	/* W   BG2 Rotation/Scaling Parameter C (dy) */
 #define  GBA_BG2PD		0x4000026	/* W   BG2 Rotation/Scaling Parameter D (dmy) */
 #define  GBA_BG2X		0x4000028	/* W   BG2 Reference Point X-Coordinate */
-#define  GBA_BG2Y		0x400002C	/* W   BG2 Reference Point Y-Coordinate */
+#define  GBA_BG2Y		0x400002c	/* W   BG2 Reference Point Y-Coordinate */
 #define  GBA_BG3PA		0x4000030	/* W   BG3 Rotation/Scaling Parameter A (dx) */
 #define  GBA_BG3PB		0x4000032	/* W   BG3 Rotation/Scaling Parameter B (dmx) */
 #define  GBA_BG3PC		0x4000034	/* W   BG3 Rotation/Scaling Parameter C (dy) */
 #define  GBA_BG3PD		0x4000036	/* W   BG3 Rotation/Scaling Parameter D (dmy) */
 #define  GBA_BG3X		0x4000038	/* W   BG3 Reference Point X-Coordinate */
-#define  GBA_BG3Y		0x400003C	/* W   BG3 Reference Point Y-Coordinate */
+#define  GBA_BG3Y		0x400003c	/* W   BG3 Reference Point Y-Coordinate */
 #define  GBA_WIN0H		0x4000040	/* W   Window 0 Horizontal Dimensions */
 #define  GBA_WIN1H		0x4000042	/* W   Window 1 Horizontal Dimensions */
 #define  GBA_WIN0V		0x4000044	/* W   Window 0 Vertical Dimensions */
 #define  GBA_WIN1V		0x4000046	/* W   Window 1 Vertical Dimensions */
 #define  GBA_WININ		0x4000048	/* R/W Inside of Window 0 and 1 */
-#define  GBA_WINOUT		0x400004A	/* R/W Inside of OBJ Window & Outside of Windows */
-#define  GBA_MOSAIC		0x400004C	/* W   Mosaic Size */
+#define  GBA_WINOUT		0x400004a	/* R/W Inside of OBJ Window & Outside of Windows */
+#define  GBA_MOSAIC		0x400004c	/* W   Mosaic Size */
 #define  GBA_BLDCNT		0x4000050	/* R/W Color Special Effects Selection */
 #define  GBA_BLDALPHA	0x4000052	/* R/W Alpha Blending Coefficients */
 #define  GBA_BLDY		0x4000054	/* W   Brightness (Fade-In/Out) Coefficient */
@@ -66,37 +67,37 @@
 #define GBA_SOUND1CNT_H	0x4000062	/* R/W  Channel 1 Duty/Length/Envelope (NR11, NR12) */
 #define GBA_SOUND1CNT_X	0x4000064	/* R/W  Channel 1 Frequency/Control    (NR13, NR14) */
 #define GBA_SOUND2CNT_L	0x4000068	/* R/W  Channel 2 Duty/Length/Envelope (NR21, NR22) */
-#define GBA_SOUND2CNT_H	0x400006C	/* R/W  Channel 2 Frequency/Control    (NR23, NR24) */
+#define GBA_SOUND2CNT_H	0x400006c	/* R/W  Channel 2 Frequency/Control    (NR23, NR24) */
 #define GBA_SOUND3CNT_L	0x4000070	/* R/W  Channel 3 Stop/Wave RAM select (NR30) */
 #define GBA_SOUND3CNT_H	0x4000072	/* R/W  Channel 3 Length/Volume        (NR31, NR32) */
 #define GBA_SOUND3CNT_X	0x4000074	/* R/W  Channel 3 Frequency/Control    (NR33, NR34) */
 #define GBA_SOUND4CNT_L	0x4000078	/* R/W  Channel 4 Length/Envelope      (NR41, NR42) */
-#define GBA_SOUND4CNT_H	0x400007C	/* R/W  Channel 4 Frequency/Control    (NR43, NR44) */
+#define GBA_SOUND4CNT_H	0x400007c	/* R/W  Channel 4 Frequency/Control    (NR43, NR44) */
 #define GBA_SOUNDCNT_L 	0x4000080	/* R/W  Control Stereo/Volume/Enable   (NR50, NR51) */
 #define GBA_SOUNDCNT_H 	0x4000082	/* R/W  Control Mixing/DMA Control */
 #define GBA_SOUNDCNT_X	0x4000084	/* R/W  Control Sound on/off           (NR52) */
 #define GBA_SOUNDBIAS	0x4000088	/* BIOS Sound PWM Control */
 #define GBA_WAVE_RAM	0x4000090	/* R/W  Channel 3 Wave Pattern RAM (2 banks!!) */
-#define GBA_FIFO_A		0x40000A0	/* W    Channel A FIFO, Data 0-3 */
-#define GBA_FIFO_B		0x40000A4	/* W    Channel B FIFO, Data 0-3 */
+#define GBA_FIFO_A		0x40000a0	/* W    Channel A FIFO, Data 0-3 */
+#define GBA_FIFO_B		0x40000a4	/* W    Channel B FIFO, Data 0-3 */
 
 // DMA Transfer Channels
-#define GBA_DMA0SAD		0x40000B0	/* W    DMA 0 Source Address */
-#define GBA_DMA0DAD		0x40000B4	/* W    DMA 0 Destination Address */
-#define GBA_DMA0CNT_L	0x40000B8	/* W    DMA 0 Word Count */
-#define GBA_DMA0CNT_H	0x40000BA	/* R/W  DMA 0 Control */
-#define GBA_DMA1SAD		0x40000BC	/* W    DMA 1 Source Address */
-#define GBA_DMA1DAD		0x40000C0	/* W    DMA 1 Destination Address */
-#define GBA_DMA1CNT_L	0x40000C4	/* W    DMA 1 Word Count */
-#define GBA_DMA1CNT_H	0x40000C6	/* R/W  DMA 1 Control */
-#define GBA_DMA2SAD		0x40000C8	/* W    DMA 2 Source Address */
-#define GBA_DMA2DAD		0x40000CC	/* W    DMA 2 Destination Address */
-#define GBA_DMA2CNT_L	0x40000D0	/* W    DMA 2 Word Count */
-#define GBA_DMA2CNT_H	0x40000D2	/* R/W  DMA 2 Control */
-#define GBA_DMA3SAD		0x40000D4	/* W    DMA 3 Source Address */
-#define GBA_DMA3DAD		0x40000D8	/* W    DMA 3 Destination Address */
-#define GBA_DMA3CNT_L	0x40000DC	/* W    DMA 3 Word Count */
-#define GBA_DMA3CNT_H	0x40000DE	/* R/W  DMA 3 Control */
+#define GBA_DMA0SAD		0x40000b0	/* W    DMA 0 Source Address */
+#define GBA_DMA0DAD		0x40000b4	/* W    DMA 0 Destination Address */
+#define GBA_DMA0CNT_L	0x40000b8	/* W    DMA 0 Word Count */
+#define GBA_DMA0CNT_H	0x40000ba	/* R/W  DMA 0 Control */
+#define GBA_DMA1SAD		0x40000bc	/* W    DMA 1 Source Address */
+#define GBA_DMA1DAD		0x40000c0	/* W    DMA 1 Destination Address */
+#define GBA_DMA1CNT_L	0x40000c4	/* W    DMA 1 Word Count */
+#define GBA_DMA1CNT_H	0x40000c6	/* R/W  DMA 1 Control */
+#define GBA_DMA2SAD		0x40000c8	/* W    DMA 2 Source Address */
+#define GBA_DMA2DAD		0x40000cc	/* W    DMA 2 Destination Address */
+#define GBA_DMA2CNT_L	0x40000d0	/* W    DMA 2 Word Count */
+#define GBA_DMA2CNT_H	0x40000d2	/* R/W  DMA 2 Control */
+#define GBA_DMA3SAD		0x40000d4	/* W    DMA 3 Source Address */
+#define GBA_DMA3DAD		0x40000d8	/* W    DMA 3 Destination Address */
+#define GBA_DMA3CNT_L	0x40000dc	/* W    DMA 3 Word Count */
+#define GBA_DMA3CNT_H	0x40000de	/* R/W  DMA 3 Control */
 
 // Timer Registers
 #define GBA_TM0CNT_L	0x4000100	/* R/W  Timer 0 Counter/Reload */
@@ -104,9 +105,9 @@
 #define GBA_TM1CNT_L	0x4000104	/* R/W  Timer 1 Counter/Reload */
 #define GBA_TM1CNT_H	0x4000106	/* R/W  Timer 1 Control */
 #define GBA_TM2CNT_L	0x4000108	/* R/W  Timer 2 Counter/Reload */
-#define GBA_TM2CNT_H	0x400010A	/* R/W  Timer 2 Control */
-#define GBA_TM3CNT_L	0x400010C	/* R/W  Timer 3 Counter/Reload */
-#define GBA_TM3CNT_H	0x400010E	/* R/W  Timer 3 Control */
+#define GBA_TM2CNT_H	0x400010a	/* R/W  Timer 2 Control */
+#define GBA_TM3CNT_L	0x400010c	/* R/W  Timer 3 Counter/Reload */
+#define GBA_TM3CNT_H	0x400010e	/* R/W  Timer 3 Control */
 
 // Serial Communication (1)
 #define GBA_SIODATA32	0x4000120	/*R/W   SIO Data (Normal-32bit Mode; shared with below) */
@@ -115,8 +116,8 @@
 #define GBA_SIOMULTI2	0x4000124	/*R/W   SIO Data 2 (2nd Child) (Multi-Player Mode) */
 #define GBA_SIOMULTI3	0x4000126	/*R/W   SIO Data 3 (3rd Child) (Multi-Player Mode) */
 #define GBA_SIOCNT		0x4000128	/*R/W   SIO Control Register */
-#define GBA_SIOMLT_SEND	0x400012A	/*R/W   SIO Data (Local of MultiPlayer; shared below) */
-#define GBA_SIODATA8	0x400012A	/*R/W   SIO Data (Normal-8bit and UART Mode) */
+#define GBA_SIOMLT_SEND	0x400012a	/*R/W   SIO Data (Local of MultiPlayer; shared below) */
+#define GBA_SIODATA8	0x400012a	/*R/W   SIO Data (Normal-8bit and UART Mode) */
 
 // Keypad Input
 #define GBA_KEYINPUT	0x4000130	/* R    Key Status */
@@ -638,10 +639,20 @@ typedef struct {
 	UINT8  cart_backup[128 * 1024];
 	UINT8  flash_chip_id[4];
 	UINT32 openbus_word;
-	UINT32 eeprom_word;
-	UINT32 eeprom_addr;
-	UINT32 prefetch_en;
-	UINT32 prefetch_size;
+	UINT32 dma_latch;
+	UINT32 gamepak_address_latch;
+	bool   last_bus_access_dma;
+	UINT32 prefetch_en;	UINT32 prefetch_head_address;
+	UINT32 prefetch_last_address;
+	INT32  prefetch_count;
+	INT32  prefetch_countdown;
+	INT32  prefetch_duty;
+	UINT8  prefetch_opcode_width;
+	UINT8  prefetch_capacity;
+	bool   prefetch_active;
+	bool   prefetch_thumb;
+	bool   prefetch_was_disabled;
+	bool   last_gamepak_access_dma;
 	UINT32 requests;
 	UINT32 bios_word;
 	UINT32 sram_word;
@@ -662,6 +673,14 @@ typedef struct {
 } gba_gpio_t;
 
 typedef struct {
+	INT32  type;		// 0: none, 1: standard, 2: george, 3: alternate
+	INT32  rom_mode;
+	INT32  sram_mode;
+	UINT8  write_sequence[5];
+	bool   accepting_mode_change;
+} gba_vfame_t;
+
+typedef struct {
 	UINT32 rom_size;
 	UINT8  backup_type;
 	bool   backup_is_dirty;
@@ -669,7 +688,8 @@ typedef struct {
 	INT32  flash_state;
 	INT32  flash_bank;
 	UINT32 features;
-	gba_gpio_t gpio;
+	gba_gpio_t  gpio;
+	gba_vfame_t vfame;
 } gba_cartridge_t;
 
 typedef struct {
@@ -677,6 +697,8 @@ typedef struct {
 	INT32  dest_addr;
 	INT32  length;
 	INT32  current_transaction;
+	UINT32 remaining;
+	INT32  activation_countdown;
 	bool   last_enable;
 	bool   last_vblank;
 	bool   last_hblank;
@@ -686,7 +708,110 @@ typedef struct {
 	bool   video_dma_active;
 } gba_dma_t;
 
+// OBJ pixel double-buffer layout, matching NanoBoyAdvance's Sprite::Pixel packing.
+#define GBA_OBJ_PIXEL_COLOR(p)    ((p) & 0xff)
+#define GBA_OBJ_PIXEL_PRIORITY(p) SB_BFE((p), 8, 2)
+#define GBA_OBJ_PIXEL_ALPHA(p)    SB_BFE((p), 10, 1)
+#define GBA_OBJ_PIXEL_WINDOW(p)   SB_BFE((p), 11, 1)
+#define GBA_OBJ_PIXEL_MOSAIC(p)   SB_BFE((p), 12, 1)
+
 typedef struct {
+	INT32 width;
+	INT32 height;
+	INT32 mode;
+	INT32 draw_x;
+	INT32 remaining_pixels;
+	INT32 texture_x;
+	INT32 texture_y;
+	INT32 matrix[4];
+	INT32 tile_number;
+	INT32 priority;
+	INT32 palette;
+	bool  mosaic;
+	bool  affine;
+	bool  flip_h;
+	bool  is_256;
+} gba_obj_drawer_t;
+
+typedef struct {
+	INT32  cycle;
+	INT32  cycle_limit;
+	INT32  target_line;
+	INT32  epoch_line;
+	INT32  mosaic_y;
+	UINT64 last_sync;
+	UINT64 vram_access;
+	UINT64 oam_access;
+	bool  active;
+	INT32 oam_index;
+	INT32 oam_step;
+	INT32 oam_wait;
+	INT32 oam_pending_wait;
+	bool  oam_delay_wait;
+	INT32 initial_local_x;
+	INT32 initial_local_y;
+	INT32 matrix_address;
+	bool  drawing;
+	INT32 state_rd;
+	INT32 state_wr;
+	gba_obj_drawer_t drawer[2];
+	UINT16 buffer[2][240];
+	INT32  buf_rd;
+	INT32  buf_wr;
+} gba_obj_engine_t;
+
+typedef struct {
+	INT32  fetches;
+	UINT32 tile_address;
+	UINT32 palette;
+	bool   flip_x;
+	UINT16 piso_data;
+	INT32  piso_remaining;
+} gba_bg_text_t;
+
+typedef struct {
+	INT32  x;
+	INT32  y;
+	bool   out_of_bounds;
+	UINT16 tile_address;
+} gba_bg_affine_t;
+
+typedef struct {
+	UINT64 last_sync;
+	UINT64 vram_access;
+	UINT32 cycle;
+	gba_bg_text_t text[4];
+	gba_bg_affine_t affine[2];
+	UINT32 buffer[240][4];
+	UINT16 vram_latch;
+} gba_bg_engine_t;
+
+typedef struct {
+	UINT64 last_sync;
+	UINT32 cycle;
+	bool   v_flag[2];
+	bool   h_flag[2];
+	UINT8  buffer[240];
+} gba_window_engine_t;
+
+typedef struct {
+	UINT64 last_sync;
+	UINT64 pram_access;
+	UINT32 cycle;
+	UINT32 bg_mosaic_x;
+	UINT32 obj_mosaic_x;
+	INT32  layer[2];
+	UINT32 color[2];
+	bool   force_alpha;
+	bool   forced_blank;
+	UINT16 color_left;
+	UINT16 obj_latch;
+	UINT8  window_control;
+} gba_merge_engine_t;
+
+typedef struct {
+	UINT64 master_clock;
+	UINT64 committed_clock;
 	INT32  scan_clock;
 	bool   last_vblank;
 	bool   last_hblank;
@@ -703,13 +828,28 @@ typedef struct {
 	INT32  fast_forward_ticks;
 	float  ghosting_strength;
 	UINT32 mosaic_y_counter;
+	UINT32 bg_mosaic_y_counter;
+	gba_bg_engine_t bg;
+	gba_obj_engine_t obj;
+	gba_window_engine_t window_engine;
+	gba_merge_engine_t merge;
+	UINT16 obj_mosaic_latch;
+	INT32  obj_mosaic_x;
 } gba_ppu_t;
 
 typedef struct {
-	bool   last_enable;
-	UINT16 reload_value;
-	UINT16 pending_reload_value;
-	INT32  startup_delay;
+	UINT16 counter;
+	UINT16 reload;
+	UINT16 pending_reload;
+	UINT16 control;
+	UINT16 pending_control;
+	UINT64 timestamp_started;
+	UINT64 overflow_deadline;
+	UINT64 reload_commit_deadline;
+	UINT64 control_commit_deadline;
+	bool   reload_write_pending;
+	bool   control_write_pending;
+	bool   running;
 } gba_timer_t;
 
 typedef struct {
@@ -736,11 +876,17 @@ typedef struct {
 } gba_frame_sequencer_t;
 
 typedef struct {
-	struct {
-		INT8  data[64];
-		INT32 read_ptr;
-		INT32 write_ptr;
-	} fifo[2];
+	UINT32 queue[7];
+	UINT8  read_ptr;
+	UINT8  write_ptr;
+	UINT8  count;
+	UINT32 pipe;
+	UINT8  pipe_bytes;
+	INT8   sample_latch;
+} gba_audio_fifo_t;
+
+typedef struct {
+	gba_audio_fifo_t fifo[2];
 	double current_sim_time;
 	double current_sample_generated_time;
 	UINT16 wave_freq_timer;
@@ -754,8 +900,10 @@ typedef struct {
 } gba_audio_t;
 
 typedef struct {
-	INT32 ticks_till_transfer_done;
-	bool  last_active;
+	UINT64 completion_deadline;
+	INT32  completion_cycles;
+	bool   last_active;
+	bool   scheduled;
 } gba_sio_t;
 
 typedef struct {
@@ -813,41 +961,96 @@ typedef struct {
 	UINT8  state;
 } gba_tilt_sensor_t;
 
+#define GBA_IRQ_EVENT_CAPACITY 16
+
+#define GBA_IRQ_EVENT_COMMIT_RAISE    0
+#define GBA_IRQ_EVENT_COMMIT_SOFTWARE 1
+#define GBA_IRQ_EVENT_AVAILABLE       2
+#define GBA_IRQ_EVENT_CPU_LINE        3
+
+typedef struct {
+	UINT64 deadline;
+	UINT32 sequence;
+	UINT8  type;
+	UINT8  priority;
+	UINT8  value;
+} gba_irq_event_t;
+
+typedef struct {
+	UINT64 clock;
+	UINT32 next_sequence;
+	UINT16 pending_ie;
+	UINT16 pending_if;
+	UINT8  pending_ime;
+	UINT8  irq_available;
+	UINT8  irq_line_target;
+	UINT8  cpu_irq_line;
+	UINT8  event_count;
+	gba_irq_event_t events[GBA_IRQ_EVENT_CAPACITY];
+} gba_irq_t;
+
+#define GBA_EEPROM_ACCEPT_COMMAND 0x01
+#define GBA_EEPROM_WRITE_MODE     0x02
+#define GBA_EEPROM_READ_MODE      0x04
+#define GBA_EEPROM_GET_ADDRESS    0x08
+#define GBA_EEPROM_WRITING        0x10
+#define GBA_EEPROM_READING        0x20
+#define GBA_EEPROM_DUMMY_NIBBLE   0x40
+#define GBA_EEPROM_EAT_DUMMY      0x80
+#define GBA_EEPROM_BUSY           0x100
+
+#define GBA_EEPROM_SIZE_512B      0
+#define GBA_EEPROM_SIZE_8KB       1
+
+typedef struct {
+	UINT64 clock;
+	UINT64 busy_deadline;
+	UINT32 serial_buffer;
+	UINT32 address;
+	UINT16 state;
+	UINT16 transmitted_bits;
+	UINT8  size;
+	bool   detect_size;
+} gba_eeprom_t;
+
 typedef struct gba_t {
-	gba_mem_t			mem;
-	arm7_t				cpu;
-	gba_cartridge_t		cart;
-	gba_ppu_t			ppu;
-	gba_rtc_t			rtc;
-	gba_dma_t			dma[4];
-	gba_sio_t			sio;
-	gba_bess_info_t		bess;
+	UINT32 raw_state_version;
+	gba_mem_t mem;
+	arm7_t cpu;
+	gba_cartridge_t cart;
+	gba_ppu_t ppu;
+	gba_rtc_t rtc;
+	gba_dma_t dma[4];
+	gba_sio_t sio;
+	gba_bess_info_t bess;
 	//There is a 2 cycle penalty when the CPU takes over from the DMA
-	bool				last_transaction_dma;
-	bool				activate_dmas;
-	bool				dma_wait_ppu;
-	gba_timer_t			timers[4];
-	UINT32				timer_ticks_before_event;
-	UINT32				deferred_timer_ticks;
-	UINT32				global_timer;
-	gba_audio_t			audio;
-	bool				prev_key_interrupt;
-	UINT32				first_target_buffer[GBA_LCD_W];
-	UINT32				second_target_buffer[GBA_LCD_W];
-	UINT8				window[GBA_LCD_W];
-	UINT8*				framebuffer;
-	// Some HW has up to a 4 cycle delay before its IF propagates. 
-	// This array acts as a FIFO to keep track of that. 
-	UINT16				pipelined_if[5];
-	INT32				active_if_pipe_stages;
-	INT32				last_cpu_tick;
-	INT32				residual_dma_ticks;
-	bool				stop_mode;
-	bool				frame_in_progress;
-	bool				pause_after_frame;
-	gba_solar_sensor_t	solar_sensor;
-	gba_gyro_sensor_t	gyro_sensor;
-	gba_tilt_sensor_t	tilt_sensor;
+	bool   last_transaction_dma;
+	bool   activate_dmas;
+	bool   dma_wait_ppu;
+	UINT8  dma_runnable_mask;
+	UINT8  dma_hblank_mask;
+	UINT8  dma_vblank_mask;
+	UINT8  dma_video_mask;
+	INT8   dma_active_channel;
+	gba_timer_t timers[4];
+	UINT64 timer_clock;
+	gba_eeprom_t eeprom;
+	gba_audio_t audio;
+	UINT32 first_target_buffer[GBA_LCD_W];
+	UINT32 second_target_buffer[GBA_LCD_W];
+	UINT8  window[GBA_LCD_W];
+	UINT8* framebuffer;
+	gba_irq_t irq;
+	INT32  last_cpu_tick;
+	UINT32 pending_host_audio_cycles;
+	UINT8  bus_owner;
+	bool   render_frame;
+	bool   stop_mode;
+	bool   frame_in_progress;
+	bool   pause_after_frame;
+	gba_solar_sensor_t solar_sensor;
+	gba_gyro_sensor_t  gyro_sensor;
+	gba_tilt_sensor_t  tilt_sensor;
 } gba_t;
 
 typedef struct {
@@ -861,9 +1064,18 @@ typedef struct {
 static void  gba_process_audio_writes(gba_t* gba);
 static UINT8 gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
 static bool  gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size);
-static FORCE_INLINE void   gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
+static void   gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
 static FORCE_INLINE UINT32 gba_read32(gba_t* gba, UINT32 baddr);
 static FORCE_INLINE void   gba_store32(gba_t* gba, UINT32 baddr, UINT32 data);
+static FORCE_INLINE void   gba_store16(gba_t* gba, UINT32 baddr, UINT32 data);
+static void   gba_system_advance(gba_t* gba, UINT32 cycles);
+static void   gba_advance_audio_clock(gba_t* gba, UINT32 cycles);
+static INT32  gba_tick_dma(gba_t* gba, INT32 last_tick);
+static FORCE_INLINE void   gba_prefetch_step(gba_t* gba, UINT32 cycles);
+static FORCE_INLINE void   gba_prefetch_stop(gba_t* gba);
+static FORCE_INLINE void   gba_dma_request_mask(gba_t* gba, UINT8 mask);
+static void   gba_dma_tick_activation(gba_t* gba);
+static FORCE_INLINE UINT16 gba_timer_read_counter(gba_t* gba, INT32 timer);
 
 //Returns offset into savestate where bess info can be found
 static UINT32 gba_save_best_effort_state(gba_t* gba) 
@@ -879,11 +1091,16 @@ static UINT32 gba_save_best_effort_state(gba_t* gba)
 	gba->bess.vram_seg        = ((UINT8*)gba->mem.vram       ) - (UINT8*)gba;
 	gba->bess.oam_seg         = ((UINT8*)gba->mem.oam        ) - (UINT8*)gba;
 	gba->bess.cart_backup_seg = ((UINT8*)gba->mem.cart_backup) - (UINT8*)gba;
-	for (INT32 i = 0;i < 4;++i)
-		gba->bess.timer_reload_values[i] = gba->timers[i].reload_value;
+	for (INT32 i = 0;i < 4;++i) {
+		gba->bess.timer_reload_values[i] = gba->timers[i].reload;
+		*(UINT16*)(gba->mem.io + ((GBA_TM0CNT_L + i * 4) & 0x3ff)) = gba_timer_read_counter(gba, i);
+	}
 
 	return ((UINT8*)&gba->bess) - (UINT8*)(gba);
 }
+
+static void gba_eeprom_reset_transport(gba_t* gba);
+static void gba_eeprom_set_size(gba_t* gba, UINT8 size, bool detect_size);
 
 static bool gba_load_best_effort_state(gba_t* gba, UINT8* save_state_data, UINT32 size, UINT32 bess_offset)
 {
@@ -905,11 +1122,182 @@ static bool gba_load_best_effort_state(gba_t* gba, UINT8* save_state_data, UINT3
 	memcpy(gba->mem.vram       , save_state_data + bess->vram_seg       , sizeof(gba->mem.vram));
 	memcpy(gba->mem.oam        , save_state_data + bess->oam_seg        , sizeof(gba->mem.oam));
 	memcpy(gba->mem.cart_backup, save_state_data + bess->cart_backup_seg, sizeof(gba->mem.cart_backup));
-	for (INT32 i = 0;i < 4;++i)
-		gba->timers[i].pending_reload_value = gba->timers[i].reload_value = bess->timer_reload_values[i];
+	for (INT32 i = 0;i < 4;++i) {
+		gba_timer_t* timer = &gba->timers[i];
+		timer->counter = *(UINT16*)(gba->mem.io + ((GBA_TM0CNT_L + i * 4) & 0x3ff));
+		timer->reload = bess->timer_reload_values[i];
+		timer->pending_reload = timer->reload;
+		timer->control = *(UINT16*)(gba->mem.io + ((GBA_TM0CNT_H + i * 4) & 0x3ff));
+		timer->control &= i ? 0x00c7 : 0x00c3;
+		timer->pending_control = timer->control;
+		timer->reload_write_pending = false;
+		timer->control_write_pending = false;
+		timer->running = false;
+	}
+
+	const INT32 timer_shift[4] = { 0, 6, 8, 10 };
+	gba->irq.pending_ie = *(UINT16*)(gba->mem.io + (GBA_IE & 0x3ff)) & 0x3fff;
+	gba->irq.pending_if = *(UINT16*)(gba->mem.io + (GBA_IF & 0x3ff)) & 0x3fff;
+	gba->irq.pending_ime = *(UINT16*)(gba->mem.io + (GBA_IME & 0x3ff)) & 1;
+	gba->irq.irq_available = (gba->irq.pending_ie & gba->irq.pending_if) != 0;
+	gba->irq.irq_line_target = gba->irq.pending_ime && gba->irq.irq_available;
+	gba->irq.cpu_irq_line = gba->irq.irq_line_target;
+	gba->irq.event_count = 0;
+	gba->cpu.wait_for_interrupt = false;
+	gba->stop_mode = false;
+
+	if (gba->cart.backup_type >= GBA_BACKUP_EEPROM && gba->cart.backup_type <= GBA_BACKUP_EEPROM_8KB) {
+		gba_eeprom_reset_transport(gba);
+		if (!gba->eeprom.detect_size && (gba->eeprom.size == GBA_EEPROM_SIZE_512B || gba->eeprom.size == GBA_EEPROM_SIZE_8KB))
+			gba_eeprom_set_size(gba, gba->eeprom.size, false);
+		else
+			gba_eeprom_set_size(gba, GBA_EEPROM_SIZE_8KB, true);
+	}
+
+	for (INT32 i = 0;i < 4;++i) {
+		gba_timer_t* timer = &gba->timers[i];
+		if ((timer->control & 0x80) && !(timer->control & 4)) {
+			INT32 shift = timer_shift[timer->control & 3];
+			INT32 phase = gba->timer_clock & ((1 << shift) - 1);
+			UINT64 span = ((UINT64)0x10000 - timer->counter) << shift;
+			timer->running = true;
+			timer->timestamp_started = gba->timer_clock - phase;
+			timer->overflow_deadline = gba->timer_clock + span - phase;
+		}
+	}
 
 	gba_recompute_waitstate_table(gba, gba_read32(gba, GBA_WAITCNT));
 	return true;
+}
+
+static void gba_eeprom_set_size(gba_t* gba, UINT8 size, bool detect_size)
+{
+	gba->eeprom.size = size;
+	gba->eeprom.detect_size = detect_size;
+	if (gba->cart.backup_type >= GBA_BACKUP_EEPROM && gba->cart.backup_type <= GBA_BACKUP_EEPROM_8KB)
+		gba->cart.backup_type = size == GBA_EEPROM_SIZE_512B ? GBA_BACKUP_EEPROM_512B : GBA_BACKUP_EEPROM_8KB;
+}
+
+static void gba_eeprom_reset_transport(gba_t* gba)
+{
+	gba->eeprom.state = GBA_EEPROM_ACCEPT_COMMAND;
+	gba->eeprom.serial_buffer = 0;
+	gba->eeprom.address = 0;
+	gba->eeprom.transmitted_bits = 0;
+	gba->eeprom.busy_deadline = 0;
+}
+
+static bool gba_eeprom_address(gba_t* gba, UINT32 address)
+{
+	if (gba->cart.backup_type < GBA_BACKUP_EEPROM || gba->cart.backup_type > GBA_BACKUP_EEPROM_8KB)
+		return false;
+	UINT32 region = address >> 24;
+	if (region < 0x8 || region > 0xd)
+		return false;
+	UINT32 offset = address & 0x1ffffff;
+	if (gba->cart.rom_size <= 0x01000000)
+		return offset & 0x01000000;
+	return offset >= 0x01ffff00;
+}
+
+static void gba_eeprom_write_bit(gba_t* gba, UINT8 bit)
+{
+	gba_eeprom_t* eeprom = &gba->eeprom;
+	if (eeprom->state & (GBA_EEPROM_BUSY | GBA_EEPROM_READING))
+		return;
+
+	eeprom->serial_buffer = (eeprom->serial_buffer << 1) | (bit & 1);
+	eeprom->transmitted_bits++;
+
+	if (eeprom->state & GBA_EEPROM_ACCEPT_COMMAND) {
+		if (eeprom->transmitted_bits == 2) {
+			switch (eeprom->serial_buffer) {
+				case 2:
+					eeprom->state = GBA_EEPROM_WRITE_MODE | GBA_EEPROM_GET_ADDRESS | GBA_EEPROM_WRITING | GBA_EEPROM_EAT_DUMMY;
+					break;
+				case 3:
+					eeprom->state = GBA_EEPROM_READ_MODE | GBA_EEPROM_GET_ADDRESS | GBA_EEPROM_EAT_DUMMY;
+					break;
+			}
+			eeprom->serial_buffer = 0;
+			eeprom->transmitted_bits = 0;
+		}
+	} else if (eeprom->state & GBA_EEPROM_GET_ADDRESS) {
+		UINT16 address_bits = eeprom->size == GBA_EEPROM_SIZE_512B ? 6 : 14;
+		if (eeprom->transmitted_bits == address_bits) {
+			eeprom->address = (eeprom->serial_buffer * 8) & 0x1fff;
+			eeprom->state &= ~GBA_EEPROM_GET_ADDRESS;
+			eeprom->serial_buffer = 0;
+			eeprom->transmitted_bits = 0;
+			if (eeprom->state & GBA_EEPROM_WRITE_MODE) {
+				for (INT32 i = 0; i < 8; i++) {
+					if (gba->mem.cart_backup[eeprom->address + i]) {
+						gba->mem.cart_backup[eeprom->address + i] = 0;
+						gba->cart.backup_is_dirty = true;
+					}
+				}
+			}
+		}
+	} else if (eeprom->state & GBA_EEPROM_WRITING) {
+		UINT32 index = (eeprom->transmitted_bits - 1) >> 3;
+		UINT32 value_bit = 7 - ((eeprom->transmitted_bits - 1) & 7);
+		if (bit) {
+			UINT8* data = &gba->mem.cart_backup[eeprom->address + index];
+			if (!(*data & (1 << value_bit))) {
+				*data |= 1 << value_bit;
+				gba->cart.backup_is_dirty = true;
+			}
+		}
+		if (eeprom->transmitted_bits == 64) {
+			eeprom->state &= ~GBA_EEPROM_WRITING;
+			eeprom->serial_buffer = 0;
+			eeprom->transmitted_bits = 0;
+		}
+	} else if (eeprom->state & GBA_EEPROM_EAT_DUMMY) {
+		eeprom->serial_buffer = 0;
+		eeprom->transmitted_bits = 0;
+		if (eeprom->state & GBA_EEPROM_WRITE_MODE) {
+			eeprom->state = GBA_EEPROM_BUSY;
+			eeprom->busy_deadline = eeprom->clock + 101400;
+		} else {
+			eeprom->state |= GBA_EEPROM_READING | GBA_EEPROM_DUMMY_NIBBLE;
+			eeprom->state &= ~GBA_EEPROM_EAT_DUMMY;
+		}
+	}
+}
+
+static FORCE_INLINE UINT8 gba_eeprom_read_bit(gba_t* gba)
+{
+	gba_eeprom_t* eeprom = &gba->eeprom;
+	if ((eeprom->state & (GBA_EEPROM_READING | GBA_EEPROM_DUMMY_NIBBLE)) == (GBA_EEPROM_READING | GBA_EEPROM_DUMMY_NIBBLE)) {
+		if (eeprom->transmitted_bits == 3) {
+			eeprom->state &= ~GBA_EEPROM_DUMMY_NIBBLE;
+			eeprom->transmitted_bits = 0;
+			return 0;
+		}
+		eeprom->transmitted_bits++;
+		return 0;
+	}
+	if (eeprom->state & GBA_EEPROM_READING) {
+		UINT32 index = eeprom->transmitted_bits >> 3;
+		UINT32 bit = 7 - (eeprom->transmitted_bits & 7);
+		eeprom->transmitted_bits++;
+		if (eeprom->transmitted_bits == 64) {
+			eeprom->state = GBA_EEPROM_ACCEPT_COMMAND;
+			eeprom->serial_buffer = 0;
+			eeprom->transmitted_bits = 0;
+		}
+		return (gba->mem.cart_backup[eeprom->address + index] >> bit) & 1;
+	}
+	return eeprom->state & GBA_EEPROM_BUSY ? 0 : 1;
+}
+
+static void gba_eeprom_advance(gba_t* gba)
+{
+	gba_eeprom_t* eeprom = &gba->eeprom;
+	eeprom->clock++;
+	if ((eeprom->state & GBA_EEPROM_BUSY) && eeprom->clock >= eeprom->busy_deadline)
+		gba_eeprom_reset_transport(gba);
 }
 
 static FORCE_INLINE sb_debug_mmio_access_t gba_debug_mmio_access(gba_t* gba, UINT32 baddr, INT32 trigger_breakpoint)
@@ -934,18 +1322,89 @@ static FORCE_INLINE sb_debug_mmio_access_t gba_debug_mmio_access(gba_t* gba, UIN
 }
 
 static void gba_tick_keypad(sb_joy_t* joy, gba_t* gba);
-static void gba_compute_timers(gba_t* gba);
-static FORCE_INLINE void gba_tick_timers(gba_t* gba);
-static FORCE_INLINE void gba_send_interrupt(gba_t* gba, INT32 delay, INT32 if_bit);
+static void gba_tick_timers(gba_t* gba);
+static FORCE_INLINE UINT16 gba_timer_read_counter(gba_t* gba, INT32 timer);
+static FORCE_INLINE void gba_timer_write_reload(gba_t* gba, INT32 timer, UINT16 value);
+static FORCE_INLINE void gba_timer_write_control(gba_t* gba, INT32 timer, UINT16 value);
+static void gba_eeprom_reset_transport(gba_t* gba);
+static void gba_eeprom_set_size(gba_t* gba, UINT8 size, bool detect_size);
+static void gba_sio_start(gba_t* gba, UINT16 value);
+static bool gba_irq_schedule(gba_t* gba, UINT8 type, UINT8 priority, UINT8 value, UINT64 deadline);
+static FORCE_INLINE void gba_irq_raise(gba_t* gba, UINT16 if_bits);
+static void gba_irq_tick(gba_t* gba);
+static bool gba_eeprom_address(gba_t* gba, UINT32 address);
+static FORCE_INLINE UINT8 gba_eeprom_read_bit(gba_t* gba);
+static void gba_eeprom_write_bit(gba_t* gba, UINT8 bit);
+static void gba_eeprom_advance(gba_t* gba);
 
 static FORCE_INLINE bool gba_gpio_active(const gba_t* gba)
 {
 	return gba->cart.features & (GBA_CART_RTC | GBA_CART_SOLAR | GBA_CART_RUMBLE | GBA_CART_GYRO);
 }
 
+// VFame (FC Mini) cartridge pattern value for out-of-bounds ROM reads
+static FORCE_INLINE UINT32 gba_vfame_pattern_right_shift2(UINT32 addr)
+{
+	UINT32 value = addr & 0xffff;
+	value >>= 2;
+	value += (addr & 3) == 2  ? 0x8000 : 0;
+	value += (addr & 0x10000) ? 0x4000 : 0;
+	return value;
+}
+
+static UINT16 gba_vfame_get_pattern(UINT32 addr)
+{
+	addr &= 0x1fffff;
+	UINT32 value = 0;
+	switch (addr & 0x1f0000) {
+		case 0x000000:
+		case 0x010000: value = (addr >> 1) & 0xffff;							break;
+		case 0x020000: value = addr & 0xffff;									break;
+		case 0x030000: value = (addr & 0xffff) + 1;								break;
+		case 0x040000: value = 0xffff - (addr & 0xffff);						break;
+		case 0x050000: value = (0xffff - (addr & 0xffff)) - 1;					break;
+		case 0x060000: value = (addr & 0xffff) ^ 0xaaaa;						break;
+		case 0x070000: value = ((addr & 0xffff) ^ 0xaaaa) + 1;					break;
+		case 0x080000: value = (addr & 0xffff) ^ 0x5555;						break;
+		case 0x090000: value = ((addr & 0xffff) ^ 0x5555) - 1;					break;
+		case 0x0a0000:
+		case 0x0b0000: value = gba_vfame_pattern_right_shift2(addr);			break;
+		case 0x0c0000:
+		case 0x0d0000: value = 0xffff - gba_vfame_pattern_right_shift2(addr);	break;
+		case 0x0e0000:
+		case 0x0f0000: value = gba_vfame_pattern_right_shift2(addr) ^ 0xaaaa;	break;
+		case 0x100000:
+		case 0x110000: value = gba_vfame_pattern_right_shift2(addr) ^ 0x5555;	break;
+		case 0x120000: value = 0xffff - ((addr & 0xffff) >> 1);					break;
+		case 0x130000: value = 0xffff - ((addr & 0xffff) >> 1) - 0x8000;		break;
+		case 0x140000:
+		case 0x150000: value = ((addr >> 1) & 0xffff) ^ 0xaaaa;					break;
+		case 0x160000:
+		case 0x170000: value = ((addr >> 1) & 0xffff) ^ 0x5555;					break;
+		case 0x180000:
+		case 0x190000: value = ((addr >> 1) & 0xffff) ^ 0xf0f0;					break;
+		case 0x1a0000:
+		case 0x1b0000: value = ((addr >> 1) & 0xffff) ^ 0x0f0f;					break;
+		case 0x1c0000:
+		case 0x1d0000: value = ((addr >> 1) & 0xffff) ^ 0xff00;					break;
+		case 0x1e0000:
+		case 0x1f0000: value = ((addr >> 1) & 0xffff) ^ 0x00ff;					break;
+	}
+	return value & 0xffff;
+}
+
 static FORCE_INLINE UINT16 gba_rom_read16(const gba_t* gba, UINT32 address)
 {
 	UINT32 offset = (address & 0x1fffffe);
+	if (gba_eeprom_address((gba_t*)gba, address))
+		return 1;
+	if (offset >= gba->cart.rom_size) {
+		if (gba->cart.vfame.type)
+			return gba_vfame_get_pattern(address);
+		UINT32 mask = gba->cart.rom_size - 1;
+		if ((gba->cart.rom_size & mask) == 0)
+			offset &= mask & ~1;
+	}
 	return gba->mem.cart_rom[offset] | (gba->mem.cart_rom[offset + 1] << 8);
 }
 
@@ -1014,6 +1473,11 @@ static FORCE_INLINE UINT16 gba_gpio_read16(gba_t* gba, UINT32 address)
 // Returns a pointer to the data backing the baddr (when not DWORD aligned, it
 // ignores the lowest 2 bits.
 static FORCE_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 baddr, INT32 req_type);
+static void gba_ppu_sync_to(gba_t* gba, UINT64 target_clock);
+static FORCE_INLINE void gba_ppu_sync(gba_t* gba)
+{
+	gba_ppu_sync_to(gba, gba->ppu.committed_clock);
+}
 static FORCE_INLINE UINT32 gba_read32(gba_t* gba, UINT32 baddr)
 {
 	if (gba_gpio_address(gba, baddr)) {
@@ -1027,8 +1491,31 @@ static FORCE_INLINE UINT32 gba_read32(gba_t* gba, UINT32 baddr)
 	return *gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_4B);
 }
 
+static FORCE_INLINE UINT16 gba_gamepak_read16(gba_t* gba, UINT32 address, bool seq)
+{
+	if (!seq || (address & 0x1ffff) == 0)
+		gba->mem.gamepak_address_latch = address & 0x1fffffe;
+	UINT32 latched = gba->mem.gamepak_address_latch;
+	UINT16 value = gba_eeprom_address(gba, 0x08000000 | latched) ? gba_eeprom_read_bit(gba) : gba_rom_read16(gba, 0x08000000 | latched);
+	gba->mem.gamepak_address_latch = (latched + 2) & 0x1ffffff;
+	return value;
+}
+
+static FORCE_INLINE UINT32 gba_gamepak_read32(gba_t* gba, UINT32 address, bool seq)
+{
+	if (!seq || (address & 0x1ffff) == 0)
+		gba->mem.gamepak_address_latch = address & 0x1fffffc;
+	UINT32 latched = gba->mem.gamepak_address_latch;
+	UINT32 value = gba_rom_read16(gba, 0x08000000 | latched);
+	value |= (UINT32)gba_rom_read16(gba, 0x08000000 | ((latched + 2) & 0x1ffffff)) << 16;
+	gba->mem.gamepak_address_latch = (latched + 4) & 0x1ffffff;
+	return value;
+}
+
 static FORCE_INLINE UINT16 gba_read16(gba_t* gba, UINT32 baddr)
 {
+	if (gba_eeprom_address(gba, baddr))
+		return gba_eeprom_read_bit(gba);
 	if (gba_gpio_address(gba, baddr))
 		return gba_gpio_read16(gba, baddr);
 	UINT32* val    = gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_2B);
@@ -1054,7 +1541,12 @@ static FORCE_INLINE UINT8 gba_read8_debug(gba_t* gba, UINT32 baddr)
 	return ((UINT8*)val)[offset];
 }
 
-static FORCE_INLINE void gba_process_flash_state_machine(gba_t* gba, UINT32 baddr, UINT8 data)
+static FORCE_INLINE INT32 gba_flash_effective_bank(gba_t* gba)
+{
+	return gba->cart.backup_type == GBA_BACKUP_FLASH_128K ? gba->cart.flash_bank & 1 : 0;
+}
+
+static void gba_process_flash_state_machine(gba_t* gba, UINT32 baddr, UINT8 data)
 {
 #define FLASH_DEFAULT		0x00
 #define FLASH_RECV_AA		0x01
@@ -1063,24 +1555,25 @@ static FORCE_INLINE void gba_process_flash_state_machine(gba_t* gba, UINT32 badd
 #define FLASH_ERASE_RECV_55	0x04
 
 #define FLASH_ENTER_CHIP_ID	0x90
-#define FLASH_EXIT_CHIP_ID	0xF0
+#define FLASH_EXIT_CHIP_ID	0xf0
 #define FLASH_PREP_ERASE	0x80
 #define FLASH_ERASE_CHIP	0x10
 #define FLASH_ERASE_4KB		0x30
-#define FLASH_WRITE_BYTE	0xA0
-#define FLASH_SET_BANK		0xB0
+#define FLASH_WRITE_BYTE	0xa0
+#define FLASH_SET_BANK		0xb0
 
 	INT32 state = gba->cart.flash_state;
 	gba->cart.flash_state = FLASH_DEFAULT;
 	baddr &= 0xffff;
 	switch (state) {
 		default:
-			printf("Unknown flash state %02x\n", gba->cart.flash_state);
+			printf("Unknown flash state %02x\n", state);
+			break;
 		case FLASH_DEFAULT:
-			if (baddr == 0x5555 && data == 0xAA) gba->cart.flash_state = FLASH_RECV_AA;
+			if (baddr == 0x5555 && data == 0xaa) gba->cart.flash_state = FLASH_RECV_AA;
 			break;
 		case FLASH_RECV_AA:
-			if (baddr == 0x2AAA && data == 0x55) gba->cart.flash_state = FLASH_RECV_55;
+			if (baddr == 0x2aaa && data == 0x55) gba->cart.flash_state = FLASH_RECV_55;
 			break;
 		case FLASH_RECV_55:
 			if (baddr == 0x5555) {
@@ -1090,43 +1583,54 @@ static FORCE_INLINE void gba_process_flash_state_machine(gba_t* gba, UINT32 badd
 					case FLASH_EXIT_CHIP_ID: gba->cart.in_chip_id_mode = false;            break;
 					case FLASH_PREP_ERASE:   gba->cart.flash_state     = FLASH_PREP_ERASE; break;
 					case FLASH_WRITE_BYTE:   gba->cart.flash_state     = FLASH_WRITE_BYTE; break;
-					case FLASH_SET_BANK:     gba->cart.flash_state     = FLASH_SET_BANK;   break;
+					case FLASH_SET_BANK:
+						if (gba->cart.backup_type == GBA_BACKUP_FLASH_128K)
+							gba->cart.flash_state = FLASH_SET_BANK;
+						break;
 					default: printf("Unknown flash command: %02x\n", data);                break;
 				}
 			}
 			break;
 		case FLASH_PREP_ERASE:
-			if (baddr == 0x5555 && data == 0xAA) gba->cart.flash_state = FLASH_ERASE_RECV_AA;
+			if (baddr == 0x5555 && data == 0xaa) gba->cart.flash_state = FLASH_ERASE_RECV_AA;
 			break;
 		case FLASH_ERASE_RECV_AA:
-			if (baddr == 0x2AAA && data == 0x55) gba->cart.flash_state = FLASH_ERASE_RECV_55;
+			if (baddr == 0x2aaa && data == 0x55) gba->cart.flash_state = FLASH_ERASE_RECV_55;
 			break;
 		case FLASH_ERASE_RECV_55:
-			if (baddr == 0x5555 || data == FLASH_ERASE_4KB) {
-				INT32 size         = gba->cart.backup_type == GBA_BACKUP_FLASH_64K ? 64 * 1024 : 128 * 1024;
-				INT32 erase_4k_off = gba->cart.flash_bank * 64 * 1024 + SB_BFE(baddr, 12, 4) * 4096;
-				// Process command
-				switch (data) {
-					case FLASH_ERASE_CHIP:
-						printf("Erase Flash Chip %d bytes\n", size);
-						for (INT32 i = 0;i < size;++i) gba->mem.cart_backup[i] = 0xff;
-						break;
-					case FLASH_ERASE_4KB:
-						for (INT32 i = 0;i < 4096;++i) gba->mem.cart_backup[erase_4k_off + i] = 0xff;
-						break;
-					default:
-						printf("Unknown flash erase command: %02x\n", data);
-						break;
+			if (baddr == 0x5555 && data == FLASH_ERASE_CHIP) {
+				INT32 size = gba->cart.backup_type == GBA_BACKUP_FLASH_64K ? 64 * 1024 : 128 * 1024;
+				printf("Erase Flash Chip %d bytes\n", size);
+				for (INT32 i = 0;i < size;++i) {
+					if (gba->mem.cart_backup[i] != 0xff) {
+						gba->mem.cart_backup[i] = 0xff;
+						gba->cart.backup_is_dirty = true;
+					}
 				}
+			} else if (data == FLASH_ERASE_4KB && (baddr & 0x0fff) == 0 && baddr <= 0xf000) {
+				INT32 erase_4k_off = gba_flash_effective_bank(gba) * 64 * 1024 + baddr;
+				for (INT32 i = 0;i < 4096;++i) {
+					if (gba->mem.cart_backup[erase_4k_off + i] != 0xff) {
+						gba->mem.cart_backup[erase_4k_off + i] = 0xff;
+						gba->cart.backup_is_dirty = true;
+					}
+				}
+			} else if (baddr == 0x5555 || data == FLASH_ERASE_4KB) {
+				printf("Unknown flash erase command: %02x\n", data);
+			}
+			break;
+		case FLASH_WRITE_BYTE: {
+			INT32 offset = gba_flash_effective_bank(gba) * 64 * 1024 + baddr;
+			UINT8 value = gba->mem.cart_backup[offset] & data;
+			if (value != gba->mem.cart_backup[offset]) {
+				gba->mem.cart_backup[offset] = value;
 				gba->cart.backup_is_dirty = true;
 			}
 			break;
-		case FLASH_WRITE_BYTE:
-			gba->mem.cart_backup[gba->cart.flash_bank * 64 * 1024 + baddr] &= data;
-			gba->cart.backup_is_dirty = true;
-			break;
+		}
 		case FLASH_SET_BANK:
-			gba->cart.flash_bank = data & 1;
+			if (!baddr)
+				gba->cart.flash_bank = data & 1;
 			break;
 	}
 }
@@ -1134,7 +1638,10 @@ static FORCE_INLINE void gba_process_flash_state_machine(gba_t* gba, UINT32 badd
 static FORCE_INLINE void gba_process_rtc_state_machine(gba_t* gba)
 {
 	UINT8 pins = gba_gpio_pins(gba);
-	UINT8 sio  = gba_rtc_update_pins(&gba->rtc, pins);
+	UINT8 force_irq = 0;
+	UINT8 sio = gba_rtc_update_pins(&gba->rtc, pins, &force_irq);
+	if (force_irq)
+		gba_irq_raise(gba, 1 << GBA_INT_GAMEPAK);
 	gba_gpio_drive(gba, 2, sio << 1);
 }
 
@@ -1165,12 +1672,93 @@ static FORCE_INLINE UINT8 gba_process_tilt_read(gba_t* gba, UINT32 baddr)
 	return 0xff;
 }
 
+// VFame SRAM write - address/value scrambling for FC Mini carts
+static FORCE_INLINE UINT32 gba_vfame_reorder_bits(UINT32 value, const UINT8* reordering, INT32 len)
+{
+	UINT32 result = 0;
+	for (INT32 i = 0; i < len; i++)
+		if (SB_BFE(value, i, 1))
+			result |= 1 << reordering[i];
+	return result;
+}
+
+static void gba_vfame_sram_write(gba_t* gba, UINT32 address, UINT8 value)
+{
+	gba_vfame_t* vfame = &gba->cart.vfame;
+	// Mode change sequence detection
+	if (address >= 0xfff8 && address <= 0xfffc) {
+		vfame->write_sequence[address - 0xfff8] = value;
+		if (address == 0xfffc) {
+			static const UINT8 start_seq[5] = { 0x99, 0x02, 0x05, 0x02, 0x03 };
+			static const UINT8 end_seq[5]   = { 0x99, 0x03, 0x62, 0x02, 0x56 };
+			if (memcmp(start_seq, vfame->write_sequence, 5) == 0)
+				vfame->accepting_mode_change = true;
+			if (memcmp(end_seq,   vfame->write_sequence, 5) == 0)
+				vfame->accepting_mode_change = false;
+		}
+	}
+	if (vfame->accepting_mode_change) {
+		if (address == 0xfffe) {
+			vfame->sram_mode = value;
+			return;
+		} else if (address == 0xfffd) {
+			vfame->rom_mode  = value;
+			return;
+		}
+	}
+	if (vfame->sram_mode == -1)
+		return;
+
+	// addr_reorder[type][mode-1][16]
+	static const UINT8 addr_reorder[3][3][16] = {
+		{ // VFAME_STANDARD [0]
+			{ 15, 14,  9,  1,  8, 10,  7,  3,  5, 11,  4,  0, 13, 12,  2,  6 },
+			{ 15,  7, 13,  5, 11,  6,  0,  9, 12,  2, 10, 14,  3,  1,  8,  4 },
+			{ 15,  0,  3, 12,  2,  4, 14, 13,  1, 8,   6,  7,  9,  5, 11, 10 }
+		},
+		{ // VFAME_GEORGE [1]
+			{ 15,  7, 13,  1, 11, 10, 14,  9, 12,  2,  4,  0,  3,  5,  8,  6 },
+			{ 15, 14,  3, 12,  8,  4,  0, 13,  5, 11,  6,  7,  9,  1,  2, 10 },
+			{ 15,  0,  9,  5,  2,  6,  7,  3,  1,  8, 10, 14, 13, 12, 11,  4 }
+		},
+		{ // VFAME_ALTERNATE [2]
+			{ 15,  0, 13,  5,  8,  4,  7,  3,  1,  2, 10, 14,  9, 12, 11,  6 },
+			{ 15,  7,  9,  1,  2,  6, 14, 13, 12, 11,  4,  0,  3,  5,  8, 10 },
+			{ 15, 14,  3, 12, 11, 10,  0,  9,  5,  8,  6,  7, 13,  1,  2,  4 }
+		},
+	};
+	// val_reorder[type][reorder_val-1][8]
+	static const UINT8 val_reorder[3][3][8] = {
+		{ { 5, 4, 3, 2, 1, 0, 7, 6 }, { 3, 2, 1, 0, 7, 6, 5, 4 }, { 1, 0, 7, 6, 5, 4, 3, 2 } },
+		{ { 3, 0, 7, 2, 1, 4, 5, 6 }, { 1, 4, 3, 0, 5, 6, 7, 2 }, { 5, 2, 1, 6, 7, 0, 3, 4 } },
+		{ { 5, 4, 7, 2, 1, 0, 3, 6 }, { 1, 2, 3, 0, 5, 6, 7, 4 }, { 3, 0, 1, 6, 7, 4, 5, 2 } },
+	};
+
+	INT32 mode = vfame->sram_mode & 0x3;
+	INT32 type = vfame->type - 1; // 0: standard, 1: george, 2: alternate
+	if (mode != 0) {
+		address = gba_vfame_reorder_bits(address, addr_reorder[type][mode - 1], 16);
+		INT32 reorder_val = (vfame->sram_mode & 0xf) >> 2;
+		if (reorder_val != 0)
+			value = gba_vfame_reorder_bits(value, val_reorder[type][reorder_val - 1], 8);
+	}
+	if (vfame->sram_mode & 0x80)
+		value ^= 0xaa;
+	address &= 0x7fff;
+	if (gba->mem.cart_backup[address] != value) {
+		gba->mem.cart_backup[address] = value;
+		gba->cart.backup_is_dirty = true;
+	}
+}
+
 static FORCE_INLINE void gba_process_backup_write(gba_t* gba, UINT32 baddr, UINT32 data)
 {
 	if (gba->cart.backup_type == GBA_BACKUP_FLASH_64K || gba->cart.backup_type == GBA_BACKUP_FLASH_128K) {
 		gba_process_flash_state_machine(gba, baddr, data);
 	} else if (gba->cart.backup_type == GBA_BACKUP_SRAM) {
-		if (gba->mem.cart_backup[baddr & 0x7fff] != (data & 0xff)) {
+		if (gba->cart.vfame.type) {
+			gba_vfame_sram_write(gba, baddr, data & 0xff);
+		} else if (gba->mem.cart_backup[baddr & 0x7fff] != (data & 0xff)) {
 			gba->mem.cart_backup[baddr & 0x7fff] = data & 0xff;
 			gba->cart.backup_is_dirty = true;
 		}
@@ -1184,20 +1772,20 @@ static void gba_process_solar_sensor(gba_t* gba)
 	bool clk = gba_gpio_pin(gba, 0);
 	bool rst = gba_gpio_pin(gba, 1);
 	bool cs  = gba_gpio_pin(gba, 2);
+	bool falling = !gba->solar_sensor.light_edge && !clk;
 	if (cs) {
+		gba->solar_sensor.light_edge = clk ? 0 : 1;
 		gba_gpio_drive(gba, 8, 0);
 		return;
 	}
 	if (rst) {
-		gba->solar_sensor.dac        = 0;
-		gba->solar_sensor.light_edge = true;
-		gba->solar_sensor.value      = gba->solar_sensor.pending_value;
-	}
-	if (clk && gba->solar_sensor.light_edge) {
+		gba->solar_sensor.dac   = 0;
+		gba->solar_sensor.value = gba->solar_sensor.pending_value;
+	} else if (falling) {
 		gba->solar_sensor.dac++;
 	}
-	gba->solar_sensor.light_edge = !clk;
-	bool flag = gba->solar_sensor.dac >= gba->solar_sensor.value;
+	gba->solar_sensor.light_edge = clk ? 0 : 1;
+	bool flag = gba->solar_sensor.dac > gba->solar_sensor.value;
 	gba_gpio_drive(gba, 8, flag << 3);
 }
 
@@ -1219,9 +1807,13 @@ static FORCE_INLINE void gba_process_gyro_sensor(gba_t* gba)
 
 static FORCE_INLINE void gba_gpio_update(gba_t* gba)
 {
-	if (gba->cart.features & GBA_CART_RTC  ) gba_process_rtc_state_machine(gba);
-	if (gba->cart.features & GBA_CART_SOLAR) gba_process_solar_sensor(gba);
-	if (gba->cart.features & GBA_CART_GYRO ) gba_process_gyro_sensor(gba);
+	if (gba->cart.features & GBA_CART_RTC  )
+		gba_process_rtc_state_machine(gba);
+	if (gba->cart.features & GBA_CART_SOLAR)
+		gba_process_solar_sensor(gba);
+	if (gba->cart.features & GBA_CART_GYRO )
+		gba_process_gyro_sensor(gba);
+
 	gba_gpio_update_rumble(gba);
 }
 
@@ -1234,11 +1826,19 @@ static FORCE_INLINE void gba_gpio_write16(gba_t* gba, UINT32 address, UINT16 dat
 	}
 }
 
+static FORCE_INLINE void gba_obj_write_sync(gba_t* gba, UINT32 baddr)
+{
+	UINT32 region = baddr >> 24;
+	if (region >= 0x5 && region <= 0x7)
+		gba_ppu_sync(gba);
+}
+
 static FORCE_INLINE void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	gba_obj_write_sync(gba, baddr);
 	if (baddr >= 0x08000000) {
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) {
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data >> ((baddr & 3) * 8));
 			return;
 		}
@@ -1253,9 +1853,14 @@ static FORCE_INLINE void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 
 static FORCE_INLINE void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	gba_obj_write_sync(gba, baddr);
 	if (baddr >= 0x08000000) {
+		if (gba_eeprom_address(gba, baddr)) {
+			gba_eeprom_write_bit(gba, data & 1);
+			return;
+		}
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) {
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data >> ((baddr & 1) * 8));
 			return;
 		}
@@ -1271,18 +1876,19 @@ static FORCE_INLINE void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 
 static FORCE_INLINE void gba_store8(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	gba_obj_write_sync(gba, baddr);
 	if (baddr >= 0x05000000) {
 		// 8 bit stores to palette mirror across 8 bit halves
 		if ((baddr & 0xff000000) == 0x5000000) {
 			gba_store16(gba, baddr & ~1, (data & 0xff) * 0x0101);
 			return;
 		}
-		if (((baddr & 0xff000000) == 0x06000000) && ((baddr & 0x1ffff) <= 0x0013FFF)) {
+		if (((baddr & 0xff000000) == 0x06000000) && ((baddr & 0x1ffff) <= 0x0013fff)) {
 			gba_store16(gba, baddr & ~1, (data & 0xff) * 0x0101);
 			return;
 		}
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) {
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data);
 			return;
 		}
@@ -1302,12 +1908,12 @@ static FORCE_INLINE void gba_store8_debug(gba_t* gba, UINT32 baddr, UINT32 data)
 			gba_store16(gba, baddr & ~1, (data & 0xff) * 0x0101);
 			return;
 		}
-		if (((baddr & 0xff000000) == 0x06000000) && ((baddr & 0x1ffff) <= 0x0013FFF)) {
+		if (((baddr & 0xff000000) == 0x06000000) && ((baddr & 0x1ffff) <= 0x0013fff)) {
 			gba_store16(gba, baddr & ~1, (data & 0xff) * 0x0101);
 			return;
 		}
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) { 
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data);
 			return;
 		}
@@ -1349,26 +1955,932 @@ static FORCE_INLINE UINT32 gba_io_read32(gba_t* gba, UINT32 baddr)
 	return *(UINT32*)(gba->mem.io + (baddr & 0xfff));
 }
 
-static FORCE_INLINE void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
+// Persistent per-cycle OBJ pipeline, ported from NanoBoyAdvance sprite.cc.
+// OAM scanner + VRAM drawer advance one slot per 2 master clocks; attributes,
+// matrix and texels latch at their own fetch cycle so mid-scanline writes land
+// correctly. NBA's open questions (live OBJ enable freeze, forced blank, 1D/2D
+// mapping latch, exact cycle limit) are kept as-is, not hardware-proven.
+
+#define GBA_OBJ_MODE_NORMAL     0
+#define GBA_OBJ_MODE_SEMI       1
+#define GBA_OBJ_MODE_WINDOW     2
+#define GBA_OBJ_MODE_PROHIBITED 3
+
+static void gba_obj_begin_line(gba_t* gba, INT32 target_line)
+{
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	obj->target_line = target_line;
+	obj->cycle = 0;
+	obj->cycle_limit = SB_BFE(dispcnt, 5, 1) ? 964 : 1232;
+	obj->mosaic_y = gba->ppu.mosaic_y_counter;
+	obj->active = true;
+	obj->oam_index = 0;
+	obj->oam_step = 0;
+	obj->oam_wait = 0;
+	obj->oam_delay_wait = false;
+	obj->drawing = false;
+	obj->state_rd = 0;
+	obj->state_wr = 1;
+	memset(obj->buffer[obj->buf_wr], 0, sizeof(obj->buffer[obj->buf_wr]));
+}
+
+// Epoch boundary = physical scanline transition. The engine spends line N
+// producing line N+1's buffer, which is swapped in at the start of line N+1.
+static void gba_obj_epoch_boundary(gba_t* gba)
+{
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	obj->epoch_line = (obj->epoch_line + 1) % 228;
+	INT32 line = obj->epoch_line;
+	if (line < 160 || line == 227) {
+		obj->buf_rd ^= 1;
+		obj->buf_wr ^= 1;
+		if (line != 159) {
+			INT32 next = (line == 227) ? 0 : line + 1;
+			gba_obj_begin_line(gba, next);
+		} else {
+			obj->active = false;
+		}
+	}
+}
+
+static FORCE_INLINE INT32 gba_obj_vram_boundary(gba_t* gba)
+{
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	INT32 bg_mode = SB_BFE(dispcnt, 0, 3);
+	return (bg_mode >= 3 && bg_mode <= 5) ? 0x14000 : 0x10000;
+}
+
+static FORCE_INLINE void gba_obj_plot(gba_t* gba, INT32 x, UINT32 color_index)
+{
+	if (x < 0 || x >= 240)
+		return;
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	gba_obj_drawer_t* dr = &obj->drawer[obj->state_rd];
+	UINT16* pixel = &obj->buffer[obj->buf_wr][x];
+	bool opaque = color_index != 0;
+	if (dr->mode == GBA_OBJ_MODE_WINDOW && opaque) {
+		*pixel |= 1 << 11;
+	} else if (dr->priority < GBA_OBJ_PIXEL_PRIORITY(*pixel) || GBA_OBJ_PIXEL_COLOR(*pixel) == 0) {
+		if (opaque) {
+			*pixel = (*pixel & ~0xff) | (color_index & 0xff);
+			if (dr->mode == GBA_OBJ_MODE_SEMI)
+				*pixel |= 1 << 10;
+			else
+				*pixel &= ~(1 << 10);
+		}
+		if (dr->mosaic)
+			*pixel |= 1 << 12;
+		else
+			*pixel &= ~(1 << 12);
+		*pixel = (*pixel & ~(3 << 8)) | ((dr->priority & 3) << 8);
+	}
+}
+
+static void gba_obj_fetch_vram(gba_t* gba)
+{
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	if (!obj->drawing)
+		return;
+	gba_obj_drawer_t* dr = &obj->drawer[obj->state_rd];
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	bool map_1d = SB_BFE(dispcnt, 6, 1);
+	INT32 boundary = gba_obj_vram_boundary(gba);
+	obj->vram_access = gba->ppu.committed_clock;
+	INT32 width = dr->width;
+	INT32 height = dr->height;
+	UINT32 base_tile = dr->tile_number;
+
+	if (dr->affine) {
+		if (obj->oam_delay_wait)
+			return;
+		INT32 texture_x = dr->texture_x >> 8;
+		INT32 texture_y = dr->texture_y >> 8;
+		if (texture_x >= 0 && texture_x < width && texture_y >= 0 && texture_y < height) {
+			INT32 tile_x = texture_x & 7;
+			INT32 tile_y = texture_y & 7;
+			INT32 block_x = texture_x >> 3;
+			INT32 block_y = texture_y >> 3;
+			UINT32 color_index = 0;
+			if (dr->is_256) {
+				UINT32 tile;
+				if (map_1d)
+					tile = (base_tile + block_y * ((UINT32)width >> 2) + (block_x << 1)) & 0x3ff;
+				else
+					tile = ((base_tile + (block_y << 5)) & 0x3e0) | (((base_tile & ~1) + (block_x << 1)) & 0x1f);
+				UINT32 address = 0x10000 + (tile << 5) + (tile_y << 3) + tile_x;
+				if (address >= (UINT32)boundary)
+					color_index = gba->mem.vram[address];
+			} else {
+				UINT32 tile;
+				if (map_1d)
+					tile = (base_tile + block_y * ((UINT32)width >> 3) + block_x) & 0x3ff;
+				else
+					tile = ((base_tile + (block_y << 5)) & 0x3e0) | ((base_tile + block_x) & 0x1f);
+				UINT32 address = 0x10000 + (tile << 5) + (tile_y << 2) + (tile_x >> 1);
+				if (address >= (UINT32)boundary) {
+					UINT8 data = gba->mem.vram[address];
+					color_index = (tile_x & 1) ? (data >> 4) : (data & 15);
+					if (color_index > 0)
+						color_index |= dr->palette << 4;
+				}
+			}
+			gba_obj_plot(gba, dr->draw_x, color_index);
+		}
+		dr->draw_x++;
+		dr->texture_x += dr->matrix[0];
+		dr->texture_y += dr->matrix[2];
+		if (--dr->remaining_pixels == 0)
+			obj->drawing = false;
+	} else {
+		INT32 texture_x = dr->texture_x ^ (dr->flip_h ? (width - 1) : 0);
+		INT32 texture_y = dr->texture_y;
+		INT32 tile_x = texture_x & 7 & ~1;
+		INT32 tile_y = texture_y & 7;
+		INT32 block_x = texture_x >> 3;
+		INT32 block_y = texture_y >> 3;
+		UINT32 palette;
+		UINT32 color_index[2] = { 0, 0 };
+		if (dr->is_256) {
+			UINT32 tile;
+			if (map_1d)
+				tile = (base_tile + block_y * ((UINT32)width >> 2) + (block_x << 1)) & 0x3ff;
+			else
+				tile = ((base_tile + (block_y << 5)) & 0x3e0) | (((base_tile & ~1) + (block_x << 1)) & 0x1f);
+			UINT32 address = 0x10000 + (tile << 5) + (tile_y << 3) + tile_x;
+			UINT16 data = 0;
+			if (address >= (UINT32)boundary)
+				data = *(UINT16*)(gba->mem.vram + address);
+			if (dr->flip_h) {
+				color_index[0] = data >> 8;
+				color_index[1] = data & 0xff;
+			} else {
+				color_index[0] = data & 0xff;
+				color_index[1] = data >> 8;
+			}
+			palette = 0;
+		} else {
+			UINT32 tile;
+			if (map_1d)
+				tile = (base_tile + block_y * ((UINT32)width >> 3) + block_x) & 0x3ff;
+			else
+				tile = ((base_tile + (block_y << 5)) & 0x3e0) | ((base_tile + block_x) & 0x1f);
+			UINT32 address = 0x10000 + (tile << 5) + (tile_y << 2) + (tile_x >> 1);
+			UINT8 data = 0;
+			if (address >= (UINT32)boundary)
+				data = gba->mem.vram[address];
+			if (dr->flip_h) {
+				color_index[0] = data >> 4;
+				color_index[1] = data & 15;
+			} else {
+				color_index[0] = data & 15;
+				color_index[1] = data >> 4;
+			}
+			palette = dr->palette << 4;
+		}
+		for (INT32 i = 0; i < 2; i++) {
+			UINT32 ci = color_index[i];
+			if (ci > 0)
+				ci |= palette;
+			gba_obj_plot(gba, dr->draw_x++, ci);
+		}
+		dr->texture_x += 2;
+		dr->remaining_pixels -= 2;
+		if (dr->remaining_pixels == 0)
+			obj->drawing = false;
+	}
+}
+
+static void gba_obj_fetch_oam(gba_t* gba)
+{
+	static const INT32 size_lut[4][4][2] = {
+		{ {  8 ,  8 }, { 16,  16 }, { 32, 32 }, { 64, 64 } },
+		{ { 16,   8 }, { 32,   8 }, { 32, 16 }, { 64, 32 } },
+		{ {  8 , 16 }, {  8 , 32 }, { 16, 32 }, { 32, 64 } },
+		{ {  8 ,  8 }, {  8 ,  8 }, {  8 , 8 }, {  8 , 8 } }
+	};
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	if (obj->oam_wait > 0 && !obj->oam_delay_wait) {
+		obj->oam_wait--;
+		return;
+	}
+	obj->oam_delay_wait = false;
+	gba_obj_drawer_t* dr = &obj->drawer[obj->state_wr];
+	INT32 step = obj->oam_step;
+	obj->oam_access = gba->ppu.committed_clock;
+
+	if (step == 0) {
+		if (obj->oam_index >= 128) {
+			obj->oam_step = 6;
+			return;
+		}
+		UINT32 attr01 = *(UINT32*)(gba->mem.oam + obj->oam_index * 8);
+		bool active = false;
+		if ((attr01 & 0x300) != 0x200) {
+			INT32 mode = SB_BFE(attr01, 10, 2);
+			if (mode != GBA_OBJ_MODE_PROHIBITED) {
+				INT32 x = SB_BFE(attr01, 16, 9);
+				INT32 y = attr01 & 0xff;
+				if (x >= 240)
+					x -= 512;
+				INT32 shape = SB_BFE(attr01, 14, 2);
+				INT32 size  = SB_BFE(attr01, 30, 2);
+				INT32 width  = size_lut[shape][size][0];
+				INT32 height = size_lut[shape][size][1];
+				INT32 half_width  = width  >> 1;
+				INT32 half_height = height >> 1;
+				bool affine = SB_BFE(attr01, 8, 1);
+				if (affine && SB_BFE(attr01, 9, 1)) {
+					half_width  *= 2;
+					half_height *= 2;
+				}
+				INT32 vcount = obj->target_line;
+				INT32 y_max = (y + half_height * 2) & 255;
+				if ((vcount >= y || y_max < y) && vcount < y_max) {
+					bool mosaic = SB_BFE(attr01, 12, 1) && mode != GBA_OBJ_MODE_WINDOW;
+					dr->width  = width;
+					dr->height = height;
+					dr->mode   = mode;
+					dr->mosaic = mosaic;
+					dr->affine = affine;
+					dr->draw_x = x;
+					dr->remaining_pixels = half_width << 1;
+					dr->is_256 = SB_BFE(attr01, 13, 1);
+					INT32 local_y = (vcount - y) & 255;
+					if (mosaic) {
+						local_y -= obj->mosaic_y;
+						if (local_y < 0)
+							local_y = 0;
+					}
+					if (!affine) {
+						bool flip_v = SB_BFE(attr01, 29, 1);
+						dr->flip_h = SB_BFE(attr01, 28, 1);
+						dr->texture_x = 0;
+						dr->texture_y = local_y;
+						if (flip_v)
+							dr->texture_y ^= height - 1;
+						obj->oam_pending_wait = half_width - 2;
+					} else {
+						obj->initial_local_x = -half_width;
+						obj->initial_local_y = local_y - half_height;
+						obj->oam_pending_wait = half_width * 2 - 1;
+						obj->matrix_address = (SB_BFE(attr01, 25, 5) * 32) + 6;
+					}
+					active = true;
+					if (x < 0) {
+						INT32 clip = (-x) & (affine ? ~0 : ~1);
+						dr->draw_x += clip;
+						dr->remaining_pixels -= clip;
+						if (affine) {
+							obj->oam_pending_wait -= clip;
+							obj->initial_local_x += clip;
+						} else {
+							obj->oam_pending_wait -= clip >> 1;
+							dr->texture_x += clip;
+						}
+						if (dr->remaining_pixels <= 0)
+							active = false;
+					}
+				}
+			}
+		}
+		if (active)
+			obj->oam_step = 1;
+		else
+			obj->oam_index++;
+	} else if (step == 1) {
+		UINT16 attr2 = *(UINT16*)(gba->mem.oam + obj->oam_index * 8 + 4);
+		dr->tile_number = attr2 & 0x3ff;
+		dr->priority    = SB_BFE(attr2, 10, 2);
+		dr->palette     = SB_BFE(attr2, 12, 4);
+		if (dr->affine) {
+			obj->oam_step = 2;
+		} else {
+			obj->state_rd ^= 1;
+			obj->state_wr ^= 1;
+			obj->drawing   = true;
+			obj->oam_index++;
+			obj->oam_step  = 0;
+			obj->oam_wait  = obj->oam_pending_wait;
+			obj->oam_delay_wait = true;
+		}
+	} else if (step >= 2 && step <= 5) {
+		dr->matrix[step - 2] = *(INT16*)(gba->mem.oam + obj->matrix_address);
+		obj->matrix_address += 8;
+		if (++obj->oam_step == 6) {
+			INT32 x0 = obj->initial_local_x;
+			INT32 y0 = obj->initial_local_y;
+			dr->texture_x  = dr->matrix[0] * x0 + dr->matrix[1] * y0 + (dr->width << 7);
+			dr->texture_y  = dr->matrix[2] * x0 + dr->matrix[3] * y0 + (dr->height << 7);
+			obj->state_rd ^= 1;
+			obj->state_wr ^= 1;
+			obj->drawing   = true;
+			obj->oam_index++;
+			obj->oam_step  = 0;
+			obj->oam_wait  = obj->oam_pending_wait;
+			obj->oam_delay_wait = true;
+		}
+	}
+}
+
+// Advance the OBJ pipeline to the committed master clock. Called each
+// gba_tick_ppu and before any OAM/VRAM/PRAM/PPU-MMIO write commits.
+static FORCE_INLINE bool gba_ppu_forced_blank(gba_t* gba)
+{
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	return ((gba->ppu.dispcnt_pipeline[0] | dispcnt) & (1 << 7)) != 0;
+}
+
+static FORCE_INLINE INT32 gba_ppu_obj_vram_boundary(gba_t* gba)
+{
+	INT32 mode = SB_BFE(gba_io_read16(gba, GBA_DISPCNT), 0, 3);
+	return mode >= 3 && mode <= 5 ? 0x14000 : 0x10000;
+}
+
+static FORCE_INLINE UINT8 gba_bg_fetch8(gba_t* gba, UINT32 cycle, UINT32 address)
+{
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	if (gba_ppu_forced_blank(gba))
+		return 0;
+	if (address < (UINT32)gba_ppu_obj_vram_boundary(gba)) {
+		bg->vram_access = gba->ppu.committed_clock - bg->cycle + cycle;
+		bg->vram_latch = *(UINT16*)(gba->mem.vram + (address & ~1u));
+		return gba->mem.vram[address];
+	}
+	return ((UINT8*)&bg->vram_latch)[address & 1];
+}
+
+static FORCE_INLINE UINT16 gba_bg_fetch16(gba_t* gba, UINT32 cycle, UINT32 address)
+{
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	if (gba_ppu_forced_blank(gba))
+		return 0;
+	if (address < (UINT32)gba_ppu_obj_vram_boundary(gba)) {
+		bg->vram_access = gba->ppu.committed_clock - bg->cycle + cycle;
+		bg->vram_latch = *(UINT16*)(gba->mem.vram + (address & ~1u));
+		return bg->vram_latch;
+	}
+	return bg->vram_latch;
+}
+
+static void gba_bg_begin_line(gba_t* gba, INT32 line)
+{
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	bg->cycle = 0;
+	bg->last_sync = gba->ppu.committed_clock;
+	for (INT32 i = 0; i < 4; i++)
+		bg->text[i].fetches = 0;
+	for (INT32 i = 0; i < 2; i++) {
+		if (gba->ppu.aff[i].wrote_bgx || line == 0) {
+			INT32 value = gba_io_read32(gba, GBA_BG2X + i * 0x10) & 0x0fffffff;
+			gba->ppu.aff[i].render_bgx = (value << 4) >> 4;
+			gba->ppu.aff[i].wrote_bgx = false;
+		}
+		if (gba->ppu.aff[i].wrote_bgy || line == 0) {
+			INT32 value = gba_io_read32(gba, GBA_BG2Y + i * 0x10) & 0x0fffffff;
+			gba->ppu.aff[i].render_bgy = (value << 4) >> 4;
+			gba->ppu.aff[i].wrote_bgy = false;
+		}
+		bg->affine[i].x = gba->ppu.aff[i].render_bgx;
+		bg->affine[i].y = gba->ppu.aff[i].render_bgy;
+	}
+}
+
+static void gba_bg_render_text(gba_t* gba, INT32 id, UINT32 cycle)
+{
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	gba_bg_text_t* text = &bg->text[id];
+	UINT16 bgcnt = gba_io_read16(gba, GBA_BG0CNT + id * 2);
+	bool full_palette = SB_BFE(bgcnt, 7, 1);
+	if (text->fetches > 0 && text->piso_remaining == 0) {
+		UINT16 data = gba_bg_fetch16(gba, cycle, text->tile_address);
+		if (text->flip_x) {
+			data = (data >> 8) | (data << 8);
+			if (!full_palette)
+				data = ((data & 0xf0f0) >> 4) | ((data & 0x0f0f) << 4);
+			text->tile_address -= 2;
+		} else {
+			text->tile_address += 2;
+		}
+		text->piso_data = data;
+		text->piso_remaining = 4;
+		text->fetches--;
+	}
+	UINT32 index;
+	INT32 screen_x = ((INT32)cycle >> 2) - 9;
+	if (full_palette) {
+		index = text->piso_data & 0xff;
+		text->piso_data >>= 8;
+		text->piso_remaining -= 2;
+	} else {
+		index = text->piso_data & 15;
+		if (index != 0)
+			index |= text->palette << 4;
+		text->piso_data >>= 4;
+		text->piso_remaining--;
+	}
+	if (screen_x >= 0 && screen_x < 240)
+		bg->buffer[screen_x][id] = index;
+
+	UINT32 hofs = gba_io_read16(gba, GBA_BG0HOFS + id * 4) & 0x1ff;
+	UINT32 step = (cycle >> 2) + (hofs & 7);
+	if (cycle < 1007 && step >= 8 && (step & 7) == 0) {
+		UINT32 tile_base = SB_BFE(bgcnt, 2, 2) << 14;
+		UINT32 map_block = SB_BFE(bgcnt, 8, 5);
+		UINT32 line = gba_io_read16(gba, GBA_VCOUNT) + (gba_io_read16(gba, GBA_BG0VOFS + id * 4) & 0x1ff);
+		if (SB_BFE(bgcnt, 6, 1))
+			line -= gba->ppu.bg_mosaic_y_counter;
+		UINT32 grid_x = (hofs >> 3) + (step >> 3) - 1;
+		UINT32 grid_y = line >> 3;
+		UINT32 tile_y = line & 7;
+		UINT32 screen_x_block = (grid_x >> 5) & 1;
+		UINT32 screen_y_block = (grid_y >> 5) & 1;
+		switch (SB_BFE(bgcnt, 14, 2)) {
+			case 1: map_block += screen_x_block; break;
+			case 2: map_block += screen_y_block; break;
+			case 3: map_block += screen_x_block + (screen_y_block << 1); break;
+		}
+		UINT32 address = (map_block << 11) + ((grid_y & 31) << 6) + ((grid_x & 31) << 1);
+		UINT16 tile = gba_bg_fetch16(gba, cycle, address);
+		if (cycle < 1004) {
+			UINT32 number = tile & 0x3ff;
+			bool flip_y = SB_BFE(tile, 11, 1);
+			text->palette = tile >> 12;
+			text->flip_x = SB_BFE(tile, 10, 1);
+			UINT32 real_tile_y = flip_y ? 7 - tile_y : tile_y;
+			if (full_palette) {
+				text->tile_address = tile_base + (number << 6) + (real_tile_y << 3) + (text->flip_x ? 6 : 0);
+				text->fetches = 4;
+			} else {
+				text->tile_address = tile_base + (number << 5) + (real_tile_y << 2) + (text->flip_x ? 2 : 0);
+				text->fetches = 2;
+			}
+			text->piso_remaining = 0;
+		}
+	}
+}
+
+static void gba_bg_render_affine(gba_t* gba, INT32 id, UINT32 cycle)
+{
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	UINT16 bgcnt = gba_io_read16(gba, GBA_BG2CNT + id * 2);
+	if (cycle < 32)
+		return;
+	if ((cycle & 1) == 0) {
+		INT32 log_size = SB_BFE(bgcnt, 14, 2);
+		INT32 size = 128 << log_size;
+		INT32 mask = size - 1;
+		INT32 x = bg->affine[id].x >> 8;
+		INT32 y = bg->affine[id].y >> 8;
+		bg->affine[id].x += (INT16)gba_io_read16(gba, GBA_BG2PA + id * 0x10);
+		bg->affine[id].y += (INT16)gba_io_read16(gba, GBA_BG2PC + id * 0x10);
+		if (SB_BFE(bgcnt, 13, 1)) {
+			x &= mask;
+			y &= mask;
+			bg->affine[id].out_of_bounds = false;
+		} else {
+			bg->affine[id].out_of_bounds = ((x | y) & -size) != 0;
+		}
+		UINT16 address = (SB_BFE(bgcnt, 8, 5) << 11) + ((y >> 3) << (4 + log_size)) + (x >> 3);
+		UINT8 tile = gba_bg_fetch8(gba, cycle, address);
+		bg->affine[id].tile_address = (SB_BFE(bgcnt, 2, 2) << 14) + (tile << 6) + ((y & 7) << 3) + (x & 7);
+	} else {
+		UINT32 index = gba_bg_fetch8(gba, cycle, bg->affine[id].tile_address);
+		if (bg->affine[id].out_of_bounds)
+			index = 0;
+		UINT32 x = (cycle - 32) >> 2;
+		if (x < 240)
+			bg->buffer[x][2 + id] = index;
+	}
+}
+
+static void gba_bg_render_bitmap(gba_t* gba, INT32 mode, UINT32 cycle)
+{
+	if (cycle < 32 || (cycle & 3) != 3)
+		return;
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	UINT32 screen_x = (cycle - 32) >> 2;
+	INT32 x = bg->affine[0].x >> 8;
+	INT32 y = bg->affine[0].y >> 8;
+	UINT32 color = 0;
+	if (mode == 3) {
+		UINT32 address = ((UINT32)y * 240 + (UINT32)x) * 2;
+		UINT16 data = gba_bg_fetch16(gba, cycle, address & 0x1ffff);
+		if (x >= 0 && x < 240 && y >= 0 && y < 160)
+			color = data | 0x80000000u;
+	} else if (mode == 4) {
+		UINT32 frame = SB_BFE(gba_io_read16(gba, GBA_DISPCNT), 4, 1);
+		UINT32 address = frame * 0xa000 + (UINT32)y * 240 + (UINT32)x;
+		UINT8 data = gba_bg_fetch8(gba, cycle, address & 0x1ffff);
+		if (x >= 0 && x < 240 && y >= 0 && y < 160)
+			color = data;
+	} else {
+		UINT32 frame = SB_BFE(gba_io_read16(gba, GBA_DISPCNT), 4, 1);
+		UINT32 address = frame * 0xa000 + ((UINT32)y * 160 + (UINT32)x) * 2;
+		UINT16 data = gba_bg_fetch16(gba, cycle, address & 0x1ffff);
+		if (x >= 0 && x < 160 && y >= 0 && y < 128)
+			color = data | 0x80000000u;
+	}
+	if (screen_x < 240)
+		bg->buffer[screen_x][2] = color;
+	bg->affine[0].x += (INT16)gba_io_read16(gba, GBA_BG2PA);
+	bg->affine[0].y += (INT16)gba_io_read16(gba, GBA_BG2PC);
+}
+
+static void gba_bg_finish_line(gba_t* gba, INT32 mode)
+{
+	UINT16 mosaic = gba_io_read16(gba, GBA_MOSAIC);
+	INT32 line = gba_io_read16(gba, GBA_VCOUNT);
+	INT32 size_y = SB_BFE(mosaic, 4, 4) + 1;
+	if (line < 159) {
+		if (++gba->ppu.bg_mosaic_y_counter >= (UINT32)size_y)
+			gba->ppu.bg_mosaic_y_counter = 0;
+		else
+			gba->ppu.bg_mosaic_y_counter &= 15;
+	} else {
+		gba->ppu.bg_mosaic_y_counter = 0;
+	}
+	UINT16 effective = gba->ppu.dispcnt_pipeline[0] & gba_io_read16(gba, GBA_DISPCNT);
+	for (INT32 id = 0; id < 2; id++) {
+		bool mode_has_bg = id == 0 ? mode >= 1 && mode <= 5 : mode == 2;
+		if (!mode_has_bg || !(effective & (1 << (10 + id))))
+			continue;
+		INT32 pb = (INT16)gba_io_read16(gba, GBA_BG2PB + id * 0x10);
+		INT32 pd = (INT16)gba_io_read16(gba, GBA_BG2PD + id * 0x10);
+		UINT16 bgcnt = gba_io_read16(gba, GBA_BG2CNT + id * 2);
+		if (SB_BFE(bgcnt, 6, 1)) {
+			if (gba->ppu.bg_mosaic_y_counter == 0) {
+				gba->ppu.aff[id].render_bgx += pb * size_y;
+				gba->ppu.aff[id].render_bgy += pd * size_y;
+			}
+		} else {
+			gba->ppu.aff[id].render_bgx += pb;
+			gba->ppu.aff[id].render_bgy += pd;
+		}
+	}
+}
+
+static void gba_bg_sync_to(gba_t* gba, UINT64 target_clock)
+{
+	gba_bg_engine_t* bg = &gba->ppu.bg;
+	UINT64 delta = target_clock - bg->last_sync;
+	if (delta == 0 || bg->cycle >= 1232)
+		return;
+	bg->last_sync = target_clock;
+	while (delta-- > 0 && bg->cycle < 1232) {
+		UINT32 cycle = ++bg->cycle;
+		UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+		UINT16 effective = gba->ppu.dispcnt_pipeline[0] & dispcnt;
+		INT32 mode = SB_BFE(dispcnt, 0, 3);
+		if (mode <= 1) {
+			INT32 id = cycle & 3;
+			if ((id <= 1 || mode == 0) && (effective & (1 << (8 + id))))
+				gba_bg_render_text(gba, id, cycle);
+		}
+		if (cycle < 1007) {
+			if ((mode == 1 || mode == 2)) {
+				INT32 id = ~((INT32)cycle >> 1) & 1;
+				if ((id == 0 || mode == 2) && (effective & (1 << (10 + id))))
+					gba_bg_render_affine(gba, id, cycle);
+			} else if (mode >= 3 && mode <= 5 && (effective & (1 << 10))) {
+				gba_bg_render_bitmap(gba, mode, cycle);
+			}
+		}
+		if (cycle == 1232)
+			gba_bg_finish_line(gba, mode);
+	}
+}
+
+static void gba_window_begin_line(gba_t* gba, INT32 line)
+{
+	gba_window_engine_t* window = &gba->ppu.window_engine;
+	window->cycle = 0;
+	window->last_sync = gba->ppu.committed_clock;
+	for (INT32 id = 0; id < 2; id++) {
+		UINT16 winv = gba_io_read16(gba, GBA_WIN0V + id * 2);
+		if (line == SB_BFE(winv, 8, 8))
+			window->v_flag[id] = true;
+		if (line == SB_BFE(winv, 0, 8))
+			window->v_flag[id] = false;
+	}
+}
+
+static void gba_window_sync_to(gba_t* gba, UINT64 target_clock)
+{
+	gba_window_engine_t* window = &gba->ppu.window_engine;
+	UINT64 delta = target_clock - window->last_sync;
+	window->last_sync = target_clock;
+	while (delta-- > 0 && window->cycle < 1024) {
+		UINT32 cycle = window->cycle++;
+		if ((cycle & 3) != 0)
+			continue;
+		UINT32 x = cycle >> 2;
+		for (INT32 id = 0; id < 2; id++) {
+			UINT16 winh = gba_io_read16(gba, GBA_WIN0H + id * 2);
+			if (x == (UINT32)SB_BFE(winh, 8, 8))
+				window->h_flag[id] = true;
+			if (x == (UINT32)SB_BFE(winh, 0, 8))
+				window->h_flag[id] = false;
+			if (x < 240) {
+				if (window->h_flag[id] && window->v_flag[id])
+					window->buffer[x] |= 1 << id;
+				else
+					window->buffer[x] &= ~(1 << id);
+			}
+		}
+	}
+}
+
+static void gba_merge_begin_line(gba_t* gba)
+{
+	gba_merge_engine_t* merge = &gba->ppu.merge;
+	merge->cycle = 0;
+	merge->last_sync = gba->ppu.committed_clock;
+	merge->bg_mosaic_x = 0;
+	merge->obj_mosaic_x = 0;
+	merge->obj_latch = 0;
+}
+
+static void gba_obj_sync_to(gba_t* gba, UINT64 target_clock)
+{
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	UINT64 delta = target_clock - obj->last_sync;
+	if (delta == 0)
+		return;
+	obj->last_sync = target_clock;
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	bool obj_enable = SB_BFE(dispcnt, 12, 1);
+	while (delta-- > 0) {
+		INT32 cycle = obj->cycle;
+		if (obj->active && cycle < obj->cycle_limit) {
+			if (obj_enable && (cycle & 1) == 0) {
+				gba_obj_fetch_vram(gba);
+				gba_obj_fetch_oam(gba);
+			}
+			if (cycle == 1192) {
+				UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
+				INT32 size_y = SB_BFE(mos_reg, 12, 4) + 1;
+				if (obj->target_line < 159) {
+					if (++gba->ppu.mosaic_y_counter == (UINT32)size_y)
+						gba->ppu.mosaic_y_counter = 0;
+					else
+						gba->ppu.mosaic_y_counter &= 15;
+				} else {
+					gba->ppu.mosaic_y_counter = 0;
+				}
+			}
+		}
+		if (++obj->cycle >= 1232) {
+			obj->cycle = 0;
+			gba_obj_epoch_boundary(gba);
+		}
+	}
+}
+
+static FORCE_INLINE UINT16 gba_merge_blend(UINT16 color_a, UINT16 color_b, INT32 eva, INT32 evb)
+{
+	INT32 ra = SB_BFE(color_a, 0, 5);
+	INT32 ga = ((color_a >> 4) & 62) | (color_a >> 15);
+	INT32 ba = SB_BFE(color_a, 10, 5);
+	INT32 rb = SB_BFE(color_b, 0, 5);
+	INT32 gb = ((color_b >> 4) & 62) | (color_b >> 15);
+	INT32 bb = SB_BFE(color_b, 10, 5);
+	if (eva > 16) eva = 16;
+	if (evb > 16) evb = 16;
+	INT32 r = (ra * eva + rb * evb + 8) >> 4;
+	INT32 g = (ga * eva + gb * evb + 8) >> 4;
+	INT32 b = (ba * eva + bb * evb + 8) >> 4;
+	if (r > 31) r = 31;
+	if (g > 63) g = 63;
+	if (b > 31) b = 31;
+	return (b << 10) | ((g >> 1) << 5) | r;
+}
+
+static FORCE_INLINE UINT16 gba_merge_brighten(UINT16 color, INT32 evy)
+{
+	if (evy > 16) evy = 16;
+	INT32 r = SB_BFE(color, 0, 5);
+	INT32 g = ((color >> 4) & 62) | (color >> 15);
+	INT32 b = SB_BFE(color, 10, 5);
+	r += ((31 - r) * evy + 8) >> 4;
+	g += ((63 - g) * evy + 8) >> 4;
+	b += ((31 - b) * evy + 8) >> 4;
+	return (b << 10) | ((g >> 1) << 5) | r;
+}
+
+static FORCE_INLINE UINT16 gba_merge_darken(UINT16 color, INT32 evy)
+{
+	if (evy > 16) evy = 16;
+	INT32 r = SB_BFE(color, 0, 5);
+	INT32 g = ((color >> 4) & 62) | (color >> 15);
+	INT32 b = SB_BFE(color, 10, 5);
+	r -= (r * evy + 7) >> 4;
+	g -= (g * evy + 7) >> 4;
+	b -= (b * evy + 7) >> 4;
+	return (b << 10) | ((g >> 1) << 5) | r;
+}
+
+static FORCE_INLINE UINT16 gba_merge_fetch_pram(gba_t* gba, UINT32 cycle, UINT32 index)
+{
+	gba->ppu.merge.pram_access = gba->ppu.committed_clock - gba->ppu.merge.cycle + cycle;
+	return *(UINT16*)(gba->mem.palette + ((index << 1) & 0x3fe));
+}
+
+static FORCE_INLINE UINT8 gba_merge_window_control(gba_t* gba, UINT32 x, bool enable_obj)
+{
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	bool win0 = SB_BFE(dispcnt, 13, 1);
+	bool win1 = SB_BFE(dispcnt, 14, 1);
+	bool objwin = SB_BFE(dispcnt, 15, 1) && enable_obj;
+	if (!win0 && !win1 && !objwin)
+		return 0x3f;
+	UINT16 winin = gba_io_read16(gba, GBA_WININ);
+	UINT16 winout = gba_io_read16(gba, GBA_WINOUT);
+	UINT8 inside = gba->ppu.window_engine.buffer[x];
+	if (win0 && (inside & 1))
+		return SB_BFE(winin, 0, 6);
+	if (win1 && (inside & 2))
+		return SB_BFE(winin, 8, 6);
+	UINT16 raw = gba->ppu.obj.buffer[gba->ppu.obj.buf_rd][x];
+	if (objwin && GBA_OBJ_PIXEL_WINDOW(raw))
+		return SB_BFE(winout, 8, 6);
+	return SB_BFE(winout, 0, 6);
+}
+
+static FORCE_INLINE void gba_merge_store_pixel(gba_t* gba, INT32 x, INT32 y, UINT16 color)
+{
+	INT32 p = (x + y * 240) * 4;
+	INT32 r = SB_BFE(color, 0, 5) * 8;
+	INT32 g = SB_BFE(color, 5, 5) * 8;
+	INT32 b = SB_BFE(color, 10, 5) * 8;
+	gba->framebuffer[p + 0] = r;
+	gba->framebuffer[p + 1] = g;
+	gba->framebuffer[p + 2] = b;
+}
+
+static void gba_merge_phase0(gba_t* gba, UINT32 x)
+{
+	static const INT8 min_bg[8] = { 0, 0, 2, 2, 2, 2, 0, 0 };
+	static const INT8 max_bg[8] = { 3, 2, 3, 2, 2, 2, -1, -1 };
+	gba_merge_engine_t* merge = &gba->ppu.merge;
+	UINT16 live = gba_io_read16(gba, GBA_DISPCNT);
+	UINT16 effective = gba->ppu.dispcnt_pipeline[0] & live;
+	INT32 mode = SB_BFE(live, 0, 3);
+	bool enable_obj = (effective & (1 << 12)) != 0;
+	merge->window_control = gba_merge_window_control(gba, x, enable_obj);
+	merge->forced_blank = ((gba->ppu.dispcnt_pipeline[0] | live) & (1 << 7)) != 0;
+	if (merge->forced_blank) {
+		merge->color[0] = 0x7fff;
+		return;
+	}
+	INT32 bg_list[4];
+	INT32 bg_count = 0;
+	for (INT32 priority = 0; priority < 4; priority++) {
+		for (INT32 id = min_bg[mode]; id <= max_bg[mode]; id++) {
+			UINT16 bgcnt = gba_io_read16(gba, GBA_BG0CNT + id * 2);
+			if (SB_BFE(bgcnt, 0, 2) == priority && (effective & (1 << (8 + id))))
+				bg_list[bg_count++] = id;
+		}
+	}
+	UINT32 priorities[2] = { 3, 3 };
+	merge->layer[0] = merge->layer[1] = 5;
+	merge->color[0] = merge->color[1] = 0;
+	INT32 list_index = 0;
+	for (INT32 slot = 0; slot < 2; slot++) {
+		while (list_index < bg_count) {
+			INT32 id = bg_list[list_index++];
+			if (!SB_BFE(merge->window_control, id, 1))
+				continue;
+			UINT16 bgcnt = gba_io_read16(gba, GBA_BG0CNT + id * 2);
+			UINT32 mx = x - (SB_BFE(bgcnt, 6, 1) ? merge->bg_mosaic_x : 0);
+			UINT32 color = gba->ppu.bg.buffer[mx][id];
+			if (color != 0) {
+				merge->layer[slot] = id;
+				merge->color[slot] = color;
+				priorities[slot] = SB_BFE(bgcnt, 0, 2);
+				break;
+			}
+		}
+	}
+	merge->force_alpha = false;
+	UINT16 raw = enable_obj ? gba->ppu.obj.buffer[gba->ppu.obj.buf_rd][x] : 0;
+	if (!GBA_OBJ_PIXEL_MOSAIC(raw) || !GBA_OBJ_PIXEL_MOSAIC(merge->obj_latch) ||
+		GBA_OBJ_PIXEL_PRIORITY(raw) < GBA_OBJ_PIXEL_PRIORITY(merge->obj_latch) || merge->obj_mosaic_x == 0)
+		merge->obj_latch = raw;
+	if (enable_obj && SB_BFE(merge->window_control, 4, 1) && GBA_OBJ_PIXEL_COLOR(merge->obj_latch) != 0) {
+		UINT32 priority = GBA_OBJ_PIXEL_PRIORITY(merge->obj_latch);
+		UINT32 color = GBA_OBJ_PIXEL_COLOR(merge->obj_latch) | 0x100;
+		if (priority <= priorities[0]) {
+			merge->layer[1] = merge->layer[0];
+			merge->color[1] = merge->color[0];
+			merge->layer[0] = 4;
+			merge->color[0] = color;
+			merge->force_alpha = GBA_OBJ_PIXEL_ALPHA(merge->obj_latch);
+		} else if (priority <= priorities[1]) {
+			merge->layer[1] = 4;
+			merge->color[1] = color;
+		}
+	}
+	if ((merge->color[0] & 0x80000000u) == 0)
+		merge->color[0] = gba_merge_fetch_pram(gba, merge->cycle, merge->color[0]);
+}
+
+static void gba_merge_phase2(gba_t* gba, UINT32 x, INT32 y)
+{
+	gba_merge_engine_t* merge = &gba->ppu.merge;
+	if (!merge->forced_blank) {
+		UINT16 bldcnt = gba_io_read16(gba, GBA_BLDCNT);
+		bool have_src = SB_BFE(bldcnt, 8 + merge->layer[1], 1);
+		if (merge->force_alpha && have_src) {
+			if ((merge->color[1] & 0x80000000u) == 0)
+				merge->color[1] = gba_merge_fetch_pram(gba, merge->cycle, merge->color[1]);
+			UINT16 alpha = gba_io_read16(gba, GBA_BLDALPHA);
+			merge->color[0] = gba_merge_blend(merge->color[0], merge->color[1], SB_BFE(alpha, 0, 5), SB_BFE(alpha, 8, 5));
+		} else if (SB_BFE(merge->window_control, 5, 1)) {
+			bool have_dst = SB_BFE(bldcnt, merge->layer[0], 1);
+			INT32 effect = SB_BFE(bldcnt, 6, 2);
+			if (effect == 1 && have_dst && have_src) {
+				if ((merge->color[1] & 0x80000000u) == 0)
+					merge->color[1] = gba_merge_fetch_pram(gba, merge->cycle, merge->color[1]);
+				UINT16 alpha = gba_io_read16(gba, GBA_BLDALPHA);
+				merge->color[0] = gba_merge_blend(merge->color[0], merge->color[1], SB_BFE(alpha, 0, 5), SB_BFE(alpha, 8, 5));
+			} else if (effect == 2 && have_dst) {
+				merge->color[0] = gba_merge_brighten(merge->color[0], SB_BFE(gba_io_read16(gba, GBA_BLDY), 0, 5));
+			} else if (effect == 3 && have_dst) {
+				merge->color[0] = gba_merge_darken(merge->color[0], SB_BFE(gba_io_read16(gba, GBA_BLDY), 0, 5));
+			}
+		}
+	}
+	UINT16 color = merge->color[0];
+	if (x & 1) {
+		UINT16 left = merge->color_left;
+		if (gba_io_read16(gba, GBA_GREENSWP) & 1) {
+			UINT16 mask = 31 << 5;
+			UINT16 gl = left & mask;
+			UINT16 gr = color & mask;
+			left = (left & ~mask) | gr;
+			color = (color & ~mask) | gl;
+		}
+		gba_merge_store_pixel(gba, x - 1, y, left);
+		gba_merge_store_pixel(gba, x, y, color);
+	} else {
+		merge->color_left = color;
+	}
+	INT32 bg_size = SB_BFE(gba_io_read16(gba, GBA_MOSAIC), 0, 4) + 1;
+	INT32 obj_size = SB_BFE(gba_io_read16(gba, GBA_MOSAIC), 8, 4) + 1;
+	if (++merge->bg_mosaic_x == (UINT32)bg_size) merge->bg_mosaic_x = 0;
+	if (++merge->obj_mosaic_x == (UINT32)obj_size) merge->obj_mosaic_x = 0;
+}
+
+static void gba_merge_sync_to(gba_t* gba, UINT64 target_clock)
+{
+	gba_merge_engine_t* merge = &gba->ppu.merge;
+	UINT64 delta = target_clock - merge->last_sync;
+	merge->last_sync = target_clock;
+	INT32 y = (INT32)((target_clock / 1232) % 228);
+	while (delta-- > 0 && merge->cycle < 1006) {
+		INT32 pixel_cycle = (INT32)merge->cycle - 46;
+		if (pixel_cycle >= 0) {
+			UINT32 x = (UINT32)pixel_cycle >> 2;
+			INT32 phase = pixel_cycle & 3;
+			if (phase == 0)
+				gba_merge_phase0(gba, x);
+			else if (phase == 2)
+				gba_merge_phase2(gba, x, y);
+		}
+		merge->cycle++;
+	}
+}
+
+// The ordering matches NanoBoyAdvance's PPU::Sync().
+static void gba_ppu_sync_to(gba_t* gba, UINT64 target_clock)
+{
+	gba_bg_sync_to(gba, target_clock);
+	gba_obj_sync_to(gba, target_clock);
+	gba_window_sync_to(gba, target_clock);
+	gba_merge_sync_to(gba, target_clock);
+}
+
+static void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 {
 	// TODO: Make the waitstate for the ROM configureable
 	const INT32 wait_state_table[16 * 4] = {
-		1,1,1,1,	//0x00 (bios)
-		1,1,1,1,	//0x01 (bios)
-		3,3,6,6,	//0x02 (256k WRAM)
-		1,1,1,1,	//0x03 (32k WRAM)
-		1,1,1,1,	//0x04 (IO)
-		1,1,2,2,	//0x05 (BG/OBJ Palette)
-		1,1,2,2,	//0x06 (VRAM)
-		1,1,1,1,	//0x07 (OAM)
-		4,4,8,8,	//0x08 (GAMEPAK ROM 0)
-		4,4,8,8,	//0x09 (GAMEPAK ROM 0)
-		4,4,8,8,	//0x0A (GAMEPAK ROM 1)
-		4,4,8,8,	//0x0B (GAMEPAK ROM 1)
-		4,4,8,8,	//0x0C (GAMEPAK ROM 2)
-		4,4,8,8,	//0x0D (GAMEPAK ROM 2)
-		4,4,4,4,	//0x0E (GAMEPAK SRAM)
-		1,1,1,1,	//0x0F (unused)
+		1, 1, 1, 1,		//0x00 (bios)
+		1, 1, 1, 1,		//0x01 (bios)
+		3, 3, 6, 6,		//0x02 (256k WRAM)
+		1, 1, 1, 1,		//0x03 (32k WRAM)
+		1, 1, 1, 1,		//0x04 (IO)
+		1, 1, 2, 2,		//0x05 (BG/OBJ Palette)
+		1, 1, 2, 2,		//0x06 (VRAM)
+		1, 1, 1, 1,		//0x07 (OAM)
+		4, 4, 8, 8,		//0x08 (GAMEPAK ROM 0)
+		4, 4, 8, 8,		//0x09 (GAMEPAK ROM 0)
+		4, 4, 8, 8,		//0x0a (GAMEPAK ROM 1)
+		4, 4, 8, 8,		//0x0b (GAMEPAK ROM 1)
+		4, 4, 8, 8,		//0x0c (GAMEPAK ROM 2)
+		4, 4, 8, 8,		//0x0d (GAMEPAK ROM 2)
+		4, 4, 4, 4,		//0x0e (GAMEPAK SRAM)
+		1, 1, 1, 1,		//0x0f (unused)
 	};
 	for (INT32 i = 0;i < 16 * 4;++i) {
 		gba->mem.wait_state_table[i] = wait_state_table[i];
@@ -1410,65 +2922,176 @@ static FORCE_INLINE void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcn
 			gba->mem.wait_state_table[(0x08 + i + ws * 2) * 4 + 3] = wait32b_nonseq;
 		}
 	}
-	gba->mem.prefetch_en   = prefetch_en;
-	gba->mem.prefetch_size = 0;
+	if (gba->mem.prefetch_en && !prefetch_en)
+		gba->mem.prefetch_was_disabled = true;
+	gba->mem.prefetch_en = prefetch_en;
 
 	//SRAM
-	gba->mem.wait_state_table[(0x0E * 4) + 0] = 1 + primary_table[sram_wait];
-	gba->mem.wait_state_table[(0x0E * 4) + 1] = 1 + primary_table[sram_wait];
-	gba->mem.wait_state_table[(0x0E * 4) + 2] = 1 + primary_table[sram_wait];
-	gba->mem.wait_state_table[(0x0E * 4) + 3] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 0] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 1] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 2] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 3] = 1 + primary_table[sram_wait];
 	waitcnt &= (1 << 15);	// Force cartridge to report as GBA cart
 	gba_io_store16(gba, GBA_WAITCNT, waitcnt);
 }
 
-static FORCE_INLINE void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 request_size /*0: 1B,1: 2B,3: 4B*/)
+static FORCE_INLINE bool gba_ppu_video_bus_busy(gba_t* gba, UINT32 address)
 {
-	INT32 bank       = SB_BFE(address, 24, 4);
-	bool prefetch_en = gba->mem.prefetch_en;
-	if (SB_UNLIKELY(!prefetch_en)) {
-		if (gba->cpu.i_cycles)
-			request_size |= 1;
-		if (request_size & 1)
-			gba->cpu.next_fetch_sequential = false;
-		gba->mem.prefetch_size = 0;
+	UINT32 region = address >> 24;
+	UINT64 clock = gba->ppu.committed_clock;
+	if (region == 0x5)
+		return gba->ppu.merge.pram_access + 1 == clock;
+	if (region == 0x6) {
+		UINT32 offset = address & 0x1ffff;
+		if (offset < (UINT32)gba_ppu_obj_vram_boundary(gba))
+			return gba->ppu.bg.vram_access == clock;
+		return gba->ppu.obj.vram_access + 1 == clock;
 	}
+	if (region == 0x7)
+		return gba->ppu.obj.oam_access + 1 == clock;
+	return false;
+}
+
+static FORCE_INLINE UINT32 gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 request_size /*0: 1B,1: 2B,3: 4B*/)
+{
+	INT32 bank = SB_BFE(address, 24, 4);
+	return gba->mem.wait_state_table[bank * 4 + request_size];
+}
+
+static FORCE_INLINE void gba_prefetch_step(gba_t* gba, UINT32 cycles)
+{
+	if (!gba->mem.prefetch_active)
+		return;
+	gba->mem.prefetch_countdown -= cycles;
+	while (gba->mem.prefetch_countdown <= 0) {
+		gba->mem.prefetch_count++;
+		if (gba->mem.prefetch_en && gba->mem.prefetch_count < gba->mem.prefetch_capacity) {
+			gba->mem.prefetch_last_address += gba->mem.prefetch_opcode_width;
+			gba->mem.prefetch_countdown += gba->mem.prefetch_duty;
+		} else {
+			break;
+		}
+	}
+}
+
+static FORCE_INLINE void gba_prefetch_stop(gba_t* gba)
+{
+	if (!gba->mem.prefetch_active)
+		return;
+	UINT32 pc = gba->cpu.registers[15];
+	if (pc >= 0x08000000 && pc <= 0x0dffffff) {
+		INT32 half_duty_plus_one = (gba->mem.prefetch_duty >> 1) + 1;
+		if (gba->mem.prefetch_countdown == 1 ||
+			(!gba->mem.prefetch_thumb && gba->mem.prefetch_countdown == half_duty_plus_one))
+			gba_system_advance(gba, 1);
+	}
+	gba->mem.prefetch_active = false;
+}
+
+static FORCE_INLINE void gba_prefetch_access(gba_t* gba, UINT32 address, INT32 request_size, bool code)
+{
+	INT32 bank = SB_BFE(address, 24, 4);
 	UINT32 wait = gba->mem.wait_state_table[bank * 4 + request_size];
-	if (SB_LIKELY(prefetch_en)) {
-		gba->mem.prefetch_size += gba->cpu.i_cycles;
-		if (bank >= 0x08 && bank <= 0x0D) {
-			if (SB_UNLIKELY(request_size & 1)) {
-				UINT32 pc = gba->cpu.prefetch_pc;
-				if (pc >= 0x08000000) {
-					INT32 pc_bank         = SB_BFE(pc, 24, 4);
-					INT32 prefetch_cycles = gba->mem.wait_state_table[pc_bank * 4];
-					INT32 prefetch_phase  = (gba->mem.prefetch_size) % prefetch_cycles;
-					if (gba->mem.prefetch_size >
-						gba->cpu.i_cycles && prefetch_phase == prefetch_cycles - 1)wait += 1;
-				}
-				//Non sequential->reset prefetch buffer
-				gba->mem.prefetch_size         = 0;
-				gba->cpu.next_fetch_sequential = false;
-			} else {
-				//Sequential fetch from prefetch buffer based on available wait states
-				if (gba->mem.prefetch_size >= wait) {
-					gba->mem.prefetch_size -= wait - 1;
-					wait = 1;
-				} else {
-					wait -= gba->mem.prefetch_size;
-					gba->mem.prefetch_size = 0;
-				}
-			}
-		} else gba->mem.prefetch_size += wait;
+	if (!code) {
+		gba_prefetch_stop(gba);
+		gba_system_advance(gba, wait);
+		return;
 	}
-	gba->mem.requests += wait;
+	if (gba->mem.prefetch_active) {
+		if (gba->mem.prefetch_count && address == gba->mem.prefetch_head_address) {
+			gba->mem.prefetch_count--;
+			gba->mem.prefetch_head_address += gba->mem.prefetch_opcode_width;
+			gba_system_advance(gba, 1);
+			return;
+		}
+		if (gba->mem.prefetch_countdown > 0 && address == gba->mem.prefetch_last_address) {
+			gba_system_advance(gba, gba->mem.prefetch_countdown);
+			gba->mem.prefetch_head_address = gba->mem.prefetch_last_address;
+			gba->mem.prefetch_count = 0;
+			return;
+		}
+	}
+	gba_prefetch_stop(gba);
+	if (gba->mem.prefetch_was_disabled || gba->mem.last_gamepak_access_dma) {
+		request_size |= 1;
+		wait = gba->mem.wait_state_table[bank * 4 + request_size];
+		gba->mem.prefetch_was_disabled = false;
+		gba->mem.last_gamepak_access_dma = false;
+	}
+	gba_system_advance(gba, wait);
+	if (gba->mem.prefetch_en) {
+		gba->mem.prefetch_active = true;
+		gba->mem.prefetch_count = 0;
+		gba->mem.prefetch_thumb = arm7_get_thumb_bit(&gba->cpu);
+		gba->mem.prefetch_opcode_width = gba->mem.prefetch_thumb ? 2 : 4;
+		gba->mem.prefetch_capacity = gba->mem.prefetch_thumb ? 8 : 4;
+		gba->mem.prefetch_duty = gba->mem.wait_state_table[bank * 4 + (gba->mem.prefetch_thumb ? 0 : 2)];
+		gba->mem.prefetch_countdown = gba->mem.prefetch_duty;
+		gba->mem.prefetch_last_address = address + gba->mem.prefetch_opcode_width;
+		gba->mem.prefetch_head_address = gba->mem.prefetch_last_address;
+	}
+}
+
+static FORCE_INLINE void gba_service_dma_before_cpu_access(gba_t* gba)
+{
+	if (!gba->activate_dmas || gba->bus_owner)
+		return;
+	INT32 elapsed = gba->last_cpu_tick;
+	gba->last_cpu_tick = 0;
+	gba->bus_owner = 1;
+	while (gba->activate_dmas) {
+		if (!gba_tick_dma(gba, elapsed))
+			break;
+		elapsed = 0;
+	}
+	gba->bus_owner = 0;
+}
+
+static FORCE_INLINE void gba_video_bus_beat(gba_t* gba, UINT32 address)
+{
+	do {
+		gba_system_advance(gba, 1);
+		gba_ppu_sync(gba);
+	} while (gba_ppu_video_bus_busy(gba, address));
+}
+
+static FORCE_INLINE bool gba_video_bus_access(gba_t* gba, UINT32 address, INT32 request_size)
+{
+	UINT32 region = address >> 24;
+	if (region < 0x5 || region > 0x7)
+		return false;
+	INT32 beats = request_size >= 2 && region != 0x7 ? 2 : 1;
+	for (INT32 beat = 0; beat < beats; beat++)
+		gba_video_bus_beat(gba, address + beat * 2);
+	return true;
+}
+
+static FORCE_INLINE void gba_cpu_advance_access(gba_t* gba, UINT32 address, INT32 request_size)
+{
+	UINT32 region = address >> 24;
+	if (region >= 0x8 && region <= 0xf) {
+		gba_prefetch_access(gba, address, request_size, false);
+		return;
+	}
+	if (!gba_video_bus_access(gba, address, request_size))
+		gba_system_advance(gba, gba_compute_access_cycles(gba, address, request_size));
 }
 
 static FORCE_INLINE UINT32 gba_compute_access_cycles_dma(gba_t* gba, UINT32 address, INT32 request_size/*0: 1B,1: 2B,3: 4B*/)
 {
-	INT32 bank  = SB_BFE(address, 24, 4);
-	UINT32 wait = gba->mem.wait_state_table[bank * 4 + request_size];
-	return wait;
+	INT32 bank = SB_BFE(address, 24, 4);
+	return gba->mem.wait_state_table[bank * 4 + request_size];
+}
+
+static FORCE_INLINE void gba_dma_advance_access(gba_t* gba, UINT32 address, INT32 request_size)
+{
+	UINT32 region = address >> 24;
+	if (region >= 0x8 && region <= 0xf) {
+		gba_prefetch_stop(gba);
+		gba->mem.last_gamepak_access_dma = true;
+	}
+	if (!gba_video_bus_access(gba, address, request_size))
+		gba_system_advance(gba, gba_compute_access_cycles_dma(gba, address, request_size));
 }
 
 static FORCE_INLINE void gba_process_mmio_read(gba_t* gba, UINT32 address);
@@ -1476,28 +3099,68 @@ static FORCE_INLINE void gba_process_mmio_read(gba_t* gba, UINT32 address);
 // Memory IO functions for the emulated CPU
 static FORCE_INLINE UINT32 arm7_read32(void* user_data, UINT32 address)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, 3);
-	UINT32 value = gba_read32((gba_t*)user_data, address);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, 3);
+	UINT32 value = gba_read32(gba, address);
 	return value;
 }
 
 static FORCE_INLINE UINT32 arm7_read16(void* user_data, UINT32 address)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, 1);
-	UINT16 value = gba_read16((gba_t*)user_data, address);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, 1);
+	UINT16 value = gba_read16(gba, address);
 	return value;
 }
 
 static FORCE_INLINE UINT32 arm7_read32_seq(void* user_data, UINT32 address, bool seq)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, seq ? 2 : 3);
-	return gba_read32((gba_t*)user_data, address);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, seq ? 2 : 3);
+	return gba_read32(gba, address);
 }
 
 static FORCE_INLINE UINT32 arm7_read16_seq(void* user_data, UINT32 address, bool seq)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, seq ? 0 : 1);
-	return gba_read16((gba_t*)user_data, address);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, seq ? 0 : 1);
+	return gba_read16(gba, address);
+}
+
+static FORCE_INLINE UINT32 arm7_fetch32(void* user_data, UINT32 address, bool seq)
+{
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	UINT32 region = address >> 24;
+	if (region >= 0x8 && region <= 0xd) {
+		bool effective_seq = seq && (address & 0x1ffff) != 0 && !gba->mem.last_bus_access_dma;
+		gba_prefetch_access(gba, address, effective_seq ? 2 : 3, true);
+		gba->mem.last_bus_access_dma = false;
+		return gba_gamepak_read32(gba, address, effective_seq);
+	}
+	gba_cpu_advance_access(gba, address, seq ? 2 : 3);
+	gba->mem.last_bus_access_dma = false;
+	return gba_read32(gba, address);
+}
+
+static FORCE_INLINE UINT32 arm7_fetch16(void* user_data, UINT32 address, bool seq)
+{
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	UINT32 region = address >> 24;
+	if (region >= 0x8 && region <= 0xd) {
+		bool effective_seq = seq && (address & 0x1ffff) != 0 && !gba->mem.last_bus_access_dma;
+		gba_prefetch_access(gba, address, effective_seq ? 0 : 1, true);
+		gba->mem.last_bus_access_dma = false;
+		return gba_gamepak_read16(gba, address, effective_seq);
+	}
+	gba_cpu_advance_access(gba, address, seq ? 0 : 1);
+	gba->mem.last_bus_access_dma = false;
+	return gba_read16(gba, address);
 }
 
 void gba_cpu_breakpoint(void* user_data)
@@ -1513,13 +3176,15 @@ static bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT3
 
 static FORCE_INLINE UINT8 arm7_read8(void* user_data, UINT32 address)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, 1);
-	return gba_read8((gba_t*)user_data, address);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, 1);
+	return gba_read8(gba, address);
 }
 
 static FORCE_INLINE void gba_dma_write32(gba_t* gba, UINT32 address, UINT32 data)
 {
-	if ((address & 0xfffffC00) == 0x04000000) {
+	if ((address & 0xfffffc00) == 0x04000000) {
 		if (gba_process_mmio_write(gba, address, data, 4))
 			return;
 	}
@@ -1528,7 +3193,7 @@ static FORCE_INLINE void gba_dma_write32(gba_t* gba, UINT32 address, UINT32 data
 
 static FORCE_INLINE void gba_dma_write16(gba_t* gba, UINT32 address, UINT16 data)
 {
-	if ((address & 0xfffffC00) == 0x04000000) {
+	if ((address & 0xfffffc00) == 0x04000000) {
 		if (gba_process_mmio_write(gba, address, data, 2)) return;
 	}
 	gba_store16(gba, address, data);
@@ -1536,53 +3201,83 @@ static FORCE_INLINE void gba_dma_write16(gba_t* gba, UINT32 address, UINT16 data
 
 static FORCE_INLINE void arm7_write32(void* user_data, UINT32 address, UINT32 data)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, 3);
-	gba_dma_write32((gba_t*)user_data, address, data);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	UINT32 region = address >> 24;
+	if (region >= 0x5 && region <= 0x6) {
+		gba_video_bus_beat(gba, address);
+		gba_store16(gba, address, data & 0xffff);
+		gba_video_bus_beat(gba, address + 2);
+		gba_store16(gba, address + 2, data >> 16);
+		return;
+	}
+	gba_cpu_advance_access(gba, address, 3);
+	gba_dma_write32(gba, address, data);
 }
 
 static FORCE_INLINE void arm7_write16(void* user_data, UINT32 address, UINT16 data)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, 1);
-	gba_dma_write16((gba_t*)user_data, address, data);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, 1);
+	gba_dma_write16(gba, address, data);
 }
 
 static FORCE_INLINE void arm7_write8(void* user_data, UINT32 address, UINT8 data)
 {
-	gba_compute_access_cycles((gba_t*)user_data, address, 1);
+	gba_t* gba = (gba_t*)user_data;
+	gba_service_dma_before_cpu_access(gba);
+	gba_cpu_advance_access(gba, address, 1);
 	if ((address & 0xfffff000) == 0x04000000) {
-		if (gba_process_mmio_write((gba_t*)user_data, address, data, 1))
+		if (gba_process_mmio_write(gba, address, data, 1))
 			return;
 	}
-	gba_store8((gba_t*)user_data, address, data);
+	gba_store8(gba, address, data);
 }
 
 // Try to load a GBA rom, return false on invalid rom
 bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch);
  
+static FORCE_INLINE UINT32 gba_open_bus_value(gba_t* gba)
+{
+	if (gba->mem.last_bus_access_dma)
+		return gba->mem.dma_latch;
+	if (!arm7_get_thumb_bit(&gba->cpu))
+		return gba->cpu.prefetch_opcode[1];
+	UINT32 low = gba->cpu.prefetch_opcode[0] & 0xffff;
+	UINT32 high = gba->cpu.prefetch_opcode[1] & 0xffff;
+	UINT32 region = gba->cpu.registers[PC] >> 24;
+	if (region == 0x2 || region == 0x5 || region == 0x6 || (region >= 0x8 && region <= 0xd))
+		return high * 0x10001u;
+	if (region == 0x3 && (gba->cpu.registers[PC] & 2))
+		return (low << 16) | high;
+	if ((region == 0x0 || region == 0x7) && (gba->cpu.registers[PC] & 2))
+		return high * 0x10001u;
+	return low | (high << 16);
+}
+
 static FORCE_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 {
+	gba->mem.openbus_word = gba_open_bus_value(gba);
 	UINT32* ret = &gba->mem.openbus_word;
 	switch (addr >> 24) {
 		case 0x0:
 			if (addr < 0x4000) {
 				if (gba->cpu.registers[15] < 0x4000)
 					gba->mem.bios_word = *(UINT32*)(gba->mem.bios + (addr & ~3));
-				//else gba->mem.bios_word=0;
-				gba->mem.openbus_word = gba->mem.bios_word;
+				ret = &gba->mem.bios_word;
 			}
 			break;
 		case 0x1:
 			break;
 		case 0x2:
 			ret = (UINT32*)(gba->mem.wram0 + (addr & 0x3fffc));
-			gba->mem.openbus_word = *ret;
 			break;
 		case 0x3:
 			ret = (UINT32*)(gba->mem.wram1 + (addr & 0x7ffc));
-			gba->mem.openbus_word = *ret;
 			break;
 		case 0x4:
-			if (SB_LIKELY(addr <= 0x40003FF)) {
+			if (SB_LIKELY(addr <= 0x40003ff)) {
 				if (req_type & GBA_REQ_READ) {
 					INT32 io_reg = (addr >> 2) & 0xff;
 					if (SB_LIKELY(gba->mem.mmio_reg_valid_lookup[io_reg])) {
@@ -1600,13 +3295,11 @@ static FORCE_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_
 			break;
 		case 0x5:
 			ret = (UINT32*)(gba->mem.palette + (addr & 0x3fc));
-			gba->mem.openbus_word = *ret;
 			break;
 		case 0x6:
 			if (addr & 0x10000) {
 				ret = (UINT32*)(gba->mem.vram + (addr & 0x07ffc) + 0x10000);
-				gba->mem.openbus_word = *ret;
-				if (addr & 0x08000) {
+					if (addr & 0x08000) {
 					UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
 					INT32 bg_mode  = SB_BFE(dispcnt, 0, 3);
 					//Don't allow writes to mirrored VRAM in bitmap mode. See also vram-mirror.gba
@@ -1616,24 +3309,32 @@ static FORCE_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_
 					}
 				}
 			} else ret = (UINT32*)(gba->mem.vram + (addr & 0x1fffc));
-			gba->mem.openbus_word = *ret;
 			break;
 		case 0x7:
 			ret = (UINT32*)(gba->mem.oam + (addr & 0x3fc));
-			gba->mem.openbus_word = *ret;
 			break;
 		case 0x8:
 		case 0x9:
-		case 0xA:
-		case 0xB:
-		case 0xC:
-		case 0xD: {
+		case 0xa:
+		case 0xb:
+		case 0xc:
+		case 0xd: {
 			INT32 maddr = addr & 0x1fffffc;
+			if (gba_eeprom_address(gba, addr) && (req_type & GBA_REQ_READ)) {
+				gba->mem.openbus_word = gba_eeprom_read_bit(gba) * 0x10001u;
+				break;
+			}
+			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
+				if (gba->cart.vfame.type) {
+					gba->mem.openbus_word = gba_vfame_get_pattern(addr) | (gba_vfame_get_pattern(addr + 2) << 16);
+					break;
+				}
+				UINT32 mask = gba->cart.rom_size - 1;
+				if ((gba->cart.rom_size & mask) == 0)
+					maddr &= mask & ~3;
+			}
 			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
 				gba->mem.openbus_word = ((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16);
-				// Return ready when done writting EEPROM (required by Minish Cap)
-				if (gba->cart.backup_type == GBA_BACKUP_EEPROM)
-					gba->mem.openbus_word = 1;
 			} else {
 				gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
 				if (req_type & 0x3) {
@@ -1643,42 +3344,140 @@ static FORCE_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_
 			}
 		}
 			break;
-		case 0xE:
-		case 0xF:
+		case 0xe:
+		case 0xf:
 			if (gba->cart.backup_type == GBA_BACKUP_SRAM) {
 				gba->mem.sram_word = (UINT32)gba->mem.cart_backup[addr & 0x7fff] * 0x01010101u;
 				ret = &gba->mem.sram_word;
 			} else if (gba->cart.features & GBA_CART_TILT) {
 				gba->mem.sram_word = (UINT32)gba_process_tilt_read(gba, addr) * 0x01010101u;
 				ret = &gba->mem.sram_word;
-			} else if (gba->cart.backup_type == GBA_BACKUP_EEPROM) {
-				ret = (UINT32*)&gba->mem.eeprom_word;
 			} else if (gba->cart.backup_type == GBA_BACKUP_NONE) {
 				gba->mem.sram_word = 0xffffffff;
 				ret = &gba->mem.sram_word;
 			} else {
 				//Flash
-				if (gba->cart.in_chip_id_mode && addr <= 0xE000001) {
+				if (gba->cart.in_chip_id_mode && (addr & 0xffff) < 2) {
 					gba->mem.openbus_word = *(UINT32*)gba->mem.flash_chip_id;
 					ret = &gba->mem.openbus_word;
 				} else {
-					gba->mem.sram_word = gba->mem.cart_backup[(addr & 0xffff) + gba->cart.flash_bank * 64 * 1024] * 0x01010101;
+					gba->mem.sram_word = gba->mem.cart_backup[(addr & 0xffff) + gba_flash_effective_bank(gba) * 64 * 1024] * 0x01010101;
 					ret = &gba->mem.sram_word;
 				}
 			}
-			gba->mem.openbus_word = (*ret & 0xffff) * 0x10001;
 			break;
 	}
 	return ret;
 }
 
-static FORCE_INLINE void gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data)
+static void gba_audio_fifo_clear_queue(gba_audio_fifo_t* fifo)
 {
-	INT32 size = (gba->audio.fifo[fifo].write_ptr - gba->audio.fifo[fifo].read_ptr) & 0x1f;
-	if (size < 28) {
-		gba->audio.fifo[fifo].write_ptr = (gba->audio.fifo[fifo].write_ptr + 1) & 0x1f;
-		gba->audio.fifo[fifo].data[gba->audio.fifo[fifo].write_ptr] = data;
+	memset(fifo->queue, 0, sizeof(fifo->queue));
+	fifo->read_ptr = 0;
+	fifo->write_ptr = 0;
+	fifo->count = 0;
+}
+
+static void gba_audio_fifo_enqueue_word(gba_audio_fifo_t* fifo, UINT32 value)
+{
+	if (fifo->count >= 7) {
+		// NanoBoyAdvance clears the queued words and drops a write that overflows the FIFO.
+		gba_audio_fifo_clear_queue(fifo);
+		return;
 	}
+	fifo->queue[fifo->write_ptr] = value;
+	fifo->write_ptr = (fifo->write_ptr + 1) % 7;
+	fifo->count++;
+}
+
+static FORCE_INLINE INT32 gba_audio_dma_fifo(gba_t* gba, INT32 channel)
+{
+	if (channel < 1 || channel > 2)
+		return -1;
+	UINT32 address = gba->dma[channel].dest_addr & ~3;
+	if (address == GBA_FIFO_A)
+		return 0;
+	if (address == GBA_FIFO_B)
+		return 1;
+	return -1;
+}
+
+static FORCE_INLINE bool gba_audio_dma_eligible(gba_t* gba, INT32 channel)
+{
+	if (gba_audio_dma_fifo(gba, channel) < 0)
+		return false;
+	UINT16 cnt_h = gba_io_read16(gba, GBA_DMA0CNT_H + channel * 12);
+	return SB_BFE(cnt_h, 15, 1) && SB_BFE(cnt_h, 12, 2) == 3;
+}
+
+static void gba_audio_dma_cancel(gba_t* gba)
+{
+	for (INT32 channel = 1; channel <= 2; channel++) {
+		if (gba->dma[channel].activate_audio_dma) {
+			gba->dma[channel].activate_audio_dma = false;
+			if (gba->dma[channel].activation_countdown > 0)
+				gba->dma[channel].activation_countdown = -1;
+			gba->dma_runnable_mask &= ~(1 << channel);
+		}
+	}
+	gba->activate_dmas = gba->dma_runnable_mask != 0;
+}
+
+static void gba_audio_fifo_request_dma(gba_t* gba, INT32 fifo)
+{
+	UINT8 mask = 0;
+	for (INT32 channel = 1; channel <= 2; channel++) {
+		if (gba_audio_dma_eligible(gba, channel) && gba_audio_dma_fifo(gba, channel) == fifo) {
+			gba->dma[channel].activate_audio_dma = true;
+			mask |= 1 << channel;
+		}
+	}
+	if (mask)
+		gba_dma_request_mask(gba, mask);
+}
+
+static void gba_audio_fifo_timer_overflow(gba_t* gba, INT32 timer)
+{
+	if (!(gba_io_read16(gba, GBA_SOUNDCNT_X) & 0x80))
+		return;
+	UINT16 soundcnt_h = gba_io_read16(gba, GBA_SOUNDCNT_H);
+	for (INT32 index = 0; index < 2; index++) {
+		if (SB_BFE(soundcnt_h, 10 + index * 4, 1) != timer)
+			continue;
+		gba_audio_fifo_t* fifo = &gba->audio.fifo[index];
+		if (fifo->count <= 3)
+			gba_audio_fifo_request_dma(gba, index);
+		if (!fifo->pipe_bytes && fifo->count) {
+			fifo->pipe = fifo->queue[fifo->read_ptr];
+			fifo->read_ptr = (fifo->read_ptr + 1) % 7;
+			fifo->count--;
+			fifo->pipe_bytes = 4;
+		}
+		INT8 sample = 0;
+		if (fifo->pipe_bytes) {
+			sample = (INT8)(fifo->pipe & 0xff);
+			fifo->pipe >>= 8;
+			fifo->pipe_bytes--;
+			if (!fifo->pipe_bytes)
+				fifo->pipe = 0;
+		}
+		fifo->sample_latch = sample;
+	}
+}
+
+static void gba_audio_fifo_write_mmio(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes)
+{
+	if (!(gba_io_read16(gba, GBA_SOUNDCNT_X) & 0x80))
+		return;
+	INT32 fifo = address >= GBA_FIFO_B;
+	UINT32 word = data;
+	if (req_size_bytes == 1)
+		word = (data & 0xff) * 0x01010101;
+	else if (req_size_bytes == 2) {
+		word = data & 0xffff;
+		word |= word << 16;
+	}
+	gba_audio_fifo_enqueue_word(&gba->audio.fifo[fifo], word);
 }
 
 static void gba_recompute_mmio_mask_table(gba_t* gba) {
@@ -1708,7 +3507,11 @@ static void gba_recompute_mmio_mask_table(gba_t* gba) {
 			data_mask &= 0x770fff77;
 		else if (dword_address == 0x4000084)
 			data_mask &= 0x0000008f;
-		else if (dword_address == 0x4000088 || dword_address == 0x4000134 || dword_address == 0x4000140 || dword_address == 0x4000158 || dword_address == 0x4000204 || dword_address == 0x4000208)
+		else if (dword_address == GBA_IE)
+			data_mask = 0x3fff3fff;
+		else if (dword_address == GBA_IME)
+			data_mask = 0x00000001;
+		else if (dword_address == 0x4000088 || dword_address == 0x4000134 || dword_address == 0x4000140 || dword_address == 0x4000158 || dword_address == 0x4000204)
 			data_mask = 0x0000ffff;
 		else if (dword_address == 0x40000b8 || dword_address == 0x40000c4 || dword_address == 0x40000d0)
 			data_mask &= 0xf7e00000;
@@ -1732,13 +3535,16 @@ static void gba_recompute_mmio_mask_table(gba_t* gba) {
 
 static FORCE_INLINE void gba_process_mmio_read(gba_t* gba, UINT32 address)
 {
-	// Force recomputing timers on timer read
-	if (address >= GBA_TM0CNT_L && address <= GBA_TM3CNT_H)
-		gba_compute_timers(gba);
+	if (address >= GBA_TM0CNT_L && address <= GBA_TM3CNT_H) {
+		INT32 timer = (address - GBA_TM0CNT_L) / 4;
+		gba_io_store16(gba, GBA_TM0CNT_L + timer * 4, gba_timer_read_counter(gba, timer));
+		gba_io_store16(gba, GBA_TM0CNT_H + timer * 4, gba->timers[timer].control);
+	}
 }
 
 static bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes)
 {
+	gba_ppu_sync(gba);
 	UINT32 address_u32 = address & ~3;
 	UINT32 word_mask   = 0xffffffff;
 	UINT32 word_data   = data;
@@ -1752,58 +3558,63 @@ static bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT3
 	word_data &= word_mask;
 
 	if (address_u32 == GBA_IE) {
-		UINT16 IE = gba_io_read16(gba, GBA_IE);
-		UINT16 IF = gba_io_read16(gba, GBA_IF);
-
-		IE = ((IE & ~word_mask) | (word_data & word_mask)) >> 0;
-		IF &= ~((word_data) >> 16);
-		gba_io_store16(gba, GBA_IE, IE);
-		gba_io_store16(gba, GBA_IF, IF);
-
+		if (word_mask & 0x0000ffff) {
+			UINT16 mask = word_mask & 0xffff;
+			gba->irq.pending_ie = (gba->irq.pending_ie & ~mask) | (word_data & mask);
+			gba->irq.pending_ie &= 0x3fff;
+		}
+		if (word_mask & 0xffff0000)
+			gba->irq.pending_if &= ~((word_data >> 16) & 0x3fff);
+		gba_irq_schedule(gba, GBA_IRQ_EVENT_COMMIT_SOFTWARE, 1, 0, gba->irq.clock + 1);
+		return true;
+	} else if (address_u32 == GBA_IME) {
+		if (word_mask & 1) {
+			gba->irq.pending_ime = word_data & 1;
+			gba_irq_schedule(gba, GBA_IRQ_EVENT_COMMIT_SOFTWARE, 1, 0, gba->irq.clock + 1);
+		}
+		return true;
+	} else if (address_u32 == GBA_FIFO_A || address_u32 == GBA_FIFO_B) {
+		gba_audio_fifo_write_mmio(gba, address_u32, data, req_size_bytes);
 		return true;
 	} else if (address_u32 == GBA_SOUNDCNT_L) {
 		if (word_mask & 0xffff0000) {
 			UINT16 soundcnt_h = word_data >> 16;
 			for (INT32 i = 0;i < 2;++i) {
 				if (SB_BFE(soundcnt_h, 11 + i * 4, 1)) {
-					gba->audio.fifo[i].read_ptr  = 0;
-					gba->audio.fifo[i].write_ptr = 0;
-					for (INT32 d = 0;d < 32;++d)
-						gba->audio.fifo[i].data[d] = 0;
+					gba_audio_fifo_clear_queue(&gba->audio.fifo[i]);
 					word_data &= ~(1u << (27 + i * 4));
 				}
 			}
 		}
 	} else if (address_u32 == GBA_TM0CNT_L || address_u32 == GBA_TM1CNT_L || address_u32 == GBA_TM2CNT_L || address_u32 == GBA_TM3CNT_L) {
-		gba_compute_timers(gba);
-		INT32 timer_off = (address_u32 - GBA_TM0CNT_L) / 4;
-		if (word_mask & 0xffff) {
-			gba->timers[timer_off + 0].pending_reload_value = word_data & (word_mask & 0xffff);
+		INT32 timer = (address_u32 - GBA_TM0CNT_L) / 4;
+		if (word_mask & 0x0000ffff) {
+			UINT16 value = gba->timers[timer].pending_reload;
+			UINT16 mask = word_mask & 0xffff;
+			value = (value & ~mask) | (word_data & mask);
+			gba_timer_write_reload(gba, timer, value);
 		}
-		if (word_mask & 0xffff0000) {
-			gba_store16(gba, address_u32 + 2, (word_data >> 16) & 0xffff);
-			gba->timers[timer_off + 0].reload_value = gba->timers[timer_off + 0].pending_reload_value;
+		if (word_mask & 0x00ff0000) {
+			UINT16 value = gba->timers[timer].pending_control;
+			value = (value & 0xff00) | ((word_data >> 16) & 0xff);
+			gba_timer_write_control(gba, timer, value);
 		}
-		gba->timer_ticks_before_event = 0;
 		return true;
 	} else if (address_u32 == GBA_POSTFLG) {
-		//Only BIOS can update Post Flag and haltcnt
-		if (gba->cpu.registers[15] < 0x4000) {
-			//Writes to haltcnt halt the CPU
-			if (word_mask & 0xff00) {
-				if (word_data & 0x8000) {
-					gba->stop_mode         = true;
-					gba->frame_in_progress = false;
-				}
+		if ((word_mask & 0xff) && gba->cpu.registers[15] < 0x4000) {
+			UINT8 postflg = gba_io_read8(gba, GBA_POSTFLG);
+			if (!postflg)
+				gba_io_store8(gba, GBA_POSTFLG, word_data & 0xff);
+		}
+		if ((word_mask & 0xff00) && gba->cpu.registers[15] < 0x4000) {
+			UINT8 haltcnt = (word_data >> 8) & 0xff;
+			if (!(haltcnt & 0x80)) {
 				gba->cpu.wait_for_interrupt = true;
+				gba_system_advance(gba, 1);
+				if (gba->irq.irq_available)
+					gba->cpu.wait_for_interrupt = false;
 			}
-			UINT32 data = gba_io_read32(gba, address_u32);
-			//POST can only be initialized once, then other writes are dropped. 
-			if ((word_mask & 0xff) && (data & 0xff))
-				word_mask &= ~0xff;
-			data &= ~word_mask;
-			data |= word_data & word_mask;
-			gba_io_store32(gba, address_u32, data);
+			// NanoBoyAdvance does not currently implement STOP entry.
 		}
 		return true;
 	} else if (address_u32 == GBA_BG2X || address_u32 == GBA_BG3X) {
@@ -1814,15 +3625,66 @@ static bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT3
 		gba->ppu.aff[aff_bg].wrote_bgy = true;
 	} else if (address_u32 == GBA_DMA0CNT_L || address_u32 == GBA_DMA1CNT_L ||
 		address_u32 == GBA_DMA2CNT_L || address_u32 == GBA_DMA3CNT_L) {
-		gba->activate_dmas = true;
+		INT32 channel = (address_u32 - GBA_DMA0CNT_L) / 12;
+		UINT16 old_cnt_h = gba_io_read16(gba, address_u32 + 2);
+		UINT32 value = (gba_io_read32(gba, address_u32) & ~word_mask) | (word_data & word_mask);
+		gba_io_store32(gba, address_u32, value);
+		UINT16 cnt_h = value >> 16;
+		bool old_enable = SB_BFE(old_cnt_h, 15, 1);
+		bool enable = SB_BFE(cnt_h, 15, 1);
+		UINT8 bit = 1 << channel;
+		gba->dma_hblank_mask &= ~bit;
+		gba->dma_vblank_mask &= ~bit;
+		gba->dma_video_mask &= ~bit;
+		if (!enable) {
+			gba->dma_runnable_mask &= ~bit;
+			gba->dma[channel].activation_countdown = -1;
+			gba->dma[channel].last_enable = false;
+		} else {
+			INT32 mode = SB_BFE(cnt_h, 12, 2);
+			if (mode == 1) gba->dma_vblank_mask |= bit;
+			if (mode == 2) gba->dma_hblank_mask |= bit;
+			if (mode == 3 && channel == 3) gba->dma_video_mask |= bit;
+			if (!old_enable) {
+				bool word = SB_BFE(cnt_h, 10, 1);
+				gba->dma[channel].source_addr = gba_io_read32(gba, GBA_DMA0SAD + 12 * channel) & (word ? ~3 : ~1);
+				gba->dma[channel].dest_addr = gba_io_read32(gba, GBA_DMA0DAD + 12 * channel) & (word ? ~3 : ~1);
+				UINT32 count = gba_io_read16(gba, address_u32);
+				if (!count) count = channel == 3 ? 0x10000 : 0x4000;
+				gba->dma[channel].remaining = count;
+				gba->dma[channel].current_transaction = 0;
+				gba->dma[channel].last_enable = true;
+				gba->dma[channel].activation_countdown = -1;
+				gba->dma[channel].startup_delay = -1;
+				if (gba->eeprom.detect_size && (count == 9 || count == 17 || count == 73 || count == 81)) {
+					if (gba_eeprom_address(gba, gba->dma[channel].dest_addr))
+						gba_eeprom_set_size(gba, count == 9 || count == 73 ? GBA_EEPROM_SIZE_512B : GBA_EEPROM_SIZE_8KB, false);
+				}
+				if (mode == 0) gba_dma_request_mask(gba, bit);
+			}
+		}
+		gba->activate_dmas = gba->dma_runnable_mask != 0;
+		return true;
+	} else if (address_u32 == GBA_SIOCNT) {
+		bool handled = false;
+		if (word_mask & 0x0000ffff) {
+			UINT16 value = (gba_io_read16(gba, GBA_SIOCNT) & ~(word_mask & 0xffff)) | (word_data & word_mask & 0xffff);
+			gba_sio_start(gba, value);
+			handled = true;
+		}
+		if (word_mask & 0xffff0000) {
+			gba_store16(gba, GBA_SIODATA8, (word_data >> 16) & 0xffff);
+			handled = true;
+		}
+		if (handled)
+			return true;
 	} else if (address_u32 == GBA_WAITCNT) {
 		UINT16 waitcnt = gba_io_read16(gba, GBA_WAITCNT);
 		waitcnt = ((waitcnt & ~word_mask) | (word_data & word_mask));
 		gba_recompute_waitstate_table(gba, waitcnt);
 	} else if (address_u32 == GBA_KEYINPUT) {
-		if (word_mask & 0xffff0000) {
-			gba_store16(gba, GBA_KEYINPUT, (word_data >> 16) & 0xffff);
-		}
+		if (word_mask & 0xffff0000)
+			gba_store16(gba, GBA_KEYCNT, (word_data >> 16) & 0xffff);
 		gba_tick_keypad(NULL, gba);
 	} else if (address_u32 >= GBA_SOUND1CNT_L && address_u32 < GBA_WAVE_RAM) {
 		for (INT32 i = 0;i < 4;++i) {
@@ -1864,7 +3726,7 @@ INT32 gba_search_rom_for_backup_string(gba_t* gba)
 	return btype;
 }
 
-static FORCE_INLINE void gba_setup_flash_id(gba_t* gba)
+static void gba_setup_flash_id(gba_t* gba)
 {
 	// Not used unless the cartridge enters flash chip-id mode.
 	if (gba->cart.backup_type == GBA_BACKUP_FLASH_64K) {
@@ -1887,6 +3749,7 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 {
 	memset(gba,     0, sizeof(gba_t));
 	memset(scratch, 0, sizeof(gba_scratch_t));
+	gba->raw_state_version = GBA_RAW_STATE_VERSION;
 	gba->solar_sensor.value         = 0xff;
 	gba->solar_sensor.pending_value = 0xff;
 	gba->gyro_sensor.pending_sample = 0x700;
@@ -1894,9 +3757,6 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	gba->tilt_sensor.sample_y       = 0xfff;
 	gba->tilt_sensor.pending_x      = 0x3a0;
 	gba->tilt_sensor.pending_y      = 0x3a0;
-	if (!sb_path_has_file_ext(emu->rom_path, ".gba"))
-		return false;
-
 	if (emu->rom_size > 32 * 1024 * 1024) {
 		printf("ROMs with sizes >32MB (%zu bytes) are too big for the GBA\n", emu->rom_size);
 		return false;
@@ -1911,7 +3771,22 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	gba->cart.rom_size    = emu->rom_size;
 	gba->mem.cart_rom     = emu->rom_data;
 
-	gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
+	// VFame (FC Mini) cartridge detection
+	{
+		static const UINT8 vfame_init_seq[16] = {
+			0xb4, 0x00, 0x9f, 0xe5, 0x99, 0x10, 0xa0, 0xe3,
+			0x00, 0x10, 0xc0, 0xe5, 0xac, 0x00, 0x9f, 0xe5
+		};
+		if (emu->rom_size >= 0x16c && memcmp(vfame_init_seq, emu->rom_data + 0x15c, 16) == 0) {
+			gba->cart.vfame.type      =  1;		// VFAME_STANDARD
+			gba->cart.vfame.rom_mode  = -1;
+			gba->cart.vfame.sram_mode = -1;
+			gba->cart.backup_type     = GBA_BACKUP_SRAM;
+		}
+	}
+
+	if (!gba->cart.vfame.type)
+		gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
 
 	size_t bytes = 0;
 	UINT8* data  = sb_load_file_data(emu->save_file_path, &bytes);
@@ -1930,6 +3805,16 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	// Setup flash chip id (this is not used if the cartridge does not have flash backup storage)
 	gba_setup_flash_id(gba);
 
+	if (gba->cart.backup_type >= GBA_BACKUP_EEPROM && gba->cart.backup_type <= GBA_BACKUP_EEPROM_8KB) {
+		gba_eeprom_reset_transport(gba);
+		if (gba->cart.backup_type == GBA_BACKUP_EEPROM) {
+			gba_eeprom_set_size(gba, GBA_EEPROM_SIZE_8KB, true);
+			gba->cart.backup_type = GBA_BACKUP_EEPROM;
+		} else {
+			gba_eeprom_set_size(gba, gba->cart.backup_type == GBA_BACKUP_EEPROM_512B ? GBA_EEPROM_SIZE_512B : GBA_EEPROM_SIZE_8KB, false);
+		}
+	}
+
 	gba->cpu = arm7_init(gba);
 
 	for (INT32 bg = 2;bg < 4;++bg) {
@@ -1939,7 +3824,7 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba_io_store16(gba, GBA_BG2PD + (bg - 2) * 0x10, 1 << 8);
 	}
 	gba_store16(gba, 0x04000088, 512);
-	gba_store32(gba, 0x040000DC, 0x84000000);
+	gba_store32(gba, 0x040000dc, 0x84000000);
 	gba_recompute_waitstate_table(gba, 0);
 	gba_recompute_mmio_mask_table(gba);
 
@@ -1947,11 +3832,11 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		printf("No GBA bios using bundled bios\n");
 		memcpy(gba->mem.bios, gba_bios_bin, sizeof(gba_bios_bin));
 		const UINT32 initial_regs[37] = {
-			0x0      ,0x0,0x0      ,0x0,0x0,0x0      ,0x0,0x0,
-			0x0      ,0x0,0x0      ,0x0,0x0,0x3007f00,0x0,0x8000000,
-			0xdf     ,0x0,0x0      ,0x0,0x0,0x0      ,0x0,0x0,
-			0x3007fa0,0x0,0x3007fe0,0x0,0x0,0x0      ,0x0,0x0,
-			0x0      ,0x0,0x0      ,0x0,0x0,
+			0x0      , 0x0,0x0      , 0x0,0x0,0x0      , 0x0,0x0,
+			0x0      , 0x0,0x0      , 0x0,0x0,0x3007f00, 0x0,0x8000000,
+			0xdf     , 0x0,0x0      , 0x0,0x0,0x0      , 0x0,0x0,
+			0x3007fa0, 0x0,0x3007fe0, 0x0,0x0,0x0      , 0x0,0x0,
+			0x0      , 0x0,0x0      , 0x0,0x0,
 		};
 		for (INT32 i = 0;i < 37;++i)
 			gba->cpu.registers[i] = initial_regs[i];
@@ -1976,12 +3861,26 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 			UINT32 data = initial_mmio_writes[i + 1];
 			arm7_write32(gba, addr, data);
 		}
-		gba_store32(gba, GBA_IE,      0x1);
+		gba->irq.pending_ie = 1;
+		gba_io_store16(gba, GBA_IE, 1);
+		gba_io_store16(gba, GBA_IF, 0);
+		gba_io_store16(gba, GBA_IME, 0);
 		gba_store16(gba, GBA_DISPCNT, 0x9140);
+		gba->ppu.dispcnt_pipeline[0] = 0x9140;
+		gba->ppu.dispcnt_pipeline[1] = 0x9140;
+		gba->ppu.dispcnt_pipeline[2] = 0x9140;
 	} else {
 		gba->cpu.registers[PC  ] = 0x00000000;
 		gba->cpu.registers[CPSR] = 0x000000d3;
 	}
+	gba->ppu.obj.buf_rd = 0;
+	gba->ppu.obj.buf_wr = 1;
+	gba->ppu.obj.epoch_line = 0;
+	gba->ppu.obj.last_sync = 0;
+	gba_bg_begin_line(gba, 0);
+	gba_window_begin_line(gba, 0);
+	gba_merge_begin_line(gba);
+	gba_obj_begin_line(gba, 1);
 	if (gba->cpu.log_cmp_file) {
 		fclose(gba->cpu.log_cmp_file);
 		gba->cpu.log_cmp_file = NULL;
@@ -1997,39 +3896,97 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 #define GBA_LCD_VBLANK_START	(GBA_LCD_H*1232)
 #define GBA_LCD_VBLANK_END		(227*1232)
 
-//Returns true if the fast forward failed to be more efficient in main emu loop
+// Persistent PPU pipelines must observe every master clock until event-based
+// batching can advance all of their state without skipping fetch phases.
 static FORCE_INLINE INT32 gba_ppu_compute_max_fast_forward(gba_t* gba, bool render)
 {
-	INT32 scanline_clock = (gba->ppu.scan_clock) % 1232;
-	//If inside hblank, can fastforward to outside of hblank
-	if (scanline_clock >= GBA_LCD_HBLANK_START * 4 && scanline_clock <= GBA_LCD_HBLANK_END * 4)
-		return GBA_LCD_HBLANK_END   * 4 - scanline_clock - 1;
-	//If inside hrender, can fastforward to hblank if not the first pixel and not visible
-	bool not_visible = !render || gba->ppu.scan_clock > GBA_LCD_VBLANK_START;
-	if (not_visible && (scanline_clock >= 1 && scanline_clock <= GBA_LCD_HBLANK_START * 4))
-		return GBA_LCD_HBLANK_START * 4 - scanline_clock - 1;
-	return 3 - ((gba->ppu.scan_clock) % 4);
+	(void)gba;
+	(void)render;
+	return 0;
 }
 
-static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
+#if 0 // Replaced by the persistent merge engine.
+// Merge one OBJ line-buffer pixel: horizontal mosaic latch, per-pixel window,
+// seed first_target.
+static UINT8 gba_obj_merge_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 {
-	if (SB_LIKELY(gba->ppu.fast_forward_ticks > 0)) {
-		gba->ppu.fast_forward_ticks--;
-		return;
+	gba_obj_engine_t* obj = &gba->ppu.obj;
+	UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
+	if (lcd_x == 0) {
+		gba->ppu.obj_mosaic_latch = 0;
+		gba->ppu.obj_mosaic_x = 0;
 	}
 
-	if (gba->ppu.scan_clock >= 280896) gba->ppu.scan_clock -= 280896;
-	INT32 lcd_y = (gba->ppu.scan_clock) / 1232;
-	INT32 lcd_x = ((gba->ppu.scan_clock) % 1232) / 4;
-	gba->ppu.scan_clock++;
-	gba->ppu.fast_forward_ticks = gba_ppu_compute_max_fast_forward(gba, render) + 1;
-	gba->ppu.scan_clock += gba->ppu.fast_forward_ticks;
-	if (lcd_x == 0 || lcd_x == GBA_LCD_HBLANK_START || lcd_x == GBA_LCD_HBLANK_END) {
+	UINT16 raw = SB_BFE(dispcnt, 12, 1) ? obj->buffer[obj->buf_rd][lcd_x] : 0;
+	UINT16 latch = gba->ppu.obj_mosaic_latch;
+	if (!GBA_OBJ_PIXEL_MOSAIC(raw) || !GBA_OBJ_PIXEL_MOSAIC(latch) ||
+		GBA_OBJ_PIXEL_PRIORITY(raw) < GBA_OBJ_PIXEL_PRIORITY(latch) || gba->ppu.obj_mosaic_x == 0)
+		latch = raw;
+	gba->ppu.obj_mosaic_latch = latch;
+	UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
+	if (++gba->ppu.obj_mosaic_x >= SB_BFE(mos_reg, 8, 4) + 1)
+		gba->ppu.obj_mosaic_x = 0;
+
+	UINT8 window_control = 0x3f;
+	if (SB_BFE(dispcnt, 13, 3) != 0) {
+		UINT16 winout = gba_io_read16(gba, GBA_WINOUT);
+		window_control = SB_BFE(winout, 0, 8);
+		if (SB_BFE(dispcnt, 15, 1) && GBA_OBJ_PIXEL_WINDOW(raw))
+			window_control = SB_BFE(winout, 8, 6);
+		UINT16 winin = gba_io_read16(gba, GBA_WININ);
+		for (INT32 win = 1; win >= 0; --win) {
+			if (!SB_BFE(dispcnt, 13 + win, 1))
+				continue;
+			UINT16 winh = gba_io_read16(gba, GBA_WIN0H + 2 * win);
+			UINT16 winv = gba_io_read16(gba, GBA_WIN0V + 2 * win);
+			INT32 xmin = SB_BFE(winh, 8, 8), xmax = SB_BFE(winh, 0, 8);
+			INT32 ymin = SB_BFE(winv, 8, 8), ymax = SB_BFE(winv, 0, 8);
+			if (xmin > xmax) xmax = 240;
+			if (ymin > ymax) ymax = 161;
+			if (xmax > 240) xmax = 240;
+			if (lcd_y < ymin || lcd_y >= ymax || lcd_x < xmin || lcd_x >= xmax)
+				continue;
+			window_control = SB_BFE(winin, win * 8, 6);
+		}
+	}
+
+	UINT32 backdrop_col = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE)) | (5u << 17);
+	UINT32 col = backdrop_col;
+	INT32 color_index = GBA_OBJ_PIXEL_COLOR(latch);
+	if (color_index != 0 && SB_BFE(window_control, 4, 1)) {
+		UINT32 rgb = *(UINT16*)(gba->mem.palette + GBA_OBJ_PALETTE + color_index * 2);
+		INT32 priority = GBA_OBJ_PIXEL_PRIORITY(latch);
+		col = rgb | (4u << 17) | (((UINT32)(5 - priority)) << 28) | (0x7u << 25);
+		if (GBA_OBJ_PIXEL_ALPHA(latch))
+			col |= 1 << 16;
+	}
+	gba->first_target_buffer[lcd_x] = col;
+	return window_control;
+}
+#endif
+
+static void gba_tick_ppu(gba_t* gba, bool render)
+{
+	gba_ppu_sync(gba);
+
+	INT32 scan_clock = (INT32)(gba->ppu.committed_clock % 280896);
+	INT32 lcd_y = scan_clock / 1232;
+	INT32 line_cycle = scan_clock % 1232;
+	bool pixel_phase = (line_cycle & 3) == 0;
+	UINT16 affine_dispcnt_latch = gba->ppu.dispcnt_pipeline[0];
+
+	if (line_cycle == 40) {
+		gba->ppu.dispcnt_pipeline[0] = gba->ppu.dispcnt_pipeline[1];
+		gba->ppu.dispcnt_pipeline[1] = gba->ppu.dispcnt_pipeline[2];
+		gba->ppu.dispcnt_pipeline[2] = gba_io_read16(gba, GBA_DISPCNT);
+	}
+
+	if (line_cycle == 0 || line_cycle == 1007) {
 		UINT16 disp_stat  = gba_io_read16(gba, GBA_DISPSTAT) & ~0x7;
 		UINT16 vcount_cmp = SB_BFE(disp_stat, 8, 8);
-		INT32  vcount     = (lcd_y + (lcd_x >= GBA_LCD_HBLANK_END)) % 228;
+		INT32  vcount     = lcd_y;
 		bool   vblank     = lcd_y >= 160 && lcd_y < 227;
-		bool   hblank     = lcd_x >= GBA_LCD_HBLANK_START && lcd_x < GBA_LCD_HBLANK_END;
+		bool   hblank     = line_cycle >= 1007;
 		disp_stat |= vblank ? 0x1 : 0;
 		disp_stat |= hblank ? 0x2 : 0;
 		disp_stat |= vcount == vcount_cmp ? 0x4 : 0;
@@ -2038,17 +3995,14 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 		UINT32 new_if = 0;
 		if (hblank != gba->ppu.last_hblank) {
 			gba->ppu.last_hblank = hblank;
-			bool hblank_irq_en   = SB_BFE(disp_stat, 4, 1);
+			bool hblank_irq_en = SB_BFE(disp_stat, 4, 1);
 			if (hblank && hblank_irq_en)
 				new_if |= (1 << GBA_INT_LCD_HBLANK);
-			gba->activate_dmas |= gba->dma_wait_ppu;
-			if (!hblank) {
-				gba->ppu.dispcnt_pipeline[0] = gba->ppu.dispcnt_pipeline[1];
-				gba->ppu.dispcnt_pipeline[1] = gba->ppu.dispcnt_pipeline[2];
-				gba->ppu.dispcnt_pipeline[2] = gba_io_read16(gba, GBA_DISPCNT);
-			}
+			if (hblank && lcd_y < 160)
+				gba_dma_request_mask(gba, gba->dma_hblank_mask);
 		}
-		if (lcd_y != gba->ppu.last_lcd_y) {
+		if (line_cycle == 0 && lcd_y != gba->ppu.last_lcd_y) {
+			disp_stat &= ~0x4;
 			if (vblank != gba->ppu.last_vblank) {
 				if (vblank)
 					gba->frame_in_progress = false;
@@ -2056,47 +4010,81 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 				bool vblank_irq_en = SB_BFE(disp_stat, 3, 1);
 				if (vblank && vblank_irq_en)
 					new_if |= (1 << GBA_INT_LCD_VBLANK);
-				gba->activate_dmas |= gba->dma_wait_ppu;
+				if (vblank)
+					gba_dma_request_mask(gba, gba->dma_vblank_mask);
 			}
 			gba->ppu.last_lcd_y = lcd_y;
-			if (lcd_y == vcount_cmp) {
-				bool vcnt_irq_en = SB_BFE(disp_stat, 5, 1);
-				if (vcnt_irq_en)
-					new_if |= (1 << GBA_INT_LCD_VCOUNT);
-			}
+			if (lcd_y == vcount_cmp && SB_BFE(disp_stat, 5, 1))
+				new_if |= (1 << GBA_INT_LCD_VCOUNT);
 		}
-		gba_send_interrupt(gba, 3, new_if);
+		gba_irq_raise(gba, new_if);
+		if (line_cycle == 0) {
+			if (lcd_y < 160) {
+				gba_bg_begin_line(gba, lcd_y);
+				gba_merge_begin_line(gba);
+			}
+			gba_window_begin_line(gba, lcd_y);
+		}
+	}
+	if (line_cycle == 1) {
+		UINT16 disp_stat = gba_io_read16(gba, GBA_DISPSTAT);
+		UINT16 vcount_cmp = SB_BFE(disp_stat, 8, 8);
+		bool old_flag = SB_BFE(disp_stat, 2, 1);
+		bool new_flag = lcd_y == vcount_cmp;
+		disp_stat = (disp_stat & ~0x4) | (new_flag ? 0x4 : 0);
+		gba_io_store16(gba, GBA_DISPSTAT, disp_stat);
+		if (!old_flag && new_flag && SB_BFE(disp_stat, 5, 1))
+			gba_irq_raise(gba, 1 << GBA_INT_LCD_VCOUNT);
 	}
 
+	gba->ppu.committed_clock++;
+	gba->ppu.master_clock = gba->ppu.committed_clock;
+	gba->ppu.scan_clock = (INT32)(gba->ppu.committed_clock % 280896);
+	gba->ppu.fast_forward_ticks = gba_ppu_compute_max_fast_forward(gba, render);
+
+	(void)pixel_phase;
+	(void)affine_dispcnt_latch;
+	(void)render;
+	return;
+
+#if 0 // Replaced by persistent BG/Window/Merge pipelines above.
+	INT32 lcd_x = line_cycle / 4;
 	if (!render)
 		return;
 
-	if (lcd_x == GBA_LCD_HBLANK_START) {
-		UINT16 dispcnt = gba->ppu.dispcnt_pipeline[0];
-		INT32  bg_mode = SB_BFE(dispcnt, 0, 3);
-		if (bg_mode != 0) {
-			for (INT32 aff = 0; aff < 2; ++aff) {
-				bool bg_en = SB_BFE(dispcnt, 8 + aff + 2, 1);
-				if (!bg_en) continue;
-				INT32 b = (INT16)gba_io_read16(gba, GBA_BG2PB  + (aff) * 0x10);
-				INT32 d = (INT16)gba_io_read16(gba, GBA_BG2PD  + (aff) * 0x10);
-				UINT16 bgcnt =     gba_io_read16(gba, GBA_BG2CNT +  aff  * 2);
-				bool mosaic = SB_BFE(bgcnt, 6, 1);
-				if (mosaic) {
-					UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
-					INT32  mos_y   = SB_BFE(mos_reg, 4, 4) + 1;
-					if ((lcd_y % mos_y) == 0) {
-						gba->ppu.aff[aff].render_bgx += b * mos_y;
-						gba->ppu.aff[aff].render_bgy += d * mos_y;
-					}
-				} else {
-					gba->ppu.aff[aff].render_bgx += b;
-					gba->ppu.aff[aff].render_bgy += d;
+	if (line_cycle == 1228) {
+		if (lcd_y < 159) {
+			UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
+			INT32 mos_y = SB_BFE(mos_reg, 4, 4) + 1;
+			if (++gba->ppu.bg_mosaic_y_counter >= (UINT32)mos_y)
+				gba->ppu.bg_mosaic_y_counter = 0;
+		} else {
+			gba->ppu.bg_mosaic_y_counter = 0;
+		}
+
+		UINT16 dispcnt = affine_dispcnt_latch & gba_io_read16(gba, GBA_DISPCNT);
+		INT32 bg_mode = SB_BFE(dispcnt, 0, 3);
+		for (INT32 aff = 0; aff < 2; ++aff) {
+			bool mode_has_bg = aff == 0 ? bg_mode >= 1 && bg_mode <= 5 : bg_mode == 2;
+			bool bg_en = mode_has_bg && SB_BFE(dispcnt, 10 + aff, 1);
+			if (!bg_en) continue;
+			INT32 b = (INT16)gba_io_read16(gba, GBA_BG2PB + aff * 0x10);
+			INT32 d = (INT16)gba_io_read16(gba, GBA_BG2PD + aff * 0x10);
+			UINT16 bgcnt = gba_io_read16(gba, GBA_BG2CNT + aff * 2);
+			if (SB_BFE(bgcnt, 6, 1)) {
+				UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
+				INT32 mos_y = SB_BFE(mos_reg, 4, 4) + 1;
+				if (gba->ppu.bg_mosaic_y_counter == 0) {
+					gba->ppu.aff[aff].render_bgx += b * mos_y;
+					gba->ppu.aff[aff].render_bgy += d * mos_y;
 				}
+			} else {
+				gba->ppu.aff[aff].render_bgx += b;
+				gba->ppu.aff[aff].render_bgy += d;
 			}
 		}
 	}
-	bool reload_ref_points = lcd_x == GBA_LCD_HBLANK_END || (lcd_y == 0 && lcd_x == 0);
+	bool reload_ref_points = line_cycle == 1228 || (lcd_y == 0 && lcd_x == 0);
 	if (reload_ref_points) {
 		//Latch BGX and BGY registers
 		for (INT32 aff = 0; aff < 2; ++aff) {
@@ -2116,218 +4104,18 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 	}
 	UINT16 dispcnt         = gba_io_read16(gba, GBA_DISPCNT);
 	INT32  bg_mode         = SB_BFE(dispcnt, 0, 3);
-	INT32  obj_vram_map_2d = !SB_BFE(dispcnt, 6, 1);
 	INT32  forced_blank    = SB_BFE(dispcnt, 7, 1);
 	bool visible = lcd_x < 240 && lcd_y < 160;
-	//Render sprites over scanline when it completes
-	if ((lcd_y < 159 || lcd_y == 227) && lcd_x == GBA_LCD_HBLANK_START) {
-		INT32  sprite_lcd_y = (lcd_y + 1) % 228;
-		UINT16 mos_reg      = gba_io_read16(gba, GBA_MOSAIC);
-		INT32  mos_y        = SB_BFE(mos_reg, 12, 4) + 1;
-		// Partial fix to https://github.com/skylersaleh/SkyEmu/issues/316
-		if (++gba->ppu.mosaic_y_counter >= mos_y || sprite_lcd_y == 0) {
-			gba->ppu.mosaic_y_counter = 0;
-		}
-		//Render sprites over scanline when it completes
-		UINT8 default_window_control = 0x3f;	//bitfield [0-3:bg0-bg3 enable 4:obj enable, 5: special effect enable]
-		bool winout_enable = SB_BFE(dispcnt, 13, 3) != 0;
-		UINT16 WINOUT      = gba_io_read16(gba, GBA_WINOUT);
-		if (winout_enable)
-			default_window_control = SB_BFE(WINOUT, 0, 8);
-
-		for (INT32 x = 0; x < 240; ++x) {
-			gba->window[x] = default_window_control;
-		}
-		UINT8 obj_window_control = default_window_control;
-		bool  obj_window_enable  = SB_BFE(dispcnt, 15, 1);
-		if (obj_window_enable)
-			obj_window_control   = SB_BFE(WINOUT, 8, 6);
-		bool  display_obj        = SB_BFE(dispcnt, 12, 1);
-		if (display_obj) {
-			for (INT32 o = 0; o < 128; ++o) {
-				UINT16 attr0 = *(UINT16*)(gba->mem.oam + o * 8 + 0);
-				//Attr0
-				UINT8 y_coord     = SB_BFE(attr0, 0, 8);
-				bool  rot_scale   = SB_BFE(attr0, 8, 1);
-				bool  double_size = SB_BFE(attr0, 9, 1) && rot_scale;
-				bool  obj_disable = SB_BFE(attr0, 9, 1) && !rot_scale;
-				if (obj_disable)
-					continue;
-
-				INT32  obj_mode   = SB_BFE(attr0, 10, 2);		//(0=Normal, 1=Semi-Transparent, 2=OBJ Window, 3=Prohibited)
-				bool   mosaic     = SB_BFE(attr0, 12, 1);
-				bool   colors_or_palettes = SB_BFE(attr0, 13, 1);
-				INT32  obj_shape  = SB_BFE(attr0, 14, 2);	//(0=Square,1=Horizontal,2=Vertical,3=Prohibited)
-				UINT16 attr1 = *(UINT16*)(gba->mem.oam + o * 8 + 2);
-
-				INT32 rotscale_param = SB_BFE(attr1,  9, 5);
-				bool  h_flip         = SB_BFE(attr1, 12, 1) && !rot_scale;
-				bool  v_flip         = SB_BFE(attr1, 13, 1) && !rot_scale;
-				INT32 obj_size       = SB_BFE(attr1, 14, 2);
-				// Size  Square   Horizontal  Vertical
-				// 0     8x8      16x8        8x16
-				// 1     16x16    32x8        8x32
-				// 2     32x32    32x16       16x32
-				// 3     64x64    64x32       32x64
-				const INT32 xsize_lookup[16] = {
-					 8,16, 8, 0,
-					16,32, 8, 0,
-					32,32,16, 0,
-					64,64,32, 0
-				};
-				const INT32 ysize_lookup[16] = {
-					 8, 8,16, 0,
-					16, 8,32, 0,
-					32,16,32, 0,
-					64,32,64, 0
-				};
-
-				INT32 y_size = ysize_lookup[obj_size * 4 + obj_shape];
-
-				if (((sprite_lcd_y - y_coord) & 0xff) < y_size * (double_size ? 2 : 1)) {
-					INT16 x_coord = SB_BFE(attr1, 0, 9);
-					if (SB_BFE(x_coord, 8, 1))
-						x_coord |= 0xfe00;
-
-					INT32 x_size  = xsize_lookup[obj_size * 4 + obj_shape];
-					INT32 x_start = x_coord >= 0 ? x_coord : 0;
-					INT32 x_end   = x_coord + x_size * (double_size ? 2 : 1);
-					if (x_end >= 240)x_end = 240;
-					//Attr2
-					//Skip objects disabled by window
-					UINT16 attr2 = *(UINT16*)(gba->mem.oam + o * 8 + 4);
-					INT32  tile_base = SB_BFE(attr2,  0, 10);
-					// Always place sprites as the highest priority
-					INT32  priority  = SB_BFE(attr2, 10,  2);
-					INT32  palette   = SB_BFE(attr2, 12,  4);
-					for (INT32 x = x_start; x < x_end; ++x) {
-						INT32 sx = (x - x_coord);
-						INT32 sy = (sprite_lcd_y - y_coord) & 0xff;
-						if (mosaic) {
-							UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
-							INT32  mos_x = SB_BFE(mos_reg,  8, 4) + 1;
-							INT32  mos_y = SB_BFE(mos_reg, 12, 4) + 1;
-							sx = ((x / mos_x) * mos_x - x_coord);
-							if (sx < 0)
-								sx = 0;
-							sy = (sprite_lcd_y - y_coord) & 0xff;
-							sy -= gba->ppu.mosaic_y_counter;
-							if (sy < 0) {
-								sy = 0;
-							}
-						}
-						if (rot_scale) {
-							UINT32 param_base = rotscale_param * 0x20;
-							INT32 a = *(INT16*)(gba->mem.oam + param_base + 0x6);
-							INT32 b = *(INT16*)(gba->mem.oam + param_base + 0xe);
-							INT32 c = *(INT16*)(gba->mem.oam + param_base + 0x16);
-							INT32 d = *(INT16*)(gba->mem.oam + param_base + 0x1e);
-
-							INT64 x1 = sx << 8;
-							INT64 y1 = sy << 8;
-							INT64 objref_x = (x_size << (double_size ? 8 : 7));
-							INT64 objref_y = (y_size << (double_size ? 8 : 7));
-
-							INT64 x2 = a * (x1 - objref_x) + b * (y1 - objref_y) + (x_size << 15);
-							INT64 y2 = c * (x1 - objref_x) + d * (y1 - objref_y) + (y_size << 15);
-
-							sx = (x2 >> 16);
-							sy = (y2 >> 16);
-							if (sx >= x_size || sy >= y_size || sx < 0 || sy < 0)
-								continue;
-						} else {
-							if (h_flip)
-								sx = x_size - sx - 1;
-							if (v_flip)
-								sy = y_size - sy - 1;
-						}
-						INT32 tx = sx % 8;
-						INT32 ty = sy % 8;
-
-						INT32 y_tile_stride = obj_vram_map_2d ? 32 : x_size / 8 * (colors_or_palettes ? 2 : 1);
-						INT32 tile          = tile_base + (((sx / 8)) * (colors_or_palettes ? 2 : 1)) + (sy / 8) * y_tile_stride;
-						// Don't allow the column indices to overflow into the row indices in 2D mode. 
-						// See: https://github.com/skylersaleh/SkyEmu/issues/13
-						if (obj_vram_map_2d) {
-							tile  = (tile_base + (((sx / 8)) * (colors_or_palettes ? 2 : 1))) & 31;
-							tile |= (tile_base +   (sy / 8)  * y_tile_stride) & ~31;
-						}
-						//Tiles >511 are not rendered in bg_mode3-5 since that memory is used to store the bitmap graphics. 
-						if (tile < 512 && bg_mode >= 3 && bg_mode <= 5)
-							continue;
-						UINT8 palette_id;
-						INT32 obj_tile_base = GBA_OBJ_TILES0_2;
-						bool transparent = false;
-						if (colors_or_palettes == false) {
-							palette_id  = gba->mem.vram[obj_tile_base + tile * 8 * 4 + tx / 2 + ty * 4];
-							palette_id  = (palette_id >> ((tx & 1) * 4)) & 0xf;
-							transparent =  palette_id == 0;
-							palette_id +=  palette * 16;
-						} else {
-							palette_id  = gba->mem.vram[obj_tile_base + tile * 8 * 4 + tx + ty * 8];
-							transparent = palette_id == 0;
-						}
-
-						UINT32 col = *(UINT16*)(gba->mem.palette + GBA_OBJ_PALETTE + palette_id * 2);
-						//Handle window objects(not displayed but control the windowing of other things)
-						if (obj_mode == 2 && !transparent) {
-							gba->window[x] = obj_window_control;
-						} else if (obj_mode != 3) {
-							INT32 type = 4;
-							col = col | (type << 17) | ((5 - priority) << 28) | ((0x7) << 25);
-							if (obj_mode == 1)
-								col |= 1 << 16;
-							if ((col >> 17) > (gba->first_target_buffer[x] >> 17)) {
-								if (transparent) {
-									//Update priority for transparent pixels (needed for golden sun)
-									if (SB_BFE(gba->first_target_buffer[x], 17, 3) != 5)
-										gba->first_target_buffer[x] = (gba->first_target_buffer[x] & (0x0fffffff)) | (col & 0xf0000000);
-								} else gba->first_target_buffer[x] = col;
-							}
-						}
-					}
-				}
-			}
-		}
-		INT32 enabled_windows = SB_BFE(dispcnt, 13, 3);		// [0: win0, 1:win1, 2: objwin]
-		if (enabled_windows) {
-			for (INT32 win = 1; win >= 0; --win) {
-				bool win_enable = SB_BFE(dispcnt, 13 + win, 1);
-				if (!win_enable)
-					continue;
-				UINT16 WINH = gba_io_read16(gba, GBA_WIN0H + 2 * win);
-				UINT16 WINV = gba_io_read16(gba, GBA_WIN0V + 2 * win);
-				INT32  win_xmin = SB_BFE(WINH, 8, 8);
-				INT32  win_xmax = SB_BFE(WINH, 0, 8);
-				INT32  win_ymin = SB_BFE(WINV, 8, 8);
-				INT32  win_ymax = SB_BFE(WINV, 0, 8);
-				// Garbage values of X2>240 or X1>X2 are interpreted as X2=240.
-				// Garbage values of Y2>160 or Y1>Y2 are interpreted as Y2=160. 
-				if (win_xmin > win_xmax)
-					win_xmax = 240;
-				if (win_ymin > win_ymax)
-					win_ymax = 161;
-				if (win_xmax > 240)
-					win_xmax = 240;
-				if (sprite_lcd_y < win_ymin || sprite_lcd_y >= win_ymax)
-					continue;
-				UINT16 winin = gba_io_read16(gba, GBA_WININ);
-				UINT8  win_value = SB_BFE(winin, win * 8, 6);
-				for (INT32 x = win_xmin; x < win_xmax; ++x)
-					gba->window[x] = win_value;
-			}
-			INT32  backdrop_type = 5;
-			UINT32 backdrop_col  = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2)) | (backdrop_type << 17);
-			for (INT32 x = 0; x < 240; ++x) {
-				UINT8 window_control = gba->window[x];
-				if (SB_BFE(window_control, 4, 1) == 0)
-					gba->first_target_buffer[x] = backdrop_col;
-			}
-		}
-	}
-
 	if (visible) {
-		UINT8 window_control = gba->window[lcd_x];
+		UINT8 window_control = gba_obj_merge_pixel(gba, lcd_x, lcd_y);
+		if (SB_BFE(dispcnt, 13, 2) != 0) {
+			UINT8 inside = gba->ppu.window_engine.buffer[lcd_x];
+			UINT16 winin = gba_io_read16(gba, GBA_WININ);
+			if (SB_BFE(dispcnt, 13, 1) && (inside & 1))
+				window_control = SB_BFE(winin, 0, 6);
+			else if (SB_BFE(dispcnt, 14, 1) && (inside & 2))
+				window_control = SB_BFE(winin, 8, 6);
+		}
 		if (bg_mode == 6 || bg_mode == 7) {
 			//Palette 0 is taken as the background
 		} else if (bg_mode <= 5) {
@@ -2335,9 +4123,33 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 				UINT32 col = 0;
 				if ((bg < 2 && bg_mode == 2) || (bg == 3 && bg_mode == 1) || (bg != 2 && bg_mode >= 3))
 					continue;
-				bool bg_en = SB_BFE(dispcnt, 8 + bg, 1) && SB_BFE(gba->ppu.dispcnt_pipeline[0], 8 + bg, 1);
+				bool bg_en = SB_BFE(gba->ppu.dispcnt_pipeline[0] & dispcnt, 8 + bg, 1);
 				if (!bg_en || SB_BFE(window_control, bg, 1) == 0)
 					continue;
+
+				UINT16 pipeline_bgcnt = gba_io_read16(gba, GBA_BG0CNT + bg * 2);
+				INT32 source_x = lcd_x;
+				if (SB_BFE(pipeline_bgcnt, 6, 1)) {
+					INT32 mosaic_x = SB_BFE(gba_io_read16(gba, GBA_MOSAIC), 0, 4) + 1;
+					source_x -= source_x % mosaic_x;
+				}
+				UINT32 pipeline_pixel = gba->ppu.bg.buffer[source_x][bg];
+				if (pipeline_pixel != 0) {
+					if (pipeline_pixel & 0x80000000u)
+						col = pipeline_pixel & 0xffff;
+					else
+						col = *(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + pipeline_pixel * 2);
+					INT32 priority = SB_BFE(pipeline_bgcnt, 0, 2);
+					col |= (bg << 17) | ((5 - priority) << 28) | ((4 - bg) << 25);
+					if (col > gba->first_target_buffer[lcd_x]) {
+						UINT32 t = gba->first_target_buffer[lcd_x];
+						gba->first_target_buffer[lcd_x] = col;
+						col = t;
+					}
+					if (col > gba->second_target_buffer[lcd_x])
+						gba->second_target_buffer[lcd_x] = col;
+				}
+				continue;
 
 				bool   rot_scale = bg_mode >= 1 && bg >= 2;
 				UINT16 bgcnt = gba_io_read16(gba, GBA_BG0CNT + bg * 2);
@@ -2415,7 +4227,7 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 				} else if (bg_mode == 4) {
 					INT32 p          = bg_x + bg_y * 240;
 					INT32 frame_sel  = SB_BFE(dispcnt, 4, 1);
-					INT32 addr       = p * 1 + 0xA000 * frame_sel;
+					INT32 addr       = p * 1 + 0xa000 * frame_sel;
 					UINT8 pallete_id = gba->mem.vram[addr];
 					if (pallete_id == 0)
 						continue;
@@ -2423,7 +4235,7 @@ static FORCE_INLINE void gba_tick_ppu(gba_t* gba, bool render)
 				} else if (bg_mode == 5) {
 					INT32 p         = bg_x + bg_y * 160;
 					INT32 frame_sel = SB_BFE(dispcnt, 4, 1);
-					INT32 addr      = p * 2 + 0xA000 * frame_sel;
+					INT32 addr      = p * 2 + 0xa000 * frame_sel;
 					col = *(UINT16*)(gba->mem.vram + addr);
 				} else {
 					bg_x = bg_x & (screen_size_x - 1);
@@ -2577,6 +4389,7 @@ evy = 1;
 			gba->framebuffer[p + 1] = g * 8 * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1] * screen_blend_factor;
 		}
 	}
+#endif
 }
 
 static void gba_tick_keypad(sb_joy_t* joy, gba_t* gba)
@@ -2601,50 +4414,47 @@ static void gba_tick_keypad(sb_joy_t* joy, gba_t* gba)
 	UINT16 keycnt      = gba_io_read16(gba, GBA_KEYCNT);
 	bool irq_enable    = SB_BFE(keycnt, 14, 1);
 	bool irq_condition = SB_BFE(keycnt, 15, 1);		//[0: any key, 1: all keys]
-	INT32 if_bit = 0;
-	if (irq_enable || gba->stop_mode) {
-		UINT16 pressed = SB_BFE(reg_value, 0, 10) ^ 0x3ff;
-		UINT16 mask    = SB_BFE(keycnt,    0, 10);
+	UINT16 pressed     = SB_BFE(reg_value, 0, 10) ^ 0x3ff;
+	UINT16 mask        = SB_BFE(keycnt,    0, 10);
+	bool condition     = irq_condition ? pressed == mask : (pressed & mask) != 0;
 
-		if (irq_condition && ((pressed & mask) == mask))
-			if_bit |= 1 << GBA_INT_KEYPAD;
-		if (!irq_condition && ((pressed & mask) != 0))
-			if_bit |= 1 << GBA_INT_KEYPAD;
-
-		if (if_bit)
-			gba->stop_mode = false;
-
-		if (if_bit && !gba->prev_key_interrupt && irq_enable) {
-			gba_send_interrupt(gba, 4, if_bit);
-			gba->prev_key_interrupt = true;
-		} else
-			gba->prev_key_interrupt = false;
-
-	}
+	if (condition && gba->stop_mode)
+		gba->stop_mode = false;
+	if (condition && irq_enable)
+		gba_irq_raise(gba, 1 << GBA_INT_KEYPAD);
 }
 
-UINT64 gba_read_eeprom_bitstream(gba_t* gba, UINT32 source_address, INT32 offset, INT32 size, INT32 elem_size, INT32 dir)
+static FORCE_INLINE void gba_dma_request_mask(gba_t* gba, UINT8 mask)
 {
-	UINT64 data = 0;
-	for (INT32 i = 0; i < size; ++i) {
-		data |= ((UINT64)(gba_read16(gba, source_address + (i + offset) * elem_size * dir) & 1)) << (size - i - 1);
+	for (INT32 i = 0; i < 4; i++) {
+		UINT8 bit = 1 << i;
+		if ((mask & bit) && !(gba->dma_runnable_mask & bit) && gba->dma[i].activation_countdown < 0)
+			gba->dma[i].activation_countdown = 2;
 	}
-	return data;
 }
 
-void gba_store_eeprom_bitstream(gba_t* gba, UINT32 source_address, INT32 offset, INT32 size, INT32 elem_size, INT32 dir, UINT64 data)
+static void gba_dma_tick_activation(gba_t* gba)
 {
-	for (INT32 i = 0; i < size; ++i) {
-		gba_store16(gba, source_address + (i + offset) * elem_size * dir, data >> (size - i - 1) & 1);
+	for (INT32 i = 0; i < 4; i++) {
+		if (gba->dma[i].activation_countdown > 0 && --gba->dma[i].activation_countdown == 0) {
+			UINT16 cnt_h = gba_io_read16(gba, GBA_DMA0CNT_H + 12 * i);
+			if (SB_BFE(cnt_h, 15, 1))
+				gba->dma_runnable_mask |= 1 << i;
+			gba->dma[i].activation_countdown = -1;
+		}
 	}
+	gba->activate_dmas = gba->dma_runnable_mask != 0;
 }
 
-static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
+static INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 {
 	INT32 ticks = 0;
 	gba->activate_dmas = false;
 	gba->dma_wait_ppu  = false;
 	for (INT32 i = 0;i < 4;++i) {
+		if (!(gba->dma_runnable_mask & (1 << i)))
+			continue;
+		gba->dma_active_channel = i;
 		UINT16 cnt_h = gba_io_read16(gba, GBA_DMA0CNT_H + 12 * i);
 		bool enable  = SB_BFE(cnt_h, 15, 1);
 		if (enable) {
@@ -2727,25 +4537,14 @@ static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 					else
 						gba->dma[i].dest_addr &= ~1;
 				}
-				bool audio_dma = (mode == 3) && (i == 1 || i == 2);
+				bool audio_dma = (mode == 3) && gba_audio_dma_fifo(gba, i) >= 0;
 				if (audio_dma) {
 					if (gba->dma[i].activate_audio_dma == false)
 						continue;
 					gba->dma[i].activate_audio_dma = false;
 				}
-				if (gba->dma[i].source_addr >= 0x08000000 && gba->dma[i].dest_addr >= 0x08000000) {
+				if (gba->dma[i].source_addr >= 0x08000000 && gba->dma[i].dest_addr >= 0x08000000)
 					force_first_write_sequential = true;
-				} else {
-					if (gba->dma[i].dest_addr >= 0x08000000) {
-						// Allow the in process prefetech to finish before starting DMA
-						if (!gba->mem.prefetch_size && gba->mem.prefetch_en)
-							ticks += gba_compute_access_cycles_dma(gba, gba->dma[i].dest_addr, 2) > 4;
-					}
-				}
-				if (gba->dma[i].source_addr >= 0x08000000) {
-					if (gba->mem.prefetch_en)
-						ticks += gba_compute_access_cycles_dma(gba, gba->dma[i].source_addr, 2) <= 4;
-				}
 				gba->last_transaction_dma = true;
 				UINT32 cnt = gba_io_read16(gba, GBA_DMA0CNT_L + 12 * i);
 
@@ -2754,8 +4553,8 @@ static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 				if (cnt == 0)
 					cnt = i == 3 ? 0x10000 : 0x4000;
 
-				static const UINT32 src_mask[] = { 0x07FFFFFF, 0x0FFFFFFF, 0x0FFFFFFF, 0x0FFFFFFF };
-				static const UINT32 dst_mask[] = { 0x07FFFFFF, 0x07FFFFFF, 0x07FFFFFF, 0x0FFFFFFF };
+				static const UINT32 src_mask[] = { 0x07ffffff, 0x0fffffff, 0x0fffffff, 0x0fffffff };
+				static const UINT32 dst_mask[] = { 0x07ffffff, 0x07ffffff, 0x07ffffff, 0x0fffffff };
 				gba->dma[i].source_addr &= src_mask[i];
 				gba->dma[i].dest_addr   &= dst_mask[i];
 				gba_io_store16(gba, GBA_DMA0CNT_L + 12 * i, cnt);
@@ -2774,67 +4573,19 @@ static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 			if (dst >= 0x08000000 && dst < 0x0e000000)
 				dst_dir = 1;
 
-			// EEPROM DMA transfers
-			if (i == 3 && gba->cart.backup_type == GBA_BACKUP_EEPROM) {
-				INT32 src_in_eeprom = (src & 0x1ffffff) >= gba->cart.rom_size || (src & 0x1ffffff) >= 0x01ffff00;
-				INT32 dst_in_eeprom = (dst & 0x1ffffff) >= gba->cart.rom_size || (dst & 0x1ffffff) >= 0x01ffff00;
-				src_in_eeprom &= src >= 0x8000000 && src <= 0xDFFFFFF;
-				dst_in_eeprom &= dst >= 0x8000000 && dst <= 0xDFFFFFF;
-				skip_dma = src_in_eeprom || dst_in_eeprom;
-				if (dst_in_eeprom) {
-					if (cnt == 73) {
-						// Write data 6 bit address
-						UINT32 addr = gba_read_eeprom_bitstream(gba, src, 2,      6, type ? 4 : 2, src_dir);
-						UINT64 data = gba_read_eeprom_bitstream(gba, src, 2 + 6, 64, type ? 4 : 2, src_dir);
-						((UINT64*)gba->mem.cart_backup)[addr] = data;
-						gba->cart.backup_is_dirty = true;
-					} else if (cnt == 81) {
-						// Write data 14 bit address
-						UINT32 addr = gba_read_eeprom_bitstream(gba, src, 2,      14, type ? 4 : 2, src_dir) & 0x3ff;
-						UINT64 data = gba_read_eeprom_bitstream(gba, src, 2 + 14, 64, type ? 4 : 2, src_dir);
-						((UINT64*)gba->mem.cart_backup)[addr] = data;
-						gba->cart.backup_is_dirty = true;
-					} else if (cnt ==  9) {
-						// 2 bits "11" (Read Request)
-						// 6 bits eeprom address (MSB first)
-						// 1 bit "0"
-						// Write data 6 bit address
-						gba->mem.eeprom_addr = gba_read_eeprom_bitstream(gba, src, 2,  6, type ? 4 : 2, src_dir);
-					} else if (cnt == 17) {
-						// 2 bits "11" (Read Request)
-						// 14 bits eeprom address (MSB first)
-						// 1 bit "0"
-						// Write data 6 bit address
-						gba->mem.eeprom_addr = gba_read_eeprom_bitstream(gba, src, 2, 14, type ? 4 : 2, src_dir) & 0x3ff;
-					} else {
-						printf("Bad cnt: %d for eeprom write\n", cnt);
-					}
-					gba->dma[i].current_transaction = cnt;
-				}
-				if (src_in_eeprom) {
-					if (cnt == 68) {
-						UINT64 data = ((UINT64*)gba->mem.cart_backup)[gba->mem.eeprom_addr];
-						gba_store_eeprom_bitstream(gba, dst, 4, 64, type ? 4 : 2, dst_dir, data);
-					} else {
-						printf("Bad cnt: %d for eeprom read\n", cnt);
-					}
-					gba->dma[i].current_transaction = cnt;
-				}
-			}
-			bool audio_dma = (mode == 3) && (i == 1 || i == 2);
+			bool audio_dma = (mode == 3) && gba_audio_dma_fifo(gba, i) >= 0;
 			if (audio_dma) {
-				INT32 fifo = i - 1;
+				INT32 fifo = gba_audio_dma_fifo(gba, i);
 				dst &= ~3;
 				src &= ~3;
 				for (INT32 x = 0;x < 4;++x) {
 					UINT32 src_addr = src + x * 4 * src_dir;
-					UINT32 data     = gba_read32(gba, src_addr);
-					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 0, 8));
-					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 8, 8));
-					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 16, 8));
-					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 24, 8));
-					ticks += gba_compute_access_cycles_dma(gba, src_addr, x != 0 ? 2 : 3);
-					ticks += gba_compute_access_cycles_dma(gba, dst, x != 0 || force_first_write_sequential ? 2 : 3);
+					gba_dma_advance_access(gba, src_addr, x != 0 ? 2 : 3);
+					UINT32 data = gba_read32(gba, src_addr);
+					gba->mem.dma_latch = data;
+					gba->mem.last_bus_access_dma = true;
+					gba_dma_advance_access(gba, dst, x != 0 || force_first_write_sequential ? 2 : 3);
+					gba_audio_fifo_enqueue_word(&gba->audio.fifo[fifo], data);
 				}
 				dst_addr_ctl   = 2;
 				transfer_bytes = 4;
@@ -2848,26 +4599,33 @@ static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 					INT32 src_addr = src + x * transfer_bytes * src_dir;
 					if (type) {
 						if (src_addr >= 0x02000000) {
+							gba_dma_advance_access(gba, src_addr, x != 0 ? 2 : 3);
 							gba->dma[i].latched_transfer = gba_read32(gba, src_addr);
-							ticks += gba_compute_access_cycles_dma(gba, src_addr, x != 0 ? 2 : 3);
+							gba->mem.dma_latch = gba->dma[i].latched_transfer;
+							gba->mem.last_bus_access_dma = true;
 						}
+						gba_dma_advance_access(gba, dst_addr, x != 0 || force_first_write_sequential ? 2 : 3);
 						gba_dma_write32(gba, dst_addr, gba->dma[i].latched_transfer);
-						ticks += gba_compute_access_cycles_dma(gba, dst_addr, x != 0 || force_first_write_sequential ? 2 : 3);
+						ticks = -1;
 					} else {
 						INT32 v = 0;
 						if (src_addr >= 0x02000000) {
-							v = gba->dma[i].latched_transfer = (gba_read16(gba, src_addr)) & 0xffff;
+							gba_dma_advance_access(gba, src_addr, x != 0 ? 0 : 1);
+							v = gba->dma[i].latched_transfer = gba_read16(gba, src_addr) & 0xffff;
 							gba->dma[i].latched_transfer |= gba->dma[i].latched_transfer << 16;
-							ticks += gba_compute_access_cycles_dma(gba, src_addr, x != 0 ? 0 : 1);
+							gba->mem.dma_latch = gba->dma[i].latched_transfer;
+							gba->mem.last_bus_access_dma = true;
 						} else
 							v = gba->dma[i].latched_transfer >> (((dst_addr) & 0x3) * 8);
+						gba_dma_advance_access(gba, dst_addr, x != 0 || force_first_write_sequential ? 0 : 1);
 						gba_dma_write16(gba, dst_addr, v & 0xffff);
-						ticks += gba_compute_access_cycles_dma(gba, dst_addr, x != 0 || force_first_write_sequential ? 0 : 1);
+						ticks = -1;
 					}
 				}
 			}
 		
 			if (gba->dma[i].current_transaction >= cnt) {
+				gba->dma_runnable_mask &= ~(1 << i);
 				if (dst_addr_ctl == 0 || dst_addr_ctl == 3)
 					dst += cnt * transfer_bytes;
 				else if (dst_addr_ctl == 1)
@@ -2882,7 +4640,7 @@ static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 
 				if (irq_enable) {
 					UINT16 if_bit = 1 << (GBA_INT_DMA0 + i);
-					gba_send_interrupt(gba, 4, if_bit);
+					gba_irq_raise(gba, if_bit);
 				}
 				if (!dma_repeat || mode == 0) {
 					cnt_h &= 0x7fff;
@@ -2899,142 +4657,199 @@ static FORCE_INLINE INT32 gba_tick_dma(gba_t*gba, INT32 last_tick)
 		if (ticks)
 			break;
 	}
-	gba->activate_dmas |= ticks != 0;
+	if (ticks)
+		gba->dma_runnable_mask |= 1 << gba->dma_active_channel;
+	gba->activate_dmas = gba->dma_runnable_mask != 0;
  
 	if (gba->last_transaction_dma && ticks == 0) {
-		ticks += 2;
+		gba_system_advance(gba, 2);
 		gba->last_transaction_dma = false;
 	}
 
-	return ticks;
+	return ticks < 0 ? 1 : ticks;
 }
 
-static FORCE_INLINE void gba_tick_sio(gba_t* gba)
+static void gba_sio_start(gba_t* gba, UINT16 value)
 {
-	//Just a stub for now;
+	static const INT32 cycles[4] = { 512, 64, 2048, 256 };
+	UINT16 siocnt = (gba_io_read16(gba, GBA_SIOCNT) & 0x0080) | (value & ~0x0080);
+	bool active = siocnt & 0x0080;
+	bool start = value & 0x0080;
+	gba_io_store16(gba, GBA_SIOCNT, siocnt);
+	if (!active && start) {
+		siocnt |= 0x0080;
+		gba_io_store16(gba, GBA_SIOCNT, siocnt);
+		if (siocnt & 1) {
+			INT32 index = SB_BFE(siocnt, 1, 1) | (SB_BFE(siocnt, 12, 1) << 1);
+			gba->sio.completion_cycles = cycles[index];
+			gba->sio.completion_deadline = gba->eeprom.clock + gba->sio.completion_cycles;
+			gba->sio.scheduled = true;
+		} else {
+			// External-clock normal mode remains pending without an external clock model.
+			gba->sio.completion_cycles = 0;
+			gba->sio.completion_deadline = 0;
+			gba->sio.scheduled = false;
+		}
+	}
+}
+
+static void gba_tick_sio(gba_t* gba)
+{
 	UINT16 siocnt = gba_io_read16(gba, GBA_SIOCNT);
-	bool active      = SB_BFE(siocnt,  7, 1);
-	bool irq_enabled = SB_BFE(siocnt, 14, 1);
-	if (active) {
-		if (gba->sio.last_active == false) {
-			gba->sio.last_active = true;
-			gba->sio.ticks_till_transfer_done = 8 * 8;
-		}
-		bool internal_clock = SB_BFE(siocnt, 0, 1);
-		if (internal_clock)
-			gba->sio.ticks_till_transfer_done--;
-		if (gba->sio.ticks_till_transfer_done <= 0) {
-			if (irq_enabled) {
-				UINT16 if_bit = 1 << (GBA_INT_SERIAL);
-				gba_send_interrupt(gba, 4, if_bit);
-			}
-			siocnt &= ~(1 << 7);
-			gba_io_store16(gba, GBA_SIOCNT,    siocnt);
-			gba->sio.last_active = false;
-			gba_io_store8( gba, GBA_SIODATA8,  0);
-			gba_io_store32(gba, GBA_SIODATA32, 0);
-		}
+	bool active = SB_BFE(siocnt, 7, 1);
+	if (!active) {
+		gba->sio.last_active = false;
+		gba->sio.scheduled = false;
+		return;
+	}
+	if (gba->sio.scheduled && gba->eeprom.clock >= gba->sio.completion_deadline) {
+		if (SB_BFE(siocnt, 14, 1))
+			gba_irq_raise(gba, 1 << GBA_INT_SERIAL);
+		gba_io_store16(gba, GBA_SIOCNT, siocnt & ~0x0080);
+		gba->sio.scheduled = false;
+	}
+	gba->sio.last_active = true;
+}
 
+static FORCE_INLINE INT32 gba_timer_shift(UINT16 control)
+{
+	static const INT32 shift[4] = { 0, 6, 8, 10 };
+	return shift[control & 3];
+}
+
+static FORCE_INLINE UINT16 gba_timer_mask_control(INT32 timer, UINT16 control)
+{
+	return control & (timer ? 0x00c7 : 0x00c3);
+}
+
+static FORCE_INLINE UINT32 gba_timer_counter_delta(gba_t* gba, gba_timer_t* timer)
+{
+	if (!timer->running || timer->timestamp_started == gba->timer_clock + 1)
+		return 0;
+	return (UINT32)((gba->timer_clock - timer->timestamp_started) >> gba_timer_shift(timer->control));
+}
+
+static FORCE_INLINE UINT16 gba_timer_read_counter(gba_t* gba, INT32 timer)
+{
+	gba_timer_t* channel = &gba->timers[timer];
+	return channel->counter + gba_timer_counter_delta(gba, channel);
+}
+
+static FORCE_INLINE void gba_timer_start(gba_t* gba, INT32 timer, INT32 cycle_offset)
+{
+	gba_timer_t* channel = &gba->timers[timer];
+	INT32 shift = gba_timer_shift(channel->control);
+	UINT64 span = ((UINT64)0x10000 - channel->counter) << shift;
+	channel->running = true;
+	channel->timestamp_started = gba->timer_clock - cycle_offset;
+	channel->overflow_deadline = gba->timer_clock + span - cycle_offset;
+}
+
+static void gba_timer_reload_and_signal(gba_t* gba, INT32 timer)
+{
+	gba_timer_t* channel = &gba->timers[timer];
+	channel->counter = channel->reload;
+
+	if (channel->control & 0x40) {
+		UINT16 if_bit = 1 << (GBA_INT_TIMER0 + timer);
+		gba_irq_raise(gba, if_bit);
+	}
+
+	if (timer < 2)
+		gba_audio_fifo_timer_overflow(gba, timer);
+
+	if (timer < 3) {
+		gba_timer_t* next = &gba->timers[timer + 1];
+		if ((next->control & 0x84) == 0x84) {
+			UINT32 value = (UINT32)next->counter + 1;
+			next->counter = value;
+			if (value == 0x10000)
+				gba_timer_reload_and_signal(gba, timer + 1);
+		}
 	}
 }
 
-static FORCE_INLINE void gba_tick_timers(gba_t* gba)
+static FORCE_INLINE void gba_timer_stop(gba_t* gba, INT32 timer)
 {
-	gba->deferred_timer_ticks += 1;
-	if (SB_UNLIKELY(gba->deferred_timer_ticks >= gba->timer_ticks_before_event))
-		gba_compute_timers(gba);
+	gba_timer_t* channel = &gba->timers[timer];
+	if (!channel->running)
+		return;
+	UINT32 value = (UINT32)channel->counter + gba_timer_counter_delta(gba, channel);
+	channel->running = false;
+	channel->counter = value;
+	if (value >= 0x10000)
+		gba_timer_reload_and_signal(gba, timer);
 }
 
-static void gba_compute_timers(gba_t* gba)
+static FORCE_INLINE void gba_timer_write_reload(gba_t* gba, INT32 timer, UINT16 value)
 {
-	INT32  ticks            = gba->deferred_timer_ticks;
-	UINT32 old_global_timer = gba->global_timer;
-	gba->global_timer += gba->deferred_timer_ticks;
+	gba_timer_t* channel = &gba->timers[timer];
+	channel->pending_reload = value;
+	channel->reload_commit_deadline = gba->timer_clock + 1;
+	channel->reload_write_pending = true;
+}
 
-	gba->deferred_timer_ticks      = 0;
-	INT32 last_timer_overflow      = 0;
-	INT32 timer_ticks_before_event = 32768;
-	const INT32 prescaler_lookup[] = { 0,6,8,10 };
-	for (INT32 t = 0; t < 4; ++t) {
-		UINT16 tm_cnt_h = gba_io_read16(gba, GBA_TM0CNT_H + t * 4);
-		bool enable = SB_BFE(tm_cnt_h, 7, 1);
-		if (enable) {
-			INT32 compensated_ticks = ticks;
-			UINT16 prescale = SB_BFE(tm_cnt_h, 0, 2);
-			bool   count_up = SB_BFE(tm_cnt_h, 2, 1) && t != 0;
-			bool   irq_en   = SB_BFE(tm_cnt_h, 6, 1);
-			UINT16 value    = gba_io_read16(gba, GBA_TM0CNT_L + t * 4);
-			if (enable != gba->timers[t].last_enable && enable) {
-				gba->timers[t].startup_delay = 2;
-				value = gba->timers[t].reload_value;
-				gba_io_store16(gba, GBA_TM0CNT_L + t * 4, value);
-			}
-			if (gba->timers[t].startup_delay >= 0) {
-				gba->timers[t].startup_delay -= ticks;
-				gba->timers[t].last_enable    = enable;
-				if (gba->timers[t].startup_delay >= 0) {
-					if (gba->timers[t].startup_delay < timer_ticks_before_event)timer_ticks_before_event = gba->timers[t].startup_delay;
-					continue;
-				}
-				compensated_ticks = -gba->timers[t].startup_delay;
-				gba->timers[t].startup_delay = -1;
-			}
-			if (count_up) {
-				if (last_timer_overflow) {
-					UINT32 v = value;
-					v += last_timer_overflow;
-					last_timer_overflow = 0;
-					while (v > 0xffff) {
-						v = (v + gba->timers[t].reload_value) - 0x10000;
-						last_timer_overflow++;
-					}
-					value = v;
-				}
-			} else {
-				last_timer_overflow = 0;
-				INT32 prescale_duty = prescaler_lookup[prescale];
+static FORCE_INLINE void gba_timer_write_control(gba_t* gba, INT32 timer, UINT16 value)
+{
+	gba_timer_t* channel = &gba->timers[timer];
+	channel->pending_control = value;
+	channel->control_commit_deadline = gba->timer_clock + 1;
+	channel->control_write_pending = true;
+}
 
-				INT32 increment = (gba->global_timer >> prescale_duty) - (old_global_timer >> prescale_duty);
-				INT32 v         = value + increment;
-				while (v > 0xffff) {
-					v = (v + gba->timers[t].reload_value) - 0x10000;
-					last_timer_overflow++;
-				}
-				value = v;
-				INT32 ticks_before_overflow = (int)(0xffff - value) << (prescale_duty);
-				if (ticks_before_overflow < timer_ticks_before_event)
-					timer_ticks_before_event = ticks_before_overflow;
-			}
-			if (last_timer_overflow) {
-				UINT16 soundcnt_h = gba_io_read16(gba, GBA_SOUNDCNT_H);
-				if (t < 2) {
-					for (INT32 i = 0; i < 2; ++i) {
-						INT32 timer = SB_BFE(soundcnt_h, 10 + i * 4, 1);
-						if (timer != t)
-							continue;
-						INT32 samples_to_pop = last_timer_overflow;
-						INT32 size = (gba->audio.fifo[i].write_ptr - gba->audio.fifo[i].read_ptr) & 0x1f;
-						while (samples_to_pop-- && size) {
-							gba->audio.fifo[i].read_ptr = (gba->audio.fifo[i].read_ptr + 1) & 0x1f;
-							--size;
-						}
-						if (size < GBA_AUDIO_DMA_ACTIVATE_THRESHOLD)
-							gba->dma[i + 1].activate_audio_dma = gba->activate_dmas = true;
-					}
-				}
-				if (irq_en) {
-					UINT16 if_bit = 1 << (GBA_INT_TIMER0 + t);
-					gba_send_interrupt(gba, 4, if_bit);
-				}
-			}
-			gba->timers[t].reload_value = gba->timers[t].pending_reload_value;
+static void gba_timer_commit_control(gba_t* gba, INT32 timer)
+{
+	gba_timer_t* channel = &gba->timers[timer];
+	bool old_enable = channel->control & 0x80;
+	gba_timer_stop(gba, timer);
+	channel->control = gba_timer_mask_control(timer, channel->pending_control);
+	gba_io_store16(gba, GBA_TM0CNT_H + timer * 4, channel->control);
 
-			gba_io_store16(gba, GBA_TM0CNT_L + t * 4, value);
-		} else
-			last_timer_overflow = 0;
-		gba->timers[t].last_enable = enable;
+	if (!(channel->control & 0x80))
+		return;
+
+	INT32 shift = gba_timer_shift(channel->control);
+	INT32 phase = gba->timer_clock & ((1 << shift) - 1);
+	if (old_enable) {
+		if (!(channel->control & 4))
+			gba_timer_start(gba, timer, phase);
+	} else if (channel->control & 4) {
+		channel->counter = channel->reload;
+	} else if (channel->counter == 0xffff && phase == 0) {
+		gba_timer_start(gba, timer, 0);
+	} else {
+		channel->counter = channel->reload;
+		gba_timer_start(gba, timer, phase - 1);
 	}
-	gba->timer_ticks_before_event = timer_ticks_before_event;
+}
+
+static void gba_tick_timers(gba_t* gba)
+{
+	gba->timer_clock++;
+
+	for (INT32 timer = 0; timer < 4; timer++) {
+		gba_timer_t* channel = &gba->timers[timer];
+		if (channel->running && channel->overflow_deadline == gba->timer_clock) {
+			gba_timer_reload_and_signal(gba, timer);
+			gba_timer_start(gba, timer, 0);
+		}
+	}
+
+	for (INT32 timer = 0; timer < 4; timer++) {
+		gba_timer_t* channel = &gba->timers[timer];
+		if (channel->reload_write_pending && channel->reload_commit_deadline == gba->timer_clock) {
+			channel->reload = channel->pending_reload;
+			channel->reload_write_pending = false;
+		}
+	}
+
+	for (INT32 timer = 0; timer < 4; timer++) {
+		gba_timer_t* channel = &gba->timers[timer];
+		if (channel->control_write_pending && channel->control_commit_deadline == gba->timer_clock) {
+			channel->control_write_pending = false;
+			gba_timer_commit_control(gba, timer);
+		}
+	}
 }
 
 static FORCE_INLINE float gba_polyblep(float t, float dt)
@@ -3059,48 +4874,120 @@ static FORCE_INLINE float gba_bandlimited_square(float t, float duty_cycle, floa
 	return y;
 }
 
-static FORCE_INLINE void gba_send_interrupt(gba_t* gba, INT32 delay, INT32 if_bit)
+static bool gba_irq_schedule(gba_t* gba, UINT8 type, UINT8 priority, UINT8 value, UINT64 deadline)
 {
-	if (if_bit) {
-		gba->active_if_pipe_stages |= 1 << delay;
-		gba->pipelined_if[delay]   |= if_bit;
+	gba_irq_t* irq = &gba->irq;
+	if (type <= GBA_IRQ_EVENT_COMMIT_SOFTWARE) {
+		for (INT32 i = 0; i < irq->event_count; i++) {
+			gba_irq_event_t* event = &irq->events[i];
+			if (event->deadline == deadline && event->type == type && event->priority == priority)
+				return true;
+		}
+	}
+	if (irq->event_count >= GBA_IRQ_EVENT_CAPACITY)
+		return false;
+
+	gba_irq_event_t event;
+	event.deadline = deadline;
+	event.sequence = irq->next_sequence++;
+	event.type = type;
+	event.priority = priority;
+	event.value = value;
+
+	INT32 insert = irq->event_count;
+	while (insert > 0) {
+		gba_irq_event_t* previous = &irq->events[insert - 1];
+		if (previous->deadline < event.deadline)
+			break;
+		if (previous->deadline == event.deadline && previous->priority < event.priority)
+			break;
+		if (previous->deadline == event.deadline && previous->priority == event.priority && previous->sequence < event.sequence)
+			break;
+		irq->events[insert] = *previous;
+		insert--;
+	}
+	irq->events[insert] = event;
+	irq->event_count++;
+	return true;
+}
+
+static void gba_irq_commit_io(gba_t* gba)
+{
+	gba_irq_t* irq = &gba->irq;
+	UINT16 ie = irq->pending_ie & 0x3fff;
+	UINT16 int_if = irq->pending_if & 0x3fff;
+	UINT8 ime = irq->pending_ime & 1;
+	gba_io_store16(gba, GBA_IE, ie);
+	gba_io_store16(gba, GBA_IF, int_if);
+	gba_io_store16(gba, GBA_IME, ime);
+
+	UINT8 available = (ie & int_if) != 0;
+	if (available != irq->irq_available)
+		gba_irq_schedule(gba, GBA_IRQ_EVENT_AVAILABLE, 0, available, irq->clock + 1);
+
+	UINT8 line = ime && available;
+	if (line != irq->irq_line_target) {
+		gba_irq_schedule(gba, GBA_IRQ_EVENT_CPU_LINE, 0, line, irq->clock + 2);
+		irq->irq_line_target = line;
 	}
 }
 
-static FORCE_INLINE void gba_tick_interrupts(gba_t* gba)
+static FORCE_INLINE void gba_irq_raise(gba_t* gba, UINT16 if_bits)
 {
-	if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
-		UINT16 if_bit = gba->pipelined_if[0];
-		if (if_bit) {
-			UINT16 if_val = gba_io_read16(gba, GBA_IF);
-			if_val |= if_bit;
-			gba_io_store16(gba, GBA_IF, if_val);
-		}
-		gba->pipelined_if[0] = gba->pipelined_if[1];
-		gba->pipelined_if[1] = gba->pipelined_if[2];
-		gba->pipelined_if[2] = gba->pipelined_if[3];
-		gba->pipelined_if[3] = gba->pipelined_if[4];
-		gba->pipelined_if[4] = 0;
-		gba->active_if_pipe_stages >>= 1;
+	if_bits &= 0x3fff;
+	if (!if_bits)
+		return;
+	gba->irq.pending_if |= if_bits;
+	gba_irq_schedule(gba, GBA_IRQ_EVENT_COMMIT_RAISE, 0, 0, gba->irq.clock + 1);
+}
+
+static void gba_irq_dispatch(gba_t* gba, gba_irq_event_t event)
+{
+	switch (event.type) {
+		case GBA_IRQ_EVENT_COMMIT_RAISE:
+		case GBA_IRQ_EVENT_COMMIT_SOFTWARE:
+			gba_irq_commit_io(gba);
+			break;
+		case GBA_IRQ_EVENT_AVAILABLE:
+			gba->irq.irq_available = event.value;
+			if (event.value)
+				gba->cpu.wait_for_interrupt = false;
+			break;
+		case GBA_IRQ_EVENT_CPU_LINE:
+			gba->irq.cpu_irq_line = event.value;
+			break;
+	}
+}
+
+static void gba_irq_tick(gba_t* gba)
+{
+	gba_irq_t* irq = &gba->irq;
+	irq->clock++;
+	while (irq->event_count && irq->events[0].deadline <= irq->clock) {
+		gba_irq_event_t event = irq->events[0];
+		irq->event_count--;
+		for (INT32 i = 0; i < irq->event_count; i++)
+			irq->events[i] = irq->events[i + 1];
+		gba_irq_dispatch(gba, event);
 	}
 }
 
 UINT64 gba_decrypt_arv3(UINT64 code)
 {
-	const UINT32 S0 = 0x7AA9648F;
-	const UINT32 S1 = 0x7FAE6994;
-	const UINT32 S2 = 0xC0EFAAD5;
-	const UINT32 S3 = 0x42712C57;
+	const UINT32 S0 = 0x7aa9648f;
+	const UINT32 S1 = 0x7fae6994;
+	const UINT32 S2 = 0xc0efaad5;
+	const UINT32 S3 = 0x42712c57;
 
 	UINT32 l = code >> 32;
-	UINT32 r = code & 0xFFFFFFFF;
+	UINT32 r = code & 0xffffffff;
 
-	UINT32 tmp = 0x9E3779B9 << 5;
+	UINT32 tmp = 0x9e3779b9 << 5;
 
 	for (INT32 i = 0; i < 32; i++) {
 		r -= ((l << 4) + S2) ^ (l + tmp) ^ ((l >> 5) + S3);
 		l -= ((r << 4) + S0) ^ (r + tmp) ^ ((r >> 5) + S1);
-		tmp -= 0x9E3779B9;
+		tmp -= 0x9e3779b9;
 	}
 
 	return ((UINT64)l << 32) | r;
@@ -3108,8 +4995,8 @@ UINT64 gba_decrypt_arv3(UINT64 code)
 
 bool gba_handle_ar_if_instruction(gba_t* gba, UINT32 left, UINT32 right)
 {
-	UINT32 address = ((left << 4) & 0x0F000000) | (left & 0x000FFFFF);
-	UINT8  current_code  = (left >> 24) & 0xFF;
+	UINT32 address = ((left << 4) & 0x0f000000) | (left & 0x000fffff);
+	UINT8  current_code  = (left >> 24) & 0xff;
 	UINT32 left_compare  = gba_read32(gba, address);
 	UINT32 right_compare = right;
 	INT32  left_compare_signed  = 0;
@@ -3117,15 +5004,15 @@ bool gba_handle_ar_if_instruction(gba_t* gba, UINT32 left, UINT32 right)
 
 	switch (current_code & 0x6) {
 		case 0: {
-			left_compare  &= 0xFF;
-			right_compare &= 0xFF;
+			left_compare  &= 0xff;
+			right_compare &= 0xff;
 			left_compare_signed  = (INT8)(left_compare);
 			right_compare_signed = (INT8)(right_compare);
 			break;
 		}
 		case 0x2: {
-			left_compare  &= 0xFFFF;
-			right_compare &= 0xFFFF;
+			left_compare  &= 0xffff;
+			right_compare &= 0xffff;
 			left_compare_signed  = (INT16)(left_compare);
 			right_compare_signed = (INT16)(right_compare);
 			break;
@@ -3192,28 +5079,28 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 	for (INT32 i = 0;i < size;i += 2) {
 		UINT64 code  = gba_decrypt_arv3(buffer[i + 1] | ((UINT64)buffer[i] << 32));
 		UINT32 left  = code >> 32;
-		UINT32 right = code & 0xFFFFFFFF;
+		UINT32 right = code & 0xffffffff;
 
 		if (!if_stack[if_stack_index])
 			continue;
-		if (right == 0x1DC0DE) {
+		if (right == 0x1dc0de) {
 			continue;
 		}
 
 		if (left != 0) {
-			UINT8  current_code = (left >> 24) & 0xFF;
-			UINT32 address      = ((left << 4) & 0x0F000000) | (left & 0x000FFFFF);
+			UINT8  current_code = (left >> 24) & 0xff;
+			UINT32 address      = ((left << 4) & 0x0f000000) | (left & 0x000fffff);
 
 			switch (current_code) {
 				case 0x00: {
 					UINT32 offset = right >> 8;
-					UINT8  data   = right & 0xFF;
+					UINT8  data   = right & 0xff;
 					gba_store8(gba, address + offset, data);
 					break;
 				}
 				case 0x02: {
 					UINT32 offset = right >> 16;
-					UINT16 data   = right & 0xFFFF;
+					UINT16 data   = right & 0xffff;
 					gba_store16(gba, address + offset * 2, data);
 					break;
 				}
@@ -3224,14 +5111,14 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 				}
 				case 0x40: {
 					UINT32 offset = right >> 8;
-					UINT8  data   = right & 0xFF;
+					UINT8  data   = right & 0xff;
 					address = gba_read32(gba, address);
 					gba_store8(gba, address + offset, data);
 					break;
 				}
 				case 0x42: {
 					UINT32 offset = right >> 16;
-					UINT16 data   = right & 0xFFFF;
+					UINT16 data   = right & 0xffff;
 					address = gba_read32(gba, address);
 					gba_store16(gba, address + offset * 2, data);
 					break;
@@ -3243,13 +5130,13 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 					break;
 				}
 				case 0x80: {
-					UINT8 data     = right & 0xFF;
+					UINT8 data     = right & 0xff;
 					UINT8 old_data = gba_read8(gba, address);
 					gba_store8(gba, address, old_data + data);
 					break;
 				}
 				case 0x82: {
-					UINT16 data     = right & 0xFFFF;
+					UINT16 data     = right & 0xffff;
 					UINT16 old_data = gba_read16(gba, address);
 					gba_store16(gba, address, old_data + data);
 					break;
@@ -3260,17 +5147,17 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 					gba_store32(gba, address, old_data + data);
 					break;
 				}
-				case 0xC4: {
+				case 0xc4: {
 					continue;
 				}
-				case 0xC6: {
-					UINT32 address = 0x4000000 | (left & 0xFFFFFF);
-					UINT16 data = right & 0xFFFF;
+				case 0xc6: {
+					UINT32 address = 0x4000000 | (left & 0xffffff);
+					UINT16 data = right & 0xffff;
 					gba_store16(gba, address, data);
 					break;
 				}
-				case 0xC7: {
-					UINT32 address = 0x4000000 | (left & 0xFFFFFF);
+				case 0xc7: {
+					UINT32 address = 0x4000000 | (left & 0xffffff);
 					UINT32 data = right;
 					gba_store32(gba, address, data);
 					break;
@@ -3279,7 +5166,7 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 					// if instruction
 					bool condition = gba_handle_ar_if_instruction(gba, left, right);
 
-					switch (current_code & 0xC0) {
+					switch (current_code & 0xc0) {
 						case 0x00: {
 							if (!condition) {
 								// skip next instruction
@@ -3298,7 +5185,7 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 						case 0x80: {
 							break;
 						}
-						case 0xC0: {
+						case 0xc0: {
 							if (!condition) {
 								// turn off all codes
 								return true;
@@ -3319,7 +5206,7 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 				}
 			}
 		} else {
-			UINT8 current_code = (right >> 24) & 0xFF;
+			UINT8 current_code = (right >> 24) & 0xff;
 
 			if (right == 0) {
 				// end of code list
@@ -3347,16 +5234,16 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 					break;
 				}
 				case 0x18:
-				case 0x1A:
-				case 0x1C:
-				case 0x1E: {
+				case 0x1a:
+				case 0x1c:
+				case 0x1e: {
 					if (i + 3 >= size)
 						return false;
-					UINT32 address   = 0x8000000 | ((right & 0xFFFFFF) << 1);
+					UINT32 address   = 0x8000000 | ((right & 0xffffff) << 1);
 					UINT64 decrypted = gba_decrypt_arv3(buffer[i + 3] | ((UINT64)buffer[i + 2] << 32));
 					UINT16 data      = decrypted >> 32;
-					gba->mem.cart_rom[(address + 0) & 0x1FFFFFF] = data;
-					gba->mem.cart_rom[(address + 1) & 0x1FFFFFF] = data >> 8;
+					gba->mem.cart_rom[(address + 0) & 0x1ffffff] = data;
+					gba->mem.cart_rom[(address + 1) & 0x1ffffff] = data >> 8;
 					i += 2;
 					break;
 				}
@@ -3365,7 +5252,7 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 					if (i + 3 >= size)return false;
 					if (ar_button_pressed) {
 						UINT64 decrypted = gba_decrypt_arv3(buffer[i + 3] | ((UINT64)buffer[i + 2] << 32));
-						UINT32 address   = ((right << 4) & 0x0F000000) | (right & 0x000FFFFF);
+						UINT32 address   = ((right << 4) & 0x0f000000) | (right & 0x000fffff);
 						UINT8  data      = decrypted >> 32;
 						gba_store8(gba, address, data);
 					}
@@ -3378,7 +5265,7 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 						return false;
 					if (ar_button_pressed) {
 						UINT64 decrypted = gba_decrypt_arv3(buffer[i + 3] | ((UINT64)buffer[i + 2] << 32));
-						UINT32 address   = ((right << 4) & 0x0F000000) | (right & 0x000FFFFF);
+						UINT32 address   = ((right << 4) & 0x0f000000) | (right & 0x000fffff);
 						UINT16 data      = decrypted >> 32;;
 						gba_store16(gba, address, data);
 					}
@@ -3391,7 +5278,7 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 						return false;
 					if (ar_button_pressed) {
 						UINT64 decrypted = gba_decrypt_arv3(buffer[i + 3] | ((UINT64)buffer[i + 2] << 32));
-						UINT32 address   = ((right << 4) & 0x0F000000) | (right & 0x000FFFFF);
+						UINT32 address   = ((right << 4) & 0x0f000000) | (right & 0x000fffff);
 						UINT32 data      = decrypted >> 32;
 						gba_store32(gba, address, data);
 					}
@@ -3406,22 +5293,22 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 					if (i + 3 >= size)
 						return false;
 					UINT64 decrypted = gba_decrypt_arv3(buffer[i + 3] | ((UINT64)buffer[i + 2] << 32));
-					UINT32 address   = ((right << 4) & 0x0F000000) | (right & 0x000FFFFF);
-					UINT8  repeat            = (decrypted >> 16) & 0xFF;
-					UINT8  data_increment    = (decrypted >> 24) & 0xFF;
-					UINT32 address_increment =  decrypted        & 0xFFFF;
+					UINT32 address   = ((right << 4) & 0x0f000000) | (right & 0x000fffff);
+					UINT8  repeat            = (decrypted >> 16) & 0xff;
+					UINT8  data_increment    = (decrypted >> 24) & 0xff;
+					UINT32 address_increment =  decrypted        & 0xffff;
 					UINT32 data              =  decrypted >> 32;
 
-					if ((current_code & 0xF) == 0x2) {
+					if ((current_code & 0xf) == 0x2) {
 						address_increment *= 2;
-					} else if ((current_code & 0xF) == 0x4) {
+					} else if ((current_code & 0xf) == 0x4) {
 						address_increment *= 4;
 					}
 
 					for (INT32 j = 0;j < repeat;j++) {
-						if ((current_code & 0xF) == 0x2) {
+						if ((current_code & 0xf) == 0x2) {
 							gba_store16(gba, address, data);
-						} else if ((current_code & 0xF) == 0x4) {
+						} else if ((current_code & 0xf) == 0x4) {
 							gba_store32(gba, address, data);
 						} else {
 							gba_store8(gba,  address, data);
@@ -3470,11 +5357,11 @@ bool gba_run_ar_cheat(gba_t* gba, const UINT32* buffer, UINT32 size)
 #define SB_IO_AUD2_FREQ				0xff18
 #define SB_IO_AUD2_FREQ_HI			0xff19
 
-#define SB_IO_AUD3_POWER			0xff1A
-#define SB_IO_AUD3_LENGTH			0xff1B
-#define SB_IO_AUD3_VOL				0xff1C
-#define SB_IO_AUD3_FREQ				0xff1D
-#define SB_IO_AUD3_FREQ_HI			0xff1E
+#define SB_IO_AUD3_POWER			0xff1a
+#define SB_IO_AUD3_LENGTH			0xff1b
+#define SB_IO_AUD3_VOL				0xff1c
+#define SB_IO_AUD3_FREQ				0xff1d
+#define SB_IO_AUD3_FREQ_HI			0xff1e
 #define SB_IO_AUD3_WAVE_BASE		0xff30
 
 #define SB_IO_AUD4_LENGTH			0xff20
@@ -3561,8 +5448,14 @@ static UINT8 gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value)
 	if (!addr)
 		return value;
 	if (addr == SB_IO_SOUND_ON_OFF) {
+		bool old_enable = sb_read8_io(gb, SB_IO_SOUND_ON_OFF) & 0x80;
 		value &= 0xf0;
 		value |= sb_read8_io(gb, SB_IO_SOUND_ON_OFF) & 0xf;
+		if (old_enable && !(value & 0x80)) {
+			gba_audio_fifo_clear_queue(&gb->audio.fifo[0]);
+			gba_audio_fifo_clear_queue(&gb->audio.fifo[1]);
+			gba_audio_dma_cancel(gb);
+		}
 	}
 	if (addr >= SB_IO_AUD3_WAVE_BASE && addr < SB_IO_AUD3_WAVE_BASE + 16) {
 		bool wave_active = SB_BFE(sb_read8_io(gb, SB_IO_SOUND_ON_OFF), 2, 1);
@@ -3662,8 +5555,8 @@ static void sb_tick_frame_seq(sb_gb_t* gb, sb_frame_sequencer_t* seq)
 						volume  = 0;
 						seq->env_overflow[i] = true;
 					}
-					if (volume > 0xF) {
-						volume = 0xF;
+					if (volume > 0xf) {
+						volume = 0xf;
 						seq->env_overflow[i] = true;
 					};
 					seq->volume[i] = volume;
@@ -3747,7 +5640,7 @@ static void sb_process_audio_writes(sb_gb_t* gb)
 				if (seq->length[i] == 0)
 					seq->length[i] = i == 2 ? 256 : 64;
 				if (i == 3)
-					seq->lfsr4 = 0x7FFF;
+					seq->lfsr4 = 0x7fff;
 				if (i == 2) {
 					audio->wave_sample_offset = 31;
 					audio->wave_freq_timer    = 4;
@@ -3799,37 +5692,40 @@ static void sb_process_audio_writes(sb_gb_t* gb)
 	sb_store8_io(gb, SB_IO_SOUND_ON_OFF, nrf_52);
 }
 
-static FORCE_INLINE void sb_process_audio(sb_gb_t *gb, sb_emu_state_t*emu, double delta_time, INT32 cycles)
+static void gba_advance_audio_clock(gba_t* gba, UINT32 cycles)
 {
-	sb_audio_t* audio = &gb->audio;
-	sb_frame_sequencer_t* seq = &audio->sequencer;
-
-	if (delta_time > 1.0 / 60.)
-		delta_time = 1.0 / 60.;
-	audio->current_sim_time += delta_time;
-#ifdef GBA_AUDIO
+	gba_audio_t* audio = &gba->audio;
+	gba_frame_sequencer_t* seq = &audio->sequencer;
 	UINT32 prev_audio_clock = audio->audio_clock;
 	audio->audio_clock += cycles;
-	cycles = (audio->audio_clock - (prev_audio_clock & ~3)) / 4;
+	UINT32 audio_cycles = (audio->audio_clock - (prev_audio_clock & ~3)) / 4;
 	UINT32 frame_cycles = (audio->audio_clock - (prev_audio_clock & ~32767)) / 32768;
 	while (frame_cycles--)
-		gba_tick_frame_seq(gb, seq);
-#endif
+		gba_tick_frame_seq(gba, seq);
 
-	INT32 freq_tim = audio->wave_freq_timer;
-	freq_tim -= cycles;
+	INT32 freq_tim = audio->wave_freq_timer - (INT32)audio_cycles;
 	if (freq_tim < 0) {
 		INT32 wave_inc_count = (-freq_tim - 1) / ((2048 - seq->frequency[2]) * 2) + 1;
 		audio->wave_sample_offset += wave_inc_count;
 		freq_tim += (2048 - seq->frequency[2]) * 2 * wave_inc_count;
-		UINT32 wav_samp = (audio->wave_sample_offset) % 32;
-		INT32 dat = sb_read_wave_ram(gb, wav_samp / 2);
+		UINT32 wav_samp = audio->wave_sample_offset % 32;
+		INT32 dat = gba_read_wave_ram(gba, wav_samp / 2);
 		audio->curr_wave_data = dat;
 		INT32 offset = (wav_samp & 1) ? 0 : 4;
-		audio->curr_wave_sample = ((dat >> offset) & 0xf);
+		audio->curr_wave_sample = (dat >> offset) & 0xf;
 	}
 	audio->wave_freq_timer = freq_tim;
+}
 
+static void sb_process_audio(sb_gb_t *gb, sb_emu_state_t*emu, double delta_time, INT32 cycles)
+{
+	sb_audio_t* audio = &gb->audio;
+	sb_frame_sequencer_t* seq = &audio->sequencer;
+	(void)cycles;
+
+	if (delta_time > 1.0 / 60.)
+		delta_time = 1.0 / 60.;
+	audio->current_sim_time += delta_time;
 	audio->current_sample_generated_time -= (int)(audio->current_sim_time);
 	audio->current_sim_time -= (int)(audio->current_sim_time);
 
@@ -3962,7 +5858,7 @@ static FORCE_INLINE void sb_process_audio(sb_gb_t *gb, sb_emu_state_t*emu, doubl
 
 	#ifdef GBA_AUDIO
 		for (INT32 i = 0; i < 2; ++i)
-			channels[4 + i] = audio->fifo[i].data[audio->fifo[i].read_ptr & 0x1f] / 128.;
+			channels[4 + i] = audio->fifo[i].sample_latch / 128.;
 	#else
 		for (INT32 i = 0; i < 2; ++i)
 			channels[4 + i] = 0;
@@ -4051,6 +5947,69 @@ static FORCE_INLINE void sb_process_audio(sb_gb_t *gb, sb_emu_state_t*emu, doubl
 
 // END GB REUSE CODE SHIM//
 
+static void gba_system_advance_one(gba_t* gba)
+{
+	gba_eeprom_advance(gba);
+
+	gba->irq.clock++;
+	if (gba->irq.event_count && gba->irq.events[0].deadline <= gba->irq.clock) {
+		while (gba->irq.event_count && gba->irq.events[0].deadline <= gba->irq.clock) {
+			gba_irq_event_t event = gba->irq.events[0];
+			gba->irq.event_count--;
+			for (INT32 i = 0; i < gba->irq.event_count; i++)
+				gba->irq.events[i] = gba->irq.events[i + 1];
+			gba_irq_dispatch(gba, event);
+		}
+	}
+
+	bool dma_pending = false;
+	for (INT32 i = 0; i < 4; i++) {
+		if (gba->dma[i].activation_countdown > 0) {
+			dma_pending = true;
+			break;
+		}
+	}
+	if (dma_pending)
+		gba_dma_tick_activation(gba);
+
+	if (gba->sio.scheduled || gba->sio.last_active || (gba_io_read16(gba, GBA_SIOCNT) & 0x0080))
+		gba_tick_sio(gba);
+
+	gba->timer_clock++;
+	bool timer_due = false;
+	for (INT32 i = 0; i < 4; i++) {
+		gba_timer_t* timer = &gba->timers[i];
+		if ((timer->running && timer->overflow_deadline == gba->timer_clock) ||
+			(timer->reload_write_pending && timer->reload_commit_deadline == gba->timer_clock) ||
+			(timer->control_write_pending && timer->control_commit_deadline == gba->timer_clock)) {
+			timer_due = true;
+			break;
+		}
+	}
+	if (timer_due) {
+		gba->timer_clock--;
+		gba_tick_timers(gba);
+	}
+
+	gba_tick_ppu(gba, gba->render_frame);
+}
+
+static void gba_system_advance(gba_t* gba, UINT32 cycles)
+{
+	gba->pending_host_audio_cycles += cycles;
+	gba_prefetch_step(gba, cycles);
+	gba_advance_audio_clock(gba, cycles);
+	for (UINT32 i = 0; i < cycles; i++)
+		gba_system_advance_one(gba);
+}
+
+static void gba_cpu_idle(void* user_data, UINT32 cycles)
+{
+	gba_t* gba = (gba_t*)user_data;
+	gba->cpu.next_fetch_sequential = false;
+	gba_system_advance(gba, cycles);
+}
+
 void gba_cpu_trigger_breakpoint(void* data)
 {
 	gba_t* gba = (gba_t*)data;
@@ -4069,9 +6028,12 @@ void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data)
 	gba->cpu.read32       = arm7_read32;
 	gba->cpu.read16_seq   = arm7_read16_seq;
 	gba->cpu.read32_seq   = arm7_read32_seq;
+	gba->cpu.fetch16      = arm7_fetch16;
+	gba->cpu.fetch32      = arm7_fetch32;
 	gba->cpu.write8       = arm7_write8;
 	gba->cpu.write16      = arm7_write16;
 	gba->cpu.write32      = arm7_write32;
+	gba->cpu.idle         = gba_cpu_idle;
 	gba->cpu.user_data    = gba;
 }
 
@@ -4093,63 +6055,32 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		solar_value = 1.00;
 	if (!(solar_value > 0.00))
 		solar_value = 0.00;
-	gba->solar_sensor.pending_value = 0xE9 - solar_value * (0xE9 - 0x32);	// latched into value when the game resets the sensor
+	gba->solar_sensor.pending_value = 0xe9 - solar_value * (0xe9 - 0x32);	// latched into value when the game resets the sensor
 	gba->gyro_sensor.pending_sample = gba_gyro_sample(emu->joy.gyro_z);
 	gba->tilt_sensor.pending_x = gba_tilt_sample(emu->joy.tilt_x);
 	gba->tilt_sensor.pending_y = gba_tilt_sample(emu->joy.tilt_y);
 	gba->ppu.ghosting_strength = emu->screen_ghosting_strength;
+	gba->render_frame = emu->render_frame;
 	while (gba->frame_in_progress) {
 		INT32 ticks = gba->activate_dmas ? gba_tick_dma(gba, gba->last_cpu_tick) : 0;
-		if (!ticks && gba->residual_dma_ticks) {
-			ticks = gba->residual_dma_ticks;
-			gba->residual_dma_ticks = 0;
-		}
 		if (!ticks) {
 			gba->cpu.i_cycles = 0;
-			gba->mem.requests = 0;
-			if (!gba->cpu.phased_op_id) {
-				UINT16 int_if = gba_io_read16(gba, GBA_IF);
-				if (SB_UNLIKELY(int_if)) {
-					int_if &= gba_io_read16(gba, GBA_IE);
-					UINT32 ime = gba_io_read32(gba, GBA_IME);
-					int_if *= SB_BFE(ime, 0, 1);
-					if (int_if)
-						arm7_process_interrupts(&gba->cpu);
-				}
-			}
+			if (gba->cpu.wait_for_interrupt && gba->irq.irq_available)
+				gba->cpu.wait_for_interrupt = false;
+			if (!gba->cpu.phased_op_id && gba->irq.cpu_irq_line)
+				arm7_process_interrupts(&gba->cpu);
+			UINT64 begin_clock = gba->ppu.committed_clock;
 			arm7_exec_instruction(&gba->cpu);
-			gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
+			gba->last_cpu_tick = (INT32)(gba->ppu.committed_clock - begin_clock);
+			ticks = 0;
 		}
-		gba_tick_sio(gba);
-		INT32 ppu_fast_forward   = gba->ppu.fast_forward_ticks;
-		INT32 timer_fast_forward = gba->timer_ticks_before_event - gba->deferred_timer_ticks;
-		INT32 fast_forward_ticks = ppu_fast_forward < timer_fast_forward ? ppu_fast_forward : timer_fast_forward;
-		if (fast_forward_ticks > ticks) {
-			if (gba->cpu.wait_for_interrupt)
-				ticks = fast_forward_ticks;
-			else
-				fast_forward_ticks = ticks;
-		}
-		if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
-			for (INT32 i = 0;i < fast_forward_ticks;++i)
-				gba_tick_interrupts(gba);
-		}
-		// RTC advances with host wall time, not emulated master clocks
-		gba->deferred_timer_ticks   += fast_forward_ticks;
-		gba->ppu.fast_forward_ticks -= fast_forward_ticks;
-		ticks -= fast_forward_ticks > ticks ? ticks : fast_forward_ticks;
-		double delta_t = ((double)ticks + fast_forward_ticks) / (16 * 1024 * 1024);
-		gba_tick_audio(gba, emu, delta_t, ticks + fast_forward_ticks);
-
-		bool last_activate_dmas = gba->activate_dmas;
-		for (INT32 t = 0;t < ticks;++t) {
-			if (gba->activate_dmas && !last_activate_dmas) {
-				gba->residual_dma_ticks = ticks - t - 1;
-				gba->last_cpu_tick = t + 1;
-			}
-			gba_tick_interrupts(gba);
-			gba_tick_timers(gba);
-			gba_tick_ppu(gba, emu->render_frame);
+		if (ticks > 1)
+			gba_system_advance(gba, ticks);
+		if (gba->pending_host_audio_cycles) {
+			UINT32 audio_cycles = gba->pending_host_audio_cycles;
+			gba->pending_host_audio_cycles = 0;
+			double delta_t = (double)audio_cycles / (16 * 1024 * 1024);
+			gba_tick_audio(gba, emu, delta_t, 0);
 		}
 	}
 	gba_gpio_update_rumble(gba);

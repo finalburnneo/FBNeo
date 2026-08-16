@@ -24226,6 +24226,24 @@ struct BurnDriver BurnDrvsms_snakekq = {
 	256, 192, 4, 3
 };
 
+// Snake Pit (HB)
+static struct BurnRomInfo sms_snakepitRomDesc[] = {
+	{ "Snake Pit (2026)(Popixel Games).sms",	524288, 0x8c9de8bc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_snakepit)
+STD_ROM_FN(sms_snakepit)
+
+struct BurnDriver BurnDrvsms_snakepit = {
+	"sms_snakepit", NULL, NULL, NULL, "2026",
+	"Snake Pit (HB)\0", NULL, "Popixel Games", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_snakepitRomInfo, sms_snakepitRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)
 static struct BurnRomInfo sms_snappysnorgRomDesc[] = {
 	{ "Snappy Snorg and the Seven Silver Stones v1.4 (2023)(pinkeyeFR).sms",	1048576, 0x934b9fe7, BRF_PRG | BRF_ESS },
@@ -24730,6 +24748,24 @@ struct BurnDriver BurnDrvsms_tempojrgg2sms = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_tempojrgg2smsRomInfo, sms_tempojrgg2smsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tetris (System E) (HB, v1.5)
+static struct BurnRomInfo sms_tetrisseRomDesc[] = {
+	{ "Tetris (System E) v1.5 (2026)(Master Linkuei).sms",	131072, 0x08ab88b7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tetrisse)
+STD_ROM_FN(sms_tetrisse)
+
+struct BurnDriver BurnDrvsms_tetrisse = {
+	"sms_tetrisse", NULL, NULL, NULL, "2026",
+	"Tetris (System E) (HB, v1.5)\0", NULL, "Master Linkuei", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_tetrisseRomInfo, sms_tetrisseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

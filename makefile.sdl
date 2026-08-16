@@ -50,10 +50,10 @@ include makefile.burn_rules
 
 # Platform stuff
 alldir	+= 	burner burner/sdl burner/sdl dep/libs/libspng dep/libs/lib7z dep/libs/zlib intf intf/video \
-			intf/video/scalers 	intf/video/sdl intf/audio intf/audio/sdl intf/input intf/input/sdl intf/cd intf/cd/sdl \
+			intf/video/scalers 	intf/video/sdl intf/audio intf/audio/sdl intf/input intf/input/sdl intf/cd \
 			intf/perfcount intf/perfcount/sdl dep/generated
 
-depobj	+= 	neocdlist.o \
+depobj	+= 	cdlist.o \
 			\
 			conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o sshot.o state.o statec.o unzip.o zipfn.o \
 			\
@@ -68,7 +68,7 @@ depobj	+= 	neocdlist.o \
 			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
 			\
 			inp_sdl.o aud_sdl.o support_paths.o ips_manager.o scrn.o localise_gamelist.o \
-			cd_sdl2.o config.o main.o run.o stringset.o bzip.o drv.o media.o romdata.o \
+			cd_img.o config.o main.o run.o stringset.o bzip.o drv.o media.o romdata.o \
 			inpdipsw.o vid_sdlfx.o inputbuf.o replay.o vid_sdlopengl.o input_sdl.o stated.o
 
 ifdef INCLUDE_7Z_SUPPORT
@@ -261,7 +261,7 @@ ifdef BUILD_NATIVE
 endif
 
 # For zlib
-DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
+DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=64
 
 # For libchdr
 DEF := $(DEF) -DCHDR_SYSTEM_ZLIB

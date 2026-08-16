@@ -81,6 +81,8 @@ objdir	= obj/$(COMPILENAME)/
 srcdir	= src/
 
 include makefile.burn_rules
+#optional: include developer's makefile.burn_rules_dev
+-include makefile.burn_rules_dev
 include makefile.burner_win32_rules
 
 incdir	= $(foreach dir,$(alldir),-I$(srcdir)$(dir)) -I$(objdir)dep/generated -I$(srcdir)dep/mingw/include -I$(srcdir)dep/mingw/include/directx9 -I$(srcdir)dep/mingw/include/xaudio2
@@ -277,7 +279,7 @@ endif
 
 
 # For zlib
-DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
+DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=64
 
 # For lib7z
 ifdef INCLUDE_7Z_SUPPORT

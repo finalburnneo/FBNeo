@@ -187,6 +187,11 @@ void h6280_irqcallback(int (*irqcallback)(int))
 	h6280.irq_callback = irqcallback;
 }
 
+void h6280_set_callback(int (*cb)(int))
+{
+	h6280.insn_callback = cb;
+}
+
 void h6280Reset(void)
 {
 #if defined FBNEO_DEBUG
@@ -196,8 +201,10 @@ void h6280Reset(void)
 
 	/* wipe out the h6280 structure */
 	int (*save_irqcallback)(int) = h6280.irq_callback;
+	int (*save_insncallback)(int) = h6280.insn_callback;
 	memset(&h6280, 0, sizeof(h6280_Regs));
 	h6280.irq_callback = save_irqcallback;
+	h6280.insn_callback = save_insncallback;
 
 	/* set I and B flags */
 	P = _fI | _fB;
@@ -290,6 +297,7 @@ int h6280Run(int cycles)
 				set_irq_line(2,ASSERT_LINE);
 			}
 		}
+
 	} while (h6280_ICount > 0 && !end_run);
 
 	cycles = cycles - h6280_ICount;

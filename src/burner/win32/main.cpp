@@ -1179,7 +1179,7 @@ int ProcessCmdLine()
 			return 1;
 		}
 
-		if (_tcscmp(szName, _T("-listinfoastrohomeonly")) == 0) {
+		if (_tcscmp(szName, _T("-listinfoastrocadeonly")) == 0) {
 			write_datfile(DAT_ASTROHOME_ONLY, stdout);
 			return 1;
 		}

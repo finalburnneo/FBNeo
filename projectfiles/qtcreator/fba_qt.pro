@@ -84,13 +84,19 @@ INCLUDEPATH += \
     $$SRC/dep/libs \
     $$SRC/dep/libs/libpng \
     $$SRC/dep/libs/zlib \
+    $$SRC/dep/libs/libchdr \
+    $$SRC/dep/libs/libchdr/include \
+    $$SRC/dep/libs/lzma \
+    $$SRC/dep/libs/lzma/include \
+    $$SRC/dep/libs/zstd \
 
 DEFINES += BUILD_QT \
     LSB_FIRST \
     "__fastcall=" \
     "_fastcall=" \
     WITH_QTCREATOR \
-    INCLUDE_LIB_PNGH
+    INCLUDE_LIB_PNGH \
+    CHDR_SYSTEM_ZLIB
 
 linux: DEFINES += BUILD_QT_LINUX
 macx: DEFINES += BUILD_QT_MACX
@@ -389,7 +395,7 @@ $$DRV_NEOGEO {
 
         HEADERS += $$files(../../src/burn/drv/neogeo/*.h)
         SOURCES += $$files(../../src/burn/drv/neogeo/*.cpp)
-        SOURCES *= ../../src/burner/qt/neocdlist.cpp
+        SOURCES *= ../../src/burner/cdlist.cpp
 }
 
 #===============================================================================
@@ -659,6 +665,24 @@ SOURCES += \
     ../../src/intf/audio/aud_interface.cpp \
     ../../src/intf/audio/lowpass2.cpp \
     ../../src/intf/cd/cd_interface.cpp \
+    ../../src/intf/cd/cd_img.cpp \
+    ../../src/intf/cd/cd_chd.cpp \
+    ../../src/dep/libs/libchdr/libchdr_bitstream.c \
+    ../../src/dep/libs/libchdr/libchdr_cdrom.c \
+    ../../src/dep/libs/libchdr/libchdr_chd.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdfl.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdlz.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdzl.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_cdzs.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_flac.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_huff.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_lzma.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_zlib.c \
+    ../../src/dep/libs/libchdr/libchdr_codec_zstd.c \
+    ../../src/dep/libs/libchdr/libchdr_flac.c \
+    ../../src/dep/libs/libchdr/libchdr_huffman.c \
+    ../../src/dep/libs/lzma/libchdr_lzma.c \
+    ../../src/dep/libs/zstd/zstddeclib.c \
     ../../src/intf/input/inp_interface.cpp \
     ../../src/intf/video/vid_interface.cpp \
     ../../src/intf/video/vid_support.cpp \

@@ -19986,6 +19986,44 @@ struct BurnDriver BurnDrvsnes_Kablooey = {
 	512, 448, 4, 3
 };
 
+// Kamaitachi no Yoru (Hack, English)
+// https://github.com/ButThouMust/kamaitachi-sfc-english
+static struct BurnRomInfo snes_KamaitachiteRomDesc[] = {
+	{ "Kamaitachi no Yoru T-Eng (2026)(ButThouMust).sfc", 3145728, 0xba25366f, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kamaitachite)
+STD_ROM_FN(snes_Kamaitachite)
+
+struct BurnDriver BurnDrvsnes_Kamaitachite = {
+	"snes_kamaitachite", NULL, NULL, NULL, "2026",
+	"Kamaitachi no Yoru (Hack, English)\0", NULL, "ButThouMust", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_KamaitachiteRomInfo, snes_KamaitachiteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Kamaitachi no Yoru (Japan)
+
+static struct BurnRomInfo snes_KamaitachiRomDesc[] = {
+	{ "Kamaitachi no Yoru (J)(1994)(Chun Soft).sfc", 3145728, 0x71c631aa, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kamaitachi)
+STD_ROM_FN(snes_Kamaitachi)
+
+struct BurnDriver BurnDrvsnes_Kamaitachi = {
+	"snes_kamaitachi", "snes_kamaitachite", NULL, NULL, "1994",
+	"Kamaitachi no Yoru (Japan)\0", NULL, "Chun Soft", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_KamaitachiRomInfo, snes_KamaitachiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Kamen Rider (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_KamenriderRomDesc[] = {

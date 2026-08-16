@@ -24,7 +24,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 	if (nLen <= 0) return 1;
 
-	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR) || (LD_HI_NIBBLE | LD_LO_NIBBLE))
+	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR) || (nFlags & (LD_HI_NIBBLE | LD_LO_NIBBLE)))
 	{
 		// Use temporary memory to load ROM, ips patching is also done here, enough space must be reserved.
 		if (bDoIpsPatch) {

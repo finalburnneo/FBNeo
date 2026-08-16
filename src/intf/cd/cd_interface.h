@@ -14,6 +14,7 @@ INT32 CDEmuExit();
 INT32 CDEmuStop();
 INT32 CDEmuPlay(UINT8 M, UINT8 S, UINT8 F);
 INT32 CDEmuLoadSector(INT32 LBA, char* pBuffer);
+INT32 CDEmuReadDataSector(INT32 nLba, UINT8* pBuffer);
 UINT8* CDEmuReadTOC(INT32 track);
 UINT8* CDEmuReadQChannel();
 INT32 CDEmuSetVolume(double dVolume);
@@ -46,7 +47,9 @@ static inline void CDEmuResume()
 {
 	extern CDEmuStatusValue CDEmuStatus;
 
-	CDEmuStatus = playing;
+	if (CDEmuStatus == paused) {
+		CDEmuStatus = playing;
+	}
 }
 
 #endif /*CD_INTERFACE_H_*/

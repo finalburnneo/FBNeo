@@ -392,7 +392,6 @@ void UnloadDrvIcons();
 // neocdsel.cpp
 int NeoCDList_Init();
 extern bool  bNeoCDListScanSub;
-extern bool  bNeoCDListScanOnlyISO;
 extern TCHAR szNeoCDCoverDir[MAX_PATH];
 extern TCHAR szNeoCDPreviewDir[MAX_PATH];
 extern TCHAR szNeoCDGamesDir[MAX_PATH];
@@ -403,10 +402,7 @@ HBITMAP PNGLoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset)
 HBITMAP PNGLoadBitmapBuffer(HWND hWnd, void *buffer, int bufferLength, int nWidth, int nHeight, int nPreset);
 HBITMAP LoadBitmap(HWND hWnd, FILE* fp, int nWidth, int nHeight, int nPreset);
 int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
-TCHAR* ParseCueGetImageFile(const TCHAR* cueFullPath);
-void  FreeNGCDGame(NGCDGAME** ppGame);
-INT32 GetNGCDGameTitle(const UINT32 nGameID, NGCDGAME** ppOutGame, bool bPrintLog = false);
-INT32 cdimgCountChdAudioTracks(TCHAR* pszFile);
+#include "cd_img.h"
 
 // romdata.cpp
 extern bool bRDListScanSub;

@@ -98,6 +98,8 @@ endif
 srcdir	= src/
 
 include makefile.burn_rules
+#optional: include developer's makefile.burn_rules_dev
+-include makefile.burn_rules_dev
 include makefile.burner_win32_rules
 
 ifdef GCC345
@@ -394,7 +396,7 @@ ifdef BUILD_NATIVE
 endif
 
 # For zlib
-DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=32
+DEF := $(DEF) -DNO_VIZ -D_LARGEFILE64_SOURCE=0 -D_FILE_OFFSET_BITS=64
 
 # For libchdr
 DEF := $(DEF) -DCHDR_SYSTEM_ZLIB

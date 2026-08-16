@@ -198,6 +198,10 @@ endif
 
 ifdef DEBUG
 	DEF	:= $(DEF) /DFBNEO_DEBUG
+else
+ifndef SYMBOL
+	DEF	:= $(DEF) /DNDEBUG
+endif
 endif
 
 ifdef ROM_VERIFY

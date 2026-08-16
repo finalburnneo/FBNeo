@@ -8,8 +8,8 @@
 #include "cdrom.h"
 
 #define CHD_MAX_TRACKS      (99)
-#define CHD_FRAME_SIZE      (2352 + 96)   // libchdr stores every frame at this stride
-#define CHD_TRACK_PADDING   (4)           // chdman pads tracks to a 4-frame boundary
+#define CHD_FRAME_SIZE      (2352 + 96)		// libchdr stores every frame at this stride
+#define CHD_TRACK_PADDING   (4)				// chdman pads tracks to a 4-frame boundary
 
 struct ChdImage {
 	chd_file* pChd;
@@ -17,13 +17,15 @@ struct ChdImage {
 	INT32     nContainer;
 	INT32     nNumTracks;
 	INT32     nTotalFrames;
-	INT32     nFlags;                        // CD_FLAG_GDROM / CD_FLAG_GDROMLE
+	INT32     nFlags;						// CD_FLAG_GDROM / CD_FLAG_GDROMLE
 	UINT8*    pHunkBuf;
 	INT32     nHunkBytes;
 	INT32     nFramesPerHunk;
+	UINT32    nTotalHunks;
 	INT32     nVersion;
-	INT32     nCachedHunk;                   // -1 = none
-	ChdTrack  Tracks[CHD_MAX_TRACKS + 1];    // +1 dummy lead-out entry
+	UINT8     Sha1[20];
+	INT32     nCachedHunk;					// -1 = none
+	ChdTrack  Tracks[CHD_MAX_TRACKS + 1];	// +1 dummy lead-out entry
 };
 
 // LBA -> MSF in BCD, matching the address stored in a real CD sync header.
@@ -101,13 +103,17 @@ const TCHAR* ChdTrackTypeName(INT32 nType)
 	}
 }
 
-// Fetch a track's metadata string (tries CHTR, then CHT2, then CHGD).
+// Fetch a track's metadata string (tries CHT2, then CHTR, then CHGD).
 // Returns the parsed metadata tag on success, or 0 on failure.
 static UINT32 ChdReadTrackMeta(chd_file* pChd, INT32 nIndex, char* szOut, INT32 nOutLen)
 {
 	static const UINT32 Tags[] = {
-		CDROM_TRACK_METADATA_TAG, CDROM_TRACK_METADATA2_TAG, GDROM_TRACK_METADATA_TAG
+		CDROM_TRACK_METADATA2_TAG, CDROM_TRACK_METADATA_TAG, GDROM_TRACK_METADATA_TAG
 	};
+
+	if (!pChd || !szOut || nOutLen <= 0) {
+		return 0;
+	}
 
 	for (INT32 i = 0; i < 3; i++) {
 		UINT32 nResultLen = 0;
@@ -115,7 +121,8 @@ static UINT32 ChdReadTrackMeta(chd_file* pChd, INT32 nIndex, char* szOut, INT32 
 		chd_error err = chd_get_metadata(pChd, Tags[i], nIndex, szOut, nOutLen - 1,
 			&nResultLen, NULL, &nFlags);
 		if (err == CHDERR_NONE && nResultLen > 0) {
-			szOut[nResultLen] = '\0';
+			UINT32 nTerm = nResultLen < (UINT32)nOutLen ? nResultLen : (UINT32)nOutLen - 1;
+			szOut[nTerm] = '\0';
 			return Tags[i];
 		}
 	}
@@ -139,6 +146,8 @@ static INT32 ChdParseToc(ChdImage* pImage)
 		char szType[16] = { 0 }, szSub[16] = { 0 }, szPgType[16] = { 0 }, szPgSub[16] = { 0 };
 
 		if (nTag == CDROM_TRACK_METADATA_TAG) {
+			nPregap = 0;
+			nPostgap = 0;
 			if (sscanf(szMeta, CDROM_TRACK_METADATA_FORMAT,
 				&nTrackNum, szType, szSub, &nFrames) != 4) {
 				return 1;
@@ -168,16 +177,18 @@ static INT32 ChdParseToc(ChdImage* pImage)
 			return 1;
 		}
 
-		pT->nSubSize  = ChdSubSizeFromString(szSub);
-		pT->nSubType  = (pT->nSubSize != 0) ? 1 : 0;
-		pT->nFrames   = nFrames;
-		pT->nPregap   = nPregap;
-		pT->nPostgap  = nPostgap;
-		pT->nPadFrames = nPad;
-		// chdman pads each track up to a 4-frame boundary in the CHD.
+		pT->nSubSize       = ChdSubSizeFromString(szSub);
+		pT->nSubType       = (pT->nSubSize != 0) ? 1 : 0;
+		pT->nFrames        = nFrames;
+		pT->nPregap        = nPregap;
+		pT->nStoredPregap  = (nPregap > 0 && szPgType[0] == 'V') ? nPregap : 0;
+		pT->nVirtualPregap = nPregap - pT->nStoredPregap;
+		pT->nPostgap       = nPostgap;
+		pT->nPadFrames     = nPad;
+		// chdman pads each track up to a 4-frame boundary.
 		INT32 nPadded = (nFrames + CHD_TRACK_PADDING - 1) / CHD_TRACK_PADDING;
 		pT->nExtraFrames = nPadded * CHD_TRACK_PADDING - nFrames;
-		pT->nControl  = (pT->nType == CHD_TRACK_AUDIO) ? 0x01 : 0x41;
+		pT->nControl     = (pT->nType == CHD_TRACK_AUDIO) ? 0x01 : 0x41;
 	}
 
 	if (nTrk == 0) {
@@ -185,36 +196,37 @@ static INT32 ChdParseToc(ChdImage* pImage)
 	}
 	pImage->nNumTracks = nTrk;
 
-	// Compute physical / chd / logical frame offsets (MAME cdrom_file(chd)).
 	INT32 nPhysOfs = 0, nChdOfs = 0, nLogOfs = 0;
 	for (INT32 i = 0; i < nTrk; i++) {
 		ChdTrack* pT = &pImage->Tracks[i];
-		pT->nLogFrameOfs = 0;
-
-		if (pT->nDataSize != 0) {
-			// pregap data lives in the CHD, offset this track to index 1
-			pT->nLogFrameOfs = pT->nPregap;
+		if (pT->nStoredPregap > pT->nFrames) {
+			return 1;
 		}
 
-		pT->nPhysFrameOfs = nPhysOfs;
-		pT->nChdFrameOfs  = nChdOfs;
-		pT->nLogFrameOfs += nLogOfs;
-		pT->nLogFrames    = pT->nFrames - pT->nPregap;
+		pT->nIndex0LBA     = nLogOfs;
+		pT->nIndex1LBA     = nLogOfs + pT->nPregap;
+		pT->nChdTrackStart = nChdOfs;
+		pT->nChdIndex1     = nChdOfs + pT->nStoredPregap;
+		pT->nPhysFrameOfs  = nPhysOfs;
+		pT->nChdFrameOfs   = pT->nChdTrackStart;
+		pT->nLogFrameOfs   = pT->nIndex1LBA;
+		pT->nLogFrames     = pT->nFrames - pT->nStoredPregap;
 
-		nLogOfs  += pT->nPostgap;
 		nPhysOfs += pT->nFrames;
-		nChdOfs  += pT->nFrames;
-		nChdOfs  += pT->nExtraFrames;   // 4-frame boundary padding (CD)
-		nChdOfs  += pT->nPadFrames;     // explicit PAD (GD-ROM)
-		nLogOfs  += pT->nFrames;
+		nChdOfs  += pT->nFrames + pT->nExtraFrames + pT->nPadFrames;
+		nLogOfs   = pT->nIndex1LBA + pT->nLogFrames + pT->nPostgap;
 	}
 
 	// dummy lead-out entry for range searches
 	ChdTrack* pEnd = &pImage->Tracks[nTrk];
-	pEnd->nPhysFrameOfs = nPhysOfs;
-	pEnd->nLogFrameOfs  = nLogOfs;
-	pEnd->nChdFrameOfs  = nChdOfs;
-	pEnd->nLogFrames    = 0;
+	pEnd->nIndex0LBA     = nLogOfs;
+	pEnd->nIndex1LBA     = nLogOfs;
+	pEnd->nChdTrackStart = nChdOfs;
+	pEnd->nChdIndex1     = nChdOfs;
+	pEnd->nPhysFrameOfs  = nPhysOfs;
+	pEnd->nLogFrameOfs   = nLogOfs;
+	pEnd->nChdFrameOfs   = nChdOfs;
+	pEnd->nLogFrames     = 0;
 
 	pImage->nTotalFrames = nLogOfs;
 	return 0;
@@ -270,7 +282,9 @@ ChdImage* ChdOpenFile(const TCHAR* szPath)
 	}
 	pImage->nHunkBytes     = (INT32)pHeader->hunkbytes;
 	pImage->nFramesPerHunk = pImage->nHunkBytes / CHD_FRAME_SIZE;
+	pImage->nTotalHunks    = pHeader->totalhunks;
 	pImage->nVersion       = (INT32)pHeader->version;
+	memcpy(pImage->Sha1, pHeader->sha1, sizeof(pImage->Sha1));
 
 	pImage->nContainer = ChdDetectContainer(pImage);
 
@@ -303,18 +317,30 @@ void ChdClose(ChdImage* pImage)
 		chd_close(pImage->pChd);
 	}
 	if (pImage->pFile) {
-		fclose(pImage->pFile);   // libchdr's core_stdio_nonowner does not close it
+		fclose(pImage->pFile);		// libchdr's core_stdio_nonowner does not close it
 	}
 	free_s((void**)&pImage->pHunkBuf);
 	free(pImage);
 }
 
-INT32 ChdGetContainerType(ChdImage* pImage) { return pImage ? pImage->nContainer : CHD_CONTAINER_NONE; }
-INT32 ChdGetNumTracks(ChdImage* pImage)     { return pImage ? pImage->nNumTracks : 0; }
-INT32 ChdGetTotalFrames(ChdImage* pImage)   { return pImage ? pImage->nTotalFrames : 0; }
-INT32 ChdGetVersion(ChdImage* pImage)       { return pImage ? pImage->nVersion : 0; }
-INT32 ChdGetHunkBytes(ChdImage* pImage)     { return pImage ? pImage->nHunkBytes : 0; }
+INT32 ChdGetContainerType(ChdImage* pImage) { return pImage ? pImage->nContainer     : CHD_CONTAINER_NONE; }
+INT32 ChdGetNumTracks(ChdImage* pImage)     { return pImage ? pImage->nNumTracks     : 0; }
+INT32 ChdGetTotalFrames(ChdImage* pImage)   { return pImage ? pImage->nTotalFrames   : 0; }
+INT32 ChdGetVersion(ChdImage* pImage)       { return pImage ? pImage->nVersion       : 0; }
+INT32 ChdGetHunkBytes(ChdImage* pImage)     { return pImage ? pImage->nHunkBytes     : 0; }
 INT32 ChdGetFramesPerHunk(ChdImage* pImage) { return pImage ? pImage->nFramesPerHunk : 0; }
+
+INT32 ChdGetSha1(ChdImage* pImage, UINT8* pSha1)
+{
+	if (!pImage || !pSha1 || pImage->nVersion < 3) return 1;
+	for (INT32 i = 0; i < (INT32)sizeof(pImage->Sha1); i++) {
+		if (pImage->Sha1[i]) {
+			memcpy(pSha1, pImage->Sha1, sizeof(pImage->Sha1));
+			return 0;
+		}
+	}
+	return 1;
+}
 
 const ChdTrack* ChdGetTrack(ChdImage* pImage, INT32 nTrack)
 {
@@ -328,12 +354,18 @@ const ChdTrack* ChdGetTrack(ChdImage* pImage, INT32 nTrack)
 // decompressing the covering hunk on cache miss.
 static INT32 ChdReadFrameBytes(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset, INT32 nLength, UINT8* pDest)
 {
-	if (!pImage || !pImage->pHunkBuf || pImage->nFramesPerHunk == 0) {
+	if (!pImage || !pImage->pChd || !pImage->pHunkBuf || !pDest ||
+		nChdFrame < 0 || nOffset < 0 || nLength < 0 ||
+		nOffset > CHD_FRAME_SIZE || nLength > CHD_FRAME_SIZE - nOffset ||
+		pImage->nFramesPerHunk <= 0 || pImage->nTotalHunks == 0) {
 		return 1;
 	}
 
-	INT32 nHunk = nChdFrame / pImage->nFramesPerHunk;
+	INT32 nHunk        = nChdFrame / pImage->nFramesPerHunk;
 	INT32 nFrameInHunk = nChdFrame % pImage->nFramesPerHunk;
+	if ((UINT32)nHunk >= pImage->nTotalHunks) {
+		return 1;
+	}
 
 	if (pImage->nCachedHunk != nHunk) {
 		if (chd_read(pImage->pChd, (UINT32)nHunk, pImage->pHunkBuf) != CHDERR_NONE) {
@@ -342,44 +374,80 @@ static INT32 ChdReadFrameBytes(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset,
 		pImage->nCachedHunk = nHunk;
 	}
 
-	memcpy(pDest, pImage->pHunkBuf + nFrameInHunk * CHD_FRAME_SIZE + nOffset, nLength);
+	memcpy(pDest, pImage->pHunkBuf + nFrameInHunk * CHD_FRAME_SIZE + nOffset, (size_t)nLength);
 	return 0;
 }
 
 INT32 ChdReadRaw(ChdImage* pImage, INT32 nChdFrame, INT32 nOffset, INT32 nLength, UINT8* pDest)
 {
+	if (!pImage || !pDest || nChdFrame < 0 || nOffset < 0 || nLength < 0 ||
+		nOffset > CHD_FRAME_SIZE || nLength > CHD_FRAME_SIZE - nOffset) {
+		return 1;
+	}
 	return ChdReadFrameBytes(pImage, nChdFrame, nOffset, nLength, pDest);
 }
 
-// logical LBA -> (track, chd frame), MAME logical_to_chd_lba
+// Returns -2 for a virtual INDEX 0 sector.
 static INT32 ChdLogicalToChd(ChdImage* pImage, INT32 nLogLba, INT32* pnTrack)
 {
-	for (INT32 i = 0; i < pImage->nNumTracks; i++) {
-		if (nLogLba < pImage->Tracks[i + 1].nLogFrameOfs) {
-			INT32 nPhys = pImage->Tracks[i].nPhysFrameOfs + (nLogLba - pImage->Tracks[i].nLogFrameOfs);
-			INT32 nChd  = nPhys - pImage->Tracks[i].nPhysFrameOfs + pImage->Tracks[i].nChdFrameOfs;
-			*pnTrack = i;
-			return nChd;
-		}
+	if (!pImage || !pnTrack || nLogLba < 0 || nLogLba >= pImage->nTotalFrames) {
+		return -1;
 	}
-	*pnTrack = 0;
-	return nLogLba;
+
+	for (INT32 i = 0; i < pImage->nNumTracks; i++) {
+		ChdTrack* pT = &pImage->Tracks[i];
+		if (nLogLba < pT->nIndex0LBA || nLogLba >= pT->nIndex1LBA + pT->nLogFrames) {
+			continue;
+		}
+
+		*pnTrack = i;
+		if (nLogLba < pT->nIndex1LBA) {
+			if (pT->nVirtualPregap != 0) {
+				return -2;
+			}
+			return pT->nChdTrackStart + nLogLba - pT->nIndex0LBA;
+		}
+		return pT->nChdIndex1 + nLogLba - pT->nIndex1LBA;
+	}
+	return -1;
+}
+
+static INT32 ChdTypeSize(INT32 nType)
+{
+	switch (nType) {
+		case CHD_TRACK_MODE1:
+		case CHD_TRACK_MODE2_FORM1: return 2048;
+		case CHD_TRACK_MODE2_FORM2: return 2324;
+		case CHD_TRACK_MODE2:
+		case CHD_TRACK_MODE2_FORM_MIX: return 2336;
+		case CHD_TRACK_MODE1_RAW:
+		case CHD_TRACK_MODE2_RAW:
+		case CHD_TRACK_AUDIO: return 2352;
+	}
+	return 0;
 }
 
 INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 {
-	if (!pImage || pImage->nNumTracks == 0) {
+	if (!pImage || !pDest || pImage->nNumTracks == 0 || nLba < 0 || nLba >= pImage->nTotalFrames) {
 		return 1;
 	}
 
-	INT32 nTrack = 0;
+	INT32 nTrack    = 0;
 	INT32 nChdFrame = ChdLogicalToChd(pImage, nLba, &nTrack);
+	if (nChdFrame == -1) {
+		return 1;
+	}
 	ChdTrack* pT = &pImage->Tracks[nTrack];
 	INT32 nTrackType = pT->nType;
 
-	// pregap not physically present: hand back zeros
-	if (pT->nDataSize != 0 && nLba < pT->nLogFrameOfs) {
-		memset(pDest, 0, (nDataType == CHD_TRACK_RAW_DONTCARE) ? pT->nDataSize : 2352);
+	if (nChdFrame == -2) {
+		INT32 nSize = (nDataType == CHD_TRACK_RAW_DONTCARE || nDataType == CHD_TRACK_MODE1_RAW ||
+			nDataType == CHD_TRACK_MODE2_RAW) ? 2352 : ChdTypeSize(nDataType);
+		if (nSize == 0) {
+			return 1;
+		}
+		memset(pDest, 0, nSize);
 		return 0;
 	}
 
@@ -394,10 +462,9 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 
 	// 2352 mode-1 raw sector out of 2048 mode-1 data (synthesize sync + header)
 	if (nDataType == CHD_TRACK_MODE1_RAW && nTrackType == CHD_TRACK_MODE1) {
-		static const UINT8 SyncBytes[12] = { 0x00,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0x00 };
-		// Header address is the absolute MSF (BCD), which includes the
-		// standard 150-frame (2 second) lead-in, matching real raw sectors.
+		static const UINT8 SyncBytes[12] = { 0x00, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0x00 };
 		UINT32 nMsf = ChdLbaToMsf(nLba + 150);
+		memset(pDest, 0, 2352);
 		memcpy(pDest, SyncBytes, 12);
 		pDest[12] = (UINT8)(nMsf >> 16);
 		pDest[13] = (UINT8)(nMsf >> 8);
@@ -407,8 +474,7 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 	}
 
 	// 2048 mode-1 data out of a mode-2 form1 or raw sector
-	if (nDataType == CHD_TRACK_MODE1 &&
-		(nTrackType == CHD_TRACK_MODE2_FORM1 || nTrackType == CHD_TRACK_MODE2_RAW)) {
+	if (nDataType == CHD_TRACK_MODE1 && (nTrackType == CHD_TRACK_MODE2_FORM1 || nTrackType == CHD_TRACK_MODE2_RAW)) {
 		return ChdReadFrameBytes(pImage, nChdFrame, 24, 2048, pDest);
 	}
 
@@ -418,8 +484,7 @@ INT32 ChdReadSector(ChdImage* pImage, INT32 nLba, INT32 nDataType, UINT8* pDest)
 	}
 
 	// 2336 mode-2 data out of a 2352 raw sector (skip the header)
-	if (nDataType == CHD_TRACK_MODE2 &&
-		(nTrackType == CHD_TRACK_MODE1_RAW || nTrackType == CHD_TRACK_MODE2_RAW)) {
+	if (nDataType == CHD_TRACK_MODE2 && (nTrackType == CHD_TRACK_MODE1_RAW || nTrackType == CHD_TRACK_MODE2_RAW)) {
 		return ChdReadFrameBytes(pImage, nChdFrame, 16, 2336, pDest);
 	}
 

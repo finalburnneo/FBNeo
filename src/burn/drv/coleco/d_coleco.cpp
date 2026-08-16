@@ -644,7 +644,7 @@ static UINT8 __fastcall main_read(UINT16 address)
 			//bprintf(0, _T("eeprom_ok\n"));
 			return EEP_STATUS_OK;
 		}
-		if (OCMBanks[2] == OCMMask && O_EEPROM_ReadTimer > 0 && (address & 0xfff) < 0x100) {
+		if (OCMBanks[2] == OCMMask && O_EEPROM_ReadTimer > 0 && (address & 0xfff) < 0x1ff) {
 			//bprintf(0, _T("eeprom_read %x\t\tfr: %d\n"), address, nCurrentFrame);
 			return DrvEEPROM[address & 0x3ff];
 		} else {
@@ -5216,7 +5216,7 @@ struct BurnDriver BurnDrvcv_amzsnake = {
 
 // Amidar (HB)
 static struct BurnRomInfo cv_AmidarRomDesc[] = {
-	{ "Amidar (2025)(Opcode).rom", 131072, 0xe4676d56, BRF_ESS | BRF_PRG },
+	{ "Amidar (2024)(Opcode).rom", 131072, 0xe4676d56, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(cv_Amidar, cv_Amidar, cv_coleco)
@@ -5230,6 +5230,24 @@ struct BurnDriver BurnDrvcv_Amidar = {
 	CVGetZipName, cv_AmidarRomInfo, cv_AmidarRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitOCM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
+};
+
+// DK Arcade (HB)
+static struct BurnRomInfo cv_DkarcadeRomDesc[] = {
+   { "DK Arcade (2023)(Opcode).rom", 131072, 0x76004C98, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(cv_Dkarcade, cv_Dkarcade, cv_coleco)
+STD_ROM_FN(cv_Dkarcade)
+
+struct BurnDriver BurnDrvcv_Dkarcade = {
+   "cv_dkarcade", NULL, "cv_coleco", NULL, "2023",
+   "DK Arcade (HB)\0", "SGM - Super Game Module", "Opcode Games - Nintendo", "ColecoVision",
+   NULL, NULL, NULL, NULL,
+   BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
+   CVGetZipName, cv_DkarcadeRomInfo, cv_DkarcadeRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+   DrvInitOCM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+   272, 228, 4, 3
 };
 
 // AntiAir (HB)

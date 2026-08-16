@@ -7014,16 +7014,16 @@ struct BurnDriver BurnDrvcv_Dkarcade = {
    272, 228, 4, 3
 };
 
-// DK Jr. Arcade
+// DK Jr. Arcade (SGM) (HB)
 static struct BurnRomInfo cv_DkjrarcadeRomDesc[] = {
-	{ "DK Jr. Arcade (2023)(Opcode Games).rom", 131072, 0xc4ea9601, BRF_ESS | BRF_PRG },
+	{ "DK Jr. Arcade SGM (2024)(Opcode Games).rom", 131072, 0xc4ea9601, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(cv_Dkjrarcade, cv_Dkjrarcade, cv_coleco)
 STD_ROM_FN(cv_Dkjrarcade)
 
 struct BurnDriver BurnDrvcv_Dkjrarcade = {
-	"cv_dkjrarcade", NULL, "cv_coleco", NULL, "2023",
+	"cv_dkjrarcade", NULL, "cv_coleco", NULL, "1982-2024",
 	"DK Jr. Arcade (SGM) (HB)\0", "SGM - Super Game Module", "Opcode Games - Nintendo", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_PLATFORM, 0,

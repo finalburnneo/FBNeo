@@ -42375,7 +42375,7 @@ struct BurnDriver BurnDrvsnes_Trialsmanaen = {
 	"snes_trialsmanaen", NULL, NULL, NULL, "1995-2019",
 	"Trials of Mana (World, English, Rev 1, Collection of Mana)\0", NULL, "Square Enix", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_TrialsmanaenRomInfo, snes_TrialsmanaenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3

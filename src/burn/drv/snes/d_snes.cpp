@@ -32277,7 +32277,7 @@ STD_ROM_PICK(snes_Seikdens3j)
 STD_ROM_FN(snes_Seikdens3j)
 
 struct BurnDriver BurnDrvsnes_Seikdens3j = {
-	"snes_seikdens3j", "snes_seikdens3te", NULL, NULL, "1993",
+	"snes_seikdens3j", "snes_trsofmanaen", NULL, NULL, "1993",
 	"Seiken Densetsu 3 (Japan)\0", NULL, "Squaresoft", "SNES / Super Famicom",
 	L"Seiken Densetsu 3 (Japan)\0\u8056\u5263\u4f1d\u8aac 3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
@@ -32296,34 +32296,14 @@ STD_ROM_PICK(snes_Seikdens3te)
 STD_ROM_FN(snes_Seikdens3te)
 
 struct BurnDriver BurnDrvsnes_Seikdens3te = {
-	"snes_seikdens3te", NULL, NULL, NULL, "2000",
+	"snes_seikdens3te", "snes_trsofmanaen", NULL, NULL, "2000",
 	"Seiken Densetsu 3 (Hack, English v1.01)\0", NULL, "LNF Translations, Neill Corlett, SoM2Freak", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
 	SNESGetZipName, snes_Seikdens3teRomInfo, snes_Seikdens3teRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
-
-// Seiken Densetsu 3 ~ Trials of Mana (Hack, Portuguese v1.03)
-// https://www.romhacking.net.br/index.php?topic=2536.0
-static struct BurnRomInfo snes_Seikdens3tpRomDesc[] = {
-	{ "Seiken Densetsu 3 - Trials of Mana PT-BR v1.03 (2024)(Dindo).sfc", 4194304, 0x0c61a7bf, BRF_ESS | BRF_PRG },
-};
-
-STD_ROM_PICK(snes_Seikdens3tp)
-STD_ROM_FN(snes_Seikdens3tp)
-
-struct BurnDriver BurnDrvsnes_Seikdens3tp = {
-	"snes_seikdens3tp", "snes_seikdens3te", NULL, NULL, "2024",
-	"Seiken Densetsu 3 ~ Trials of Mana (Hack, Portuguese v1.03)\0", NULL, "Dindo", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
-	SNESGetZipName, snes_Seikdens3tpRomInfo, snes_Seikdens3tpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	512, 448, 4, 3
-};
-
 
 // Seiken Densetsu 3 ~ Secret of Mana 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/1837/
@@ -32335,7 +32315,7 @@ STD_ROM_PICK(snes_Seikdens3ts)
 STD_ROM_FN(snes_Seikdens3ts)
 
 struct BurnDriver BurnDrvsnes_Seikdens3ts = {
-	"snes_seikdens3ts", "snes_seikdens3te", NULL, NULL, "2013",
+	"snes_seikdens3ts", "snes_trsofmanaen", NULL, NULL, "2013",
 	"Seiken Densetsu 3 ~ Secret of Mana 2 (Hack, Spanish)\0", NULL, "Traducciones Magno", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
@@ -32354,7 +32334,7 @@ STD_ROM_PICK(snes_Seikdens3ttc)
 STD_ROM_FN(snes_Seikdens3ttc)
 
 struct BurnDriver BurnDrvsnes_Seikdens3ttc = {
-	"snes_seikdens3ttc", "snes_seikdens3te", NULL, NULL, "2012",
+	"snes_seikdens3ttc", "snes_trsofmanaen", NULL, NULL, "2012",
 	"Seiken Densetsu 3 (Hack, Traditional Chinese v1.0)\0", NULL, "darklink, vinxu", "SNES / Super Famicom",
 	L"Seiken Densetsu 3 (Hack, Traditional Chinese v1.0)\0\u8056\u528d\u50b3\u8aaa 3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
@@ -42378,6 +42358,101 @@ struct BurnDriver BurnDrvsnes_Treashuntgtsc = {
 	L"Treasure Hunter G (Hack, Simplified Chinese v1.0)\0\u8d22\u5b9d\u730e\u4eba G\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG | GBF_STRATEGY, 0,
 	SNESGetZipName, snes_TreashuntgtscRomInfo, snes_TreashuntgtscRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Trials of Mana (World, English, Rev 1, Collection of Mana)
+
+static struct BurnRomInfo snes_TrsofmanaenRomDesc[] = {
+	{ "Trials of Mana (W, English, Rev 1)(1995-2019)(Square Enix).sfc", 6291456, 0x173e6097, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Trsofmanaen)
+STD_ROM_FN(snes_Trsofmanaen)
+
+struct BurnDriver BurnDrvsnes_Trsofmanaen = {
+	"snes_trsofmanaen", NULL, NULL, NULL, "1995-2019",
+	"Trials of Mana (World, English, Rev 1, Collection of Mana)\0", NULL, "Square Enix", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TrsofmanaenRomInfo, snes_TrsofmanaenRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Trials of Mana (World, German, Rev 1, Collection of Mana)
+
+static struct BurnRomInfo snes_TrsofmanadeRomDesc[] = {
+	{ "Trials of Mana (W, German, Rev 1)(1995-2019)(Square Enix).sfc", 6291456, 0x534df838, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Trsofmanade)
+STD_ROM_FN(snes_Trsofmanade)
+
+struct BurnDriver BurnDrvsnes_Trsofmanade = {
+	"snes_trsofmanade", "snes_trsofmanaen", NULL, NULL, "1995-2019",
+	"Trials of Mana (World, German, Rev 1, Collection of Mana)\0", NULL, "Square Enix", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TrsofmanadeRomInfo, snes_TrsofmanadeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Trials of Mana (World, Spanish, Rev 1, Collection of Mana)
+
+static struct BurnRomInfo snes_TrsofmanaesRomDesc[] = {
+	{ "Trials of Mana (W, Spanish, Rev 1)(1995-2019)(Square Enix).sfc", 6291456, 0x593cd548, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Trsofmanaes)
+STD_ROM_FN(snes_Trsofmanaes)
+
+struct BurnDriver BurnDrvsnes_Trsofmanaes = {
+	"snes_trsofmanaes", "snes_trsofmanaen", NULL, NULL, "1995-2019",
+	"Trials of Mana (World, Spanish, Rev 1, Collection of Mana)\0", NULL, "Square Enix", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TrsofmanaesRomInfo, snes_TrsofmanaesRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Trials of Mana (World, French, Rev 1, Collection of Mana)
+
+static struct BurnRomInfo snes_TrsofmanafrRomDesc[] = {
+	{ "Trials of Mana (W, French, Rev 1)(1995-2019)(Square Enix).sfc", 6291456, 0x3d09832a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Trsofmanafr)
+STD_ROM_FN(snes_Trsofmanafr)
+
+struct BurnDriver BurnDrvsnes_Trsofmanafr = {
+	"snes_trsofmanafr", "snes_trsofmanaen", NULL, NULL, "1995-2019",
+	"Trials of Mana (World, French, Rev 1, Collection of Mana)\0", NULL, "Square Enix", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TrsofmanafrRomInfo, snes_TrsofmanafrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Trials of Mana (Hack, Portuguese v1.03)
+// https://www.romhacking.net.br/index.php?topic=2536.0
+static struct BurnRomInfo snes_TrsofmanatpRomDesc[] = {
+	{ "Trials of Mana PT-BR v1.03 (2024)(Dindo).sfc", 4194304, 0x0c61a7bf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Trsofmanatp)
+STD_ROM_FN(snes_Trsofmanatp)
+
+struct BurnDriver BurnDrvsnes_Srsofmanatp = {
+	"snes_trsofmanatp", "snes_trsofmanaen", NULL, NULL, "2024",
+	"Trials of Mana (Hack, Portuguese v1.03)\0", NULL, "Dindo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ACTION | GBF_RPG, 0,
+	SNESGetZipName, snes_TrsofmanatpRomInfo, snes_TrsofmanatpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

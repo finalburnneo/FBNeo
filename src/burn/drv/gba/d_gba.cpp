@@ -55044,6 +55044,25 @@ struct BurnDriver BurnDrvgba_xmanam = {
 // ----------------------------------------
 
 
+// 2048 (HB, v1.3.1)
+
+static struct BurnRomInfo gba_2048RomDesc[] = {
+	{ "2048 v1.3.1 (2024-26)(Basil Termini).gba",	262144,	0x1c4b5dcf,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_2048, gba_2048, gba_gba)
+STD_ROM_FN(gba_2048)
+
+struct BurnDriver BurnDrvgba_2048 = {
+	"gba_2048", NULL, "gba_gba", NULL, "2024-26",
+	"2048 (HB, v1.3.1)\0", NULL, "Basil Termini", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_2048RomInfo, gba_2048RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Advance Wars Returns (Hack, v3.3)
 // https://www.romhacking.net/hacks/6012/
 static struct BurnRomInfo gba_advwarsrRomDesc[] = {
@@ -55405,6 +55424,25 @@ struct BurnDriver BurnDrvgba_clocktower = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Collie Defense (HB)
+
+static struct BurnRomInfo gba_colliedefRomDesc[] = {
+	{ "Collie Defense (2024)(Yann Vaillant).gba",	2985468,	0x2559e4bf,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_colliedef, gba_colliedef, gba_gba)
+STD_ROM_FN(gba_colliedef)
+
+struct BurnDriver BurnDrvgba_colliedef = {
+	"gba_colliedef", NULL, "gba_gba", NULL, "2024",
+	"Collie Defense (HB)\0", "Published by The Retro Room Games", "Yann Vaillant", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_STRATEGY, 0,
+	GbaGetZipName, gba_colliedefRomInfo, gba_colliedefRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Crypt Sweeper (HB)
 
 static struct BurnRomInfo gba_cryptsweepRomDesc[] = {
@@ -55690,6 +55728,25 @@ struct BurnDriver BurnDrvgba_hexavirus = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Howgarts Tris (HB)
+
+static struct BurnRomInfo gba_howgartstrisRomDesc[] = {
+	{ "Howgarts Tris (2023)(VG Source Game Studio).gba",	209884,	0x53daf7a8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_howgartstris, gba_howgartstris, gba_gba)
+STD_ROM_FN(gba_howgartstris)
+
+struct BurnDriver BurnDrvgba_howgartstris = {
+	"gba_howgartstris", NULL, "gba_gba", NULL, "2023",
+	"Howgarts Tris (HB)\0", NULL, "VG Source Game Studio", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_howgartstrisRomInfo, gba_howgartstrisRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Inky and the Alien Aquarium (HB)
 
 static struct BurnRomInfo gba_inkyalienRomDesc[] = {
@@ -55727,10 +55784,10 @@ struct BurnDriver BurnDrvgba_kieni8 = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Jurl (HB, v1.0c)
+// Jurl (HB, v1.2a)
 
 static struct BurnRomInfo gba_jurlRomDesc[] = {
-	{ "Jurl v1.0c (2025)(Tonsomo Entertainment).gba",	964484,	0x1dffb414,	BRF_ESS | BRF_PRG },
+	{ "Jurl v1.2a (2025)(Tonsomo Entertainment).gba",	964716,	0x67d03d52,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_jurl, gba_jurl, gba_gba)
@@ -55738,7 +55795,7 @@ STD_ROM_FN(gba_jurl)
 
 struct BurnDriver BurnDrvgba_jurl = {
 	"gba_jurl", NULL, "gba_gba", NULL, "2025",
-	"Jurl (HB, v1.0c)\0", NULL, "Tonsomo Entertainment", "Game Boy Advance",
+	"Jurl (HB, v1.2a)\0", NULL, "Tonsomo Entertainment", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
 	GbaGetZipName, gba_jurlRomInfo, gba_jurlRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
@@ -56275,4 +56332,3 @@ struct BurnDriver BurnDrvgba_xenocrisis = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
-

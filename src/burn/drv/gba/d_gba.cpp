@@ -55405,6 +55405,25 @@ struct BurnDriver BurnDrvgba_chipsch = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Chronavi, The (HB)
+
+static struct BurnRomInfo gba_chronaviRomDesc[] = {
+	{ "Chronavi, The (2026)(2Barrel Arts).gba",	11920752,	0x49781ac8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_chronavi, gba_chronavi, gba_gba)
+STD_ROM_FN(gba_chronavi)
+
+struct BurnDriver BurnDrvgba_chronavi = {
+	"gba_chronavi", NULL, "gba_gba", NULL, "2026",
+	"Chronavi, The (HB)\0", NULL, "2Barrel Arts", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SHOOT, 0,
+	GbaGetZipName, gba_chronaviRomInfo, gba_chronaviRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Clock Tower Advance (HB)
 
 static struct BurnRomInfo gba_clocktowerRomDesc[] = {

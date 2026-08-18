@@ -1234,19 +1234,27 @@ static void QuickOpenExit()
 	memset(szAppQuickPath, 0, sizeof(szAppQuickPath));
 }
 
+static INT32 CDListGetPlatform(const TCHAR* pszPath)
+{
+	CDListResult Result;
+	if (!CDListIdentify(pszPath, &Result))
+		return CDLIST_PLATFORM_UNKNOWN;
+	return Result.nPlatform;
+}
+
 static bool NgcdVerifyPath(const TCHAR* pszSelCue)
 {
 	if ((NULL == pszSelCue) || !FileExists(pszSelCue)) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE));
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelCue);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return false;
 	}
 
 	const TCHAR* pszExt = _tcsrchr(pszSelCue, _T('.'));
-	if (NULL == pszExt || ((0 != _tcsicmp(_T(".cue"), pszExt)) && (0 != _tcsicmp(_T(".chd"), pszExt)))) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD: %s\n\n"), pszSelCue);
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue, .chd"));
+	if (NULL == pszExt || ((0 != _tcsicmp(_T(".cue"), pszExt)) && (0 != _tcsicmp(_T(".chd"), pszExt)) && (0 != _tcsicmp(_T(".ccd"), pszExt)))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE_FILE), pszSelCue);
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue, .ccd, .chd"));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return false;
 	}
@@ -1257,7 +1265,7 @@ static bool NgcdVerifyPath(const TCHAR* pszSelCue)
 			TCHAR c = *(p - 1);
 			if ((_T('/') == c) ||
 				(_T('\\') == c)) {		// xxxx//ssss\\...
-				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD:\n\n"));
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE));
 				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelCue);
 				FBAPopupDisplay(PUF_TYPE_ERROR);
 				return false;
@@ -1360,9 +1368,25 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 			nDrvIdx = IpsGetDrvForQuickOpen(pszSelect);
 			break;
 
-		case 3:
-			nDrvIdx = RomdataGetDrvIndex(_T("neocdz"));
+		case 3: {
+			INT32 nPlatform = CDListGetPlatform(pszSelect);
+			const TCHAR* pszDrvName = NULL;
+			switch (nPlatform) {
+				case CDLIST_PLATFORM_NEOCD:
+					pszDrvName = _T("neocdz");
+					break;
+				case CDLIST_PLATFORM_PCECD:
+					pszDrvName = _T("pce_scdsys");
+					break;
+				default:
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE_IDENTIFY), pszSelect);
+					FBAPopupDisplay(PUF_TYPE_ERROR);
+					return -1;
+			}
+
+			nDrvIdx = RomdataGetDrvIndex(pszDrvName);
 			break;
+		}
 
 		case 4:
 			nDrvIdx = ArchiveNameFindDrv(pszSelect);
@@ -1576,7 +1600,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_LOAD_ROMDATA:
 		case MENU_LOAD_IPSPATCH:
-		case MENU_LOAD_NEOGEOCD:
+		case MENU_LOAD_CDIMAGE:
 		case MENU_LOAD_ARCHIVE: {
 			nQuickOpen = id - MENU_LOAD_ROMDATA + 1;
 
@@ -1593,9 +1617,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					break;
 
 				case 3:
-					pszFilter = _T(" (*.cue,*.chd)\0*.cue;*.chd\0\0");
-					nStringID = IDS_DISK_FILE_NEOGEOCD;
-					nStrLen   = 28;
+					pszFilter = _T(" (*.ccd,*.cue,*.chd)\0*.ccd;*.cue;*.chd\0\0");
+					nStringID = IDS_DISK_FILE_CDIMAGE;
+					nStrLen   = 39;
 					break;
 
 				case 4:

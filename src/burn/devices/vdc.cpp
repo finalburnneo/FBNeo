@@ -1198,8 +1198,11 @@ void vdc_write(INT32 which, UINT8 offset, UINT8 data)
 				break;
 
 				case HDR: {
+					int old_w = vdc_width[which];
 					vdc_width[which] = ((data & 0x003F) + 1) << 3;
-					bprintf(0, _T("vdc width  %d\n"), vdc_width[which]);
+					if (old_w != vdc_width[which]) {
+						bprintf(0, _T("vdc width  %d\n"), vdc_width[which]);
+					}
 				}
 				break;
 

@@ -210,9 +210,10 @@ static void pce_write(UINT32 address, UINT8 data)
 		return;
 	}
 
-	CDSubsystemMiscWrite(address, data); // cd system (acard, bram)
-
-	bprintf(0,_T("unknown write %x:%x\n"), address, data );
+	if (!CDSubsystemMiscWrite(address, data)) { // cd system (acard, bram)
+		// if the cd system doesn't handle this address, better log it!
+		bprintf(0,_T("unknown write %x:%x\n"), address, data);
+	}
 }
 
 static UINT8 pce_read(UINT32 address)
@@ -269,10 +270,6 @@ static UINT8 pce_read(UINT32 address)
 	}
 
 	return CDSubsystemMiscRead(address); // cd system (acard, bram)
-
-	bprintf(0,_T("Unknown read %x\n"), address );
-
-	return 0;
 }
 
 static UINT8 sgx_read(UINT32 address)

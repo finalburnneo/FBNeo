@@ -1260,7 +1260,7 @@ void CDSubsystemRegsWrite(UINT32 address, UINT8 data)
 	}
 }
 
-void CDSubsystemMiscWrite(UINT32 address, UINT8 data)
+int CDSubsystemMiscWrite(UINT32 address, UINT8 data)
 {
 	if (HAS_CD) {
 		if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
@@ -1268,14 +1268,16 @@ void CDSubsystemMiscWrite(UINT32 address, UINT8 data)
 			{
 				PCECDBRAM[address & 0x7FF] = data;
 			}
-			return;
+			return 1;
 		}
 
 		if ((hardware_type == ACARD_HW) && (address >= 0x080000) && (address <= 0x087fff)) {
 			acard_ram_w(address, data);
-			return;
+			return 1;
 		}
 	}
+
+	return 0; // "not handled here"
 }
 
 UINT8 CDSubsystemRegsRead(UINT32 address)

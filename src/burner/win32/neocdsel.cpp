@@ -642,6 +642,12 @@ static bool SelectForPlay()
 	nCDEmuSelect = 0;
 	_tcsncpy(CDEmuImage, pEntry->szPath, MAX_PATH - 1);
 	CDEmuImage[MAX_PATH - 1] = _T('\0');
+#ifdef BUILD_PCE
+	if (pEntry->nPlatform == CDLIST_PLATFORM_PCECD) {
+		_tcsncpy(PCECD_szTitle, pEntry->szTitle[0] ? pEntry->szTitle : _T(""), CDLIST_TEXT_SIZE - 1);
+		PCECD_szTitle[CDLIST_TEXT_SIZE - 1] = _T('\0');
+	}
+#endif
 	nRunPlatform = pEntry->nPlatform;
 	return true;
 }

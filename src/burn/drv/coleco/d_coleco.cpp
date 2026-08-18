@@ -8616,6 +8616,24 @@ struct BurnDriver BurnDrvcv_karateka2 = {
 	272, 228, 4, 3
 };
 
+// Kennedy Approach (HB, v0.5)
+static struct BurnRomInfo cv_kennedyapprRomDesc[] = {
+	{ "Kennedy Approach v0.5 (2026)(Electric Dreams).rom",	131072, 0x79774ec7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_kennedyappr, cv_kennedyappr, cv_coleco)
+STD_ROM_FN(cv_kennedyappr)
+
+struct BurnDriver BurnDrvcv_kennedyappr = {
+	"cv_kennedyappr", NULL, "cv_coleco", NULL, "2026",
+	"Kennedy Approach (HB, v0.5)\0", NULL, "Electric Dreams", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_SIM, 0,
+	CVGetZipName, cv_kennedyapprRomInfo, cv_kennedyapprRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Kevtris (HB)
 static struct BurnRomInfo cv_kevtrisRomDesc[] = {
     { "Kevtris (1996)(Kevin Horton).rom",	0x4000, 0x819a06e5, BRF_PRG | BRF_ESS },

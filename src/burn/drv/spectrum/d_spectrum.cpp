@@ -61916,6 +61916,25 @@ struct BurnDriver BurnSpecTwinlight = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Uchotos (HB)
+
+static struct BurnRomInfo SpecUchotosRomDesc[] = {
+	{ "Uchotos 48K-AY (2026)(Inufuto).tzx", 16384, 0x833ab2fa, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecUchotos, SpecUchotos, Spectrum)
+STD_ROM_FN(SpecUchotos)
+
+struct BurnDriver BurnSpecUchotos = {
+	"spec_uchotos", NULL, "spec_spectrum", NULL, "2026",
+	"Uchotos (48K) (HB)\0", "AY Sound supported", "Inufuto", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecUchotosRomInfo, SpecUchotosRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // UFO (48K) (HB)
 
 static struct BurnRomInfo SpecUfoRomDesc[] = {

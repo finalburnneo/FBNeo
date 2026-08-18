@@ -46365,6 +46365,25 @@ struct BurnDriver BurnDrvsnes_Alphaspheredc = {
 	512, 448, 4, 3
 };
 
+// Angelsong (HB, v1.5)
+// https://team-disposable.itch.io/angelsong
+static struct BurnRomInfo snes_AngelsongRomDesc[] = {
+	{ "Angelsong v1.5 (2025-26)(Team Disposable & Haller.Z).sfc", 262144, 0xdaae6bdc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Angelsong)
+STD_ROM_FN(snes_Angelsong)
+
+struct BurnDriver BurnDrvsnes_Angelsong = {
+	"snes_angelsong", NULL, NULL, NULL, "2025-26",
+	"Angelsong (HB, v1.5)\0", NULL, "Team Disposable and Haller.Z", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION, 0,
+	SNESGetZipName, snes_AngelsongRomInfo, snes_AngelsongRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Apocalypse II (Euro) (Piko)
 
 static struct BurnRomInfo snes_Apocalypse2pikoRomDesc[] = {

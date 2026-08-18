@@ -900,7 +900,9 @@ static UINT16 ics2115_reg_read()
 
 		case 0x4B: // Address of Interrupting Oscillator
 			// bprintf(0, _T("IntOscAddr read\n"));
+			ret = 0x80;
 
+#if 0
 			ret = 0xFF;
 
 			if (m_irq_on)
@@ -927,6 +929,7 @@ static UINT16 ics2115_reg_read()
 			}
 
 			ret <<= 8;
+#endif
 			break;
 
 		case 0x4C: // Chip Revision

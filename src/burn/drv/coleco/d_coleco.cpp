@@ -6780,6 +6780,42 @@ struct BurnDriver BurnDrvcv_dacman = {
 	272, 228, 4, 3
 };
 
+// Dacman (HB. Alt)
+static struct BurnRomInfo cv_dacmanaRomDesc[] = {
+	{ "Dacman (Alt)(2000)(Daniel Bienvenu).rom",	32768, 0x3c0bba92, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_dacmana, cv_dacmana, cv_coleco)
+STD_ROM_FN(cv_dacmana)
+
+struct BurnDriver BurnDrvcv_dacmana = {
+	"cv_dacmana", "cv_dacman", "cv_coleco", NULL, "2000",
+	"Dacman (HB, Alt)\0", NULL, "Daniel Bienvenu", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
+	CVGetZipName, cv_dacmanaRomInfo, cv_dacmanaRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Dacman II (HB)
+static struct BurnRomInfo cv_dacman2RomDesc[] = {
+	{ "Dacman II (2026)(Amy Bienvenu).rom",	16106, 0xdfeccda0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_dacman2, cv_dacman2, cv_coleco)
+STD_ROM_FN(cv_dacman2)
+
+struct BurnDriver BurnDrvcv_dacman2 = {
+	"cv_dacman2", NULL, "cv_coleco", NULL, "2026",
+	"Dacman II (HB)\0", NULL, "Amy Bienvenu", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_MAZE, 0,
+	CVGetZipName, cv_dacman2RomInfo, cv_dacman2RomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Danger Tower (SGM) (HB)
 static struct BurnRomInfo cv_dangrtowerRomDesc[] = {
     { "Danger Tower SGM (2017)(Team Pixelboy).rom",	0x8000, 0x0246bdb1, BRF_PRG | BRF_ESS },
@@ -12421,6 +12457,24 @@ struct BurnDriver BurnDrvcv_Txupinazo = {
     CVGetZipName, cv_TxupinazoRomInfo, cv_TxupinazoRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
+};
+
+// Uchotos (HB)
+static struct BurnRomInfo cv_uchotosRomDesc[] = {
+	{ "Uchotos (2026)(Inufuto).rom",	8192, 0x87ec1018, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_uchotos, cv_uchotos, cv_coleco)
+STD_ROM_FN(cv_uchotos)
+
+struct BurnDriver BurnDrvcv_uchotos = {
+	"cv_uchotos", NULL, "cv_coleco", NULL, "2026",
+	"Uchotos (HB)\0", NULL, "Inufuto", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
+	CVGetZipName, cv_uchotosRomInfo, cv_uchotosRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
 };
 
 // Uridium (SGM) (HB)

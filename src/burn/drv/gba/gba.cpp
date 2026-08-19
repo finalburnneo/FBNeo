@@ -1,13 +1,54 @@
-#ifndef GBA_STANDALONE
 #include "burnint.h"
-#else
-#include <stdlib.h>
-#define BurnMalloc(x) malloc(x)
-#define BurnFree(x) do { free(x); (x) = NULL; } while (0)
-#endif
 #include "gba.h"
-#include "gba_impl.h"
 
+// ---------------------------------------------------------------------------
+// Cross-subsystem forward declarations.  Every subsystem header is aggregated
+// into the single translation unit of gba.cpp, so these declarations let a
+// function in one header call a static function defined in another regardless
+// of include order.  Specifiers mirror each definition exactly.
+// ---------------------------------------------------------------------------
+
+// apu.h
+static inline void  gba_process_audio_writes(gba_t* gba);
+static inline UINT8 gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
+static inline void  gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
+
+// bus.h
+static inline void    gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
+static inline void    gba_recompute_mmio_mask_table(gba_t* gba);
+static inline UINT32  gba_read32(gba_t* gba, UINT32 baddr);
+static inline UINT16  gba_read16(gba_t* gba, UINT32 baddr);
+static inline UINT8   gba_read8(gba_t* gba, UINT32 baddr);
+static inline void    gba_store32(gba_t* gba, UINT32 baddr, UINT32 data);
+static inline void    gba_store16(gba_t* gba, UINT32 baddr, UINT32 data);
+static inline void    gba_store8(gba_t* gba, UINT32 baddr, UINT32 data);
+static inline void    gba_io_store16(gba_t* gba, UINT32 baddr, UINT16 data);
+static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 baddr, INT32 req_type);
+static inline void    gba_process_mmio_read(gba_t* gba, UINT32 address);
+static inline bool    gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes);
+static inline void    arm7_write32(void* user_data, UINT32 address, UINT32 data);
+static inline void    gba_tick_keypad(sb_joy_t* joy, gba_t* gba);
+
+// cart.h
+static inline UINT16   gba_rom_read16(const gba_t* gba, UINT32 address);
+
+// timer.h
+static inline void                  gba_compute_timers(gba_t* gba);
+static inline void     gba_tick_timers(gba_t* gba);
+static inline void     gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
+
+#include "gpio.h"
+#include "cart.h"
+#include "bus.h"
+#include "timer.h"
+#include "ppu.h"
+#include "dma.h"
+#include "sio.h"
+#include "apu.h"
+
+void gba_cpu_trigger_breakpoint(void* data);
+void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);
+void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch);
 struct GbaCore {
 	gba_t			state;
 	gba_scratch_t	scratch;
@@ -17,7 +58,7 @@ struct GbaCore {
 	bool			ownsRom;
 	UINT8			externalBios[16 * 1024];
 	bool			externalBiosLoaded;
-	UINT32 			cartridgeFeatures;
+	UINT32			cartridgeFeatures;
 	UINT8			cartridgeBackupType;
 	double			sourceRate;
 	INT32			outputFrames;
@@ -221,7 +262,6 @@ INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaR
 	core->ownsRom = true;
 	core->cartridgeFeatures   = GbaDetectCartridgeFeatures(core->rom, core->romSize);
 	core->cartridgeBackupType = GbaDetectCartridgeBackupType(core->rom, core->romSize);
-	rom = core->rom;
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = romSize;
 	core->host.bios_data  = core->externalBiosLoaded ? core->externalBios : NULL;
@@ -320,61 +360,6 @@ INT32 GbaCoreRunFrame(GbaCore *core)
 		return 1;
 	core->host.render_frame = true;
 	gba_tick(&core->host, &core->state, &core->scratch);
-	// Reference capture harness: set GBA_REF=1 in the environment to dump
-	// deterministic state signatures at fixed frame numbers.
-	if (getenv("GBA_REF")) {
-		static INT32 ref_frame = 0;
-		ref_frame++;
-		if (ref_frame == 1) printf("[GBA_REF] f1 wall_ms=%u\n", (unsigned)clock());
-		if (ref_frame == 300) printf("[GBA_REF] f300 wall_ms=%u\n", (unsigned)clock());
-		static const INT32 ref_points[] = { 1, 2, 5, 10, 30, 60, 120, 300 };
-		bool hit = false;
-		for (UINT32 i = 0; i < sizeof(ref_points) / sizeof(ref_points[0]); i++) {
-			if (ref_frame == ref_points[i]) {
-				hit = true;
-				break;
-			}
-		}
-		if (hit) {
-			UINT32 fnv = 2166136261u;
-			const UINT32* fb = (const UINT32*)core->scratch.framebuffer;
-			for (INT32 i = 0; i < GBA_WIDTH * GBA_HEIGHT; i++) {
-				fnv ^= fb[i];
-				fnv *= 16777619u;
-			}
-			UINT32 pram_crc = 0, vram_crc = 0, oam_crc = 0;
-			for (INT32 i = 0; i < 1024; i++)
-				pram_crc += core->state.mem.palette[i] * (i + 1);
-			for (INT32 i = 0; i < 0x18000 / 4; i++)
-				vram_crc += ((UINT32*)core->state.mem.vram)[i] * (i + 1);
-			for (INT32 i = 0; i < 1024 / 4; i++)
-				oam_crc += ((UINT32*)core->state.mem.oam)[i] * (i + 1);
-			FILE* f = fopen("gba_reference.log", "ab");
-			if (f) {
-				fprintf(f, "f=%d fb=%08x pram=%08x vram=%08x oam=%08x ie=%04x if=%04x ime=%04x dispstat=%04x vcount=%04x t0=%04x t1=%04x t2=%04x t3=%04x\n",
-					ref_frame, fnv, pram_crc, vram_crc, oam_crc,
-					*(UINT16*)(core->state.mem.io + 0x200), *(UINT16*)(core->state.mem.io + 0x202),
-					*(UINT16*)(core->state.mem.io + 0x208), *(UINT16*)(core->state.mem.io + 0x004),
-					*(UINT16*)(core->state.mem.io + 0x006),
-					*(UINT16*)(core->state.mem.io + 0x100), *(UINT16*)(core->state.mem.io + 0x104),
-					*(UINT16*)(core->state.mem.io + 0x108), *(UINT16*)(core->state.mem.io + 0x10c));
-				fclose(f);
-			}
-			if (ref_frame == 300) {
-				UINT8* state = (UINT8*)malloc(sizeof(gba_t));
-				if (state) {
-					if (GbaCoreSaveState(core, state, sizeof(gba_t)) == 0) {
-						FILE* s = fopen("gba_reference_state.bin", "wb");
-						if (s) {
-							fwrite(state, 1, sizeof(gba_t), s);
-							fclose(s);
-						}
-					}
-					free(state);
-				}
-			}
-		}
-	}
 	return 0;
 }
 
@@ -495,15 +480,13 @@ size_t GbaCoreStateSize()
 	return sizeof(gba_t);
 }
 
-#define GBA_RAW_STATE_MAGIC 0x53414247u	// 'AGBS'
-
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 {
 	if (core == NULL || data == NULL || size < sizeof(gba_t))
 		return 1;
 	memcpy(data, &core->state, sizeof(gba_t));
-	((gba_t *)data)->raw_state_magic = GBA_RAW_STATE_MAGIC;
 	UINT8 *state = (UINT8 *)data;
+// pointer fields: nulls the pointer, not the pointee
 #define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, sizeof(((type *)0)->field))
 	const size_t mem = offsetof(gba_t, mem);
 	const size_t cpu = offsetof(gba_t, cpu);
@@ -512,7 +495,6 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_mem_t, mem, cart_backup);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   framebuffer);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, user_data);
-	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, log_cmp_file);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read8);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read16);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read32);
@@ -530,13 +512,11 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 
 INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preserveAudio)
 {
-	if (core == NULL || data == NULL || size < sizeof(gba_t) - sizeof(UINT32) || core->rom == NULL)
-		return 1;
-	if (size == sizeof(gba_t) && ((const gba_t *)data)->raw_state_magic != GBA_RAW_STATE_MAGIC)
+	if (core == NULL || data == NULL || size < sizeof(gba_t) || core->rom == NULL)
 		return 1;
 	UINT8 battery[GBA_BATTERY_CAPACITY];
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
-	memcpy(&core->state, data, size);
+	memcpy(&core->state, data, sizeof(gba_t));
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
@@ -556,3 +536,110 @@ void GbaCoreRebind(GbaCore *core)
 	gba_ptrs_init(&core->state, &core->scratch, core->rom);
 	core->state.cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
 }
+void gba_cpu_trigger_breakpoint(void* data)
+{
+	gba_t* gba = (gba_t*)data;
+	gba->frame_in_progress = false;
+	gba->pause_after_frame = true;
+}
+
+void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data)
+{
+	gba->framebuffer      = scratch->framebuffer;
+	gba->mem.bios         = scratch->bios;
+	gba->mem.cart_rom     = rom_data;
+	gba->cpu.read8        = arm7_read8;
+	gba->cpu.read16       = arm7_read16;
+	gba->cpu.read32       = arm7_read32;
+	gba->cpu.read16_seq   = arm7_read16_seq;
+	gba->cpu.read32_seq   = arm7_read32_seq;
+	gba->cpu.write8       = arm7_write8;
+	gba->cpu.write16      = arm7_write16;
+	gba->cpu.write32      = arm7_write32;
+	gba->cpu.user_data    = gba;
+}
+
+void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
+{
+	gba_ptrs_init(gba, scratch, emu->rom_data);
+	gba->cpu.user_data          = gba;
+	gba->cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
+
+
+	gba_tick_keypad(&emu->joy, gba);
+	gba->frame_in_progress = true;
+	float solar_value = emu->joy.solar_sensor;
+	if (!(solar_value < 1.00))
+		solar_value = 1.00;
+	if (!(solar_value > 0.00))
+		solar_value = 0.00;
+	gba->solar_sensor.pending_value = 0xE9 - solar_value * (0xE9 - 0x32);	// latched into value when the game resets the sensor
+	gba->gyro_sensor.pending_sample = gba_gyro_sample(emu->joy.gyro_z);
+	gba->tilt_sensor.pending_x = gba_tilt_sample(emu->joy.tilt_x);
+	gba->tilt_sensor.pending_y = gba_tilt_sample(emu->joy.tilt_y);
+	gba->ppu.ghosting_strength = emu->screen_ghosting_strength;
+	while (gba->frame_in_progress) {
+		INT32 ticks = gba->activate_dmas ? gba_tick_dma(gba, gba->last_cpu_tick) : 0;
+		if (!ticks && gba->residual_dma_ticks) {
+			ticks = gba->residual_dma_ticks;
+			gba->residual_dma_ticks = 0;
+		}
+		if (!ticks) {
+			gba->cpu.i_cycles = 0;
+			gba->mem.requests = 0;
+			if (!gba->cpu.phased_op_id) {
+				UINT16 int_if = gba_io_read16(gba, GBA_IF);
+				if (SB_UNLIKELY(int_if)) {
+					int_if &= gba_io_read16(gba, GBA_IE);
+					UINT32 ime = gba_io_read32(gba, GBA_IME);
+					int_if *= SB_BFE(ime, 0, 1);
+					if (int_if)
+						arm7_process_interrupts(&gba->cpu);
+				}
+			}
+			arm7_exec_instruction(&gba->cpu);
+			gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
+		}
+		gba_tick_sio(gba);
+		INT32 ppu_fast_forward   = gba->ppu.fast_forward_ticks;
+		INT32 timer_fast_forward = gba->timer_ticks_before_event - gba->deferred_timer_ticks;
+		INT32 fast_forward_ticks = ppu_fast_forward < timer_fast_forward ? ppu_fast_forward : timer_fast_forward;
+		if (fast_forward_ticks > ticks) {
+			if (gba->cpu.wait_for_interrupt)
+				ticks = fast_forward_ticks;
+			else
+				fast_forward_ticks = ticks;
+		}
+		if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
+			for (INT32 i = 0;i < fast_forward_ticks;++i)
+				gba_tick_interrupts(gba);
+		}
+		// RTC advances with host wall time, not emulated master clocks
+		gba->deferred_timer_ticks   += fast_forward_ticks;
+		gba->ppu.fast_forward_ticks -= fast_forward_ticks;
+		ticks -= fast_forward_ticks > ticks ? ticks : fast_forward_ticks;
+		double delta_t = ((double)ticks + fast_forward_ticks) / (16 * 1024 * 1024);
+		gba_tick_audio(gba, emu, delta_t, ticks + fast_forward_ticks);
+
+		bool last_activate_dmas = gba->activate_dmas;
+		for (INT32 t = 0;t < ticks;++t) {
+			if (gba->activate_dmas && !last_activate_dmas) {
+				gba->residual_dma_ticks = ticks - t - 1;
+				gba->last_cpu_tick = t + 1;
+			}
+			gba_tick_interrupts(gba);
+			gba_tick_timers(gba);
+			gba_tick_ppu(gba, emu->render_frame);
+		}
+	}
+	gba_gpio_update_rumble(gba);
+	emu->joy.rumble = gba->cart.gpio.rumble;
+	//LCD turns off in stop mode
+	if (gba->stop_mode)
+		memset(scratch->framebuffer, 0, sizeof(scratch->framebuffer));
+	if (gba->pause_after_frame) {
+		emu->run_mode          = SB_MODE_PAUSE;
+		gba->pause_after_frame = false;
+	}
+}
+

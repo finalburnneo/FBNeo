@@ -24,30 +24,30 @@ static UINT16	DrvTiltX;
 static UINT16	DrvTiltY;
 
 #define GBA_BUTTON_INPUTS																	\
-	{ "P1 Up",			BIT_DIGITAL,	DrvJoy + GBA_BUTTON_UP,		"p1 up"				},	\
-	{ "P1 Down",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_DOWN,	"p1 down"			},	\
-	{ "P1 Left",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_LEFT,	"p1 left"			},	\
-	{ "P1 Right",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_RIGHT,	"p1 right"			},	\
-	{ "P1 Button A",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_A,		"p1 fire 1"			},	\
-	{ "P1 Button B",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_B,		"p1 fire 2"			},	\
-	{ "P1 Button L",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_L,		"p1 fire 3"			},	\
-	{ "P1 Button R",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_R,		"p1 fire 4"			},
+{ "P1 Up",			BIT_DIGITAL,	DrvJoy + GBA_BUTTON_UP,		"p1 up"				},	\
+{ "P1 Down",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_DOWN,	"p1 down"			},	\
+{ "P1 Left",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_LEFT,	"p1 left"			},	\
+{ "P1 Right",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_RIGHT,	"p1 right"			},	\
+{ "P1 Button A",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_A,		"p1 fire 1"			},	\
+{ "P1 Button B",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_B,		"p1 fire 2"			},	\
+{ "P1 Button L",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_L,		"p1 fire 3"			},	\
+{ "P1 Button R",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_R,		"p1 fire 4"			},
 
 #define GBA_RESET_INPUTS																	\
-	{ "P1 Select",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_SELECT,	"p1 select"			},	\
-	{ "P1 Start",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_START,	"p1 start"			},	\
-	{ "Reset",			BIT_DIGITAL,	&DrvReset,					"reset"				},
+{ "P1 Select",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_SELECT,	"p1 select"			},	\
+{ "P1 Start",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_START,	"p1 start"			},	\
+{ "Reset",			BIT_DIGITAL,	&DrvReset,					"reset"				},
 
 #define GBA_SOLAR_INPUTS																	\
-	{ "Solar Brighter",	BIT_DIGITAL,	&DrvSolarUp,				"p1 fire 5"			},	\
-	{ "Solar Darker",	BIT_DIGITAL,	&DrvSolarDown,				"p1 fire 6"			},
+{ "Solar Brighter",	BIT_DIGITAL,	&DrvSolarUp,				"p1 fire 5"			},	\
+{ "Solar Darker",	BIT_DIGITAL,	&DrvSolarDown,				"p1 fire 6"			},
 
 #define GBA_GYRO_INPUTS																		\
-	{ "Gyro Z",			BIT_ANALOG_ABS,	(UINT8*)&DrvGyroZ,			"p1 gyro z-axis"	},
+{ "Gyro Z",			BIT_ANALOG_ABS,	(UINT8*)&DrvGyroZ,			"p1 gyro z-axis"	},
 
 #define GBA_TILT_INPUTS																		\
-	{ "Tilt X",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltX,			"p1 tilt x-axis"	},	\
-	{ "Tilt Y",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltY,			"p1 tilt y-axis"	},
+{ "Tilt X",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltX,			"p1 tilt x-axis"	},	\
+{ "Tilt Y",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltY,			"p1 tilt y-axis"	},
 
 static struct BurnInputInfo GbaInputList[] = {
 	GBA_BUTTON_INPUTS
@@ -79,16 +79,6 @@ static struct BurnInputInfo TiltInputList[] = {		// Tilt sensor
 };
 
 STDINPUTINFO(Tilt)
-
-static struct BurnInputInfo AioInputList[] = {		// All-in-one
-	GBA_BUTTON_INPUTS
-	GBA_SOLAR_INPUTS
-	GBA_GYRO_INPUTS
-	GBA_TILT_INPUTS
-	GBA_RESET_INPUTS
-};
-
-STDINPUTINFO(Aio)
 
 #undef GBA_BUTTON_INPUTS
 #undef GBA_SOLAR_INPUTS
@@ -253,7 +243,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin) {
-		*pnMin = 0x029708;
+		*pnMin = 0x02970A;
 	}
 
 	if ((nAction & ACB_VOLATILE) && Gba && DrvState) {

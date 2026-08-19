@@ -95,7 +95,7 @@ BEGIN
 	IDS_DISK_TEXT				"Text Files"
 	IDS_DISK_FILE_ROMDATA		"%s RomData Type"
 	IDS_DISK_FILE_IPSPATCH		"%s IPS Type"
-	IDS_DISK_FILE_NEOGEOCD		"%s NeoGeo-CD Type"
+	IDS_DISK_FILE_CDIMAGE		"%s CD image"
 	IDS_DISK_FILE_ARCHIVE		"%s Archive Types"
 
 	IDS_DISK_SAVEREPORT			"Save system information report"
@@ -406,6 +406,9 @@ BEGIN
 	IDS_ERR_CDEMU_INI_FAIL		"Couldn't initialise CD emulation."
 	IDS_ERR_DRIVER_NOT_EXIST	"Driver does not exist."
 	IDS_ERR_ROMSET_DUPLICATE	"Romset has duplicate names with drivers in the driver list."
+	IDS_ERR_CD_IMAGE			"CD image:\n\n"
+	IDS_ERR_CD_IMAGE_FILE		"CD image: %s\n\n"
+	IDS_ERR_CD_IMAGE_IDENTIFY	"Unable to identify the CD image.\n\n%s"
 	
 	IDS_ERR_MACRO_NOT_MAPPING	"Double-click the macro to change its mapping first"
 

@@ -150,10 +150,7 @@ static void GbaCoreApplyCartridgeFeatures(GbaCore *core)
 {
 	core->state.cart.features = core->cartridgeFeatures;
 	if (core->cartridgeBackupType != GBA_BACKUP_NONE) {
-		UINT8 backup_type = core->state.cart.backup_type;
-		bool already_detected = backup_type == GBA_BACKUP_EEPROM_512B || backup_type == GBA_BACKUP_EEPROM_8KB;
-		if (!(core->cartridgeBackupType == GBA_BACKUP_EEPROM && already_detected))
-			core->state.cart.backup_type = core->cartridgeBackupType;
+		core->state.cart.backup_type = core->cartridgeBackupType;
 		gba_setup_flash_id(&core->state);
 	}
 	gba_gpio_update_rumble(&core->state);
@@ -271,10 +268,6 @@ INT32 GbaCoreReset(GbaCore *core)
 	INT64 rtcSeconds      = core->state.rtc.rtc_seconds;
 	INT64 rtcHostSeconds  = core->state.rtc.host_seconds;
 	UINT8 rtcStatus       = core->state.rtc.status;
-	UINT8 backupType      = core->state.cart.backup_type;
-	UINT8 eepromSize      = core->state.eeprom.size;
-	bool  eepromDetect    = core->state.eeprom.detect_size;
-	bool  batteryDirty    = core->state.cart.backup_is_dirty;
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = core->romSize;
@@ -286,12 +279,6 @@ INT32 GbaCoreReset(GbaCore *core)
 	if (!loaded)
 		return 1;
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
-	if (backupType == GBA_BACKUP_EEPROM_512B || backupType == GBA_BACKUP_EEPROM_8KB) {
-		core->state.cart.backup_type = backupType;
-		core->state.eeprom.size = eepromSize;
-		core->state.eeprom.detect_size = eepromDetect;
-	}
-	core->state.cart.backup_is_dirty = batteryDirty;
 	core->state.rtc.rtc_seconds  = rtcSeconds;
 	core->state.rtc.host_seconds = rtcHostSeconds;
 	core->state.rtc.status       = rtcStatus;
@@ -333,6 +320,61 @@ INT32 GbaCoreRunFrame(GbaCore *core)
 		return 1;
 	core->host.render_frame = true;
 	gba_tick(&core->host, &core->state, &core->scratch);
+	// Reference capture harness: set GBA_REF=1 in the environment to dump
+	// deterministic state signatures at fixed frame numbers.
+	if (getenv("GBA_REF")) {
+		static INT32 ref_frame = 0;
+		ref_frame++;
+		if (ref_frame == 1) printf("[GBA_REF] f1 wall_ms=%u\n", (unsigned)clock());
+		if (ref_frame == 300) printf("[GBA_REF] f300 wall_ms=%u\n", (unsigned)clock());
+		static const INT32 ref_points[] = { 1, 2, 5, 10, 30, 60, 120, 300 };
+		bool hit = false;
+		for (UINT32 i = 0; i < sizeof(ref_points) / sizeof(ref_points[0]); i++) {
+			if (ref_frame == ref_points[i]) {
+				hit = true;
+				break;
+			}
+		}
+		if (hit) {
+			UINT32 fnv = 2166136261u;
+			const UINT32* fb = (const UINT32*)core->scratch.framebuffer;
+			for (INT32 i = 0; i < GBA_WIDTH * GBA_HEIGHT; i++) {
+				fnv ^= fb[i];
+				fnv *= 16777619u;
+			}
+			UINT32 pram_crc = 0, vram_crc = 0, oam_crc = 0;
+			for (INT32 i = 0; i < 1024; i++)
+				pram_crc += core->state.mem.palette[i] * (i + 1);
+			for (INT32 i = 0; i < 0x18000 / 4; i++)
+				vram_crc += ((UINT32*)core->state.mem.vram)[i] * (i + 1);
+			for (INT32 i = 0; i < 1024 / 4; i++)
+				oam_crc += ((UINT32*)core->state.mem.oam)[i] * (i + 1);
+			FILE* f = fopen("gba_reference.log", "ab");
+			if (f) {
+				fprintf(f, "f=%d fb=%08x pram=%08x vram=%08x oam=%08x ie=%04x if=%04x ime=%04x dispstat=%04x vcount=%04x t0=%04x t1=%04x t2=%04x t3=%04x\n",
+					ref_frame, fnv, pram_crc, vram_crc, oam_crc,
+					*(UINT16*)(core->state.mem.io + 0x200), *(UINT16*)(core->state.mem.io + 0x202),
+					*(UINT16*)(core->state.mem.io + 0x208), *(UINT16*)(core->state.mem.io + 0x004),
+					*(UINT16*)(core->state.mem.io + 0x006),
+					*(UINT16*)(core->state.mem.io + 0x100), *(UINT16*)(core->state.mem.io + 0x104),
+					*(UINT16*)(core->state.mem.io + 0x108), *(UINT16*)(core->state.mem.io + 0x10c));
+				fclose(f);
+			}
+			if (ref_frame == 300) {
+				UINT8* state = (UINT8*)malloc(sizeof(gba_t));
+				if (state) {
+					if (GbaCoreSaveState(core, state, sizeof(gba_t)) == 0) {
+						FILE* s = fopen("gba_reference_state.bin", "wb");
+						if (s) {
+							fwrite(state, 1, sizeof(gba_t), s);
+							fclose(s);
+						}
+					}
+					free(state);
+				}
+			}
+		}
+	}
 	return 0;
 }
 
@@ -434,17 +476,6 @@ INT32 GbaCoreLoadBattery(GbaCore *core, const UINT8 *data, size_t size)
 		return 1;
 	memset(core->state.mem.cart_backup, 0xff, GBA_BATTERY_CAPACITY);
 	memcpy(core->state.mem.cart_backup, data, size);
-	if (core->state.cart.backup_type == GBA_BACKUP_EEPROM && core->state.eeprom.detect_size) {
-		if (size == 512) {
-			core->state.cart.backup_type = GBA_BACKUP_EEPROM_512B;
-			core->state.eeprom.size = GBA_EEPROM_SIZE_512B;
-			core->state.eeprom.detect_size = false;
-		} else if (size == 8 * 1024) {
-			core->state.cart.backup_type = GBA_BACKUP_EEPROM_8KB;
-			core->state.eeprom.size = GBA_EEPROM_SIZE_8KB;
-			core->state.eeprom.detect_size = false;
-		}
-	}
 	core->state.cart.backup_is_dirty = false;
 	return 0;
 }
@@ -464,11 +495,14 @@ size_t GbaCoreStateSize()
 	return sizeof(gba_t);
 }
 
+#define GBA_RAW_STATE_MAGIC 0x53414247u	// 'AGBS'
+
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 {
 	if (core == NULL || data == NULL || size < sizeof(gba_t))
 		return 1;
 	memcpy(data, &core->state, sizeof(gba_t));
+	((gba_t *)data)->raw_state_magic = GBA_RAW_STATE_MAGIC;
 	UINT8 *state = (UINT8 *)data;
 #define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, sizeof(((type *)0)->field))
 	const size_t mem = offsetof(gba_t, mem);
@@ -484,31 +518,26 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read32);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read16_seq);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read32_seq);
-	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, fetch16);
-	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, fetch32);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, write8);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, write16);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, write32);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, coprocessor_read);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, coprocessor_write);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, trigger_breakpoint);
-	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, idle);
 #undef GBA_CLEAR_STATE_FIELD
 	return 0;
 }
 
 INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preserveAudio)
 {
-	if (core == NULL || data == NULL || size != sizeof(gba_t) || core->rom == NULL)
+	if (core == NULL || data == NULL || size < sizeof(gba_t) - sizeof(UINT32) || core->rom == NULL)
 		return 1;
-	if (((const gba_t *)data)->raw_state_version != GBA_RAW_STATE_VERSION)
+	if (size == sizeof(gba_t) && ((const gba_t *)data)->raw_state_magic != GBA_RAW_STATE_MAGIC)
 		return 1;
 	UINT8 battery[GBA_BATTERY_CAPACITY];
-	bool  batteryDirty = core->state.cart.backup_is_dirty;
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
-	memcpy(&core->state, data, sizeof(gba_t));
+	memcpy(&core->state, data, size);
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
-	core->state.cart.backup_is_dirty |= batteryDirty;
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
 	if (!preserveAudio)

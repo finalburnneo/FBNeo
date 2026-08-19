@@ -38529,21 +38529,21 @@ struct BurnDriver BurnDrvmd_bigfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Black Jewel Reborn (HB, Demo v2.11)
-// https://pscdgames.itch.io/black-jewel-reborn
-static struct BurnRomInfo md_bjreborndemoRomDesc[] = {
-	{ "Black Jewel Reborn v2.11 (2022)(PSCD Games).bin", 3407872, 0x0adee51c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Black Jewel Reborn (HB, Alpha)
+// https://pscdgames.itch.io/black-jewel-reborn-sega-mega-drive-genesis-alpha
+static struct BurnRomInfo md_bjrebornRomDesc[] = {
+	{ "Black Jewel Reborn Alpha (2022-26)(PSCD Games).bin", 3932160, 0x5b901963, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_bjreborndemo)
-STD_ROM_FN(md_bjreborndemo)
+STD_ROM_PICK(md_bjreborn)
+STD_ROM_FN(md_bjreborn)
 
-struct BurnDriver BurnDrvmd_bjreborndemo = {
-	"md_bjreborndemo", NULL, NULL, NULL, "2022",
-	"Black Jewel Reborn (HB, Demo v2.11)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
+struct BurnDriver BurnDrvmd_bjreborn = {
+	"md_bjreborn", NULL, NULL, NULL, "2022-26",
+	"Black Jewel Reborn (HB, Alpha)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_bjreborndemoRomInfo, md_bjreborndemoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_bjrebornRomInfo, md_bjrebornRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

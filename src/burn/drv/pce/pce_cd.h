@@ -8,7 +8,7 @@ enum { PCE_HW = 0, TG16_HW, SGX_HW, CD_HW, ACARD_HW };
 void CDSubsystemTick();
 
 void CDSubsystemRegsWrite(UINT32 address, UINT8 data);
-void CDSubsystemMiscWrite(UINT32 address, UINT8 data);
+int CDSubsystemMiscWrite(UINT32 address, UINT8 data);
 
 UINT8 CDSubsystemRegsRead(UINT32 address);
 UINT8 CDSubsystemMiscRead(UINT32 address);

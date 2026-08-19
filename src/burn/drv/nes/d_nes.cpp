@@ -14335,6 +14335,25 @@ struct BurnDriver BurnDrvnes_2048 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// 2048 (mmuszkow) (HB)
+// https://github.com/mmuszkow/2048-nes
+static struct BurnRomInfo nes_2048mRomDesc[] = {
+	{ "2048 (2015)(mmuszkow).nes",          24592, 0x6527bb61, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_2048m)
+STD_ROM_FN(nes_2048m)
+
+struct BurnDriver BurnDrvnes_2048m = {
+	"nes_2048m", NULL, NULL, NULL, "2015",
+	"2048 (mmuszkow) (HB)\0", NULL, "mmuszkow", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_2048mRomInfo, nes_2048mRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Action 53 vol.1: Streemerz Bundle + Compo 2011 (HB)
 static struct BurnRomInfo nes_actio53vol1stbuRomDesc[] = {
 	{ "Action 53 vol1 - Streemerz Bundle + Compo 2011 (2013)(Damian Yerrick & Contributors).nes",          524304, 0x54fc4fae, BRF_ESS | BRF_PRG },
@@ -16181,6 +16200,25 @@ struct BurnDriver BurnDrvnes_bustina = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_ADV, 0,
 	NESGetZipName, nes_bustinaRomInfo, nes_bustinaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Byte Craft (HB)
+// https://aspie01.itch.io/bytecraft
+static struct BurnRomInfo nes_bytecraftRomDesc[] = {
+	{ "Byte Craft (2026)(Mr. Aspie).nes",          1310736, 0x07f399cb	, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_bytecraft)
+STD_ROM_FN(nes_bytecraft)
+
+struct BurnDriver BurnDrvnes_bytecraft = {
+	"nes_bytecraft", NULL, NULL, NULL, "2026",
+	"Byte Craft (HB)\0", NULL, "Mr. Aspie", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_bytecraftRomInfo, nes_bytecraftRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -22604,6 +22642,25 @@ struct BurnDriver BurnDrvnes_nalleland = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Necro Nancy - Nightmare Mode Demo (HB)
+// https://grimware.itch.io/necro-nancy-nes
+static struct BurnRomInfo nes_necronancynmdRomDesc[] = {
+	{ "Necro Nancy - Nightmare Mode Demo (2025)(Grimware Games).nes",          524304, 0x03f13855, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_necronancynmd)
+STD_ROM_FN(nes_necronancynmd)
+
+struct BurnDriver BurnDrvnes_necronancynmd = {
+	"nes_necronancynmd", NULL, NULL, NULL, "2025",
+	"Necro Nancy - Nightmare Mode Demo (HB)\0", NULL, "Grimware Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SHOOT, 0,
+	NESGetZipName, nes_necronancynmdRomInfo, nes_necronancynmdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Nebs and Debs (HB, v1.1)
 static struct BurnRomInfo nes_nebsanddebsRomDesc[] = {
 	{ "Nebs and Debs v1.1 (2018)(Dullahan).nes",          40976, 0xdb4ffebc, BRF_ESS | BRF_PRG },
@@ -24927,6 +24984,25 @@ struct BurnDriver BurnDrvnes_soeu = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Soccer (HB)
+// https://foko-games.itch.io/pc-soccer-nes
+static struct BurnRomInfo nes_soccer26RomDesc[] = {
+	{ "Soccer (2026)(Foko Games).nes",          90128, 0x7c812702, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_soccer26)
+STD_ROM_FN(nes_soccer26)
+
+struct BurnDriver BurnDrvnes_soccer26 = {
+	"nes_soccer26", NULL, NULL, NULL, "2026",
+	"Soccer (HB)\0", NULL, "Foko Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SPORTSFOOTBALL, 0,
+	NESGetZipName, nes_soccer26RomInfo, nes_soccer26RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Soko Banana (HB)
 static struct BurnRomInfo nes_sokobananaRomDesc[] = {
 	{ "Soko Banana (2023)(Flip For Fate).nes",          524304, 0xa3973b4b, BRF_ESS | BRF_PRG },
@@ -25595,6 +25671,25 @@ struct BurnDriver BurnDrvnes_sudoku23 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_sudoku23RomInfo, nes_sudoku23RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Sunset Land (HB)
+// https://rivet-gun-games.itch.io/sunset-land
+static struct BurnRomInfo nes_sunsetlandRomDesc[] = {
+	{ "Sunset Land (2026)(Rivet Gun Games).nes",          524304, 0x69b85bde, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sunsetland)
+STD_ROM_FN(nes_sunsetland)
+
+struct BurnDriver BurnDrvnes_sunsetland = {
+	"nes_sunsetland", NULL, NULL, NULL, "2026",
+	"Sunset Land (HB)\0", NULL, "Rivet Gun Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_ACTION, 0,
+	NESGetZipName, nes_sunsetlandRomInfo, nes_sunsetlandRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

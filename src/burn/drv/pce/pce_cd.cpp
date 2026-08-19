@@ -1,16 +1,5 @@
 // FB Neo PC-Engine CD driver module
 // Based on MAME/MESS driver by Wilbert Pol & Angelo Salese
-// (Ported with AI assist)
-
-/*
- * notes:
- * 
- * There is currently no/minimal UI support, code-wise to start a game you need to :
- * - copy its image path to CDEmuImage
- * - call CDEmuInit()
- * - start the pce_scdsys romset
- * neogeo cd emulation uses the same process internally, except it starts the neocdz romset
- */
 
 #include "burnint.h"
 #include "h6280_intf.h"
@@ -27,7 +16,6 @@ static UINT8 *PCESuperRAM;
 static UINT8 *PCEAcardRAM;
 
 static dtimer cd_ack_clear_timer;
-static dtimer cd_adpcm_dma_timer;
 
 struct acard_port_t {
 	UINT8  ctrl;
@@ -104,6 +92,7 @@ static double cd_cdda_volume = 100.0, cd_adpcm_volume = 100.0;
 #define PCE_CD_TICKS_PER_SEC (262 * 60)
 static double cd_cdda_fade_step = 0.0, cd_adpcm_fade_step = 0.0;
 static UINT8 cd_cdda_fade_active = 0, cd_adpcm_fade_active = 0;
+static UINT8 adpcm_dma_active;
 
 #define PCE_CD_CLOCK 9216000
 
@@ -576,7 +565,7 @@ static void cd_update()
 			cd_selected = 0;
 			cd_cdda_status = PCE_CD_CDDA_OFF;
 			CDEmuStop();
-			cd_adpcm_dma_timer.stop_retrig(); // stop ADPCM DMA here
+			adpcm_dma_active = 0; // stop ADPCM DMA here
 		}
 		scsi_last_RST = scsi_RST;
 	}
@@ -673,6 +662,9 @@ static void cd_adpcm_dma_timer_cb(int param)
 		PCEADPCMRAM[adpcm_write_ptr] = cd_get_cd_data_byte();
 		adpcm_write_ptr = (adpcm_write_ptr + 1) & 0xffff;
 		cd_adpcm_status &= ~4;
+
+		if (adpcm_length < 0xffff) adpcm_length++;
+		cd_set_irq_line(PCE_CD_IRQ_SAMPLE_HALF_PLAY, (adpcm_length < 0x8000) ? 1 : 0);
 	}
 }
 
@@ -702,7 +694,7 @@ static void cd_reg_cdc_status_w(UINT8 data)
 	scsi_SEL = 1;
 	cd_update();
 	scsi_SEL = 0;
-	cd_adpcm_dma_timer.stop_retrig(); // stop ADPCM DMA here
+	adpcm_dma_active = 0; // stop ADPCM DMA here
 	/* any write here clears CD transfer irqs */
 	cd_set_irq_line(0x70, 0);
 	cd_cdc_status = data;
@@ -851,7 +843,7 @@ static UINT8 cd_reg_adpcm_dma_control_r()
 static void cd_reg_adpcm_dma_control_w(UINT8 data)
 {
 	if (data & 3) {
-		cd_adpcm_dma_timer.start((INT32)hz_to_cycles(153600.0f, 7159090), 0, 1, 1);
+		adpcm_dma_active = 1;
 		cd_adpcm_status |= 4;
 	}
 	cd_adpcm_dma_reg = data;
@@ -915,6 +907,7 @@ static void cd_reg_adpcm_address_control_w(UINT8 data)
 		msm_end_addr = 0;
 		msm_half_addr = 0;
 		msm_nibble = 0;
+		adpcm_length = 0;
 		cd_adpcm_stop(0);
 		MSM5205ResetWrite(0, 1);
 	}
@@ -925,10 +918,9 @@ static void cd_reg_adpcm_address_control_w(UINT8 data)
 
 	if ((data & 0x40) && ((cd_adpcm_control & 0x40) == 0)) { // ADPCM play
 		msm_start_addr = adpcm_read_ptr;
-		msm_end_addr = (adpcm_read_ptr + adpcm_length) & 0xffff;
-		msm_half_addr = (adpcm_read_ptr + (adpcm_length / 2)) & 0xffff;
 		msm_nibble = 0;
 		cd_adpcm_play();
+		cd_set_irq_line(PCE_CD_IRQ_SAMPLE_HALF_PLAY, (adpcm_length < 0x8000) ? 1 : 0);
 		MSM5205ResetWrite(0, 0);
 	} else if ((data & 0x40) == 0) {
 		// used by bbros to cancel an in-flight sample// used by bbros to cancel an in-flight sample
@@ -944,7 +936,6 @@ static void cd_reg_adpcm_address_control_w(UINT8 data)
 
 	if (data & 0x10) { // ADPCM set length
 		adpcm_length = cd_adpcm_latch_address;
-		bprintf(0, _T("ADPCM set length: latch=%04x -> adpcm_length=%04x\n"), cd_adpcm_latch_address, adpcm_length);
 	}
 	if (data & 0x08) { // ADPCM set read address
 		adpcm_read_ptr = cd_adpcm_latch_address;
@@ -1047,10 +1038,14 @@ static void cd_msm5205_vclk_callback()
 	msm_nibble ^= 1;
 	if (msm_nibble == 0) {
 		msm_start_addr++;
-		if (msm_start_addr == msm_half_addr) {
-			// half-play IRQ intentionally not fired here
-		}
-		if (msm_start_addr > msm_end_addr) {
+		// adpcm_length represents "how many unplayed bytes are currently buffered",
+		// decremented here on consumption, incremented on DMA/manual write (see cd_adpcm_dma_timer_cb).
+		// MAME uses a fixed start/end address comparison, which is breaking sound in Last Armagueddon's intro
+		if (adpcm_length > 0) {
+			adpcm_length--;
+			cd_set_irq_line(PCE_CD_IRQ_SAMPLE_HALF_PLAY, (adpcm_length < 0x8000) ? 1 : 0);
+		} else {
+			cd_set_irq_line(PCE_CD_IRQ_SAMPLE_HALF_PLAY, 0);
 			cd_adpcm_stop(1);
 			MSM5205ResetWrite(0, 1);
 		}
@@ -1117,6 +1112,12 @@ void CDSubsystemTick()
 			cd_adpcm_fade_active = 0;
 		}
 	}
+
+	// MAME is using a timer for this, but doing the same breaks "Ginga Fukei Densetsu Sapphire" in FBNeo.
+	// specifically, a few seconds of intro just before starting to play are being skipped.
+	// I couldn't test whether MAME suffered from the same issue or not,
+	// with MAME being a nightmare when it comes to starting pce arcade card games
+	if (adpcm_dma_active) cd_adpcm_dma_timer_cb(0);
 }
 
 static UINT8 acard_peripheral_r(UINT32 offset)
@@ -1259,7 +1260,7 @@ void CDSubsystemRegsWrite(UINT32 address, UINT8 data)
 	}
 }
 
-void CDSubsystemMiscWrite(UINT32 address, UINT8 data)
+int CDSubsystemMiscWrite(UINT32 address, UINT8 data)
 {
 	if (HAS_CD) {
 		if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
@@ -1267,14 +1268,16 @@ void CDSubsystemMiscWrite(UINT32 address, UINT8 data)
 			{
 				PCECDBRAM[address & 0x7FF] = data;
 			}
-			return;
+			return 1;
 		}
 
 		if ((hardware_type == ACARD_HW) && (address >= 0x080000) && (address <= 0x087fff)) {
 			acard_ram_w(address, data);
-			return;
+			return 1;
 		}
 	}
+
+	return 0; // "not handled here"
 }
 
 UINT8 CDSubsystemRegsRead(UINT32 address)
@@ -1377,6 +1380,7 @@ void CDSubsystemReset()
 		cd_cdda_status = PCE_CD_CDDA_OFF;
 		cd_irq_mask = 0;
 		cd_irq_status = 0;
+		adpcm_dma_active = 0;
 		adpcm_read_ptr = adpcm_write_ptr = 0;
 		msm_idle = 1;
 		msm_start_addr = msm_end_addr = msm_half_addr = 0;
@@ -1440,7 +1444,6 @@ void CDSubsystemInit()
 
 	timerInit();
 	timerAdd(cd_ack_clear_timer, 0, cd_ack_clear_timer_cb);
-	timerAdd(cd_adpcm_dma_timer, 0, cd_adpcm_dma_timer_cb);
 	h6280Open(0);
 	h6280SetCallback(timerRun);
 	h6280Close();
@@ -1524,6 +1527,7 @@ void CDSubsystemScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(cd_cdda_fade_active);
 			SCAN_VAR(cd_adpcm_fade_step);
 			SCAN_VAR(cd_adpcm_fade_active);
+			SCAN_VAR(adpcm_dma_active);
 			SCAN_VAR(msm_start_addr);
 			SCAN_VAR(msm_end_addr);
 			SCAN_VAR(msm_half_addr);

@@ -2958,7 +2958,7 @@ static struct BurnRomInfo Altbeast6RomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 
-	{ "317-0076.c2",    0x01000, 0x32c91f89, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0076.c2",    0x01000, 0x32c91f89, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
 
 	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };
@@ -3886,7 +3886,7 @@ static struct BurnRomInfo Ddux1RomDesc[] = {
 
 	{ "epr-11916.a10",  0x08000, 0x7ab541cf, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 
-	{ "317-0095.c2",    0x01000, 0xb06b4ca7, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+	{ "317-0095.c2",    0x01000, 0xb06b4ca7, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG }, // Intel i8751 protection MCU
 
 	{ "315-5298.b9",    0x000eb, 0x39b47212, BRF_OPT }, // PLD
 };

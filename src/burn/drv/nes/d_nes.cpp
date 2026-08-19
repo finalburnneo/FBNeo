@@ -19190,6 +19190,25 @@ struct BurnDriver BurnDrvnes_gggg = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Goomba Invaders (HB)
+// https://brig78cx.itch.io/goomba-invaders
+static struct BurnRomInfo nes_goombainvRomDesc[] = {
+	{ "Goomba Invaders (2026)(BriG78).nes",          40976, 0x4bfb362a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_goombainv)
+STD_ROM_FN(nes_goombainv)
+
+struct BurnDriver BurnDrvnes_goombainv = {
+	"nes_goombainv", NULL, NULL, NULL, "2026",
+	"Goomba Invaders (HB)\0", NULL, "BriG78", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
+	NESGetZipName, nes_goombainvRomInfo, nes_goombainvRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Gorodki (HB)
 static struct BurnRomInfo nes_gorodkiRomDesc[] = {
 	{ "Gorodki (2016)(Shiru).nes",          40976, 0x6f3dba49, BRF_ESS | BRF_PRG },

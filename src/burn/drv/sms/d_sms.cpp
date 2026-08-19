@@ -22728,6 +22728,24 @@ struct BurnDriver BurnDrvsms_goodzilla = {
 	256, 192, 4, 3
 };
 
+// Goomba Invaders (HB)
+static struct BurnRomInfo sms_goombainvRomDesc[] = {
+	{ "Goomba Invaders (2026)(BriG78).sms",	32768, 0x6dbfeb1a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_goombainv)
+STD_ROM_FN(sms_goombainv)
+
+struct BurnDriver BurnDrvsms_goombainv = {
+	"sms_goombainv", NULL, NULL, NULL, "2026",
+	"Goomba Invaders (HB)\0", NULL, "BriG78", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_goombainvRomInfo, sms_goombainvRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Gotris (HB, v1.3p)
 static struct BurnRomInfo sms_gotrisfvRomDesc[] = {
 	{ "Gotris v1.3p (2022)(Tuxedo Games).sms",	278528, 0xa11888ff, BRF_PRG | BRF_ESS },
@@ -24892,6 +24910,24 @@ struct BurnDriver BurnDrvsms_turmamon2 = {
 	L"Turma Da M\u00f4nica Na Terra Dos Monstros (Hack, v1.02)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_turmamon2RomInfo, sms_turmamon2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Uchotos (HB)
+static struct BurnRomInfo sms_uchotosRomDesc[] = {
+	{ "Uchotos (2026)(Inufuto).sms",	16384, 0xd31930dc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_uchotos)
+STD_ROM_FN(sms_uchotos)
+
+struct BurnDriver BurnDrvsms_uchotos = {
+	"sms_uchotos", NULL, NULL, NULL, "2026",
+	"Uchotos (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_uchotosRomInfo, sms_uchotosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

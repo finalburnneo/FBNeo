@@ -34596,9 +34596,9 @@ struct BurnDriver BurnDrvMSX_sp8inv = {
 	272, 228, 4, 3
 };
 
-// Space Bash: Contact !! (HB)
+// Space Bash: Contact !! (HB, v1.1)
 static struct BurnRomInfo MSX_spacebashRomDesc[] = {
-	{ "Space Bash - Contact !! (2026)(Dave's Retro Forge).rom",	557056, 0x14dad385, BRF_PRG | BRF_ESS },
+	{ "Space Bash - Contact !! v1.1 (2026)(Dave's Retro Forge).rom",	557056, 0xf57042fe, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_spacebash, MSX_spacebash, msx_msx)
@@ -34606,7 +34606,7 @@ STD_ROM_FN(MSX_spacebash)
 
 struct BurnDriver BurnDrvMSX_spacebash = {
 	"msx_spacebash", NULL, "msx_msx", NULL, "2026",
-	"Space Bash: Contact !! (HB)\0", NULL, "Dave's Retro Forge", "MSX",
+	"Space Bash: Contact !! (HB, v1.1)\0", NULL, "Dave's Retro Forge", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_spacebashRomInfo, MSX_spacebashRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

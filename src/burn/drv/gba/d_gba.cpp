@@ -55623,6 +55623,25 @@ struct BurnDriver BurnDrvgba_feline = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Fill2Grid (HB)
+
+static struct BurnRomInfo gba_fill2gridRomDesc[] = {
+	{ "Fill2Grid (2026)(Enarkz).gba",	57136,	0x2a0c384f,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_fill2grid, gba_fill2grid, gba_gba)
+STD_ROM_FN(gba_fill2grid)
+
+struct BurnDriver BurnDrvgba_fill2grid = {
+	"gba_fill2grid", NULL, "gba_gba", NULL, "2026",
+	"Fill2Grid (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_fill2gridRomInfo, gba_fill2gridRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Final Fight One - Redux Edition (Hack, v3.0)
 // https://www.romhacking.net/hacks/3495/
 static struct BurnRomInfo gba_ffight1reRomDesc[] = {
@@ -55680,6 +55699,25 @@ struct BurnDriver BurnDrvgba_firembvq = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Flappy Bird (HB)
+
+static struct BurnRomInfo gba_flappybirdRomDesc[] = {
+	{ "Flappy Bird (2014)(Jay Van Hutten).gba",	575204,	0x4d099541,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_flappybird, gba_flappybird, gba_gba)
+STD_ROM_FN(gba_flappybird)
+
+struct BurnDriver BurnDrvgba_flappybird = {
+	"gba_flappybird", NULL, "gba_gba", NULL, "2014",
+	"Flappy Bird (HB)\0", "Hold SELECT while booting to delete your save data", "Jay Van Hutten", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_flappybirdRomInfo, gba_flappybirdRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_HEIGHT, GBA_WIDTH, 2, 3
+};
+
 // F-Zero: Vintage Velocity Zero (Hack, v3.0)
 // https://www.romhacking.net/hacks/9506/
 static struct BurnRomInfo gba_fzerovvzRomDesc[] = {
@@ -55695,6 +55733,44 @@ struct BurnDriver BurnDrvgba_fzerovvz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_fzerovvzRomInfo, gba_fzerovvzRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Galacard Advance (2025 Version) (HB)
+
+static struct BurnRomInfo gba_galacard25RomDesc[] = {
+	{ "Galacard Advance (2025 Version) (2025)(Bipedal Studios).gba",	3986555,	0x46d31560,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_galacard25, gba_galacard25, gba_gba)
+STD_ROM_FN(gba_galacard25)
+
+struct BurnDriver BurnDrvgba_galacard25 = {
+	"gba_galacard25", NULL, "gba_gba", NULL, "2025",
+	"Galacard Advance (2025 Version) (HB)\0", NULL, "Bipedal Studios", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_CARD, 0,
+	GbaGetZipName, gba_galacard25RomInfo, gba_galacard25RomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Galacard Advance (HB)
+
+static struct BurnRomInfo gba_galacardRomDesc[] = {
+	{ "Galacard Advance (2025)(Bipedal Studios).gba",	3751705,	0x6dedf53e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_galacard, gba_galacard, gba_gba)
+STD_ROM_FN(gba_galacard)
+
+struct BurnDriver BurnDrvgba_galacard = {
+	"gba_galacard", "gba_galacard25", "gba_gba", NULL, "2025",
+	"Galacard Advance (HB)\0", NULL, "Bipedal Studios", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_CARD, 0,
+	GbaGetZipName, gba_galacardRomInfo, gba_galacardRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -56055,6 +56131,25 @@ struct BurnDriver BurnDrvgba_oubliette = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RPG, 0,
 	GbaGetZipName, gba_oublietteRomInfo, gba_oublietteRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Paragon Breakout (HB)
+
+static struct BurnRomInfo gba_paragonbrkRomDesc[] = {
+	{ "Paragon Breakout (2026)(Enarkz).gba",	43104,	0x21609c4c,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_paragonbrk, gba_paragonbrk, gba_gba)
+STD_ROM_FN(gba_paragonbrk)
+
+struct BurnDriver BurnDrvgba_paragonbrk = {
+	"gba_paragonbrk", NULL, "gba_gba", NULL, "2026",
+	"Paragon Breakout (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BREAKOUT, 0,
+	GbaGetZipName, gba_paragonbrkRomInfo, gba_paragonbrkRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

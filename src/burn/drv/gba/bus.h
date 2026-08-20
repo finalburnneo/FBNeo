@@ -396,13 +396,9 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 					gba->mem.openbus_word = gba_fcmini_get_pattern(addr) | (gba_fcmini_get_pattern(addr + 2) << 16);
 					break;
 				}
-				UINT32 mask = gba->cart.rom_size - 1;
-				if ((gba->cart.rom_size & mask) == 0)
-					maddr &= mask & ~3;
-			}
-			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
 				gba->mem.openbus_word = ((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16);
-				if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0x1ffffff) >= 0x01ffff00)
+				// Return ready when done writing EEPROM (required by Minish Cap)
+				if (gba->cart.backup_type == GBA_BACKUP_EEPROM)
 					gba->mem.openbus_word = 1;
 			} else {
 				gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);

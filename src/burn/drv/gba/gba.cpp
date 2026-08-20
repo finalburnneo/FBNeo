@@ -9,9 +9,9 @@
 // ---------------------------------------------------------------------------
 
 // apu.h
-static inline void  gba_process_audio_writes(gba_t* gba);
-static inline UINT8 gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
-static inline void  gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
+static inline void    gba_process_audio_writes(gba_t* gba);
+static inline UINT8   gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
+static inline void    gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
 
 // bus.h
 static inline void    gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
@@ -108,50 +108,50 @@ UINT8 GbaSolarLegacyToLevel(UINT16 legacy)
 }
 
 static const GbaCartridgeProfile GbaCartridgeProfiles[] = {
-	{{'U', '3', 'I', 'J'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'U', '3', 'I', 'E'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'U', '3', 'I', 'P'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'U', '3', '2', 'J'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'U', '3', '2', 'E'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'U', '3', '2', 'P'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'U', '3', '3', 'J'}, GBA_CART_RTC | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM    },
-	{{'V', '4', '9', 'J'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM      },
-	{{'V', '4', '9', 'E'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM      },
-	{{'V', '4', '9', 'P'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM      },
-	{{'2', 'G', 'B', 'P'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM      },
-	{{'R', 'Z', 'W', 'J'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM      },
-	{{'R', 'Z', 'W', 'E'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM      },
-	{{'R', 'Z', 'W', 'P'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM      },
-	{{'K', 'H', 'P', 'J'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM    },
-	{{'K', 'Y', 'G', 'J'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM    },
-	{{'K', 'Y', 'G', 'E'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM    },
-	{{'K', 'Y', 'G', 'P'}, GBA_CART_TILT,					GBA_BACKUP_EEPROM    },
-	{{'B', 'L', 'J', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K },
-	{{'B', 'L', 'J', 'K'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K },
-	{{'B', 'L', 'V', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K },
-	{{'A', 'X', 'V', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'V', 'E'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'V', 'P'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'V', 'I'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'V', 'S'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'V', 'D'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'V', 'F'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'E'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'P'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'I'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'S'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'D'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'A', 'X', 'P', 'F'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'E'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'P'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'I'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'S'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'D'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'P', 'E', 'F'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
-	{{'B', 'R', '4', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_64K },
-	{{'B', 'K', 'A', 'J'}, GBA_CART_RTC,					GBA_BACKUP_FLASH_128K},
+	{ {'U', '3', 'I', 'J'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', 'I', 'E'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', 'I', 'P'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', '2', 'J'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', '2', 'E'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', '2', 'P'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'U', '3', '3', 'J'}, GBA_CART_RTC    | GBA_CART_SOLAR,	GBA_BACKUP_EEPROM     },
+	{ {'V', '4', '9', 'J'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
+	{ {'V', '4', '9', 'E'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
+	{ {'V', '4', '9', 'P'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
+	{ {'2', 'G', 'B', 'P'}, GBA_CART_RUMBLE,					GBA_BACKUP_SRAM       },
+	{ {'R', 'Z', 'W', 'J'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM       },
+	{ {'R', 'Z', 'W', 'E'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM       },
+	{ {'R', 'Z', 'W', 'P'}, GBA_CART_RUMBLE | GBA_CART_GYRO,	GBA_BACKUP_SRAM       },
+	{ {'K', 'H', 'P', 'J'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
+	{ {'K', 'Y', 'G', 'J'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
+	{ {'K', 'Y', 'G', 'E'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
+	{ {'K', 'Y', 'G', 'P'}, GBA_CART_TILT,						GBA_BACKUP_EEPROM     },
+	{ {'B', 'L', 'J', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
+	{ {'B', 'L', 'J', 'K'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
+	{ {'B', 'L', 'V', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
+	{ {'B', 'R', '4', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_64K  },
+	{ {'B', 'K', 'A', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'E'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'P'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'I'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'S'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'D'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'V', 'F'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'E'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'P'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'I'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'S'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'D'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'A', 'X', 'P', 'F'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'J'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'E'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'P'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'I'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'S'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'D'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
+	{ {'B', 'P', 'E', 'F'}, GBA_CART_RTC,						GBA_BACKUP_FLASH_128K },
 };
 
 static const GbaCartridgeProfile *GbaFindCartridgeProfile(const UINT8 *rom, size_t romSize)
@@ -288,6 +288,16 @@ INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaR
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
 	GbaCoreClearPresentation(core);
+	return 0;
+}
+
+INT32 GbaCoreWriteRom(GbaCore *core, UINT32 offset, const UINT8 *data, UINT32 length)
+{
+	if (core == NULL || core->rom == NULL || data == NULL || length == 0)
+		return 1;
+	if ((UINT64)offset + (UINT64)length > (UINT64)core->romSize)
+		return 1;
+	memcpy(core->rom + offset, data, length);
 	return 0;
 }
 

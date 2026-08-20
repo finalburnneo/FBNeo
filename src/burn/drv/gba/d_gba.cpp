@@ -2,6 +2,7 @@
 
 #include "burnint.h"
 #include "gba.h"
+#include "joyprocess.h"
 
 static GbaCore*	Gba;
 static UINT8*	DrvRom;
@@ -11,7 +12,7 @@ static UINT8*	DrvBattery;
 static INT32	DrvStateSize;
 static INT32	DrvBatterySize;
 
-static UINT8	DrvJoy[10];
+static UINT8	DrvJoy[12];
 static UINT8	DrvReset;
 static UINT8	DrvRecalc;
 static UINT16	DrvSolar;
@@ -22,32 +23,38 @@ static UINT8	DrvSolarDownLast;
 static UINT16	DrvGyroZ;
 static UINT16	DrvTiltX;
 static UINT16	DrvTiltY;
+static UINT16	DrvInput[1] = { 0x0000 };
+static ClearOpposite<1, UINT16> clear_opposite;
 
 #define GBA_BUTTON_INPUTS																	\
-{ "P1 Up",			BIT_DIGITAL,	DrvJoy + GBA_BUTTON_UP,		"p1 up"				},	\
-{ "P1 Down",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_DOWN,	"p1 down"			},	\
-{ "P1 Left",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_LEFT,	"p1 left"			},	\
-{ "P1 Right",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_RIGHT,	"p1 right"			},	\
-{ "P1 Button A",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_A,		"p1 fire 1"			},	\
-{ "P1 Button B",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_B,		"p1 fire 2"			},	\
-{ "P1 Button L",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_L,		"p1 fire 3"			},	\
-{ "P1 Button R",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_R,		"p1 fire 4"			},
+	{ "P1 Up",			BIT_DIGITAL,	DrvJoy + GBA_BUTTON_UP,		"p1 up"				},	\
+	{ "P1 Down",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_DOWN,	"p1 down"			},	\
+	{ "P1 Left",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_LEFT,	"p1 left"			},	\
+	{ "P1 Right",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_RIGHT,	"p1 right"			},	\
+	{ "P1 Button A",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_A,		"p1 fire 1"			},	\
+	{ "P1 Button B",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_B,		"p1 fire 2"			},	\
+	{ "P1 Button L",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_L,		"p1 fire 3"			},	\
+	{ "P1 Button R",	BIT_DIGITAL,	DrvJoy + GBA_BUTTON_R,		"p1 fire 4"			},
 
 #define GBA_RESET_INPUTS																	\
-{ "P1 Select",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_SELECT,	"p1 select"			},	\
-{ "P1 Start",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_START,	"p1 start"			},	\
-{ "Reset",			BIT_DIGITAL,	&DrvReset,					"reset"				},
+	{ "P1 Select",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_SELECT,	"p1 select"			},	\
+	{ "P1 Start",		BIT_DIGITAL,	DrvJoy + GBA_BUTTON_START,	"p1 start"			},	\
+	{ "Reset",			BIT_DIGITAL,	&DrvReset,					"reset"				},
 
 #define GBA_SOLAR_INPUTS																	\
-{ "Solar Brighter",	BIT_DIGITAL,	&DrvSolarUp,				"p1 fire 5"			},	\
-{ "Solar Darker",	BIT_DIGITAL,	&DrvSolarDown,				"p1 fire 6"			},
+	{ "Solar Brighter",	BIT_DIGITAL,	&DrvSolarUp,				"p1 fire 5"			},	\
+	{ "Solar Darker",	BIT_DIGITAL,	&DrvSolarDown,				"p1 fire 6"			},
 
 #define GBA_GYRO_INPUTS																		\
-{ "Gyro Z",			BIT_ANALOG_ABS,	(UINT8*)&DrvGyroZ,			"p1 gyro z-axis"	},
+	{ "Gyro Z",			BIT_ANALOG_ABS,	(UINT8*)&DrvGyroZ,			"p1 gyro z-axis"	},
 
 #define GBA_TILT_INPUTS																		\
-{ "Tilt X",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltX,			"p1 tilt x-axis"	},	\
-{ "Tilt Y",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltY,			"p1 tilt y-axis"	},
+	{ "Tilt X",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltX,			"p1 tilt x-axis"	},	\
+	{ "Tilt Y",			BIT_ANALOG_ABS,	(UINT8*)&DrvTiltY,			"p1 tilt y-axis"	},
+
+#define GBA_DIPA_INPUTS																		\
+	{ "DIP A",			BIT_DIPSWITCH,	DrvJoy + GBA_BUTTON_DIP1,	"dip 1"				},
+
 
 static struct BurnInputInfo GbaInputList[] = {
 	GBA_BUTTON_INPUTS
@@ -80,14 +87,59 @@ static struct BurnInputInfo TiltInputList[] = {		// Tilt sensor
 
 STDINPUTINFO(Tilt)
 
+static struct BurnInputInfo GbaAInputList[] = {
+	GBA_BUTTON_INPUTS
+	GBA_RESET_INPUTS
+	GBA_DIPA_INPUTS
+};
+
+STDINPUTINFO(GbaA)
+
 #undef GBA_BUTTON_INPUTS
 #undef GBA_SOLAR_INPUTS
 #undef GBA_GYRO_INPUTS
 #undef GBA_TILT_INPUTS
 #undef GBA_RESET_INPUTS
+#undef GBA_DIPA_INPUTS
+
+#define GBA_DIPSW(Name)		(ARRAY_SIZE(Name##InputList) - 1)
+
+static struct BurnDIPInfo MkscDIPList[] =
+{
+	{ GBA_DIPSW(GbaA),	0xff,	0xff,	0x01,	NULL			},
+
+	{ 0,				0xfe,	0,		2,		"60 FPS Patch"	},
+	{ GBA_DIPSW(GbaA),	0x01,	0x01,	0x00,	"Off"			},
+	{ GBA_DIPSW(GbaA),	0x01,	0x01,	0x01,	"On"			},
+};
+
+STDDIPINFO(Mksc)
+
+#undef GBA_DIPSW
+
+// Mario Kart 60 FPS patch (MKSC60fps IPS, 2 bytes per region)
+#define MKSC60FPS_PATCH_LEN	2
+
+struct DrvMksc60fpsPatchEntry {
+	UINT32 nOffset;
+	UINT8  patchData[MKSC60FPS_PATCH_LEN];
+};
+
+static const DrvMksc60fpsPatchEntry Mksc60fpsPatchUsaEur[] = {
+	{ 0x030c18, { 0x00, 0x00 } },	// MKSC60fps(USA) / MKSC60fps(EUR)
+};
+
+static const DrvMksc60fpsPatchEntry Mksc60fpsPatchJpn[] = {
+	{ 0x02a718, { 0x00, 0x00 } },	// MKA60fps(JP)
+};
+
+static const DrvMksc60fpsPatchEntry *pDrvMksc60fpsPatch;
+static UINT8	DrvMksc60fpsOrig[MKSC60FPS_PATCH_LEN];
+static UINT8	DrvMksc60fpsActive;
 
 static INT32 DrvDoReset()
 {
+	clear_opposite.reset();
 	return GbaCoreReset(Gba);
 }
 
@@ -101,11 +153,30 @@ static INT32 DrvInit()
 	BurnSetRefreshRate(59.72750057);
 
 	UINT32 romSize = ri.nLen;
+	if (bDoIpsPatch)
+		romSize += nIpsMemExpLen[PRG1_ROM];
 	DrvRom = (UINT8 *)BurnMalloc((INT32)romSize);
 	if (DrvRom == NULL)
 		return 1;
 	if (BurnLoadRom(DrvRom, 0, 1))
 		return 1;
+
+	// MKSC 60fps: pick this driver's patch table, save the native ROM bytes
+	DrvMksc60fpsActive = 0;
+	pDrvMksc60fpsPatch = NULL;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "gba_mariokrt") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "gba_mariokrtu") == 0) {
+		pDrvMksc60fpsPatch = Mksc60fpsPatchUsaEur;
+	} else if (strcmp(BurnDrvGetTextA(DRV_NAME), "gba_mariokrtj") == 0) {
+		pDrvMksc60fpsPatch = Mksc60fpsPatchJpn;
+	}
+	if (pDrvMksc60fpsPatch != NULL) {
+		if ((UINT64)pDrvMksc60fpsPatch->nOffset + MKSC60FPS_PATCH_LEN > romSize) {
+			pDrvMksc60fpsPatch = NULL;
+		} else {
+			memcpy(DrvMksc60fpsOrig, DrvRom + pDrvMksc60fpsPatch->nOffset, MKSC60FPS_PATCH_LEN);
+		}
+	}
+
 	if (GbaCoreInit(&Gba))
 		return 1;
 
@@ -133,11 +204,12 @@ static INT32 DrvInit()
 	rtcSeed.second  = (UINT8)  localTime.tm_sec;
 	bprintf(PRINT_NORMAL, _T("GBA RTC seed: %04d-%02d-%02d %02d:%02d:%02d (wday %d)\n"),
 		rtcSeed.year, rtcSeed.month, rtcSeed.day, rtcSeed.hour, rtcSeed.minute, rtcSeed.second, rtcSeed.weekday);
-	if (GbaCoreLoadRom(Gba, DrvRom, romSize, &rtcSeed)) return 1;
+	if (GbaCoreLoadRom(Gba, DrvRom, romSize, &rtcSeed))
+		return 1;
 
 	DrvStateSize = (INT32)GbaCoreStateSize();
-	DrvState   = (UINT8*)BurnMalloc(DrvStateSize);
-	DrvBattery = (UINT8*)BurnMalloc((INT32)GbaCoreGetBatteryCapacity());
+	DrvState     = (UINT8*)BurnMalloc(DrvStateSize);
+	DrvBattery   = (UINT8*)BurnMalloc((INT32)GbaCoreGetBatteryCapacity());
 	if (DrvState == NULL || DrvBattery == NULL)
 		return 1;
 
@@ -176,6 +248,9 @@ static INT32 DrvExit()
 	DrvTiltX         = 0x8000;
 	DrvTiltY         = 0x8000;
 
+	DrvMksc60fpsActive = 0;
+	pDrvMksc60fpsPatch = NULL;
+
 	return 0;
 }
 
@@ -204,7 +279,31 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (DrvReset && !bBurnRunAheadFrame && DrvDoReset()) return 1;
+	if (DrvReset && !bBurnRunAheadFrame && DrvDoReset())
+		return 1;
+
+	// MKSC 60fps DIP patch: 1 = patch, 0 = restore, then reset
+	if (!bBurnRunAheadFrame && pDrvMksc60fpsPatch != NULL) {
+		UINT8 dipOn = DrvJoy[GBA_BUTTON_DIP1] & 1;
+		if (dipOn != DrvMksc60fpsActive) {
+			const UINT8 *pData = dipOn ? pDrvMksc60fpsPatch->patchData : DrvMksc60fpsOrig;
+			if (GbaCoreWriteRom(Gba, pDrvMksc60fpsPatch->nOffset, pData, MKSC60FPS_PATCH_LEN))
+				return 1;
+//			bprintf(PRINT_NORMAL, _T("MKSC 60fps patch %s (offset %08x)\n"), dipOn ? _T("applied") : _T("restored"), pDrvMksc60fpsPatch->nOffset);
+			DrvMksc60fpsActive = dipOn;
+			if (DrvDoReset())
+				return 1;
+		}
+	}
+
+	// Compile digital inputs
+	DrvInput[0] = 0x0000;
+	for (INT32 i = 0; i < 10; i++) {
+		DrvInput[0] |= ((DrvJoy[i] & 1) << i);
+	}
+	
+	// Apply SOCD processing to directional inputs
+	clear_opposite.check(0, DrvInput[0], 0x0010, 0x0020, 0x0040, 0x0080, nSocd[0]);
 
 	GbaInput input;
 	memset(&input, 0, sizeof(input));
@@ -219,12 +318,10 @@ static INT32 DrvFrame()
 	DrvSolarUpLast   = DrvSolarUp;
 	DrvSolarDownLast = DrvSolarDown;
 	input.solar = GbaSolarLevelToInput((UINT8)DrvSolar);
-	for (INT32 i = 0; i < 10; i++) {
-		input.buttons |= (DrvJoy[i] & 1) << i;
-	}
+	input.buttons = DrvInput[0];
 	GbaCoreSetInput(Gba, &input);
 
-	INT32 runAhead   = bBurnRunAheadFrame != 0;
+	INT32  runAhead  = bBurnRunAheadFrame != 0;
 	double audioRate = nBurnSoundLen > 0 ? DrvAudioRate() : 0.0;
 	if (GbaCoreConfigureAudio(Gba, audioRate, nBurnSoundLen, !runAhead && nBurnSoundLen > 0))
 		return 1;
@@ -243,11 +340,12 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin) {
-		*pnMin = 0x02970A;
+		*pnMin = 0x02970b;
 	}
 
 	if ((nAction & ACB_VOLATILE) && Gba && DrvState) {
 		SCAN_VAR(DrvSolar);
+		clear_opposite.scan();
 		if (nAction & ACB_WRITE) {
 			if (DrvSolar > GBA_SOLAR_LEVEL_MAX)
 				DrvSolar = GbaSolarLegacyToLevel(DrvSolar);
@@ -278,6 +376,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
+
+#undef MKSC60FPS_PATCH_LEN
 
 static INT32 GbaGetZipName(char **pszName, UINT32 i)
 {
@@ -26997,7 +27097,7 @@ struct BurnDriver BurnDrvgba_mariokrt = {
 	"Mario Kart: Super Circuit (Europe)\0", NULL, "Nintendo", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
-	GbaGetZipName, gba_mariokrtRomInfo, gba_mariokrtRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	GbaGetZipName, gba_mariokrtRomInfo, gba_mariokrtRomName, NULL, NULL, NULL, NULL, GbaAInputInfo, MkscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -27015,7 +27115,7 @@ struct BurnDriver BurnDrvgba_mariokrtu = {
 	"Mario Kart: Super Circuit (USA)\0", NULL, "Nintendo", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
-	GbaGetZipName, gba_mariokrtuRomInfo, gba_mariokrtuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	GbaGetZipName, gba_mariokrtuRomInfo, gba_mariokrtuRomName, NULL, NULL, NULL, NULL, GbaAInputInfo, MkscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -27033,7 +27133,7 @@ struct BurnDriver BurnDrvgba_mariokrtj = {
 	"Mario Kart Advance (Japan)\0", NULL, "Nintendo", "Game Boy Advance",
 	L"Mario Kart Advance (Japan)\0\u30de\u30ea\u30aa\u30ab\u30fc\u30c8\u30a2\u30c9\u30d0\u30f3\u30b9\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
-	GbaGetZipName, gba_mariokrtjRomInfo, gba_mariokrtjRomName, NULL, NULL, NULL, NULL, GbaInputInfo, NULL,
+	GbaGetZipName, gba_mariokrtjRomInfo, gba_mariokrtjRomName, NULL, NULL, NULL, NULL, GbaAInputInfo, MkscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

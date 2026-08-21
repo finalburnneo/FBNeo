@@ -8423,6 +8423,323 @@ static struct BurnRomInfo DaimakaiRomDesc[] = {
 STD_ROM_PICK(Daimakai)
 STD_ROM_FN(Daimakai)
 
+// Ghouls'n Ghosts - Artoria Edition hacks (GoodLuckTrying)
+static struct BurnRomInfo GhoulsMaidenRomDesc[] = {
+	{ "dme_29maiden.10h", 0x020000, 0x62bc0f9f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dme_30maiden.10j", 0x020000, 0x3d770ee1, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dme_27maiden.9h",  0x020000, 0x717dfa2f, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dme_28maiden.9j",  0x020000, 0x00136f06, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm-17maiden.7j",       0x080000, 0xf96c3f5d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "dm-05maiden.3a", 0x080000, 0x089d3e31, BRF_GRA | CPS1_TILES },
+	{ "dm-07maiden.3f", 0x080000, 0xb7b0567c, BRF_GRA | CPS1_TILES },
+	{ "dm-06maiden.3c", 0x080000, 0x92ca0ba1, BRF_GRA | CPS1_TILES },
+	{ "dm-08maiden.3g", 0x080000, 0x0f39afc8, BRF_GRA | CPS1_TILES },
+	{ "09maiden.4a", 0x010000, 0xe99f777e, BRF_GRA | CPS1_TILES },
+	{ "18maiden.7a", 0x010000, 0x9798c4be, BRF_GRA | CPS1_TILES },
+	{ "13maiden.4e", 0x010000, 0xd731677a, BRF_GRA | CPS1_TILES },
+	{ "22maiden.7e", 0x010000, 0xe9282194, BRF_GRA | CPS1_TILES },
+	{ "11maiden.4c", 0x010000, 0xf94717d0, BRF_GRA | CPS1_TILES },
+	{ "20maiden.7c", 0x010000, 0xd2605c04, BRF_GRA | CPS1_TILES },
+	{ "15maiden.4g", 0x010000, 0xad8a53ec, BRF_GRA | CPS1_TILES },
+	{ "24maiden.7g", 0x010000, 0xae66ab27, BRF_GRA | CPS1_TILES },
+	{ "10maiden.4b", 0x010000, 0xafce74dd, BRF_GRA | CPS1_TILES },
+	{ "19maiden.7b", 0x010000, 0x0b4e155f, BRF_GRA | CPS1_TILES },
+	{ "14maiden.4f", 0x010000, 0x5bc8e886, BRF_GRA | CPS1_TILES },
+	{ "23maiden.7f", 0x010000, 0x095a6785, BRF_GRA | CPS1_TILES },
+	{ "12maiden.4d", 0x010000, 0xaa3d5491, BRF_GRA | CPS1_TILES },
+	{ "21maiden.7d", 0x010000, 0x1fb7da8c, BRF_GRA | CPS1_TILES },
+	{ "16maiden.4h", 0x010000, 0x2913fa9b, BRF_GRA | CPS1_TILES },
+	{ "25maiden.7h", 0x010000, 0x5749565d, BRF_GRA | CPS1_TILES },
+
+	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	A_BOARD_PLDS
+
+	{ "dm620.2a", 0x000117, 0xf6e5f727, BRF_OPT },
+	{ "lwio.8i",  0x000117, 0xad52b90c, BRF_OPT },
+};
+STD_ROM_PICK(GhoulsMaiden)
+STD_ROM_FN(GhoulsMaiden)
+
+struct BurnDriver BurnDrvCpsGhoulsMaiden = {
+	"ghoulsmaiden", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Maiden Artoria Edition (World)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsMaidenRomInfo, GhoulsMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static struct BurnRomInfo GhoulsKnightRomDesc[] = {
+	{ "dme_29knight.10h", 0x020000, 0xa26366a2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dme_30knight.10j", 0x020000, 0x906bfbd9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dme_27knight.9h",  0x020000, 0x0f80f588, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dme_28knight.9j",  0x020000, 0x448bf481, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm-17knight.7j",       0x080000, 0xe856d9b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "dm-05knight.3a", 0x080000, 0x68381793, BRF_GRA | CPS1_TILES },
+	{ "dm-07knight.3f", 0x080000, 0xfe68674d, BRF_GRA | CPS1_TILES },
+	{ "dm-06knight.3c", 0x080000, 0xc0e27e48, BRF_GRA | CPS1_TILES },
+	{ "dm-08knight.3g", 0x080000, 0x7be8f80a, BRF_GRA | CPS1_TILES },
+	{ "09knight.4a", 0x010000, 0xa726123a, BRF_GRA | CPS1_TILES },
+	{ "18knight.7a", 0x010000, 0x379d3bee, BRF_GRA | CPS1_TILES },
+	{ "13knight.4e", 0x010000, 0xeedbdd71, BRF_GRA | CPS1_TILES },
+	{ "22knight.7e", 0x010000, 0x96a4311f, BRF_GRA | CPS1_TILES },
+	{ "11knight.4c", 0x010000, 0xaf590ecd, BRF_GRA | CPS1_TILES },
+	{ "20knight.7c", 0x010000, 0x00bdeef0, BRF_GRA | CPS1_TILES },
+	{ "15knight.4g", 0x010000, 0xd409bf40, BRF_GRA | CPS1_TILES },
+	{ "24knight.7g", 0x010000, 0xfc91ec7c, BRF_GRA | CPS1_TILES },
+	{ "10knight.4b", 0x010000, 0x08043aa8, BRF_GRA | CPS1_TILES },
+	{ "19knight.7b", 0x010000, 0xdaca4bc1, BRF_GRA | CPS1_TILES },
+	{ "14knight.4f", 0x010000, 0x0d7d3de4, BRF_GRA | CPS1_TILES },
+	{ "23knight.7f", 0x010000, 0x53622c1c, BRF_GRA | CPS1_TILES },
+	{ "12knight.4d", 0x010000, 0xf7770b2c, BRF_GRA | CPS1_TILES },
+	{ "21knight.7d", 0x010000, 0x3d4192b7, BRF_GRA | CPS1_TILES },
+	{ "16knight.4h", 0x010000, 0x5c63b626, BRF_GRA | CPS1_TILES },
+	{ "25knight.7h", 0x010000, 0x47ce5f76, BRF_GRA | CPS1_TILES },
+
+	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	A_BOARD_PLDS
+
+	{ "dm620.2a", 0x000117, 0xf6e5f727, BRF_OPT },
+	{ "lwio.8i",  0x000117, 0xad52b90c, BRF_OPT },
+};
+STD_ROM_PICK(GhoulsKnight)
+STD_ROM_FN(GhoulsKnight)
+
+struct BurnDriver BurnDrvCpsGhoulsKnight = {
+	"ghoulsknight", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Knight Artoria Edition (World)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsKnightRomInfo, GhoulsKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static struct BurnRomInfo GhoulsuMaidenRomDesc[] = {
+	{ "dmu_29maiden.10h", 0x020000, 0x7ac6c63e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmu_30maiden.10j", 0x020000, 0x0a3d58f0, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmu_27maiden.9h",  0x020000, 0xdb966113, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmu_28maiden.9j",  0x020000, 0xd6594f60, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm-17maiden.7j",       0x080000, 0xf96c3f5d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "dm-05maiden.3a", 0x080000, 0x089d3e31, BRF_GRA | CPS1_TILES },
+	{ "dm-07maiden.3f", 0x080000, 0xb7b0567c, BRF_GRA | CPS1_TILES },
+	{ "dm-06maiden.3c", 0x080000, 0x92ca0ba1, BRF_GRA | CPS1_TILES },
+	{ "dm-08maiden.3g", 0x080000, 0x0f39afc8, BRF_GRA | CPS1_TILES },
+	{ "09maiden.4a", 0x010000, 0xe99f777e, BRF_GRA | CPS1_TILES },
+	{ "18maiden.7a", 0x010000, 0x9798c4be, BRF_GRA | CPS1_TILES },
+	{ "13maiden.4e", 0x010000, 0xd731677a, BRF_GRA | CPS1_TILES },
+	{ "22maiden.7e", 0x010000, 0xe9282194, BRF_GRA | CPS1_TILES },
+	{ "11maiden.4c", 0x010000, 0xf94717d0, BRF_GRA | CPS1_TILES },
+	{ "20maiden.7c", 0x010000, 0xd2605c04, BRF_GRA | CPS1_TILES },
+	{ "15maiden.4g", 0x010000, 0xad8a53ec, BRF_GRA | CPS1_TILES },
+	{ "24maiden.7g", 0x010000, 0xae66ab27, BRF_GRA | CPS1_TILES },
+	{ "10maiden.4b", 0x010000, 0xafce74dd, BRF_GRA | CPS1_TILES },
+	{ "19maiden.7b", 0x010000, 0x0b4e155f, BRF_GRA | CPS1_TILES },
+	{ "14maiden.4f", 0x010000, 0x5bc8e886, BRF_GRA | CPS1_TILES },
+	{ "23maiden.7f", 0x010000, 0x095a6785, BRF_GRA | CPS1_TILES },
+	{ "12maiden.4d", 0x010000, 0xaa3d5491, BRF_GRA | CPS1_TILES },
+	{ "21maiden.7d", 0x010000, 0x1fb7da8c, BRF_GRA | CPS1_TILES },
+	{ "16maiden.4h", 0x010000, 0x2913fa9b, BRF_GRA | CPS1_TILES },
+	{ "25maiden.7h", 0x010000, 0x5749565d, BRF_GRA | CPS1_TILES },
+
+	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	A_BOARD_PLDS
+
+	{ "dm620.2a", 0x000117, 0xf6e5f727, BRF_OPT },
+	{ "lwio.8i",  0x000117, 0xad52b90c, BRF_OPT },
+};
+STD_ROM_PICK(GhoulsuMaiden)
+STD_ROM_FN(GhoulsuMaiden)
+
+struct BurnDriver BurnDrvCpsGhoulsuMaiden = {
+	"ghoulsumaiden", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Maiden Artoria Edition (USA)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsuMaidenRomInfo, GhoulsuMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsuDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static struct BurnRomInfo GhoulsuKnightRomDesc[] = {
+	{ "dmu_29knight.10h", 0x020000, 0x6b315490, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmu_30knight.10j", 0x020000, 0xe3209d51, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmu_27knight.9h",  0x020000, 0x0cc89606, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmu_28knight.9j",  0x020000, 0xa263bde6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm-17knight.7j",       0x080000, 0xe856d9b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "dm-05knight.3a", 0x080000, 0x68381793, BRF_GRA | CPS1_TILES },
+	{ "dm-07knight.3f", 0x080000, 0xfe68674d, BRF_GRA | CPS1_TILES },
+	{ "dm-06knight.3c", 0x080000, 0xc0e27e48, BRF_GRA | CPS1_TILES },
+	{ "dm-08knight.3g", 0x080000, 0x7be8f80a, BRF_GRA | CPS1_TILES },
+	{ "09knight.4a", 0x010000, 0xa726123a, BRF_GRA | CPS1_TILES },
+	{ "18knight.7a", 0x010000, 0x379d3bee, BRF_GRA | CPS1_TILES },
+	{ "13knight.4e", 0x010000, 0xeedbdd71, BRF_GRA | CPS1_TILES },
+	{ "22knight.7e", 0x010000, 0x96a4311f, BRF_GRA | CPS1_TILES },
+	{ "11knight.4c", 0x010000, 0xaf590ecd, BRF_GRA | CPS1_TILES },
+	{ "20knight.7c", 0x010000, 0x00bdeef0, BRF_GRA | CPS1_TILES },
+	{ "15knight.4g", 0x010000, 0xd409bf40, BRF_GRA | CPS1_TILES },
+	{ "24knight.7g", 0x010000, 0xfc91ec7c, BRF_GRA | CPS1_TILES },
+	{ "10knight.4b", 0x010000, 0x08043aa8, BRF_GRA | CPS1_TILES },
+	{ "19knight.7b", 0x010000, 0xdaca4bc1, BRF_GRA | CPS1_TILES },
+	{ "14knight.4f", 0x010000, 0x0d7d3de4, BRF_GRA | CPS1_TILES },
+	{ "23knight.7f", 0x010000, 0x53622c1c, BRF_GRA | CPS1_TILES },
+	{ "12knight.4d", 0x010000, 0xf7770b2c, BRF_GRA | CPS1_TILES },
+	{ "21knight.7d", 0x010000, 0x3d4192b7, BRF_GRA | CPS1_TILES },
+	{ "16knight.4h", 0x010000, 0x5c63b626, BRF_GRA | CPS1_TILES },
+	{ "25knight.7h", 0x010000, 0x47ce5f76, BRF_GRA | CPS1_TILES },
+
+	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	A_BOARD_PLDS
+
+	{ "dm620.2a", 0x000117, 0xf6e5f727, BRF_OPT },
+	{ "lwio.8i",  0x000117, 0xad52b90c, BRF_OPT },
+};
+STD_ROM_PICK(GhoulsuKnight)
+STD_ROM_FN(GhoulsuKnight)
+
+struct BurnDriver BurnDrvCpsGhoulsuKnight = {
+	"ghoulsuknight", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Knight Artoria Edition (USA)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsuKnightRomInfo, GhoulsuKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsuDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static struct BurnRomInfo DaimakaiMaidenRomDesc[] = {
+	{ "dmj_38maiden.12f", 0x020000, 0x7f436646, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmj_39maiden.12h", 0x020000, 0xebc72dee, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmj_40maiden.13f", 0x020000, 0xa8371817, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmj_41maiden.13h", 0x020000, 0xcd7de9bb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_33maiden.10f", 0x020000, 0x0e47e3b3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_34maiden.10h", 0x020000, 0xd9675957, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_35maiden.11f", 0x020000, 0xc04b85c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_36maiden.11h", 0x020000, 0x89be83de, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_02maiden.4b", 0x020000, 0xe195234d, BRF_GRA | CPS1_TILES },
+	{ "dm_01maiden.4a", 0x020000, 0xbf40447c, BRF_GRA | CPS1_TILES },
+	{ "dm_10maiden.9b", 0x020000, 0x64506deb, BRF_GRA | CPS1_TILES },
+	{ "dm_09maiden.9a", 0x020000, 0x6db846bf, BRF_GRA | CPS1_TILES },
+	{ "dm_18maiden.5e", 0x020000, 0x3d707890, BRF_GRA | CPS1_TILES },
+	{ "dm_17maiden.5c", 0x020000, 0x25adb6e2, BRF_GRA | CPS1_TILES },
+	{ "dm_30maiden.8h", 0x020000, 0x29bb7d32, BRF_GRA | CPS1_TILES },
+	{ "dm_29maiden.8f", 0x020000, 0xd99c38e0, BRF_GRA | CPS1_TILES },
+	{ "dm_04maiden.5b", 0x020000, 0xa4f4f8f0, BRF_GRA | CPS1_TILES },
+	{ "dm_03maiden.5a", 0x020000, 0xb1033e62, BRF_GRA | CPS1_TILES },
+	{ "dm_12maiden.10b", 0x020000, 0x10fdd76a, BRF_GRA | CPS1_TILES },
+	{ "dm_11maiden.10a", 0x020000, 0x9040cb04, BRF_GRA | CPS1_TILES },
+	{ "dm_20maiden.7e", 0x020000, 0x281d0b3e, BRF_GRA | CPS1_TILES },
+	{ "dm_19maiden.7c", 0x020000, 0x2623b52f, BRF_GRA | CPS1_TILES },
+	{ "dm_32maiden.9h", 0x020000, 0x99692344, BRF_GRA | CPS1_TILES },
+	{ "dm_31maiden.9f", 0x020000, 0x54acb729, BRF_GRA | CPS1_TILES },
+	{ "dm_06maiden.7b", 0x010000, 0xe99f777e, BRF_GRA | CPS1_TILES },
+	{ "dm_05maiden.7a", 0x010000, 0x9798c4be, BRF_GRA | CPS1_TILES },
+	{ "dm_14maiden.11b", 0x010000, 0xd731677a, BRF_GRA | CPS1_TILES },
+	{ "dm_13maiden.11a", 0x010000, 0xe9282194, BRF_GRA | CPS1_TILES },
+	{ "dm_22maiden.8e", 0x010000, 0xf94717d0, BRF_GRA | CPS1_TILES },
+	{ "dm_21maiden.8c", 0x010000, 0xd2605c04, BRF_GRA | CPS1_TILES },
+	{ "dm_26maiden.10e", 0x010000, 0xad8a53ec, BRF_GRA | CPS1_TILES },
+	{ "dm_25maiden.10c", 0x010000, 0xae66ab27, BRF_GRA | CPS1_TILES },
+	{ "dm_08maiden.8b", 0x010000, 0xafce74dd, BRF_GRA | CPS1_TILES },
+	{ "dm_07maiden.8a", 0x010000, 0x0b4e155f, BRF_GRA | CPS1_TILES },
+	{ "dm_16maiden.12b", 0x010000, 0x5bc8e886, BRF_GRA | CPS1_TILES },
+	{ "dm_15maiden.12a", 0x010000, 0x095a6785, BRF_GRA | CPS1_TILES },
+	{ "dm_24maiden.9e", 0x010000, 0xaa3d5491, BRF_GRA | CPS1_TILES },
+	{ "dm_23maiden.9c", 0x010000, 0x1fb7da8c, BRF_GRA | CPS1_TILES },
+	{ "dm_28maiden.11e", 0x010000, 0x2913fa9b, BRF_GRA | CPS1_TILES },
+	{ "dm_27maiden.11c", 0x010000, 0x5749565d, BRF_GRA | CPS1_TILES },
+
+	{ "37.13c", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	A_BOARD_PLDS
+
+	{ "dm22a.1a", 0x000117, 0xd4776116, BRF_OPT },
+	{ "lwio.12c", 0x000117, 0xad52b90c, BRF_OPT },
+};
+STD_ROM_PICK(DaimakaiMaiden)
+STD_ROM_FN(DaimakaiMaiden)
+
+struct BurnDriver BurnDrvCpsDaimakaiMaiden = {
+	"daimakaimaiden", "ghouls", NULL, NULL, "2026",
+	"Daimakaimura - Maiden Artoria Edition (Japan)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, DaimakaiMaidenRomInfo, DaimakaiMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
+	DaimakaiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static struct BurnRomInfo DaimakaiKnightRomDesc[] = {
+	{ "dmj_38knight.12f", 0x020000, 0x3098aca7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmj_39knight.12h", 0x020000, 0x222d253b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmj_40knight.13f", 0x020000, 0x1050f528, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dmj_41knight.13h", 0x020000, 0xbff07623, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_33knight.10f", 0x020000, 0x37619c8a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_34knight.10h", 0x020000, 0xf92dc399, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_35knight.11f", 0x020000, 0xc04b85c8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_36knight.11h", 0x020000, 0x89be83de, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "dm_02knight.4b", 0x020000, 0x27bd1d69, BRF_GRA | CPS1_TILES },
+	{ "dm_01knight.4a", 0x020000, 0xe8ba76ec, BRF_GRA | CPS1_TILES },
+	{ "dm_10knight.9b", 0x020000, 0x44d222eb, BRF_GRA | CPS1_TILES },
+	{ "dm_09knight.9a", 0x020000, 0x5561f7df, BRF_GRA | CPS1_TILES },
+	{ "dm_18knight.5e", 0x020000, 0xa65e9f34, BRF_GRA | CPS1_TILES },
+	{ "dm_17knight.5c", 0x020000, 0x3f84db19, BRF_GRA | CPS1_TILES },
+	{ "dm_30knight.8h", 0x020000, 0x500840f2, BRF_GRA | CPS1_TILES },
+	{ "dm_29knight.8f", 0x020000, 0xbafb92de, BRF_GRA | CPS1_TILES },
+	{ "dm_04knight.5b", 0x020000, 0xa4f4f8f0, BRF_GRA | CPS1_TILES },
+	{ "dm_03knight.5a", 0x020000, 0xb1033e62, BRF_GRA | CPS1_TILES },
+	{ "dm_12knight.10b", 0x020000, 0x10fdd76a, BRF_GRA | CPS1_TILES },
+	{ "dm_11knight.10a", 0x020000, 0x9040cb04, BRF_GRA | CPS1_TILES },
+	{ "dm_20knight.7e", 0x020000, 0x281d0b3e, BRF_GRA | CPS1_TILES },
+	{ "dm_19knight.7c", 0x020000, 0x2623b52f, BRF_GRA | CPS1_TILES },
+	{ "dm_32knight.9h", 0x020000, 0x99692344, BRF_GRA | CPS1_TILES },
+	{ "dm_31knight.9f", 0x020000, 0x54acb729, BRF_GRA | CPS1_TILES },
+	{ "dm_06knight.7b", 0x010000, 0xa726123a, BRF_GRA | CPS1_TILES },
+	{ "dm_05knight.7a", 0x010000, 0x379d3bee, BRF_GRA | CPS1_TILES },
+	{ "dm_14knight.11b", 0x010000, 0xeedbdd71, BRF_GRA | CPS1_TILES },
+	{ "dm_13knight.11a", 0x010000, 0x96a4311f, BRF_GRA | CPS1_TILES },
+	{ "dm_22knight.8e", 0x010000, 0xaf590ecd, BRF_GRA | CPS1_TILES },
+	{ "dm_21knight.8c", 0x010000, 0x00bdeef0, BRF_GRA | CPS1_TILES },
+	{ "dm_26knight.10e", 0x010000, 0xd409bf40, BRF_GRA | CPS1_TILES },
+	{ "dm_25knight.10c", 0x010000, 0xfc91ec7c, BRF_GRA | CPS1_TILES },
+	{ "dm_08knight.8b", 0x010000, 0x08043aa8, BRF_GRA | CPS1_TILES },
+	{ "dm_07knight.8a", 0x010000, 0xdaca4bc1, BRF_GRA | CPS1_TILES },
+	{ "dm_16knight.12b", 0x010000, 0x0d7d3de4, BRF_GRA | CPS1_TILES },
+	{ "dm_15knight.12a", 0x010000, 0x53622c1c, BRF_GRA | CPS1_TILES },
+	{ "dm_24knight.9e", 0x010000, 0xf7770b2c, BRF_GRA | CPS1_TILES },
+	{ "dm_23knight.9c", 0x010000, 0x3d4192b7, BRF_GRA | CPS1_TILES },
+	{ "dm_28knight.11e", 0x010000, 0x5c63b626, BRF_GRA | CPS1_TILES },
+	{ "dm_27knight.11c", 0x010000, 0x47ce5f76, BRF_GRA | CPS1_TILES },
+
+	{ "37.13c", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	A_BOARD_PLDS
+
+	{ "dm22a.1a", 0x000117, 0xd4776116, BRF_OPT },
+	{ "lwio.12c", 0x000117, 0xad52b90c, BRF_OPT },
+};
+STD_ROM_PICK(DaimakaiKnight)
+STD_ROM_FN(DaimakaiKnight)
+
+struct BurnDriver BurnDrvCpsDaimakaiKnight = {
+	"daimakaiknight", "ghouls", NULL, NULL, "2026",
+	"Daimakaimura - Knight Artoria Edition (Japan)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, DaimakaiKnightRomInfo, DaimakaiKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
+	DaimakaiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 static struct BurnRomInfo DaimakairRomDesc[] = {
 	{ "damj_23.8f",    0x080000, 0xc3b248ec, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "damj_22.7f",    0x080000, 0x595ff2f3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -17390,6 +17707,12 @@ static const struct GameConfig ConfigTable[] =
 	{ "daimakai"      , CPS_B_01    , mapper_DM22A , 0, NULL                },
 	{ "daimakair"     , CPS_B_21_DEF, mapper_DAM63B, 0, NULL                },
 	{ "daimakaib"     , CPS_B_21_DEF, mapper_DAM63B, 0, NULL                }, // game controls layers at 0x98000c
+	{ "ghoulsmaiden"  , CPS_B_01    , mapper_DM620 , 0, NULL                },
+	{ "ghoulsknight"  , CPS_B_01    , mapper_DM620 , 0, NULL                },
+	{ "ghoulsumaiden" , CPS_B_01    , mapper_DM620 , 0, NULL                },
+	{ "ghoulsuknight" , CPS_B_01    , mapper_DM620 , 0, NULL                },
+	{ "daimakaimaiden", CPS_B_01    , mapper_DM22A , 0, NULL                },
+	{ "daimakaiknight", CPS_B_01    , mapper_DM22A , 0, NULL                },
 	{ "mpumpkin"      , CPS_B_21_DEF, mapper_SFZ63B, 0, NULL                },
 	{ "knights"       , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },
 	{ "knightsu"      , CPS_B_21_BT4, mapper_KR63B , 0, NULL                },

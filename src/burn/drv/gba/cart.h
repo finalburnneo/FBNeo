@@ -30,9 +30,6 @@ static inline bool gba_load_bios_file(const char*, const char*, const char*, UIN
 	return true;
 }
 
-
-
-
 // FC Mini (FC Mini) cartridge pattern value for out-of-bounds ROM reads
 static inline UINT32 gba_fcmini_pattern_right_shift2(UINT32 addr)
 {
@@ -254,6 +251,16 @@ static inline void gba_fcmini_sram_write(gba_t* gba, UINT32 address, UINT8 value
 
 static inline void gba_process_backup_write(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	if (gba->cart.backup_type == GBA_BACKUP_NONE && gba->cart.rom_size >= 0x2000000) {
+		// store at the flash command base detects flash, other stores detect SRAM
+		if (baddr == 0x0e005555) {
+			gba->cart.backup_type     = GBA_BACKUP_FLASH_64K;
+			gba->mem.flash_chip_id[1] = 0xd4;
+			gba->mem.flash_chip_id[0] = 0xbf;
+		} else {
+			gba->cart.backup_type = GBA_BACKUP_SRAM;
+		}
+	}
 	if (gba->cart.backup_type == GBA_BACKUP_FLASH_64K || gba->cart.backup_type == GBA_BACKUP_FLASH_128K) {
 		gba_process_flash_state_machine(gba, baddr, data);
 	} else if (gba->cart.backup_type == GBA_BACKUP_SRAM) {
@@ -312,6 +319,66 @@ void gba_unload(gba_t* /*gba*/, gba_scratch_t* /*scratch*/)
 	printf("Unloading GBA\n");
 }
 
+// 64MB carts bank-switch an 8KB window through mapper registers
+static inline void gba_matrix_remap(gba_t* gba)
+{
+	if (gba->cart.matrix.vaddr & 0xffffe1ff)
+		return;
+	if (gba->cart.matrix.size  & 0xffffe1ff)
+		return;
+	if ((gba->cart.matrix.vaddr + gba->cart.matrix.size - 1) & 0xffffe000)
+		return;
+	if (gba->cart.matrix.paddr >= gba->cart.rom_size)
+		return;
+	UINT32 size = gba->cart.matrix.size;
+	if (gba->cart.matrix.paddr + size > gba->cart.rom_size)
+		size = gba->cart.rom_size - gba->cart.matrix.paddr;
+	memcpy(gba->mem.matrix_window + gba->cart.matrix.vaddr, gba->mem.cart_rom + gba->cart.matrix.paddr, size);
+}
+
+static inline void gba_matrix_write(gba_t* gba, UINT32 reg, UINT32 value)
+{
+	switch (reg) {
+		case 0x0:
+			gba->cart.matrix.cmd = value;
+			if (value == 0x01 || value == 0x11)
+				gba_matrix_remap(gba);
+			return;
+		case 0x4:
+			gba->cart.matrix.paddr = value & 0x03ffffff;
+			return;
+		case 0x8:
+			gba->cart.matrix.vaddr = value & 0x007fffff;
+			return;
+		case 0xc:
+			if (value == 0)
+				return;
+			gba->cart.matrix.size = value << 9;
+			return;
+	}
+}
+
+static inline void gba_matrix_write16(gba_t* gba, UINT32 reg, UINT16 value)
+{
+	switch (reg) {
+		case 0x0: gba_matrix_write(gba, reg, value | (gba->cart.matrix.cmd   & 0xffff0000)); break;
+		case 0x4: gba_matrix_write(gba, reg, value | (gba->cart.matrix.paddr & 0xffff0000)); break;
+		case 0x8: gba_matrix_write(gba, reg, value | (gba->cart.matrix.vaddr & 0xffff0000)); break;
+		case 0xc: gba_matrix_write(gba, reg, value | (gba->cart.matrix.size  & 0xffff0000)); break;
+	}
+}
+
+static inline void gba_matrix_reset(gba_t* gba)
+{
+	gba->cart.matrix.size  = 0x1000;
+	gba->cart.matrix.paddr = 0;
+	gba->cart.matrix.vaddr = 0;
+	gba_matrix_remap(gba);
+	gba->cart.matrix.paddr = 0x200;
+	gba->cart.matrix.vaddr = 0x1000;
+	gba_matrix_remap(gba);
+}
+
 bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 {
 	memset(gba,     0, sizeof(gba_t));
@@ -323,8 +390,8 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	gba->tilt_sensor.sample_y       = 0xfff;
 	gba->tilt_sensor.pending_x      = 0x3a0;
 	gba->tilt_sensor.pending_y      = 0x3a0;
-	if (emu->rom_size > 32 * 1024 * 1024) {
-		printf("ROMs with sizes >32MB (%u bytes) are too big for the GBA\n", (UINT32)emu->rom_size);
+	if (emu->rom_size > 64 * 1024 * 1024) {
+		printf("ROMs with sizes >64MB (%u bytes) are too big for the GBA\n", (UINT32)emu->rom_size);
 		return false;
 	}
 
@@ -334,8 +401,14 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		memcpy(scratch->bios, gba_bios_bin, sizeof(gba_bios_bin));
 		scratch->skip_bios_intro = true;
 	}
-	gba->cart.rom_size    = emu->rom_size;
-	gba->mem.cart_rom     = emu->rom_data;
+	gba->cart.rom_size = emu->rom_size;
+	gba->mem.cart_rom  = emu->rom_data;
+
+	// 64MB carts use bank-switched windows
+	if (emu->rom_size > 0x2000000 && emu->rom_data[0xac] == 'M') {
+		gba->cart.matrix.active = true;
+		gba_matrix_reset(gba);
+	}
 
 	// FC Mini (FC Mini) cartridge detection
 	{
@@ -350,7 +423,9 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		}
 	}
 
-	if (!gba->cart.fcmini.type)
+	// Scan for backup strings; 32MB carts (e.g. video carts) are dense with data
+	// and yield false positives, so leave them at none.
+	if (!gba->cart.fcmini.type && gba->cart.rom_size < 0x2000000)
 		gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
 
 	size_t bytes = 0;
@@ -379,9 +454,10 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba_io_store16(gba, GBA_BG2PD + (bg - 2) * 0x10, 1 << 8);
 	}
 	gba_store16(gba, 0x04000088, 512);
-	gba_store32(gba, 0x040000DC, 0x84000000);
+	gba_store32(gba, 0x040000dc, 0x84000000);
 	gba_recompute_waitstate_table(gba, 0);
 	gba_recompute_mmio_mask_table(gba);
+	gba_io_store16(gba, GBA_KEYINPUT, 0x3ff);	// power-on default: no keys pressed
 
 	if (scratch->skip_bios_intro) {
 		printf("No GBA bios using bundled bios\n");
@@ -412,7 +488,7 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 			0x4000300,0x1,
 		};
 		for (INT32 i = 0;i < ARRAY_SIZE(initial_mmio_writes);i += 2) {
-			UINT32 addr = initial_mmio_writes[i + 0];
+			UINT32 addr  = initial_mmio_writes[i + 0];
 			UINT32 wdata = initial_mmio_writes[i + 1];
 			arm7_write32(gba, addr, wdata);
 		}
@@ -444,8 +520,5 @@ void gba_store_eeprom_bitstream(gba_t* gba, UINT32 source_address, INT32 offset,
 		gba_store16(gba, source_address + (i + offset) * elem_size * dir, data >> (size - i - 1) & 1);
 	}
 }
-
-
-
 
 #endif

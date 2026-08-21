@@ -67,22 +67,16 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 					if (vcount >= 160 || !gba->ppu.last_hblank || last_hblank)
 						continue;
 				}
-				//Video dma
+				//Video dma: fires once per scanline on lines 2-161
 				if (mode == 3 && i == 3) {
 					gba->dma_wait_ppu = true;
 					UINT16 vcount = gba_io_read16(gba, GBA_VCOUNT);
 					if (!gba->ppu.last_hblank || last_hblank)
 						continue;
-					//Video dma starts at scanline 2
-					if (vcount == 2) {
-						gba->dma[i].video_dma_active = true;
-					}
-					if (!gba->dma[i].video_dma_active)
+					if (vcount < 2 || vcount >= 162)
 						continue;
-					if (vcount == 161) {
+					if (vcount == 161)
 						dma_repeat = false;
-						gba->dma[i].video_dma_active = false;
-					}
 				}
 
 				if (dst_addr_ctl == 3) {
@@ -141,11 +135,15 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				dst_dir = 1;
 
 			// EEPROM DMA transfers
+			if (i == 3 && gba->cart.backup_type == GBA_BACKUP_NONE && gba->cart.rom_size >= 0x2000000 && (dst & 0xff000000) == 0x0d000000) {
+				// Detected EEPROM savegame
+				gba->cart.backup_type = GBA_BACKUP_EEPROM;
+			}
 			if (i == 3 && gba->cart.backup_type == GBA_BACKUP_EEPROM) {
-				INT32 src_in_eeprom = (src & 0x1ffffff) >= gba->cart.rom_size || (src & 0x1ffffff) >= 0x01ffff00;
-				INT32 dst_in_eeprom = (dst & 0x1ffffff) >= gba->cart.rom_size || (dst & 0x1ffffff) >= 0x01ffff00;
-				src_in_eeprom &= src >= 0x8000000 && src <= 0xDFFFFFF;
-				dst_in_eeprom &= dst >= 0x8000000 && dst <= 0xDFFFFFF;
+				INT32 src_in_eeprom = (src & 0x1ffffff) >= gba->cart.rom_size || (src & 0x1ffffff) >= 0x01ffff00 || (src & 0xff000000) == 0x0d000000;
+				INT32 dst_in_eeprom = (dst & 0x1ffffff) >= gba->cart.rom_size || (dst & 0x1ffffff) >= 0x01ffff00 || (dst & 0xff000000) == 0x0d000000;
+				src_in_eeprom &= src >= 0x8000000 && src <= 0xdffffff;
+				dst_in_eeprom &= dst >= 0x8000000 && dst <= 0xdffffff;
 				skip_dma = src_in_eeprom || dst_in_eeprom;
 				if (dst_in_eeprom) {
 					if (cnt == 73) {
@@ -166,23 +164,33 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 						// 1 bit "0"
 						// Write data 6 bit address
 						gba->mem.eeprom_addr = gba_read_eeprom_bitstream(gba, src, 2,  6, type ? 4 : 2, src_dir);
+						gba->cart.eeprom_read_bits_remaining = 68;
 					} else if (cnt == 17) {
 						// 2 bits "11" (Read Request)
 						// 14 bits eeprom address (MSB first)
 						// 1 bit "0"
 						// Write data 6 bit address
 						gba->mem.eeprom_addr = gba_read_eeprom_bitstream(gba, src, 2, 14, type ? 4 : 2, src_dir) & 0x3ff;
+						gba->cart.eeprom_read_bits_remaining = 68;
 					} else {
 						printf("Bad cnt: %d for eeprom write\n", cnt);
 					}
 					gba->dma[i].current_transaction = cnt;
 				}
 				if (src_in_eeprom) {
-					if (cnt == 68) {
-						UINT64 data = ((UINT64*)gba->mem.cart_backup)[gba->mem.eeprom_addr];
-						gba_store_eeprom_bitstream(gba, dst, 4, 64, type ? 4 : 2, dst_dir, data);
-					} else {
-						printf("Bad cnt: %d for eeprom read\n", cnt);
+					// One EEPROM bit per transfer: 4 dummy zeros, then 64 data bits, then ready=1
+					for (INT32 x = 0; x < cnt; ++x) {
+						UINT32 bit = 1;
+						if (gba->cart.eeprom_read_bits_remaining > 0) {
+							--gba->cart.eeprom_read_bits_remaining;
+							bit = 0;
+							if (gba->cart.eeprom_read_bits_remaining < 64) {
+								INT32 step = 63 - gba->cart.eeprom_read_bits_remaining;
+								UINT32 byte_addr = gba->mem.eeprom_addr * 8 + 7 - (step >> 3);
+								bit = (gba->mem.cart_backup[byte_addr] >> (0x7 - (step & 0x7))) & 1;
+							}
+						}
+						gba_store16(gba, dst + x * transfer_bytes * dst_dir, bit);
 					}
 					gba->dma[i].current_transaction = cnt;
 				}
@@ -195,8 +203,8 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				for (INT32 x = 0;x < 4;++x) {
 					UINT32 src_addr = src + x * 4 * src_dir;
 					UINT32 data     = gba_read32(gba, src_addr);
-					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 0, 8));
-					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 8, 8));
+					gba_audio_fifo_push(gba, fifo, SB_BFE(data,  0, 8));
+					gba_audio_fifo_push(gba, fifo, SB_BFE(data,  8, 8));
 					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 16, 8));
 					gba_audio_fifo_push(gba, fifo, SB_BFE(data, 24, 8));
 					ticks += gba_compute_access_cycles_dma(gba, src_addr, x != 0 ? 2 : 3);

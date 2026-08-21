@@ -147,7 +147,7 @@ static INT32 DrvInit()
 {
 	struct BurnRomInfo ri;
 	memset(&ri, 0, sizeof(ri));
-	if (BurnDrvGetRomInfo(&ri, 0) || ri.nLen == 0 || ri.nLen > 32 * 1024 * 1024)
+	if (BurnDrvGetRomInfo(&ri, 0) || ri.nLen == 0 || ri.nLen > 64 * 1024 * 1024)
 		return 1;
 
 	BurnSetRefreshRate(59.72750057);
@@ -342,7 +342,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin) {
-		*pnMin = 0x02970b;
+		*pnMin = 0x02970c;
 	}
 
 	if ((nAction & ACB_VOLATILE) && Gba && DrvState) {

@@ -258,6 +258,7 @@ typedef struct {
 #define GBA_BACKUP_SRAM			4
 #define GBA_BACKUP_FLASH_64K	5
 #define GBA_BACKUP_FLASH_128K	6
+#define GBA_BACKUP_FORCE_NONE	7
 
 #define GBA_REQ_1B				0x01
 #define GBA_REQ_2B				0x02
@@ -327,6 +328,7 @@ typedef struct {
 	UINT8  oam[1024];
 	UINT8* cart_rom;
 	UINT8  cart_backup[128 * 1024];
+	UINT8  matrix_window[0x2000];
 	UINT8  flash_chip_id[4];
 	UINT32 openbus_word;
 	UINT32 eeprom_word;
@@ -365,6 +367,14 @@ typedef struct {
 	INT32  flash_state;
 	INT32  flash_bank;
 	UINT32 features;
+	struct {
+		bool   active;
+		UINT32 cmd;
+		UINT32 paddr;
+		UINT32 vaddr;
+		UINT32 size;
+	} matrix;
+	INT32  eeprom_read_bits_remaining;
 	gba_gpio_t   gpio;
 	gba_fcmini_t fcmini;
 } gba_cartridge_t;

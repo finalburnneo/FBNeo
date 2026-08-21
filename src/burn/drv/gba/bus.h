@@ -45,6 +45,10 @@ static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 			gba_process_backup_write(gba, baddr, data >> ((baddr & 3) * 8));
 			return;
 		}
+		if (gba->cart.matrix.active && (baddr & 0x01ffff00) == 0x00800100) {
+			gba_matrix_write(gba, baddr & 0x3c, data);
+			return;
+		}
 		if (gba_gpio_address(gba, baddr)) {
 			// Game Pak GPIO registers are 16-bit; 32-bit ROM stores do not access them.
 			return;
@@ -64,6 +68,13 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 		}
 		if (gba_gpio_address(gba, baddr)) {
 			gba_gpio_write16(gba, baddr & ~1, data);
+			return;
+		}
+		//Detected EEPROM savegame
+		if (gba->cart.backup_type == GBA_BACKUP_NONE && gba->cart.rom_size >= 0x2000000 && (baddr & 0xff000000) == 0x0d000000)
+			gba->cart.backup_type = GBA_BACKUP_EEPROM;
+		if (gba->cart.matrix.active && (baddr & 0x01ffff00) == 0x00800100) {
+			gba_matrix_write16(gba, baddr & 0x3c, (UINT16)data);
 			return;
 		}
 	}
@@ -390,6 +401,25 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 		case 0xB:
 		case 0xC:
 		case 0xD: {
+			if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0xff000000) == 0x0d000000) {
+				gba->mem.openbus_word = 1;	// ready when done writing EEPROM
+				break;
+			}
+			if (gba->cart.matrix.active) {
+				INT32 maddr = addr & 0x0ffffff;
+				if (maddr < 0x2000) {
+					gba->mem.openbus_word = *(UINT32*)(gba->mem.matrix_window + (maddr & ~3));
+					if (req_type & 0x3) {
+						UINT16 res16 = gba->mem.openbus_word >> (addr & 2) * 8;
+						gba->mem.openbus_word = res16 * 0x10001u;
+					}
+				} else {
+					UINT32 echo = ((addr & ~3) >> 1) & 0xffff;
+					echo |= (((addr & ~3) + 2) >> 1) << 16;
+					gba->mem.openbus_word = echo;
+				}
+				break;
+			}
 			INT32 maddr = addr & 0x1fffffc;
 			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
 				if (gba->cart.fcmini.type) {
@@ -420,6 +450,15 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 			} else if (gba->cart.backup_type == GBA_BACKUP_EEPROM) {
 				ret = (UINT32*)&gba->mem.eeprom_word;
 			} else if (gba->cart.backup_type == GBA_BACKUP_NONE) {
+				if (gba->cart.rom_size >= 0x2000000) {
+					// Detected SRAM savegame
+					gba->cart.backup_type = GBA_BACKUP_SRAM;
+					gba->mem.sram_word = (UINT32)gba->mem.cart_backup[addr & 0x7fff] * 0x01010101u;
+				} else {
+					gba->mem.sram_word = 0xffffffff;
+				}
+				ret = &gba->mem.sram_word;
+			} else if (gba->cart.backup_type == GBA_BACKUP_FORCE_NONE) {
 				gba->mem.sram_word = 0xffffffff;
 				ret = &gba->mem.sram_word;
 			} else {
@@ -518,6 +557,12 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba_io_store16(gba, GBA_IF, IF);
 
 		return true;
+	} else if (address_u32 == GBA_IF) {
+		//Writing 1 to an IF bit acknowledges (clears) the interrupt
+		UINT16 IF = gba_io_read16(gba, GBA_IF);
+		IF &= ~(word_data & word_mask);
+		gba_io_store16(gba, GBA_IF, IF);
+		return true;
 	} else if (address_u32 == GBA_SOUNDCNT_L) {
 		if (word_mask & 0xffff0000) {
 			UINT16 soundcnt_h = word_data >> 16;
@@ -577,10 +622,14 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		waitcnt = ((waitcnt & ~word_mask) | (word_data & word_mask));
 		gba_recompute_waitstate_table(gba, waitcnt);
 	} else if (address_u32 == GBA_KEYINPUT) {
+		// 0x04000130 word: KEYINPUT (low, read-only) + KEYCNT (high, R/W).
+		// KEYCNT writes must never clobber KEYINPUT (caused spurious keypad IRQ:
+		// disarming KEYCNT while armed made every key read as pressed).
 		if (word_mask & 0xffff0000) {
-			gba_store16(gba, GBA_KEYINPUT, (word_data >> 16) & 0xffff);
+			gba_io_store16(gba, GBA_KEYCNT, (word_data >> 16) & 0xc3ff);
+			gba_tick_keypad(NULL, gba);
 		}
-		gba_tick_keypad(NULL, gba);
+		return true;
 	} else if (address_u32 >= GBA_SOUND1CNT_L && address_u32 < GBA_WAVE_RAM) {
 		for (INT32 i = 0;i < 4;++i) {
 			if (word_mask & (0xff << (i * 8))) {

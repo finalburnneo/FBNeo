@@ -8462,16 +8462,6 @@ static struct BurnRomInfo GhoulsMaidenRomDesc[] = {
 STD_ROM_PICK(GhoulsMaiden)
 STD_ROM_FN(GhoulsMaiden)
 
-struct BurnDriver BurnDrvCpsGhoulsMaiden = {
-	"ghoulsmaiden", "ghouls", NULL, NULL, "2026",
-	"Ghouls'n Ghosts - Maiden Artoria Edition (World)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
-	NULL, GhoulsMaidenRomInfo, GhoulsMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsDIPInfo,
-	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 static struct BurnRomInfo GhoulsKnightRomDesc[] = {
 	{ "dme_29knight.10h", 0x020000, 0xa26366a2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "dme_30knight.10j", 0x020000, 0x906bfbd9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -8509,16 +8499,6 @@ static struct BurnRomInfo GhoulsKnightRomDesc[] = {
 };
 STD_ROM_PICK(GhoulsKnight)
 STD_ROM_FN(GhoulsKnight)
-
-struct BurnDriver BurnDrvCpsGhoulsKnight = {
-	"ghoulsknight", "ghouls", NULL, NULL, "2026",
-	"Ghouls'n Ghosts - Knight Artoria Edition (World)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
-	NULL, GhoulsKnightRomInfo, GhoulsKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsDIPInfo,
-	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
 
 static struct BurnRomInfo GhoulsuMaidenRomDesc[] = {
 	{ "dmu_29maiden.10h", 0x020000, 0x7ac6c63e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -8558,16 +8538,6 @@ static struct BurnRomInfo GhoulsuMaidenRomDesc[] = {
 STD_ROM_PICK(GhoulsuMaiden)
 STD_ROM_FN(GhoulsuMaiden)
 
-struct BurnDriver BurnDrvCpsGhoulsuMaiden = {
-	"ghoulsumaiden", "ghouls", NULL, NULL, "2026",
-	"Ghouls'n Ghosts - Maiden Artoria Edition (USA)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
-	NULL, GhoulsuMaidenRomInfo, GhoulsuMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsuDIPInfo,
-	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 static struct BurnRomInfo GhoulsuKnightRomDesc[] = {
 	{ "dmu_29knight.10h", 0x020000, 0x6b315490, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "dmu_30knight.10j", 0x020000, 0xe3209d51, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -8605,16 +8575,6 @@ static struct BurnRomInfo GhoulsuKnightRomDesc[] = {
 };
 STD_ROM_PICK(GhoulsuKnight)
 STD_ROM_FN(GhoulsuKnight)
-
-struct BurnDriver BurnDrvCpsGhoulsuKnight = {
-	"ghoulsuknight", "ghouls", NULL, NULL, "2026",
-	"Ghouls'n Ghosts - Knight Artoria Edition (USA)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
-	NULL, GhoulsuKnightRomInfo, GhoulsuKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsuDIPInfo,
-	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
 
 static struct BurnRomInfo DaimakaiMaidenRomDesc[] = {
 	{ "dmj_38maiden.12f", 0x020000, 0x7f436646, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -8668,16 +8628,6 @@ static struct BurnRomInfo DaimakaiMaidenRomDesc[] = {
 STD_ROM_PICK(DaimakaiMaiden)
 STD_ROM_FN(DaimakaiMaiden)
 
-struct BurnDriver BurnDrvCpsDaimakaiMaiden = {
-	"daimakaimaiden", "ghouls", NULL, NULL, "2026",
-	"Daimakaimura - Maiden Artoria Edition (Japan)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
-	NULL, DaimakaiMaidenRomInfo, DaimakaiMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
-	DaimakaiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
-
 static struct BurnRomInfo DaimakaiKnightRomDesc[] = {
 	{ "dmj_38knight.12f", 0x020000, 0x3098aca7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "dmj_39knight.12h", 0x020000, 0x222d253b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -8729,16 +8679,6 @@ static struct BurnRomInfo DaimakaiKnightRomDesc[] = {
 };
 STD_ROM_PICK(DaimakaiKnight)
 STD_ROM_FN(DaimakaiKnight)
-
-struct BurnDriver BurnDrvCpsDaimakaiKnight = {
-	"daimakaiknight", "ghouls", NULL, NULL, "2026",
-	"Daimakaimura - Knight Artoria Edition (Japan)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
-	NULL, DaimakaiKnightRomInfo, DaimakaiKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
-	DaimakaiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
-	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
-};
 
 static struct BurnRomInfo DaimakairRomDesc[] = {
 	{ "damj_23.8f",    0x080000, 0xc3b248ec, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -24081,6 +24021,66 @@ struct BurnDriver BurnDrvCpsDaimakaib = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
 	NULL, DaimakaibRomInfo, DaimakaibRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
 	DaimakaibInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsGhoulsMaiden = {
+	"ghoulsmaiden", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Maiden Artoria Edition (World)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsMaidenRomInfo, GhoulsMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsGhoulsKnight = {
+	"ghoulsknight", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Knight Artoria Edition (World)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsKnightRomInfo, GhoulsKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsGhoulsuMaiden = {
+	"ghoulsumaiden", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Maiden Artoria Edition (USA)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsuMaidenRomInfo, GhoulsuMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsuDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsGhoulsuKnight = {
+	"ghoulsuknight", "ghouls", NULL, NULL, "2026",
+	"Ghouls'n Ghosts - Knight Artoria Edition (USA)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, GhoulsuKnightRomInfo, GhoulsuKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, GhoulsuDIPInfo,
+	GhoulsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDaimakaiMaiden = {
+	"daimakaimaiden", "ghouls", NULL, NULL, "2026",
+	"Daimakaimura - Maiden Artoria Edition (Japan)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, DaimakaiMaidenRomInfo, DaimakaiMaidenRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
+	DaimakaiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsDaimakaiKnight = {
+	"daimakaiknight", "ghouls", NULL, NULL, "2026",
+	"Daimakaimura - Knight Artoria Edition (Japan)\0", NULL, "hack (GoodLuckTrying)", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS1, GBF_RUNGUN, 0,
+	NULL, DaimakaiKnightRomInfo, DaimakaiKnightRomName, NULL, NULL, NULL, NULL, GhoulsInputInfo, DaimakaiDIPInfo,
+	DaimakaiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -43137,6 +43137,25 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.2.9)
+// https://valenzuelagustavo.github.io/tmnt-md-devlog/
+static struct BurnRomInfo md_tmntarcadeRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.2.9 (2026)(Gustavo Valenzuela).bin", 1048576, 0xe009b761, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmntarcade)
+STD_ROM_FN(md_tmntarcade)
+
+struct BurnDriver BurnDrvmd_tmntarcade = {
+	"md_tmntarcade", NULL, NULL, NULL, "2026",
+	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.2.9)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tmntarcadeRomInfo, md_tmntarcadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Teenage Queen The Demo (HB)
 static struct BurnRomInfo md_teenqueenRomDesc[] = {
 	{ "teenage queen demo (2006)(spoutnick team).bin", 393216, 0xf0971d8a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

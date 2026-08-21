@@ -26794,6 +26794,24 @@ struct BurnDriver BurnDrvnes_teslavsedison = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tetris (HB)
+static struct BurnRomInfo nes_tetrishbRomDesc[] = {
+	{ "Tetris (2010).nes",          65552, 0xfeae6527, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tetrishb)
+STD_ROM_FN(nes_tetrishb)
+
+struct BurnDriver BurnDrvnes_tetrishb = {
+	"nes_tetrishb", NULL, NULL, NULL, "2010",
+	"Tetris (HB)\0", NULL, "<unknown>", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_tetrishbRomInfo, nes_tetrishbRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // They Came To Wreak Hell (HB, v0.7)
 static struct BurnRomInfo nes_tctwhRomDesc[] = {
 	{ "They Came To Wreak Hell v0.7 (2022)(Team Disposable).nes",          131088, 0x907df61e, BRF_ESS | BRF_PRG },

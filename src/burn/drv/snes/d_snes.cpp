@@ -36849,10 +36849,10 @@ struct BurnDriver BurnDrvsnes_Supbomb5j = {
 	512, 448, 4, 3
 };
 
-// Super Bomberman - Panic Bomber W (World)
+// Super Bomberman - Panic Bomber W (USA)
 
 static struct BurnRomInfo snes_SupbombpbwRomDesc[] = {
-	{ "Super Bomberman - Panic Bomber W (W)(2026)(Hudson Soft).sfc", 2097152, 0x46b5c2bf, BRF_ESS | BRF_PRG },
+	{ "Super Bomberman - Panic Bomber W (U)(2026)(Hudson Soft).sfc", 2097152, 0x46b5c2bf, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supbombpbw)
@@ -36860,7 +36860,7 @@ STD_ROM_FN(snes_Supbombpbw)
 
 struct BurnDriver BurnDrvsnes_Supbombpbw = {
 	"snes_supbombpbw", NULL, NULL, NULL, "2026",
-	"Super Bomberman - Panic Bomber W (World)\0", "SA-1 enhancement CPU - Official English Translation", "Hudson Soft", "SNES / Super Famicom",
+	"Super Bomberman - Panic Bomber W (USA)\0", "SA-1 enhancement CPU - Official English Translation", "Hudson Soft", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SupbombpbwRomInfo, snes_SupbombpbwRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

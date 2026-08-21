@@ -426,10 +426,21 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 					gba->mem.openbus_word = gba_fcmini_get_pattern(addr) | (gba_fcmini_get_pattern(addr + 2) << 16);
 					break;
 				}
-				gba->mem.openbus_word = ((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16);
-				// Return ready when done writing EEPROM (required by Minish Cap)
-				if (gba->cart.backup_type == GBA_BACKUP_EEPROM)
-					gba->mem.openbus_word = 1;
+				UINT32 mask = gba->cart.rom_size - 1;
+				if ((gba->cart.rom_size & mask) == 0) {
+					// power-of-two ROM: out-of-range reads wrap back into ROM
+					maddr &= mask & ~3;
+					gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
+					if (req_type & 0x3) {
+						UINT16 res16 = gba->mem.openbus_word >> (addr & 2) * 8;
+						gba->mem.openbus_word = res16 * 0x10001u;
+					}
+				} else {
+					gba->mem.openbus_word = ((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16);
+					// EEPROM ready only at top of ROM space, not every OOB read
+					if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0x1ffffff) >= 0x01ffff00)
+						gba->mem.openbus_word = 1;
+				}
 			} else {
 				gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
 				if (req_type & 0x3) {

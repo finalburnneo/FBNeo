@@ -26378,7 +26378,7 @@ struct BurnDriver BurnDrvsms_alexshinc = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd in Shinobi World (Hack, Portuguese)
+// Alex Kidd no Mundo de Shinobi (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/master-system/alex-kidd-in-shinobi-world-po.b.r.e
 static struct BurnRomInfo sms_alexshinptRomDesc[] = {
 	{ "Alex Kidd no Mundo de Shinobi T-Por (2017)(PO.B.R.E.).sms",	262144, 0x005ede22, BRF_PRG | BRF_ESS },
@@ -26780,7 +26780,7 @@ struct BurnDriver BurnDrvgg_frayte = {
 // Genius Bakabon, The (Hack, English v1.2)
 // https://www.romhacking.net/translations/6544/
 static struct BurnRomInfo sms_bakabonenRomDesc[] = {
-	{ "Genius Bakabon, The T-Eng v1.2 (2023)( (FCandChill).sms",	262144, 0x7d0d2d4d, BRF_PRG | BRF_ESS },
+	{ "Genius Bakabon, The T-Eng v1.2 (2023)(FCandChill).sms",	262144, 0x7d0d2d4d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_bakabonen)

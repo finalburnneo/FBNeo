@@ -694,6 +694,7 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 	gba->tilt_sensor.pending_x = gba_tilt_sample(emu->joy.tilt_x);
 	gba->tilt_sensor.pending_y = gba_tilt_sample(emu->joy.tilt_y);
 	gba->ppu.ghosting_strength = emu->screen_ghosting_strength;
+	static INT32 audio_accum = 0;	// batch audio to ~every 512 cycles (per-instr double div removed)
 	while (gba->frame_in_progress) {
 		INT32 ticks = gba->activate_dmas ? gba_tick_dma(gba, gba->last_cpu_tick) : 0;
 		if (!ticks && gba->residual_dma_ticks) {
@@ -734,8 +735,12 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba->deferred_timer_ticks   += fast_forward_ticks;
 		gba->ppu.fast_forward_ticks -= fast_forward_ticks;
 		ticks -= fast_forward_ticks > ticks ? ticks : fast_forward_ticks;
-		double delta_t = ((double)ticks + fast_forward_ticks) / (16 * 1024 * 1024);
-		gba_tick_audio(gba, emu, delta_t, ticks + fast_forward_ticks);
+		audio_accum += ticks + fast_forward_ticks;
+		if (audio_accum >= 512) {
+			double delta_t = (double)audio_accum / (16 * 1024 * 1024);
+			gba_tick_audio(gba, emu, delta_t, audio_accum);
+			audio_accum = 0;
+		}
 
 		bool last_activate_dmas = gba->activate_dmas;
 		for (INT32 t = 0;t < ticks;++t) {

@@ -820,7 +820,7 @@ static inline void arm7_multiply(arm7_t* cpu, UINT32 opcode)
 		bool Z = (result & 0xffffffff) == 0;
 		bool C = ARM7_BFE(cpsr, 29, 1);
 		bool V = ARM7_BFE(cpsr, 28, 1);
-		cpsr &= 0x0ffffff;
+		cpsr &= 0x0fffffff;
 		cpsr |= (N ? 1u : 0u) << 31;
 		cpsr |= (Z ? 1  : 0)  << 30;
 		cpsr |= (C ? 1  : 0)  << 29;
@@ -879,7 +879,7 @@ static inline void arm7_multiply_long(arm7_t* cpu, UINT32 opcode)
 		bool Z = result == 0;
 		bool C = ARM7_BFE(cpsr, 29, 1);
 		bool V = ARM7_BFE(cpsr, 28, 1);
-		cpsr &= 0x0ffffff;
+		cpsr &= 0x0fffffff;
 		cpsr |= (N ? 1 : 0) << 31;
 		cpsr |= (Z ? 1 : 0) << 30;
 		cpsr |= (C ? 1 : 0) << 29;

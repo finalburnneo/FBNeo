@@ -6,7 +6,7 @@ extern UINT8 PCEJoy2[12];
 extern UINT8 PCEJoy3[12];
 extern UINT8 PCEJoy4[12];
 extern UINT8 PCEJoy5[12];
-extern UINT8 PCEDips[3];
+extern UINT8 PCEDips[4];
 
 INT32 PceGetZipName(char** pszName, UINT32 i);
 INT32 TgGetZipName(char** pszName, UINT32 i);

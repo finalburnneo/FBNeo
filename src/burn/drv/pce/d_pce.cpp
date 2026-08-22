@@ -71,6 +71,7 @@ static struct BurnInputInfo pceInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	PCEDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	PCEDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	PCEDips + 2,	"dip"		},
+	{"Dip D",			BIT_DIPSWITCH,	PCEDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(pce)
@@ -78,6 +79,67 @@ STDINPUTINFO(pce)
 static struct BurnDIPInfo pceDIPList[] =
 {
 	DIP_OFFSET(0x3d)
+
+	{0   , 0xfe, 0   ,    2, "Joystick Type Player 1"	},
+	{0x00, 0x01, 0x03, 0x00, "2-buttons"				},
+	{0x00, 0x01, 0x03, 0x02, "6-buttons"				},
+
+	{0   , 0xfe, 0   ,    2, "Joystick Type Player 2"	},
+	{0x00, 0x01, 0x0c, 0x00, "2-buttons"				},
+	{0x00, 0x01, 0x0c, 0x08, "6-buttons"				},
+
+	{0   , 0xfe, 0   ,    2, "Joystick Type Player 3"	},
+	{0x00, 0x01, 0x30, 0x00, "2-buttons"				},
+	{0x00, 0x01, 0x30, 0x20, "6-buttons"				},
+
+	{0   , 0xfe, 0   ,    2, "Joystick Type Player 4"	},
+	{0x00, 0x01, 0xc0, 0x00, "2-buttons"				},
+	{0x00, 0x01, 0xc0, 0x80, "6-buttons"				},
+
+	{0   , 0xfe, 0   ,    2, "Joystick Type Player 5"	},
+	{0x01, 0x01, 0x03, 0x00, "2-buttons"				},
+	{0x01, 0x01, 0x03, 0x02, "6-buttons"				},
+
+	{0   , 0xfe, 0   ,    2, "Sprite Limit"				},
+	{0x02, 0x01, 0x10, 0x10, "Disabled (hack)"			},
+	{0x02, 0x01, 0x10, 0x00, "Enabled"					},
+
+	{0   , 0xfe, 0   ,    2, "Alt Palette"				},
+	{0x02, 0x01, 0x20, 0x00, "Disabled"					},
+	{0x02, 0x01, 0x20, 0x20, "Enabled"					},
+
+	{0   , 0xfe, 0   ,    2, "Sound Synthesis"			},
+	{0x02, 0x01, 0x80, 0x00, "LQ (Low CPU Usage)"		},
+	{0x02, 0x01, 0x80, 0x80, "HQ (High CPU Usage)"		},
+};
+
+static struct BurnDIPInfo pcedefaultsDIPList[] =
+{
+	{0x00, 0xff, 0xff, 0x00, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
+	{0x02, 0xff, 0xff, 0x01, NULL						},
+	{0x03, 0xff, 0xff, 0x00, NULL						},
+};
+
+static struct BurnDIPInfo pceHQSoundDIPList[] =
+{
+	{0x00, 0xff, 0xff, 0x00, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
+	{0x02, 0xff, 0xff, 0x81, NULL						},
+	{0x03, 0xff, 0xff, 0x00, NULL						},
+};
+
+STDDIPINFOEXT(pce, pcedefaults, pce)
+STDDIPINFOEXT(pce_hq_sound, pceHQSound, pce)
+
+static struct BurnDIPInfo pcecdDIPList[] =
+{
+	DIP_OFFSET(0x3d)
+
+	{0x00, 0xff, 0xff, 0x00, NULL						},
+	{0x01, 0xff, 0xff, 0x00, NULL						},
+	{0x02, 0xff, 0xff, 0x01, NULL						},
+	{0x03, 0xff, 0xff, 0x00, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Joystick Type Player 1"	},
 	{0x00, 0x01, 0x03, 0x00, "2-buttons"				},
@@ -114,31 +176,21 @@ static struct BurnDIPInfo pceDIPList[] =
 	{0   , 0xfe, 0   ,    2, "Sound Synthesis"			},
 	{0x02, 0x01, 0x80, 0x00, "LQ (Low CPU Usage)"		},
 	{0x02, 0x01, 0x80, 0x80, "HQ (High CPU Usage)"		},
+
+	{0   , 0xfd, 0   ,    3, "Bios"													},
+	{0x03, 0x01, 0x03, 0x00, "Super CD-Rom System Card (Japan, v3.0)"				},
+	{0x03, 0x01, 0x03, 0x01, "Super CD-Rom System Card (Japan, v3.0, font hack)"	},
+	{0x03, 0x01, 0x03, 0x02, "TurboGrafx CD System Card (USA, v3.0)"				},
 };
 
-static struct BurnDIPInfo pcedefaultsDIPList[] =
-{
-	{0x00, 0xff, 0xff, 0x00, NULL						},
-	{0x01, 0xff, 0xff, 0x00, NULL						},
-	{0x02, 0xff, 0xff, 0x01, NULL						},
-};
-
-static struct BurnDIPInfo pceHQSoundDIPList[] =
-{
-	{0x00, 0xff, 0xff, 0x00, NULL						},
-	{0x01, 0xff, 0xff, 0x00, NULL						},
-	{0x02, 0xff, 0xff, 0x81, NULL						},
-};
-
-STDDIPINFOEXT(pce, pcedefaults, pce)
-STDDIPINFOEXT(pce_hq_sound, pceHQSound, pce)
+STDDIPINFO(pcecd)
 
 
 // -----------------------
 // CD-Rom System Firmwares
 // -----------------------
 
-
+#if 0
 // CD-Rom System Card (v1.0)
 
 static struct BurnRomInfo pce_cdsysbRomDesc[] = {
@@ -215,25 +267,6 @@ struct BurnDriverD BurnDrvpce_gecd = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
-// Super CD-Rom System Card (v3.0)
-
-static struct BurnRomInfo pce_scdsysRomDesc[] = {
-	{ "Super CD-Rom System Card (Japan, v3.0)(1991).pce", 0x040000, 0x6d9a73ef, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(pce_scdsys)
-STD_ROM_FN(pce_scdsys)
-
-struct BurnDriver BurnDrvpce_scdsys = {
-	"pce_scdsys", NULL, NULL, NULL, "1991",
-	"Super CD-Rom System Card (v3.0)\0", "System - media selected seperately", "NEC - Hudson Soft", "PC Engine",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCE_CD, GBF_BIOS, 0,
-	PceGetZipName, pce_scdsysRomInfo, pce_scdsysRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
-	PCECDInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
-	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
-};
-
 // TurboGrafx CD Super System Card (v3.0)
 
 static struct BurnRomInfo tg_scdsysRomDesc[] = {
@@ -269,6 +302,28 @@ struct BurnDriverD BurnDrvtg_cdsys = {
 	0, 1, HARDWARE_PCENGINE_TG16, GBF_BIOS, 0,
 	TgGetZipName, tg_cdsysRomInfo, tg_cdsysRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+#endif
+
+// CD System Card
+
+static struct BurnRomInfo pce_scdsysRomDesc[] = {
+	{ "Super CD-Rom System Card (Japan, v3.0)(1991).pce"           , 0x040000, 0x6d9a73ef, BRF_PRG | BRF_ESS },
+	{ "Super CD-Rom System Card (Japan, v3.0, font hack)(2026).pce", 0x040000, 0x16a9fda2, BRF_PRG | BRF_ESS | BRF_OPT },
+	{ "TurboGrafx CD System Card (USA, v3.0)(1992).pce"            , 0x040000, 0x2b5b75fe, BRF_PRG | BRF_ESS | BRF_OPT },
+};
+
+STD_ROM_PICK(pce_scdsys)
+STD_ROM_FN(pce_scdsys)
+
+struct BurnDriver BurnDrvpce_scdsys = {
+	"pce_scdsys", NULL, NULL, NULL, "1991",
+	"CD System Card\0", "System - media selected seperately", "NEC - Hudson Soft", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCE_CD, GBF_BIOS, 0,
+	PceGetZipName, pce_scdsysRomInfo, pce_scdsysRomName, NULL, NULL, NULL, NULL, pceInputInfo, pcecdDIPInfo,
+	PCECDInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 

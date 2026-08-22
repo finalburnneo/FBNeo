@@ -35,7 +35,7 @@ UINT8 PCEJoy2[12];
 UINT8 PCEJoy3[12];
 UINT8 PCEJoy4[12];
 UINT8 PCEJoy5[12];
-UINT8 PCEDips[3];
+UINT8 PCEDips[4];
 
 static UINT8 last_dip;
 
@@ -401,7 +401,7 @@ static INT32 CommonInit(int type)
 	{
 		memset (PCECartROM, 0xff, length);
 
-		if (BurnLoadRom(PCECartROM, 0, 1)) return 1;
+		if (BurnLoadRom(PCECartROM, PCEDips[3], 1)) return 1;
 
 		if (ri.nLen & 0x200) { // remove header
 			memcpy (PCECartROM, PCECartROM + 0x200, ri.nLen - 0x200);

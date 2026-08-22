@@ -546,8 +546,11 @@ enum GbaButton {
 	GBA_BUTTON_DOWN,
 	GBA_BUTTON_R,
 	GBA_BUTTON_L,
-	GBA_BUTTON_DIP1,
-	GBA_BUTTON_DIP2,
+};
+
+enum GbaDipSwitch {
+	GBA_DIPSWITCH_01 = 0,
+	GBA_DIPSWITCH_02,
 };
 
 enum GbaCartridgeFeature {
@@ -585,6 +588,7 @@ void   GbaCoreExit(GbaCore **core);
 INT32  GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaRtcSeed *rtcSeed);
 INT32  GbaCoreWriteRom(GbaCore *core, UINT32 offset, const UINT8 *data, UINT32 length);
 INT32  GbaCoreLoadBios(GbaCore *core, const UINT8 *bios, size_t biosSize);
+void   GbaCoreSetBiosMode(GbaCore *core, INT32 forceCustomBios);
 INT32  GbaCoreReset(GbaCore *core);
 void   GbaCoreSetInput(GbaCore *core, const GbaInput *input);
 INT32  GbaCoreConfigureAudio(GbaCore *core, double sourceRate, INT32 outputFrames, INT32 captureAudio);

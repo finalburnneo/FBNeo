@@ -58,6 +58,7 @@ struct GbaCore {
 	bool			ownsRom;
 	UINT8			externalBios[16 * 1024];
 	bool			externalBiosLoaded;
+	bool			forceCustomBios;
 	UINT32			cartridgeFeatures;
 	UINT8			cartridgeBackupType;
 	double			sourceRate;
@@ -370,8 +371,8 @@ INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaR
 	core->cartridgeBackupType = GbaDetectCartridgeBackupType(core->rom, core->romSize);
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = romSize;
-	core->host.bios_data  = core->externalBiosLoaded ? core->externalBios : NULL;
-	core->host.bios_size  = core->externalBiosLoaded ? sizeof(core->externalBios) : 0;
+	core->host.bios_data  = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
+	core->host.bios_size  = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
 	core->host.rom_loaded = true;
 	strcpy(core->host.rom_path, "fbneo.gba");
 	gba_host_loading  = &core->host;
@@ -416,6 +417,13 @@ INT32 GbaCoreLoadBios(GbaCore *core, const UINT8 *bios, size_t biosSize)
 	return 0;
 }
 
+void GbaCoreSetBiosMode(GbaCore *core, INT32 forceCustomBios)
+{
+	if (core == NULL)
+		return;
+	core->forceCustomBios = forceCustomBios != 0;
+}
+
 INT32 GbaCoreReset(GbaCore *core)
 {
 	if (core == NULL || core->rom == NULL)
@@ -427,8 +435,8 @@ INT32 GbaCoreReset(GbaCore *core)
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
 	core->host.rom_data   = core->rom;
 	core->host.rom_size   = core->romSize;
-	core->host.bios_data  = core->externalBiosLoaded ? core->externalBios : NULL;
-	core->host.bios_size  = core->externalBiosLoaded ? sizeof(core->externalBios) : 0;
+	core->host.bios_data  = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
+	core->host.bios_size  = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
 	gba_host_loading      = &core->host;
 	const bool loaded     = gba_load_rom(&core->host, &core->state, &core->scratch);
 	gba_host_loading      = NULL;
@@ -647,8 +655,8 @@ void GbaCoreRebind(GbaCore *core)
 		return;
 	core->host.rom_data  = core->rom;
 	core->host.rom_size  = core->romSize;
-	core->host.bios_data = core->externalBiosLoaded ? core->externalBios : NULL;
-	core->host.bios_size = core->externalBiosLoaded ? sizeof(core->externalBios) : 0;
+	core->host.bios_data = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
+	core->host.bios_size = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
 	gba_ptrs_init(&core->state, &core->scratch, core->rom);
 	core->state.cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
 }

@@ -21069,6 +21069,44 @@ struct BurnDriver BurnDrvsnes_Kylepetty = {
 	512, 448, 4, 3
 };
 
+// Lady Stalker - Kako kara no Chousen (Japan)
+
+static struct BurnRomInfo snes_LadystalkerRomDesc[] = {
+	{ "Lady Stalker - Kako kara no Chousen (J)(1995)(Taito).sfc", 2621440, 0x4390d719, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ladystalker)
+STD_ROM_FN(snes_Ladystalker)
+
+struct BurnDriver BurnDrvsnes_Ladystalker = {
+	"snes_ladystalker", "snes_ladystalkerte", NULL, NULL, "1995",
+	"Lady Stalker - Kako kara no Chousen (Japan)\0", NULL, "Taito", "SNES / Super Famicom",
+	L"Lady Stalker - Kako kara no Chousen (Japan)\0\u30ec\u30c7\u30a3\u30b9\u30c8\u30fc\u30ab\u30fc \u301c\u904e\u53bb\u304b\u3089\u306e\u6311\u6226\u301c\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_LadystalkerRomInfo, snes_LadystalkerRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Lady Stalker - The Apocalypse Engine (Hack, English)
+
+static struct BurnRomInfo snes_LadystalkerteRomDesc[] = {
+	{ "Lady Stalker - The Apocalypse Engine T-Eng (2026)(Retch).sfc", 4194304, 0x3a59468a, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Ladystalkerte)
+STD_ROM_FN(snes_Ladystalkerte)
+
+struct BurnDriver BurnDrvsnes_Ladystalkerte = {
+	"snes_ladystalkerte", NULL, NULL, NULL, "2026",
+	"Lady Stalker - The Apocalypse Engine (Hack, English)\0", NULL, "Retch", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_LadystalkerteRomInfo, snes_LadystalkerteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Lagoon (USA)
 
 static struct BurnRomInfo snes_LagoonRomDesc[] = {

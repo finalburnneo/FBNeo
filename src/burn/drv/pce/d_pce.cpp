@@ -190,7 +190,7 @@ STDDIPINFO(pcecd)
 // CD-Rom System Firmwares
 // -----------------------
 
-#if 0
+/*
 // CD-Rom System Card (v1.0)
 
 static struct BurnRomInfo pce_cdsysbRomDesc[] = {
@@ -304,7 +304,7 @@ struct BurnDriverD BurnDrvtg_cdsys = {
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
-#endif
+*/
 
 // CD System Card
 

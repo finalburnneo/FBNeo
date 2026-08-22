@@ -8447,10 +8447,10 @@ static struct BurnRomInfo GhoulsMaidenRomDesc[] = {
 	{ "19maiden.7b", 0x010000, 0x0b4e155f, BRF_GRA | CPS1_TILES },
 	{ "14maiden.4f", 0x010000, 0x5bc8e886, BRF_GRA | CPS1_TILES },
 	{ "23maiden.7f", 0x010000, 0x095a6785, BRF_GRA | CPS1_TILES },
-	{ "12maiden.4d", 0x010000, 0xaa3d5491, BRF_GRA | CPS1_TILES },
-	{ "21maiden.7d", 0x010000, 0x1fb7da8c, BRF_GRA | CPS1_TILES },
+	{ "12maiden.4d", 0x010000, 0xc8a5b7e9, BRF_GRA | CPS1_TILES },
+	{ "21maiden.7d", 0x010000, 0x7d2f39f4, BRF_GRA | CPS1_TILES },
 	{ "16maiden.4h", 0x010000, 0x2913fa9b, BRF_GRA | CPS1_TILES },
-	{ "25maiden.7h", 0x010000, 0x5749565d, BRF_GRA | CPS1_TILES },
+	{ "25maiden.7h", 0x010000, 0x35d1b525, BRF_GRA | CPS1_TILES },
 
 	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -8485,10 +8485,10 @@ static struct BurnRomInfo GhoulsKnightRomDesc[] = {
 	{ "19knight.7b", 0x010000, 0xdaca4bc1, BRF_GRA | CPS1_TILES },
 	{ "14knight.4f", 0x010000, 0x0d7d3de4, BRF_GRA | CPS1_TILES },
 	{ "23knight.7f", 0x010000, 0x53622c1c, BRF_GRA | CPS1_TILES },
-	{ "12knight.4d", 0x010000, 0xf7770b2c, BRF_GRA | CPS1_TILES },
-	{ "21knight.7d", 0x010000, 0x3d4192b7, BRF_GRA | CPS1_TILES },
+	{ "12knight.4d", 0x010000, 0x95efe854, BRF_GRA | CPS1_TILES },
+	{ "21knight.7d", 0x010000, 0x5fd971cf, BRF_GRA | CPS1_TILES },
 	{ "16knight.4h", 0x010000, 0x5c63b626, BRF_GRA | CPS1_TILES },
-	{ "25knight.7h", 0x010000, 0x47ce5f76, BRF_GRA | CPS1_TILES },
+	{ "25knight.7h", 0x010000, 0x2556bc0e, BRF_GRA | CPS1_TILES },
 
 	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -8523,10 +8523,10 @@ static struct BurnRomInfo GhoulsuMaidenRomDesc[] = {
 	{ "19maiden.7b", 0x010000, 0x0b4e155f, BRF_GRA | CPS1_TILES },
 	{ "14maiden.4f", 0x010000, 0x5bc8e886, BRF_GRA | CPS1_TILES },
 	{ "23maiden.7f", 0x010000, 0x095a6785, BRF_GRA | CPS1_TILES },
-	{ "12maiden.4d", 0x010000, 0xaa3d5491, BRF_GRA | CPS1_TILES },
-	{ "21maiden.7d", 0x010000, 0x1fb7da8c, BRF_GRA | CPS1_TILES },
+	{ "12maiden.4d", 0x010000, 0xc8a5b7e9, BRF_GRA | CPS1_TILES },
+	{ "21maiden.7d", 0x010000, 0x7d2f39f4, BRF_GRA | CPS1_TILES },
 	{ "16maiden.4h", 0x010000, 0x2913fa9b, BRF_GRA | CPS1_TILES },
-	{ "25maiden.7h", 0x010000, 0x5749565d, BRF_GRA | CPS1_TILES },
+	{ "25maiden.7h", 0x010000, 0x35d1b525, BRF_GRA | CPS1_TILES },
 
 	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -8561,10 +8561,10 @@ static struct BurnRomInfo GhoulsuKnightRomDesc[] = {
 	{ "19knight.7b", 0x010000, 0xdaca4bc1, BRF_GRA | CPS1_TILES },
 	{ "14knight.4f", 0x010000, 0x0d7d3de4, BRF_GRA | CPS1_TILES },
 	{ "23knight.7f", 0x010000, 0x53622c1c, BRF_GRA | CPS1_TILES },
-	{ "12knight.4d", 0x010000, 0xf7770b2c, BRF_GRA | CPS1_TILES },
-	{ "21knight.7d", 0x010000, 0x3d4192b7, BRF_GRA | CPS1_TILES },
+	{ "12knight.4d", 0x010000, 0x95efe854, BRF_GRA | CPS1_TILES },
+	{ "21knight.7d", 0x010000, 0x5fd971cf, BRF_GRA | CPS1_TILES },
 	{ "16knight.4h", 0x010000, 0x5c63b626, BRF_GRA | CPS1_TILES },
-	{ "25knight.7h", 0x010000, 0x47ce5f76, BRF_GRA | CPS1_TILES },
+	{ "25knight.7h", 0x010000, 0x2556bc0e, BRF_GRA | CPS1_TILES },
 
 	{ "26.10a", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -8613,10 +8613,10 @@ static struct BurnRomInfo DaimakaiMaidenRomDesc[] = {
 	{ "dm_07maiden.8a", 0x010000, 0x0b4e155f, BRF_GRA | CPS1_TILES },
 	{ "dm_16maiden.12b", 0x010000, 0x5bc8e886, BRF_GRA | CPS1_TILES },
 	{ "dm_15maiden.12a", 0x010000, 0x095a6785, BRF_GRA | CPS1_TILES },
-	{ "dm_24maiden.9e", 0x010000, 0xaa3d5491, BRF_GRA | CPS1_TILES },
-	{ "dm_23maiden.9c", 0x010000, 0x1fb7da8c, BRF_GRA | CPS1_TILES },
+	{ "dm_24maiden.9e", 0x010000, 0xc8a5b7e9, BRF_GRA | CPS1_TILES },
+	{ "dm_23maiden.9c", 0x010000, 0x7d2f39f4, BRF_GRA | CPS1_TILES },
 	{ "dm_28maiden.11e", 0x010000, 0x2913fa9b, BRF_GRA | CPS1_TILES },
-	{ "dm_27maiden.11c", 0x010000, 0x5749565d, BRF_GRA | CPS1_TILES },
+	{ "dm_27maiden.11c", 0x010000, 0x35d1b525, BRF_GRA | CPS1_TILES },
 
 	{ "37.13c", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
 
@@ -8665,10 +8665,10 @@ static struct BurnRomInfo DaimakaiKnightRomDesc[] = {
 	{ "dm_07knight.8a", 0x010000, 0xdaca4bc1, BRF_GRA | CPS1_TILES },
 	{ "dm_16knight.12b", 0x010000, 0x0d7d3de4, BRF_GRA | CPS1_TILES },
 	{ "dm_15knight.12a", 0x010000, 0x53622c1c, BRF_GRA | CPS1_TILES },
-	{ "dm_24knight.9e", 0x010000, 0xf7770b2c, BRF_GRA | CPS1_TILES },
-	{ "dm_23knight.9c", 0x010000, 0x3d4192b7, BRF_GRA | CPS1_TILES },
+	{ "dm_24knight.9e", 0x010000, 0x95efe854, BRF_GRA | CPS1_TILES },
+	{ "dm_23knight.9c", 0x010000, 0x5fd971cf, BRF_GRA | CPS1_TILES },
 	{ "dm_28knight.11e", 0x010000, 0x5c63b626, BRF_GRA | CPS1_TILES },
-	{ "dm_27knight.11c", 0x010000, 0x47ce5f76, BRF_GRA | CPS1_TILES },
+	{ "dm_27knight.11c", 0x010000, 0x2556bc0e, BRF_GRA | CPS1_TILES },
 
 	{ "37.13c", 0x010000, 0x3692f6e5, BRF_PRG | CPS1_Z80_PROGRAM },
 

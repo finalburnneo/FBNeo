@@ -57033,7 +57033,7 @@ struct BurnDriver BurnDrvgba_voltorbesc = {
 	"Voltorb's Escape (HB)\0", NULL, "AceMan", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
-	GbaGetZipName, gba_voltorbescRomInfo, gba_voltorbescRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	GbaGetZipName, gba_voltorbescRomInfo, gba_voltorbescRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

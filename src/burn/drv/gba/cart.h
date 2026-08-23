@@ -502,6 +502,7 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba->cpu.registers[CPSR] = 0x000000d3;
 	}
 	gba->audio.current_sample_generated_time = gba->audio.current_sim_time = 0;
+	gba_timing_init(gba);
 	return true;
 }
 

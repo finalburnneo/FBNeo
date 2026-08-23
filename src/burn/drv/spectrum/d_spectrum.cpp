@@ -34687,10 +34687,10 @@ struct BurnDriver BurnSpecBasictowerpt = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Basilisko de Roco, El (128K) (HB)
+// Basilisco de Roko, El (128K) (HB)
 
 static struct BurnRomInfo SpecBasiroco128RomDesc[] = {
-	{ "Basilisko de Roco, El 128K (2024)(Retrosotano).tap", 53569, 0x1c3b947e, BRF_ESS | BRF_PRG },
+	{ "Basilisco de Roko, El 128K (2024)(RetroSotano).tap", 53569, 0x1c3b947e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBasiroco128, SpecBasiroco128, Spec128)
@@ -34698,7 +34698,7 @@ STD_ROM_FN(SpecBasiroco128)
 
 struct BurnDriver BurnSpecBasiroco128 = {
 	"spec_basiroco128", NULL, "spec_spec128", NULL, "2024",
-	"Basilisko de Roco, El (128K) (HB)\0", NULL, "Retrosotano", "ZX Spectrum",
+	"Basilisco de Roko, El (128K) (HB)\0", NULL, "RetroSotano", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBasiroco128RomInfo, SpecBasiroco128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34706,10 +34706,10 @@ struct BurnDriver BurnSpecBasiroco128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Basilisko de Roco, El (48K) (HB)
+// Basilisco de Roko, El (48K) (HB)
 
 static struct BurnRomInfo SpecBasiroco48RomDesc[] = {
-	{ "Basilisko de Roco, El 48K (2024)(Retrosotano).tap", 53126, 0x99baf2c2, BRF_ESS | BRF_PRG },
+	{ "Basilisco de Roko, El 48K (2024)(RetroSotano).tap", 53126, 0x99baf2c2, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBasiroco48, SpecBasiroco48, Spectrum)
@@ -34717,7 +34717,7 @@ STD_ROM_FN(SpecBasiroco48)
 
 struct BurnDriver BurnSpecBasiroco48 = {
 	"spec_basiroco48", "spec_basiroco128", "spec_spectrum", NULL, "2024",
-	"Basilisko de Roco, El (48K) (HB)\0", NULL, "Retrosotano", "ZX Spectrum",
+	"Basilisco de Roko, El (48K) (HB)\0", NULL, "RetroSotano", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBasiroco48RomInfo, SpecBasiroco48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34725,10 +34725,10 @@ struct BurnDriver BurnSpecBasiroco48 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Basilisko de Roco 2, El (128K) (HB)
+// Basilisco de Roko 2, El (128K) (HB)
 
 static struct BurnRomInfo SpecBasilisk2128RomDesc[] = {
-	{ "Basilisko de Roco 2, El 128K (2024)(Retrosotano).tap", 53844, 0xb8695d6b, BRF_ESS | BRF_PRG },
+	{ "Basilisco de Roko 2, El 128K (2024)(RetroSotano).tap", 53844, 0xb8695d6b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBasilisk2128, SpecBasilisk2128, Spec128)
@@ -34736,7 +34736,7 @@ STD_ROM_FN(SpecBasilisk2128)
 
 struct BurnDriver BurnSpecBasilisk2128 = {
 	"spec_basilisk2128", NULL, "spec_spec128", NULL, "2024",
-	"Basilisko de Roco 2, El (128K) (HB)\0", NULL, "Retrosotano", "ZX Spectrum",
+	"Basilisco de Roko 2, El (128K) (HB)\0", NULL, "RetroSotano", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBasilisk2128RomInfo, SpecBasilisk2128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34744,10 +34744,10 @@ struct BurnDriver BurnSpecBasilisk2128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Basilisko de Roco 2, El (48K) (HB)
+// Basilisco de Roko 2, El (48K) (HB)
 
 static struct BurnRomInfo SpecBasilisk248RomDesc[] = {
-	{ "Basilisko de Roco 2, El 48K (2024)(Retrosotano).tap", 53371, 0x137cc20d, BRF_ESS | BRF_PRG },
+	{ "Basilisco de Roko 2, El 48K (2024)(RetroSotano).tap", 53371, 0x137cc20d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBasilisk248, SpecBasilisk248, Spectrum)
@@ -34755,11 +34755,68 @@ STD_ROM_FN(SpecBasilisk248)
 
 struct BurnDriver BurnSpecBasilisk248 = {
 	"spec_basilisk248", "spec_basilisk2128", "spec_spectrum", NULL, "2024",
-	"Basilisko de Roco 2, El (48K) (HB)\0", NULL, "Retrosotano", "ZX Spectrum",
+	"Basilisco de Roko 2, El (48K) (HB)\0", NULL, "RetroSotano", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecBasilisk248RomInfo, SpecBasilisk248RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Basilisk of Roko (English) (128K) (HB, v2026)
+
+static struct BurnRomInfo SpecBasirokoenRomDesc[] = {
+	{ "Basilisk of Roko EN 128K (2026)(RetroSotano).tap", 58466, 0x37a3d09c, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBasirokoen, SpecBasirokoen, Spec128)
+STD_ROM_FN(SpecBasirokoen)
+
+struct BurnDriver BurnSpecBasirokoen = {
+	"spec_basirokoen", NULL, "spec_spec128", NULL, "2026",
+	"Basilisk of Roko (English) (128K) (HB, v2026)\0", NULL, "RetroSotano", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecBasirokoenRomInfo, SpecBasirokoenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Basilisco de Roko (Spanish) (128K) (HB, v2026)
+
+static struct BurnRomInfo SpecBasirokoesRomDesc[] = {
+	{ "Basilisco de Roko ES 128K (2026)(RetroSotano).tap", 58469, 0xed66efc7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBasirokoes, SpecBasirokoes, Spec128)
+STD_ROM_FN(SpecBasirokoes)
+
+struct BurnDriver BurnSpecBasirokoes = {
+	"spec_basirokoes", "spec_basirokoen", "spec_spec128", NULL, "2026",
+	"Basilisco de Roko (Spanish) (128K) (HB, v2026)\0", NULL, "RetroSotano", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecBasirokoesRomInfo, SpecBasirokoesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Basilisco de Roko, O (Portuguese) (128K) (HB, v2026)
+
+static struct BurnRomInfo SpecBasirokoptRomDesc[] = {
+	{ "Basilisco de Roko, O PT 128K (2026)(RetroSotano).tap", 58412, 0x3134bac9, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBasirokopt, SpecBasirokopt, Spec128)
+STD_ROM_FN(SpecBasirokopt)
+
+struct BurnDriver BurnSpecBasirokopt = {
+	"spec_basirokopt", "spec_basirokoen", "spec_spec128", NULL, "2026",
+	"Basilisco de Roko, O (Portuguese) (128K) (HB, v2026)\0", NULL, "RetroSotano", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecBasirokoptRomInfo, SpecBasirokoptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 

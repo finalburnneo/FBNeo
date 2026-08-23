@@ -14480,6 +14480,44 @@ struct BurnDriver BurnDrvnes_advpanzer3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Adventures of Panzer, The: Blarghe! (HB, Alpha v0.01)
+// https://pixelcraft-games.itch.io/the-adventures-of-panzer-blarghe
+static struct BurnRomInfo nes_advpanzerblRomDesc[] = {
+	{ "Adventures of Panzer, The - Blarghe! Alpha v0.01 (2025)(PixelCraft).nes",          524304, 0xc3c1bcab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_advpanzerbl)
+STD_ROM_FN(nes_advpanzerbl)
+
+struct BurnDriver BurnDrvnes_advpanzerbl = {
+	"nes_advpanzerbl", NULL, NULL, NULL, "2025",
+	"Adventures of Panzer, The: Blarghe! (HB, Alpha v0.01)\0", NULL, "PixelCraft", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_advpanzerblRomInfo, nes_advpanzerblRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Adventures of Panzer, The: DMuscles (HB, Byte-Off 3 Demo)
+// https://pixelcraft-games.itch.io/the-adventures-of-panzer-dmuscles
+static struct BurnRomInfo nes_advpanzerdmRomDesc[] = {
+	{ "Adventures of Panzer, The - DMuscles Byte-Off 3 Demo (2022)(PixelCraft).nes",          524304, 0x0a543bd6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_advpanzerdm)
+STD_ROM_FN(nes_advpanzerdm)
+
+struct BurnDriver BurnDrvnes_advpanzerdm = {
+	"nes_advpanzerdm", NULL, NULL, NULL, "2022",
+	"Adventures of Panzer, The: DMuscles (HB, Byte-Off 3 Demo)\0", NULL, "PixelCraft", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_advpanzerdmRomInfo, nes_advpanzerdmRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Adventures of Panzer, The: Frontiers (HB, v1.2)
 static struct BurnRomInfo nes_advpanzer4RomDesc[] = {
 	{ "Adventures of Panzer, The - Frontiers v1.2 (2025)(PixelCraft).nes",          524304, 0x16e205ae, BRF_ESS | BRF_PRG },

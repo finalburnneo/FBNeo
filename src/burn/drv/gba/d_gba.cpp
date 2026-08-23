@@ -56062,6 +56062,25 @@ struct BurnDriver BurnDrvgba_galacard = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Gematrix (HB)
+
+static struct BurnRomInfo gba_gematrixRomDesc[] = {
+	{ "Gematrix (2024)(Issung).gba",	1184496,	0x2af2da4e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_gematrix, gba_gematrix, gba_gba)
+STD_ROM_FN(gba_gematrix)
+
+struct BurnDriver BurnDrvgba_gematrix = {
+	"gba_gematrix", NULL, "gba_gba", NULL, "2024",
+	"Gematrix (HB)\0", NULL, "Issung", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_gematrixRomInfo, gba_gematrixRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CultDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {
@@ -56460,6 +56479,25 @@ struct BurnDriver BurnDrvgba_pphoenix = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Polybius (HB)
+
+static struct BurnRomInfo gba_polybiusRomDesc[] = {
+	{ "Polybius (2026)(knurmrty).gba",	31204,	0xdd271b30,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_polybius, gba_polybius, gba_gba)
+STD_ROM_FN(gba_polybius)
+
+struct BurnDriver BurnDrvgba_polybius = {
+	"gba_polybius", NULL, "gba_gba", NULL, "2026",
+	"Polybius (HB)\0", NULL, "knurmrty", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SHOOT, 0,
+	GbaGetZipName, gba_polybiusRomInfo, gba_polybiusRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CultDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Powerpig (HB)
 
 static struct BurnRomInfo gba_powerpigRomDesc[] = {
@@ -56687,6 +56725,25 @@ struct BurnDriver BurnDrvgba_syscrusher = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Tiny Cities Advance (HB)
+
+static struct BurnRomInfo gba_tinycitiesRomDesc[] = {
+	{ "Tiny Cities Advance (2026)(CoffeeTommy).gba",	774988,	0x1a3c8dc9,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tinycities, gba_tinycities, gba_gba)
+STD_ROM_FN(gba_tinycities)
+
+struct BurnDriver BurnDrvgba_tinycities = {
+	"gba_tinycities", NULL, "gba_gba", NULL, "2026",
+	"Tiny Cities Advance (HB)\0", NULL, "CoffeeTommy", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SIM, 0,
+	GbaGetZipName, gba_tinycitiesRomInfo, gba_tinycitiesRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CultDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Tollrunner - Community Version (HB)
 
 static struct BurnRomInfo gba_tollrunnerRomDesc[] = {
@@ -56740,6 +56797,25 @@ struct BurnDriver BurnDrvgba_varooom3d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_varooom3dRomInfo, gba_varooom3dRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CultDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Voltorb's Escape (HB)
+
+static struct BurnRomInfo gba_voltorbescRomDesc[] = {
+	{ "Voltorb's Escape (2025)(AceMan).gba",	4324964,	0xc7c36b7c,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_voltorbesc, gba_voltorbesc, gba_gba)
+STD_ROM_FN(gba_voltorbesc)
+
+struct BurnDriver BurnDrvgba_voltorbesc = {
+	"gba_voltorbesc", NULL, "gba_gba", NULL, "2025",
+	"Voltorb's Escape (HB)\0", NULL, "AceMan", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_voltorbescRomInfo, gba_voltorbescRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CultDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

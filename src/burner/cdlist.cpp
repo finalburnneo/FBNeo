@@ -670,7 +670,7 @@ INT32 PceCDInfo_Init()
 		PceCdInfoUseFileName(PceCdInfo.szTitle, CDLIST_TEXT_SIZE, CDEmuImage);
 
 		for (UINT32 i = 0; i < sizeof(pcengine_cd_games) / sizeof(pce_cd_dink); i++) {
-			if ((pcengine_cd_games[i].sha1[0] != '\0') && !wcscmp(pcengine_cd_games[i].sha1, ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0))) {
+			if ((pcengine_cd_games[i].sha1[0] != '\0') && !_tcscmp(pcengine_cd_games[i].sha1, ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0))) {
 				bprintf(0, _T("found entry at idx %d\n"), i);
 
 				_tcscpy(PceCdInfo.szTitle, pcengine_cd_games[i].name);

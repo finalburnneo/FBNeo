@@ -274,7 +274,9 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 			break;
 	}
 	gba->activate_dmas |= ticks != 0;
- 
+	if (ticks)
+		gba->dma_access_pending = true;
+
 	if (gba->last_transaction_dma && ticks == 0) {
 		ticks += 2;
 		gba->last_transaction_dma = false;

@@ -8,6 +8,7 @@
 #include "c6280.h"
 #include "bitswap.h"
 #include "pce_cd.h"
+#include "pcecdlist.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -555,6 +556,9 @@ INT32 PCEExit()
 	h6280Exit();
 
 	CDSubsystemExit();
+
+	// release the PC Engine CD information object if needed
+	PceCDInfo_Exit();
 
 	BurnFree(AllMem);
 

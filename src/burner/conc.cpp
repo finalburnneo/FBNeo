@@ -1055,11 +1055,8 @@ INT32 ConfigCheatLoad()
 	TCHAR szFilename[MAX_PATH] = _T("");
 	TCHAR szDrvName[MAX_PATH] = _T("");
 
-	if (NeoCDInfo_ID()) {
-		_stprintf(szDrvName, _T("ngcd_%s"), NeoCDInfo_Text(DRV_NAME));
-	} else {
-		_stprintf(szDrvName, _T("%s"), BurnDrvGetText(DRV_NAME));
-	}
+	_stprintf(szDrvName, _T("%s"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
+
 	bprintf(0, _T("Cheat engine, game name: %s\n"), szDrvName);
 
 	pCurrentCheat = NULL;

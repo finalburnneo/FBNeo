@@ -1,6 +1,6 @@
 // Burner Config for Game file module
 #include "burner.h"
-#include "neocdlist.h"
+#include "cdlist.h"
 
 const INT32 nConfigMinVersion = 0x020921;
 
@@ -18,11 +18,7 @@ static TCHAR* GameConfigName()
 		}
 	#else
 		// Return the path of the config file for this game
-		if (NeoCDInfo_ID()) {
-			_stprintf(szName, _T("config/games/ngcd_%s.ini"), NeoCDInfo_Text(DRV_NAME));
-		} else {
-			_stprintf(szName, _T("config/games/%s.ini"), BurnDrvGetText(DRV_NAME));
-		}
+		_stprintf(szName, _T("config/games/%s.ini"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
 	#endif
 	return szName;
 }
@@ -133,7 +129,12 @@ INT32 ConfigGameSave(bool bSave)
 	}
 
 	// Write title
-	_ftprintf(h, _T("// ") _T(APP_TITLE) _T(" v%s --- Config File for %s (%s)\n\n"), szAppBurnVer, BurnDrvGetText(DRV_NAME), ANSIToTCHAR(BurnDrvGetTextA(DRV_FULLNAME), NULL, 0));
+
+	if (IsCDGame()) {
+		_ftprintf(h, _T("// ") _T(APP_TITLE) _T(" v%s --- Config File for %s (%s)\n\n"), szAppBurnVer, CDInfo_GamePrefix(), CDInfo_Text(DRV_FULLNAME));
+	} else {
+		_ftprintf(h, _T("// ") _T(APP_TITLE) _T(" v%s --- Config File for %s (%s)\n\n"), szAppBurnVer, BurnDrvGetText(DRV_NAME), ANSIToTCHAR(BurnDrvGetTextA(DRV_FULLNAME), NULL, 0));
+	}
 
 	_ftprintf(h, _T("// --- Miscellaneous ----------------------------------------------------------\n\n"));
 	// Write version number

@@ -1,8 +1,38 @@
 #ifndef CDLIST_H_
 #define CDLIST_H_
 
+#include "burn.h"
+
 #define CDLIST_SHA1_SIZE (20)
 #define CDLIST_TEXT_SIZE (256)
+
+// CD game type of the active driver, derived from the hardware code
+// (usable at any time while a driver is selected, no disc required)
+enum {
+	CDGAME_NONE = 0,								// not a CD game
+	CDGAME_NEOGEO,									// Neo Geo CD
+	CDGAME_PCE										// PC Engine CD
+};
+
+static inline INT32 CDGameType()
+{
+	INT32 nHardware = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	if (nHardware == HARDWARE_SNK_NEOCD) {
+		return CDGAME_NEOGEO;
+	}
+	if (nHardware == HARDWARE_PCENGINE_PCE_CD) {
+		return CDGAME_PCE;
+	}
+	return CDGAME_NONE;
+}
+
+static inline bool IsCDGame()
+{
+	return CDGameType() != CDGAME_NONE;
+}
+
+TCHAR *CDInfo_GamePrefix();
+TCHAR* CDInfo_Text(INT32 nText);
 
 enum CDListPlatform {
 	CDLIST_PLATFORM_UNKNOWN = 0,

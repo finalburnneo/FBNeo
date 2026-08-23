@@ -1164,7 +1164,8 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		SetDlgItemTextA(hDlg, IDC_REPLAYTIME, szRecordedTime);
 
 		if (!_tcsncmp(wszStartupGame, _T("neocdz"), 6) || !_tcsncmp(wszStartupGame, _T("ngcd_"), 5) ||
-		    _tcsstr(szChoice, _T("ngcd_")) ) {
+			!_tcsncmp(wszStartupGame, _T("pcecd_"), 6) ||
+		    _tcsstr(szChoice, _T("ngcd_")) || _tcsstr(szChoice, _T("pcecd_")) ) {
 			// Neo Geo CD game, show nice warning :)
 			ShowWindow(GetDlgItem(hDlg, IDC_NGCD_WARN), SW_SHOW);
 		}
@@ -1175,11 +1176,7 @@ static TCHAR *GetDrvName() // for both arcade & neocd
 {
 	static TCHAR szName[MAX_PATH] = _T("");
 
-	if (NeoCDInfo_ID()) {
-		_stprintf(szName, _T("ngcd_%s"), NeoCDInfo_Text(DRV_NAME));
-	} else {
-		_stprintf(szName, _T("%s"), BurnDrvGetText(DRV_NAME));
-	}
+	_stprintf(szName, _T("%s"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
 
 	return szName;
 }

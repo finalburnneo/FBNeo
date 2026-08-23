@@ -879,8 +879,14 @@ static void cdimgPrintImageInfo()
 	if (cdimgTOC->ImageType == CD_TYPE_BINCUE)
 		bprintf(0, _T("Disk At Once (.BIN/.CUE) format\n"));
 
+	INT32 toc_count = 0;
+	UINT32 *toc = (UINT32*)malloc(100 * sizeof(UINT32));
+	memset(toc, 0, 100 * sizeof(UINT32));
+
 	for (INT32 trk = cdimgTOC->FirstTrack - 1; trk <= cdimgTOC->LastTrack; trk++) {
 		const UINT8* addressUNBCD = dinkLBAToMSF(cdimgMSFToLBA(cdimgTOC->TrackData[trk].Address));
+
+		toc[toc_count++] = *(UINT32*)cdimgTOC->TrackData[trk].Address;
 
 		if (trk != cdimgTOC->LastTrack) {
 			bprintf(0, _T("Track %02d: %02d:%02d:%02d\n"), trk + 1,   addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
@@ -888,6 +894,10 @@ static void cdimgPrintImageInfo()
 			bprintf(0, _T("    total running time %02i:%02i:%02i\n"), addressUNBCD[1], addressUNBCD[2], addressUNBCD[3]);
 		}
 	}
+
+	BurnComputeSHA1((UINT8*)toc, toc_count*4, (char*)CDEmuImageTOCSHA1);
+	bprintf(0, _T("TOC Hash:  %S\n"), CDEmuImageTOCSHA1);
+	free(toc);
 }
 
 static INT32 cdimgAddLastTrack()
@@ -1438,8 +1448,9 @@ static INT32 cdimgInit()
 	}
 	if (nDataTrack >= 0) {
 		const CDImageTrack* pTrack = CDImageGetTrack(cdimgImage, nDataTrack);
-		if (CDImageReadDataSector(cdimgImage, pTrack->nIndex1LBA + 16, buf) || memcmp(buf + 1, "CD001", 5))
-			dprintf(_T("*** Bad CD!\n"));
+		if (CDImageReadDataSector(cdimgImage, pTrack->nIndex1LBA + 16, buf) || memcmp(buf + 1, "CD001", 5)) {
+			dprintf(_T("*** Not NeoGeoCD image\n"));
+		}
 	} else {
 		dprintf(_T("*** CD image has no data track; skipping PVD check\n"));
 	}

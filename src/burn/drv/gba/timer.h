@@ -8,11 +8,11 @@
 static inline void gba_compute_timers(gba_t* gba)
 {
 	// event fires count the firing cycle; register accesses stop one short
-	bool   from_event      = !gba->timer_event.active;
-	INT32  pos             = (INT32)gba->global_timer + (from_event ? 1 : 0);
-	UINT32 old_global_timer = (UINT32)((INT32)gba->timer_settle_clock + 1);
-	INT32  ticks           = pos - (INT32)old_global_timer;
-	gba->timer_settle_clock = (UINT32)(pos - 1);
+	bool   from_event       = !gba->timer_event.active;
+	UINT32 pos              = gba->global_timer + (from_event ? 1u : 0u);
+	UINT32 old_global_timer = gba->timer_settle_clock + 1;
+	INT32  ticks            = (INT32)(pos - old_global_timer);
+	gba->timer_settle_clock = pos - 1;
 
 	INT32 last_timer_overflow      = 0;
 	INT32 timer_ticks_before_event = 32768;
@@ -54,7 +54,7 @@ static inline void gba_compute_timers(gba_t* gba)
 			last_timer_overflow = 0;
 			INT32 prescale_duty = prescaler_lookup[prescale];
 
-			INT32 increment = ((UINT32)pos >> prescale_duty) - (old_global_timer >> prescale_duty);
+			INT32 increment = (INT32)((pos >> prescale_duty) - (old_global_timer >> prescale_duty));
 			INT32 v         = value + increment;
 			while (v > 0xffff) {
 				v = (v + gba->timers[t].reload_value) - 0x10000;

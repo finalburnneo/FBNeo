@@ -14,7 +14,7 @@ typedef uint8_t  UINT8;
 typedef int8_t   INT8;
 typedef int16_t  INT16;
 typedef uint16_t UINT16;
-typedef int32_t  INT32;
+typedef int32_t	 INT32;
 typedef uint32_t UINT32;
 typedef int64_t  INT64;
 typedef uint64_t UINT64;
@@ -102,10 +102,10 @@ struct gba_t;
 // Central event scheduler: intrusive list ordered by (when, priority)
 typedef struct gba_event_t {
 	struct gba_event_t*	next;
-	INT32 when;			// absolute master clock of the event
-	INT32 priority;		// lower fires first at the same time
-	void  (*callback)(struct gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
-	bool  active;
+	UINT32 when;			// absolute master clock of the event
+	INT32  priority;		// lower fires first at the same time
+	void   (*callback)(struct gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
+	bool   active;
 } gba_event_t;
 
 typedef struct {
@@ -572,12 +572,12 @@ static inline void gba_timing_schedule(gba_t* gba, gba_event_t* event, INT32 whe
 {
 	if (event->active)
 		gba_timing_deschedule(gba, event);
-	event->when   = (INT32)gba->global_timer + when;
+	event->when   = gba->global_timer + (UINT32)when;
 	event->active = true;
 	gba_event_t** previous = &gba->timing.head;
 	gba_event_t*  next     = gba->timing.head;
 	while (next) {
-		INT32 next_when = next->when - event->when;
+		INT32 next_when = (INT32)(next->when - event->when);
 		if (next_when > 0 || (next_when == 0 && next->priority > event->priority))
 			break;
 		previous = &next->next;
@@ -593,7 +593,7 @@ static inline INT32 gba_timing_next(gba_t* gba)
 	gba_event_t* next = gba->timing.head;
 	if (!next)
 		return 0x20000000;
-	INT32 when = next->when - (INT32)gba->global_timer;
+	INT32 when = (INT32)(next->when - gba->global_timer);
 	return when > 0 ? when : 0;
 }
 
@@ -602,7 +602,7 @@ static inline void gba_timing_dispatch(gba_t* gba, sb_emu_state_t* emu)
 {
 	while (gba->timing.head) {
 		gba_event_t* next = gba->timing.head;
-		INT32 when = next->when - (INT32)gba->global_timer;
+		INT32 when = (INT32)(next->when - gba->global_timer);
 		if (when > 0)
 			return;
 		gba->timing.head = next->next;
@@ -623,7 +623,7 @@ static inline void gba_timing_rebuild(gba_t* gba)
 		if (!event->active)
 			continue;
 		event->active = false;
-		gba_timing_schedule(gba, event, event->when - (INT32)gba->global_timer);
+		gba_timing_schedule(gba, event, (INT32)(event->when - gba->global_timer));
 	}
 }
 

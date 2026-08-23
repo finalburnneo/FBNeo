@@ -736,14 +736,14 @@ static inline INT32 gba_timing_ff(gba_t* gba, INT32 ticks)
 {
 	INT32 ff = ticks;
 	if (gba->ppu_event.active) {
-		INT32 d = gba->ppu_event.when - (INT32)gba->global_timer;
+		INT32 d = (INT32)(gba->ppu_event.when - gba->global_timer);
 		if (d < 0)
 			d = 0;
 		if (d < ff)
 			ff = d;
 	}
 	if (gba->timer_event.active) {
-		INT32 d = gba->timer_event.when - (INT32)gba->global_timer;
+		INT32 d = (INT32)(gba->timer_event.when - gba->global_timer);
 		d = d <= 0 ? 0 : d + 1;
 		if (d < ff)
 			ff = d;
@@ -773,11 +773,11 @@ static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 		}
 		return;
 	}
-	INT32 advanced    = 0;
-	INT32 audio_pos   = event_free;
-	INT32 dma_on_pos  = -1;
-	INT32 shifted     = 0;
-	bool  dma_was_on  = gba->activate_dmas;
+	INT32 advanced   = 0;
+	INT32 audio_pos  = event_free;
+	INT32 dma_on_pos = -1;
+	INT32 shifted    = 0;
+	bool  dma_was_on = gba->activate_dmas;
 	for (;;) {
 		// entering cycle `advanced`: its pipeline shift precedes its events
 		if (shifted == advanced && advanced < ticks) {
@@ -861,7 +861,7 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		solar_value = 1.00;
 	if (!(solar_value > 0.00))
 		solar_value = 0.00;
-	gba->solar_sensor.pending_value = 0xE9 - solar_value * (0xe9 - 0x32);	// latched into value when the game resets the sensor
+	gba->solar_sensor.pending_value = 0xe9 - solar_value * (0xe9 - 0x32);	// latched into value when the game resets the sensor
 	gba->gyro_sensor.pending_sample = gba_gyro_sample(emu->joy.gyro_z);
 	gba->tilt_sensor.pending_x = gba_tilt_sample(emu->joy.tilt_x);
 	gba->tilt_sensor.pending_y = gba_tilt_sample(emu->joy.tilt_y);

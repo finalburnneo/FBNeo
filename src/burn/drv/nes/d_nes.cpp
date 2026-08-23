@@ -14480,10 +14480,10 @@ struct BurnDriver BurnDrvnes_advpanzer3 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Adventures of Panzer, The: Blarghe! (HB, Alpha v0.01)
+// Adventures of Panzer, The: Blarghe!! (HB, Alpha v0.01)
 // https://pixelcraft-games.itch.io/the-adventures-of-panzer-blarghe
 static struct BurnRomInfo nes_advpanzerblRomDesc[] = {
-	{ "Adventures of Panzer, The - Blarghe! Alpha v0.01 (2025)(PixelCraft).nes",          524304, 0xc3c1bcab, BRF_ESS | BRF_PRG },
+	{ "Adventures of Panzer, The - Blarghe!! Alpha v0.01 (2025)(PixelCraft).nes",          524304, 0xc3c1bcab, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_advpanzerbl)
@@ -14491,7 +14491,7 @@ STD_ROM_FN(nes_advpanzerbl)
 
 struct BurnDriver BurnDrvnes_advpanzerbl = {
 	"nes_advpanzerbl", NULL, NULL, NULL, "2025",
-	"Adventures of Panzer, The: Blarghe! (HB, Alpha v0.01)\0", NULL, "PixelCraft", "NES / Famicom",
+	"Adventures of Panzer, The: Blarghe!! (HB, Alpha v0.01)\0", NULL, "PixelCraft", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
 	NESGetZipName, nes_advpanzerblRomInfo, nes_advpanzerblRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

@@ -380,6 +380,7 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 			M6800CPUContext[i].WritePort = M6800WritePortDummyHandler;
 
 			M6800CPUContext[i].bResetLine = 0;
+			M6800CPUContext[i].nAddressMask = 0xffff;
 			nM6800CyclesDone[i] = 0;
 
 			for (INT32 j = 0; j < (0x0100 * 3); j++) {
@@ -556,6 +557,16 @@ UINT32 M6800GetPC(INT32)
 	return m6800_get_pc();
 }
 
+void M6800SetAddressMask(UINT16 nMask)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800SetAddressMask called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6800SetAddressMask called when no CPU open\n"));
+	if ((nMask & 0xff) != 0xff) bprintf(PRINT_ERROR, _T("M6800SetAddressMask called with suspect mask %4.4x\n"), nMask);
+#endif
+	M6800CPUContext[nActiveCPU].nAddressMask = nMask;
+}
+
 INT32 M6800MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 {
 #if defined FBNEO_DEBUG
@@ -637,6 +648,8 @@ void M6800SetWritePortHandler(void (*pHandler)(UINT16, UINT8))
 
 UINT8 M6800ReadByte(UINT16 Address)
 {
+	Address &= M6800CPUContext[nActiveCPU].nAddressMask;
+
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x000 | (Address >> 8)];
 	if (pr != NULL) {
@@ -653,6 +666,8 @@ UINT8 M6800ReadByte(UINT16 Address)
 
 void M6800WriteByte(UINT16 Address, UINT8 Data)
 {
+	Address &= M6800CPUContext[nActiveCPU].nAddressMask;
+
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x100 | (Address >> 8)];
 	if (pr != NULL) {
@@ -669,6 +684,8 @@ void M6800WriteByte(UINT16 Address, UINT8 Data)
 
 UINT8 M6800ReadOp(UINT16 Address)
 {
+	Address &= M6800CPUContext[nActiveCPU].nAddressMask;
+
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
 	if (pr != NULL) {
@@ -685,6 +702,8 @@ UINT8 M6800ReadOp(UINT16 Address)
 
 UINT8 M6800ReadOpArg(UINT16 Address)
 {
+	Address &= M6800CPUContext[nActiveCPU].nAddressMask;
+
 	// check mem map
 	UINT8 * pr = M6800CPUContext[nActiveCPU].pMemMap[0x200 | (Address >> 8)];
 	if (pr != NULL) {
@@ -720,6 +739,8 @@ void M6800WritePort(UINT16 Address, UINT8 Data)
 
 void M6800WriteRom(UINT32 Address, UINT8 Data)
 {
+	Address &= M6800CPUContext[nActiveCPU].nAddressMask;
+
 #if defined FBNEO_DEBUG
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800WriteRom called without init\n"));
 #endif

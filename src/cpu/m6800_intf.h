@@ -12,6 +12,7 @@ struct M6800Ext {
 	m6800_Regs reg;
 
 	UINT8* pMemMap[0x100 * 3];
+	UINT16 nAddressMask;
 
 	pReadByteHandler ReadByte;
 	pWriteByteHandler WriteByte;
@@ -131,6 +132,12 @@ INT32 M6800MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType);
 #define M6803MapMemory		M6800MapMemory
 #define M6801MapMemory		M6800MapMemory
 #define NSC8105MapMemory	M6800MapMemory
+
+void M6800SetAddressMask(UINT16 nMask);
+#define HD63701SetAddressMask	M6800SetAddressMask
+#define M6803SetAddressMask		M6800SetAddressMask
+#define M6801SetAddressMask		M6800SetAddressMask
+#define NSC8105SetAddressMask	M6800SetAddressMask
 
 void M6800SetReadHandler(UINT8 (*pHandler)(UINT16));
 #define HD63701SetReadHandler	M6800SetReadHandler

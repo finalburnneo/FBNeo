@@ -1,7 +1,7 @@
 #include "burnint.h"
 #include "burn_led.h"
 
-#define MAX_LED		8
+#define MAX_LED		16
 
 static INT32 led_status[MAX_LED];
 

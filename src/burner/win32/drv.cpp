@@ -173,7 +173,7 @@ static void NeoCDZRateChange()
 {
 	if (nAudSampleRate[nAudSelect] != 44100) {
 		nNeoCDZnAudSampleRateSave = nAudSampleRate[nAudSelect];
-		bprintf(PRINT_IMPORTANT, _T("Switching sound rate to 44100hz (from %dhz) as required by NeoGeo CDZ\n"), nNeoCDZnAudSampleRateSave);
+		bprintf(PRINT_IMPORTANT, _T("Switching sound rate to 44100hz (from %dhz) as required by NeoGeo & PCE CD\n"), nNeoCDZnAudSampleRateSave);
 		nAudSampleRate[nAudSelect] = 44100; // force 44100hz for CDDA
 	}
 }
@@ -214,6 +214,7 @@ int DrvInit(int nDrvNum, bool bRestore)
 			NeoCDZRateChange();
 		} else if (nHardware == HARDWARE_PCENGINE_PCE_CD) {
 			PceCDInfo_Init();
+			NeoCDZRateChange();
 		}
 	}
 

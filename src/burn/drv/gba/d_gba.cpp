@@ -5947,7 +5947,7 @@ struct BurnDriver BurnDrvgba_bof2j = {
 
 // Britney's Dance Beat (Europe, M2 EN/DE)
 static struct BurnRomInfo gba_britneygRomDesc[] = {
-	{ "Britney's Dance Beat (E, EN/DE)(2002)(THQ).gba",	0x0800000,	0xcfe69825,	BRF_ESS | BRF_PRG },
+	{ "Britney's Dance Beat (E, EN-DE)(2002)(THQ).gba",	0x0800000,	0xcfe69825,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_britneyg, gba_britneyg, gba_gba)
@@ -5965,7 +5965,7 @@ struct BurnDriver BurnDrvgba_britneyg = {
 
 // Britney's Dance Beat (Europe, M2 EN/FR)
 static struct BurnRomInfo gba_britneyfRomDesc[] = {
-	{ "Britney's Dance Beat (E, EN/FR)(2002)(THQ).gba",	0x0800000,	0x021cda8e,	BRF_ESS | BRF_PRG },
+	{ "Britney's Dance Beat (E, EN-FR)(2002)(THQ).gba",	0x0800000,	0x021cda8e,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_britneyf, gba_britneyf, gba_gba)

@@ -22,29 +22,41 @@ struct pce_cd_dink {
 	TCHAR *year;
 	TCHAR *company;
 };
+#if 0
+Adventure Quiz Capcom - stuck playing track 7(?)
+Baby Jo the Super Hero - stuck playing track 5
+Alnam no Kiba - unknown writes to 1ee9xx/8xx
+Aoki Ookami - unknown write to 1efffx
+Bakuden Unbalanced Zone - black screen after start game
+Beyond Shadowgate - stuck reading track 36, but if you ffwd through it, it'll get to the title screen, but hang @ black screen when game starts
+Bishojyo Jyanshi Idol Pai - load error (GECD card required)
+#endif
 
 static pce_cd_dink pcengine_cd_games[] = {
-	{ _T(""), _T("3x3 Eyes Sanjiyan Hensei"), _T("3x3eyes"), _T("1994"), _T("NEC Home Electronics") },
+	{ _T("fe893dc89a64c3066a4bcc6862dae9deb187adba"), _T("1552 Tenka Tairan"), _T("1552tenk"), _T("1993"), _T("ASK Kodansha") },
+	{ _T("09a51d8e84e493f674add3744263bf1861c78ad4"), _T("3x3 Eyes Sanjiyan Hensei"), _T("3x3eyes"), _T("1994"), _T("NEC Home Electronics") },
 	{ _T("2936ff0fbbe1576f617f3bb2258fb6f496950738"), _T("A. III"), _T("a3"), _T("1993"), _T("Artdink") },
 	{ _T("84e3174018730071bd53f0b7435f58dae6762d15"), _T("The Addams Family"), _T("addamsfamily"), _T("1991"), _T("ICOM Simulations / NEC") },
 	{ _T("26f926cd1ba60acdd498e968889803056ebeae6e"), _T("Advanced V.G."), _T("advancedvg"), _T("1994"), _T("TGL") },
 	{ _T("70017b0eaf34509aa33dfdf02b66ef2812c40440"), _T("Adventure Quiz Capcom World Hatena no Dai Bouken"), _T("adventurequiz"), _T("1992"), _T("Capcom / Hudson") },
 	{ _T("30439aa9cbd39bd9824fd58acc7c50377f022a67"), _T("Ai Cho Aniki"), _T("aichoaniki"), _T("1995"), _T("Masaya") },
 	{ _T("07c1b51969d2d9dc46ca63d8c7d2f1c97003e0c1"), _T("Akiyamajin no Suugaku Misuteri - Hihou Indo no Honoo wo Sisyu Seyo"), _T("akiyamajin"), _T("1994"), _T("NHK") },
+	{ _T("0933f47431dd7f4c8ba1a6445ea98235e02403c3"), _T("Alshark"), _T("alshark"), _T("1994"), _T("Victor Entertainment") },
 	{ _T(""), _T("Alzadick: Summer Carnival '92"), _T("alzadick"), _T("1992"), _T("Naxat") },
+	{ _T("3e60609304964c6008ce767b59b687a542db1b64"), _T("Alnam no Kiba - Juuzoku Juuni Shinto Densetsu"), _T("alkiba"), _T("1994"), _T("Right Stuff") },
 	{ _T("202542a3e85154e189f2af11513da61b86c8e255"), _T("Ane-san"), _T("anesan"), _T("1995"), _T("NEC") },
-	{ _T(""), _T("Aoki Ookami to Shiroki Mejika: Genchou Hishi"), _T("aokiookami"), _T("1993"), _T("Koei") },
+	{ _T("4f846aaff54a715d59b4fb4c5bd3afa9a9cde8c3"), _T("Aoki Ookami to Shiroki Mejika: Genchou Hishi"), _T("aokiookami"), _T("1993"), _T("Koei") },
 	{ _T(""), _T("Arunamu no Kiba"), _T("arunamukiba"), _T("1994"), _T("Right Stuff") },
-	{ _T(""), _T("Asuka 120% Maxima BURNING Fest."), _T("asuka120"), _T("1995"), _T("Fill-in-Cafe / NEC Avenue") },
+	{ _T("8432cb255c80938ebd8d367c89537a9c6f32a34f"), _T("Asuka 120% Maxima BURNING Fest."), _T("asuka120"), _T("1995"), _T("Fill-in-Cafe / NEC Avenue") },
 	{ _T(""), _T("The Atlas: Renaissance Voyager"), _T("atlas"), _T("1994"), _T("Artdink") },
-	{ _T(""), _T("Aurora Quest Otaku no Seiza"), _T("auroraquest"), _T("1993"), _T("Pack-In-Video") },
+	{ _T("9e8a764ea97f72e95dc0af19fa91eee13e682ea9"), _T("Aurora Quest Otaku no Seiza"), _T("auroraquest"), _T("1993"), _T("Pack-In-Video") },
 	{ _T(""), _T("Auto Crusher Palladium"), _T("autocrusher"), _T("1994"), _T("Pack-In-Video") },
 	{ _T("cff6cbf4656ef801b24b09c2a4c97ef0554de933"), _T("Avenger"), _T("avenger"), _T("1990"), _T("Telenet Japan / Laser Soft") },
 	{ _T("1228a8a4e12af9a3273a9e102aae651f297627c5"), _T("Babel"), _T("babel"), _T("1992"), _T("Telenet Japan") },
 	{ _T("65b4fb0a76a827bfef622d78ac2a04f5171c3218"), _T("Baby Jo the Super Hero"), _T("babyjo"), _T("1992"), _T("Microworld") },
 	{ _T("57341422b90aaf4b6248410cb35f01d6c4be738d"), _T("Bakuden Unbalanced Zone"), _T("bakuden"), _T("1994"), _T("Sony Music Entertainment") },
 	{ _T(""), _T("Bakuretsu Hunter Duo Comic"), _T("bakuretsuhunter"), _T("1994"), _T("") },
-	{ _T(""), _T("Bakushou Yoshimoto No Shinkigeki"), _T("bakushouyoshi"), _T("1994"), _T("Hudson") },
+	{ _T("e233d3a551dc89b087bf55fe8ad54db0bf1c07ac"), _T("Bakushou Yoshimoto No Shinkigeki"), _T("bakushouyoshi"), _T("1994"), _T("Hudson") },
 	{ _T(""), _T("Bastard!!"), _T("bastard"), _T(""), _T("") },
 	{ _T("f87fad2ad1c620133a54c58dc2ccb994929f69e1"), _T("Basted"), _T("basted"), _T("1994"), _T("NEC Avenue") },
 	{ _T(""), _T("Battlefield '94 In Super Battle Dream"), _T("battlefield94"), _T("1994"), _T("Fujicom") },
@@ -52,9 +64,9 @@ static pce_cd_dink pcengine_cd_games[] = {
 	{ _T("ddcd88a9bebbbb339bd0a46263111fcb9398f530"), _T("Beyond Shadowgate"), _T("beyondshadowgate"), _T("1993"), _T("ICOM Simulations") },
 	{ _T("ec409f3de96f40b61f84bf553af130eff51260ef"), _T("Bikini Girls"), _T("bikinigirls"), _T(""), _T("Excite Software") },
 	{ _T("ed4c838a700ee94055e14be1eb0d6e800718d309"), _T("Bikkuriman Daijikai"), _T("bikkuriman"), _T("1988"), _T("Hudson") },
-	{ _T(""), _T("Bishojyo Jyanshi Idol Pai"), _T("idolpai"), _T("1995"), _T("Hacker International") },
+	{ _T("7c979d4f19ef1c5e03c59232c6f5d723ce236798"), _T("Bishojyo Jyanshi Idol Pai"), _T("idolpai"), _T("1995"), _T("Hacker International") },
 	{ _T(""), _T("Bishoujo Senshi Sailor Moon"), _T("sailormoon"), _T("1994"), _T("Banpresto") },
-	{ _T(""), _T("Bishoujo Senshi Sailor Moon Collection"), _T("sailormooncol"), _T("1994"), _T("Banpresto") },
+	{ _T("a2638bb479492aa169075717aec10a48e1b58ddb"), _T("Bishoujo Senshi Sailor Moon Collection"), _T("sailormooncol"), _T("1994"), _T("Banpresto") },
 	{ _T("79f0ba17ffdaf97f7e45bcca6b9f77462c126977"), _T("Black Hole Assault"), _T("blackholeassault"), _T("1993"), _T("Micronet") },
 	{ _T("42162eb4007bedfc85cf1ccef5f4d353a1a8d730"), _T("Blood Gear"), _T("bloodgear"), _T("1994"), _T("Hudson") },
 	{ _T(""), _T("Bomberman '94 Taikenban"), _T("bomberman94demo"), _T("1993"), _T("Hudson") },
@@ -64,10 +76,10 @@ static pce_cd_dink pcengine_cd_games[] = {
 	{ _T("426b02a7d995db8564804526f23eadbb941c92b9"), _T("Browning"), _T("browning"), _T("1992"), _T("Telenet Japan") },
 	{ _T("e4b1e6c23077d044ec26f0af1eff869fb3bf56ba"), _T("Builderland"), _T("builderland"), _T("1992"), _T("Microworld") },
 	{ _T("b003325525b8f3fb99b1b88401d58b3ef77eba2c"), _T("Burai: Hachigyoku no Yuushi Densetsu"), _T("burai"), _T("1991"), _T("Riverhillsoft") },
-	{ _T(""), _T("Burai II: Yami Koutei no Gyakushuu"), _T("burai2"), _T("1992"), _T("Riverhillsoft") },
+	{ _T("f879dac2da5c7967e2e63f587fe0b46b14328575"), _T("Burai II: Yami Koutei no Gyakushuu"), _T("burai2"), _T("1992"), _T("Riverhillsoft") },
 	{ _T("5520d1210e80fb12adb5e99646f1f2a26d22e6a2"), _T("Buster Bros. (Pomping World in Japan)"), _T("busterbros"), _T("1991"), _T("Hudson") },
 
-	{ _T(""), _T("CAL II"), _T("cal2"), _T("1993"), _T("NEC Avenue") },
+	{ _T("28f3fbf45ca037f1b86037939f80aeeb253d4584"), _T("CAL II"), _T("cal2"), _T("1993"), _T("NEC Avenue") },
 	{ _T("3ec798b5b175558a89fd9c5578d15995b383c07a"), _T("CAL III"), _T("cal3"), _T("1994"), _T("NEC Avenue") },
 	{ _T("c23b5e9584bc9397ea86a64a573a3e4e0691b795"), _T("Camp California"), _T("campcalifornia"), _T("1993"), _T("NEC") },
 	{ _T("426d5bc0f315494560ef172d5789bb646ead4411"), _T("Cardangels"), _T("cardangels"), _T("1994"), _T("Fujicom") },

@@ -885,6 +885,12 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 				ticks              = gba_timing_next(gba);
 				if (ticks < 1)
 					ticks = 1;
+				gba_advance(gba, emu, ticks);
+				// a halted CPU wakes within the interrupt latency: settle the
+				// IF pipeline promptly instead of running to the next horizon
+				while (gba->active_if_pipe_stages && !gba->interrupt_pending)
+					gba_advance(gba, emu, 1);
+				continue;
 			} else {
 				arm7_exec_instruction(&gba->cpu);
 				gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;

@@ -513,7 +513,6 @@ typedef struct gba_t {
 	gba_sio_t sio;
 	//There is a 2 cycle penalty when the CPU takes over from the DMA
 	bool last_transaction_dma;
-	bool dma_access_pending;
 	bool activate_dmas;
 	bool dma_wait_ppu;
 	gba_timer_t timers[4];

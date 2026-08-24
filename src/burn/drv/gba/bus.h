@@ -230,11 +230,6 @@ static inline void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 r
 			gba->cpu.next_fetch_sequential = false;
 		gba->mem.prefetch_size = 0;
 	}
-	if (gba->dma_access_pending) {
-		gba->dma_access_pending = false;
-		if (prefetch_en && bank >= 0x08 && bank <= 0x0d)
-			request_size |= 1;
-	}
 	UINT32 wait = gba->mem.wait_state_table[bank * 4 + request_size];
 	if (SB_LIKELY(prefetch_en)) {
 		gba->mem.prefetch_size += gba->cpu.i_cycles;

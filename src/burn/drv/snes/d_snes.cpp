@@ -9018,6 +9018,25 @@ struct BurnDriver BurnDrvsnes_Dai3jisrt = {
 	512, 448, 4, 3
 };
 
+// Dai-4-ji Super Robot Taisen (Japan, Rev. 1)
+
+static struct BurnRomInfo snes_Dai4jisrtRomDesc[] = {
+	{ "Dai-4-ji Super Robot Taisen (J, Rev 1)(1995)(Banpresto).sfc", 3145728, 0x63883e1e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dai4jisrt)
+STD_ROM_FN(snes_Dai4jisrt)
+
+struct BurnDriver BurnDrvsnes_Dai4jisrt = {
+	"snes_dai4jisrt", "snes_suprobwars4", NULL, NULL, "1995",
+	"Dai-4-ji Super Robot Taisen (Japan, Rev. 1)\0", NULL, "Banpresto", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Dai4jisrtRomInfo, snes_Dai4jisrtRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Daikaijuu Monogatari (Japan)
 
 static struct BurnRomInfo snes_DaikaijuuRomDesc[] = {
@@ -39852,6 +39871,25 @@ struct BurnDriver BurnDrvsnes_Suprobwars3ti = {
 	512, 448, 4, 3
 };
 
+// Super Robot Wars 4 (Hack, English)
+// https://aeongenesis.net/projects/srw4
+static struct BurnRomInfo snes_Suprobwars4RomDesc[] = {
+	{ "Super Robot Wars 4 T-Eng (2026)(Aeon Genesis).sfc", 4194304, 0x72bbacca, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Suprobwars4)
+STD_ROM_FN(snes_Suprobwars4)
+
+struct BurnDriver BurnDrvsnes_Suprobwars4 = {
+	"snes_suprobwars4", NULL, NULL, NULL, "2026",
+	"Super Robot Wars 4 (Hack, English)\0", NULL, "Aeon Genesis", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_STRATEGY, 0,
+	SNESGetZipName, snes_Suprobwars4RomInfo, snes_Suprobwars4RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Robot Wars EX (Hack, English)
 // https://www.romhacking.net/translations/4100/
 static struct BurnRomInfo snes_SuprobwarsexteRomDesc[] = {
@@ -48606,6 +48644,25 @@ struct BurnDriver BurnDrvsnes_Micromages2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Micromages2RomInfo, snes_Micromages2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Minicraft 3D (HB, v0.2)
+
+static struct BurnRomInfo snes_Minicraft3dRomDesc[] = {
+	{ "Minicraft 3D v0.2 (2026)(GameOfTobi).sfc", 65536, 0xa1bac09c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Minicraft3d)
+STD_ROM_FN(snes_Minicraft3d)
+
+struct BurnDriver BurnDrvsnes_Minicraft3d = {
+	"snes_minicraft3d", NULL, NULL, NULL, "2026",
+	"Minicraft 3D (HB, v0.2)\0", NULL, "GameOfTobi", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_SIM, 0,
+	SNESGetZipName, snes_Minicraft3dRomInfo, snes_Minicraft3dRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

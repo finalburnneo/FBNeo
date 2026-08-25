@@ -7765,7 +7765,7 @@ struct BurnDriver BurnDrvgba_n_bombmn = {
 
 // NES Classics: Castlevania (Europe)
 static struct BurnRomInfo gba_n_cvaniaRomDesc[] = {
-	{ "NES Classics - Castlevania (E)(2004)(Nintendo).gba",	0x0400000,	0x2b510046,	BRF_ESS | BRF_PRG },
+	{ "NES Classics - Castlevania (E)(2004)(Nintendo).gba",	0x0100000,	0x497e3279,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_n_cvania, gba_n_cvania, gba_gba)
@@ -10933,7 +10933,7 @@ struct BurnDriver BurnDrvgba_dogz2a = {
 
 // Dogz 2 (USA, rev. 1)
 static struct BurnRomInfo gba_dogz2u1RomDesc[] = {
-	{ "agb-bime-1.u1",	0x1000000,	0x0e2aca9e,	BRF_ESS | BRF_PRG },
+	{ "agb-bime-1.u1",	0x1000000,	0xa0ebb191,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_dogz2u1, gba_dogz2u1, gba_gba)
@@ -23228,7 +23228,7 @@ struct BurnDriver BurnDrvgba_kingkong = {
 
 // King Kong - The Official Game of the Movie (Europe, English / Swedish / Norwegian / Danish / Finnish)
 static struct BurnRomInfo gba_kingkong1RomDesc[] = {
-	{ "agb-bkqx-0.u1",	0x0800000,	0x37387b19,	BRF_ESS | BRF_PRG },
+	{ "agb-bkqx-0.u1",	0x0800000,	0x439a92eb,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_kingkong1, gba_kingkong1, gba_gba)
@@ -23462,7 +23462,7 @@ struct BurnDriver BurnDrvgba_kinghrtsu = {
 
 // Kinniku Banzuke - Kimero! Kiseki no Kanzen Seiha (Japan)
 static struct BurnRomInfo gba_kinnibkkRomDesc[] = {
-	{ "kinniku banzuke - kimero kiseki no kanzen seiha (japan).bin",	0x0800000,	0x40b1dd00,	BRF_ESS | BRF_PRG },
+	{ "kinniku banzuke - kimero kiseki no kanzen seiha (japan).bin",	0x0800000,	0xc81b9701,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_kinnibkk, gba_kinnibkk, gba_gba)

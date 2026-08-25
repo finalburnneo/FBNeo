@@ -30,6 +30,8 @@ D_FUNCS=(NeoPVCBankswitch NeoPVCMapBank mslugxMapBank mslugxBankswitch
          ms5plusWriteWordBankSwitch kf2k3blaWriteWordBankswitch)
 R_FUNCS=(Bankswitch)
 R_OPT=(NeoClampBank)
+# object-like macros the patched d_neogeo.cpp introduces; absent from baseline
+D_DEFS=(PVC_BANK_WINDOW MSLUGX_BANK_WINDOW)
 
 CXX=${CXX:-c++}
 CXXFLAGS=${CXXFLAGS:--O2 -std=c++17 -Wall -Wextra -Wno-unused-parameter}
@@ -40,10 +42,11 @@ mkdir -p "$BUILD/baseline/gen" "$BUILD/patched/gen"
 
 emit_gen() {   # $1 = variant dir, $2 = "base"|"tree"
 	local out="$1" mode="$2"
-	local req_d=() req_r=() opt_r=()
+	local req_d=() req_r=() opt_r=() def_d=()
 	for f in "${D_FUNCS[@]}"; do req_d+=(--require "$f"); done
 	for f in "${R_FUNCS[@]}"; do req_r+=(--require "$f"); done
 	for f in "${R_OPT[@]}";   do opt_r+=(--optional "$f"); done
+	for f in "${D_DEFS[@]}";  do def_d+=(--define  "$f"); done
 
 	if [ "$mode" = base ]; then
 		git -C "$REPO" show "$BASE:$NEO_RUN" \
@@ -51,12 +54,12 @@ emit_gen() {   # $1 = variant dir, $2 = "base"|"tree"
 			  "${req_r[@]}" "${opt_r[@]}" > "$out/gen/neo_run_funcs.inc"
 		git -C "$REPO" show "$BASE:$D_NEOGEO" \
 			| python3 "$HERE/extract.py" --source - --label "$BASE:$D_NEOGEO" \
-			  "${req_d[@]}" > "$out/gen/d_neogeo_funcs.inc"
+			  "${def_d[@]}" "${req_d[@]}" > "$out/gen/d_neogeo_funcs.inc"
 	else
 		python3 "$HERE/extract.py" --source "$REPO/$NEO_RUN" --label "tree:$NEO_RUN" \
 			"${req_r[@]}" "${opt_r[@]}" > "$out/gen/neo_run_funcs.inc"
 		python3 "$HERE/extract.py" --source "$REPO/$D_NEOGEO" --label "tree:$D_NEOGEO" \
-			"${req_d[@]}" > "$out/gen/d_neogeo_funcs.inc"
+			"${def_d[@]}" "${req_d[@]}" > "$out/gen/d_neogeo_funcs.inc"
 	fi
 }
 

@@ -24,10 +24,13 @@ INT32 SekMapMemory(UINT8 *pMemory, UINT32 nStart, UINT32 nEnd, INT32 nType)
 void SekOpen(INT32) {}
 void SekClose() {}
 
+// Only the counter is reset: every reader bounds its loop by g_shimCallCount,
+// so stale entries past it are unreachable.  Clearing the whole array instead
+// would cost more than the functions under test do, which would swamp the
+// hot-path timing measurement.
 void ShimResetCalls()
 {
 	g_shimCallCount = 0;
-	memset(g_shimCalls, 0, sizeof(g_shimCalls));
 }
 
 // The functions under test compute `Neo68KROMActive + nBank` for banks that,

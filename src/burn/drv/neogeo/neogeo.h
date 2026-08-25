@@ -113,6 +113,11 @@ void NeoMapBank();
 void NeoMap68KFix();
 void NeoUpdateVector();
 
+// Clamp a 68K program-ROM bank so that [nBank, nBank + nWindowLen) stays inside
+// the allocated cartridge ROM; returns nBank0 when it would not. For bankswitch
+// handlers whose bank comes from cartridge/protection RAM rather than a table.
+UINT32 NeoClampBank(UINT32 nBank, UINT32 nWindowLen, UINT32 nBank0);
+
 // neo_palette.cpp
 extern UINT8* NeoPalSrc[2];
 extern INT32 nNeoPaletteBank;

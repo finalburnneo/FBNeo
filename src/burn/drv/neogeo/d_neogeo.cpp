@@ -2266,10 +2266,22 @@ void NeoPVCPallette02() // pack RGB dword to palette word
 	PVCRAM[0x1fed] = (b4 >> 1) | ((b2 & 1) << 4) | ((b1 & 1) << 5) | ((b4 & 1) << 6) | ((b3 & 1) << 7);
 }
 
+// Window mapped by the PVC bankswitch: 0x200000-0x2FDFFF (0x2FE000 upwards is
+// the protection RAM, mapped separately).
+#define PVC_BANK_WINDOW		0x000FE000
+
 void NeoPVCBankswitch()
 {
 	UINT32 nBank  = (PVCRAM[0x1ff3] << 16) | (PVCRAM[0x1ff2] << 8) | PVCRAM[0x1ff1];
-	nBank += (Neo68KROMActive[0x108] & 0x10) << 16;	// for kof2003 (bank 0 is $100000)
+	UINT32 nBank0 = (Neo68KROMActive[0x108] & 0x10) << 16;	// for kof2003 (bank 0 is $100000)
+	nBank += nBank0;
+
+	// The bank is three bytes of protection RAM, so it can reach $10FFFFF -- far
+	// past any cartridge. Unchecked it maps a 1MB read/fetch window off the end
+	// of the allocation; measured on hardware at 9,428,990 bytes past the end of
+	// kof2003's 9MB program ROM. Clamp to this cartridge's own bank 0, the same
+	// fallback the generic Bankswitch() uses.
+	nBank = NeoClampBank(nBank, PVC_BANK_WINDOW, nBank0);
 
 	if (nNeo68KROMBank != nBank)
 	{
@@ -2300,6 +2312,12 @@ void __fastcall PVCWriteWordBankSwitch(UINT32 sekAddress, UINT16 wordValue)
 
 static void NeoPVCMapBank()
 {
+	// Also reached on savestate load, where nNeo68KROMBank comes straight out of
+	// the state: a state written before the clamp above existed can carry an
+	// out-of-range bank, so repair it here rather than mapping it.
+	nNeo68KROMBank = NeoClampBank(nNeo68KROMBank, PVC_BANK_WINDOW,
+								  (Neo68KROMActive[0x108] & 0x10) << 16);
+
 	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2fdfff, MAP_ROM);
 }
 
@@ -7406,14 +7424,27 @@ static UINT16 __fastcall mslugx_protection_read()
 	return ret;
 }
 
+// mslugx maps 0x200000-0x2FFBFF, but mslugx_read_protection_word() below reads
+// Neo68KROMActive[nNeo68KROMBank + (address & 0xFFFFE)], so the bank's real
+// reach is a full megabyte.
+#define MSLUGX_BANK_WINDOW	0x00100000
+
 static void mslugxMapBank()
 {
+	// See NeoPVCMapBank(): also reached on savestate load.
+	nNeo68KROMBank = NeoClampBank(nNeo68KROMBank, MSLUGX_BANK_WINDOW, 0x100000);
+
 	SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2ffbff, MAP_ROM);
 }
 
 static void mslugxBankswitch(UINT32 nBank)
 {
 	nBank = ((nBank & 7) + 1) * 0x100000;
+
+	// Same arithmetic as the generic Bankswitch(), but this copy lost that
+	// function's bounds check: bank 7 is $800000 while every mslugx set but one
+	// has a $500000 program ROM.
+	nBank = NeoClampBank(nBank, MSLUGX_BANK_WINDOW, 0x100000);
 
 	if (nBank != nNeo68KROMBank) {
 		nNeo68KROMBank = nBank;
@@ -10013,7 +10044,8 @@ void __fastcall ms5plusWriteWordBankSwitch(UINT32 sekAddress, UINT16 wordValue)
 {
 	if (sekAddress==0x2ffff4)
 	{
-		UINT32 nBank = wordValue << 16;
+		// No mask and no table: a word of $FFFF asks for a bank at $FFFF0000.
+		UINT32 nBank = NeoClampBank(wordValue << 16, PVC_BANK_WINDOW, 0x100000);
 		if (nNeo68KROMBank != nBank)
 		{
 			nNeo68KROMBank = nBank;
@@ -11271,6 +11303,10 @@ void __fastcall kf2k3blaWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 
 	if (sekAddress == 0x2ffff2) {
 		UINT32 nBank = ((PVCRAM[0x1ff3] << 16) | (PVCRAM[0x1ff2] << 8) | PVCRAM[0x1ff0]) + 0x100000;
+
+		// Bootleg PVC variant: same unbounded protection-RAM bank as
+		// NeoPVCBankswitch(), against a $700000 program ROM.
+		nBank = NeoClampBank(nBank, PVC_BANK_WINDOW, 0x100000);
 
 		if (nBank != nNeo68KROMBank) {
 			nNeo68KROMBank = nBank;

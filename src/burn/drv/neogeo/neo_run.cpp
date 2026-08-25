@@ -971,6 +971,34 @@ inline static void MapPalette(INT32 nBank)
 	}
 }
 
+// Clamp a 68K program-ROM bank so the whole mapped window stays inside the
+// allocated cartridge ROM, falling back to the caller's own bank 0.
+//
+// This is the check Bankswitch() below already performs for the generic path
+// (and that MAME's write_banksel() performs for its equivalent). The protected
+// and bootleg bankswitch handlers in d_neogeo.cpp derive their bank from
+// cartridge or protection RAM instead of from a fixed table, so the value is
+// whatever the game -- or a glitch, or a protection handshake word read
+// mid-sequence -- happens to have left there, and needs the same check.
+//
+// Note the test is on the WINDOW END, not on the bank alone: Bankswitch()'s
+// `nBank >= nCodeSize` is exact only because its banks are 1MB-aligned, its
+// window is exactly 1MB and nCodeSize is 1MB-aligned. The protected paths have
+// byte-granular banks, so those coincidences do not hold for them.
+//
+// nCodeSize[] is file-static here, so the helper lives in this file and the
+// callers pass their own window length and bank-0 base.
+UINT32 NeoClampBank(UINT32 nBank, UINT32 nWindowLen, UINT32 nBank0)
+{
+	const UINT32 nSize = nCodeSize[nNeoActiveSlot];
+
+	if (nWindowLen > nSize || nBank > nSize - nWindowLen) {
+		return nBank0;
+	}
+
+	return nBank;
+}
+
 static void Bankswitch(UINT32 nBank)
 {
 	nBank = 0x100000 + ((nBank & 7) << 20);

@@ -104,7 +104,7 @@ typedef struct gba_event_t {
 	struct gba_event_t*	next;
 	UINT32 when;			// absolute master clock of the event
 	INT32  priority;		// lower fires first at the same time
-	void   (*callback)(struct gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
+	void (*callback)(struct gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 	bool   active;
 } gba_event_t;
 
@@ -115,6 +115,8 @@ typedef struct {
 #define GBA_EVENT_PRIORITY_TIMER	1
 #define GBA_EVENT_PRIORITY_PPU		2
 #define GBA_EVENT_PRIORITY_SIO		3
+#define GBA_EVENT_PRIORITY_AUDIO	4
+#define GBA_EVENT_PRIORITY_DMA		5
 
 #include "cpu.h"
 
@@ -402,8 +404,9 @@ typedef struct {
 	INT32  dest_addr;
 	INT32  current_transaction;
 	bool   last_enable;
-	bool   last_vblank;
-	bool   last_hblank;
+	UINT32 last_vblank_seq;		// ppu.vblank_seq at the last trigger check
+	UINT32 last_hblank_seq;		// ppu.hblank_seq at the last trigger check
+	UINT32 latched_count;		// transfer count latched at enable / last completion
 	UINT32 latched_transfer;
 	INT32  startup_delay;
 	bool   activate_audio_dma;
@@ -414,6 +417,8 @@ typedef struct {
 	INT32  scan_clock;
 	bool   last_vblank;
 	bool   last_hblank;
+	UINT32 vblank_seq;			// increments at each vblank rising edge
+	UINT32 hblank_seq;			// increments at each hblank rising edge
 	INT32  last_lcd_y;
 	struct {
 		INT32 render_bgx;
@@ -473,7 +478,6 @@ typedef struct {
 	float  capacitor_r;
 	gba_frame_sequencer_t sequencer;
 	UINT32 audio_clock;
-	INT32  sample_accum;		// cycles since the last audio batch
 } gba_audio_t;
 
 typedef struct {
@@ -511,7 +515,7 @@ typedef struct gba_t {
 	gba_rtc_t rtc;
 	gba_dma_t dma[4];
 	gba_sio_t sio;
-	//There is a 2 cycle penalty when the CPU takes over from the DMA
+	// 2-cycle penalty when the CPU takes over from the DMA
 	bool last_transaction_dma;
 	bool activate_dmas;
 	bool dma_wait_ppu;
@@ -522,14 +526,15 @@ typedef struct gba_t {
 	gba_event_t  timer_event;
 	gba_event_t  ppu_event;
 	gba_event_t  sio_event;
+	gba_event_t  audio_event;
+	gba_event_t  dma_event;
 	gba_audio_t  audio;
 	bool   prev_key_interrupt;
 	UINT32 first_target_buffer[GBA_LCD_W];
 	UINT32 second_target_buffer[GBA_LCD_W];
 	UINT8  window[GBA_LCD_W];
 	UINT8* framebuffer;
-	// Some HW has up to a 4 cycle delay before its IF propagates. 
-	// This array acts as a FIFO to keep track of that. 
+	// IF propagates with up to 4-cycle delay; this FIFO tracks it
 	UINT16 pipelined_if[5];
 	INT32  active_if_pipe_stages;
 	bool   interrupt_pending;	// cached (IE & IF) with IME enabled
@@ -616,8 +621,8 @@ static inline void gba_timing_dispatch(gba_t* gba, sb_emu_state_t* emu)
 static inline void gba_timing_rebuild(gba_t* gba)
 {
 	gba->timing.head   = NULL;
-	gba_event_t* events[3] = { &gba->timer_event, &gba->ppu_event, &gba->sio_event };
-	for (INT32 i = 0; i < 3; ++i) {
+	gba_event_t* events[5] = { &gba->timer_event, &gba->ppu_event, &gba->sio_event, &gba->audio_event, &gba->dma_event };
+	for (INT32 i = 0; i < 5; ++i) {
 		gba_event_t* event = events[i];
 		event->next = NULL;
 		if (!event->active)

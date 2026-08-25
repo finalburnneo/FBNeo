@@ -8,15 +8,15 @@
 static inline void gba_compute_timers(gba_t* gba)
 {
 	// event fires count the firing cycle; register accesses stop one short
-	bool   from_event       = !gba->timer_event.active;
+	bool   from_event = !gba->timer_event.active;
 	UINT32 pos              = gba->global_timer + (from_event ? 1u : 0u);
 	UINT32 old_global_timer = gba->timer_settle_clock + 1;
-	INT32  ticks            = (INT32)(pos - old_global_timer);
+	INT32  ticks = (INT32)(pos - old_global_timer);
 	gba->timer_settle_clock = pos - 1;
 
 	INT32 last_timer_overflow      = 0;
 	INT32 timer_ticks_before_event = 32768;
-	const INT32 prescaler_lookup[] = { 0,6,8,10 };
+	const INT32 prescaler_lookup[] = { 0, 6, 8, 10 };
 	for (INT32 t = 0; t < 4; ++t) {
 		UINT16 tm_cnt_h = gba_io_read16(gba, GBA_TM0CNT_H + t * 4);
 		bool enable = SB_BFE(tm_cnt_h, 7, 1);
@@ -24,7 +24,7 @@ static inline void gba_compute_timers(gba_t* gba)
 			UINT16 prescale = SB_BFE(tm_cnt_h, 0, 2);
 			bool   count_up = SB_BFE(tm_cnt_h, 2, 1) && t != 0;
 			bool   irq_en   = SB_BFE(tm_cnt_h, 6, 1);
-			UINT16 value    = gba_io_read16(gba, GBA_TM0CNT_L + t * 4);
+			UINT16 value = gba_io_read16(gba, GBA_TM0CNT_L + t * 4);
 			if (enable != gba->timers[t].last_enable && enable) {
 				gba->timers[t].startup_delay = 2;
 				value = gba->timers[t].reload_value;
@@ -34,7 +34,8 @@ static inline void gba_compute_timers(gba_t* gba)
 				gba->timers[t].startup_delay -= ticks;
 				gba->timers[t].last_enable    = enable;
 				if (gba->timers[t].startup_delay >= 0) {
-					if (gba->timers[t].startup_delay < timer_ticks_before_event)timer_ticks_before_event = gba->timers[t].startup_delay;
+					if (gba->timers[t].startup_delay < timer_ticks_before_event)
+						timer_ticks_before_event = gba->timers[t].startup_delay;
 					continue;
 				}
 				gba->timers[t].startup_delay = -1;
@@ -51,46 +52,46 @@ static inline void gba_compute_timers(gba_t* gba)
 					value = v;
 				}
 			} else {
-			last_timer_overflow = 0;
-			INT32 prescale_duty = prescaler_lookup[prescale];
+				last_timer_overflow = 0;
+				INT32 prescale_duty = prescaler_lookup[prescale];
 
-			INT32 increment = (INT32)((pos >> prescale_duty) - (old_global_timer >> prescale_duty));
-			INT32 v         = value + increment;
-			while (v > 0xffff) {
-				v = (v + gba->timers[t].reload_value) - 0x10000;
-				last_timer_overflow++;
+				INT32 increment = (INT32)((pos >> prescale_duty) - (old_global_timer >> prescale_duty));
+				INT32 v = value + increment;
+				while (v > 0xffff) {
+					v = (v + gba->timers[t].reload_value) - 0x10000;
+					last_timer_overflow++;
+				}
+				value = v;
+				INT32 ticks_before_overflow = (INT32)(0xffff - value) << (prescale_duty);
+				if (ticks_before_overflow < timer_ticks_before_event)
+					timer_ticks_before_event = ticks_before_overflow;
 			}
-			value = v;
-			INT32 ticks_before_overflow = (int)(0xffff - value) << (prescale_duty);
-			if (ticks_before_overflow < timer_ticks_before_event)
-				timer_ticks_before_event = ticks_before_overflow;
-		}
-		if (last_timer_overflow) {
-			UINT16 soundcnt_h = gba_io_read16(gba, GBA_SOUNDCNT_H);
-			if (t < 2) {
-				for (INT32 i = 0; i < 2; ++i) {
-					INT32 timer = SB_BFE(soundcnt_h, 10 + i * 4, 1);
-					if (timer != t)
-						continue;
-					INT32 samples_to_pop = last_timer_overflow;
-					INT32 size = (gba->audio.fifo[i].write_ptr - gba->audio.fifo[i].read_ptr) & 0x1f;
-					while (samples_to_pop-- && size) {
-						gba->audio.fifo[i].read_ptr = (gba->audio.fifo[i].read_ptr + 1) & 0x1f;
-						--size;
-					}
-					if (size < GBA_AUDIO_DMA_ACTIVATE_THRESHOLD) {
-						gba->dma[i + 1].activate_audio_dma = gba->activate_dmas = true;
+			if (last_timer_overflow) {
+				UINT16 soundcnt_h = gba_io_read16(gba, GBA_SOUNDCNT_H);
+				if (t < 2) {
+					for (INT32 i = 0; i < 2; ++i) {
+						INT32 timer = SB_BFE(soundcnt_h, 10 + i * 4, 1);
+						if (timer != t)
+							continue;
+						INT32 samples_to_pop = last_timer_overflow;
+						INT32 size = (gba->audio.fifo[i].write_ptr - gba->audio.fifo[i].read_ptr) & 0x1f;
+						while (samples_to_pop-- && size) {
+							gba->audio.fifo[i].read_ptr = (gba->audio.fifo[i].read_ptr + 1) & 0x1f;
+							--size;
+						}
+						if (size < GBA_AUDIO_DMA_ACTIVATE_THRESHOLD) {
+							gba->dma[i + 1].activate_audio_dma = gba->activate_dmas = true;
+						}
 					}
 				}
+				if (irq_en) {
+					UINT16 if_bit = 1 << (GBA_INT_TIMER0 + t);
+					gba_send_interrupt(gba, 4, if_bit);
+				}
 			}
-			if (irq_en) {
-				UINT16 if_bit = 1 << (GBA_INT_TIMER0 + t);
-				gba_send_interrupt(gba, 4, if_bit);
-			}
-		}
-		gba->timers[t].reload_value = gba->timers[t].pending_reload_value;
+			gba->timers[t].reload_value = gba->timers[t].pending_reload_value;
 
-		gba_io_store16(gba, GBA_TM0CNT_L + t * 4, value);
+			gba_io_store16(gba, GBA_TM0CNT_L + t * 4, value);
 		} else
 			last_timer_overflow = 0;
 		gba->timers[t].last_enable = enable;

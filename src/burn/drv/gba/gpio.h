@@ -5,12 +5,11 @@
 
 #include "gba.h"
 
-// Howard Hinnant's days_from_civil / civil_from_days (public domain). Proleptic
-// Gregorian, handles any date including 2100 (not a leap year).
+// Howard Hinnant's days_from_civil / civil_from_days (public domain)
 static inline INT32 gba_rtc_days_from_civil(INT32 y, UINT32 m, UINT32 d)
 {
 	y -= (m <= 2);
-	INT32 era = (y >= 0 ? y : y - 399) / 400;
+	INT32  era = (y >= 0 ? y : y - 399) / 400;
 	UINT32 yoe = (UINT32)(y - era * 400);
 	UINT32 doy = (153 * (m + (m > 2 ? -3 : 9)) + 2) / 5 + d - 1;
 	UINT32 doe = yoe * 365 + yoe / 4 - yoe / 100 + doy;
@@ -20,12 +19,12 @@ static inline INT32 gba_rtc_days_from_civil(INT32 y, UINT32 m, UINT32 d)
 static inline void gba_rtc_civil_from_days(INT32 z, INT32 *y, UINT32 *m, UINT32 *d)
 {
 	z += 719468;
-	INT32 era = (z >= 0 ? z : z - 146096) / 146097;
+	INT32  era = (z >= 0 ? z : z - 146096) / 146097;
 	UINT32 doe = (UINT32)(z - era * 146097);
 	UINT32 yoe = (doe - doe / 1460 + doe / 36524 - doe / 146096) / 365;
-	UINT32 y0 = yoe + (UINT32)era * 400;
+	UINT32 y0  = yoe + (UINT32)era * 400;
 	UINT32 doy = doe - (365 * yoe + yoe / 4 - yoe / 100);
-	UINT32 mp = (5 * doy + 2) / 153;
+	UINT32 mp  = (5 * doy + 2) / 153;
 	*d = doy - (153 * mp + 2) / 5 + 1;
 	*m = mp + (mp < 10 ? 3 : -9);
 	*y = (INT32)y0 + (*m <= 2);
@@ -39,21 +38,26 @@ static inline INT64 gba_rtc_civil_to_seconds(const gba_rtc_civil_t *c)
 
 static inline void gba_rtc_seconds_to_civil(INT64 sec, gba_rtc_civil_t *c)
 {
-	INT64 day = sec / 86400;
+	INT64 day      = sec / 86400;
 	INT32 into_day = (INT32)(sec - day * 86400);
-	if (into_day < 0) { into_day += 86400; day -= 1; }
+	if (into_day < 0) {
+		into_day += 86400;
+		day      -= 1;
+	}
 	INT32 y;
 	UINT32 m, d;
 	gba_rtc_civil_from_days((INT32)day + GBA_RTC_DAYS_1970_TO_2000, &y, &m, &d);
-	if (y < 2000) y = 2000 + ((y - 2000) % 100 + 100) % 100;
-	else if (y > 2099) y = 2000 + ((y - 2000) % 100 + 100) % 100;
-	c->year = (UINT16)y;
-	c->month = (UINT8)m;
-	c->day = (UINT8)d;
-	c->weekday = (UINT8)(((day % 7) + 7 + 6) % 7);  // 2000-01-01 = Saturday (6, 0=Sun)
-	c->hour = (UINT8)(into_day / 3600);
-	c->minute = (UINT8)((into_day % 3600) / 60);
-	c->second = (UINT8)(into_day % 60);
+	if (y < 2000)
+		y = 2000 + ((y - 2000) % 100 + 100) % 100;
+	else if (y > 2099)
+		y = 2000 + ((y - 2000) % 100 + 100) % 100;
+	c->year    = (UINT16)y;
+	c->month   = (UINT8 )m;
+	c->day     = (UINT8 )d;
+	c->weekday = (UINT8)(((day % 7) + 7 + 6) % 7);	// 2000-01-01 = Saturday (6, 0=Sun)
+	c->hour    = (UINT8)( into_day / 3600);
+	c->minute  = (UINT8)((into_day % 3600) / 60);
+	c->second  = (UINT8)( into_day % 60);
 }
 
 static inline INT64 gba_rtc_current_seconds(const gba_rtc_t *rtc)
@@ -81,7 +85,8 @@ static inline INT32 gba_rtc_bcd_decode(UINT8 value, UINT8 maximum, UINT8 *result
 
 static inline UINT8 gba_rtc_hour_encode(UINT8 hour_24, UINT8 status)
 {
-	if (status & 0x40) return gba_rtc_bcd_encode(hour_24);
+	if (status & 0x40)
+		return gba_rtc_bcd_encode(hour_24);
 	return gba_rtc_bcd_encode(hour_24 % 12) | (hour_24 >= 12 ? 0x80 : 0);
 }
 
@@ -101,15 +106,15 @@ static inline INT32 gba_rtc_hour_decode(UINT8 status, UINT8 value, UINT8 *hour)
 
 static inline void gba_rtc_transport_reset(gba_rtc_t *rtc)
 {
-	rtc->phase = GBA_RTC_IDLE;
-	rtc->command = 0;
+	rtc->phase            = GBA_RTC_IDLE;
+	rtc->command          = 0;
 	rtc->command_register = 0;
-	rtc->command_read = 0;
-	rtc->bit_index = 0;
-	rtc->byte_index = 0;
-	rtc->byte_count = 0;
+	rtc->command_read     = 0;
+	rtc->bit_index        = 0;
+	rtc->byte_index       = 0;
+	rtc->byte_count       = 0;
 	memset(rtc->buffer, 0, sizeof(rtc->buffer));
-	rtc->sio_out = 1;
+	rtc->sio_out          = 1;
 }
 
 static inline void gba_rtc_cold_init(gba_rtc_t *rtc, const gba_rtc_civil_t *seed)
@@ -119,15 +124,15 @@ static inline void gba_rtc_cold_init(gba_rtc_t *rtc, const gba_rtc_civil_t *seed
 	const gba_rtc_civil_t *s = (seed && seed->year >= 2000 && seed->year <= 2099 &&
 		seed->month >= 1 && seed->month <= 12 && seed->day >= 1 &&
 		seed->day <= 31 && seed->hour <= 23 && seed->minute <= 59 && seed->second <= 59) ? seed : &fallback;
-	rtc->rtc_seconds = gba_rtc_civil_to_seconds(s);
+	rtc->rtc_seconds  = gba_rtc_civil_to_seconds(s);
 	rtc->host_seconds = GBA_RTC_NOW_SECONDS();
-	rtc->status = 0x40;
+	rtc->status       = 0x40;
 	gba_rtc_transport_reset(rtc);
 }
 
 static inline void gba_rtc_reanchor(gba_rtc_t *rtc, INT64 rtc_seconds)
 {
-	rtc->rtc_seconds = rtc_seconds;
+	rtc->rtc_seconds  = rtc_seconds;
 	rtc->host_seconds = GBA_RTC_NOW_SECONDS();
 }
 
@@ -137,19 +142,19 @@ static inline void gba_rtc_latch_read(gba_rtc_t *rtc)
 	switch (rtc->command_register) {
 		case GBA_RTC_STATUS:
 			rtc->byte_count = 1;
-			rtc->buffer[0] = rtc->status;
+			rtc->buffer[0]  = rtc->status;
 			break;
 		case GBA_RTC_DATE_TIME: {
 			gba_rtc_civil_t c;
 			gba_rtc_seconds_to_civil(gba_rtc_current_seconds(rtc), &c);
 			rtc->byte_count = 7;
 			rtc->buffer[0] = gba_rtc_bcd_encode((UINT8)(c.year % 100));
-			rtc->buffer[1] = gba_rtc_bcd_encode(c.month);
-			rtc->buffer[2] = gba_rtc_bcd_encode(c.day);
-			rtc->buffer[3] = gba_rtc_bcd_encode(c.weekday);
+			rtc->buffer[1] = gba_rtc_bcd_encode( c.month);
+			rtc->buffer[2] = gba_rtc_bcd_encode( c.day);
+			rtc->buffer[3] = gba_rtc_bcd_encode( c.weekday);
 			rtc->buffer[4] = gba_rtc_hour_encode(c.hour, rtc->status);
-			rtc->buffer[5] = gba_rtc_bcd_encode(c.minute);
-			rtc->buffer[6] = gba_rtc_bcd_encode(c.second);
+			rtc->buffer[5] = gba_rtc_bcd_encode( c.minute);
+			rtc->buffer[6] = gba_rtc_bcd_encode( c.second);
 			break;
 		}
 		case GBA_RTC_TIME: {
@@ -157,8 +162,8 @@ static inline void gba_rtc_latch_read(gba_rtc_t *rtc)
 			gba_rtc_seconds_to_civil(gba_rtc_current_seconds(rtc), &c);
 			rtc->byte_count = 3;
 			rtc->buffer[0] = gba_rtc_hour_encode(c.hour, rtc->status);
-			rtc->buffer[1] = gba_rtc_bcd_encode(c.minute);
-			rtc->buffer[2] = gba_rtc_bcd_encode(c.second);
+			rtc->buffer[1] = gba_rtc_bcd_encode( c.minute);
+			rtc->buffer[2] = gba_rtc_bcd_encode( c.second);
 			break;
 		}
 		default:
@@ -225,7 +230,7 @@ static inline void gba_rtc_commit_write(gba_rtc_t *rtc)
 
 static inline UINT8 gba_rtc_reverse8(UINT8 value)
 {
-	value = (value >> 4) | (value << 4);
+	value = ( value >> 4)         | ( value         << 4);
 	value = ((value & 0x33) << 2) | ((value & 0xcc) >> 2);
 	return ((value & 0x55) << 1) | ((value & 0xaa) >> 1);
 }
@@ -239,10 +244,10 @@ static inline void gba_rtc_decode_command(gba_rtc_t *rtc)
 		return;
 	}
 
-	rtc->command = command;
+	rtc->command          =  command;
 	rtc->command_register = (command >> 4) & 7;
-	rtc->command_read = (command >> 7) & 1;
-	rtc->bit_index = 0;
+	rtc->command_read     = (command >> 7) & 1;
+	rtc->bit_index  = 0;
 	rtc->byte_index = 0;
 	memset(rtc->buffer, 0, sizeof(rtc->buffer));
 
@@ -252,7 +257,7 @@ static inline void gba_rtc_decode_command(gba_rtc_t *rtc)
 		return;
 	}
 	if (rtc->command_register == GBA_RTC_FORCE_IRQ || rtc->command_register == GBA_RTC_UNUSED ||
-		rtc->command_register == GBA_RTC_UNUSED2 || rtc->command_register == GBA_RTC_UNUSED3) {
+		rtc->command_register == GBA_RTC_UNUSED2   || rtc->command_register == GBA_RTC_UNUSED3) {
 		rtc->phase = GBA_RTC_COMPLETE;
 		return;
 	}
@@ -263,7 +268,7 @@ static inline void gba_rtc_decode_command(gba_rtc_t *rtc)
 	} else {
 		rtc->byte_count = rtc->command_register == GBA_RTC_STATUS ? 1 :
 			rtc->command_register == GBA_RTC_DATE_TIME ? 7 :
-			rtc->command_register == GBA_RTC_TIME ? 3 : 0;
+			rtc->command_register == GBA_RTC_TIME      ? 3 : 0;
 		rtc->phase = rtc->byte_count ? GBA_RTC_RECEIVE : GBA_RTC_COMPLETE;
 	}
 }
@@ -305,10 +310,10 @@ static inline void gba_rtc_shift_output(gba_rtc_t *rtc)
 
 static inline UINT8 gba_rtc_update_pins(gba_rtc_t *rtc, UINT8 pins)
 {
-	UINT8 old = rtc->last_pins;
-	UINT8 cs = (pins >> 2) & 1;
-	UINT8 old_cs = (old >> 2) & 1;
-	UINT8 sck = pins & 1;
+	UINT8 old     = rtc->last_pins;
+	UINT8 cs      = (pins >> 2) & 1;
+	UINT8 old_cs  = (old >> 2) & 1;
+	UINT8 sck     = pins & 1;
 	UINT8 old_sck = old & 1;
 
 	if (!cs) {
@@ -318,12 +323,14 @@ static inline UINT8 gba_rtc_update_pins(gba_rtc_t *rtc, UINT8 pins)
 	}
 	if (!old_cs) {
 		gba_rtc_transport_reset(rtc);
-		rtc->phase = GBA_RTC_COMMAND;
+		rtc->phase     = GBA_RTC_COMMAND;
 		rtc->last_pins = pins;
 		return rtc->sio_out;
 	}
-	if (!old_sck && sck) gba_rtc_sample_input(rtc, (old >> 1) & 1);
-	if (old_sck && !sck) gba_rtc_shift_output(rtc);
+	if (!old_sck && sck)
+		gba_rtc_sample_input(rtc, (old >> 1) & 1);
+	if (old_sck && !sck)
+		gba_rtc_shift_output(rtc);
 	rtc->last_pins = pins;
 	return rtc->sio_out;
 }
@@ -469,9 +476,12 @@ static inline void gba_process_gyro_sensor(gba_t* gba)
 
 static inline void gba_gpio_update(gba_t* gba)
 {
-	if (gba->cart.features & GBA_CART_RTC  ) gba_process_rtc_state_machine(gba);
-	if (gba->cart.features & GBA_CART_SOLAR) gba_process_solar_sensor(gba);
-	if (gba->cart.features & GBA_CART_GYRO ) gba_process_gyro_sensor(gba);
+	if (gba->cart.features & GBA_CART_RTC)
+		gba_process_rtc_state_machine(gba);
+	if (gba->cart.features & GBA_CART_SOLAR)
+		gba_process_solar_sensor(gba);
+	if (gba->cart.features & GBA_CART_GYRO)
+		gba_process_gyro_sensor(gba);
 	gba_gpio_update_rumble(gba);
 }
 

@@ -1,12 +1,7 @@
 #include "burnint.h"
 #include "gba.h"
 
-// ---------------------------------------------------------------------------
-// Cross-subsystem forward declarations.  Every subsystem header is aggregated
-// into the single translation unit of gba.cpp, so these declarations let a
-// function in one header call a static function defined in another regardless
-// of include order.  Specifiers mirror each definition exactly.
-// ---------------------------------------------------------------------------
+// Forward declarations for cross-header calls within this single translation unit
 
 // apu.h
 static inline void    gba_process_audio_writes(gba_t* gba);
@@ -40,6 +35,7 @@ static inline void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_
 
 // ppu.h
 static inline void    gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
+static inline void    gba_ppu_refresh_status(gba_t* gba);
 
 // sio.h
 #define GBA_SIO_TRANSFER_TICKS	(8 * 8)
@@ -446,17 +442,17 @@ INT32 GbaCoreReset(GbaCore *core)
 	if (core == NULL || core->rom == NULL)
 		return 1;
 	UINT8 battery[GBA_BATTERY_CAPACITY];
-	INT64 rtcSeconds      = core->state.rtc.rtc_seconds;
-	INT64 rtcHostSeconds  = core->state.rtc.host_seconds;
-	UINT8 rtcStatus       = core->state.rtc.status;
+	INT64 rtcSeconds     = core->state.rtc.rtc_seconds;
+	INT64 rtcHostSeconds = core->state.rtc.host_seconds;
+	UINT8 rtcStatus      = core->state.rtc.status;
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
-	core->host.rom_data   = core->rom;
-	core->host.rom_size   = core->romSize;
-	core->host.bios_data  = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
-	core->host.bios_size  = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
-	gba_host_loading      = &core->host;
-	const bool loaded     = gba_load_rom(&core->host, &core->state, &core->scratch);
-	gba_host_loading      = NULL;
+	core->host.rom_data  = core->rom;
+	core->host.rom_size  = core->romSize;
+	core->host.bios_data = (core->externalBiosLoaded && !core->forceCustomBios) ? core->externalBios : NULL;
+	core->host.bios_size = (core->externalBiosLoaded && !core->forceCustomBios) ? sizeof(core->externalBios) : 0;
+	gba_host_loading     = &core->host;
+	const bool loaded    = gba_load_rom(&core->host, &core->state, &core->scratch);
+	gba_host_loading     = NULL;
 	if (!loaded)
 		return 1;
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
@@ -488,8 +484,8 @@ INT32 GbaCoreConfigureAudio(GbaCore *core, double sourceRate, INT32 outputFrames
 		return 1;
 	core->host.capture_audio = captureAudio != 0;
 	if (sourceRate != core->sourceRate || outputFrames != core->outputFrames) {
-		core->sourceRate             = sourceRate;
-		core->outputFrames           = outputFrames;
+		core->sourceRate   = sourceRate;
+		core->outputFrames = outputFrames;
 		core->host.audio_sample_rate = sourceRate;
 		GbaCoreClearPresentation(core);
 	}
@@ -585,7 +581,9 @@ size_t GbaCoreGetBatteryCapacity()
 
 size_t GbaCoreGetBatterySize(const GbaCore *core)
 {
-	if (core == NULL)                return   0;
+	if (core == NULL)
+		return   0;
+
 	switch (core->state.cart.backup_type) {
 		case GBA_BACKUP_EEPROM_512B: return 512;
 		case GBA_BACKUP_EEPROM:
@@ -654,6 +652,10 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   ppu_event.callback);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   sio_event.next);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   sio_event.callback);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   audio_event.next);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   audio_event.callback);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   dma_event.next);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   dma_event.callback);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timing.head);
 #undef GBA_CLEAR_STATE_FIELD
 	return 0;
@@ -713,8 +715,19 @@ void gba_timing_init(gba_t* gba)
 	gba->sio_event.priority   = GBA_EVENT_PRIORITY_SIO;
 	gba->sio_event.callback   = gba_sio_event;
 	gba->sio_event.active     = false;
+	gba->audio_event.next     = NULL;
+	gba->audio_event.when     = 0;
+	gba->audio_event.priority = GBA_EVENT_PRIORITY_AUDIO;
+	gba->audio_event.callback = gba_audio_event;
+	gba->audio_event.active   = false;
+	gba->dma_event.next       = NULL;
+	gba->dma_event.when       = 0;
+	gba->dma_event.priority   = GBA_EVENT_PRIORITY_DMA;
+	gba->dma_event.callback   = gba_dma_event;
+	gba->dma_event.active     = false;
 	gba_timing_schedule(gba, &gba->timer_event, 0);
 	gba_timing_schedule(gba, &gba->ppu_event,   0);
+	gba_timing_schedule(gba, &gba->audio_event, GBA_AUDIO_EVENT_INTERVAL);
 	gba_update_interrupt_pending(gba);
 }
 
@@ -726,17 +739,34 @@ void gba_timing_rebind(gba_t* gba)
 	gba->ppu_event.callback   = gba_ppu_event;
 	gba->sio_event.priority   = GBA_EVENT_PRIORITY_SIO;
 	gba->sio_event.callback   = gba_sio_event;
+	gba->audio_event.priority = GBA_EVENT_PRIORITY_AUDIO;
+	gba->audio_event.callback = gba_audio_event;
+	gba->dma_event.priority   = GBA_EVENT_PRIORITY_DMA;
+	gba->dma_event.callback   = gba_dma_event;
 	gba_timing_rebuild(gba);
 	gba_update_interrupt_pending(gba);
 }
 
-// lead-in length matching the per-cycle fast-forward horizon: the ppu settles on
-// its boundary, the timer one cycle past it; due events settle immediately
+// Fast-forward lead-in matching the per-cycle horizon; due events settle immediately
 static inline INT32 gba_timing_ff(gba_t* gba, INT32 ticks)
 {
 	INT32 ff = ticks;
 	if (gba->ppu_event.active) {
 		INT32 d = (INT32)(gba->ppu_event.when - gba->global_timer);
+		if (d < 0)
+			d = 0;
+		if (d < ff)
+			ff = d;
+	}
+	if (gba->audio_event.active) {
+		INT32 d = (INT32)(gba->audio_event.when - gba->global_timer);
+		if (d < 0)
+			d = 0;
+		if (d < ff)
+			ff = d;
+	}
+	if (gba->dma_event.active) {
+		INT32 d = (INT32)(gba->dma_event.when - gba->global_timer);
 		if (d < 0)
 			d = 0;
 		if (d < ff)
@@ -751,30 +781,20 @@ static inline INT32 gba_timing_ff(gba_t* gba, INT32 ticks)
 	return ff;
 }
 
-// advances the master clock by `ticks` cycles, firing every event that comes due
-// on the way.  Each cycle shifts the IF pipeline before its events fire, and
-// events landing exactly on the quantum end stay pending so the next iteration's
-// DMA/exec decision runs first, matching the per-cycle cadence.
+// Advance the master clock by ticks, firing due events; per-cycle IF shifts precede events
 static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 {
 	INT32 event_free = gba_timing_ff(gba, ticks);
 	if (ticks <= event_free) {
-		// event-free span: no dispatch, so shifts and audio settle in one batch
+		// event-free span: no dispatch, so shifts settle in one batch
 		gba->global_timer += ticks;
 		if (gba->active_if_pipe_stages) {
 			for (INT32 i = 0; i < ticks; ++i)
 				gba_tick_interrupts(gba);
 		}
-		gba->audio.sample_accum += ticks;
-		if (gba->audio.sample_accum >= 512) {
-			double delta_t = (double)gba->audio.sample_accum / (16 * 1024 * 1024);
-			gba_tick_audio(gba, emu, delta_t, gba->audio.sample_accum);
-			gba->audio.sample_accum = 0;
-		}
 		return;
 	}
 	INT32 advanced   = 0;
-	INT32 audio_pos  = event_free;
 	INT32 dma_on_pos = -1;
 	INT32 shifted    = 0;
 	bool  dma_was_on = gba->activate_dmas;
@@ -784,16 +804,6 @@ static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 			if (SB_UNLIKELY(gba->active_if_pipe_stages))
 				gba_tick_interrupts(gba);
 			++shifted;
-		}
-		if (advanced == audio_pos) {
-			// audio batch point: end of the event-free lead-in, full span credited
-			audio_pos = -1;
-			gba->audio.sample_accum += ticks;
-			if (gba->audio.sample_accum >= 512) {
-				double delta_t = (double)gba->audio.sample_accum / (16 * 1024 * 1024);
-				gba_tick_audio(gba, emu, delta_t, gba->audio.sample_accum);
-				gba->audio.sample_accum = 0;
-			}
 		}
 		if (advanced < ticks) {
 			gba_timing_dispatch(gba, emu);
@@ -806,8 +816,6 @@ static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 		INT32 step  = ticks - advanced;
 		if (until < step)
 			step = until;
-		if (audio_pos >= 0 && audio_pos - advanced < step)
-			step = audio_pos - advanced;
 		if (step < 1)
 			step = 1;
 		gba->global_timer += step;
@@ -886,8 +894,7 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 				if (ticks < 1)
 					ticks = 1;
 				gba_advance(gba, emu, ticks);
-				// a halted CPU wakes within the interrupt latency: settle the
-				// IF pipeline promptly instead of running to the next horizon
+				// settle the IF pipeline within the interrupt latency, not the next horizon
 				while (gba->active_if_pipe_stages && !gba->interrupt_pending)
 					gba_advance(gba, emu, 1);
 				continue;

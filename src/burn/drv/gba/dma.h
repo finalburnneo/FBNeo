@@ -5,6 +5,35 @@
 
 #include "gba.h"
 
+// PPU-timed DMA wake, 2 cycles after the hblank/vblank edge; rescan timing bits if dma_wait_ppu is stale
+static inline void gba_dma_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late)
+{
+	(void)emu;
+	(void)cycles_late;
+	if (!gba->dma_wait_ppu) {
+		for (INT32 i = 0; i < 4; ++i) {
+			UINT16 cnt_h = gba_io_read16(gba, GBA_DMA0CNT_H + 12 * i);
+			INT32  mode  = SB_BFE(cnt_h, 12, 2);
+			if ((cnt_h & 0x8000) && (mode == 1 || mode == 2 || (mode == 3 && i == 3))) {
+				gba->dma_wait_ppu = true;
+				break;
+			}
+		}
+	}
+	gba->activate_dmas |= gba->dma_wait_ppu;
+}
+
+// Count latched at enable/repeat; CNT_L writes don't affect a pending transfer
+static inline UINT32 gba_dma_latch_count(gba_t* gba, INT32 i)
+{
+	UINT32 cnt = gba_io_read16(gba, GBA_DMA0CNT_L + 12 * i);
+	if (i != 3)
+		cnt &= 0x3fff;
+	if (cnt == 0)
+		cnt = i == 3 ? 0x10000 : 0x4000;
+	return cnt;
+}
+
 static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 {
 	INT32 ticks = 0;
@@ -20,7 +49,7 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				gba->dma[i].last_enable = enable;
 				gba->dma[i].source_addr = gba_io_read32(gba, GBA_DMA0SAD + 12 * i);
 				gba->dma[i].dest_addr   = gba_io_read32(gba, GBA_DMA0DAD + 12 * i);
-				//GBA Suite says that these need to be force aligned
+				// force align addresses on enable
 				if (type) {
 					gba->dma[i].dest_addr   &= ~3;
 					gba->dma[i].source_addr &= ~3;
@@ -30,6 +59,10 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				}
 				gba->dma[i].current_transaction = 0;
 				gba->dma[i].startup_delay       = 2;
+				// (re)enabled PPU-timed channel waits for the NEXT edge, not the current one
+				gba->dma[i].last_vblank_seq = gba->ppu.vblank_seq;
+				gba->dma[i].last_hblank_seq = gba->ppu.hblank_seq;
+				gba->dma[i].latched_count   = gba_dma_latch_count(gba, i);
 			}
 			INT32  dst_addr_ctl = SB_BFE(cnt_h,  5, 2);	// 0: incr 1: decr 2: fixed 3: incr reload
 			INT32  src_addr_ctl = SB_BFE(cnt_h,  7, 2);	// 0: incr 1: decr 2: fixed 3: not allowed
@@ -53,25 +86,28 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				if (dst_addr_ctl == 3) {
 					gba->dma[i].dest_addr = gba_io_read32(gba, GBA_DMA0DAD + 12 * i);
 				}
-				bool last_vblank = gba->dma[i].last_vblank;
-				bool last_hblank = gba->dma[i].last_hblank;
-				gba->dma[i].last_vblank = gba->ppu.last_vblank;
-				gba->dma[i].last_hblank = gba->ppu.last_hblank;
-				if (mode == 1 && (!gba->ppu.last_vblank || last_vblank)) {
+				// PPU-timed triggers: fire at most once per hblank/vblank rising
+				// edge.  The seq counters increment inside the ppu event at the
+				// edge, so this is exact regardless of when the poll runs.
+				bool vblank_edge = gba->ppu.last_vblank && gba->dma[i].last_vblank_seq != gba->ppu.vblank_seq;
+				bool hblank_edge = gba->ppu.last_hblank && gba->dma[i].last_hblank_seq != gba->ppu.hblank_seq;
+				gba->dma[i].last_vblank_seq = gba->ppu.vblank_seq;
+				gba->dma[i].last_hblank_seq = gba->ppu.hblank_seq;
+				if (mode == 1 && !vblank_edge) {
 					gba->dma_wait_ppu = true;
 					continue;
 				}
 				if (mode == 2) {
 					gba->dma_wait_ppu = true;
 					UINT16 vcount = gba_io_read16(gba, GBA_VCOUNT);
-					if (vcount >= 160 || !gba->ppu.last_hblank || last_hblank)
+					if (vcount >= 160 || !hblank_edge)
 						continue;
 				}
-				//Video dma: fires once per scanline on lines 2-161
+				// Video dma: fires once per scanline on lines 2-161
 				if (mode == 3 && i == 3) {
 					gba->dma_wait_ppu = true;
 					UINT16 vcount = gba_io_read16(gba, GBA_VCOUNT);
-					if (!gba->ppu.last_hblank || last_hblank)
+					if (!hblank_edge)
 						continue;
 					if (vcount < 2 || vcount >= 162)
 						continue;
@@ -81,7 +117,7 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 
 				if (dst_addr_ctl == 3) {
 					gba->dma[i].dest_addr = gba_io_read32(gba, GBA_DMA0DAD + 12 * i);
-					//GBA Suite says that these need to be force aligned
+					// force align reloaded dest address
 					if (type)
 						gba->dma[i].dest_addr &= ~3;
 					else
@@ -107,18 +143,12 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 						ticks += gba_compute_access_cycles_dma(gba, gba->dma[i].source_addr, 2) <= 4;
 				}
 				gba->last_transaction_dma = true;
-				UINT32 cnt = gba_io_read16(gba, GBA_DMA0CNT_L + 12 * i);
-
-				if (i != 3)
-					cnt &= 0x3fff;
-				if (cnt == 0)
-					cnt = i == 3 ? 0x10000 : 0x4000;
+				UINT32 cnt = gba->dma[i].latched_count;	// latched at enable / last completion
 
 				static const UINT32 src_mask[] = { 0x07FFFFFF, 0x0FFFFFFF, 0x0FFFFFFF, 0x0FFFFFFF };
 				static const UINT32 dst_mask[] = { 0x07FFFFFF, 0x07FFFFFF, 0x07FFFFFF, 0x0FFFFFFF };
 				gba->dma[i].source_addr &= src_mask[i];
 				gba->dma[i].dest_addr   &= dst_mask[i];
-				gba_io_store16(gba, GBA_DMA0CNT_L + 12 * i, cnt);
 			}
 			const static INT32 dir_lookup[4] = { 1, -1, 0, 1 };
 			INT32 src_dir = dir_lookup[src_addr_ctl];
@@ -126,7 +156,7 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 
 			UINT32 src = gba->dma[i].source_addr;
 			UINT32 dst = gba->dma[i].dest_addr;
-			UINT32 cnt = gba_io_read16(gba, GBA_DMA0CNT_L + 12 * i);
+			UINT32 cnt = gba->dma[i].latched_count;	// keep the whole transfer on the latched count
 
 			// ROM ignores direction and always increments
 			if (src >= 0x08000000 && src < 0x0e000000)
@@ -159,17 +189,11 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 						((UINT64*)gba->mem.cart_backup)[addr] = data;
 						gba->cart.backup_is_dirty = true;
 					} else if (cnt ==  9) {
-						// 2 bits "11" (Read Request)
-						// 6 bits eeprom address (MSB first)
-						// 1 bit "0"
-						// Write data 6 bit address
+						// read request: 2b "11" + 6b addr(MSB first) + 1b "0"
 						gba->mem.eeprom_addr = gba_read_eeprom_bitstream(gba, src, 2,  6, type ? 4 : 2, src_dir);
 						gba->cart.eeprom_read_bits_remaining = 68;
 					} else if (cnt == 17) {
-						// 2 bits "11" (Read Request)
-						// 14 bits eeprom address (MSB first)
-						// 1 bit "0"
-						// Write data 6 bit address
+						// read request: 2b "11" + 14b addr(MSB first) + 1b "0"
 						gba->mem.eeprom_addr = gba_read_eeprom_bitstream(gba, src, 2, 14, type ? 4 : 2, src_dir) & 0x3ff;
 						gba->cart.eeprom_read_bits_remaining = 68;
 					} else {
@@ -260,12 +284,11 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				}
 				if (!dma_repeat || mode == 0) {
 					cnt_h &= 0x7fff;
-					//gba_io_store16(gba, GBA_DMA0CNT_L+12*i,0);
-					//Reload on incr reload
 					enable = false;
 					gba_io_store16(gba, GBA_DMA0CNT_H + 12 * i, cnt_h);
 				} else {
 					gba->dma[i].current_transaction = 0;
+					gba->dma[i].latched_count = gba_dma_latch_count(gba, i);
 				}
 			}
 		}

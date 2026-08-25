@@ -41,7 +41,7 @@ static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 {
 	if (baddr >= 0x08000000) {
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) {
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data >> ((baddr & 3) * 8));
 			return;
 		}
@@ -62,7 +62,7 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 {
 	if (baddr >= 0x08000000) {
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) {
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data >> ((baddr & 1) * 8));
 			return;
 		}
@@ -78,8 +78,8 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 			return;
 		}
 	}
-	UINT32* val  = gba_dword_lookup(gba, baddr, GBA_REQ_WRITE | GBA_REQ_2B);
-	INT32 offset = SB_BFE(baddr, 1, 1);
+	UINT32* val    = gba_dword_lookup(gba, baddr, GBA_REQ_WRITE | GBA_REQ_2B);
+	INT32   offset = SB_BFE(baddr, 1, 1);
 	((UINT16*)val)[offset] = data;
 }
 
@@ -91,12 +91,12 @@ static inline void gba_store8(gba_t* gba, UINT32 baddr, UINT32 data)
 			gba_store16(gba, baddr & ~1, (data & 0xff) * 0x0101);
 			return;
 		}
-		if (((baddr & 0xff000000) == 0x06000000) && ((baddr & 0x1ffff) <= 0x0013FFF)) {
+		if (((baddr & 0xff000000) == 0x06000000) && ((baddr & 0x1ffff) <= 0x0013fff)) {
 			gba_store16(gba, baddr & ~1, (data & 0xff) * 0x0101);
 			return;
 		}
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
-		if ((baddr & 0xfe000000) == 0xE000000) {
+		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data);
 			return;
 		}
@@ -150,22 +150,22 @@ static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 {
 	// TODO: Make the waitstate for the ROM configureable
 	const INT32 wait_state_table[16 * 4] = {
-		1,1,1,1,	//0x00 (bios)
-		1,1,1,1,	//0x01 (bios)
-		3,3,6,6,	//0x02 (256k WRAM)
-		1,1,1,1,	//0x03 (32k WRAM)
-		1,1,1,1,	//0x04 (IO)
-		1,1,2,2,	//0x05 (BG/OBJ Palette)
-		1,1,2,2,	//0x06 (VRAM)
-		1,1,1,1,	//0x07 (OAM)
-		4,4,8,8,	//0x08 (GAMEPAK ROM 0)
-		4,4,8,8,	//0x09 (GAMEPAK ROM 0)
-		4,4,8,8,	//0x0A (GAMEPAK ROM 1)
-		4,4,8,8,	//0x0B (GAMEPAK ROM 1)
-		4,4,8,8,	//0x0C (GAMEPAK ROM 2)
-		4,4,8,8,	//0x0D (GAMEPAK ROM 2)
-		4,4,4,4,	//0x0E (GAMEPAK SRAM)
-		1,1,1,1,	//0x0F (unused)
+		1, 1, 1, 1,		//0x00 (bios)
+		1, 1, 1, 1,		//0x01 (bios)
+		3, 3, 6, 6,		//0x02 (256k WRAM)
+		1, 1, 1, 1,		//0x03 (32k WRAM)
+		1, 1, 1, 1,		//0x04 (IO)
+		1, 1, 2, 2,		//0x05 (BG/OBJ Palette)
+		1, 1, 2, 2,		//0x06 (VRAM)
+		1, 1, 1, 1,		//0x07 (OAM)
+		4, 4, 8, 8,		//0x08 (GAMEPAK ROM 0)
+		4, 4, 8, 8,		//0x09 (GAMEPAK ROM 0)
+		4, 4, 8, 8,		//0x0A (GAMEPAK ROM 1)
+		4, 4, 8, 8,		//0x0B (GAMEPAK ROM 1)
+		4, 4, 8, 8,		//0x0C (GAMEPAK ROM 2)
+		4, 4, 8, 8,		//0x0D (GAMEPAK ROM 2)
+		4, 4, 4, 4,		//0x0E (GAMEPAK SRAM)
+		1, 1, 1, 1,		//0x0F (unused)
 	};
 	for (INT32 i = 0;i < 16 * 4;++i) {
 		gba->mem.wait_state_table[i] = wait_state_table[i];
@@ -211,18 +211,18 @@ static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 	gba->mem.prefetch_size = 0;
 
 	//SRAM
-	gba->mem.wait_state_table[(0x0E * 4) + 0] = 1 + primary_table[sram_wait];
-	gba->mem.wait_state_table[(0x0E * 4) + 1] = 1 + primary_table[sram_wait];
-	gba->mem.wait_state_table[(0x0E * 4) + 2] = 1 + primary_table[sram_wait];
-	gba->mem.wait_state_table[(0x0E * 4) + 3] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 0] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 1] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 2] = 1 + primary_table[sram_wait];
+	gba->mem.wait_state_table[(0x0e * 4) + 3] = 1 + primary_table[sram_wait];
 	waitcnt &= (1 << 15);	// Force cartridge to report as GBA cart
 	gba_io_store16(gba, GBA_WAITCNT, waitcnt);
 }
 
 static inline void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 request_size /*0: 1B,1: 2B,3: 4B*/)
 {
-	INT32 bank       = SB_BFE(address, 24, 4);
-	bool prefetch_en = gba->mem.prefetch_en;
+	INT32 bank        = SB_BFE(address, 24, 4);
+	bool  prefetch_en = gba->mem.prefetch_en;
 	if (SB_UNLIKELY(!prefetch_en)) {
 		if (gba->cpu.i_cycles)
 			request_size |= 1;
@@ -233,7 +233,7 @@ static inline void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 r
 	UINT32 wait = gba->mem.wait_state_table[bank * 4 + request_size];
 	if (SB_LIKELY(prefetch_en)) {
 		gba->mem.prefetch_size += gba->cpu.i_cycles;
-		if (bank >= 0x08 && bank <= 0x0D) {
+		if (bank >= 0x08 && bank <= 0x0d) {
 			if (SB_UNLIKELY(request_size & 1)) {
 				UINT32 pc = gba->cpu.prefetch_pc;
 				if (pc >= 0x08000000) {
@@ -263,7 +263,7 @@ static inline void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 r
 
 static inline UINT32 gba_compute_access_cycles_dma(gba_t* gba, UINT32 address, INT32 request_size/*0: 1B,1: 2B,3: 4B*/)
 {
-	INT32 bank  = SB_BFE(address, 24, 4);
+	INT32  bank = SB_BFE(address, 24, 4);
 	UINT32 wait = gba->mem.wait_state_table[bank * 4 + request_size];
 	return wait;
 }
@@ -307,7 +307,7 @@ static inline UINT8 arm7_read8(void* user_data, UINT32 address)
 
 static inline void gba_dma_write32(gba_t* gba, UINT32 address, UINT32 data)
 {
-	if ((address & 0xfffffC00) == 0x04000000) {
+	if ((address & 0xfffffc00) == 0x04000000) {
 		if (gba_process_mmio_write(gba, address, data, 4))
 			return;
 	}
@@ -316,8 +316,9 @@ static inline void gba_dma_write32(gba_t* gba, UINT32 address, UINT32 data)
 
 static inline void gba_dma_write16(gba_t* gba, UINT32 address, UINT16 data)
 {
-	if ((address & 0xfffffC00) == 0x04000000) {
-		if (gba_process_mmio_write(gba, address, data, 2)) return;
+	if ((address & 0xfffffc00) == 0x04000000) {
+		if (gba_process_mmio_write(gba, address, data, 2))
+			return;
 	}
 	gba_store16(gba, address, data);
 }
@@ -352,7 +353,6 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 			if (addr < 0x4000) {
 				if (gba->cpu.registers[15] < 0x4000)
 					gba->mem.bios_word = *(UINT32*)(gba->mem.bios + (addr & ~3));
-				//else gba->mem.bios_word=0;
 				gba->mem.openbus_word = gba->mem.bios_word;
 			}
 			break;
@@ -367,7 +367,7 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 			gba->mem.openbus_word = *ret;
 			break;
 		case 0x4:
-			if (SB_LIKELY(addr <= 0x40003FF)) {
+			if (SB_LIKELY(addr <= 0x40003ff)) {
 				if (req_type & GBA_REQ_READ) {
 					INT32 io_reg = (addr >> 2) & 0xff;
 					if (SB_LIKELY(gba->mem.mmio_reg_valid_lookup[io_reg])) {
@@ -375,7 +375,8 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 						gba->mem.mmio_word = (*(UINT32*)(gba->mem.io + (addr & 0x3fc))) & gba->mem.mmio_data_mask_lookup[io_reg];
 						ret = &gba->mem.mmio_word;
 					}
-				} else ret = (UINT32*)(gba->mem.io + (addr & 0x3fc));
+				} else
+					ret = (UINT32*)(gba->mem.io + (addr & 0x3fc));
 			}
 			break;
 		case 0x5:
@@ -389,13 +390,13 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 				if (addr & 0x08000) {
 					UINT16 dispcnt = gba_io_read16(gba, GBA_DISPCNT);
 					INT32 bg_mode  = SB_BFE(dispcnt, 0, 3);
-					//Don't allow writes to mirrored VRAM in bitmap mode. See also vram-mirror.gba
-					//Needed for Acrobat Kid. Still requires testing to verify correct behavior
+					// block writes to mirrored VRAM in bitmap mode (Acrobat Kid)
 					if (bg_mode > 2 && !(addr & 0x04000)) {
 						ret = &gba->mem.openbus_word;*ret = 0;
 					}
 				}
-			} else ret = (UINT32*)(gba->mem.vram + (addr & 0x1fffc));
+			} else
+				ret = (UINT32*)(gba->mem.vram + (addr & 0x1fffc));
 			gba->mem.openbus_word = *ret;
 			break;
 		case 0x7:
@@ -404,10 +405,10 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 			break;
 		case 0x8:
 		case 0x9:
-		case 0xA:
-		case 0xB:
-		case 0xC:
-		case 0xD: {
+		case 0xa:
+		case 0xb:
+		case 0xc:
+		case 0xd: {
 			if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0xff000000) == 0x0d000000) {
 				gba->mem.openbus_word = 1;	// ready when done writing EEPROM
 				break;
@@ -457,8 +458,8 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 			}
 		}
 			break;
-		case 0xE:
-		case 0xF:
+		case 0xe:
+		case 0xf:
 			if (gba->cart.backup_type == GBA_BACKUP_SRAM) {
 				gba->mem.sram_word = (UINT32)gba->mem.cart_backup[addr & 0x7fff] * 0x01010101u;
 				ret = &gba->mem.sram_word;
@@ -481,7 +482,7 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 				ret = &gba->mem.sram_word;
 			} else {
 				//Flash
-				if (gba->cart.in_chip_id_mode && addr <= 0xE000001) {
+				if (gba->cart.in_chip_id_mode && addr <= 0xe000001) {
 					gba->mem.openbus_word = *(UINT32*)gba->mem.flash_chip_id;
 					ret = &gba->mem.openbus_word;
 				} else {
@@ -495,7 +496,8 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 	return ret;
 }
 
-static inline void gba_recompute_mmio_mask_table(gba_t* gba) {
+static inline void gba_recompute_mmio_mask_table(gba_t* gba)
+{
 	for (INT32 io_reg = 0; io_reg < 256;io_reg++) {
 		UINT32 dword_address = 0x04000000 + io_reg * 4;
 		UINT32 data_mask     = 0xffffffff;
@@ -549,6 +551,9 @@ static inline void gba_process_mmio_read(gba_t* gba, UINT32 address)
 	// Force recomputing timers on timer read
 	if (address >= GBA_TM0CNT_L && address <= GBA_TM3CNT_H)
 		gba_compute_timers(gba);
+	// Derive DISPSTAT/VCOUNT from the live beam position (io holds stale boundary snapshots)
+	else if (address >= GBA_DISPSTAT && address <= GBA_VCOUNT)
+		gba_ppu_refresh_status(gba);
 }
 
 static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes)
@@ -663,9 +668,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		waitcnt = ((waitcnt & ~word_mask) | (word_data & word_mask));
 		gba_recompute_waitstate_table(gba, waitcnt);
 	} else if (address_u32 == GBA_KEYINPUT) {
-		// 0x04000130 word: KEYINPUT (low, read-only) + KEYCNT (high, R/W).
-		// KEYCNT writes must never clobber KEYINPUT (caused spurious keypad IRQ:
-		// disarming KEYCNT while armed made every key read as pressed).
+		// KEYCNT (high word) writes must not clobber read-only KEYINPUT (low word)
 		if (word_mask & 0xffff0000) {
 			gba_io_store16(gba, GBA_KEYCNT, (word_data >> 16) & 0xc3ff);
 			gba_tick_keypad(NULL, gba);

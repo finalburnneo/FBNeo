@@ -49,59 +49,44 @@ typedef void   (*arm_trigger_breakpoint_fn_t)(void* user_data);
 
 
 typedef struct {
-	// Registers
-	/*
-	0-15: R0-R15
-	16: CPSR
-	17-23: R8_fiq-R14_fiq
-	24-25: R13_irq-R14_irq
-	26-27: R13_svc-R14_svc
-	28-29: R13_abt-R14_abt
-	30-31: R13_und-R14_und
-	32: SPSR_fiq
-	33: SPSR_irq
-	34: SPSR_svc
-	35: SPSR_abt
-	36: SPSR_und
-	*/
-
-	UINT32						prefetch_pc;
-	UINT32						step_instructions;		//Instructions to step before triggering a breakpoint
-	UINT32						prefetch_opcode[5];
-	UINT32						i_cycles;				//Executed i-cycles minus 1
-	bool						next_fetch_sequential;
-	UINT32						registers[37];
-	void*						user_data;
-	arm_read32_fn_t				read32;
-	arm_read16_fn_t				read16;
-	arm_read32_seq_fn_t			read32_seq;
-	arm_read16_seq_fn_t			read16_seq;
-	arm_read8_fn_t				read8;
-	arm_write32_fn_t			write32;
-	arm_write16_fn_t			write16;
-	arm_write8_fn_t				write8;
-	arm_coproc_read_fn_t		coprocessor_read;
-	arm_coproc_write_fn_t		coprocessor_write;
-	arm_trigger_breakpoint_fn_t	trigger_breakpoint;
-	bool						wait_for_interrupt;
-	UINT32						phased_opcode;
-	UINT32						phased_op_id;
-	UINT32						phase;
+	// Registers: 0-15 R0-R15, 16 CPSR, 17-36 banked R/SPSR registers (see defines above)
+	UINT32 prefetch_pc;
+	UINT32 step_instructions;		//Instructions to step before triggering a breakpoint
+	UINT32 prefetch_opcode[5];
+	UINT32 i_cycles;				//Executed i-cycles minus 1
+	bool   next_fetch_sequential;
+	UINT32 registers[37];
+	void*  user_data;
+	arm_read32_fn_t read32;
+	arm_read16_fn_t read16;
+	arm_read32_seq_fn_t read32_seq;
+	arm_read16_seq_fn_t read16_seq;
+	arm_read8_fn_t   read8;
+	arm_write32_fn_t write32;
+	arm_write16_fn_t write16;
+	arm_write8_fn_t  write8;
+	arm_coproc_read_fn_t  coprocessor_read;
+	arm_coproc_write_fn_t coprocessor_write;
+	arm_trigger_breakpoint_fn_t trigger_breakpoint;
+	bool   wait_for_interrupt;
+	UINT32 phased_opcode;
+	UINT32 phased_op_id;
+	UINT32 phase;
 	struct {
-		UINT32					addr;
-		UINT32					r15_off;
-		UINT32					last_bank;
-		UINT32					base_addr;
-		UINT32					cycle;
-		UINT32					num_regs;
+		UINT32 addr;
+		UINT32 r15_off;
+		UINT32 last_bank;
+		UINT32 base_addr;
+		UINT32 cycle;
+		UINT32 num_regs;
 	} block;
 } arm7_t;
 
 typedef void (*arm7_handler_t)(arm7_t* cpu, UINT32 opcode);
 typedef struct {
-	arm7_handler_t				handler;
-	char						name[12];
-	char						bitfield[33];
+	arm7_handler_t handler;
+	char name[12];
+	char bitfield[33];
 } arm7_instruction_t;
 
 #define ARM_PHASED_NONE      0 
@@ -318,8 +303,10 @@ static inline UINT32 arm7_reg_index(arm7_t* cpu, UINT32 reg)
 		 8,  9, 10, 11, 12, 13, 14, 15, 16, 16,		//mode 0xF (system)
 	};
 	INT8 r = lookup[mode * 10 + reg];
-	if (SB_LIKELY(r != -1))return r;
-	if (cpu->trigger_breakpoint)cpu->trigger_breakpoint(cpu->user_data);
+	if (SB_LIKELY(r != -1))
+		return r;
+	if (cpu->trigger_breakpoint)
+		cpu->trigger_breakpoint(cpu->user_data);
 	printf("Undefined ARM mode: %d\n", mode);
 	return 0;
 }
@@ -347,7 +334,7 @@ static inline UINT32 arm7_reg_read_r15_adj(arm7_t* cpu, UINT32 reg, INT32 r15_of
 
 static inline INT32 arm_lookup_arm_instruction_class(const arm7_instruction_t* instruction_table, UINT32 opcode_key)
 {
-	INT32 key_bits[] = { 4,5,6,7, 20,21,22,23,24,25,26,27 };
+	INT32 key_bits[] = { 4, 5, 6, 7, 20, 21, 22, 23, 24, 25, 26, 27 };
 	INT32 matched_class = -1;
 	for (INT32 c = 0; instruction_table[c].handler; ++c) {
 		bool matches = true;
@@ -395,7 +382,7 @@ static inline INT32 arm_lookup_arm_instruction_class(const arm7_instruction_t* i
 
 static inline INT32 arm_lookup_thumb_instruction_class(const arm7_instruction_t* instruction_table, UINT32 opcode_key)
 {
-	INT32 key_bits[] = { 8,9,10,11,12,13,14,15 };
+	INT32 key_bits[] = { 8, 9, 10, 11, 12, 13, 14, 15 };
 	INT32 matched_class = -1;
 	for (INT32 c = 0; instruction_table[c].handler; ++c) {
 		bool matches = true;
@@ -431,12 +418,13 @@ static inline INT32 arm_lookup_thumb_instruction_class(const arm7_instruction_t*
 	}
 	return matched_class;
 }
+
 static inline arm7_t arm7_init(void* user_data)
 {
 	// Generate ARM lookup table
 	for (INT32 i = 0; i < 4096; ++i) {
 		INT32 inst_class = arm_lookup_arm_instruction_class(arm7_instruction_classes, i);
-		arm7_lookup_table[i] = inst_class == -1 ? NULL : arm7_instruction_classes[inst_class].handler;
+		arm7_lookup_table[i]  = inst_class == -1 ? NULL : arm7_instruction_classes[inst_class].handler;
 	}
 	// Generate Thumb Lookup Table
 	for (INT32 i = 0; i < 256; ++i) {
@@ -445,43 +433,53 @@ static inline arm7_t arm7_init(void* user_data)
 	}
 	// Generate Thumb Lookup Table
 	arm7_t arm = {};
-	arm.user_data = user_data;
-	arm.prefetch_pc = -1;
-	arm.phase = 0;
+	arm.user_data    = user_data;
+	arm.prefetch_pc  = -1;
+	arm.phase        = 0;
 	arm.phased_op_id = ARM_PHASED_FILL_PIPE;
 	return arm;
 
 }
-static inline bool arm7_get_thumb_bit(arm7_t* cpu) { return ARM7_BFE(cpu->registers[CPSR],5,1);}
-static inline void arm7_set_thumb_bit(arm7_t* cpu, bool value) {
+
+static inline bool arm7_get_thumb_bit(arm7_t* cpu)
+{
+	return ARM7_BFE(cpu->registers[CPSR], 5, 1);
+}
+
+static inline void arm7_set_thumb_bit(arm7_t* cpu, bool value)
+{
 	cpu->registers[CPSR] &= ~(1 << 5);
 	if (value)
 		cpu->registers[CPSR] |= 1 << 5;
 }
-static inline void arm7_process_interrupts(arm7_t* cpu) {
-  cpu->wait_for_interrupt=false;
-  UINT32 cpsr = cpu->registers[CPSR];
-  bool I = ARM7_BFE(cpsr,7,1);
-  if(I==0&&cpu->phased_op_id==0){
-	//Interrupts are enabled when I ==0
-	cpu->registers[R14_irq] = cpu->registers[PC]+4;
-	cpu->registers[PC] = 0+ 0x18; 
-	cpu->registers[SPSR_irq] = cpsr;
-	//Update mode to IRQ
-	cpu->registers[CPSR] = (cpsr&0xffffffE0)| 0x12;
-	//Disable interrupts(set I bit)
-	cpu->registers[CPSR] |= 1<<7;
-	cpu->i_cycles+=1;
-	arm7_set_thumb_bit(cpu,false); 
-	cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
-	cpu->phase=0;
-  }
+
+static inline void arm7_process_interrupts(arm7_t* cpu)
+{
+	cpu->wait_for_interrupt = false;
+	UINT32 cpsr = cpu->registers[CPSR];
+	bool I = ARM7_BFE(cpsr, 7, 1);
+	if (I == 0 && cpu->phased_op_id == 0) {
+		//Interrupts are enabled when I ==0
+		cpu->registers[R14_irq]  = cpu->registers[PC] + 4;
+		cpu->registers[PC]       = 0 + 0x18;
+		cpu->registers[SPSR_irq] = cpsr;
+		//Update mode to IRQ
+		cpu->registers[CPSR]     = (cpsr & 0xffffffe0) | 0x12;
+		//Disable interrupts(set I bit)
+		cpu->registers[CPSR]    |= 1 << 7;
+		cpu->i_cycles += 1;
+		arm7_set_thumb_bit(cpu, false);
+		cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
+		cpu->phase = 0;
+	}
 }
 
 static inline bool arm7_check_cond_code(arm7_t* cpu, UINT32 opcode)
 {
 	UINT32 cond_code = ARM7_BFE(opcode, 28, 4);
-	if (SB_LIKELY(cond_code == 0xE))return true;
+	if (SB_LIKELY(cond_code == 0xe))
+		return true;
+
 	UINT32 cpsr = cpu->registers[CPSR];
 	bool N = ARM7_BFE(cpsr, 31, 1);
 	bool Z = ARM7_BFE(cpsr, 30, 1);
@@ -522,9 +520,9 @@ static inline void arm7_fill_pipeline(arm7_t* cpu)
 	++cpu->phase;
 	if (cpu->phase != 2)
 		return;
-	cpu->phase = 0;
+	cpu->phase        = 0;
 	cpu->phased_op_id = 0;
-	cpu->prefetch_pc = cpu->registers[PC];
+	cpu->prefetch_pc  = cpu->registers[PC];
 	cpu->next_fetch_sequential = true;
 }
 
@@ -594,9 +592,6 @@ static inline void arm7_exec_instruction(arm7_t* cpu)
 	}
 }
 
-
-
-
 static inline UINT32 arm7_rotr(UINT32 value, UINT32 rotate)
 {
 	return ((UINT64)value >> (rotate & 31)) | ((UINT64)value << (32 - (rotate & 31)));
@@ -618,9 +613,7 @@ static inline UINT32 arm7_load_shift_reg(arm7_t* arm, UINT32 opcode, INT32* carr
 static inline UINT32 arm7_shift(arm7_t* arm, UINT32 opcode, UINT64 value, UINT32 shift_value, INT32* carry)
 {
 	INT32 shift_type = ARM7_BFE(opcode, 5, 2);
-	// Shift value of 0 has special behavior from a register: 
-	// If this byte is zero, the unchanged contents of Rm will be used as the second operand,
-	// and the old value of the CPSR C flag will be passed on as the shifter carry output.
+	// Register shift of 0: use Rm unchanged and pass the old C flag as carry
 	if (shift_value == 0 && (ARM7_BFE(opcode, 4, 1) || shift_type == 0)) {
 		*carry = -1;
 		return value;
@@ -677,8 +670,8 @@ static inline void arm7_data_processing(arm7_t* cpu, UINT32 opcode)
 	// If it's used as anything but the shift amount in an operation with a register-specified shift, r15 will be PC + 12
 	// I.e. add r0, r15, r15, lsl r15 would set r0 to PC + 12 + ((PC + 12) << (PC + 8))
 	UINT64 Rd = ARM7_BFE(opcode, 12, 4);
-	INT32 S = ARM7_BFE(opcode, 20, 1);
-	INT32 op = ARM7_BFE(opcode, 21, 4);
+	INT32 S   = ARM7_BFE(opcode, 20, 1);
+	INT32 op  = ARM7_BFE(opcode, 21, 4);
 	INT32 r15_off = 4;
 	// Load Second Operand
 	UINT64 Rm = 0;
@@ -782,10 +775,7 @@ static inline void arm7_data_processing(arm7_t* cpu, UINT32 opcode)
 			cpu->registers[CPSR] = cpsr;
 		}
 		if (Rd == 15) {
-			// When Rd is R15 and the S flag is set the result of the operation is placed in R15 
-			// and the SPSR corresponding to the current mode is moved to the CPSR. This allows
-			// state changes which atomically restore both PC and CPSR. This form of instruction
-			// should not be used in User mode.
+			// Rd=R15 with S flag: write result to PC and restore SPSR to CPSR (mode switch)
 			cpu->registers[CPSR] = arm7_reg_read(cpu, SPSR);
 		}
 	}
@@ -818,8 +808,8 @@ static inline void arm7_multiply(arm7_t* cpu, UINT32 opcode)
 		UINT32 cpsr = cpu->registers[CPSR];
 		bool N = ARM7_BFE(result, 31, 1);
 		bool Z = (result & 0xffffffff) == 0;
-		bool C = ARM7_BFE(cpsr, 29, 1);
-		bool V = ARM7_BFE(cpsr, 28, 1);
+		bool C = ARM7_BFE(cpsr,   29, 1);
+		bool V = ARM7_BFE(cpsr,   28, 1);
 		cpsr &= 0x0fffffff;
 		cpsr |= (N ? 1u : 0u) << 31;
 		cpsr |= (Z ? 1  : 0)  << 30;
@@ -877,8 +867,8 @@ static inline void arm7_multiply_long(arm7_t* cpu, UINT32 opcode)
 		UINT32 cpsr = cpu->registers[CPSR];
 		bool N = ARM7_BFE(result, 63, 1);
 		bool Z = result == 0;
-		bool C = ARM7_BFE(cpsr, 29, 1);
-		bool V = ARM7_BFE(cpsr, 28, 1);
+		bool C = ARM7_BFE(cpsr,   29, 1);
+		bool V = ARM7_BFE(cpsr,   28, 1);
 		cpsr &= 0x0fffffff;
 		cpsr |= (N ? 1 : 0) << 31;
 		cpsr |= (Z ? 1 : 0) << 30;
@@ -892,14 +882,14 @@ static inline void arm7_single_data_swap(arm7_t* cpu, UINT32 opcode)
 {
 	bool B = ARM7_BFE(opcode, 22, 1);
 	UINT32 addr = arm7_reg_read_r15_adj(cpu, ARM7_BFE(opcode, 16, 4), 4);
-	UINT32 Rd = ARM7_BFE(opcode, 12, 4);
-	UINT32 Rm = ARM7_BFE(opcode, 0, 4);
+	UINT32 Rd   = ARM7_BFE(opcode, 12, 4);
+	UINT32 Rm   = ARM7_BFE(opcode,  0, 4);
 	// Load
 	UINT32 read_data = B ? cpu->read8(cpu->user_data, addr) : arm7_rotr(cpu->read32(cpu->user_data, addr), (addr & 0x3) * 8);
 
 	UINT32 store_data = arm7_reg_read_r15_adj(cpu, Rm, 8);
 	if (B == 1)
-		cpu->write8(cpu->user_data, addr, store_data);
+		cpu->write8( cpu->user_data, addr, store_data);
 	else
 		cpu->write32(cpu->user_data, addr, store_data);
 
@@ -982,7 +972,7 @@ static inline void arm7_single_word_transfer(arm7_t* cpu, UINT32 opcode)
 	INT32 Rn = ARM7_BFE(opcode, 16, 4);
 	INT32 carry;
 	INT32 offset = I == 0 ? ARM7_BFE(opcode, 0, 12) :
-		arm7_load_shift_reg(cpu, opcode, &carry);
+	arm7_load_shift_reg(cpu, opcode, &carry);
 
 	UINT64 Rd = ARM7_BFE(opcode, 12, 4);
 	UINT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
@@ -995,7 +985,7 @@ static inline void arm7_single_word_transfer(arm7_t* cpu, UINT32 opcode)
 	if (L == 0) {
 		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, 8);
 		if (B == 1)
-			cpu->write8(cpu->user_data, addr, data);
+			cpu->write8( cpu->user_data, addr, data);
 		else
 			cpu->write32(cpu->user_data, addr, data);
 	}
@@ -1021,12 +1011,12 @@ static inline void arm7_single_word_transfer(arm7_t* cpu, UINT32 opcode)
 static inline void arm7_undefined(arm7_t* cpu, UINT32 opcode)
 {
 	bool thumb = arm7_get_thumb_bit(cpu);
-	cpu->registers[R14_und] = cpu->registers[PC] - (thumb ? 0 : 4);
-	cpu->registers[PC] = 0 + 0x4;
+	cpu->registers[R14_und]  = cpu->registers[PC] - (thumb ? 0 : 4);
+	cpu->registers[PC]       = 0 + 0x4;
 	UINT32 cpsr = cpu->registers[CPSR];
 	cpu->registers[SPSR_und] = cpsr;
 	//Update mode to supervisor and block irqs
-	cpu->registers[CPSR] = (cpsr & 0xffffffE0) | 0x1b | 0x80;
+	cpu->registers[CPSR]     = (cpsr & 0xffffffE0) | 0x1b | 0x80;
 	arm7_set_thumb_bit(cpu, false);
 	printf("Unhandled Instruction Class (arm7_undefined) Opcode: %x PC:%08x\n", opcode, cpu->registers[R14_und]);
 	cpu->i_cycles += 1;
@@ -1046,7 +1036,7 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 
 	// Examples pushing R1, R5, R7
 	// P= 0(post) U = 0(dec)
-	//   mem[Rn-8]   = R1
+	//   mem[Rn-8] = R1
 	//   mem[Rn-4] = R5
 	//   mem[Rn-0] = R7
 	//   Rn-=12
@@ -1058,28 +1048,28 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 	//   Rn+=12
 
 	// P= 1(pre) U = 0(dec)
-	//   mem[Rn-12]   = R1
-	//   mem[Rn-8] = R5
-	//   mem[Rn-4] = R7
+	//   mem[Rn-12] = R1
+	//   mem[Rn-8]  = R5
+	//   mem[Rn-4]  = R7
 	//   Rn-=12
 
 	// P= 1(pre) U = 1(inc)
-	//   mem[Rn+4]   = R1
-	//   mem[Rn+8] = R5
+	//   mem[Rn+4]  = R1
+	//   mem[Rn+8]  = R5
 	//   mem[Rn+12] = R7
 	//   Rn+=12
 
 	if (cpu->phase == 0) {
 		INT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
 		INT32 increment = U ? 4 : -4;
-		INT32 num_regs = 0;
+		INT32 num_regs  = 0;
 		for (INT32 i = 0; i < 16; ++i)
 			if (ARM7_BFE(reglist, i, 1) == 1)
 				num_regs += 1;
 		INT32 base_addr = addr;
 		if (reglist == 0) {
 			// Handle Empty Rlist case: R15 loaded/stored (ARMv4 only), and Rb=Rb+/-40h (ARMv4-v5).
-			reglist = 1 << 15;
+			reglist  = 1 << 15;
 			num_regs = 16;
 		}
 		if (!U)
@@ -1091,11 +1081,11 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 
 		if (!(P ^ U))
 			addr += 4;
-		cpu->block.cycle = 0;
-		cpu->block.addr = addr;
+		cpu->block.cycle     = 0;
+		cpu->block.addr      = addr;
 		// TODO: For some reason r15 is only offset by 4 in thumb mode.
 		// Check if other people do this to. 
-		cpu->block.r15_off = arm7_get_thumb_bit(cpu) ? 4 : 8;
+		cpu->block.r15_off   = arm7_get_thumb_bit(cpu) ? 4 : 8;
 		// Address are word aligned
 		//addr&=~3;
 		cpu->block.last_bank = -1;
@@ -1139,7 +1129,7 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 		if (L && S && i == 15) {
 			cpu->registers[CPSR] = arm7_reg_read(cpu, SPSR);
 		}
-		cpu->phased_op_id = ARM_PHASED_BLOCK_TRANSFER;
+		cpu->phased_op_id  = ARM_PHASED_BLOCK_TRANSFER;
 		cpu->phased_opcode = opcode;
 		cpu->phase = i + 1;
 		return;
@@ -1214,7 +1204,7 @@ static inline void arm7_software_interrupt(arm7_t* cpu, UINT32 /*opcode*/)
 	UINT32 cpsr = cpu->registers[CPSR];
 	cpu->registers[SPSR_svc] = cpsr;
 	//Update mode to supervisor and block irqs
-	cpu->registers[CPSR] = (cpsr & 0xffffffE0) | 0x13 | 0x80;
+	cpu->registers[CPSR] = (cpsr & 0xffffffe0) | 0x13 | 0x80;
 	arm7_set_thumb_bit(cpu, false);
 }
 
@@ -1228,9 +1218,9 @@ static inline void arm7_mrs(arm7_t* cpu, UINT32 opcode)
 
 static inline void arm7_msr(arm7_t* cpu, UINT32 opcode)
 {
-	INT32 P          =  ARM7_BFE(opcode, 22, 1);
-	INT32 I          =  ARM7_BFE(opcode, 25, 1);
-	INT32 data = 0;
+	INT32 P =  ARM7_BFE(opcode, 22, 1);
+	INT32 I =  ARM7_BFE(opcode, 25, 1);
+	INT32 data     = 0;
 	INT32 dest_reg = P ? SPSR : CPSR;
 
 	// Mask behavior from: https://problemkaputt.de/gbatek.htm#armopcodespsrtransfermrsmsr
@@ -1291,7 +1281,7 @@ static inline void arm7t_mov_cmp_add_sub_imm(arm7_t* cpu, UINT32 opcode)
 	INT32 op  = ARM7_BFE(opcode, 11, 2);
 	INT32 Rd  = ARM7_BFE(opcode,  8, 3);
 	INT32 imm = ARM7_BFE(opcode,  0, 8);
-	op = (0x24AD >> (op * 4)) & 0xf;/*MOV*//*CMP*//*ADD*//*SUB*/
+	op = (0x24ad >> (op * 4)) & 0xf;/*MOV*//*CMP*//*ADD*//*SUB*/
 	UINT32 arm_op = (1 << 25) | (op << 21) | (1 << 20) | (Rd << 16) | (Rd << 12) | (imm);
 	arm7_data_processing(cpu, arm_op);
 }
@@ -1528,7 +1518,7 @@ static inline void arm7t_push_pop_reg(arm7_t* cpu, UINT32 opcode)
 	bool   include_pc_lr = ARM7_BFE(opcode,  8, 1);
 	UINT32 r_list        = ARM7_BFE(opcode,  0, 8);
 	INT32 P = !push_or_pop;
-	INT32 W = 1;
+	INT32 W =  1;
 	INT32 U =  push_or_pop;
 
 	UINT32 arm_op = (0xe << 28) | (4 << 25) | (P << 24) | (U << 23) | (W << 21) | (push_or_pop << 20) | (13 << 16) | r_list;
@@ -1558,9 +1548,9 @@ static inline void arm7t_cond_branch(arm7_t* cpu, UINT32 opcode)
 	INT32 cond  = ARM7_BFE(opcode, 8, 4);
 	INT32 s_off = ARM7_BFE(opcode, 0, 8);
 	if (ARM7_BFE(s_off, 7, 1))
-		s_off |= 0xFFFFFF00;
+		s_off |= 0xffffff00;
 	//ARM equv: cccc 1010 OOOO OOOO OOOO OOOO OOOO OOOO
-	UINT32 arm_op = (cond << 28) | (0xA << 24);
+	UINT32 arm_op = (cond << 28) | (0xa << 24);
 	if (arm7_check_cond_code(cpu, arm_op)) {
 		cpu->registers[PC] += s_off * 2 + 2;
 		cpu->prefetch_pc = -1;
@@ -1607,12 +1597,12 @@ static inline void arm7t_long_branch_link(arm7_t* cpu, UINT32 opcode)
 static inline void arm7t_unknown(arm7_t* cpu, UINT32 opcode)
 {
 	bool thumb = arm7_get_thumb_bit(cpu);
-	cpu->registers[R14_und] = cpu->registers[PC] - (thumb ? 0 : 4);
-	cpu->registers[PC] = 0 + 0x4;
+	cpu->registers[R14_und]  = cpu->registers[PC] - (thumb ? 0 : 4);
+	cpu->registers[PC]       = 0 + 0x4;
 	UINT32 cpsr = cpu->registers[CPSR];
 	cpu->registers[SPSR_und] = cpsr;
 	//Update mode to supervisor and block irqs
-	cpu->registers[CPSR] = (cpsr & 0xffffffE0) | 0x1b | 0x80;
+	cpu->registers[CPSR]     = (cpsr & 0xffffffe0) | 0x1b | 0x80;
 	arm7_set_thumb_bit(cpu, false);
 	printf("Unhandled Thumb Instruction Class: (arm7t_unknown) Opcode %x\n", opcode);
 	printf("PC: %08x\n", cpu->registers[PC]);

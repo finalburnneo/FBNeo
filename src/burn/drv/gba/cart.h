@@ -78,7 +78,7 @@ static inline UINT16 gba_fcmini_get_pattern(UINT32 addr)
 		case 0x1e0000:
 		case 0x1f0000: value = ((addr >> 1) & 0xffff) ^ 0x00ff;					break;
 	}
-	return value & 0xFFFF;
+	return value & 0xffff;
 }
 
 static inline UINT16 gba_rom_read16(const gba_t* gba, UINT32 address)
@@ -117,14 +117,13 @@ static inline void gba_process_flash_state_machine(gba_t* gba, UINT32 baddr, UIN
 		default:
 			printf("Unknown flash state %02x\n", gba->cart.flash_state);
 		case FLASH_DEFAULT:
-			if (baddr == 0x5555 && data == 0xAA) gba->cart.flash_state = FLASH_RECV_AA;
+			if (baddr == 0x5555 && data == 0xaa) gba->cart.flash_state = FLASH_RECV_AA;
 			break;
 		case FLASH_RECV_AA:
-			if (baddr == 0x2AAA && data == 0x55) gba->cart.flash_state = FLASH_RECV_55;
+			if (baddr == 0x2aaa && data == 0x55) gba->cart.flash_state = FLASH_RECV_55;
 			break;
 		case FLASH_RECV_55:
 			if (baddr == 0x5555) {
-				// Process command
 				switch (data) {
 					case FLASH_ENTER_CHIP_ID:gba->cart.in_chip_id_mode = true;             break;
 					case FLASH_EXIT_CHIP_ID: gba->cart.in_chip_id_mode = false;            break;
@@ -136,10 +135,10 @@ static inline void gba_process_flash_state_machine(gba_t* gba, UINT32 baddr, UIN
 			}
 			break;
 		case FLASH_PREP_ERASE:
-			if (baddr == 0x5555 && data == 0xAA) gba->cart.flash_state = FLASH_ERASE_RECV_AA;
+			if (baddr == 0x5555 && data == 0xaa) gba->cart.flash_state = FLASH_ERASE_RECV_AA;
 			break;
 		case FLASH_ERASE_RECV_AA:
-			if (baddr == 0x2AAA && data == 0x55) gba->cart.flash_state = FLASH_ERASE_RECV_55;
+			if (baddr == 0x2aaa && data == 0x55) gba->cart.flash_state = FLASH_ERASE_RECV_55;
 			break;
 		case FLASH_ERASE_RECV_55:
 			if (baddr == 0x5555 || data == FLASH_ERASE_4KB) {
@@ -209,17 +208,17 @@ static inline void gba_fcmini_sram_write(gba_t* gba, UINT32 address, UINT8 value
 
 	// addr_reorder[type][mode-1][16]
 	static const UINT8 addr_reorder[3][3][16] = {
-		{ // FCMINI_STANDARD [0]
+		{	// FCMINI_STANDARD [0]
 			{ 15, 14,  9,  1,  8, 10,  7,  3,  5, 11,  4,  0, 13, 12,  2,  6 },
 			{ 15,  7, 13,  5, 11,  6,  0,  9, 12,  2, 10, 14,  3,  1,  8,  4 },
 			{ 15,  0,  3, 12,  2,  4, 14, 13,  1, 8,   6,  7,  9,  5, 11, 10 }
 		},
-		{ // FCMINI_GEORGE [1]
+		{	// FCMINI_GEORGE [1]
 			{ 15,  7, 13,  1, 11, 10, 14,  9, 12,  2,  4,  0,  3,  5,  8,  6 },
 			{ 15, 14,  3, 12,  8,  4,  0, 13,  5, 11,  6,  7,  9,  1,  2, 10 },
 			{ 15,  0,  9,  5,  2,  6,  7,  3,  1,  8, 10, 14, 13, 12, 11,  4 }
 		},
-		{ // FCMINI_ALTERNATE [2]
+		{	// FCMINI_ALTERNATE [2]
 			{ 15,  0, 13,  5,  8,  4,  7,  3,  1,  2, 10, 14,  9, 12, 11,  6 },
 			{ 15,  7,  9,  1,  2,  6, 14, 13, 12, 11,  4,  0,  3,  5,  8, 10 },
 			{ 15, 14,  3, 12, 11, 10,  0,  9,  5,  8,  6,  7, 13,  1,  2,  4 }
@@ -233,7 +232,7 @@ static inline void gba_fcmini_sram_write(gba_t* gba, UINT32 address, UINT8 value
 	};
 
 	INT32 mode = fcmini->sram_mode & 0x3;
-	INT32 type = fcmini->type - 1; // 0: standard, 1: george, 2: alternate
+	INT32 type = fcmini->type - 1;	// 0: standard, 1: george, 2: alternate
 	if (mode != 0) {
 		address = gba_fcmini_reorder_bits(address, addr_reorder[type][mode - 1], 16);
 		INT32 reorder_val = (fcmini->sram_mode & 0xf) >> 2;
@@ -279,15 +278,17 @@ INT32 gba_search_rom_for_backup_string(gba_t* gba)
 {
 	INT32 btype = GBA_BACKUP_NONE;
 	for (INT32 b = 0; b < gba->cart.rom_size;++b) {
-		const char* strings[] = { "EEPROM_", "SRAM_", "FLASH_", "FLASH512_","FLASH1M_" };
+		const char* strings[] = { "EEPROM_", "SRAM_", "FLASH_", "FLASH512_", "FLASH1M_" };
 		INT32 backup_type[] = { GBA_BACKUP_EEPROM, GBA_BACKUP_SRAM, GBA_BACKUP_FLASH_64K, GBA_BACKUP_FLASH_64K, GBA_BACKUP_FLASH_128K };
 		for (INT32 type = 0; type < ARRAY_SIZE(strings);++type) {
 			INT32 str_off   = 0;
 			bool  matches   = true;
 			const char* str = strings[type];
 			while (str[str_off] && matches) {
-				if (     b + str_off  >= gba->cart.rom_size)             matches = false;
-				else if (str[str_off] != gba->mem.cart_rom[b + str_off]) matches = false;
+				if (b + str_off  >= gba->cart.rom_size)
+					matches = false;
+				else if (str[str_off] != gba->mem.cart_rom[b + str_off])
+					matches = false;
 				++str_off;
 			}
 			if (matches) {
@@ -410,21 +411,20 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba_matrix_reset(gba);
 	}
 
-	// FC Mini (FC Mini) cartridge detection
+	// FC Mini cartridge detection
 	{
 		static const UINT8 fcmini_init_seq[16] = {
 			0xb4, 0x00, 0x9f, 0xe5, 0x99, 0x10, 0xa0, 0xe3,
 			0x00, 0x10, 0xc0, 0xe5, 0xac, 0x00, 0x9f, 0xe5
 		};
 		if (emu->rom_size >= 0x16C && memcmp(fcmini_init_seq, emu->rom_data + 0x15c, 16) == 0) {
-			gba->cart.fcmini.type      =  1;		// FCMINI_STANDARD
+			gba->cart.fcmini.type      =  1;	// FCMINI_STANDARD
 			gba->cart.fcmini.sram_mode = -1;
-			gba->cart.backup_type     = GBA_BACKUP_SRAM;
+			gba->cart.backup_type      = GBA_BACKUP_SRAM;
 		}
 	}
 
-	// Scan for backup strings; 32MB carts (e.g. video carts) are dense with data
-	// and yield false positives, so leave them at none.
+	// Scan for backup strings; 32MB carts are data-dense, so skip them (false positives)
 	if (!gba->cart.fcmini.type && gba->cart.rom_size < 0x2000000)
 		gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
 
@@ -442,7 +442,7 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 			gba->mem.cart_backup[i] = 0xff;
 	}
 
-	// Setup flash chip id (this is not used if the cartridge does not have flash backup storage)
+	// Setup flash chip id (unused unless cart has flash backup)
 	gba_setup_flash_id(gba);
 
 	gba->cpu = arm7_init(gba);
@@ -473,19 +473,19 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 			gba->cpu.registers[i] = initial_regs[i];
 
 		const UINT32 initial_mmio_writes[] = {
-			0x4000000,0x80,
-			0x4000004,0x7e0000,
-			0x4000020,0x100,
-			0x4000024,0x1000000,
-			0x4000030,0x100,
-			0x4000034,0x1000000,
-			0x4000080,0xe0000,
-			0x4000084,0xf,
-			0x4000088,0x200,
-			0x4000100,0xff8a,
-			0x4000130,0x3ff,
-			0x4000134,0x8000,
-			0x4000300,0x1,
+			0x4000000, 0x80,
+			0x4000004, 0x7e0000,
+			0x4000020, 0x100,
+			0x4000024, 0x1000000,
+			0x4000030, 0x100,
+			0x4000034, 0x1000000,
+			0x4000080, 0xe0000,
+			0x4000084, 0xf,
+			0x4000088, 0x200,
+			0x4000100, 0xff8a,
+			0x4000130, 0x3ff,
+			0x4000134, 0x8000,
+			0x4000300, 0x1,
 		};
 		for (INT32 i = 0;i < ARRAY_SIZE(initial_mmio_writes);i += 2) {
 			UINT32 addr  = initial_mmio_writes[i + 0];

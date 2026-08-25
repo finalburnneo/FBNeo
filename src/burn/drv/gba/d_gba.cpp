@@ -44809,24 +44809,6 @@ struct BurnDriver BurnDrvgba_smballj = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Super Mario Bros. (Japan, Hot Mario Campaign)
-static struct BurnRomInfo gba_smbRomDesc[] = {
-	{ "super mario bros. (japan) (hot mario campaign).bin",	0x0400000,	0x085b271b,	BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(gba_smb, gba_smb, gba_gba)
-STD_ROM_FN(gba_smb)
-
-struct BurnDriver BurnDrvgba_smb = {
-	"gba_smb", NULL, "gba_gba", NULL, "19??",
-	"Super Mario Bros. (Japan, Hot Mario Campaign)\0", NULL, "<unknown>", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
-	GbaGetZipName, gba_smbRomInfo, gba_smbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
-	GBA_WIDTH, GBA_HEIGHT, 3, 2
-};
-
 // Super Monkey Ball Jr. (Europe)
 static struct BurnRomInfo gba_smonkyblRomDesc[] = {
 	{ "super monkey ball jr. (europe) (en,fr,de,es,it).bin",	0x0800000,	0xd75da09d,	BRF_ESS | BRF_PRG },

@@ -14063,6 +14063,24 @@ struct BurnDriver BurnDrvgba_f_smb = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Super Mario Bros. (Japan, Hot Mario Campaign)
+static struct BurnRomInfo gba_f_smbhmcRomDesc[] = {
+	{ "Super Mario Bros. (J, Hot Mario Campaign)(2004)(Nintendo).gba",	0x0100000,	0xe4628d75,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_f_smbhmc, gba_f_smbhmc, gba_gba)
+STD_ROM_FN(gba_f_smbhmc)
+
+struct BurnDriver BurnDrvgba_f_smbhmc = {
+	"gba_f_smbhmc", "gba_n_smb", "gba_gba", NULL, "2004",
+	"Super Mario Bros. (Japan, Hot Mario Campaign)\0", NULL, "Nintendo", "Game Boy Advance",
+	L"Super Mario Bros. (Japan, Hot Mario Campaign)\0\u30b9\u30fc\u30d1\u30fc\u30de\u30ea\u30aa\u30d6\u30e9\u30b6\u30fc\u30ba \u30db\u30c3\u30c8\u30de\u30ea\u30aa\u30ad\u30e3\u30f3\u30da\u30fc\u30f3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_f_smbhmcRomInfo, gba_f_smbhmcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Famicom Mini Vol.02: Donkey Kong (Japan)
 static struct BurnRomInfo gba_f_dkongRomDesc[] = {
 	{ "Famicom Mini Vol.02 - Donkey Kong (J)(2004)(Nintendo).gba",	0x0100000,	0x071c3f2b,	BRF_ESS | BRF_PRG },

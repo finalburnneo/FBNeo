@@ -1,8 +1,8 @@
 #include "burnint.h"
 #include "tlcs90_intf.h"
 
-static UINT8 (*read)(UINT32) = NULL;
-static void (*write)(UINT32, UINT8) = NULL;
+static UINT8 (*tlcs90_read)(UINT32) = NULL;
+static void (*tlcs90_write)(UINT32, UINT8) = NULL;
 static UINT8 (*readio)(UINT16) = NULL;
 static void (*writeio)(UINT16, UINT8) = NULL;
 
@@ -51,8 +51,8 @@ UINT8 tlcs90_program_read_byte(UINT32 address)
 		return mem[0][(address / 0x100)][address & 0xff];
 	}
 
-	if (read) {
-		return read(address);
+	if (tlcs90_read) {
+		return tlcs90_read(address);
 	}
 
 	return 0;
@@ -73,8 +73,8 @@ void tlcs90_program_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if (write) {
-		write(address, data);
+	if (tlcs90_write) {
+		tlcs90_write(address, data);
 		return;
 	}
 }
@@ -106,12 +106,12 @@ void tlcs90_io_write_byte(UINT16 port, UINT8 data)
 
 void tlcs90SetReadHandler(UINT8 (*pread)(UINT32))
 {
-	read = pread;
+	tlcs90_read = pread;
 }
 
 void tlcs90SetWriteHandler(void (*pwrite)(UINT32, UINT8))
 {
-	write = pwrite;
+	tlcs90_write = pwrite;
 }
 
 void tlcs90SetReadPortHandler(UINT8 (*pread)(UINT16))
@@ -171,8 +171,8 @@ INT32 tlcs90Init(INT32, INT32 clock)
 {
 	memset (mem, 0, 2 * 0x1000 * sizeof(UINT8 *));
 
-	read = NULL;
-	write = NULL;
+	tlcs90_read = NULL;
+	tlcs90_write = NULL;
 	readio = NULL;
 	writeio = NULL;
 
@@ -184,8 +184,8 @@ INT32 tlcs90Init(INT32, INT32 clock)
 void tlcs90Exit()
 {
 	memset (mem, 0, 2 * 0x1000 * sizeof(UINT8 *));
-	read = NULL;
-	write = NULL;
+	tlcs90_read = NULL;
+	tlcs90_write = NULL;
 	readio = NULL;
 	writeio = NULL;
 

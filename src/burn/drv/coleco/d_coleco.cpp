@@ -6582,7 +6582,7 @@ struct BurnDriver BurnDrvcv_coldblood = {
 	272, 228, 4, 3
 };
 
-// Comic Bakery (HB)
+// Comic Bakery (CollectorVision) (HB)
 static struct BurnRomInfo cv_comicbakeryRomDesc[] = {
 	{ "Comic Bakery (2014)(CollectorVision).rom",	27925, 0x8884bac2, BRF_PRG | BRF_ESS },
 };
@@ -6591,11 +6591,29 @@ STDROMPICKEXT(cv_comicbakery, cv_comicbakery, cv_coleco)
 STD_ROM_FN(cv_comicbakery)
 
 struct BurnDriver BurnDrvcv_comicbakery = {
-	"cv_comicbakery", NULL, "cv_coleco", NULL, "1984-2014",
-	"Comic Bakery (HB)\0", "Published by CollectorVision Games", "Konami", "ColecoVision",
+	"cv_comicbakery", NULL, "cv_coleco", NULL, "2014",
+	"Comic Bakery (CollectorVision) (HB)\0", NULL, "CollectorVision - Konami", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_comicbakeryRomInfo, cv_comicbakeryRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Comic Bakery (Opcode Games) (HB)
+static struct BurnRomInfo cv_comicbakeryoRomDesc[] = {
+	{ "Comic Bakery (2010)(Opcode Games).rom",	31745, 0x220cdd5e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_comicbakeryo, cv_comicbakeryo, cv_coleco)
+STD_ROM_FN(cv_comicbakeryo)
+
+struct BurnDriver BurnDrvcv_comicbakeryo = {
+	"cv_comicbakeryo", "cv_comicbakery", "cv_coleco", NULL, "2010",
+	"Comic Bakery (Opcode Games) (HB)\0", NULL, "Opcode Games - Konami", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_comicbakeryoRomInfo, cv_comicbakeryoRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
@@ -7680,7 +7698,7 @@ struct BurnDriver BurnDrvcv_frntlnsce = {
 	272, 228, 4, 3
 };
 
-// Frost Bite (HB)
+// Frostbite (HB)
 static struct BurnRomInfo cv_frostbiteRomDesc[] = {
 	{ "Frostbite (2016)(Team Pixelboy).rom",	0x08000, 0xb3212318, BRF_PRG | BRF_ESS },
 };
@@ -7690,7 +7708,7 @@ STD_ROM_FN(cv_frostbite)
 
 struct BurnDriver BurnDrvcv_frostbite = {
 	"cv_frostbite", NULL, "cv_coleco", NULL, "1983-2016",
-	"Frost Bite (HB)\0", "Published by Team Pixelboy", "Activision", "ColecoVision",
+	"Frostbite (HB)\0", "Published by Team Pixelboy", "Activision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
 	CVGetZipName, cv_frostbiteRomInfo, cv_frostbiteRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
@@ -10750,9 +10768,9 @@ struct BurnDriver BurnDrvcv_ripcord = {
     272, 228, 4, 3
 };
 
-// Risky Rick (HB)
+// Risky Rick in Dangerous Traps (HB)
 static struct BurnRomInfo cv_RiskyrickRomDesc[] = {
-	{ "Risky Rick (2018)(ArcadeVision).rom", 32768, 0x68fdb91b, BRF_ESS | BRF_PRG },
+	{ "Risky Rick in Dangerous Traps (2018)(ArcadeVision).rom", 32768, 0x68fdb91b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(cv_Riskyrick, cv_Riskyrick, cv_coleco)
@@ -10760,7 +10778,7 @@ STD_ROM_FN(cv_Riskyrick)
 
 struct BurnDriver BurnDrvcv_Riskyrick = {
 	"cv_riskyrick", NULL, "cv_coleco", NULL, "2018",
-	"Risky Rick (HB)\0", NULL, "ArcadeVision", "ColecoVision",
+	"Risky Rick in Dangerous Traps (HB)\0", NULL, "ArcadeVision", "ColecoVision",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_PLATFORM, 0,
 	CVGetZipName, cv_RiskyrickRomInfo, cv_RiskyrickRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,

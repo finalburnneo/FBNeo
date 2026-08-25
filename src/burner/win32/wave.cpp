@@ -11,11 +11,7 @@ static void MakeOfn(TCHAR* pszFilter)
 	_stprintf(pszFilter, FBALoadStringEx(hAppInst, IDS_DISK_FILE_SOUND, true), _T(APP_TITLE));
 	memcpy(pszFilter + _tcslen(pszFilter), _T(" (*.wav)\0*.wav\0\0"), 16 * sizeof(TCHAR));
 
-	if (NeoCDInfo_ID()) {
-		_stprintf(szChoice, _T("ngcd_%s.wav"), NeoCDInfo_Text(DRV_NAME));
-	} else {
-		_stprintf(szChoice, _T("%s.wav"), BurnDrvGetText(DRV_NAME));
-	}
+	_stprintf(szChoice, _T("%s.wav"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
 
 	memset(&ofn, 0, sizeof(ofn));
 	ofn.lStructSize = sizeof(ofn);
@@ -23,7 +19,7 @@ static void MakeOfn(TCHAR* pszFilter)
 	ofn.lpstrFilter = pszFilter;
 	ofn.lpstrFile = szChoice;
 	ofn.nMaxFile = sizeof(szChoice) / sizeof(TCHAR);
-	ofn.lpstrInitialDir = NULL;// default "Documents" folder.. _T(".\\wav");
+	ofn.lpstrInitialDir = NULL;	// default "Documents" folder.. _T(".\\wav");
 	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY;
 	ofn.lpstrDefExt = _T("wav");
 

@@ -1,5 +1,6 @@
 // Screen Window
 #include "burner.h"
+#include "pcecdlist.h"
 #include <process.h>
 #include <shlobj.h>
 
@@ -11,13 +12,11 @@ int nActiveGame;
 static bool bLoading = 0;
 
 #ifdef BUILD_PCE
-TCHAR PCECD_szTitle[CDLIST_TEXT_SIZE] = _T("");
-
 static void SetPCECDTitle()
 {
 	TCHAR szText[1024] = _T("");
-	const TCHAR* pszTitle = PCECD_szTitle[0] != _T('\0') ? PCECD_szTitle : FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true);
-	_sntprintf(szText, _countof(szText), _T(APP_TITLE) _T(" v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle);
+	TCHAR* pszTitle = PceCDInfo_Text(DRV_FULLNAME);
+	_sntprintf(szText, _countof(szText), _T(APP_TITLE) _T(" v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle ? pszTitle : FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	szText[_countof(szText) - 1] = _T('\0');
 	SetWindowText(hScrnWnd, szText);
 }
@@ -1252,24 +1251,6 @@ static INT32 CDListGetPlatform(const TCHAR* pszPath)
 	CDListResult Result;
 	if (!CDListIdentify(pszPath, &Result))
 		return CDLIST_PLATFORM_UNKNOWN;
-#ifdef BUILD_PCE
-	if (Result.nPlatform == CDLIST_PLATFORM_PCECD) {
-		if (Result.Metadata.szTitle[0]) {
-			_tcsncpy(PCECD_szTitle, Result.Metadata.szTitle, CDLIST_TEXT_SIZE - 1);
-		} else {
-			// No database title (e.g. cue/ccd identified by magic) - use the file name
-			const TCHAR* pszBase = _tcsrchr(pszPath, _T('\\'));
-			pszBase = pszBase ? pszBase + 1 : pszPath;
-			const TCHAR* pszSlash = _tcsrchr(pszBase, _T('/'));
-			if (pszSlash) pszBase = pszSlash + 1;
-			_tcsncpy(PCECD_szTitle, pszBase, CDLIST_TEXT_SIZE - 1);
-			PCECD_szTitle[CDLIST_TEXT_SIZE - 1] = _T('\0');
-			TCHAR* pszDot = _tcsrchr(PCECD_szTitle, _T('.'));
-			if (pszDot) *pszDot = _T('\0');
-		}
-		PCECD_szTitle[CDLIST_TEXT_SIZE - 1] = _T('\0');
-	}
-#endif
 	return Result.nPlatform;
 }
 

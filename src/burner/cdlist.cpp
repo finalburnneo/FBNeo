@@ -1,9 +1,11 @@
 #include "burner.h"
 #include "cdlist.h"
 #include "neocdlist.h"
+#include "pcecdlist.h"
 #include "cd_img.h"
 #include "neocdlist_games.h"
 #include "pcecdlist_games.h"
+#include "pcecdlist_dink.h"
 
 static NGCDGAME* pNeoGame;
 
@@ -620,3 +622,163 @@ void NeoCDInfo_Exit()
 	FreeNGCDGame(&pNeoGame);
 }
 #endif
+
+#ifdef BUILD_PCE
+static CDListMetadata PceCdInfo;
+static INT32 nPceCdInfoValid = 0;
+
+static INT32 IsPceCD()
+{
+	return (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCE_CD;
+}
+
+static void PceCdInfoUseFileName(TCHAR* pszDest, UINT32 nDest, const TCHAR* pszPath)
+{
+	// no database title (e.g. cue/ccd identified by magic only) - use the file name
+	const TCHAR* pszBase = _tcsrchr(pszPath, _T('\\'));
+	pszBase = pszBase ? pszBase + 1 : pszPath;
+	const TCHAR* pszSlash = _tcsrchr(pszBase, _T('/'));
+	if (pszSlash) {
+		pszBase = pszSlash + 1;
+	}
+	CopyText(pszDest, nDest, pszBase);
+	TCHAR* pszDot = _tcsrchr(pszDest, _T('.'));
+	if (pszDot) {
+		*pszDot = _T('\0');
+	}
+}
+
+INT32 PceCDInfo_Init()
+{
+	PceCDInfo_Exit();
+
+	if (!IsPceCD() || !CDEmuImage[0]) {
+		return 0;
+	}
+
+	CDListResult Result;
+	if (!CDListIdentifyEx(CDEmuImage, &Result, CDLIST_IDENTIFY_FAST, NULL, NULL, NULL)) {
+		return 0;
+	}
+
+	if (Result.bChdMameMatch) {
+		PceCdInfo = Result.Metadata;
+		nPceCdInfoValid = 1;
+	} else if (Result.nPlatform == CDLIST_PLATFORM_PCECD) {
+		// platform identified by SHA1 of TOC on bin/cue/etc
+		// create title from bin/cue name (for fallback)
+		PceCdInfoUseFileName(PceCdInfo.szTitle, CDLIST_TEXT_SIZE, CDEmuImage);
+
+		for (UINT32 i = 0; i < sizeof(pcengine_cd_games) / sizeof(pce_cd_dink); i++) {
+			if ((pcengine_cd_games[i].sha1[0] != '\0') && !_tcscmp(pcengine_cd_games[i].sha1, ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0))) {
+				bprintf(0, _T("found entry at idx %d\n"), i);
+
+				_tcscpy(PceCdInfo.szTitle, pcengine_cd_games[i].name);
+				_tcscpy(PceCdInfo.szName, pcengine_cd_games[i].id);
+				_tcscpy(PceCdInfo.szYear, pcengine_cd_games[i].year);
+				_tcscpy(PceCdInfo.szCompany, pcengine_cd_games[i].company);
+
+				nPceCdInfoValid = 1;
+				break;
+			}
+		}
+	}
+
+	if (nPceCdInfoValid) {
+		bprintf(PRINT_NORMAL, _T("    Title: %s\n"    ), PceCdInfo.szTitle);
+		bprintf(PRINT_NORMAL, _T("    Shortname: %s\n"), PceCdInfo.szName);
+		bprintf(PRINT_NORMAL, _T("    Year: %s\n"     ), PceCdInfo.szYear);
+		bprintf(PRINT_NORMAL, _T("    Company: %s\n"  ), PceCdInfo.szCompany);
+	}
+
+	return nPceCdInfoValid;
+}
+
+TCHAR* PceCDInfo_Text(INT32 nText)
+{
+	if (!IsPceCD()) {
+		return NULL;
+	}
+
+	if (nText == DRV_FULLNAME && PceCdInfo.szTitle[0]) {
+		// best-effort title: database title, or the file name for unidentified discs
+		return PceCdInfo.szTitle;
+	}
+
+	if (!nPceCdInfoValid) {  // FALLBACK: create "DRV_NAME" from cue filename....
+		if (nText == DRV_NAME) {
+			TCHAR c;
+			int src = 0;
+			int dst = 0;
+			int srclen = _tcslen(PceCdInfo.szTitle);
+			while (src < srclen && dst < 32) {
+				bool ok_to_copy = false;
+
+				c = _totlower(PceCdInfo.szTitle[src++]);
+
+				ok_to_copy = ((c >= _T('a') && c <= _T('z')) ||
+							  (c >= _T('0') && c <= _T('9')));
+
+				if (c == _T('-')) break;
+				if (c == _T('(')) break;
+				if (c == _T('[')) break;
+
+				if (ok_to_copy) {
+					PceCdInfo.szName[dst++] = c;
+					PceCdInfo.szName[dst] = _T('\0');
+				}
+			}
+			nPceCdInfoValid = 1; // DRV_NAME is now ok -dink
+			return PceCdInfo.szName;
+		}
+		return NULL;
+	}
+
+	switch (nText) {
+		case DRV_FULLNAME:     	return PceCdInfo.szTitle;
+		case DRV_NAME:			return PceCdInfo.szName;
+		case DRV_MANUFACTURER:	return PceCdInfo.szCompany;
+		case DRV_DATE:			return PceCdInfo.szYear;
+	}
+	return NULL;
+}
+
+INT32 PceCDInfo_ID()
+{
+	return (IsPceCD() && nPceCdInfoValid) ? 1 : 0;
+}
+
+void PceCDInfo_Exit()
+{
+	memset(&PceCdInfo, 0, sizeof(PceCdInfo));
+	nPceCdInfoValid = 0;
+}
+#endif
+
+TCHAR* CDInfo_Text(INT32 nText)
+{
+	static TCHAR szNone[] = _T("NOGAME");
+	const INT32 g_type = CDGameType();
+
+	switch (g_type) {
+		case CDGAME_NEOGEO:
+			return NeoCDInfo_Text(nText);
+		case CDGAME_PCE:
+			return PceCDInfo_Text(nText);
+		default:
+			return szNone;
+	}
+}
+
+TCHAR *CDInfo_GamePrefix()
+{
+	static TCHAR buffer[128];
+
+	TCHAR g_sys_prefixes[3][20] = { _T("none_"), _T("ngcd_"), _T("pcecd_") };
+	const INT32 g_type = CDGameType();
+
+	_stprintf(buffer, _T("%s%s"), g_sys_prefixes[g_type], CDInfo_Text(DRV_NAME));
+
+	return buffer;
+}
+

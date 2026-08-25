@@ -40445,6 +40445,24 @@ struct BurnDriver BurnDrvmd_hayatosj = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Heavy Recoil (HB)
+static struct BurnRomInfo md_heavyrecoilRomDesc[] = {
+	{ "Heavy Recoil (2026)(Wide Pixel Games).bin", 4194304, 0x49e9564b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_heavyrecoil)
+STD_ROM_FN(md_heavyrecoil)
+
+struct BurnDriver BurnDrvmd_heavyrecoil = {
+	"md_heavyrecoil", NULL, NULL, NULL, "2026",
+	"Heavy Recoil (HB)\0", NULL, "Wide Pixel Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_heavyrecoilRomInfo, md_heavyrecoilRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Hellfire Saga - Sonic (GlobalHack)
 static struct BurnRomInfo md_hellfiresagaRomDesc[] = {
 	{ "Hellfire Saga - GlobalHack (2023)(Red Miso Studios).bin", 3911106, 0xa09a9c31, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -43133,6 +43151,25 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_tanzerRomInfo, md_tanzerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.2.9)
+// https://valenzuelagustavo.github.io/tmnt-md-devlog/
+static struct BurnRomInfo md_tmntarcadeRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.2.9 (2026)(Gustavo Valenzuela).bin", 1048576, 0xe009b761, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmntarcade)
+STD_ROM_FN(md_tmntarcade)
+
+struct BurnDriver BurnDrvmd_tmntarcade = {
+	"md_tmntarcade", NULL, NULL, NULL, "2026",
+	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.2.9)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tmntarcadeRomInfo, md_tmntarcadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

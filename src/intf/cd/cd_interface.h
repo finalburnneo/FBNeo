@@ -8,6 +8,7 @@ enum CDEmuStatusValue { idle = 0, reading, playing, paused, seeking, fastforward
 enum CDEmuReadTOCFlags { CDEmuTOC_FIRSTLAST = 0x1000, CDEmuTOC_LASTMSF, CDEmuTOC_FIRSTINDEX, CDEmuTOC_ENDOFDISC };
 
 extern TCHAR CDEmuImage[MAX_PATH];
+extern UINT8 CDEmuImageTOCSHA1[MAX_PATH];
 
 INT32 CDEmuInit();
 INT32 CDEmuExit();

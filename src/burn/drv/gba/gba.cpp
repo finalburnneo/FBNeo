@@ -915,3 +915,4 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba->pause_after_frame = false;
 	}
 }
+

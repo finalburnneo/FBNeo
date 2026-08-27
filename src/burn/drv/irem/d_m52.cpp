@@ -1001,18 +1001,18 @@ struct BurnDriver BurnDrvMranger = {
 // Moon Patrol Unknown Territories
 
 static struct BurnRomInfo mpatrolutRomDesc[] = {
-	{ "mpatrolut.3m",	0x1000, 0xf0c4405b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "mpatrolut.3l",	0x1000, 0x1cd1640d, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "mpatrolut.3k",	0x1000, 0x45943910, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "mpatrolut.3j",	0x1000, 0x825e0ad3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "mpatrolut-1.3m",	0x1000, 0xf0c4405b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "mpatrolut-2.3l",	0x1000, 0x1cd1640d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mpatrolut-3.3k",	0x1000, 0x45943910, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mpatrolut-4.3j",	0x1000, 0x825e0ad3, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "mp-s1.1a",		0x1000, 0x561d3108, 2 | BRF_GRA },           //  4 M6803 Code
 
-	{ "mpatrolut.3e",	0x1000, 0x0c61ffa6, 3 | BRF_GRA },           //  5 Characters
-	{ "mpatrolut.3f",	0x1000, 0x8fbcaa31, 3 | BRF_GRA },           //  6
+	{ "mpatrolut-5.3e",	0x1000, 0x0c61ffa6, 3 | BRF_GRA },           //  5 Characters
+	{ "mpatrolut-4.3f",	0x1000, 0x8fbcaa31, 3 | BRF_GRA },           //  6
 
-	{ "mpatrolut.3m",	0x1000, 0xbd17d3ac, 4 | BRF_GRA },           //  7 Sprites
-	{ "mpatrolut.3n",	0x1000, 0x9ce028bf, 4 | BRF_GRA },           //  8
+	{ "mpatrolut-2.3m",	0x1000, 0xbd17d3ac, 4 | BRF_GRA },           //  7 Sprites
+	{ "mpatrolut-1.3n",	0x1000, 0x9ce028bf, 4 | BRF_GRA },           //  8
 
 	{ "mpe-1.3l",		0x1000, 0xc46a7f72, 5 | BRF_GRA },           //  9 Mountain Layer
 
@@ -1020,10 +1020,10 @@ static struct BurnRomInfo mpatrolutRomDesc[] = {
 
 	{ "mpe-3.3h",		0x1000, 0xa0919392, 7 | BRF_GRA },           // 11 Cityscape Layer
 
-	{ "mpatrolut.2a",	0x0200, 0x2f926603, 8 | BRF_GRA },           // 12 Color Data
-	{ "mpatrolut.1m",	0x0020, 0x1d02b31c, 8 | BRF_GRA },           // 13
-	{ "mpatrolut.1f",	0x0020, 0x298daa56, 8 | BRF_GRA },           // 14
-	{ "mpatrolut.2h",	0x0100, 0xe35efd45, 8 | BRF_GRA },           // 15
+	{ "mpatrolut-4.2a",	0x0200, 0x2f926603, 8 | BRF_GRA },           // 12 Color Data
+	{ "mpatrolut-3.1m",	0x0020, 0x1d02b31c, 8 | BRF_GRA },           // 13
+	{ "mpatrolut-1.1f",	0x0020, 0x298daa56, 8 | BRF_GRA },           // 14
+	{ "mpatrolut-2.2h",	0x0100, 0xe35efd45, 8 | BRF_GRA },           // 15
 
 	{ "mp_7621-5.7h",	0x0200, 0xcf1fd9d0, 0 | BRF_OPT },			 // 16 unkprom
 };

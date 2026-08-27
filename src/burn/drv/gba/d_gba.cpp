@@ -56667,6 +56667,25 @@ struct BurnDriver BurnDrvgba_gematrix = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Geometry Dash Advance (HB, v0.9 Beta)
+
+static struct BurnRomInfo gba_geodasadvRomDesc[] = {
+	{ "Geometry Dash Advance v0.9 Beta (2026)(AleFunky).gba",	6408812,	0xee5a501b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_geodasadv, gba_geodasadv, gba_gba)
+STD_ROM_FN(gba_geodasadv)
+
+struct BurnDriver BurnDrvgba_geodasadv = {
+	"gba_geodasadv", NULL, "gba_gba", NULL, "2026",
+	"Geometry Dash Advance (HB, v0.9 Beta)\0", NULL, "AleFunky", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_geodasadvRomInfo, gba_geodasadvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {

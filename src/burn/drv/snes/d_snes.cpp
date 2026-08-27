@@ -46690,6 +46690,25 @@ struct BurnDriver BurnDrvsnes_Bjreborndemo = {
 	512, 448, 4, 3
 };
 
+// Blokit (HB)
+
+static struct BurnRomInfo snes_BlockitRomDesc[] = {
+	{ "Blokit (2026)(Crisps).sfc", 262143, 0xc9f0aeca, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Blockit)
+STD_ROM_FN(snes_Blockit)
+
+struct BurnDriver BurnDrvsnes_Blockit = {
+	"snes_blockit", NULL, NULL, NULL, "2026",
+	"Blokit (HB)\0", NULL, "Crisps", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_BlockitRomInfo, snes_BlockitRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Blow'em Out (HB)
 
 static struct BurnRomInfo snes_BlowemoutRomDesc[] = {

@@ -7788,6 +7788,24 @@ struct BurnDriver BurnDrvcv_galaga = {
     272, 228, 4, 3
 };
 
+// Game & Watch Collection (HB, v0.33)
+static struct BurnRomInfo cv_gamewatchRomDesc[] = {
+	{ "Game & Watch Collection v0.33 (2025)(Electric Dreams).rom",	131072, 0x2f3a1c8d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_gamewatch, cv_gamewatch, cv_coleco)
+STD_ROM_FN(cv_gamewatch)
+
+struct BurnDriver BurnDrvcv_gamewatch = {
+	"cv_gamewatch", NULL, "cv_coleco", NULL, "2025",
+	"Game & Watch Collection (HB, v0.33)\0", NULL, "Electric Dreams", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_gamewatchRomInfo, cv_gamewatchRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // GamePack 1 (HB)
 static struct BurnRomInfo cv_gamepack1RomDesc[] = {
 	{ "GamePack 1 (2002)(Daniel Bienvenu).rom",	32768, 0x9a02fba5, BRF_PRG | BRF_ESS },
@@ -10084,6 +10102,24 @@ struct BurnDriver BurnDrvcv_nsub = {
     272, 228, 4, 3
 };
 
+// Oil Panic (HB, v0.72)
+static struct BurnRomInfo cv_oilpanicRomDesc[] = {
+	{ "Oil Panic v0.72 (2026)(Electric Dreams).rom",	24576, 0x4dc66df0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_oilpanic, cv_oilpanic, cv_coleco)
+STD_ROM_FN(cv_oilpanic)
+
+struct BurnDriver BurnDrvcv_oilpanic = {
+	"cv_oilpanic", NULL, "cv_coleco", NULL, "2026",
+	"Oil Panic (HB, v0.72)\0", NULL, "Electric Dreams", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION, 0,
+	CVGetZipName, cv_oilpanicRomInfo, cv_oilpanicRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Operation Hibernation (HB, 10-11-25)
 static struct BurnRomInfo cv_ophibernRomDesc[] = {
 	{ "Operation Hibernation 10-11-25 (2025)(Jess Creations).rom",	32768, 0x39ed33ed, BRF_PRG | BRF_ESS },
@@ -10476,6 +10512,24 @@ struct BurnDriver BurnDrvcv_pooyan = {
     NULL, NULL, NULL, NULL,
     BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_ACTION, 0,
     CVGetZipName, cv_pooyanRomInfo, cv_pooyanRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+    DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+    272, 228, 4, 3
+};
+
+// Pre-Astro (HB)
+static struct BurnRomInfo cv_preastroRomDesc[] = {
+    { "Pre-Astro (2025)(Haranni).rom",	30054, 0xbb02d475, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_preastro, cv_preastro, cv_coleco)
+STD_ROM_FN(cv_preastro)
+
+struct BurnDriver BurnDrvcv_preastro = {
+    "cv_preastro", NULL, "cv_coleco", NULL, "2025",
+    "Pre-Astro (HB)\0", NULL, "Haranni", "ColecoVision",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_HORSHOOT, 0,
+    CVGetZipName, cv_preastroRomInfo, cv_preastroRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
     DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
     272, 228, 4, 3
 };
@@ -11520,6 +11574,24 @@ struct BurnDriver BurnDrvcv_spacequest = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_ADV, 0,
 	CVGetZipName, cv_spacequestRomInfo, cv_spacequestRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
+// Space Trouble (SGM) (HB)
+static struct BurnRomInfo cv_spacetroubleRomDesc[] = {
+	{ "Space Trouble SGM (2026)(kamshaft).rom",	16384, 0xfc6cac16, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_spacetrouble, cv_spacetrouble, cv_coleco)
+STD_ROM_FN(cv_spacetrouble)
+
+struct BurnDriver BurnDrvcv_spacetrouble = {
+	"cv_spacetrouble", NULL, "cv_coleco", NULL, "2026",
+	"Space Trouble (SGM) (HB)\0", NULL, "kamshaft", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_COLECO, GBF_VERSHOOT, 0,
+	CVGetZipName, cv_spacetroubleRomInfo, cv_spacetroubleRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInitSGM, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };

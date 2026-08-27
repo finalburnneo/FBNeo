@@ -5837,9 +5837,9 @@ struct BurnDriver BurnDrvgba_bofa = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Breath of Fire (Europe, M3)
+// Breath of Fire (Europe)
 static struct BurnRomInfo gba_bofRomDesc[] = {
-	{ "Breath of Fire (E, M3)(2001)(UbiSoft).gba",	0x0400000,	0xa1c3165d,	BRF_ESS | BRF_PRG },
+	{ "Breath of Fire (E)(2001)(UbiSoft).gba",	0x0400000,	0xa1c3165d,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_bof, gba_bof, gba_gba)
@@ -5847,7 +5847,7 @@ STD_ROM_FN(gba_bof)
 
 struct BurnDriver BurnDrvgba_bof = {
 	"gba_bof", NULL, "gba_gba", NULL, "2001",
-	"Breath of Fire (Europe, M3)\0", NULL, "UbiSoft", "Game Boy Advance",
+	"Breath of Fire (Europe)\0", NULL, "UbiSoft", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RPG, 0,
 	GbaGetZipName, gba_bofRomInfo, gba_bofRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,

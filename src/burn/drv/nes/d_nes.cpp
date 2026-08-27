@@ -14662,9 +14662,10 @@ struct BurnDriver BurnDrvnes_aliencat2 = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Alien Smash (HB, v1.1)
+// Alien Smash (HB)
+// https://retrobrogaming.itch.io/alien-smash
 static struct BurnRomInfo nes_aliensmashRomDesc[] = {
-	{ "Alien Smash v1.1 (2026)(RBG Entertainment).nes",          524304, 0xd87adb78, BRF_ESS | BRF_PRG },
+	{ "Alien Smash (2026)(RBG Entertainment).nes",          524304, 0x1c692e98, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_aliensmash)
@@ -14672,7 +14673,7 @@ STD_ROM_FN(nes_aliensmash)
 
 struct BurnDriver BurnDrvnes_aliensmash = {
 	"nes_aliensmash", NULL, NULL, NULL, "2026",
-	"Alien Smash (HB, v1.1)\0", NULL, "RBG Entertainment", "NES / Famicom",
+	"Alien Smash (HB)\0", NULL, "RBG Entertainment", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_VERSHOOT, 0,
 	NESGetZipName, nes_aliensmashRomInfo, nes_aliensmashRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -21438,6 +21439,26 @@ struct BurnDriver BurnDrvnes_magictrl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_magictrlRomInfo, nes_magictrlRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Magical Puzzle Popils - Audio Recreation (Hack, v1.0A)
+// https://www.romhacking.net/hacks/9302/ 
+ 
+static struct BurnRomInfo nes_magicpuzpoparRomDesc[] = {
+	{ "Magical Puzzle Popils - Audio Recreation v1.0A (2026)(Mister Man).nes",          196624, 0x792f6122, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_magicpuzpopar)
+STD_ROM_FN(nes_magicpuzpopar)
+
+struct BurnDriver BurnDrvnes_magicpuzpopar = {
+	"nes_magicpuzpopar", NULL, NULL, NULL, "2026",
+	"Magical Puzzle Popils - Audio Recreation (Hack, v1.0A)\0", NULL, "Mister Man", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_magicpuzpoparRomInfo, nes_magicpuzpoparRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

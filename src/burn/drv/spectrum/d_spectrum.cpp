@@ -1333,10 +1333,10 @@ struct BurnDriver BurnSpecburatino = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Afterburner (128K)
+// After Burner (128K)
 
 static struct BurnRomInfo SpecAfterburnerRomDesc[] = {
-	{ "Afterburner 128K (1989)(Activision).tap", 102813, 0xb40696fb, BRF_ESS | BRF_PRG },
+	{ "After Burner 128K (1989)(Activision).tap", 102813, 0xb40696fb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAfterburner, SpecAfterburner, Spec128)
@@ -1344,7 +1344,7 @@ STD_ROM_FN(SpecAfterburner)
 
 struct BurnDriver BurnSpecAfterburner = {
 	"spec_afterburner", NULL, "spec_spec128", NULL, "1989",
-	"Afterburner (128K)\0", NULL, "Activision", "ZX Spectrum",
+	"After Burner (128K)\0", NULL, "Activision", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecAfterburnerRomInfo, SpecAfterburnerRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

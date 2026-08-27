@@ -43,6 +43,7 @@ INT32 CDImageReadRawSector(CDImage* pImage, INT32 nLba, UINT8* pDest);
 INT32 CDImageReadDataSector(CDImage* pImage, INT32 nLba, UINT8* pDest);
 INT32 CDImageReadUserSector(CDImage* pImage, INT32 nLba, UINT8* pDest, INT32* pnSize);
 INT32 CDImageGetChdSha1(const CDImage* pImage, UINT8* pSha1);
+INT32 CDImageGetTOCSha1(const CDImage* pImage, UINT8* pSha1);
 
 INT32 cdimgCountChdAudioTracks(TCHAR* pszFile);
 extern struct CDEmuDo cdimgDo;

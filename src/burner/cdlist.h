@@ -42,11 +42,9 @@ enum CDListPlatform {
 };
 
 enum CDListSource {
-	CDLIST_SOURCE_NONE = 0,
-	CDLIST_SOURCE_MAGIC,
-	CDLIST_SOURCE_NEO_ID,
-	CDLIST_SOURCE_CHD_SHA1,
-	CDLIST_SOURCE_RAW_SHA1
+	CDLIST_SOURCE_NONE = 0, // not detected
+	CDLIST_SOURCE_MAGIC, // identify'd by byte pattern in cd
+	CDLIST_SOURCE_GAMEDB // identify'd via neocdlist_games.h / pcecdlist_games.h
 };
 
 enum CDListConfidence {
@@ -81,14 +79,8 @@ struct CDListResult {
 	UINT32 nNeoID;
 	INT32 nAudioTrackCount;
 	TCHAR szFirstDataTrackPath[MAX_PATH];
+	TCHAR szTOCSha1[41];
 	CDListMetadata Metadata;
-	INT32 bHasChdSha1;
-	UINT8 ChdSha1[CDLIST_SHA1_SIZE];
-	INT32 bChdMameMatch;
-	CDListMetadata ChdMetadata;
-	INT32 bHasRawSha1;
-	INT32 bRawSha1Unsupported;
-	UINT8 RawSha1[CDLIST_SHA1_SIZE];
 };
 
 INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlags, CDListCancelCallback pCancelCallback, CDListSourceCallback pSourceCallback, void* pUser);

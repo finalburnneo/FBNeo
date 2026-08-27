@@ -46691,20 +46691,20 @@ struct BurnDriver BurnDrvsnes_Bjreborndemo = {
 };
 
 // Blokit (HB)
-
-static struct BurnRomInfo snes_BlockitRomDesc[] = {
+// https://crispulent-crisps.itch.io/blokit
+static struct BurnRomInfo snes_BlokitRomDesc[] = {
 	{ "Blokit (2026)(Crisps).sfc", 262143, 0xc9f0aeca, BRF_ESS | BRF_PRG },
 };
 
-STD_ROM_PICK(snes_Blockit)
-STD_ROM_FN(snes_Blockit)
+STD_ROM_PICK(snes_Blokit)
+STD_ROM_FN(snes_Blokit)
 
-struct BurnDriver BurnDrvsnes_Blockit = {
-	"snes_blockit", NULL, NULL, NULL, "2026",
+struct BurnDriver BurnDrvsnes_Blokit = {
+	"snes_blokit", NULL, NULL, NULL, "2026",
 	"Blokit (HB)\0", NULL, "Crisps", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PUZZLE, 0,
-	SNESGetZipName, snes_BlockitRomInfo, snes_BlockitRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	SNESGetZipName, snes_BlokitRomInfo, snes_BlokitRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

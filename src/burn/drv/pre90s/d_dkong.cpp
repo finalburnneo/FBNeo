@@ -3508,7 +3508,7 @@ STD_ROM_FN(dkcbarrel)
 
 struct BurnDriver BurnDrvDkcbarrel = {
 	"dkcbarrel", "dkong", NULL, "dkong", "2019",
-	"Donkey Kong Crazy Barrels Edition\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Crazy Barrels Edition\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkcbarrelRomInfo, dkcbarrelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3546,7 +3546,7 @@ STD_ROM_FN(dkfreerun)
 
 struct BurnDriver BurnDrvDkfreerun = {
 	"dkfreerun", "dkong", NULL, "dkong", "2019",
-	"Donkey Kong Freerun Edition\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Freerun Edition\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkfreerunRomInfo, dkfreerunRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3584,7 +3584,7 @@ STD_ROM_FN(dkongran1)
 
 struct BurnDriver BurnDrvDkongran1 = {
 	"dkongran1", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong Randomized Edition v1.01\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Randomized Edition v1.01\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongran1RomInfo, dkongran1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3622,7 +3622,7 @@ STD_ROM_FN(dkongchm)
 
 struct BurnDriver BurnDrvDkongchm = {
 	"dkongchm", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong League Championship v1.00\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong League Championship v1.00\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongchmRomInfo, dkongchmRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3660,7 +3660,7 @@ STD_ROM_FN(dkongchm1)
 
 struct BurnDriver BurnDrvDkongchm1 = {
 	"dkongchm1", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong Championship Edition v1.01\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Championship Edition v1.01\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongchm1RomInfo, dkongchm1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3774,7 +3774,7 @@ STD_ROM_FN(dkongss)
 
 struct BurnDriver BurnDrvDkongss = {
 	"dkongss", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong Skip Start v1.00\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Skip Start v1.00\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongssRomInfo, dkongssRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3812,7 +3812,7 @@ STD_ROM_FN(dkongotr)
 
 struct BurnDriver BurnDrvDkongotr = {
 	"dkongotr", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong On the Run v1.02\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong On the Run v1.02\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongotrRomInfo, dkongotrRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3850,7 +3850,7 @@ STD_ROM_FN(dkongitd)
 
 struct BurnDriver BurnDrvDkongitd = {
 	"dkongitd", "dkong", NULL, "dkong", "2020",
-	"Donkey Kong In the Dark v1.02\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong In the Dark v1.02\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongitdRomInfo, dkongitdRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3888,7 +3888,7 @@ STD_ROM_FN(dkongtj)
 
 struct BurnDriver BurnDrvDkongtj = {
 	"dkongtj", "dkong", NULL, "dkong", "2021",
-	"Donkey Kong Twisted Jungle v1.05\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Twisted Jungle v1.05\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongtjRomInfo, dkongtjRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3926,7 +3926,7 @@ STD_ROM_FN(dkongbp)
 
 struct BurnDriver BurnDrvDkongbp = {
 	"dkongbp", "dkong", NULL, "dkong", "2021",
-	"Donkey Kong Barrelpalooza v1.06\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Barrelpalooza v1.06\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongbpRomInfo, dkongbpRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -3964,7 +3964,7 @@ STD_ROM_FN(dkongbp1)
 
 struct BurnDriver BurnDrvDkongbp1 = {
 	"dkongbp1", "dkong", NULL, "dkong", "2021",
-	"Donkey Kong Barrelpalooza v1.07\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Barrelpalooza v1.07\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkongbp1RomInfo, dkongbp1RomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4158,7 +4158,7 @@ STD_ROM_FN(dkrndmzr)
 
 struct BurnDriver BurnDrvdkrndmzr = {
 	"dkrndmzr", "dkong", NULL, "dkong", "2022",
-	"Donkey Kong RNDMZR\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong RNDMZR\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkrndmzrRomInfo, dkrndmzrRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4196,7 +4196,7 @@ STD_ROM_FN(dkwizardry)
 
 struct BurnDriver BurnDrvdkwizardry = {
 	"dkwizardry", "dkong", NULL, "dkong", "2022",
-	"Donkey Kong Wizardry\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Wizardry\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkwizardryRomInfo, dkwizardryRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4233,7 +4233,7 @@ STD_ROM_FN(dkhrthnt)
 
 struct BurnDriver BurnDrvdkhrthnt = {
 	"dkhrthnt", "dkong", NULL, "dkong", "2022",
-	"Donkey Kong Hearthunt\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Hearthunt\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkhrthntRomInfo, dkhrthntRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4270,7 +4270,7 @@ STD_ROM_FN(dkaccel)
 
 struct BurnDriver BurnDrvdkaccel = {
 	"dkaccel", "dkong", NULL, "dkong", "2023",
-	"Donkey Kong Accelerate\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Accelerate\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkaccelRomInfo, dkaccelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4306,7 +4306,7 @@ STD_ROM_FN(dkpmx)
 
 struct BurnDriver BurnDrvdkpmx = {
 	"dkpmx", "dkong", NULL, "dkong", "2024",
-	"Donkey Kong Pac-Man Crossover\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Pac-Man Crossover\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkpmxRomInfo, dkpmxRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4343,7 +4343,7 @@ STD_ROM_FN(dkong40y)
 
 struct BurnDriver BurnDrvdkong40y = {
 	"dkong40y", "dkong", NULL, "dkong", "2021",
-	"Donkey Kong Anniversary Edition\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Anniversary Edition\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkong40yRomInfo, dkong40yRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
@@ -4381,10 +4381,49 @@ STD_ROM_FN(dkduel)
 
 struct BurnDriver BurnDrvdkduel = {
 	"dkduel", "dkong", NULL, "dkong", "2021",
-	"Donkey Kong Duel\0", NULL, "Paul Goes", "Miscellaneous",
+	"Donkey Kong Duel\0", NULL, "hack (Paul Goes)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, dkduelRomInfo, dkduelRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong (Bowser's Takeover v1.00)
+
+static struct BurnRomInfo dkbowserRomDesc[] = {
+	{ "dkbowser.5et",	0x1000, 0x2680ae9e, 1 }, //  0 maincpu
+	{ "dkbowser.5ct",	0x1000, 0x5cc230f1, 1 }, //  1
+	{ "dkbowser.5bt",	0x1000, 0xc1918928, 1 }, //  2
+	{ "dkbowser.5at",	0x1000, 0x7f3b508b, 1 }, //  3
+
+	{ "dkbowser.3i",	0x0800, 0x9e77db35, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "dkbowser.5h",	0x0800, 0xbbf41cd4, 3 }, //  6 gfx1
+	{ "dkbowser.3pt",	0x0800, 0x1653cadb, 3 }, //  7
+
+	{ "dkbowser.4m",	0x0800, 0xc8563065, 4 }, //  8 gfx2
+	{ "dkbowser.4n",	0x0800, 0xacb90323, 4 }, //  9
+	{ "dkbowser.4r",	0x0800, 0x18e81522, 4 }, // 10
+	{ "dkbowser.4s",	0x0800, 0x5aae0c7a, 4 }, // 11
+
+	{ "dkbowser.2k",	0x0100, 0xcd5154ef, 5 }, // 12 proms
+	{ "dkbowser.2j",	0x0100, 0x1a687240, 5 }, // 13
+	{ "dkbowser.5e",	0x0100, 0xa1444094, 5 }, // 14
+
+};
+
+STD_ROM_PICK(dkbowser)
+STD_ROM_FN(dkbowser)
+
+struct BurnDriver BurnDrvDkbowser = {
+	"dkbowser", "dkong", NULL, "dkong", "2026",
+	"Donkey Kong (Bowser's Takeover v1.00)\0", NULL, "hack (Paul Goes)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM | GBF_ACTION, 0,
+	NULL, dkbowserRomInfo, dkbowserRomName, NULL, NULL, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongDIPInfo,
 	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

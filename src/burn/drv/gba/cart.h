@@ -81,15 +81,21 @@ static inline UINT16 gba_fcmini_get_pattern(UINT32 addr)
 	return value & 0xffff;
 }
 
+static inline bool gba_rom_mirrors_1m(const gba_t* gba, UINT32 offset)
+{
+	return gba->cart.rom_size == 0x100000 && offset < 0x400000;
+}
+
 static inline UINT16 gba_rom_read16(const gba_t* gba, UINT32 address)
 {
-	UINT32 offset = (address & 0x1fffffe);
+	UINT32 offset = address & 0x1fffffe;
 	if (offset >= gba->cart.rom_size) {
 		if (gba->cart.fcmini.type)
 			return gba_fcmini_get_pattern(address);
-		UINT32 mask = gba->cart.rom_size - 1;
-		if ((gba->cart.rom_size & mask) == 0)
-			offset &= mask & ~1;
+		if (gba_rom_mirrors_1m(gba, offset))
+			offset &= 0x0ffffe;
+		else
+			return (address >> 1) & 0xffff;
 	}
 	return gba->mem.cart_rom[offset] | (gba->mem.cart_rom[offset + 1] << 8);
 }
@@ -454,7 +460,6 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba_io_store16(gba, GBA_BG2PD + (bg - 2) * 0x10, 1 << 8);
 	}
 	gba_store16(gba, 0x04000088, 512);
-	gba_store32(gba, 0x040000dc, 0x84000000);
 	gba_recompute_waitstate_table(gba, 0);
 	gba_recompute_mmio_mask_table(gba);
 	gba_io_store16(gba, GBA_KEYINPUT, 0x3ff);	// power-on default: no keys pressed

@@ -44,8 +44,9 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 		bool enable  = SB_BFE(cnt_h, 15, 1);
 		if (enable) {
 			bool type = SB_BFE(cnt_h, 10, 1); // 0: 16b 1:32b
+			bool enable_edge = !gba->dma[i].last_enable;
 
-			if (!gba->dma[i].last_enable) {
+			if (enable_edge) {
 				gba->dma[i].last_enable = enable;
 				gba->dma[i].source_addr = gba_io_read32(gba, GBA_DMA0SAD + 12 * i);
 				gba->dma[i].dest_addr   = gba_io_read32(gba, GBA_DMA0DAD + 12 * i);
@@ -75,7 +76,8 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 			if (gba->dma[i].current_transaction == 0) {
 				if (mode == 3 && i == 0)
 					continue;
-				if (gba->dma[i].startup_delay >= 0) {
+				bool startup_active = gba->dma[i].startup_delay >= 0;
+				if (startup_active) {
 					gba->dma[i].startup_delay -= cycle_delta;
 					if (gba->dma[i].startup_delay >= 0) {
 						gba->activate_dmas = true;
@@ -83,6 +85,8 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 					}
 					gba->dma[i].startup_delay = -1;
 				}
+				if (mode == 0 && !enable_edge && !startup_active)
+					continue;
 				if (dst_addr_ctl == 3) {
 					gba->dma[i].dest_addr = gba_io_read32(gba, GBA_DMA0DAD + 12 * i);
 				}

@@ -434,10 +434,8 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 					gba->mem.openbus_word = gba_fcmini_get_pattern(addr) | (gba_fcmini_get_pattern(addr + 2) << 16);
 					break;
 				}
-				UINT32 mask = gba->cart.rom_size - 1;
-				if ((gba->cart.rom_size & mask) == 0) {
-					// power-of-two ROM: out-of-range reads wrap back into ROM
-					maddr &= mask & ~3;
+				if (gba_rom_mirrors_1m(gba, maddr)) {
+					maddr &= 0x0ffffc;
 					gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
 					if (req_type & 0x3) {
 						UINT16 res16 = gba->mem.openbus_word >> (addr & 2) * 8;
@@ -662,7 +660,15 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba->ppu.aff[aff_bg].wrote_bgy = true;
 	} else if (address_u32 == GBA_DMA0CNT_L || address_u32 == GBA_DMA1CNT_L ||
 		address_u32 == GBA_DMA2CNT_L || address_u32 == GBA_DMA3CNT_L) {
-		gba->activate_dmas = true;
+		INT32 dma = (address_u32 - GBA_DMA0CNT_L) / 12;
+		UINT32 old_word = gba_io_read32(gba, address_u32);
+		UINT32 new_word = (old_word & ~word_mask) | (word_data & word_mask);
+		bool old_enable = (old_word & 0x80000000) != 0;
+		bool new_enable = (new_word & 0x80000000) != 0;
+		if (!old_enable && new_enable)
+			gba->activate_dmas = true;
+		else if (old_enable && !new_enable)
+			gba->dma[dma].last_enable = false;
 	} else if (address_u32 == GBA_WAITCNT) {
 		UINT16 waitcnt = gba_io_read16(gba, GBA_WAITCNT);
 		waitcnt = ((waitcnt & ~word_mask) | (word_data & word_mask));

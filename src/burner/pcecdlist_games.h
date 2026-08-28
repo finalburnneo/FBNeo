@@ -288,8 +288,8 @@ static pce_cd_dink pcengine_cd_games[] = {
 	{ _T("8e89d8ee02ec88d5e41caef8d8fb5c453d7be549"), _T("Meteor Blaster DX"), _T("meteorblaster"), _T("1994"), _T("Games Express") },
 	{ _T("0bb1d72fad572ed8642063a1a5d4ad46ef4abb06"), _T("Might and Magic"), _T("mightandmagic"), _T("1991"), _T("NEC Avenue") },
 
-	{ _T("fb23a96bc2a9dc26dd1e788087092fc4c1b55415"), _T("Might and Magic III: Isles of Terra"), _T("mightmagic3"), _T("1993"), _T("Hudson") }, // alternate?
-	{ _T("8dd8a794762cf9f4a6a6980745bf95f36de1efd6"), _T("Might and Magic III: Isles of Terra"), _T("mightmagic3"), _T("1993"), _T("Hudson") },
+	{ _T("8dd8a794762cf9f4a6a6980745bf95f36de1efd6"), _T("Might and Magic III: Isles of Terra (USA)"), _T("mightmagic3u"), _T("1993"), _T("Hudson") },
+	{ _T("fb23a96bc2a9dc26dd1e788087092fc4c1b55415"), _T("Might and Magic III: Isles of Terra (Japan)"), _T("mightmagic3j"), _T("1993"), _T("Hudson") },
 	{ _T("bef2e6b7b29821fd814c668a88b8667309481be5"), _T("Minesweeper"), _T("minesweeper"), _T("1992"), _T("Pack-In-Video") },
 	{ _T("828cfe42b2969886c91376266ce5a4eb1bda7e53"), _T("Mirai Shonen Conan"), _T("miraiconan"), _T("1992"), _T("Telenet Japan") },
 	{ _T("6240054bb52f4d2e9b1e3898a911c1e4424ae9ea"), _T("Mitsubachi Gakuen"), _T("mitsubachi"), _T("1990"), _T("Hudson") },
@@ -416,7 +416,7 @@ static pce_cd_dink pcengine_cd_games[] = {
 	{ _T("00c9bb623d2f8ff53aa002297303f2736d5ec7b0"), _T("Space Invaders: The Original Game"), _T("spaceinvaders"), _T("1995"), _T("NEC Avenue") },
 	{ _T("1564f43d2ca1eedb831b1c08b578bd803d083ade"), _T("Splash Lake (Japan)"), _T("splashlakej"), _T("1991"), _T("NEC Avenue") },
 	{ _T("90078544c9f59b0c8f167e55643114677f93e1ae"), _T("Splash Lake (USA)"), _T("splashlakeu"), _T("1992"), _T("NEC Avenue") },
-	{ _T("1ffa15d679e76d20c55752f4433359f534020d2d"), _T("Spriggan Mark 2: Re-Terraform Project"), _T("sprigganmark2"), _T("1992"), _T("Naxat") },
+	{ _T("1ffa15d679e76d20c55752f4433359f534020d2d"), _T("Spriggan Mark 2: Re-Terraform Project"), _T("spriggan2"), _T("1992"), _T("Naxat") },
 	{ _T("0d98dfbf2aae0b98b4df6cc408c9f1691250e0c4"), _T("Star Breaker"), _T("starbreaker"), _T("1994"), _T("Ray Force") },
 	{ _T("a063648f74906be28462195059a2235ad4e1cea2"), _T("Star Mobile"), _T("starmobile"), _T("1992"), _T("Naxat") },
 	{ _T("ec71239c6287bac0a4e5a5be76261aac4708f36d"), _T("Star Parodier"), _T("starparodierj"), _T("1992"), _T("Hudson") },

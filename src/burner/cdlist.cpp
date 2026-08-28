@@ -358,9 +358,10 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 	INT32 bCancelled = 0;
 
 	UINT8 sha1s[40] = { 0, };
-	int res = CDImageGetTOCSha1(pImage, sha1s);
-	_tcscpy(pResult->szTOCSha1, _AtoT((char *)sha1s));
-	bprintf(0, _T("CDImageGetTOCSha1() res %x  sha1s[%s]  %s\n"), res, pResult->szTOCSha1, pszPath);
+	if (!CDImageGetTOCSha1(pImage, sha1s)) {
+		_tcscpy(pResult->szTOCSha1, _AtoT((char *)sha1s));
+		//bprintf(0, _T("CDImageGetTOCSha1() res %x  sha1s[%s]  %s\n"), res, pResult->szTOCSha1, pszPath);
+	}
 
 	if (bCancelled || (pCancelCallback && pCancelCallback(pUser))) {
 		CDImageClose(pImage);
@@ -377,7 +378,7 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 
 		for (UINT32 i = 0; i < sizeof(pcengine_cd_games) / sizeof(pce_cd_dink); i++) {
 			if ((pcengine_cd_games[i].sha1[0] != '\0') && !_tcscmp(pcengine_cd_games[i].sha1, pResult->szTOCSha1)) {
-				bprintf(0, _T("->>found entry at idx %d\n"), i);
+				//bprintf(0, _T("->>found entry at idx %d\n"), i);
 
 				_tcscpy(pResult->Metadata.szTitle, pcengine_cd_games[i].name);
 				_tcscpy(pResult->Metadata.szName, pcengine_cd_games[i].id);
@@ -513,7 +514,7 @@ INT32 PceCDInfo_Init()
 
 		for (UINT32 i = 0; i < sizeof(pcengine_cd_games) / sizeof(pce_cd_dink); i++) {
 			if ((pcengine_cd_games[i].sha1[0] != '\0') && !_tcscmp(pcengine_cd_games[i].sha1, ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0))) {
-				bprintf(0, _T("found entry at idx %d\n"), i);
+				bprintf(0, _T("pcecdlist_games db: found entry at idx %d\n"), i);
 
 				_tcscpy(PceCdInfo.szTitle, pcengine_cd_games[i].name);
 				_tcscpy(PceCdInfo.szName, pcengine_cd_games[i].id);

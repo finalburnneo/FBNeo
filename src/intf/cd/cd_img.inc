@@ -810,7 +810,8 @@ static const UINT8* dinkLBAToMSF(const INT32 LBA) // not BCD version
 	return address;
 }
 
-static INT32 dinkMSFToLBA(const UINT8* address)
+#if 0 // currently unused
+static INT32 dinkMSFToLBA(const UINT8* address) // not BCD version
 {
 	INT32 LBA;
 
@@ -820,6 +821,7 @@ static INT32 dinkMSFToLBA(const UINT8* address)
 
 	return LBA;
 }
+#endif
 
 // -----------------------------------------------------------------------------
 
@@ -881,8 +883,8 @@ static void cdimgPrintImageInfo()
 		bprintf(0, _T("Disk At Once (.BIN/.CUE) format\n"));
 
 	INT32 toc_count = 0;
-	UINT32 *toc = (UINT32*)malloc(100 * sizeof(UINT32));
-	memset(toc, 0, 100 * sizeof(UINT32));
+	UINT32 *toc = (UINT32*)malloc(101 * sizeof(UINT32));
+	memset(toc, 0, 101 * sizeof(UINT32));
 
 	for (INT32 trk = cdimgTOC->FirstTrack - 1; trk <= cdimgTOC->LastTrack; trk++) {
 		const UINT8* addressUNBCD = dinkLBAToMSF(cdimgMSFToLBA(cdimgTOC->TrackData[trk].Address));
@@ -930,8 +932,6 @@ INT32 CDImageGetTOCSha1(const CDImage* pImage, UINT8* pSha1)
 	memset(toc, 0, 101 * sizeof(UINT32));
 
 	for (INT32 trk = FirstTrack - 1; trk <= LastTrack; trk++) {
-		const UINT8* addressUNBCD = dinkLBAToMSF(cdimgMSFToLBA((UINT8*)&Addresses[trk]));
-
 		toc[toc_count++] = Addresses[trk];
 	}
 

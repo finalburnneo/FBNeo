@@ -169,7 +169,7 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 				dst_dir = 1;
 
 			// EEPROM DMA transfers
-			if (i == 3 && gba->cart.backup_type == GBA_BACKUP_NONE && gba->cart.rom_size >= 0x2000000 && (dst & 0xff000000) == 0x0d000000) {
+			if (i == 3 && gba->cart.backup_type == GBA_BACKUP_NONE && (dst & 0xff000000) == 0x0d000000) {
 				// Detected EEPROM savegame
 				gba->cart.backup_type = GBA_BACKUP_EEPROM;
 			}

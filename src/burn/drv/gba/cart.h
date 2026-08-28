@@ -256,7 +256,7 @@ static inline void gba_fcmini_sram_write(gba_t* gba, UINT32 address, UINT8 value
 
 static inline void gba_process_backup_write(gba_t* gba, UINT32 baddr, UINT32 data)
 {
-	if (gba->cart.backup_type == GBA_BACKUP_NONE && gba->cart.rom_size >= 0x2000000) {
+	if (gba->cart.backup_type == GBA_BACKUP_NONE) {
 		// store at the flash command base detects flash, other stores detect SRAM
 		if (baddr == 0x0e005555) {
 			gba->cart.backup_type     = GBA_BACKUP_FLASH_64K;

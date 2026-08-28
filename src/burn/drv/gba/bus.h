@@ -71,7 +71,7 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 			return;
 		}
 		//Detected EEPROM savegame
-		if (gba->cart.backup_type == GBA_BACKUP_NONE && gba->cart.rom_size >= 0x2000000 && (baddr & 0xff000000) == 0x0d000000)
+		if (gba->cart.backup_type == GBA_BACKUP_NONE && (baddr & 0xff000000) == 0x0d000000)
 			gba->cart.backup_type = GBA_BACKUP_EEPROM;
 		if (gba->cart.matrix.active && (baddr & 0x01ffff00) == 0x00800100) {
 			gba_matrix_write16(gba, baddr & 0x3c, (UINT16)data);
@@ -467,13 +467,9 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 			} else if (gba->cart.backup_type == GBA_BACKUP_EEPROM) {
 				ret = (UINT32*)&gba->mem.eeprom_word;
 			} else if (gba->cart.backup_type == GBA_BACKUP_NONE) {
-				if (gba->cart.rom_size >= 0x2000000) {
-					// Detected SRAM savegame
-					gba->cart.backup_type = GBA_BACKUP_SRAM;
-					gba->mem.sram_word = (UINT32)gba->mem.cart_backup[addr & 0x7fff] * 0x01010101u;
-				} else {
-					gba->mem.sram_word = 0xffffffff;
-				}
+				// Detected SRAM savegame
+				gba->cart.backup_type = GBA_BACKUP_SRAM;
+				gba->mem.sram_word = (UINT32)gba->mem.cart_backup[addr & 0x7fff] * 0x01010101u;
 				ret = &gba->mem.sram_word;
 			} else if (gba->cart.backup_type == GBA_BACKUP_FORCE_NONE) {
 				gba->mem.sram_word = 0xffffffff;

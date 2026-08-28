@@ -4,8 +4,8 @@
 #include <process.h>
 
 bool bNeoCDListScanSub = false;
-TCHAR szNeoCDCoverDir[MAX_PATH]   = _T("support/neocdzcovers/");
-TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/neocdzpreviews/");
+TCHAR szNeoCDCoverDir[MAX_PATH]   = _T("support/cdcovers/");
+TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/cdpreviews/");
 TCHAR szNeoCDGamesDir[MAX_PATH]   = _T("neocdiso/");
 
 #if defined(BUILD_NEOGEO) || defined(BUILD_PCE)
@@ -111,6 +111,14 @@ static void NeoCDList_ShowPreviewBuf(HWND hDlg, void* pPngBuf, size_t nPngSize, 
 		}
 		nMaxWidth = (float)((Pane.right - Pane.left) * 90 / 100);
 		nMaxHeight = nMaxWidth * 0.75f;
+	}
+
+	if (Resolution.nWidth/Resolution.nHeight >= 4) {
+		// pce screenshots are 1024x240 (usually)
+		// we need to 4:3-ize it -dink
+		Resolution.nWidth = 320;
+		Resolution.nHeight = 240; // if this is larger than 240, it would lead to artifacts caused by the
+		// shrink code in ../image.cpp, ie: it can't shrink x and expand y (TOFIX-dink)
 	}
 
 	float nWidth  = (float)Resolution.nWidth;
@@ -234,34 +242,27 @@ static void LoadEntryPreview(const CDLibraryEntry* pEntry, INT32 nSide, void** p
 
 	const TCHAR* pszName = GetPreviewName(pEntry);
 	TCHAR szPath[MAX_PATH];
-	if (pEntry->nPlatform == CDLIST_PLATFORM_PCECD) {
-		if (!nSide)
-			return;
+	TCHAR tszName[MAX_PATH];
+	_stprintf(tszName, _T("%s%s"), (pEntry->nPlatform == CDLIST_PLATFORM_PCECD) ? _T("pcecd_") : _T("ngcd_"), pszName);
 
-		BuildPreviewPath(szPath, MAX_PATH, szAppPreviewsPath, pszName);
-		if (!LoadFileToBuffer(szPath, ppBuffer, pnSize))
-			LoadZipToBuffer(szAppPreviewsPath, "previews", pszName, ".png", ppBuffer, pnSize);
-
-		return;
-	}
 	if (!nSide) {
-		BuildPreviewPath(szPath, MAX_PATH, szNeoCDCoverDir, pszName);
+		BuildPreviewPath(szPath, MAX_PATH, szNeoCDCoverDir, tszName);
 		if (!LoadFileToBuffer(szPath, ppBuffer, pnSize))
-			LoadZipToBuffer(szNeoCDCoverDir, "neocdzcovers", pszName, ".png", ppBuffer, pnSize);
+			LoadZipToBuffer(szNeoCDCoverDir, "cdcovers", tszName, ".png", ppBuffer, pnSize);
 
 		return;
 	}
 
-	BuildPreviewPath(szPath, MAX_PATH, szNeoCDPreviewDir, pszName);
+	BuildPreviewPath(szPath, MAX_PATH, szNeoCDPreviewDir, tszName);
 	if (LoadFileToBuffer(szPath, ppBuffer, pnSize))
 		return;
 
-	if (LoadZipToBuffer(szNeoCDPreviewDir, "neocdzpreviews", pszName, ".png", ppBuffer, pnSize))
+	if (LoadZipToBuffer(szNeoCDPreviewDir, "cdpreviews", tszName, ".png", ppBuffer, pnSize))
 		return;
 
-	BuildPreviewPath(szPath, MAX_PATH, szAppPreviewsPath, pszName);
+	BuildPreviewPath(szPath, MAX_PATH, szAppPreviewsPath, tszName);
 	if (!LoadFileToBuffer(szPath, ppBuffer, pnSize))
-		LoadZipToBuffer(szAppPreviewsPath, "previews", pszName, ".png", ppBuffer, pnSize);
+		LoadZipToBuffer(szAppPreviewsPath, "previews", tszName, ".png", ppBuffer, pnSize);
 }
 
 static void ShowEntryDetails(INT32 nIndex)

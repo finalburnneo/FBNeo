@@ -2911,6 +2911,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_AUDIO_VOLUME_80:
 		case MENU_AUDIO_VOLUME_90:
 		case MENU_AUDIO_VOLUME_100:
+		case MENU_AUDIO_VOLUME_150:
+		case MENU_AUDIO_VOLUME_200:
 			nAudVolume = (id - MENU_AUDIO_VOLUME_0) * 1000;
 			AudSoundSetVolume();
 			break;

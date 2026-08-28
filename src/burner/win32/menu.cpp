@@ -788,7 +788,7 @@ static void CreateCDItems()
 void MenuUpdateVolume()
 {
 	int var = MENU_AUDIO_VOLUME_0 + (nAudVolume / 1000);
-	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_100, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_200, var, MF_BYCOMMAND);
 }
 
 void MenuUpdateSlowMo()

@@ -56648,6 +56648,25 @@ struct BurnDriver BurnDrvgba_galacard = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// GBAtris (HB)
+
+static struct BurnRomInfo gba_gbatrisRomDesc[] = {
+	{ "GBAtris (2019)(Mutant Stargoat Games).gba",	2343292,	0x95ec96d8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_gbatris, gba_gbatris, gba_gba)
+STD_ROM_FN(gba_gbatris)
+
+struct BurnDriver BurnDrvgba_gbatris = {
+	"gba_gbatris", NULL, "gba_gba", NULL, "2019",
+	"GBAtris (HB)\0", NULL, "Mutant Stargoat Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_gbatrisRomInfo, gba_gbatrisRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Gematrix (HB)
 
 static struct BurnRomInfo gba_gematrixRomDesc[] = {
@@ -57478,6 +57497,63 @@ struct BurnDriver BurnDrvgba_syscrusher = {
 	GbaGetZipName, gba_syscrusherRomInfo, gba_syscrusherRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Tetris: The Soviet Mind Game (HB)
+
+static struct BurnRomInfo gba_tetristsmdRomDesc[] = {
+	{ "Tetris - The Soviet Mind Game (2016)(Hammer Keyboard Studios).gba",	297916,	0x5ad992b6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tetristsmd, gba_tetristsmd, gba_gba)
+STD_ROM_FN(gba_tetristsmd)
+
+struct BurnDriver BurnDrvgba_tetristsmd = {
+	"gba_tetristsmd", NULL, "gba_gba", NULL, "2016",
+	"Tetris: The Soviet Mind Game (HB)\0", "No sound", "Hammer Keyboard Studios", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_tetristsmdRomInfo, gba_tetristsmdRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// TGMA (Tetris The Grandmaster 1 and 2) (HB, v1.0.2)
+
+static struct BurnRomInfo gba_tgmaRomDesc[] = {
+	{ "TGMA (Tetris The Grandmaster 1 and 2) v1.0.2 (2025)(Yakkers).gba",	1250344,	0x6cb4d699,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tgma, gba_tgma, gba_gba)
+STD_ROM_FN(gba_tgma)
+
+struct BurnDriver BurnDrvgba_tgma = {
+	"gba_tgma", NULL, "gba_gba", NULL, "2025",
+	"TGMA (Tetris The Grandmaster 1 and 2) (HB, v1.0.2)\0", NULL, "Yakkers", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_tgmaRomInfo, gba_tgmaRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// TGMA (Tetris The Grandmaster 1 and 2) Tate (HB, v1.0.2)
+
+static struct BurnRomInfo gba_tgmatateRomDesc[] = {
+	{ "TGMA (Tetris The Grandmaster 1 and 2) Tate v1.0.2 (2025)(Yakkers).gba",	1250500,	0xccb62009,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tgmatate, gba_tgmatate, gba_gba)
+STD_ROM_FN(gba_tgmatate)
+
+struct BurnDriver BurnDrvgba_tgmatate = {
+	"gba_tgmatate", "gba_tgma", "gba_gba", NULL, "2025",
+	"TGMA (Tetris The Grandmaster 1 and 2) Tate (HB, v1.0.2)\0", NULL, "Yakkers", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_tgmatateRomInfo, gba_tgmatateRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_HEIGHT, GBA_WIDTH, 2, 3
 };
 
 // Thrust (HB, v1.1)

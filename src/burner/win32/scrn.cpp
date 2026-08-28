@@ -1267,7 +1267,7 @@ static bool NgcdVerifyPath(const TCHAR* pszSelCue)
 	const TCHAR* pszExt = _tcsrchr(pszSelCue, _T('.'));
 	if (NULL == pszExt || ((0 != _tcsicmp(_T(".cue"), pszExt)) && (0 != _tcsicmp(_T(".chd"), pszExt)) && (0 != _tcsicmp(_T(".ccd"), pszExt)))) {
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE_FILE), pszSelCue);
-		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue, .ccd, .chd"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue, .chd"));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return false;
 	}
@@ -1630,7 +1630,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					break;
 
 				case 3:
-					pszFilter = _T(" (*.ccd,*.cue,*.chd)\0*.ccd;*.cue;*.chd\0\0");
+					pszFilter = _T(" (*.cue,*.chd)\0*.cue;*.chd\0\0");
 					nStringID = IDS_DISK_FILE_CDIMAGE;
 					nStrLen   = 39;
 					break;
@@ -1710,7 +1710,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			nCDEmuSelect = 0;
 			TCHAR szFilter[100] = { 0 };
 			_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
-			memcpy(szFilter + _tcslen(szFilter), _T(" (*.ccd,*.cue,*.chd)\0*.ccd;*.cue;*.chd\0\0"), 39 * sizeof(TCHAR));
+			memcpy(szFilter + _tcslen(szFilter), _T(" (*.cue,*.chd)\0*.cue;*.chd\0\0"), 39 * sizeof(TCHAR));
 			TCHAR szTitle[100] = { 0 };
 			_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
 			if (UseDialogs() && !bDrvOkay) {

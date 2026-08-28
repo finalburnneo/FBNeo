@@ -2363,9 +2363,9 @@ struct BurnDriver BurnDrvgba_antzracnu = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Ao-Zora to Nakama-tachi - Yume no Bouken (Japan)
+// Ao-Zora to Nakama-tachi: Yume no Bouken (Japan)
 static struct BurnRomInfo gba_aozoraRomDesc[] = {
-	{ "ao-zora to nakama-tachi - yume no bouken (japan).bin",	0x0400000,	0xad9af125,	BRF_ESS | BRF_PRG },
+	{ "Ao-Zora to Nakama-tachi - Yume no Bouken (J)(2002)(MTO).gba",	0x0400000,	0xad9af125,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_aozora, gba_aozora, gba_gba)
@@ -2373,17 +2373,17 @@ STD_ROM_FN(gba_aozora)
 
 struct BurnDriver BurnDrvgba_aozora = {
 	"gba_aozora", NULL, "gba_gba", NULL, "2002",
-	"Ao-Zora to Nakama-tachi - Yume no Bouken (Japan)\0", NULL, "MTO", "Game Boy Advance",
-	L"Ao-Zora to Nakama-tachi - Yume no Bouken (Japan)\0\u30a2\u30aa\u30fb\u30be\u30fc\u30e9\u3068\u4ef2\u9593\u305f\u3061 \u5922\u306e\u5192\u967a\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	"Ao-Zora to Nakama-tachi: Yume no Bouken (Japan)\0", NULL, "MTO", "Game Boy Advance",
+	L"Ao-Zora to Nakama-tachi: Yume no Bouken (Japan)\0\u30a2\u30aa\u30fb\u30be\u30fc\u30e9\u3068\u4ef2\u9593\u305f\u3061 \u5922\u306e\u5192\u967a\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_aozoraRomInfo, gba_aozoraRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Archer Maclean Presents Pool (USA)
+// Archer Maclean Presents 3D Pool (USA)
 static struct BurnRomInfo gba_archerpRomDesc[] = {
-	{ "archer maclean's 3d pool (usa).bin",	0x0400000,	0x4202a9cd,	BRF_ESS | BRF_PRG },
+	{ "Archer Maclean Presents 3D Pool (U)(2003)(Ignition Entertainment).gba",	0x0400000,	0x4202a9cd,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_archerp, gba_archerp, gba_gba)
@@ -2391,7 +2391,7 @@ STD_ROM_FN(gba_archerp)
 
 struct BurnDriver BurnDrvgba_archerp = {
 	"gba_archerp", NULL, "gba_gba", NULL, "2003",
-	"Archer Maclean Presents Pool (USA)\0", NULL, "Ignition Entertainment", "Game Boy Advance",
+	"Archer Maclean Presents 3D Pool (USA)\0", NULL, "Ignition Entertainment", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SPORTSMISC, 0,
 	GbaGetZipName, gba_archerpRomInfo, gba_archerpRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
@@ -2401,7 +2401,7 @@ struct BurnDriver BurnDrvgba_archerp = {
 
 // Arctic Tale (USA)
 static struct BurnRomInfo gba_arcticRomDesc[] = {
-	{ "arctic tale (usa).bin",	0x0400000,	0x81397ac0,	BRF_ESS | BRF_PRG },
+	{ "Arctic Tale (U)(2007)(DSI Games).gba",	0x0400000,	0x81397ac0,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_arctic, gba_arctic, gba_gba)
@@ -2411,15 +2411,15 @@ struct BurnDriver BurnDrvgba_arctic = {
 	"gba_arctic", NULL, "gba_gba", NULL, "2007",
 	"Arctic Tale (USA)\0", NULL, "DSI Games", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
 	GbaGetZipName, gba_arcticRomInfo, gba_arcticRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Army Men - Operation Green (USA)
+// Army Men: Operation Green (USA, M5)
 static struct BurnRomInfo gba_amenopgrRomDesc[] = {
-	{ "agb-amee-0.u1",	0x0400000,	0x6d174e28,	BRF_ESS | BRF_PRG },
+	{ "Army Men - Operation Green (U, M5)(2001)(3DO).gba",	0x0400000,	0x6d174e28,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_amenopgr, gba_amenopgr, gba_gba)
@@ -2427,17 +2427,17 @@ STD_ROM_FN(gba_amenopgr)
 
 struct BurnDriver BurnDrvgba_amenopgr = {
 	"gba_amenopgr", NULL, "gba_gba", NULL, "2001",
-	"Army Men - Operation Green (USA)\0", NULL, "3DO Company", "Game Boy Advance",
+	"Army Men: Operation Green (USA, M5)\0", NULL, "3DO Company", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RUNGUN, 0,
 	GbaGetZipName, gba_amenopgrRomInfo, gba_amenopgrRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Army Men - Turf Wars (USA)
+// Army Men: Turf Wars (USA)
 static struct BurnRomInfo gba_amenturfRomDesc[] = {
-	{ "army men - turf wars (usa).bin",	0x0800000,	0x65ac74cc,	BRF_ESS | BRF_PRG },
+	{ "Army Men - Turf Wars (U)(2002)(3DO).gba",	0x0800000,	0x65ac74cc,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_amenturf, gba_amenturf, gba_gba)
@@ -2445,17 +2445,17 @@ STD_ROM_FN(gba_amenturf)
 
 struct BurnDriver BurnDrvgba_amenturf = {
 	"gba_amenturf", NULL, "gba_gba", NULL, "2002",
-	"Army Men - Turf Wars (USA)\0", NULL, "3DO Company", "Game Boy Advance",
+	"Army Men: Turf Wars (USA)\0", NULL, "3DO Company", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RUNGUN, 0,
 	GbaGetZipName, gba_amenturfRomInfo, gba_amenturfRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Army Men Advance (Europe, USA)
+// Army Men Advance (Europe, USA, M5)
 static struct BurnRomInfo gba_amenadvRomDesc[] = {
-	{ "army men advance (usa, europe) (en,fr,de,es,it).bin",	0x0400000,	0x9a4a509f,	BRF_ESS | BRF_PRG },
+	{ "Army Men Advance (E, U, M5)(2001)(3DO).gba",	0x0400000,	0x9a4a509f,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_amenadv, gba_amenadv, gba_gba)
@@ -2463,17 +2463,17 @@ STD_ROM_FN(gba_amenadv)
 
 struct BurnDriver BurnDrvgba_amenadv = {
 	"gba_amenadv", NULL, "gba_gba", NULL, "2001",
-	"Army Men Advance (Europe, USA)\0", NULL, "3DO Company", "Game Boy Advance",
+	"Army Men Advance (Europe, USA, M5)\0", NULL, "3DO Company", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RUNGUN, 0,
 	GbaGetZipName, gba_amenadvRomInfo, gba_amenadvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Around the World in 80 Days (Europe)
+// Around the World in 80 Days (Europe, M6)
 static struct BurnRomInfo gba_around80RomDesc[] = {
-	{ "agb-b8dp-0.u1",	0x0400000,	0x2dd8cbd7,	BRF_ESS | BRF_PRG },
+	{ "Around the World in 80 Days (E, M6)(2004)(Walden Media).gba",	0x0400000,	0x2dd8cbd7,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_around80, gba_around80, gba_gba)
@@ -2481,9 +2481,9 @@ STD_ROM_FN(gba_around80)
 
 struct BurnDriver BurnDrvgba_around80 = {
 	"gba_around80", NULL, "gba_gba", NULL, "2004",
-	"Around the World in 80 Days (Europe)\0", NULL, "Walden Media", "Game Boy Advance",
+	"Around the World in 80 Days (Europe, M6)\0", NULL, "Walden Media", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_around80RomInfo, gba_around80RomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -2491,7 +2491,7 @@ struct BurnDriver BurnDrvgba_around80 = {
 
 // Around the World in 80 Days (USA)
 static struct BurnRomInfo gba_around80uRomDesc[] = {
-	{ "around the world in 80 days (usa).bin",	0x0400000,	0xc2c22af2,	BRF_ESS | BRF_PRG },
+	{ "Around the World in 80 Days (U)(2004)(Walden Media).gba",	0x0400000,	0xc2c22af2,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_around80u, gba_around80u, gba_gba)
@@ -2501,7 +2501,7 @@ struct BurnDriver BurnDrvgba_around80u = {
 	"gba_around80u", "gba_around80", "gba_gba", NULL, "2004",
 	"Around the World in 80 Days (USA)\0", NULL, "Walden Media", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_around80uRomInfo, gba_around80uRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -27708,9 +27708,9 @@ struct BurnDriver BurnDrvgba_xtownheru = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Math Patrol - The Kleptoid Threat (USA)
+// Math Patrol: The Kleptoid Threat (USA)
 static struct BurnRomInfo gba_mathptrlRomDesc[] = {
-	{ "math patrol - the kleptoid threat (usa).bin",	0x0800000,	0xaecd1301,	BRF_ESS | BRF_PRG },
+	{ "Math Patrol - The Kleptoid Threat (U)(2007)(Tomy).gba",	0x0800000,	0xaecd1301,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mathptrl, gba_mathptrl, gba_gba)
@@ -27718,7 +27718,7 @@ STD_ROM_FN(gba_mathptrl)
 
 struct BurnDriver BurnDrvgba_mathptrl = {
 	"gba_mathptrl", NULL, "gba_gba", NULL, "2007",
-	"Math Patrol - The Kleptoid Threat (USA)\0", NULL, "Tomy", "Game Boy Advance",
+	"Math Patrol: The Kleptoid Threat (USA)\0", NULL, "Tomy", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
 	GbaGetZipName, gba_mathptrlRomInfo, gba_mathptrlRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
@@ -27744,9 +27744,9 @@ struct BurnDriver BurnDrvgba_mawaru = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Max Payne Advance (Europe)
+// Max Payne Advance (Europe, M3)
 static struct BurnRomInfo gba_maxpayneRomDesc[] = {
-	{ "agb-bmep-0.u1",	0x1000000,	0x7d902b62,	BRF_ESS | BRF_PRG },
+	{ "Max Payne Advance (E, M3)(2004)(Rockstar Games).gba",	0x1000000,	0x7d902b62,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_maxpayne, gba_maxpayne, gba_gba)
@@ -27754,9 +27754,9 @@ STD_ROM_FN(gba_maxpayne)
 
 struct BurnDriver BurnDrvgba_maxpayne = {
 	"gba_maxpayne", NULL, "gba_gba", NULL, "2004",
-	"Max Payne Advance (Europe)\0", NULL, "Rockstar Games", "Game Boy Advance",
-	L"Max Payne Advance (Europe)\0Max Payne (Box)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	"Max Payne Advance (Europe, M3)\0", NULL, "Rockstar Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_RUNGUN, 0,
 	GbaGetZipName, gba_maxpayneRomInfo, gba_maxpayneRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -27764,7 +27764,7 @@ struct BurnDriver BurnDrvgba_maxpayne = {
 
 // Max Payne (USA)
 static struct BurnRomInfo gba_maxpayneuRomDesc[] = {
-	{ "max payne (usa).bin",	0x1000000,	0x296e1092,	BRF_ESS | BRF_PRG },
+	{ "Max Payne Advance (U)(2003)(Rockstar Games).gba",	0x1000000,	0x296e1092,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_maxpayneu, gba_maxpayneu, gba_gba)
@@ -27774,15 +27774,15 @@ struct BurnDriver BurnDrvgba_maxpayneu = {
 	"gba_maxpayneu", "gba_maxpayne", "gba_gba", NULL, "2003",
 	"Max Payne (USA)\0", NULL, "Rockstar Games", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_RUNGUN, 0,
 	GbaGetZipName, gba_maxpayneuRomInfo, gba_maxpayneuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Maya the Bee - Sweet Gold (Europe)
+// Maya the Bee: Sweet Gold (Europe, M5)
 static struct BurnRomInfo gba_mayabesgRomDesc[] = {
-	{ "maya the bee - sweet gold (europe) (en,fr,de,es,it).bin",	0x0400000,	0xa75778c7,	BRF_ESS | BRF_PRG },
+	{ "Maya the Bee - Sweet Gold (E, M5)(2005)(Midway).gba",	0x0400000,	0xa75778c7,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mayabesg, gba_mayabesg, gba_gba)
@@ -27790,17 +27790,17 @@ STD_ROM_FN(gba_mayabesg)
 
 struct BurnDriver BurnDrvgba_mayabesg = {
 	"gba_mayabesg", NULL, "gba_gba", NULL, "2005",
-	"Maya the Bee - Sweet Gold (Europe)\0", NULL, "Midway", "Game Boy Advance",
+	"Maya the Bee: Sweet Gold (Europe, M5)\0", NULL, "Midway", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_mayabesgRomInfo, gba_mayabesgRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Maya the Bee - The Great Adventure (Europe)
+// Maya the Bee: The Great Adventure (Europe, M5)
 static struct BurnRomInfo gba_mayabegaRomDesc[] = {
-	{ "maya the bee - the great adventure (europe) (en,fr,de,es,it).bin",	0x0400000,	0xa1764f3c,	BRF_ESS | BRF_PRG },
+	{ "Maya the Bee - The Great Adventure (E, M5)(Acclaim Entertainment).gba",	0x0400000,	0xa1764f3c,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mayabega, gba_mayabega, gba_gba)
@@ -27808,17 +27808,17 @@ STD_ROM_FN(gba_mayabega)
 
 struct BurnDriver BurnDrvgba_mayabega = {
 	"gba_mayabega", NULL, "gba_gba", NULL, "2002",
-	"Maya the Bee - The Great Adventure (Europe)\0", NULL, "Acclaim", "Game Boy Advance",
+	"Maya the Bee: The Great Adventure (Europe, M5)\0", NULL, "Acclaim Entertainment", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_mayabegaRomInfo, gba_mayabegaRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Mazes of Fate (USA)
+// Mazes of Fate (USA, M5)
 static struct BurnRomInfo gba_mazefateRomDesc[] = {
-	{ "mazes of fate (usa) (en,fr,de,es,it).bin",	0x1000000,	0x0b725a08,	BRF_ESS | BRF_PRG },
+	{ "Mazes of Fate (U, M5)(2006)(O3 Entertainment).gba",	0x1000000,	0x0b725a08,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_mazefate, gba_mazefate, gba_gba)
@@ -27826,9 +27826,9 @@ STD_ROM_FN(gba_mazefate)
 
 struct BurnDriver BurnDrvgba_mazefate = {
 	"gba_mazefate", NULL, "gba_gba", NULL, "2006",
-	"Mazes of Fate (USA)\0", NULL, "O3 Entertainment", "Game Boy Advance",
+	"Mazes of Fate (USA, M5)\0", NULL, "O3 Entertainment", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MAZE | GBF_RPG, 0,
 	GbaGetZipName, gba_mazefateRomInfo, gba_mazefateRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -41426,7 +41426,7 @@ struct BurnDriver BurnDrvgba_slotpro = {
 
 // Smashing Drive (Europe)
 static struct BurnRomInfo gba_smashdrvRomDesc[] = {
-	{ "smashing drive (europe) (en,fr,de,es,it).bin",	0x0800000,	0x1034d672,	BRF_ESS | BRF_PRG },
+	{ "Smashing Drive (E, M5)(2005)(Zoo Digital Publishing).gba",	0x0800000,	0x1034d672,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_smashdrv, gba_smashdrv, gba_gba)
@@ -41436,7 +41436,7 @@ struct BurnDriver BurnDrvgba_smashdrv = {
 	"gba_smashdrv", NULL, "gba_gba", NULL, "2005",
 	"Smashing Drive (Europe)\0", NULL, "Zoo Digital Publishing", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_smashdrvRomInfo, gba_smashdrvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -41444,7 +41444,7 @@ struct BurnDriver BurnDrvgba_smashdrv = {
 
 // Smashing Drive (USA)
 static struct BurnRomInfo gba_smashdrvuRomDesc[] = {
-	{ "smashing drive (usa).bin",	0x0800000,	0x2390aca6,	BRF_ESS | BRF_PRG },
+	{ "Smashing Drive (U)(2004)(DSI Games).gba",	0x0800000,	0x2390aca6,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_smashdrvu, gba_smashdrvu, gba_gba)
@@ -41454,15 +41454,15 @@ struct BurnDriver BurnDrvgba_smashdrvu = {
 	"gba_smashdrvu", "gba_smashdrv", "gba_gba", NULL, "2004",
 	"Smashing Drive (USA)\0", NULL, "DSI Games", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_smashdrvuRomInfo, gba_smashdrvuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Smuggler's Run (Europe)
+// Smuggler's Run (Europe, M5)
 static struct BurnRomInfo gba_smugglerRomDesc[] = {
-	{ "agb-asgp-0.u1",	0x0800000,	0x3ae0afc8,	BRF_ESS | BRF_PRG },
+	{ "Smuggler's Run (E, M5)(2002)(Digital Worldwide).gba",	0x0800000,	0x3ae0afc8,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_smuggler, gba_smuggler, gba_gba)
@@ -41470,9 +41470,9 @@ STD_ROM_FN(gba_smuggler)
 
 struct BurnDriver BurnDrvgba_smuggler = {
 	"gba_smuggler", NULL, "gba_gba", NULL, "2002",
-	"Smuggler's Run (Europe)\0", NULL, "Digital Worldwide", "Game Boy Advance",
+	"Smuggler's Run (Europe, M5)\0", NULL, "Digital Worldwide", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_smugglerRomInfo, gba_smugglerRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -41480,7 +41480,7 @@ struct BurnDriver BurnDrvgba_smuggler = {
 
 // Smuggler's Run (USA)
 static struct BurnRomInfo gba_smuggleruRomDesc[] = {
-	{ "smuggler's run (usa).bin",	0x0800000,	0x1a6aea5e,	BRF_ESS | BRF_PRG },
+	{ "Smuggler's Run (U)(2002)(Destination Software).gba",	0x0800000,	0x1a6aea5e,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_smuggleru, gba_smuggleru, gba_gba)
@@ -41490,15 +41490,15 @@ struct BurnDriver BurnDrvgba_smuggleru = {
 	"gba_smuggleru", "gba_smuggler", "gba_gba", NULL, "2002",
 	"Smuggler's Run (USA)\0", NULL, "Destination Software", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_smuggleruRomInfo, gba_smuggleruRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// The Smurfs - The Revenge of the Smurfs (Europe)
+// Revenge of the Smurfs, The (Europe, M6)
 static struct BurnRomInfo gba_smurfsRomDesc[] = {
-	{ "agb-a7sp-0.u1",	0x0400000,	0x516ce770,	BRF_ESS | BRF_PRG },
+	{ "Revenge of the Smurfs, The (E, M6)(2002)(Infogrames).gba",	0x0400000,	0x516ce770,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_smurfs, gba_smurfs, gba_gba)
@@ -41506,25 +41506,25 @@ STD_ROM_FN(gba_smurfs)
 
 struct BurnDriver BurnDrvgba_smurfs = {
 	"gba_smurfs", NULL, "gba_gba", NULL, "2002",
-	"The Smurfs - The Revenge of the Smurfs (Europe)\0", NULL, "Infogrames", "Game Boy Advance",
-	L"The Smurfs - The Revenge of the Smurfs (Europe)\0The Revenge of the Smurfs (Box) / La venganza de los Pitufos (Box) / La rivincita dei Puffi (Box)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	"Revenge of the Smurfs, The (Europe, M6)\0", NULL, "Infogrames", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_smurfsRomInfo, gba_smurfsRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// SN Systems (Japan)
+// SN Systems - Test Program (Japan)
 static struct BurnRomInfo gba_snsystemRomDesc[] = {
-	{ "snsystems.bin",	0x2000000,	0x00f5687a,	BRF_ESS | BRF_PRG },
+	{ "SN Systems (J)(200?).gba",	0x2000000,	0x00f5687a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snsystem, gba_snsystem, gba_gba)
 STD_ROM_FN(gba_snsystem)
 
 struct BurnDriver BurnDrvgba_snsystem = {
-	"gba_snsystem", NULL, "gba_gba", NULL, "19??",
-	"SN Systems (Japan)\0", NULL, "Nintendo?", "Game Boy Advance",
+	"gba_snsystem", NULL, "gba_gba", NULL, "200?",
+	"SN Systems - Test Program (Japan)\0", NULL, "<unknown>", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
 	GbaGetZipName, gba_snsystemRomInfo, gba_snsystemRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
@@ -41534,7 +41534,7 @@ struct BurnDriver BurnDrvgba_snsystem = {
 
 // Snap Kid's (Japan)
 static struct BurnRomInfo gba_snapkidRomDesc[] = {
-	{ "snap kid's (japan).bin",	0x1000000,	0x41e35c6a,	BRF_ESS | BRF_PRG },
+	{ "Snap Kid's (J)(2002)(Enix).gba",	0x1000000,	0x41e35c6a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snapkid, gba_snapkid, gba_gba)
@@ -41542,17 +41542,17 @@ STD_ROM_FN(gba_snapkid)
 
 struct BurnDriver BurnDrvgba_snapkid = {
 	"gba_snapkid", NULL, "gba_gba", NULL, "2002",
-	"Snap Kid's (Japan)\0", NULL, "Enix", "Game Boy Advance",
+	"Snap Kid's (Japan)\0", NULL, "Enix Corp.", "Game Boy Advance",
 	L"Snap Kid's (Japan)\0\u30b9\u30ca\u30c3\u30d7\u30ad\u30c3\u30ba\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RPG, 0,
 	GbaGetZipName, gba_snapkidRomInfo, gba_snapkidRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Snood (Europe)
+// Snood (Europe, M5)
 static struct BurnRomInfo gba_snoodRomDesc[] = {
-	{ "snood (europe) (en,fr,de,es,it).bin",	0x0400000,	0x32bd1486,	BRF_ESS | BRF_PRG },
+	{ "Snood (E, M5)(2001)(Digital Worldwide).gba",	0x0400000,	0x32bd1486,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snood, gba_snood, gba_gba)
@@ -41560,9 +41560,9 @@ STD_ROM_FN(gba_snood)
 
 struct BurnDriver BurnDrvgba_snood = {
 	"gba_snood", NULL, "gba_gba", NULL, "2001",
-	"Snood (Europe)\0", NULL, "Digital Worldwide", "Game Boy Advance",
+	"Snood (Europe, M5)\0", NULL, "Digital Worldwide", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_snoodRomInfo, gba_snoodRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -41570,7 +41570,7 @@ struct BurnDriver BurnDrvgba_snood = {
 
 // Snood (USA)
 static struct BurnRomInfo gba_snooduRomDesc[] = {
-	{ "snood (usa).bin",	0x0400000,	0xf1f1f148,	BRF_ESS | BRF_PRG },
+	{ "Snood (U)(2001)(Destination Software).gba",	0x0400000,	0xf1f1f148,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snoodu, gba_snoodu, gba_gba)
@@ -41580,15 +41580,15 @@ struct BurnDriver BurnDrvgba_snoodu = {
 	"gba_snoodu", "gba_snood", "gba_gba", NULL, "2001",
 	"Snood (USA)\0", NULL, "Destination Software", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_snooduRomInfo, gba_snooduRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Snood 2 - On Vacation (Europe)
+// Snood 2: On Vacation (Europe, M5)
 static struct BurnRomInfo gba_snood2RomDesc[] = {
-	{ "snood 2 - on vacation (europe) (en,fr,de,es,it).bin",	0x0400000,	0x6470252f,	BRF_ESS | BRF_PRG },
+	{ "Snood 2 - On Vacation (E, M5)(2005)(Zoo Digital Publishing).gba",	0x0400000,	0x6470252f,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snood2, gba_snood2, gba_gba)
@@ -41596,17 +41596,17 @@ STD_ROM_FN(gba_snood2)
 
 struct BurnDriver BurnDrvgba_snood2 = {
 	"gba_snood2", NULL, "gba_gba", NULL, "2005",
-	"Snood 2 - On Vacation (Europe)\0", NULL, "Zoo Digital Publishing", "Game Boy Advance",
+	"Snood 2: On Vacation (Europe, M5)\0", NULL, "Zoo Digital Publishing", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_snood2RomInfo, gba_snood2RomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Snood 2 - On Vacation (USA)
+// Snood 2: On Vacation (USA)
 static struct BurnRomInfo gba_snood2uRomDesc[] = {
-	{ "snood 2 - on vacation (usa).bin",	0x0400000,	0xd8e05727,	BRF_ESS | BRF_PRG },
+	{ "Snood 2 - On Vacation (U)(2005)(DSI Games).gba",	0x0400000,	0xd8e05727,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snood2u, gba_snood2u, gba_gba)
@@ -41614,9 +41614,9 @@ STD_ROM_FN(gba_snood2u)
 
 struct BurnDriver BurnDrvgba_snood2u = {
 	"gba_snood2u", "gba_snood2", "gba_gba", NULL, "2005",
-	"Snood 2 - On Vacation (USA)\0", NULL, "DSI Games", "Game Boy Advance",
+	"Snood 2: On Vacation (USA)\0", NULL, "DSI Games", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_snood2uRomInfo, gba_snood2uRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -41624,7 +41624,7 @@ struct BurnDriver BurnDrvgba_snood2u = {
 
 // Soccer Kid (Europe, USA)
 static struct BurnRomInfo gba_soccerkdRomDesc[] = {
-	{ "soccer kid (usa, europe).bin",	0x0400000,	0xd3485f5a,	BRF_ESS | BRF_PRG },
+	{ "Soccer Kid (E, U)(2002)(Telegames).gba",	0x0400000,	0xd3485f5a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_soccerkd, gba_soccerkd, gba_gba)
@@ -41634,7 +41634,7 @@ struct BurnDriver BurnDrvgba_soccerkd = {
 	"gba_soccerkd", NULL, "gba_gba", NULL, "2002",
 	"Soccer Kid (Europe, USA)\0", NULL, "Telegames", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_soccerkdRomInfo, gba_soccerkdRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
@@ -55505,7 +55505,7 @@ struct BurnDriver BurnDrvgba_shinmtte = {
 // Super Robot Wars J (Hack, English)
 // https://www.romhacking.net/translations/1577/
 static struct BurnRomInfo gba_srobotjteRomDesc[] = {
-	{ "Super Robot Wars J T-Eng (2010)(Kingcom).gba",	16777216,	0x89b628e3,	BRF_ESS | BRF_PRG },
+	{ "Super Robot Wars J T-Eng (2010)(Kingcom).gba",	16777216,	0x3b3cd715,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_srobotjte, gba_srobotjte, gba_gba)

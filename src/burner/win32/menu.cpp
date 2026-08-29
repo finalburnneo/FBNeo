@@ -1159,6 +1159,10 @@ void MenuUpdate()
 			}
 			CheckMenuRadioItem(hMenu, MENU_DSOUND_NOSOUND, MENU_DSOUND_48000, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DSOUND_BASS, nAudDSPModule[0] ? MF_CHECKED : MF_UNCHECKED);
+			// DSound isn't able to amp volume above 0db, disable and sanity:
+			if (nAudVolume > 10000) nAudVolume = 10000; // 100%
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_GRAYED  | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_GRAYED  | MF_BYCOMMAND);
 			break;
 		}
 
@@ -1176,6 +1180,9 @@ void MenuUpdate()
 			CheckMenuRadioItem(hMenu, MENU_XAUDIO_NOSOUND, MENU_XAUDIO_48000, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_XAUDIO_BASS, (nAudDSPModule[1] & 1) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_XAUDIO_REVERB, (nAudDSPModule[1] & 2) ? MF_CHECKED : MF_UNCHECKED);
+			// XAudio2 is able to amp volume above 0db, enable:
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_ENABLED  | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_ENABLED  | MF_BYCOMMAND);
 			break;
 		}
 	}

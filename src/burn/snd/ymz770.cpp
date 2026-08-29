@@ -164,6 +164,11 @@ void ymz770_exit()
 	}
 }
 
+void ymz770_set_volume(double dVolume)
+{
+	stream.set_volume(dVolume);
+}
+
 void ymz770_set_buffered(INT32 (*pCPUCyclesCB)(), INT32 nCPUMhz)
 {
 	stream.set_buffered(pCPUCyclesCB, nCPUMhz);

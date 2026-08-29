@@ -516,7 +516,7 @@ static INT32 DrvInit()
 	rtc9701_init();
 
 	ymz770_init(DrvSoundROM, 0x800000);
-
+	ymz770_set_volume(2.0);
 	ymz770_set_buffered(Sh3TotalCycles, SH3_CLOCK);
 	DrvDoReset();
 

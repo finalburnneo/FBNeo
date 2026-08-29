@@ -17,7 +17,7 @@
 #include <limits.h>
 #include <stdint.h>
 #include <sys/stat.h>
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 #if defined(_UNICODE) && !defined(UNICODE)
 #define UNICODE
 #endif
@@ -201,7 +201,7 @@ static UINT8* rd_read_all(FILE* fp, size_t* pLen)
 		return NULL;
 
 	*pLen = 0;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	if (_fseeki64(fp, 0, SEEK_END) != 0)
 		return NULL;
 
@@ -237,7 +237,7 @@ static bool rd_is_utf16le_nobom(const UINT8* buf, size_t len)
 	if (!buf || len < 2 || (len & 1) || buf[0] == 0 || buf[1] != 0)
 		return false;
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	INT32 nFlags = IS_TEXT_UNICODE_STATISTICS;
 	return IsTextUnicode(buf, (INT32)(len > INT_MAX ? INT_MAX : len), &nFlags) != 0;
 #else
@@ -268,7 +268,7 @@ static RDEncoding rd_detect_encoding(const UINT8* buf, size_t len)
 }
 
 // ANSI (system code page, e.g. GBK) -> malloc'd UTF-8.  Win32 only.
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 static char* rd_ansi_to_utf8(const char* s, size_t len)
 {
 	if (!s)
@@ -319,7 +319,7 @@ static char* rd_load_text(const TCHAR* szPath)
 		return (char*)raw;
 	}
 	if (enc == RD_ENC_ANSI) {
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 		char* u = rd_ansi_to_utf8((const char*)raw, len);	// GBK/... -> UTF-8
 		if (u) {
 			free_s((void**)&raw);
@@ -445,9 +445,13 @@ static bool rd_hex(const char* s, UINT32* out)
 	errno = 0;
 	char* end = NULL;
 	unsigned long v = strtoul(s, &end, 16);
-	// strtoul is 64-bit wide on LP64, so range-check explicitly instead of truncating.
-	if (s == end || *end != '\0' || errno == ERANGE || (UINT64)v > 0xffffffffULL)
+	if (s == end || *end != '\0' || errno == ERANGE)
 		return false;
+#if ULONG_MAX > 0xffffffffUL
+	// strtoul is wider than UINT32 on LP64, so reject values that would truncate.
+	if (v > 0xffffffffUL)
+		return false;
+#endif
 
 	*out = (UINT32)v;
 	return true;
@@ -656,7 +660,7 @@ static INT32 rd_get_stamp(const TCHAR* szPath, UINT64* pSize, UINT64* pWriteTime
 	if (!szPath || !pSize || !pWriteTime)
 		return 0;
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	WIN32_FILE_ATTRIBUTE_DATA Data;
 	if (!GetFileAttributesEx(szPath, GetFileExInfoStandard, &Data) || (Data.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
 		return 0;
@@ -736,7 +740,7 @@ static char* rd_tchar_to_utf8(const TCHAR* szText)
 	}
 	return szUtf8;
 #else
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	INT32 nWide = MultiByteToWideChar(CP_ACP, 0, szText, -1, NULL, 0);
 	if (nWide <= 0)
 		return NULL;
@@ -779,7 +783,7 @@ static TCHAR* rd_tchar_from_utf8(const char* szUtf8)
 	}
 	return szText;
 #else
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	INT32 nWide = MultiByteToWideChar(CP_UTF8, 0, szUtf8, -1, NULL, 0);
 	if (nWide <= 0)
 		return NULL;
@@ -1055,7 +1059,7 @@ static INT32 rd_cache_load(const TCHAR* szCachePath, const TCHAR* szRoot, struct
 	struct RDCacheReader Payload = { pFile + 32, nPayloadLength, 0 };
 	TCHAR szStoredRoot[MAX_PATH];
 	if (!rd_cache_reader_stringT(&Payload, szStoredRoot, MAX_PATH) ||
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 		_tcsicmp(szStoredRoot, szRoot)
 #else
 		_tcscmp(szStoredRoot, szRoot)
@@ -1128,7 +1132,7 @@ static INT32 rd_cache_save(const TCHAR* szCachePath, const TCHAR* szRoot, const 
 	}
 
 	INT32 nWritten = fwrite(File.pData, 1, File.nLength, fp) == File.nLength && fflush(fp) == 0;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	if (nWritten) {
 		intptr_t nHandle = _get_osfhandle(_fileno(fp));
 		nWritten = nHandle != -1 && FlushFileBuffers((HANDLE)nHandle);
@@ -1140,7 +1144,7 @@ static INT32 rd_cache_save(const TCHAR* szCachePath, const TCHAR* szRoot, const 
 	free_s((void**)&File.pData);
 	if (fclose(fp))
 		nWritten = 0;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	if (!nWritten || !MoveFileEx(szTemp, szCachePath, MOVEFILE_REPLACE_EXISTING | MOVEFILE_WRITE_THROUGH)) {
 		DeleteFile(szTemp);
 		return 0;
@@ -1544,7 +1548,7 @@ static wchar_t* rd_utf8_to_wide(const char* s)
 {
 	if (!s)
 		return NULL;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	INT32 wn = MultiByteToWideChar(CP_UTF8, 0, s, -1, NULL, 0);
 	INT32 cp = CP_UTF8;
 	if (wn <= 0) {																// not valid UTF-8: system code page
@@ -1756,7 +1760,7 @@ static INT32 rd_normalize_path(const TCHAR* szInput, TCHAR* szOutput)
 	if (rd_is_empty(szInput) || !szOutput)
 		return 0;
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	DWORD nFullLength = GetFullPathName(szInput, MAX_PATH, szOutput, NULL);
 	if (!nFullLength || nFullLength >= MAX_PATH)
 		return 0;
@@ -1805,7 +1809,7 @@ static INT32 rd_same_directory(const TCHAR* szFilePath, const TCHAR* szDirectory
 	TCHAR szDestination[MAX_PATH];
 	if (!rd_normalize_path(szFileDir, szSource) || !rd_normalize_path(szDirectory, szDestination))
 		return 0;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	return _tcsicmp(szSource, szDestination) == 0;
 #else
 	return _tcscmp(szSource, szDestination) == 0;
@@ -1822,7 +1826,7 @@ static INT32 rd_create_directory(const TCHAR* szDirectory)
 		return 0;
 
 	TCHAR* pStart = szPath + 1;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	if (szPath[0] == _T('\\') && szPath[1] == _T('\\')) {
 		pStart = _tcschr(szPath + 2, _T('\\'));
 		if (!pStart)
@@ -1836,13 +1840,13 @@ static INT32 rd_create_directory(const TCHAR* szDirectory)
 	for (TCHAR* p = pStart; *p; p++) {
 		if (*p != _T('/') && *p != _T('\\'))
 			continue;
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 		if (p == szPath + 2 && szPath[1] == _T(':'))
 			continue;
 #endif
 		TCHAR c = *p;
 		*p = _T('\0');
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 		if (!CreateDirectory(szPath, NULL) && GetLastError() != ERROR_ALREADY_EXISTS)
 #else
 		if (mkdir(szPath, 0777) != 0 && errno != EEXIST)
@@ -1851,7 +1855,7 @@ static INT32 rd_create_directory(const TCHAR* szDirectory)
 		*p = c;
 	}
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 	return CreateDirectory(szPath, NULL) || GetLastError() == ERROR_ALREADY_EXISTS;
 #else
 	return mkdir(szPath, 0777) == 0 || errno == EEXIST;
@@ -1895,7 +1899,7 @@ static INT32 rd_import_file(const TCHAR* szSource, const TCHAR* szDestination)
 		if (nTargetLength < 0 || nTargetLength >= MAX_PATH)
 			continue;
 
-#ifdef BUILD_WIN32
+#if defined(BUILD_WIN32) || defined(_WIN32)
 		if (CopyFile(szSource, szTarget, TRUE)) {
 			bprintf(PRINT_NORMAL, _T("RomData: imported '%s' to '%s'\n"), szSource, szTarget);
 			return 1;

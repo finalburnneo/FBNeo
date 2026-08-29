@@ -42335,10 +42335,10 @@ struct BurnDriver BurnDrvmd_rickdangdx = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// River Raid 2600 (HB, v0.0.2)
+// River Raid 2600 (HB, v0.0.3)
 // https://sirvh.itch.io/river-raid-2600-for-genesis
 static struct BurnRomInfo md_riverraid2600RomDesc[] = {
-	{ "River Raid 2600 v0.0.2 (2026)(SirVH).bin", 262144, 0x18cc50b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "River Raid 2600 v0.0.3 (2026)(SirVH).bin", 262144, 0x3ababf84, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_riverraid2600)
@@ -42346,7 +42346,7 @@ STD_ROM_FN(md_riverraid2600)
 
 struct BurnDriver BurnDrvmd_riverraid2600 = {
 	"md_riverraid2600", NULL, NULL, NULL, "2026",
-	"River Raid 2600 (HB, v0.0.2)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	"River Raid 2600 (HB, v0.0.3)\0", NULL, "SirVH", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
 	MegadriveGetZipName, md_riverraid2600RomInfo, md_riverraid2600RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

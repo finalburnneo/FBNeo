@@ -11621,6 +11621,24 @@ struct BurnDriver BurnDrvcv_spaceshuttle = {
 	272, 228, 4, 3
 };
 
+// Space Taxi (HB, v0.36)
+static struct BurnRomInfo cv_spacetaxiRomDesc[] = {
+	{ "Space Taxi v0.36 (2026)(Electric Dreams).rom",	131072, 0x708c9e10, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_spacetaxi, cv_spacetaxi, cv_coleco)
+STD_ROM_FN(cv_spacetaxi)
+
+struct BurnDriver BurnDrvcv_spacetaxi = {
+	"cv_spacetaxi", NULL, "cv_coleco", NULL, "2026",
+	"Space Taxi (HB, v0.36)\0", NULL, "Electric Dreams", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_COLECO, GBF_ACTION | GBF_PLATFORM, 0,
+	CVGetZipName, cv_spacetaxiRomInfo, cv_spacetaxiRomName, NULL, NULL, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Space Venture (Hack, v3.1)
 static struct BurnRomInfo cv_spaceventureRomDesc[] = {
 	{ "Space Venture v3.1 (2019)(TIX).rom",	32768, 0xf7ed24e9, BRF_PRG | BRF_ESS },

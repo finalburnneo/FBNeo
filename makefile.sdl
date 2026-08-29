@@ -68,7 +68,7 @@ depobj	+= 	cdlist.o \
 			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
 			\
 			inp_sdl.o aud_sdl.o support_paths.o ips_manager.o scrn.o localise_gamelist.o \
-			cd_img.o config.o main.o run.o stringset.o bzip.o drv.o media.o romdata.o \
+			cd_img.o config.o main.o run.o stringset.o bzip.o drv.o media.o romdata_core.o \
 			inpdipsw.o vid_sdlfx.o inputbuf.o replay.o vid_sdlopengl.o input_sdl.o stated.o
 
 ifdef INCLUDE_7Z_SUPPORT

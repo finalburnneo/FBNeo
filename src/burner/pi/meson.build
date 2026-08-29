@@ -9,7 +9,6 @@ frontend_sources = files(
     '../sdl/ips_manager.cpp',
     '../sdl/media.cpp',
     '../sdl/replay.cpp',
-    '../sdl/romdata.cpp',
     '../sdl/scrn.cpp',
     '../sdl/stated.cpp',
     '../sdl/stringset.cpp',

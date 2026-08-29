@@ -150,6 +150,7 @@ HTREEITEM hFilterDemo				= NULL;
 HTREEITEM hFilterHack				= NULL;
 HTREEITEM hFilterHomebrew			= NULL;
 HTREEITEM hFilterPrototype			= NULL;
+HTREEITEM hFilterRomData			= NULL;
 HTREEITEM hFilterGenuine			= NULL;
 HTREEITEM hFilterHorshoot			= NULL;
 HTREEITEM hFilterVershoot			= NULL;
@@ -314,7 +315,7 @@ static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 
 
 #define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT | GBF_MULTISHOOT | GBF_ACTION | GBF_RUNGUN | GBF_STRATEGY | GBF_RPG | GBF_SIM | GBF_ADV | GBF_CARD | GBF_BOARD)
 #define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST | FBF_SONIC | FBF_DONPACHI | FBF_MAHOU)
-#define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
+#define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE | BDF_ROMDATA_DRIVER)
 
 #define MASKCAPGRP				(MASKCAPMISC | MASKCPS | MASKCPS2 | MASKCPS3)
 #define MASKSEGAGRP				(MASKSEGA | MASKSG1000 | MASKSMS | MASKMEGADRIVE | MASKGG)
@@ -559,6 +560,24 @@ static int DoExtraFilters()
 
 	if (nShowMVSCartsOnly && ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) != HARDWARE_PREFIX_CARTRIDGE)) return 1;
 
+#define NON_GENUINE_MASK (MASKALLBOARD & ~(MASKBOARDTYPEGENUINE | BDF_ROMDATA_DRIVER))
+	const INT32 nFlags = BurnDrvGetFlags();
+	const INT32 nRomData = nFlags & BDF_ROMDATA_DRIVER;
+	const INT32 nNonGenuine = nFlags & NON_GENUINE_MASK;
+
+	if (nRomData) {
+		if ((nLoadMenuBoardTypeFilter & BDF_ROMDATA_DRIVER) &&
+			((nNonGenuine && (nLoadMenuBoardTypeFilter & nNonGenuine)) ||
+			(!nNonGenuine && (nLoadMenuBoardTypeFilter & MASKBOARDTYPEGENUINE))))
+			return 1;
+	} else {
+		if ((nLoadMenuBoardTypeFilter & nNonGenuine) ||
+			((nLoadMenuBoardTypeFilter & MASKBOARDTYPEGENUINE) && !nNonGenuine))
+			return 1;
+	}
+#undef NON_GENUINE_MASK
+
+#if 0
 	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)			&& (BurnDrvGetFlags() & BDF_BOOTLEG))				return 1;
 	if ((nLoadMenuBoardTypeFilter & BDF_DEMO)				&& (BurnDrvGetFlags() & BDF_DEMO))					return 1;
 	if ((nLoadMenuBoardTypeFilter & BDF_HACK)				&& (BurnDrvGetFlags() & BDF_HACK))					return 1;
@@ -570,6 +589,8 @@ static int DoExtraFilters()
 															&& (!(BurnDrvGetFlags() & BDF_HACK))
 															&& (!(BurnDrvGetFlags() & BDF_HOMEBREW))
 															&& (!(BurnDrvGetFlags() & BDF_PROTOTYPE)))	return 1;
+
+#endif
 
 	if ((nLoadMenuFamilyFilter & FBF_MSLUG)					&& (BurnDrvGetFamilyFlags() & FBF_MSLUG))			return 1;
 	if ((nLoadMenuFamilyFilter & FBF_SF)					&& (BurnDrvGetFamilyFlags() & FBF_SF))				return 1;
@@ -687,6 +708,8 @@ static int SelListMake()
 		qsort(nBurnZipListDrv, nBurnDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp_desc);
 	}
 
+#define ONLY_ROMDATA_SELECTED (nLoadMenuBoardTypeFilter == (MASKALLBOARD & ~BDF_ROMDATA_DRIVER))
+
 	// Add all the driver names to the list
 	// 1st: parents
 	for (i = nBurnDrvCount-1; i >= 0; i--) {
@@ -701,8 +724,15 @@ static int SelListMake()
 			continue;
 		}
 
-		if (BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE)) {	// Skip clones
-			continue;
+		INT32 nRomData = BurnDrvGetFlags() & BDF_ROMDATA_DRIVER;
+		if (ONLY_ROMDATA_SELECTED) {
+			if (!nRomData)
+				continue;
+		} else {
+			if (nRomData)
+				continue;
+			if (BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE))
+				continue;
 		}
 
 		if(!gameAv[nBurnDrvActive]) nMissingDrvCount++;
@@ -766,6 +796,9 @@ static int SelListMake()
 
 		// if showing zip names get active entry from our sorted list
 		if (nLoadMenuShowY & SHOWSHORT) nBurnDrvActive = nBurnZipListDrv[nBurnDrvCount - 1 - i].nBurnDrvNo;
+
+		if (ONLY_ROMDATA_SELECTED)
+			continue;
 
 		if (BurnDrvGetFlags() & BDF_BOARDROM) {
 			continue;
@@ -833,8 +866,8 @@ static int SelListMake()
 
 		// Find the parent and add a branch to the tree
 		if (!TvItem.hParent) {
-			char szTempName[32];
-			strcpy(szTempName, BurnDrvGetTextA(DRV_PARENT));
+			char szTempName[100] = { 0 };
+			strncpy(szTempName, BurnDrvGetTextA(DRV_PARENT), sizeof(szTempName) - 1);
 			int nTempBurnDrvSelect = nBurnDrvActive;
 			for (j = 0; j < nBurnDrvCount; j++) {
 				nBurnDrvActive = j;
@@ -865,6 +898,8 @@ static int SelListMake()
 		nBurnDrv[nTmpDrvCount].nBurnDrvNo = nBurnDrvActive;
 		nTmpDrvCount++;
 	}
+
+#undef ONLY_ROMDATA_SELECTED
 
 	for (i = 0; i < nTmpDrvCount; i++) {
 		// See if we need to expand the branch of an unavailable or non-working parent
@@ -953,9 +988,6 @@ static void MyEndDialog()
 	nSelDlgWidth  = rect.right - rect.left;
 	nSelDlgHeight = rect.bottom - rect.top;
 
-	if (!bSelOkay) {
-		RomDataStateRestore();
-	}
 	bSelOkay = false;
 
 	EndDialog(hSelDlg, 0);
@@ -1543,6 +1575,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_HACK			, hFilterHack			, nLoadMenuBoardTypeFilter & BDF_HACK				);
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_HOMEBREW		, hFilterHomebrew		, nLoadMenuBoardTypeFilter & BDF_HOMEBREW			);
 	_TVCreateFiltersA(hBoardType	, IDS_SEL_PROTOTYPE		, hFilterPrototype		, nLoadMenuBoardTypeFilter & BDF_PROTOTYPE			);
+	_TVCreateFiltersA(hBoardType	, IDS_SEL_ROMDATA		, hFilterRomData		, nLoadMenuBoardTypeFilter & BDF_ROMDATA_DRIVER		);
 
 	_TVCreateFiltersC(hRoot			, IDS_FAMILY			, hFamily				, nLoadMenuFamilyFilter & MASKALLFAMILY	);
 
@@ -2379,6 +2412,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterHack, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterHomebrew, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterPrototype, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterRomData, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterGenuine, FALSE);
 
 				nLoadMenuBoardTypeFilter = MASKALLBOARD;
@@ -2390,6 +2424,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterHack, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterHomebrew, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterPrototype, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterRomData, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterGenuine, TRUE);
 
 				nLoadMenuBoardTypeFilter = 0;
@@ -2622,6 +2657,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterHack)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HACK);
 		if (hItemChanged == hFilterHomebrew)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_HOMEBREW);
 		if (hItemChanged == hFilterPrototype)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_PROTOTYPE);
+		if (hItemChanged == hFilterRomData)		_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_ROMDATA_DRIVER);
 		if (hItemChanged == hFilterGenuine)			_ToggleGameListing(nLoadMenuBoardTypeFilter, MASKBOARDTYPEGENUINE);
 
 		if (hItemChanged == hFilterOtherFamily)		_ToggleGameListing(nLoadMenuFamilyFilter, MASKFAMILYOTHER);
@@ -2787,17 +2823,6 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				if (bDrvSelected) {
 					AddFavorite_Ext((CheckFavorites(BurnDrvGetTextA(DRV_NAME)) == -1) ? 1 : 0);
 				} else {
-					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
-				}
-
-				break;
-			}
-
-			case GAMESEL_MENU_ROMDATA: { // Export to RomData template
-				if (bDrvSelected) {
-					RomDataExportTemplate(hSelDlg, nDialogSelect);
-				}
-				else {
 					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 				}
 
@@ -3496,7 +3521,6 @@ int SelDialog(int nMVSCartsOnly, HWND hParentWND)
 
 	hParent = hParentWND;
 	nShowMVSCartsOnly = nMVSCartsOnly;
-	RomDataStateBackup();
 
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SELNEW), hParent, (DLGPROC)DialogProc);
 

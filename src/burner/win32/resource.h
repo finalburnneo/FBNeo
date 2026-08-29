@@ -17,7 +17,6 @@
 #define IDI_TV_NOTFOUND_NON         	    15
 #define IDI_INPD_DETECT_GAMEPADS            16 // icon
 #define IDC_INPD_DETECT_GAMEPADS            17 // control
-#define IDI_TV_ROMDATA_DRV                  18
 #define IDI_LV_CDIMAGE_CUE                  19
 #define IDI_LV_CDIMAGE_CHD                  20
 
@@ -55,8 +54,6 @@
 #define IDD_DOWNLOAD_LOCAL					82
 #define IDD_CHOOSEMONITOR					83
 #define IDD_HARDFXSETTINGS                  84
-#define IDD_ROMDATA_MANAGER					85
-#define IDD_ROMDATA_COVER_DLG				86
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -532,25 +529,6 @@
 
 #define IDDEFAULT							21160
 
-#define IDC_ROMDATA_MANAGER					21200
-#define IDC_ROMDATA_LIST					21201
-#define IDC_ROMDATA_TITLE					21202
-#define IDC_ROMDATA_PREVIEW					21203
-#define IDC_ROMDATA_TITLE_FRAME				21204
-#define IDC_ROMDATA_PREVIEW_FRAME			21205
-#define IDC_ROMDATA_TEXTDATPATH				21206
-#define IDC_ROMDATA_TEXTHARDWARE			21207
-#define IDC_ROMDATA_TEXTDRIVER				21208
-#define IDC_ROMDATA_SUBDIR_CHECK			21209
-#define IDC_ROMDATA_SCAN_BUTTON				21210
-#define IDC_ROMDATA_SELDIR_BUTTON			21211
-#define IDC_ROMDATA_PLAY_BUTTON				21212
-#define IDC_ROMDATA_CANCEL_BUTTON			21213
-#define IDC_ROMDATA_LABELHARDWARE			21214
-#define IDC_ROMDATA_LABELDAT				21215
-#define IDC_ROMDATA_LABELDRIVER				21216
-#define IDC_ROMDATA_COVER_PREVIEW_PIC		21217
-
 #define MENU_LOAD                       	10001
 #define MENU_STARTNET			 			10002
 #define MENU_STARTREPLAY					10003
@@ -564,16 +542,17 @@
 #define MENU_RESETCPUCLOCK					10011
 #define MENU_EXIT                       	10012
 #define MENU_RESET                       	10013
-#define MENU_LOAD_ROMDATA					10014
 #define MENU_LOAD_IPSPATCH					10015
 #define MENU_LOAD_CDIMAGE					10016
 #define MENU_LOAD_ARCHIVE					10017
-#define MENU_ROMDATA_MANAGER				10018
 #define MENU_MEMCARD_CREATE					10020
 #define MENU_MEMCARD_SELECT					10021
 #define MENU_MEMCARD_INSERT					10022
 #define MENU_MEMCARD_EJECT 					10023
 #define MENU_MEMCARD_TOGGLE					10024
+#define MENU_ROMDATA_DIRSEARCH				10025
+#define MENU_ROMDATA_OPENFILES				10026
+#define MENU_ROMDATA_RESEARCH				10027
 
 // PGM2 per-slot card menu IDs: base + slot*4 + action (action: 0=Create, 1=Select, 2=Insert, 3=Eject)
 #define MENU_MEMCARD_PGM2_BASE				10040
@@ -1110,7 +1089,6 @@
 #define GAMESEL_MENU_GAMEINFO				11901
 #define GAMESEL_MENU_VIEWEMMA				11902
 #define GAMESEL_MENU_FAVORITE				11903
-#define GAMESEL_MENU_ROMDATA				11904
 
 // Next default values for new objects
 //

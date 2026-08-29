@@ -3394,8 +3394,8 @@
     <ClCompile Include="..\..\src\burner\nvram.cpp">
       <Filter>burner</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burner\win32\romdata.cpp">
-      <Filter>burner\win32</Filter>
+    <ClCompile Include="..\..\src\burner\romdata_core.cpp">
+      <Filter>burner</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\luaconsole.cpp">
       <Filter>burner\win32</Filter>

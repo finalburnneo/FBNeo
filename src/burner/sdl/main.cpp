@@ -275,11 +275,6 @@ void bye(void)
 	SDL_Quit();
 }
 
-TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName)
-{
-	return NULL;
-}
-
 static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 {
 

@@ -511,8 +511,6 @@ int ConfigAppLoad()
 		DRV(nBurnDrvSelect[5]);
 
 		VAR(bNeoCDListScanSub);
-		
-		VAR(bRDListScanSub);
 
 		// Default Controls
 		VAR(nPlayerDefaultControls[0]);
@@ -926,9 +924,6 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Neo Geo CD Load Game Dialog options\n"));
 	VAR(bNeoCDListScanSub);
-
-	_ftprintf(h, _T("\n// RomData Load Game Dialog options\n"));
-	VAR(bRDListScanSub);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- miscellaneous ---------------------------------------------------------\n"));

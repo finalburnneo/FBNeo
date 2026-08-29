@@ -1459,7 +1459,7 @@ static void CreateSupportFolders()
 		{_T("support/history/")},
 		{_T("support/lua/")},
 		{_T("support/shaders/")},
-		{_T("neocdiso/")},
+		{_T("cdiso/")},
 		// rom directories
 		{_T("roms/arcade/")},
 		{_T("roms/megadrive/")},

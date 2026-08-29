@@ -6,7 +6,7 @@
 bool bNeoCDListScanSub = false;
 TCHAR szNeoCDCoverDir[MAX_PATH]   = _T("support/cdcovers/");
 TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/cdpreviews/");
-TCHAR szNeoCDGamesDir[MAX_PATH]   = _T("neocdiso/");
+TCHAR szNeoCDGamesDir[MAX_PATH]   = _T("cdiso/");
 
 #if defined(BUILD_NEOGEO) || defined(BUILD_PCE)
 

@@ -673,7 +673,7 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 				SetBkMode(pdis->hDC, TRANSPARENT);
 				SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);          
 
-				TCHAR* pszText = data ? data->sText : nullptr;
+				TCHAR* pszText;
 
 				if(data)
 				{

@@ -673,7 +673,17 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 				SetBkMode(pdis->hDC, TRANSPARENT);
 				SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);          
 
-				TCHAR* pszText = (TCHAR*)pdis->itemData;
+				TCHAR* pszText = data ? data->sText : nullptr;
+
+				if(data)
+				{
+					pszText = data->sText;
+				}
+				else
+				{
+					pszText = nullptr;
+				}
+
 				if (pszText) {
 					RECT rcText = pdis->rcItem;
 					if(bChecked){rcText.left += 24;}

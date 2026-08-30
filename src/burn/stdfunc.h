@@ -12,27 +12,45 @@
 #define STD_ROM_PICK(Name)												\
 static struct BurnRomInfo* Name##PickRom(UINT32 i)						\
 {																		\
-	if (i >= ARRAY_SIZE(Name##RomDesc)) {								\
-		return NULL;													\
-	}																	\
-	return Name##RomDesc + i;											\
-}
-
-#define STDROMPICKEXT(Name, Info1, Info2)								\
-static struct BurnRomInfo* Name##PickRom(UINT32 i)						\
-{																		\
-	if (i >= 0x80) {													\
-		i &= 0x7F;														\
-		if (i >= ARRAY_SIZE(Info2##RomDesc)) {							\
+	if ((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) {			\
+		/* Replace with the contents of Romdata */						\
+		/* Differences in array pointers */								\
+		if (i > pRDI->nDescCount) {										\
 			return NULL;												\
 		}																\
-		return Info2##RomDesc + i;										\
+		return pDataRomDesc + i;										\
 	} else {															\
-		if (i >= ARRAY_SIZE(Info1##RomDesc)) {							\
-			return emptyRomDesc + 0;									\
+		if (i >= sizeof(Name##RomDesc) / sizeof(Name##RomDesc[0])) {	\
+			return NULL;												\
 		}																\
-		return Info1##RomDesc + i;										\
+		return Name##RomDesc + i;										\
 	}																	\
+}
+
+#define STDROMPICKEXT(Name, Info1, Info2)									\
+static struct BurnRomInfo* Name##PickRom(UINT32 i)							\
+{																			\
+	if (i >= 0x80) {														\
+		i &= 0x7F;															\
+		if (i >= sizeof(Info2##RomDesc) / sizeof(Info2##RomDesc[0])) {		\
+			return NULL;													\
+		}																	\
+		return Info2##RomDesc + i;											\
+	} else {																\
+		if ((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) {			\
+			/* Replace with the contents of Romdata */						\
+			/* Differences in array pointers */								\
+			if (i > pRDI->nDescCount) {										\
+				return emptyRomDesc + 0;									\
+			}																\
+			return pDataRomDesc + i;										\
+		} else {															\
+			if (i >= sizeof(Info1##RomDesc) / sizeof(Info1##RomDesc[0])) {	\
+				return emptyRomDesc + 0;									\
+			}																\
+			return Info1##RomDesc + i;										\
+		}																	\
+	}																		\
 }
 
 // Standard rom functions for returning Length, Crc, Type and one one Name
@@ -67,7 +85,7 @@ static INT32 Name##RomName(char** pszName, UINT32 i, INT32 nAka)		\
 #define STDINPUTINFO(Name)												\
 static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)		\
 {																		\
-	if (i >= ARRAY_SIZE(Name##InputList)) {								\
+	if (i >= sizeof(Name##InputList) / sizeof(Name##InputList[0])) {	\
 		return 1;														\
 	}																	\
 	if (pii) {															\
@@ -79,7 +97,7 @@ static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)		\
 #define STDINPUTINFOSPEC(Name, Info1)									\
 static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)		\
 {																		\
-	if (i >= ARRAY_SIZE(Info1)) {										\
+	if (i >= sizeof(Info1) / sizeof(Info1[0])) {						\
 		return 1;														\
 	}																	\
 	if (pii) {															\
@@ -88,29 +106,29 @@ static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)		\
 	return 0;															\
 }
 
-#define STDINPUTINFOEXT(Name, Info1, Info2)								\
-static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)		\
-{																		\
-	if (i >= ARRAY_SIZE(Info1##InputList)) {							\
-		i -= ARRAY_SIZE(Info1##InputList);								\
-		if (i >= ARRAY_SIZE(Info2##InputList)) {						\
-			return 1;													\
-		}																\
-		if (pii) {														\
-			*pii = Info2##InputList[i];									\
-		}																\
-		return 0;														\
-	}																	\
-	if (pii) {															\
-		*pii = Info1##InputList[i];										\
-	}																	\
-	return 0;															\
+#define STDINPUTINFOEXT(Name, Info1, Info2)									\
+static INT32 Name##InputInfo(struct BurnInputInfo* pii, UINT32 i)			\
+{																			\
+	if (i >= sizeof(Info1##InputList) / sizeof(Info1##InputList[0])) {		\
+		i -= sizeof(Info1##InputList) / sizeof(Info1##InputList[0]);		\
+		if (i >= sizeof(Info2##InputList) / sizeof(Info2##InputList[0])) {	\
+			return 1;														\
+		}																	\
+		if (pii) {															\
+			*pii = Info2##InputList[i];										\
+		}																	\
+		return 0;															\
+	}																		\
+	if (pii) {																\
+		*pii = Info1##InputList[i];											\
+	}																		\
+	return 0;																\
 }
 
 #define STDDIPINFO(Name)												\
 static INT32 Name##DIPInfo(struct BurnDIPInfo* pdi, UINT32 i)			\
 {																		\
-	if (i >= ARRAY_SIZE(Name##DIPList)) {								\
+	if (i >= sizeof(Name##DIPList) / sizeof(Name##DIPList[0])) {		\
 		return 1;														\
 	}																	\
 	if (pdi) {															\
@@ -122,9 +140,9 @@ static INT32 Name##DIPInfo(struct BurnDIPInfo* pdi, UINT32 i)			\
 #define STDDIPINFOEXT(Name, Info1, Info2)								\
 static INT32 Name##DIPInfo(struct BurnDIPInfo* pdi, UINT32 i)			\
 {																		\
-	if (i >= ARRAY_SIZE(Info1##DIPList)) {								\
-		i -= ARRAY_SIZE(Info1##DIPList);								\
-		if (i >= ARRAY_SIZE(Info2##DIPList)) {							\
+	if (i >= sizeof(Info1##DIPList) / sizeof(Info1##DIPList[0])) {		\
+		i -= sizeof(Info1##DIPList) / sizeof(Info1##DIPList[0]);		\
+		if (i >= sizeof(Info2##DIPList) / sizeof(Info2##DIPList[0])) {	\
 			return 1;													\
 		}																\
 		if (pdi) {														\
@@ -142,7 +160,7 @@ static INT32 Name##DIPInfo(struct BurnDIPInfo* pdi, UINT32 i)			\
 #define STD_SAMPLE_PICK(Name)											\
 static struct BurnSampleInfo* Name##PickSample(UINT32 i)				\
 {																		\
-	if (i >= ARRAY_SIZE(Name##SampleDesc)) {							\
+	if (i >= sizeof(Name##SampleDesc) / sizeof(Name##SampleDesc[0])) {	\
 		return NULL;													\
 	}																	\
 	return Name##SampleDesc + i;										\
@@ -178,7 +196,7 @@ static INT32 Name##SampleName(char** pszName, UINT32 i, INT32 nAka)		\
 #define STD_HDD_PICK(Name)												\
 static struct BurnHDDInfo* Name##PickHDD(UINT32 i)						\
 {																		\
-	if (i >= ARRAY_SIZE(Name##HDDDesc)) {								\
+	if (i >= sizeof(Name##HDDDesc) / sizeof(Name##HDDDesc[0])) {		\
 		return NULL;													\
 	}																	\
 	return Name##HDDDesc + i;											\

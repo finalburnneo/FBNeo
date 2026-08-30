@@ -51,7 +51,7 @@ alldir += burner burner/pi burner/sdl dep/libs/libspng dep/libs/lib7z \
 
 depobj += cdlist.o \
 		\
-		conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o romdata_core.o \
+		conc.o cong.o dat.o gamc.o gami.o image.o ioapi.o misc.o \
 		sshot.o state.o statec.o unzip.o zipfn.o \
 		\
 		adler32.o compress.o crc32.o deflate.o gzclose.o gzlib.o \
@@ -69,7 +69,7 @@ depobj += cdlist.o \
 		inp_pi.o aud_sdl.o support_paths.o \
 		ips_manager.o scrn.o config.o \
 		main_pi.o run_pi.o stringset.o bzip.o drv.o media.o inpdipsw.o \
-		matrix.o vid_pi.o inputbuf.o replay.o cd_img.o crt.o
+		matrix.o vid_pi.o inputbuf.o replay.o cd_img.o romdata.o crt.o
 
 ifdef BUILD_DRM
   depobj += pigl_drm.o

@@ -19,22 +19,6 @@
 #include "dr_wav.h"
 extern "C" int stb_vorbis_decode_memory(const unsigned char* mem, int len, int* channels, int* sample_rate, short** output);
 
-// The CRT has no _t-prefixed opendir/readdir/closedir, so map them here.
-#ifdef _UNICODE
-#define MSU1_DIR		_WDIR
-#define MSU1_dirent		_wdirent
-#define msu1_opendir	_wopendir
-#define msu1_readdir	_wreaddir
-#define msu1_closedir	_wclosedir
-#else
-#define MSU1_DIR		DIR
-#define MSU1_dirent		dirent
-#define msu1_opendir	opendir
-#define msu1_readdir	readdir
-#define msu1_closedir	closedir
-#endif
-#define msu1_name(de)	((de)->d_name)		// native width: narrowing mangles non-ASCII names
-
 #if defined(BUILD_WIN32) || defined(__LIBRETRO__) || defined(__x86_64__) || defined(__i386__)
 #define MSU1_USE_R8B_RESAMPLE
 #endif
@@ -43,6 +27,30 @@ extern "C" int stb_vorbis_decode_memory(const unsigned char* mem, int len, int* 
 #include "CDSPResampler.h"
 #endif
 
+// TCHAR-aware dir ops (no _t-prefix macros exist for opendir/readdir/closedir)
+#ifdef _UNICODE
+#define MSU1_DIR		_WDIR
+#define MSU1_dirent		_wdirent
+#define msu1_opendir	_wopendir
+#define msu1_readdir	_wreaddir
+#define msu1_closedir	_wclosedir
+static void msu1_dname(const struct _wdirent* de, char* out, int outSize)
+{
+	int i;
+	for (i = 0; i < outSize - 1 && de->d_name[i]; i++)
+		out[i] = (char)de->d_name[i];
+	out[i] = 0;
+}
+#define _T_NARROW_FMT	_T("%hs")   // narrow string in wide printf (MSVC only)
+#else
+#define MSU1_DIR		DIR
+#define MSU1_dirent		dirent
+#define msu1_opendir	opendir
+#define msu1_readdir	readdir
+#define msu1_closedir	closedir
+#define msu1_dname(de, out, outSize)  snprintf(out, outSize, "%s", (de)->d_name)
+#define _T_NARROW_FMT	_T("%s")
+#endif
 
 // game short name
 static TCHAR s_gameName[128]   = { 0 };
@@ -96,17 +104,13 @@ static void msu1_buildDir(TCHAR* dst, INT32 dstLen)
 static const char* const kAudioExts[] = { "pcm", "flac", "mp3", "wav", "ogg" };
 static const INT32       kAudioExtCount = 5;
 
-// The name stays TCHAR; only the extension is narrowed, and that is always ASCII.
-static void lowerExt(const TCHAR* name, char* ext, INT32 extLen)
+static void lowerExt(const char* name, char* ext, INT32 extLen)
 {
 	ext[0] = 0;
-	const TCHAR* dot = _tcsrchr(name, _T('.'));
+	const char* dot = strrchr(name, '.');
 	if (dot == NULL || dot[1] == 0) return;
 	INT32 j = 0;
-	for (const TCHAR* p = dot + 1; *p && j < extLen - 1; p++) {
-		if (*p > 0x7f) { ext[0] = 0; return; }				// not an ASCII extension
-		ext[j++] = (char)tolower((INT32)*p);
-	}
+	for (const char* p = dot + 1; *p && j < extLen - 1; p++) ext[j++] = (char)tolower((unsigned char)*p);
 	ext[j] = 0;
 }
 
@@ -116,24 +120,24 @@ static INT32 audioExtIndex(const char* ext)
 	return -1;
 }
 
-static INT32 looseTrackMatch(const TCHAR* name, UINT16 track, char* extOut, INT32 extLen)
+static INT32 looseTrackMatch(const char* name, UINT16 track, char* extOut, INT32 extLen)
 {
 	char ext[16];
 	lowerExt(name, ext, sizeof(ext));
 	if (audioExtIndex(ext) < 0) return 0;
 
-	const TCHAR* dot = _tcsrchr(name, _T('.'));
-	const TCHAR* p   = dot;
+	const char* dot = strrchr(name, '.');
+	const char* p   = dot;
 	if (p == name) return 0;
-	const TCHAR* digitsEnd = dot;
-	const TCHAR* d = dot;
-	while (d > name && d[-1] >= _T('0') && d[-1] <= _T('9')) d--;
+	const char* digitsEnd = dot;
+	const char* d = dot;
+	while (d > name && isdigit((unsigned char)d[-1])) d--;
 	if (d == digitsEnd) return 0;
-	if (d == name || d[-1] != _T('-')) return 0;
+	if (d == name || d[-1] != '-') return 0;
 
-	UINT32 n = 0;
-	for (const TCHAR* q = d; q < digitsEnd; q++) n = n * 10u + (UINT32)(*q - _T('0'));
-	if (n != (UINT32)track) return 0;
+	unsigned long n = 0;
+	for (const char* q = d; q < digitsEnd; q++) n = n * 10u + (unsigned long)(*q - '0');
+	if (n != (unsigned long)track) return 0;
 
 	snprintf(extOut, extLen, "%s", ext);
 	return 1;
@@ -154,15 +158,16 @@ static INT32 resolveDataPath(TCHAR* path, INT32 pathLen)
 	MSU1_DIR* dp = msu1_opendir(dir);
 	if (dp != NULL) {
 		struct MSU1_dirent* de;
-		TCHAR found[256]; found[0] = 0;
+		char found[256]; found[0] = 0;
 		while ((de = msu1_readdir(dp)) != NULL) {
-			const TCHAR* dname = msu1_name(de);
+			char dname[256];
+			msu1_dname(de, dname, sizeof(dname));
 			char ext[16];
 			lowerExt(dname, ext, sizeof(ext));
-			if (strcmp(ext, "msu") == 0) { _sntprintf(found, ARRAY_SIZE(found), _T("%s"), dname); break; }
+			if (strcmp(ext, "msu") == 0) { snprintf(found, sizeof(found), "%s", dname); break; }
 		}
 		msu1_closedir(dp);
-		if (found[0]) { _sntprintf(path, pathLen, _T("%s/%s"), dir, found); return 1; }
+		if (found[0]) { _sntprintf(path, pathLen, _T("%s/") _T_NARROW_FMT, dir, found); return 1; }
 	}
 
 	return 0;
@@ -562,15 +567,16 @@ static INT32 backend_audioOpen(UINT16 track, MsuFile* out)
 	MSU1_DIR* dp = msu1_opendir(dir);
 	if (dp == NULL) return 0;
 
-	TCHAR foundName[256]; foundName[0] = 0;
-	char  foundExt[16];   foundExt[0]  = 0;
+	char foundName[256]; foundName[0] = 0;
+	char foundExt[16];   foundExt[0]  = 0;
 	struct MSU1_dirent* de;
 	while ((de = msu1_readdir(dp)) != NULL) {
-		const TCHAR* dname = msu1_name(de);
+		char dname[256];
+		msu1_dname(de, dname, sizeof(dname));
 		char ext[16];
 		if (looseTrackMatch(dname, track, ext, sizeof(ext))) {
-			_sntprintf(foundName, ARRAY_SIZE(foundName), _T("%s"), dname);
-			snprintf(foundExt, sizeof(foundExt), "%s", ext);
+			snprintf(foundName, sizeof(foundName), "%s", dname);
+			snprintf(foundExt,  sizeof(foundExt),  "%s", ext);
 			break;
 		}
 	}
@@ -578,7 +584,7 @@ static INT32 backend_audioOpen(UINT16 track, MsuFile* out)
 
 	if (foundName[0]) {
 		TCHAR path[MAX_PATH];
-		_sntprintf(path, MAX_PATH, _T("%s/%s"), dir, foundName);
+		_sntprintf(path, MAX_PATH, _T("%s/") _T_NARROW_FMT, dir, foundName);
 		if (strcmp(foundExt, "pcm") == 0) {
 			if (stream_openInto(path, &s_pcmCtx, out)) { mem_close(&s_memCtx);    return 1; }
 		} else {
@@ -626,14 +632,15 @@ INT32 snes_msu1_backend_detect(const TCHAR* shortName)
 		if (dp != NULL) {
 			struct MSU1_dirent* de;
 			while (!found && (de = msu1_readdir(dp)) != NULL) {
-				const TCHAR* dname = msu1_name(de);
+				char dname[256];
+				msu1_dname(de, dname, sizeof(dname));
 				char ext[16];
 				lowerExt(dname, ext, sizeof(ext));
 				if (audioExtIndex(ext) < 0) continue;
-				const TCHAR* dot = _tcsrchr(dname, _T('.'));
-				const TCHAR* d = dot;
-				while (d > dname && d[-1] >= _T('0') && d[-1] <= _T('9')) d--;
-				if (d != dot && d > dname && d[-1] == _T('-')) found = 1;
+				const char* dot = strrchr(dname, '.');
+				const char* d = dot;
+				while (d > dname && isdigit((unsigned char)d[-1])) d--;
+				if (d != dot && d > dname && d[-1] == '-') found = 1;
 			}
 			msu1_closedir(dp);
 		}

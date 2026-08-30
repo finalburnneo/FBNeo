@@ -10,6 +10,7 @@ frontend_sources = files(
     'media.cpp',
     '../cdlist.cpp',
     'replay.cpp',
+    'romdata.cpp',
     'run.cpp',
     'scrn.cpp',
     'sdl2_gui.cpp',

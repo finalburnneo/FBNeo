@@ -719,105 +719,61 @@ bool SetNumLock(bool bState)
 	return keyState[VK_NUMLOCK] & 1;
 }
 
-static TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims)
+static INT32 ParseExportPath(const TCHAR* pszCmdLine, TCHAR* pszDirPath, INT32* nPathLen)
 {
-	static TCHAR* prev_str = NULL;
-	TCHAR* token;
-
-	if (!delims)
-		return NULL;
-	if (!s) {
-		s = prev_str;
-		if (!s)
-			return NULL;
-	}
-
-	s += _tcsspn(s, delims);
-	if (*s == _T('\0')) {
-		prev_str = NULL;
-		return NULL;
-	}
-
-	if (*s == _T('"')) {
-		token = ++s;
-		TCHAR* endquote = _tcschr(s, _T('"'));
-		if (endquote) {
-			*endquote = _T('\0');
-			s = endquote + 1;
-		} else {
-			s = _tcschr(s, _T('\0'));
-		}
-	} else {
-		token = s;
-		s = _tcspbrk(s, delims);
-	}
-
-	if (s && *s != _T('\0')) {
-		*s = _T('\0');
-		prev_str = s + 1;
-	} else {
-		prev_str = NULL;
-	}
-
-	return token;
-}
-
-static INT32 ParseExportPath(const TCHAR* pszCmdLine, TCHAR* pszOutDir, INT32* pnPathLen)
-{
-	TCHAR szBuffer[1024] = { 0 };
-	_tcsncpy(szBuffer, pszCmdLine, sizeof(szBuffer) / sizeof(szBuffer[0]) - 1);
-
 	const TCHAR* pszDelims = _T(" \t\r\n");
-	TCHAR* pszArg = _strqtoken(szBuffer, pszDelims);
-	if (!pszArg)
+	TCHAR* pszArgA = NULL, * pszArgN = NULL;
+
+	TCHAR szBuffer[1024] = { 0 };
+	_tcscpy(szBuffer, pszCmdLine);
+
+	pszArgA = _strqtoken(szBuffer, pszDelims);	// -listxmlall or -listinfoall
+	if (NULL == pszArgA) return -1;
+
+	if ((0 != _tcsicmp(_T("-listxmlall"), pszArgA)) && (0 != _tcsicmp(_T("-listinfoall"), pszArgA)))
 		return -1;
 
-	if (_tcsicmp(pszArg, _T("-listxmlall")) != 0 && _tcsicmp(pszArg, _T("-listinfoall")) != 0)
-		return -1;
+	INT32 nMarker = 0;
 
-	bool bSilent = false;
-
-	while ((pszArg = _strqtoken(NULL, pszDelims)) != NULL) {
-		if (_tcsicmp(pszArg, _T("-s")) == 0) {
-			bSilent = true;
+	while (NULL != (pszArgN = _strqtoken(NULL, pszDelims))) {
+		if (0 == _tcsicmp(_T("-s"), pszArgN)) {
+			nMarker = 1;
 			continue;
 		}
+		// A parameter specifying the directory is entered
+		UINT32 nLen = _tcslen(pszArgN), nLimit = MAX_PATH;
+		if ((_T('/') != pszArgN[nLen - 1]) && (_T('\\') != pszArgN[nLen - 1]))
+			nLimit--;
 
-		UINT32 nLen;
-		TCHAR szPath[MAX_PATH] = { 0 };
-		_tcsncpy(szPath, pszArg, MAX_PATH - 2);
-		nLen = _tcslen(szPath);
-
-		DWORD dwAttrib = GetFileAttributes(szPath);
-		if (dwAttrib == INVALID_FILE_ATTRIBUTES || !(dwAttrib & FILE_ATTRIBUTE_DIRECTORY))
+		if (nLen >= nLimit)
 			return -1;
 
-		TCHAR cLast = szPath[nLen - 1];
-		if (cLast != _T('/') && cLast != _T('\\')) {
-			szPath[nLen++] = _T('\\');
-			szPath[nLen] = _T('\0');
+		TCHAR szDirPath[MAX_PATH] = { 0 };
+		_tcscpy(szDirPath, pszArgN);
+
+		DWORD dwAttrib = GetFileAttributes(szDirPath);
+		if ((INVALID_FILE_ATTRIBUTES == dwAttrib) || (!(dwAttrib & FILE_ATTRIBUTE_DIRECTORY)))
+			return -1;	// Input directory error
+
+		if ((_T('/') != szDirPath[nLen - 1]) && (_T('\\') != szDirPath[nLen - 1])) {
+			szDirPath[nLen + 0] = _T('\\');
+			szDirPath[nLen + 1] = _T('\0');
+			nLen++;
 		}
 
-		if (pszOutDir) _tcscpy(pszOutDir, szPath);
-		if (pnPathLen) *pnPathLen = nLen;
+		if (NULL != pszDirPath) _tcscpy(pszDirPath, szDirPath);
+		if (NULL != nPathLen)   *nPathLen = nLen;
 
 		return 2;
 	}
 
-	if (pszOutDir) _tcscpy(pszOutDir, _T(""));
-	if (pnPathLen) *pnPathLen = 1;
+	if (NULL != pszDirPath) _tcscpy(pszDirPath, _T(""));
+	if (NULL != nPathLen)   *nPathLen = 1;
 
-	return bSilent ? 1 : 0;
+	return nMarker;	// 1 Silent, 0 Not
 }
 
 #include <wininet.h>
-
-void RomDataScanDefault()
-{
-	TCHAR szCachePath[MAX_PATH];
-	INT32 nLength = _sntprintf(szCachePath, MAX_PATH, _T("config/%s.romdata.dat"), szAppExeName);
-	RomDataScan(szAppRomdataPath, (nLength >= 0 && nLength < MAX_PATH) ? szCachePath : NULL);
-}
 
 static int AppInit()
 {
@@ -836,8 +792,6 @@ static int AppInit()
 	// Load config for the application
 	ConfigAppLoad();
 	LookupSubDirThreads();
-
-	RomDataScanDefault();
 
 #if defined (FBNEO_DEBUG)
 	OpenDebugLog();
@@ -938,7 +892,7 @@ static int AppExit()
 	FreeROMInfo();
 	DestroySubDir();
 	MediaExit();
-	BurnLibExit();					// Exit the Burn library (releases RomData drivers via BurnLibExitHook)
+	BurnLibExit();					// Exit the Burn library
 
 	DisableHighResolutionTiming();
 
@@ -1312,6 +1266,45 @@ int ProcessCmdLine()
 			// Command: lua file
 			FBA_LoadLuaCode(TCHARToANSI(szName, NULL, 0));
 			//bVidAutoSwitchFullDisable = true;
+		} else if (_tcscmp(szName, _T("-romdata")) == 0) {	// cmdline for romdata
+			TCHAR* szPoint = NULL;
+			if (NULL != (szPoint = _tcsstr(szCmdLine, _T("-romdata")))) {
+				szPoint += _tcslen(_T("-romdata"));
+
+				while (szPoint[0] != _T('\0')) {
+					if (szPoint[0] == _T(' ')) {
+						szPoint++;
+					} else { break; }
+				}
+
+				TCHAR* szExt = _tcsstr(szCmdLine, _T(".dat"));
+				if (NULL != szExt) {
+					szExt[0] = _T('\0');
+				}
+				szExt = NULL;
+
+				TCHAR* szDatName = _tcstok(szPoint, _T("\""));
+
+				memset(szRomdataName, '\0', sizeof(szRomdataName));
+				_stprintf(szRomdataName, _T("%s%s%s"), szAppRomdataPath, szDatName, _T(".dat"));
+
+				szDatName = NULL;
+				szPoint = NULL;
+
+				char* szDrvName = RomdataGetDrvName();
+				INT32 nGame = BurnDrvGetIndex(szDrvName);
+
+				if ((NULL == szDrvName) || (-1 == nGame)) {
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
+					FBAPopupDisplay(PUF_TYPE_WARNING);
+
+					return 1;
+				}
+
+				if (DrvInit(nGame, true)) {	// failed (bad romset, etc.)
+					nVidFullscreen = 0;		// Don't get stuck in fullscreen mode
+				}
+			}
 		} else {
 			bQuietLoading = true;
 			bDoIpsPatch   = false;

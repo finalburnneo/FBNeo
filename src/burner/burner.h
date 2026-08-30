@@ -26,7 +26,6 @@
 #include "title.h"
 #include "burn.h"
 #include "joyprocess.h"
-#include "romdata_core.h"	// platform-independent RomData (.dat) core: RomDataScan/Free/LoadOne
 
 // ---------------------------------------------------------------------------
 // OS dependent functionality
@@ -265,7 +264,13 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount);
 INT32 ZipLoadFile(UINT8* Dest, INT32 nLen, INT32* pnWrote, INT32 nEntry);
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
 
-// ips_manager.cpp
+// romdata.cpp
+
+extern TCHAR szRomdataName[MAX_PATH];
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName);
+
+// ips_manager.cpp 
+
 void IpsPatchInit();
 void IpsPatchExit();
 

@@ -17957,10 +17957,7 @@ static char* szGameName = NULL;
 
 static void SetGameConfig()
 {
-	// A RomData driver keeps its own short name, so match the config table on the base driver.
-	const char* GameName = szGameName;
-	if (GameName == NULL && IsRomDataDrv()) GameName = RomDataDrvGetDrvName();
-	if (GameName == NULL) GameName = BurnDrvGetTextA(DRV_NAME);
+	const char* GameName = (NULL != szGameName) ? szGameName : (((NULL != pDataRomDesc) && (-1 != pRDI->nDescCount)) ? pRDI->szDrvName : BurnDrvGetTextA(DRV_NAME));
 	const struct GameConfig *k = &ConfigTable[0];
 
 	while (k->DriverName) {

@@ -42,6 +42,12 @@ static HHOOK hMenuHook;
 static bool bTest = false;
 static RECT PopupRect = { 0,0,0,0, };
 
+struct MenuItemTextAndToggle 
+{
+	TCHAR sText[256];
+	bool isItemChecked;
+};
+
 static INT32 GetCurrentMonitorHigh() {
 	HMONITOR hMonitor = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
 	if (NULL == hMonitor) return -1;
@@ -66,6 +72,14 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
         mii.fMask = MIIM_FTYPE | MIIM_DATA;
         GetMenuItemInfo(hMenu, i, TRUE, &mii); 
 
+		MENUITEMINFO miiState = { sizeof(MENUITEMINFO) };
+		miiState.fMask = MIIM_STATE;
+		GetMenuItemInfo(hMenu, i, TRUE, &miiState);
+		bool isChecked = (miiState.fState & MFS_CHECKED) != 0;
+
+		//in order to make the toggle background follow the ui color we must bring responsibility to the owner 
+		MenuItemTextAndToggle* MenuItemInfo = new MenuItemTextAndToggle();
+
         TCHAR szText[256] = { 0 };
         MENUITEMINFO miiText = { sizeof(MENUITEMINFO) };
         miiText.fMask = MIIM_STRING;
@@ -73,8 +87,11 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
         miiText.cch = 256;
         GetMenuItemInfo(hMenu, i, TRUE, &miiText);
 
+		MenuItemInfo->isItemChecked = isChecked;
+		_tcscpy_s(MenuItemInfo->sText, _countof(MenuItemInfo->sText), szText);
+
         mii.fType    |= MFT_OWNERDRAW;
-        mii.dwItemData = (ULONG_PTR)_tcsdup(szText); 
+        mii.dwItemData = (ULONG_PTR)MenuItemInfo; 
         SetMenuItemInfo(hMenu, i, TRUE, &mii);
 
         HMENU hSub = GetSubMenu(hMenu, i);

@@ -10,6 +10,12 @@ int nActiveGame;
 
 static bool bLoading = 0;
 
+struct MenuItemTextAndToggle 
+{
+	TCHAR sText[256];
+	bool isItemChecked;
+};
+
 #ifdef BUILD_NEOGEO
 static void SetNeoCDTitle(TCHAR* pszTitle)
 {
@@ -610,9 +616,14 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		case WM_MEASUREITEM:
 		{
 			LPMEASUREITEMSTRUCT pmis = (LPMEASUREITEMSTRUCT)lParam;
-			if (pmis->CtlType == ODT_MENU) {
-				pmis->itemWidth  = 150; 
-				pmis->itemHeight = 20;  
+			 if (pmis->CtlType == ODT_MENU) {
+				MenuItemTextAndToggle* data = (MenuItemTextAndToggle*) pmis->itemData;
+				HDC hdc = GetDC(hWnd);
+				SIZE sz;
+				GetTextExtentPoint32(hdc, data->sText, _tcslen(data->sText), &sz);
+				ReleaseDC(hWnd, hdc);
+				pmis->itemWidth  = sz.cx + 40; 
+				pmis->itemHeight = fmax(sz.cy, 20);
 			}
 			return TRUE;
 		}
@@ -621,39 +632,56 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		case WM_DRAWITEM:
 		{
 			LPDRAWITEMSTRUCT pdis = (LPDRAWITEMSTRUCT)lParam;
+			MenuItemTextAndToggle* data = (MenuItemTextAndToggle*) pdis->itemData;
 			if (pdis->CtlType == ODT_MENU) {
 				BOOL bSelected = (pdis->itemState & ODS_SELECTED) != 0;
-				BOOL bChecked  = (pdis->itemState & ODS_CHECKED)  != 0;
+				BOOL bChecked  = (data->isItemChecked);
 
 				COLORREF clr;
-				if (bSelected)
+
+				if(bSelected) 
+				{
 					clr = RGB((uiSelectedMenuItemColor >> 16) & 0xFF,   // R
                       		  (uiSelectedMenuItemColor >> 8) & 0xFF,    // G
-                      		   uiSelectedMenuItemColor & 0xFF);         // B
-				else if (bChecked)
-					clr = RGB((uiSelectedMenuItemColor >> 16) & 0xFF,   // R
-                      		  (uiSelectedMenuItemColor >> 8) & 0xFF,    // G
-                      		   uiSelectedMenuItemColor & 0xFF);         // B
+                      		   uiSelectedMenuItemColor & 0xFF);         // B 
+				}
 				else
+				{
 					clr = RGB((uiMenuItemColor >> 16) & 0xFF,   // R
                       		  (uiMenuItemColor >> 8) & 0xFF,    // G
                       		   uiMenuItemColor & 0xFF);         // B
+				}
 
 				HBRUSH hbr = CreateSolidBrush(clr);
 				FillRect(pdis->hDC, &pdis->rcItem, hbr);
 				DeleteObject(hbr);
+
+				if (bChecked) 
+				{
+					int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+					int cx =  pdis->rcItem.left + 12;
+					HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);     
+
+					HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
+					HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
+					Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
+					SelectObject(pdis->hDC, oldBrush);
+					SelectObject(pdis->hDC, oldPen);
+					DeleteObject(dotBrush);
+				}	
 
 				SetBkMode(pdis->hDC, TRANSPARENT);
 				SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);          
 
 				TCHAR* pszText = (TCHAR*)pdis->itemData;
 				if (pszText) {
-					DrawText(pdis->hDC, pszText, -1, &pdis->rcItem,
-							DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+					RECT rcText = pdis->rcItem;
+					if(bChecked){rcText.left += 24;}
+					DrawText(pdis->hDC, pszText, -1, &rcText, DT_SINGLELINE | DT_VCENTER | DT_LEFT);
 				}
 			}
 			return TRUE;
-		}
+	 	} 
 		// - dink - end
 		HANDLE_MSG(hWnd, WM_SIZE,			OnSize);
 		HANDLE_MSG(hWnd, WM_ENTERSIZEMOVE,	OnEnterSizeMove);

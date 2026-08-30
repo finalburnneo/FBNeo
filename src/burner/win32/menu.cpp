@@ -78,6 +78,8 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
 		bool isChecked = (miiState.fState & MFS_CHECKED) != 0;
 
 		//in order to make the toggle background follow the ui color we must bring responsibility to the owner 
+		//to do this while still telling windows to draw dots on the checked items the MenuItemTextAndToggle struct was created so that booleans can be informed along with text
+		//on line mii.dwItemData = (ULONG_PTR)MenuItemInfo;
 		MenuItemTextAndToggle* MenuItemInfo = new MenuItemTextAndToggle();
 
         TCHAR szText[256] = { 0 };

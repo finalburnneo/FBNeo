@@ -38094,6 +38094,25 @@ struct BurnDriver BurnDrvmd_amshay = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Animal Control: Elite Balloon Squad (HB, v1.2.0)
+// https://safetystoatstudios.itch.io/acebs
+static struct BurnRomInfo md_animalcontrolebsRomDesc[] = {
+	{ "Animal Control - Elite Balloon Squad v1.2.0 (2023)(Safety Stoat Studios).bin", 2490368, 0x501bc79f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_animalcontrolebs)
+STD_ROM_FN(md_animalcontrolebs)
+
+struct BurnDriver BurnDrvmd_animalcontrolebs = {
+	"md_animalcontrolebs", NULL, NULL, NULL, "2023",
+	"Animal Control: Elite Balloon Squad (HB, v1.2.0)\0", NULL, "Safety Stoat Studios", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_animalcontrolebsRomInfo, md_animalcontrolebsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Annexed Territory (HB)
 static struct BurnRomInfo md_annexedterRomDesc[] = {
 	{ "Annexed Territory (2025)(Tym01).bin", 1048576, 0x890bde10, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -38510,21 +38529,21 @@ struct BurnDriver BurnDrvmd_bigfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Black Jewel Reborn (HB, Demo v2.11)
-// https://pscdgames.itch.io/black-jewel-reborn
-static struct BurnRomInfo md_bjreborndemoRomDesc[] = {
-	{ "Black Jewel Reborn v2.11 (2022)(PSCD Games).bin", 3407872, 0x0adee51c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Black Jewel Reborn (HB, Alpha)
+// https://pscdgames.itch.io/black-jewel-reborn-sega-mega-drive-genesis-alpha
+static struct BurnRomInfo md_bjrebornRomDesc[] = {
+	{ "Black Jewel Reborn Alpha (2022-26)(PSCD Games).bin", 3932160, 0x5b901963, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_bjreborndemo)
-STD_ROM_FN(md_bjreborndemo)
+STD_ROM_PICK(md_bjreborn)
+STD_ROM_FN(md_bjreborn)
 
-struct BurnDriver BurnDrvmd_bjreborndemo = {
-	"md_bjreborndemo", NULL, NULL, NULL, "2022",
-	"Black Jewel Reborn (HB, Demo v2.11)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
+struct BurnDriver BurnDrvmd_bjreborn = {
+	"md_bjreborn", NULL, NULL, NULL, "2022-26",
+	"Black Jewel Reborn (HB, Alpha)\0", NULL, "PSCD Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_bjreborndemoRomInfo, md_bjreborndemoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_bjrebornRomInfo, md_bjrebornRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -39713,6 +39732,25 @@ struct BurnDriver BurnDrvmd_earthionwd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Elansar (M4) (HB)
+// https://orionsoft.itch.io/elansar/devlog/1623128/elansar-port-for-the-sega-genesis-megadrive
+static struct BurnRomInfo md_elansarRomDesc[] = {
+	{ "Elansar (2026)(OrionSoft).bin", 4194304, 0xa4ed642a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_elansar)
+STD_ROM_FN(md_elansar)
+
+struct BurnDriver BurnDrvmd_elansar = {
+	"md_elansar", NULL, NULL, NULL, "2026",
+	"Elansar (M4) (HB)\0", NULL, "OrionSoft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV | GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_elansarRomInfo, md_elansarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Escape 2042 (M4) (HB)
 static struct BurnRomInfo md_escape2042RomDesc[] = {
 	{ "Escape 2042 (2018)(OrionSoft).bin", 4194304, 0x0d81511c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -40403,6 +40441,24 @@ struct BurnDriver BurnDrvmd_hayatosj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_hayatosjRomInfo, md_hayatosjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Heavy Recoil (HB)
+static struct BurnRomInfo md_heavyrecoilRomDesc[] = {
+	{ "Heavy Recoil (2026)(Wide Pixel Games).bin", 4194304, 0x49e9564b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_heavyrecoil)
+STD_ROM_FN(md_heavyrecoil)
+
+struct BurnDriver BurnDrvmd_heavyrecoil = {
+	"md_heavyrecoil", NULL, NULL, NULL, "2026",
+	"Heavy Recoil (HB)\0", NULL, "Wide Pixel Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_heavyrecoilRomInfo, md_heavyrecoilRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -41172,10 +41228,10 @@ struct BurnDriver BurnDrvmd_megapang = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Pushori (HB)
+// Mega Pushori (HB, v1.1)
 // https://abadede919302.itch.io/mega-pushori
 static struct BurnRomInfo md_megapushoriRomDesc[] = {
-	{ "Mega Pushori (2026)(abadede919302).bin", 262144, 0x2f60ad1d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Pushori v1.1 (2026)(abadede919302).bin", 262144, 0xa92304d4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megapushori)
@@ -41183,7 +41239,7 @@ STD_ROM_FN(md_megapushori)
 
 struct BurnDriver BurnDrvmd_megapushori = {
 	"md_megapushori", NULL, NULL, NULL, "2026",
-	"Mega Pushori (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	"Mega Pushori (HB, v1.1)\0", NULL, "abadede919302", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_megapushoriRomInfo, md_megapushoriRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41948,6 +42004,25 @@ struct BurnDriver BurnDrvmd_psolar = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Pirates of the Drowned Hypertorus (HB, v0.0.13)
+// https://safetystoatstudios.itch.io/pirates
+static struct BurnRomInfo md_piratesdrownedRomDesc[] = {
+	{ "Pirates of the Drowned Hypertorus v0.0.13 (2026)(Safety Stoat Studios).bin", 1441792, 0x88d4a40d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_piratesdrowned)
+STD_ROM_FN(md_piratesdrowned)
+
+struct BurnDriver BurnDrvmd_piratesdrowned = {
+	"md_piratesdrowned", NULL, NULL, NULL, "2026",
+	"Pirates of the Drowned Hypertorus (HB, v0.0.13)\0", NULL, "Safety Stoat Studios", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_piratesdrownedRomInfo, md_piratesdrownedRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Pitfall 2600 Remastered (HB, v0.0.1)
 // https://sirvh.itch.io/pitfall-2600-genesis
 static struct BurnRomInfo md_pitfall2600rRomDesc[] = {
@@ -42131,6 +42206,25 @@ struct BurnDriver BurnDrvmd_rbffgenlt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Red Tanks (HB)
+// https://abadede919302.itch.io/red-tanks
+static struct BurnRomInfo md_redtanksRomDesc[] = {
+	{ "Red Tanks (2026)(abadede919302).bin", 262144, 0x223165e5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_redtanks)
+STD_ROM_FN(md_redtanks)
+
+struct BurnDriver BurnDrvmd_redtanks = {
+	"md_redtanks", NULL, NULL, NULL, "2026",
+	"Red Tanks (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_redtanksRomInfo, md_redtanksRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Rescue Dog (HB, v0.2)
 // https://namalgo.itch.io/rescue-dog
 static struct BurnRomInfo md_rescuedogRomDesc[] = {
@@ -42237,6 +42331,25 @@ struct BurnDriver BurnDrvmd_rickdangdx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_rickdangdxRomInfo, md_rickdangdxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// River Raid 2600 (HB, v0.0.3)
+// https://sirvh.itch.io/river-raid-2600-for-genesis
+static struct BurnRomInfo md_riverraid2600RomDesc[] = {
+	{ "River Raid 2600 v0.0.3 (2026)(SirVH).bin", 262144, 0x3ababf84, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_riverraid2600)
+STD_ROM_FN(md_riverraid2600)
+
+struct BurnDriver BurnDrvmd_riverraid2600 = {
+	"md_riverraid2600", NULL, NULL, NULL, "2026",
+	"River Raid 2600 (HB, v0.0.3)\0", NULL, "SirVH", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_riverraid2600RomInfo, md_riverraid2600RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -42436,6 +42549,25 @@ struct BurnDriver BurnDrvmd_sacredline0 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
 	MegadriveGetZipName, md_sacredline0RomInfo, md_sacredline0RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// SagaCrystal: Quest for Pie (HB)
+// https://dobygames.itch.io/sagacrystal
+static struct BurnRomInfo md_sagacrystalqfpRomDesc[] = {
+	{ "SagaCrystal - Quest for Pie (2026)(Doby Games).bin", 917504, 0xe61ed7af, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sagacrystalqfp)
+STD_ROM_FN(md_sagacrystalqfp)
+
+struct BurnDriver BurnDrvmd_sagacrystalqfp = {
+	"md_sagacrystalqfp", NULL, NULL, NULL, "2026",
+	"SagaCrystal: Quest for Pie (HB)\0", NULL, "Doby Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_sagacrystalqfpRomInfo, md_sagacrystalqfpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43019,6 +43151,25 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_tanzerRomInfo, md_tanzerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.2.9)
+// https://valenzuelagustavo.github.io/tmnt-md-devlog/
+static struct BurnRomInfo md_tmntarcadeRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.2.9 (2026)(Gustavo Valenzuela).bin", 1048576, 0xe009b761, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmntarcade)
+STD_ROM_FN(md_tmntarcade)
+
+struct BurnDriver BurnDrvmd_tmntarcade = {
+	"md_tmntarcade", NULL, NULL, NULL, "2026",
+	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.2.9)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tmntarcadeRomInfo, md_tmntarcadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

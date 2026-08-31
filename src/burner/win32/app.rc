@@ -248,7 +248,7 @@ BEGIN
     CONTROL         BMP_ABOUT,IDC_STATIC,"Static",SS_BITMAP | SS_REALSIZEIMAGE | SS_SUNKEN,3,3,100,50
     CONTROL         "version",IDC_FBA_VER,"Static",SS_OWNERDRAW | WS_GROUP,83,65,269,10
     CONTROL         "specialbuild",IDC_SPECIALSTRING,"Static",SS_OWNERDRAW | WS_GROUP,83,73,269,10
-    LTEXT           "FB Neo contains parts of MAME && Final Burn.\n� 2004-2025, Team FBNeo.",IDC_STATIC,6,88,235,16,WS_DISABLED
+    LTEXT           "FB Neo contains parts of MAME && Final Burn.\n� 2004-2026, Team FBNeo.",IDC_STATIC,6,88,235,16,WS_DISABLED
     DEFPUSHBUTTON   "OK",IDOK,305,90,50,14
     PUSHBUTTON      "License",IDC_SHOWLICENSE,251,90,50,14
     CONTROL         "",IDC_LICENSE,"RICHEDIT20A",ES_MULTILINE | ES_READONLY | WS_VSCROLL | ES_NOIME,3,109,353,77, WS_EX_STATICEDGE | ES_EX_NOCALLOLEINIT
@@ -992,7 +992,7 @@ BEGIN
                     WS_TABSTOP,97,25,99,10
     CONTROL         "Start Paused",IDC_STARTPAUSED,"Button",BS_AUTOCHECKBOX | 
                     WS_TABSTOP,207,25,57,10
-    LTEXT           "WARNING: Start NeoGeo CD game before loading replay file!!!",IDC_NGCD_WARN,11,104,240,10
+    LTEXT           "WARNING: Start CD game before loading replay file!!!",IDC_NGCD_WARN,11,104,240,10
 END
 
 IDD_RECORDINP DIALOGEX 0, 0, 276, 98
@@ -1109,7 +1109,7 @@ BEGIN
             MENUITEM SEPARATOR
             MENUITEM "Select IPS patch dat...",			MENU_LOAD_IPSPATCH, GRAYED
             MENUITEM SEPARATOR
-            MENUITEM "Select NeoGeo-CD cue sheet...",	MENU_LOAD_NEOGEOCD, GRAYED
+            MENUITEM "Load CD image...",				MENU_LOAD_CDIMAGE, GRAYED
             MENUITEM SEPARATOR
             MENUITEM "Select Archive file...",			MENU_LOAD_ARCHIVE, GRAYED
         END
@@ -1312,6 +1312,8 @@ BEGIN
     	MENUITEM "Plugin &options",					MENU_AUDIO_OPTIONS, GRAYED
 		POPUP "&Audio Volume"
 		BEGIN
+			MENUITEM "200% (+amp)",					MENU_AUDIO_VOLUME_200
+			MENUITEM "150% (+amp)",					MENU_AUDIO_VOLUME_150
 			MENUITEM "100% (max)",					MENU_AUDIO_VOLUME_100
 			MENUITEM "90%",							MENU_AUDIO_VOLUME_90
 			MENUITEM "80%",							MENU_AUDIO_VOLUME_80

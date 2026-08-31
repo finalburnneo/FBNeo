@@ -860,7 +860,7 @@ static void CreateCDItems()
 void MenuUpdateVolume()
 {
 	int var = MENU_AUDIO_VOLUME_0 + (nAudVolume / 1000);
-	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_100, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_AUDIO_VOLUME_0, MENU_AUDIO_VOLUME_200, var, MF_BYCOMMAND);
 }
 
 void MenuUpdateSlowMo()
@@ -1231,6 +1231,10 @@ void MenuUpdate()
 			}
 			CheckMenuRadioItem(hMenu, MENU_DSOUND_NOSOUND, MENU_DSOUND_48000, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DSOUND_BASS, nAudDSPModule[0] ? MF_CHECKED : MF_UNCHECKED);
+			// DSound isn't able to amp volume above 0db, disable and sanity:
+			if (nAudVolume > 10000) nAudVolume = 10000; // 100%
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_GRAYED  | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_GRAYED  | MF_BYCOMMAND);
 			break;
 		}
 
@@ -1248,6 +1252,9 @@ void MenuUpdate()
 			CheckMenuRadioItem(hMenu, MENU_XAUDIO_NOSOUND, MENU_XAUDIO_48000, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_XAUDIO_BASS, (nAudDSPModule[1] & 1) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_XAUDIO_REVERB, (nAudDSPModule[1] & 2) ? MF_CHECKED : MF_UNCHECKED);
+			// XAudio2 is able to amp volume above 0db, enable:
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_ENABLED  | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_ENABLED  | MF_BYCOMMAND);
 			break;
 		}
 	}
@@ -1754,7 +1761,7 @@ void MenuEnableItems()
 			EnableMenuItem(hMenu, MENU_LOAD,			MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,	MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_IPSPATCH,	MF_GRAYED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_LOAD_NEOGEOCD,	MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_CDIMAGE,	MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_ARCHIVE,	MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,	MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_STARTNET,		MF_GRAYED | MF_BYCOMMAND);
@@ -1775,7 +1782,7 @@ void MenuEnableItems()
 			EnableMenuItem(hMenu, MENU_LOAD,			MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,	MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_IPSPATCH,	MF_ENABLED | MF_BYCOMMAND);
-			EnableMenuItem(hMenu, MENU_LOAD_NEOGEOCD,	MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_LOAD_CDIMAGE,	MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_LOAD_ARCHIVE,	MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER, MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_STARTNET,		MF_ENABLED | MF_BYCOMMAND);
@@ -1862,7 +1869,7 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_LOAD,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_LOAD_ROMDATA,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_LOAD_IPSPATCH,		MF_ENABLED | MF_BYCOMMAND);
-		EnableMenuItem(hMenu, MENU_LOAD_NEOGEOCD,		MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_LOAD_CDIMAGE,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_LOAD_ARCHIVE,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_ROMDATA_MANAGER,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, ID_SLOMO_0,				MF_GRAYED  | MF_BYCOMMAND);

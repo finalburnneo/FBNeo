@@ -242,6 +242,7 @@ extern int bDrvOkay;								// 1 if the Driver has been initted okay, and it's o
 extern TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH];
 extern TCHAR szAppQuickPath[MAX_PATH];
 int DrvInit(int nDrvNum, bool bRestore);
+
 int DrvInitCallback();								// Used when Burn library needs to load a game. DrvInit(nBurnSelect, false)
 int DrvExit();
 void NeoCDZRateChangeback();

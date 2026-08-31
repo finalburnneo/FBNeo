@@ -53,10 +53,13 @@ typedef struct
 	UINT8 io_buffer;	/* last value written to the PSG, timer, and interrupt pages */
 
 	int (*irq_callback)(int irqline);
+	int (*insn_callback)(int cycles);
 }   h6280_Regs;
 
 void h6280_set_context(void *ptr);
 void h6280_get_context(void *ptr);
+
+void h6280_set_callback(int (*cb)(int));
 
 enum
 {

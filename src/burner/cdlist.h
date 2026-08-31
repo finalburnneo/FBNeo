@@ -1,8 +1,38 @@
 #ifndef CDLIST_H_
 #define CDLIST_H_
 
+#include "burn.h"
+
 #define CDLIST_SHA1_SIZE (20)
 #define CDLIST_TEXT_SIZE (256)
+
+// CD game type of the active driver, derived from the hardware code
+// (usable at any time while a driver is selected, no disc required)
+enum {
+	CDGAME_NONE = 0,								// not a CD game
+	CDGAME_NEOGEO,									// Neo Geo CD
+	CDGAME_PCE										// PC Engine CD
+};
+
+static inline INT32 CDGameType()
+{
+	INT32 nHardware = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	if (nHardware == HARDWARE_SNK_NEOCD) {
+		return CDGAME_NEOGEO;
+	}
+	if (nHardware == HARDWARE_PCENGINE_PCE_CD) {
+		return CDGAME_PCE;
+	}
+	return CDGAME_NONE;
+}
+
+static inline bool IsCDGame()
+{
+	return CDGameType() != CDGAME_NONE;
+}
+
+TCHAR *CDInfo_GamePrefix();
+TCHAR* CDInfo_Text(INT32 nText);
 
 enum CDListPlatform {
 	CDLIST_PLATFORM_UNKNOWN = 0,
@@ -12,11 +42,9 @@ enum CDListPlatform {
 };
 
 enum CDListSource {
-	CDLIST_SOURCE_NONE = 0,
-	CDLIST_SOURCE_MAGIC,
-	CDLIST_SOURCE_NEO_ID,
-	CDLIST_SOURCE_CHD_SHA1,
-	CDLIST_SOURCE_RAW_SHA1
+	CDLIST_SOURCE_NONE = 0, // not detected
+	CDLIST_SOURCE_MAGIC, // identify'd by byte pattern in cd
+	CDLIST_SOURCE_GAMEDB // identify'd via neocdlist_games.h / pcecdlist_games.h
 };
 
 enum CDListConfidence {
@@ -51,14 +79,8 @@ struct CDListResult {
 	UINT32 nNeoID;
 	INT32 nAudioTrackCount;
 	TCHAR szFirstDataTrackPath[MAX_PATH];
+	TCHAR szTOCSha1[41];
 	CDListMetadata Metadata;
-	INT32 bHasChdSha1;
-	UINT8 ChdSha1[CDLIST_SHA1_SIZE];
-	INT32 bChdMameMatch;
-	CDListMetadata ChdMetadata;
-	INT32 bHasRawSha1;
-	INT32 bRawSha1Unsupported;
-	UINT8 RawSha1[CDLIST_SHA1_SIZE];
 };
 
 INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlags, CDListCancelCallback pCancelCallback, CDListSourceCallback pSourceCallback, void* pUser);

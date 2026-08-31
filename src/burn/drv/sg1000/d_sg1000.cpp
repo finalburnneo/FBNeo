@@ -4932,6 +4932,24 @@ struct BurnDriver BurnDrvsg1k_ultdungesc = {
 	272, 228, 4, 3
 };
 
+// Uchotos (HB)
+static struct BurnRomInfo sg1k_uchotosRomDesc[] = {
+	{ "Uchotos (2026)(Inufuto).sg",	8192, 0xa39f47b7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_uchotos)
+STD_ROM_FN(sg1k_uchotos)
+
+struct BurnDriver BurnDrvsg1k_uchotos = {
+	"sg1k_uchotos", NULL, NULL, NULL, "2026",
+	"Uchotos (HB)\0", NULL, "Inufuto", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000, GBF_ACTION | GBF_PLATFORM, 0,
+	SG1KGetZipName, sg1k_uchotosRomInfo, sg1k_uchotosRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Vexed (HB, v1.08)
 static struct BurnRomInfo sg1k_vexedRomDesc[] = {
 	{ "Vexed v1.08 (2023)(Under4Mhz).sg",	32768, 0x124b2a43, BRF_PRG | BRF_ESS },

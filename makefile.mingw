@@ -674,8 +674,8 @@ $(cave_tile_func.h):	$(srcdir)dep/scripts/cave_tile_func.pl
 
 cave_sprite.d cave_sprite.o: $(cave_sprite_func.h)
 
-gba.d gba.o: $(srcdir)burn/drv/gba/gba.h $(srcdir)burn/drv/gba/gba_impl.h $(srcdir)burn/drv/gba/host.h $(srcdir)burn/drv/gba/arm7.h $(srcdir)burn/drv/gba/bios.h $(srcdir)burn/drv/gba/rtc.h
-d_gba.d d_gba.o: $(srcdir)burn/drv/gba/gba.h
+gba.d gba.o: $(srcdir)burn/drv/gba/gba.h $(srcdir)burn/drv/gba/cpu.h $(srcdir)burn/drv/gba/gpio.h $(srcdir)burn/drv/gba/cart.h $(srcdir)burn/drv/gba/bus.h $(srcdir)burn/drv/gba/timer.h $(srcdir)burn/drv/gba/ppu.h $(srcdir)burn/drv/gba/dma.h $(srcdir)burn/drv/gba/sio.h $(srcdir)burn/drv/gba/apu.h $(srcdir)burn/drv/gba/bios.h
+d_gba.d d_gba.o: $(srcdir)burn/drv/gba/gba.h $(srcdir)burn/drv/gba/cpu.h
 
 $(cave_sprite_func.h):	$(srcdir)dep/scripts/cave_sprite_func.pl
 	@$(srcdir)dep/scripts/cave_sprite_func.pl -o $(cave_sprite_func.h)

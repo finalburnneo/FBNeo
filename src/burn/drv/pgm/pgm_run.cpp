@@ -976,6 +976,7 @@ INT32 pgmInit()
 
 	v3021Init();
 	ics2115_init(ics2115_sound_irq, ICSSNDROM, nPGMSNDROMLen);
+	ics_2115_set_volume(2.0);
 	BurnTimerAttachZet(Z80_FREQ);
 
 	pBurnDrvPalette = (UINT32*)PGMPalRAM;

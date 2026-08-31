@@ -1,6 +1,7 @@
 #include "burner.h"
 #include "cdlist.h"
 #include "neocdlist.h"
+#include "pcecdlist.h"
 #include "cd_img.h"
 #include "neocdlist_games.h"
 #include "pcecdlist_games.h"
@@ -245,131 +246,6 @@ static INT32 IdentifyNeo(CDImage* pImage, const TCHAR* pszPath, CDListResult* pR
 	return 0;
 }
 
-struct CDListSha1
-{
-	UINT32 State[5];
-	UINT64 nBytes;
-	UINT8  Buffer[64];
-};
-
-static UINT32 RotateLeft(UINT32 nValue, INT32 nBits)
-{
-	return (nValue << nBits) | (nValue >> (32 - nBits));
-}
-
-static void Sha1Transform(CDListSha1* pSha1, const UINT8* pData)
-{
-	UINT32 w[80];
-	for (INT32 i =  0; i < 16; i++)
-		w[i] = ((UINT32)pData[i * 4] << 24) | ((UINT32)pData[i * 4 + 1] << 16) | ((UINT32)pData[i * 4 + 2] << 8) | pData[i * 4 + 3];
-	for (INT32 i = 16; i < 80; i++)
-		w[i] = RotateLeft(w[i - 3] ^ w[i - 8] ^ w[i - 14] ^ w[i - 16], 1);
-
-	UINT32 a = pSha1->State[0];
-	UINT32 b = pSha1->State[1];
-	UINT32 c = pSha1->State[2];
-	UINT32 d = pSha1->State[3];
-	UINT32 e = pSha1->State[4];
-	for (INT32 i = 0; i < 80; i++) {
-		UINT32 f, k;
-		if (i < 20) {
-			f = (b & c) | (~b & d); k = 0x5a827999;
-		} else if (i < 40) {
-			f = b ^ c ^ d; k = 0x6ed9eba1;
-		} else if (i < 60) {
-			f = (b & c) | (b & d) | (c & d); k = 0x8f1bbcdc;
-		} else {
-			f = b ^ c ^ d; k = 0xca62c1d6;
-		}
-		UINT32 nTemp = RotateLeft(a, 5) + f + e + k + w[i];
-		e = d;
-		d = c;
-		c = RotateLeft(b, 30);
-		b = a;
-		a = nTemp;
-	}
-	pSha1->State[0] += a;
-	pSha1->State[1] += b;
-	pSha1->State[2] += c;
-	pSha1->State[3] += d;
-	pSha1->State[4] += e;
-}
-
-static void Sha1Init(CDListSha1* pSha1)
-{
-	pSha1->State[0] = 0x67452301;
-	pSha1->State[1] = 0xefcdab89;
-	pSha1->State[2] = 0x98badcfe;
-	pSha1->State[3] = 0x10325476;
-	pSha1->State[4] = 0xc3d2e1f0;
-	pSha1->nBytes = 0;
-}
-
-static void Sha1Update(CDListSha1* pSha1, const UINT8* pData, UINT32 nLength)
-{
-	UINT32 nUsed = (UINT32)(pSha1->nBytes & 63);
-	pSha1->nBytes += nLength;
-	while (nLength) {
-		UINT32 nCopy = 64 - nUsed;
-		if (nCopy > nLength)
-			nCopy = nLength;
-		memcpy(pSha1->Buffer + nUsed, pData, nCopy);
-		nUsed   += nCopy;
-		pData   += nCopy;
-		nLength -= nCopy;
-		if (nUsed == 64) {
-			Sha1Transform(pSha1, pSha1->Buffer);
-			nUsed = 0;
-		}
-	}
-}
-
-static void Sha1Final(CDListSha1* pSha1, UINT8* pDigest)
-{
-	UINT64 nBits      = pSha1->nBytes * 8;
-	UINT8  pFinal[72] = { 0x80 };
-	UINT32 nUsed      = (UINT32)(pSha1->nBytes & 63);
-	UINT32 nPadding   = nUsed < 56 ? 56 - nUsed : 120 - nUsed;
-	for (INT32 i = 0; i < 8; i++)
-		pFinal[nPadding + i] = (UINT8)(nBits >> (56 - i * 8));
-
-	Sha1Update(pSha1, pFinal, nPadding + 8);
-	for (INT32 i = 0; i < 5; i++) {
-		pDigest[i * 4 + 0] = (UINT8)(pSha1->State[i] >> 24);
-		pDigest[i * 4 + 1] = (UINT8)(pSha1->State[i] >> 16);
-		pDigest[i * 4 + 2] = (UINT8)(pSha1->State[i] >> 8);
-		pDigest[i * 4 + 3] = (UINT8) pSha1->State[i];
-	}
-}
-
-static INT32 HashDataTrack(CDImage* pImage, const CDImageTrack* pTrack, UINT8* pDigest, CDListCancelCallback pCancelCallback, void* pUser, INT32* pbCancelled)
-{
-	if (!pImage || !pTrack || !pDigest || pTrack->nSectors <= 0)
-		return 0;
-
-	CDListSha1 Sha1;
-	Sha1Init(&Sha1);
-	UINT8 sector[2448];
-	for (INT32 i = 0; i < pTrack->nSectors; i++) {
-		if (!(i & 63) && pCancelCallback && pCancelCallback(pUser)) {
-			*pbCancelled = 1;
-			return 0;
-		}
-
-		INT32 nSize = 0;
-		if (!ReadSector(pImage, pTrack->nIndex1LBA + i, sector, &nSize))
-			return 0;
-		Sha1Update(&Sha1, sector, (UINT32)nSize);
-	}
-	if (pCancelCallback && pCancelCallback(pUser)) {
-		*pbCancelled = 1;
-		return 0;
-	}
-
-	Sha1Final(&Sha1, pDigest);
-	return 1;
-}
-
 static UINT32 CalculateCrc32(const UINT8* pData, UINT32 nLength)
 {
 	UINT32 nCrc = 0xffffffff;
@@ -444,44 +320,6 @@ static INT32 IdentifyPlatform(CDImage* pImage, CDListResult* pResult)
 	return 0;
 }
 
-#ifdef BUILD_WIN32
-static void CopyAnsiText(TCHAR* pszDest, UINT32 nDest, const char* pszSource)
-{
-	if (!pszDest || !nDest) return;
-	INT32 nLength = pszSource ? MultiByteToWideChar(65001, 0, pszSource, -1, NULL, 0) : 0;
-	if (nLength > 0) MultiByteToWideChar(65001, 0, pszSource, -1, pszDest, (int)nDest);
-	if (nLength <= 0) pszDest[0] = 0;
-	pszDest[nDest - 1] = 0;
-}
-#else
-#define CopyAnsiText CopyText
-#endif
-
-static INT32 FindPceChdGame(const UINT8* pSha1, CDListMetadata* pMetadata)
-{
-	if (!pSha1 || !pMetadata)
-		return 0;
-
-	UINT32 nLow  = 0;
-	UINT32 nHigh = pceCdGameCount;
-	while (nLow < nHigh) {
-		UINT32 nMiddle = nLow + (nHigh - nLow) / 2;
-		INT32 nCompare = memcmp(pSha1, pceCdGames[nMiddle].sha1, CDLIST_SHA1_SIZE);
-		if (nCompare > 0) nLow = nMiddle + 1;
-		else nHigh = nMiddle;
-	}
-	if (nLow >= pceCdGameCount || memcmp(pSha1, pceCdGames[nLow].sha1, CDLIST_SHA1_SIZE)) return 0;
-	const PceCdGame* pGame = &pceCdGames[nLow];
-	CopyAnsiText(pMetadata->szName,        CDLIST_TEXT_SIZE, pceCdGameStringData + pGame->shortname);
-	CopyAnsiText(pMetadata->szTitle,       CDLIST_TEXT_SIZE, pceCdGameStringData + pGame->description);
-	CopyAnsiText(pMetadata->szYear,        32,               pceCdGameStringData + pGame->year);
-	CopyAnsiText(pMetadata->szCompany,     CDLIST_TEXT_SIZE, pceCdGameStringData + pGame->publisher);
-	CopyAnsiText(pMetadata->szRegion,      64,               pceCdGameStringData + pGame->region);
-	CopyAnsiText(pMetadata->szRequirement, CDLIST_TEXT_SIZE, pceCdGameStringData + pGame->requirement);
-	CopyText(pMetadata->szDescriptor, CDLIST_TEXT_SIZE, _T("MAME pcecd CHD SHA1"));
-	return 1;
-}
-
 static void FillNeoMetadata(CDListResult* pResult)
 {
 	NGCDGAME* pGame = GetNeoGeoCDInfo(pResult->nNeoID);
@@ -518,13 +356,13 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 	}
 
 	INT32 bCancelled = 0;
-	if (!CDImageGetChdSha1(pImage, pResult->ChdSha1)) {
-		pResult->bHasChdSha1         = 1;
-		pResult->bRawSha1Unsupported = 1;
-		pResult->bChdMameMatch       = FindPceChdGame(pResult->ChdSha1, &pResult->ChdMetadata);
-	} else if (!(nFlags & CDLIST_IDENTIFY_FAST)) {
-		pResult->bHasRawSha1 = HashDataTrack(pImage, pDataTrack, pResult->RawSha1, pCancelCallback, pUser, &bCancelled);
+
+	UINT8 sha1s[40] = { 0, };
+	if (!CDImageGetTOCSha1(pImage, sha1s)) {
+		_tcscpy(pResult->szTOCSha1, _AtoT((char *)sha1s));
+		//bprintf(0, _T("CDImageGetTOCSha1() res %x  sha1s[%s]  %s\n"), res, pResult->szTOCSha1, pszPath);
 	}
+
 	if (bCancelled || (pCancelCallback && pCancelCallback(pUser))) {
 		CDImageClose(pImage);
 		return 0;
@@ -532,16 +370,26 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 
 	if (IdentifyNeo(pImage, pszPath, pResult)) {
 		pResult->nPlatform   = CDLIST_PLATFORM_NEOCD;
-		pResult->nSource     = CDLIST_SOURCE_NEO_ID;
+		pResult->nSource     = CDLIST_SOURCE_GAMEDB;
 		pResult->nConfidence = CDLIST_CONFIDENCE_EXACT;
 		FillNeoMetadata(pResult);
 	} else {
 		IdentifyPlatform(pImage, pResult);
-		if (pResult->bChdMameMatch) {
-			pResult->Metadata    = pResult->ChdMetadata;
-			pResult->nPlatform   = CDLIST_PLATFORM_PCECD;
-			pResult->nSource     = CDLIST_SOURCE_CHD_SHA1;
-			pResult->nConfidence = CDLIST_CONFIDENCE_EXACT;
+
+		for (UINT32 i = 0; i < sizeof(pcengine_cd_games) / sizeof(pce_cd_dink); i++) {
+			if ((pcengine_cd_games[i].sha1[0] != '\0') && !_tcscmp(pcengine_cd_games[i].sha1, pResult->szTOCSha1)) {
+				//bprintf(0, _T("->>found entry at idx %d\n"), i);
+
+				_tcscpy(pResult->Metadata.szTitle, pcengine_cd_games[i].name);
+				_tcscpy(pResult->Metadata.szName, pcengine_cd_games[i].id);
+				_tcscpy(pResult->Metadata.szYear, pcengine_cd_games[i].year);
+				_tcscpy(pResult->Metadata.szCompany, pcengine_cd_games[i].company);
+
+				pResult->nPlatform   = CDLIST_PLATFORM_PCECD;
+				pResult->nSource     = CDLIST_SOURCE_GAMEDB;
+				pResult->nConfidence = CDLIST_CONFIDENCE_EXACT;
+				break;
+			}
 		}
 	}
 	CDImageClose(pImage);
@@ -620,3 +468,160 @@ void NeoCDInfo_Exit()
 	FreeNGCDGame(&pNeoGame);
 }
 #endif
+
+#ifdef BUILD_PCE
+static CDListMetadata PceCdInfo;
+static INT32 nPceCdInfoValid = 0;
+
+static INT32 IsPceCD()
+{
+	return (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCE_CD;
+}
+
+static void PceCdInfoUseFileName(TCHAR* pszDest, UINT32 nDest, const TCHAR* pszPath)
+{
+	// no database title (e.g. cue/ccd identified by filename only)
+	const TCHAR* pszBase = _tcsrchr(pszPath, _T('\\'));
+	pszBase = pszBase ? pszBase + 1 : pszPath;
+	const TCHAR* pszSlash = _tcsrchr(pszBase, _T('/'));
+	if (pszSlash) {
+		pszBase = pszSlash + 1;
+	}
+	CopyText(pszDest, nDest, pszBase);
+	TCHAR* pszDot = _tcsrchr(pszDest, _T('.'));
+	if (pszDot) {
+		*pszDot = _T('\0');
+	}
+}
+
+INT32 PceCDInfo_Init()
+{
+	PceCDInfo_Exit();
+
+	if (!IsPceCD() || !CDEmuImage[0]) {
+		return 0;
+	}
+
+	CDListResult Result;
+	if (!CDListIdentifyEx(CDEmuImage, &Result, CDLIST_IDENTIFY_FAST, NULL, NULL, NULL)) {
+		return 0;
+	}
+
+	if (Result.nPlatform == CDLIST_PLATFORM_PCECD) {
+		// platform identified by SHA1 of TOC on bin/cue/etc
+		// create title from bin/cue name (for fallback)
+		PceCdInfoUseFileName(PceCdInfo.szTitle, CDLIST_TEXT_SIZE, CDEmuImage);
+
+		for (UINT32 i = 0; i < sizeof(pcengine_cd_games) / sizeof(pce_cd_dink); i++) {
+			if ((pcengine_cd_games[i].sha1[0] != '\0') && !_tcscmp(pcengine_cd_games[i].sha1, ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0))) {
+				bprintf(0, _T("pcecdlist_games db: found entry at idx %d\n"), i);
+
+				_tcscpy(PceCdInfo.szTitle, pcengine_cd_games[i].name);
+				_tcscpy(PceCdInfo.szName, pcengine_cd_games[i].id);
+				_tcscpy(PceCdInfo.szYear, pcengine_cd_games[i].year);
+				_tcscpy(PceCdInfo.szCompany, pcengine_cd_games[i].company);
+
+				nPceCdInfoValid = 1;
+				break;
+			}
+		}
+	}
+
+	if (nPceCdInfoValid) {
+		bprintf(PRINT_NORMAL, _T("    Title: %s\n"    ), PceCdInfo.szTitle);
+		bprintf(PRINT_NORMAL, _T("    Shortname: %s\n"), PceCdInfo.szName);
+		bprintf(PRINT_NORMAL, _T("    Year: %s\n"     ), PceCdInfo.szYear);
+		bprintf(PRINT_NORMAL, _T("    Company: %s\n"  ), PceCdInfo.szCompany);
+	}
+
+	return nPceCdInfoValid;
+}
+
+TCHAR* PceCDInfo_Text(INT32 nText)
+{
+	if (!IsPceCD()) {
+		return NULL;
+	}
+
+	if (nText == DRV_FULLNAME && PceCdInfo.szTitle[0]) {
+		// best-effort title: database title, or the file name for unidentified discs
+		return PceCdInfo.szTitle;
+	}
+
+	if (!nPceCdInfoValid) {  // FALLBACK: create "DRV_NAME" from cue filename....
+		if (nText == DRV_NAME) {
+			TCHAR c;
+			int src = 0;
+			int dst = 0;
+			int srclen = _tcslen(PceCdInfo.szTitle);
+			while (src < srclen && dst < 32) {
+				bool ok_to_copy = false;
+
+				c = _totlower(PceCdInfo.szTitle[src++]);
+
+				ok_to_copy = ((c >= _T('a') && c <= _T('z')) ||
+							  (c >= _T('0') && c <= _T('9')));
+
+				if (c == _T('-')) break;
+				if (c == _T('(')) break;
+				if (c == _T('[')) break;
+
+				if (ok_to_copy) {
+					PceCdInfo.szName[dst++] = c;
+					PceCdInfo.szName[dst] = _T('\0');
+				}
+			}
+			nPceCdInfoValid = 1; // DRV_NAME is now ok -dink
+			return PceCdInfo.szName;
+		}
+		return NULL;
+	}
+
+	switch (nText) {
+		case DRV_FULLNAME:     	return PceCdInfo.szTitle;
+		case DRV_NAME:			return PceCdInfo.szName;
+		case DRV_MANUFACTURER:	return PceCdInfo.szCompany;
+		case DRV_DATE:			return PceCdInfo.szYear;
+	}
+	return NULL;
+}
+
+INT32 PceCDInfo_ID()
+{
+	return (IsPceCD() && nPceCdInfoValid) ? 1 : 0;
+}
+
+void PceCDInfo_Exit()
+{
+	memset(&PceCdInfo, 0, sizeof(PceCdInfo));
+	nPceCdInfoValid = 0;
+}
+#endif
+
+TCHAR* CDInfo_Text(INT32 nText)
+{
+	static TCHAR szNone[] = _T("NOGAME");
+	const INT32 g_type = CDGameType();
+
+	switch (g_type) {
+		case CDGAME_NEOGEO:
+			return NeoCDInfo_Text(nText);
+		case CDGAME_PCE:
+			return PceCDInfo_Text(nText);
+		default:
+			return szNone;
+	}
+}
+
+TCHAR *CDInfo_GamePrefix()
+{
+	static TCHAR buffer[128];
+
+	TCHAR g_sys_prefixes[3][20] = { _T("none_"), _T("ngcd_"), _T("pcecd_") };
+	const INT32 g_type = CDGameType();
+
+	_stprintf(buffer, _T("%s%s"), g_sys_prefixes[g_type], CDInfo_Text(DRV_NAME));
+
+	return buffer;
+}
+

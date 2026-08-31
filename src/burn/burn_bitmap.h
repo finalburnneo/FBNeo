@@ -23,6 +23,8 @@ struct bitmap_struct
 	clip_struct clipdims;
 };
 
+// Special overflow pool for bitmap #0 (see tiles_generic.cpp, BurnTransferFindSpill())
+#define nTransferOverflow 		16
 
 // Get pointer to this bitmap
 UINT16 *BurnBitmapGetBitmap(INT32 nBitmapNumber);

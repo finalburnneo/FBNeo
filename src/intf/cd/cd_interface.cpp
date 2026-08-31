@@ -23,6 +23,7 @@ static struct CDEmuDo* pCDEmuDo[] =
 #define CDEMU_LEN (sizeof(pCDEmuDo) / sizeof(pCDEmuDo[0]))
 
 TCHAR CDEmuImage[MAX_PATH] = _T("");
+UINT8 CDEmuImageTOCSHA1[MAX_PATH] = { 0, };
 
 
 // ----------------------------------------------------------------------------

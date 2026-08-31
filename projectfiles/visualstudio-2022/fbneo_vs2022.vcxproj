@@ -897,6 +897,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tail2nose.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tankbatt.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tankbust.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pre90s\d_tattack.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tbowl.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tceptor.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pre90s\d_tecmo.cpp" />

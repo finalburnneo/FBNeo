@@ -22728,6 +22728,24 @@ struct BurnDriver BurnDrvsms_goodzilla = {
 	256, 192, 4, 3
 };
 
+// Goomba Invaders (HB)
+static struct BurnRomInfo sms_goombainvRomDesc[] = {
+	{ "Goomba Invaders (2026)(BriG78).sms",	32768, 0x6dbfeb1a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_goombainv)
+STD_ROM_FN(sms_goombainv)
+
+struct BurnDriver BurnDrvsms_goombainv = {
+	"sms_goombainv", NULL, NULL, NULL, "2026",
+	"Goomba Invaders (HB)\0", NULL, "BriG78", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_goombainvRomInfo, sms_goombainvRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Gotris (HB, v1.3p)
 static struct BurnRomInfo sms_gotrisfvRomDesc[] = {
 	{ "Gotris v1.3p (2022)(Tuxedo Games).sms",	278528, 0xa11888ff, BRF_PRG | BRF_ESS },
@@ -24226,6 +24244,24 @@ struct BurnDriver BurnDrvsms_snakekq = {
 	256, 192, 4, 3
 };
 
+// Snake Pit (HB)
+static struct BurnRomInfo sms_snakepitRomDesc[] = {
+	{ "Snake Pit (2026)(Popixel Games).sms",	524288, 0x8c9de8bc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_snakepit)
+STD_ROM_FN(sms_snakepit)
+
+struct BurnDriver BurnDrvsms_snakepit = {
+	"sms_snakepit", NULL, NULL, NULL, "2026",
+	"Snake Pit (HB)\0", NULL, "Popixel Games", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_snakepitRomInfo, sms_snakepitRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)
 static struct BurnRomInfo sms_snappysnorgRomDesc[] = {
 	{ "Snappy Snorg and the Seven Silver Stones v1.4 (2023)(pinkeyeFR).sms",	1048576, 0x934b9fe7, BRF_PRG | BRF_ESS },
@@ -24734,6 +24770,24 @@ struct BurnDriver BurnDrvsms_tempojrgg2sms = {
 	256, 192, 4, 3
 };
 
+// Tetris (System E) (HB, v1.5)
+static struct BurnRomInfo sms_tetrisseRomDesc[] = {
+	{ "Tetris (System E) v1.5 (2026)(Master Linkuei).sms",	131072, 0x08ab88b7, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tetrisse)
+STD_ROM_FN(sms_tetrisse)
+
+struct BurnDriver BurnDrvsms_tetrisse = {
+	"sms_tetrisse", NULL, NULL, NULL, "2026",
+	"Tetris (System E) (HB, v1.5)\0", NULL, "Master Linkuei", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_tetrisseRomInfo, sms_tetrisseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Time Soldiers Pro (Hack)
 static struct BurnRomInfo sms_timesoldproRomDesc[] = {
 	{ "Time Soldiers Pro (2023)(BcnAbel76).sms",	262144, 0x1558b8c6, BRF_PRG | BRF_ESS },
@@ -24856,6 +24910,24 @@ struct BurnDriver BurnDrvsms_turmamon2 = {
 	L"Turma Da M\u00f4nica Na Terra Dos Monstros (Hack, v1.02)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_turmamon2RomInfo, sms_turmamon2RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Uchotos (HB)
+static struct BurnRomInfo sms_uchotosRomDesc[] = {
+	{ "Uchotos (2026)(Inufuto).sms",	16384, 0xd31930dc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_uchotos)
+STD_ROM_FN(sms_uchotos)
+
+struct BurnDriver BurnDrvsms_uchotos = {
+	"sms_uchotos", NULL, NULL, NULL, "2026",
+	"Uchotos (HB)\0", "YM2413 FM sound chip supported", "Inufuto", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_PLATFORM, 0,
+	SMSGetZipName, sms_uchotosRomInfo, sms_uchotosRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -26306,7 +26378,7 @@ struct BurnDriver BurnDrvsms_alexshinc = {
 	256, 192, 4, 3
 };
 
-// Alex Kidd in Shinobi World (Hack, Portuguese)
+// Alex Kidd no Mundo de Shinobi (Hack, Portuguese)
 // https://romhackers.org/traducoes/console/master-system/alex-kidd-in-shinobi-world-po.b.r.e
 static struct BurnRomInfo sms_alexshinptRomDesc[] = {
 	{ "Alex Kidd no Mundo de Shinobi T-Por (2017)(PO.B.R.E.).sms",	262144, 0x005ede22, BRF_PRG | BRF_ESS },
@@ -26708,7 +26780,7 @@ struct BurnDriver BurnDrvgg_frayte = {
 // Genius Bakabon, The (Hack, English v1.2)
 // https://www.romhacking.net/translations/6544/
 static struct BurnRomInfo sms_bakabonenRomDesc[] = {
-	{ "Genius Bakabon, The T-Eng v1.2 (2023)( (FCandChill).sms",	262144, 0x7d0d2d4d, BRF_PRG | BRF_ESS },
+	{ "Genius Bakabon, The T-Eng v1.2 (2023)(FCandChill).sms",	262144, 0x7d0d2d4d, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_bakabonen)

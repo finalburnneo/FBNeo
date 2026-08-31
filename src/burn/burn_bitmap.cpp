@@ -43,11 +43,11 @@ void BurnBitmapAllocate(INT32 nBitmapNumber, INT32 nWidth, INT32 nHeight, bool u
 	}
 
 	// allocate bitmap
-	ptr->pBitmap = (UINT16 *)BurnMalloc(nWidth * nHeight * sizeof(UINT16));
+	ptr->pBitmap = (UINT16 *)BurnMalloc(nWidth * (nHeight + nTransferOverflow) * sizeof(UINT16));
 
 	// allocate priority bitmap
 	if (use_primap) {
-		ptr->pPrimap = (UINT8 *)BurnMalloc(nWidth * nHeight * sizeof(UINT8));
+		ptr->pPrimap = (UINT8 *)BurnMalloc(nWidth * (nHeight + nTransferOverflow) * sizeof(UINT8));
 	}
 
 	// set flags - always set initialized, only set primap if primap is allocated

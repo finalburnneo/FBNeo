@@ -1,5 +1,6 @@
 #include "burner.h"
 #include "spng.h"
+#include "cdlist.h"
 
 #define SSHOT_NOERROR 0
 #define SSHOT_ERROR_BPP_NOTSUPPORTED 1
@@ -158,16 +159,26 @@ INT32 MakeScreenShot(INT32 bType)
 #if defined(BUILD_SDL2) && !defined(SDL_WINDOWS)
 	SSHOT_DIRECTORY = SDL_GetPrefPath("fbneo", "screenshots");
 #endif
-	
+
+	char szGame[80];
+	strcpy(szGame, _TtoA(IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME)));
+
+	const TCHAR* szPreviewPath = szAppPreviewsPath;
+#if defined(BUILD_WIN32)
+	if (IsCDGame()) {
+		szPreviewPath = szNeoCDPreviewDir;
+	}
+#endif
+
 	if (bType == 0) {
 		// construct our filename -> "romname-mm-dd-hms.png"
-    		sprintf(szSShotName,"%s%s-%.2d-%.2d-%.2d%.2d%.2d.png", SSHOT_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
-	}
-	else if (bType == 1) {
-		sprintf(szSShotName,"%s%s.png", _TtoA(szAppTitlesPath), BurnDrvGetTextA(DRV_NAME));
-    	}
-    	else {
-		sprintf(szSShotName,"%s%s.png", _TtoA(szAppPreviewsPath), BurnDrvGetTextA(DRV_NAME));
+		sprintf(szSShotName,"%s%s-%.2d-%.2d-%.2d%.2d%.2d.png", SSHOT_DIRECTORY, szGame, tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+	} else if (bType == 1) {
+		// save title shot
+		sprintf(szSShotName,"%s%s.png", _TtoA(szAppTitlesPath), szGame);
+	} else {
+		// save preview shot
+		sprintf(szSShotName,"%s%s.png", _TtoA(szPreviewPath), szGame);
 	}
 	//sprintf(szTime,"%.2d-%.2d-%.2d %.2d:%.2d:%.2d", tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_year, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
 	sprintf(szTime, "%s", asctime(tmTime));

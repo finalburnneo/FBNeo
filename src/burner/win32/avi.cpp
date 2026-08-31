@@ -140,7 +140,9 @@ static INT32 AviCreateFile()
 	// construct our filename -> "romname-mm-dd-hms.avi"
 
 	if (nAviSplit == 0) { // Create the filename @ the first file in our set
-		sprintf(szAviFileName, "%s%s-%.2d-%.2d-%.2d%.2d%.2d", TAVI_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+		char sztFn[MAX_PATH] = { 0, };
+		strcpy(sztFn, _TtoA(IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME)));
+		sprintf(szAviFileName, "%s%s-%.2d-%.2d-%.2d%.2d%.2d", TAVI_DIRECTORY, sztFn, tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
 	}
 
 	// add the set# and extension to our file.

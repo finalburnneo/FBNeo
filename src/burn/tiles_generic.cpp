@@ -273,8 +273,6 @@ INT32 BurnTransferPartial(UINT32* pPalette, INT32 nStart, INT32 nEnd)
 	return 0;
 }
 
-#define nTransOverflow 16 // 16 lines of overflow, some games spill past the end of the allocated height causing heap corruption.
-
 void BurnTransferSetDimensions(INT32 nWidth, INT32 nHeight)
 {
 	nTransHeight = nHeight;
@@ -287,7 +285,7 @@ INT32 BurnTransferFindSpill()
 
 	if (Debug_BurnTransferInitted)
 	{ // pTransDraw spill detector v.0001.01 - handy for driver development!
-		for (INT32 y = nTransHeight; y < nTransHeight + nTransOverflow; y++) {
+		for (INT32 y = nTransHeight; y < nTransHeight + nTransferOverflow; y++) {
 			for (INT32 x = 0; x < nTransWidth; x++) {
 				if (pTransDraw[y * nTransWidth + x]) uhoh_spill = 1;
 			}
@@ -328,7 +326,7 @@ INT32 BurnTransferInit()
 		BurnDrvGetVisibleSize(&nTransWidth, &nTransHeight);
 	}
 
-	BurnBitmapAllocate(0, nTransWidth, nTransHeight + nTransOverflow, true);
+	BurnBitmapAllocate(0, nTransWidth, nTransHeight, true);
 
 	pTransDraw = BurnBitmapGetBitmap(0);
 	pPrioDraw = BurnBitmapGetPriomap(0);
@@ -369,7 +367,7 @@ void BurnTransferFlip(INT32 bFlipX, INT32 bFlipY)
 
 void BurnTransferRealloc()
 {
-	BurnBitmapAllocate(0, nTransWidth, nTransHeight + nTransOverflow, true);
+	BurnBitmapAllocate(0, nTransWidth, nTransHeight, true);
 
 	pTransDraw = BurnBitmapGetBitmap(0);
 	pPrioDraw = BurnBitmapGetPriomap(0);

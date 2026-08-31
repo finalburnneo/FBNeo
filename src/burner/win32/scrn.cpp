@@ -1,5 +1,6 @@
 // Screen Window
 #include "burner.h"
+#include "pcecdlist.h"
 #include <process.h>
 #include <shlobj.h>
 
@@ -15,6 +16,17 @@ struct MenuItemTextAndToggle
 	TCHAR sText[256];
 	bool isItemChecked;
 };
+
+#ifdef BUILD_PCE
+static void SetPCECDTitle()
+{
+	TCHAR szText[1024] = _T("");
+	TCHAR* pszTitle = PceCDInfo_Text(DRV_FULLNAME);
+	_sntprintf(szText, _countof(szText), _T(APP_TITLE) _T(" v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle ? pszTitle : FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+	szText[_countof(szText) - 1] = _T('\0');
+	SetWindowText(hScrnWnd, szText);
+}
+#endif
 
 #ifdef BUILD_NEOGEO
 static void SetNeoCDTitle(TCHAR* pszTitle)
@@ -957,6 +969,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "pgm2",		{ HARDWARE_IGS_PGM2, 0 } },
 	{ "neogeo",		{ HARDWARE_SNK_NEOGEO, HARDWARE_SNK_MVS, HARDWARE_SNK_DEDICATED_PCB, 0 } },
 	{ "neogeocd",	{ HARDWARE_SNK_NEOCD, 0 } },
+	{ "pcecd",		{ HARDWARE_PCENGINE_PCE_CD, 0 } },
 	{ "arcade",		{ ~0, 0 } }, // default, if not found above
 	{ "\0", { 0 } } // end
 };
@@ -1321,18 +1334,26 @@ static void QuickOpenExit()
 	memset(szAppQuickPath, 0, sizeof(szAppQuickPath));
 }
 
+static INT32 CDListGetPlatform(const TCHAR* pszPath)
+{
+	CDListResult Result;
+	if (!CDListIdentify(pszPath, &Result))
+		return CDLIST_PLATFORM_UNKNOWN;
+	return Result.nPlatform;
+}
+
 static bool NgcdVerifyPath(const TCHAR* pszSelCue)
 {
 	if ((NULL == pszSelCue) || !FileExists(pszSelCue)) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD:\n\n"));
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE));
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelCue);
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return false;
 	}
 
 	const TCHAR* pszExt = _tcsrchr(pszSelCue, _T('.'));
-	if (NULL == pszExt || ((0 != _tcsicmp(_T(".cue"), pszExt)) && (0 != _tcsicmp(_T(".chd"), pszExt)))) {
-		FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD: %s\n\n"), pszSelCue);
+	if (NULL == pszExt || ((0 != _tcsicmp(_T(".cue"), pszExt)) && (0 != _tcsicmp(_T(".chd"), pszExt)) && (0 != _tcsicmp(_T(".ccd"), pszExt)))) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE_FILE), pszSelCue);
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXTENSION), pszExt, _T(".cue, .chd"));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 		return false;
@@ -1344,7 +1365,7 @@ static bool NgcdVerifyPath(const TCHAR* pszSelCue)
 			TCHAR c = *(p - 1);
 			if ((_T('/') == c) ||
 				(_T('\\') == c)) {		// xxxx//ssss\\...
-				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("NeoGeo CD:\n\n"));
+				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE));
 				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_FILE_EXIST), pszSelCue);
 				FBAPopupDisplay(PUF_TYPE_ERROR);
 				return false;
@@ -1447,9 +1468,25 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 			nDrvIdx = IpsGetDrvForQuickOpen(pszSelect);
 			break;
 
-		case 3:
-			nDrvIdx = RomdataGetDrvIndex(_T("neocdz"));
+		case 3: {
+			INT32 nPlatform = CDListGetPlatform(pszSelect);
+			const TCHAR* pszDrvName = NULL;
+			switch (nPlatform) {
+				case CDLIST_PLATFORM_NEOCD:
+					pszDrvName = _T("neocdz");
+					break;
+				case CDLIST_PLATFORM_PCECD:
+					pszDrvName = _T("pce_scdsys");
+					break;
+				default:
+					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE_IDENTIFY), pszSelect);
+					FBAPopupDisplay(PUF_TYPE_ERROR);
+					return -1;
+			}
+
+			nDrvIdx = RomdataGetDrvIndex(pszDrvName);
 			break;
+		}
 
 		case 4:
 			nDrvIdx = ArchiveNameFindDrv(pszSelect);
@@ -1663,7 +1700,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_LOAD_ROMDATA:
 		case MENU_LOAD_IPSPATCH:
-		case MENU_LOAD_NEOGEOCD:
+		case MENU_LOAD_CDIMAGE:
 		case MENU_LOAD_ARCHIVE: {
 			nQuickOpen = id - MENU_LOAD_ROMDATA + 1;
 
@@ -1681,8 +1718,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 				case 3:
 					pszFilter = _T(" (*.cue,*.chd)\0*.cue;*.chd\0\0");
-					nStringID = IDS_DISK_FILE_NEOGEOCD;
-					nStrLen   = 28;
+					nStringID = IDS_DISK_FILE_CDIMAGE;
+					nStrLen   = 39;
 					break;
 
 				case 4:
@@ -1760,7 +1797,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			nCDEmuSelect = 0;
 			TCHAR szFilter[100] = { 0 };
 			_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
-			memcpy(szFilter + _tcslen(szFilter), _T(" (*.ccd,*.cue,*.chd)\0*.ccd;*.cue;*.chd\0\0"), 39 * sizeof(TCHAR));
+			memcpy(szFilter + _tcslen(szFilter), _T(" (*.cue,*.chd)\0*.cue;*.chd\0\0"), 39 * sizeof(TCHAR));
 			TCHAR szTitle[100] = { 0 };
 			_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
 			if (UseDialogs() && !bDrvOkay) {
@@ -2973,6 +3010,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_AUDIO_VOLUME_80:
 		case MENU_AUDIO_VOLUME_90:
 		case MENU_AUDIO_VOLUME_100:
+		case MENU_AUDIO_VOLUME_150:
+		case MENU_AUDIO_VOLUME_200:
 			nAudVolume = (id - MENU_AUDIO_VOLUME_0) * 1000;
 			AudSoundSetVolume();
 			break;
@@ -4390,6 +4429,12 @@ int ScrnTitle()
 			NeoCDInfo_SetTitle();
 			return 0;
 		}
+#ifdef BUILD_PCE
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCE_CD) {
+			SetPCECDTitle();
+			return 0;
+		}
+#endif
 
 	} else {
 		_stprintf(szText, _T(APP_TITLE) _T( " v%.20s") _T(SEPERATOR_1) _T("[%s]"), szAppBurnVer, FBALoadStringEx(hAppInst, IDS_SCRN_NOGAME, true));

@@ -28,11 +28,7 @@ int StatedAuto(int bSave)
 	static TCHAR szName[MAX_PATH] = _T("");
 	int nRet;
 
-	if (NeoCDInfo_ID() && bDrvSaveAll != 0) {
-		_stprintf(szName, _T("%sngcd_%s.fs"), szAppEEPROMPath, NeoCDInfo_Text(DRV_NAME));
-	} else {
-		_stprintf(szName, _T("%s%s.fs"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
-	}
+	_stprintf(szName, _T("%s%s.fs"), szAppEEPROMPath, IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
 
 	if (bSave == 0) {
 		nRet = BurnStateLoad(szName, bDrvSaveAll, NULL);		// Load ram
@@ -48,11 +44,7 @@ int StatedAuto(int bSave)
 
 static void CreateStateName(int nSlot)
 {
-	if (NeoCDInfo_ID()) {
-		_stprintf(szChoice, _T("./savestates/ngcd_%s slot %02x.fs"), NeoCDInfo_Text(DRV_NAME), nSlot);
-	} else {
-		_stprintf(szChoice, _T("./savestates/%s slot %02x.fs"), BurnDrvGetText(DRV_NAME), nSlot);
-	}
+	_stprintf(szChoice, _T("./savestates/%s slot %02x.fs"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME), nSlot);
 }
 
 int StatedUNDO(int nSlot)
@@ -87,11 +79,7 @@ int StatedLoad(int nSlot)
 		CreateStateName(nSlot);
 	} else {
 		if (bDrvOkay) {
-			if (NeoCDInfo_ID()) {
-				_stprintf(szChoice, _T("ngcd_%s*.fs"), NeoCDInfo_Text(DRV_NAME));
-			} else {
-				_stprintf(szChoice, _T("%s*.fs"), BurnDrvGetText(DRV_NAME));
-			}
+			_stprintf(szChoice, _T("%s*.fs"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
 		} else {
 			_stprintf(szChoice, _T("savestate"));
 		}
@@ -155,11 +143,7 @@ int StatedSave(int nSlot)
 	if (nSlot) {
 		CreateStateName(nSlot);
 	} else {
-		if (NeoCDInfo_ID()) {
-			_stprintf(szChoice, _T("ngcd_%s"), NeoCDInfo_Text(DRV_NAME));
-		} else {
-			_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
-		}
+		_stprintf(szChoice, _T("%s"), IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
 		MakeOfn(szFilter);
 		ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_STATE_SAVE, true);
 		ofn.Flags |= OFN_OVERWRITEPROMPT;

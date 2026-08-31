@@ -198,6 +198,10 @@ endif
 
 ifdef DEBUG
 	DEF	:= $(DEF) /DFBNEO_DEBUG
+else
+ifndef SYMBOL
+	DEF	:= $(DEF) /DNDEBUG
+endif
 endif
 
 ifdef ROM_VERIFY
@@ -253,8 +257,8 @@ else
 endif
 
 else
-	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /GL /Zc:forScope /MT /EHsc /FS
-	LDFLAGS += /LTCG /CGTHREADS:4
+	CFLAGS	 = /nologo /w /O2 /Ox /Oi /Ot /Oy /Ob2 /GF /Gs /Gy /Zc:forScope /MT /EHsc /FS
+	LDFLAGS +=
 endif
 
 ifdef BUILD_VS_XP_TARGET
@@ -321,9 +325,9 @@ ifeq ($(MAKELEVEL),2)
 $(objdir)/drivers.lib:		$(autdrv) | init
 	@echo Linking drivers...
 ifdef BUILD_X64_EXE
-	@LIB /MACHINE:X64 /LTCG /OUT:$@ $^
+	@LIB /MACHINE:X64 /OUT:$@ $^
 else
-	@LIB /MACHINE:X86 /LTCG /OUT:$@ $^
+	@LIB /MACHINE:X86 /OUT:$@ $^
 endif
 
 $(NAME).exe:	$(allobj) $(objdir)/drivers.lib

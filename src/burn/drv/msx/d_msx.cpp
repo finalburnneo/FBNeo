@@ -28078,7 +28078,7 @@ struct BurnDriver BurnDrvMSX_arya = {
 
 // Ascend (HB)
 static struct BurnRomInfo MSX_ascendRomDesc[] = {
-	{ "Ascend (2022)(Inufuto).rom",	9528, 0x81ee38e6, BRF_PRG | BRF_ESS },
+	{ "Ascend (2022)(Inufuto).cas",	9564, 0x4fb7bbc8, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_ascend, MSX_ascend, msx_msx)
@@ -28090,7 +28090,7 @@ struct BurnDriver BurnDrvMSX_ascend = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_ascendRomInfo, MSX_ascendRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -28888,7 +28888,7 @@ struct BurnDriver BurnDrvMSX_burnusexp = {
 
 // Cacorm (HB)
 static struct BurnRomInfo MSX_cacormRomDesc[] = {
-	{ "Cacorm (2022)(Inufuto).rom",	8357, 0xd32b2732, BRF_PRG | BRF_ESS },
+	{ "Cacorm (2022)(Inufuto).cas",	8363, 0x7d9a0cb1, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_cacorm, MSX_cacorm, msx_msx)
@@ -28900,7 +28900,7 @@ struct BurnDriver BurnDrvMSX_cacorm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
 	MSXGetZipName, MSX_cacormRomInfo, MSX_cacormRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -31590,7 +31590,7 @@ struct BurnDriver BurnDrvMSX_lasermazer = {
 
 // Lift (HB)
 static struct BurnRomInfo MSX_liftRomDesc[] = {
-	{ "Lift (2021)(Inufuto).rom",	8192, 0x1f12d963, BRF_PRG | BRF_ESS },
+	{ "Lift (2021)(Inufuto).cas",	8404, 0xb05b6f6b, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_lift, MSX_lift, msx_msx)
@@ -31602,7 +31602,7 @@ struct BurnDriver BurnDrvMSX_lift = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_liftRomInfo, MSX_liftRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -31969,7 +31969,7 @@ struct BurnDriver BurnDrvMSX_mastermind = {
 
 // Mazy (HB)
 static struct BurnRomInfo MSX_mazyRomDesc[] = {
-	{ "Mazy (2021)(Inufuto).rom",	8192, 0x7bd27e36, BRF_PRG | BRF_ESS },
+	{ "Mazy (2021)(Inufuto).cas",	8165, 0x547738a0, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mazy, MSX_mazy, msx_msx)
@@ -31981,7 +31981,7 @@ struct BurnDriver BurnDrvMSX_mazy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
 	MSXGetZipName, MSX_mazyRomInfo, MSX_mazyRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -33986,7 +33986,7 @@ struct BurnDriver BurnDrvMSX_rnff = {
 
 // Ruptus (HB)
 static struct BurnRomInfo MSX_ruptusRomDesc[] = {
-	{ "Ruptus (2021)(Inufuto).rom",	16384, 0x59ece025, BRF_PRG | BRF_ESS },
+	{ "Ruptus (2021)(Inufuto).cas",	12268, 0x1ced4c9d, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_ruptus, MSX_ruptus, msx_msx)
@@ -33998,7 +33998,7 @@ struct BurnDriver BurnDrvMSX_ruptus = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MULTISHOOT, 0,
 	MSXGetZipName, MSX_ruptusRomInfo, MSX_ruptusRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -34596,9 +34596,9 @@ struct BurnDriver BurnDrvMSX_sp8inv = {
 	272, 228, 4, 3
 };
 
-// Space Bash: Contact !! (HB)
+// Space Bash: Contact !! (HB, v1.1)
 static struct BurnRomInfo MSX_spacebashRomDesc[] = {
-	{ "Space Bash - Contact !! (2026)(Dave's Retro Forge).rom",	557056, 0x14dad385, BRF_PRG | BRF_ESS },
+	{ "Space Bash - Contact !! v1.1 (2026)(Dave's Retro Forge).rom",	557056, 0xf57042fe, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_spacebash, MSX_spacebash, msx_msx)
@@ -34606,7 +34606,7 @@ STD_ROM_FN(MSX_spacebash)
 
 struct BurnDriver BurnDrvMSX_spacebash = {
 	"msx_spacebash", NULL, "msx_msx", NULL, "2026",
-	"Space Bash: Contact !! (HB)\0", NULL, "Dave's Retro Forge", "MSX",
+	"Space Bash: Contact !! (HB, v1.1)\0", NULL, "Dave's Retro Forge", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_PLATFORM, 0,
 	MSXGetZipName, MSX_spacebashRomInfo, MSX_spacebashRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -35511,6 +35511,24 @@ struct BurnDriver BurnDrvMSX_txupi = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_txupiRomInfo, MSX_txupiRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Uchotos (HB)
+static struct BurnRomInfo MSX_uchotosRomDesc[] = {
+	{ "Uchotos (2026)(Inufuto).cas",	7749, 0x911c2339, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_uchotos, MSX_uchotos, msx_msx)
+STD_ROM_FN(MSX_uchotos)
+
+struct BurnDriver BurnDrvMSX_uchotos = {
+	"msx_uchotos", NULL, "msx_msx", NULL, "2026",
+	"Uchotos (HB)\0", NULL, "Inufuto", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_uchotosRomInfo, MSX_uchotosRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

@@ -57271,10 +57271,10 @@ struct BurnDriver BurnDrvgba_paragonbrk = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Pixel Pup (HB)
+// Pixel Pup (HB, v1.0.4)
 
 static struct BurnRomInfo gba_pixelpupRomDesc[] = {
-	{ "Pixel Pup (2026)(objet DISCRET, RetroDotCards).gba",	10621332,	0x9bb3dbd3,	BRF_ESS | BRF_PRG },
+	{ "Pixel Pup v1.0.4 (2026)(objet DISCRET, RetroDotCards).gba",	10652984,	0x0a0bbf01,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_pixelpup, gba_pixelpup, gba_gba)
@@ -57282,7 +57282,7 @@ STD_ROM_FN(gba_pixelpup)
 
 struct BurnDriver BurnDrvgba_pixelpup = {
 	"gba_pixelpup", NULL, "gba_gba", NULL, "2026",
-	"Pixel Pup (HB)\0", NULL, "objet DISCRET, RetroDotCards", "Game Boy Advance",
+	"Pixel Pup (HB, v1.0.4)\0", NULL, "objet DISCRET, RetroDotCards", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_pixelpupRomInfo, gba_pixelpupRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,

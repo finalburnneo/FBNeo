@@ -1,7 +1,7 @@
 // FBNeo GBA PPU worker thread (single-header)
-// Frame-level pipelining: main thread runs CPU/PPU state machine (same as ST),
+// Frame-level pipelining: main thread runs CPU/PPU state machine (same as single-threaded),
 // pixel composition runs in worker thread. All data passed via snapshots.
-// Back-ends: POSIX pthreads | Win32 threads | ST fallback (PPU_WORKER_DISABLE).
+// Back-ends: POSIX pthreads | Win32 threads | single-threaded fallback (PPU_WORKER_DISABLE).
 
 #pragma once
 
@@ -33,7 +33,7 @@
 #    define PPU_WORKER_HAVE_PTHREAD   1
 #    define PPU_WORKER_HAVE_WINTHREAD 0
 
-// Other platforms: ST fallback
+// Other platforms: single-threaded fallback
 #  else
 #    define PPU_WORKER_HAVE_PTHREAD   0
 #    define PPU_WORKER_HAVE_WINTHREAD 0

@@ -46978,7 +46978,7 @@ struct BurnDriver BurnDrvsnes_Cornbustpiko = {
 // Cosmo Gang - The Puzzle - Double Rotation (Hack)
 // https://www.romhacking.net/hacks/8158/
 static struct BurnRomInfo snes_CosmogangpzlhRomDesc[] = {
-	{ "Cosmo Gang - The Puzzle - Double Rotation Hack (2023)(bankbank).sfc", 524288, 0x524ee83b, BRF_ESS | BRF_PRG },
+	{ "Cosmo Gang - The Puzzle - Double Rotation (2023)(bankbank).sfc", 524288, 0x524ee83b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Cosmogangpzlh)
@@ -50417,10 +50417,10 @@ struct BurnDriver BurnDrvsnes_Superguitar = {
 	512, 448, 4, 3
 };
 
-// Super Ghouls'n Ghosts Enhanced (Hack)
+// Super Ghouls'n Ghosts Enhanced (Hack, v1.1.0)
 // https://www.romhacking.net/hacks/9480/
 static struct BurnRomInfo snes_SupergngenhRomDesc[] = {
-	{ "Super Ghouls'n Ghosts Enhanced Hack (2026)(Tiken).sfc", 1048576, 0xebb9c790, BRF_ESS | BRF_PRG },
+	{ "Super Ghouls'n Ghosts Enhanced v1.1.0 (2026)(Tiken).sfc", 1048576, 0x4e1618ac, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supergngenh)
@@ -50428,7 +50428,7 @@ STD_ROM_FN(snes_Supergngenh)
 
 struct BurnDriver BurnDrvsnes_Supergngenh = {
 	"snes_supergngenh", "snes_supergng", NULL, NULL, "2026",
-	"Super Ghouls'n Ghosts Enhanced (Hack)\0", "Air control while jumping & FastROM & more...", "Tiken", "SNES / Super Famicom",
+	"Super Ghouls'n Ghosts Enhanced (Hack, v1.1.0)\0", "Air control while jumping & FastROM & more...", "Tiken", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	SNESGetZipName, snes_SupergngenhRomInfo, snes_SupergngenhRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -50439,7 +50439,7 @@ struct BurnDriver BurnDrvsnes_Supergngenh = {
 // Super Ghouls'n Ghosts Restoration (Hack)
 // https://www.romhacking.net/hacks/3473/
 static struct BurnRomInfo snes_SupergngrRomDesc[] = {
-	{ "Super Ghouls'n Ghosts Restoration Hack (2023-25)(SCD).sfc", 2097152, 0xd983a882, BRF_ESS | BRF_PRG },
+	{ "Super Ghouls'n Ghosts Restoration (2023-25)(SCD).sfc", 2097152, 0xd983a882, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supergngr)
@@ -51354,7 +51354,7 @@ struct BurnDriver BurnDrvsnes_Brzombies = {
 // Oh No! More Zombies Ate My Neighbors! (Hack)
 
 static struct BurnRomInfo snes_Zombies2hRomDesc[] = {
-	{ "Oh No! More Zombies Ate My Neighbors! - Hack (2010)(Stanley_Decker, Sloat).sfc", 4194304, 0xd218147c, BRF_ESS | BRF_PRG },
+	{ "Oh No! More Zombies Ate My Neighbors! (2010)(Stanley_Decker, Sloat).sfc", 4194304, 0xd218147c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Zombies2h)

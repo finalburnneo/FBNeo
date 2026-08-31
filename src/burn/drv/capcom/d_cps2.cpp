@@ -1229,6 +1229,36 @@ static struct BurnInputInfo Spf2tInputList[] = {
 
 STDINPUTINFO(Spf2t)
 
+static struct BurnInputInfo MmatrixiInputList[] = {
+	{"P1 Coin"          , BIT_DIGITAL  , CpsInp020+4, "p1 coin"   },
+	{"P1 Start"         , BIT_DIGITAL  , CpsInp020+0, "p1 start"  },
+	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+	{"P1 Shot"          , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+	{"P1 Rapid-Cannon"  , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+	{"P1 Rapid-Shot"    , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+
+	{"P2 Coin"          , BIT_DIGITAL  , CpsInp020+5, "p2 coin"   },
+	{"P2 Start"         , BIT_DIGITAL  , CpsInp020+1, "p2 start"  },
+	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+	{"P2 Shot"          , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+	{"P2 Rapid-Cannon"  , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+	{"P2 Rapid-Shot"    , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+
+	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021+1, "diag"      },
+	{"Service"          , BIT_DIGITAL  , CpsInp021+2, "service"   },
+	{"Volume Up"        , BIT_DIGITAL  , &Cps2VolUp , "volumeup"  },
+	{"Volume Down"      , BIT_DIGITAL  , &Cps2VolDwn, "volumedown"},
+};
+
+STDINPUTINFO(Mmatrixi)
+
 // Rom Definitions
 
 static struct BurnRomInfo NinexxRomDesc[] = {
@@ -16415,6 +16445,44 @@ struct BurnDriver BurnDrvCpsXmvsfcph = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, XmvsfcphRomInfo, XmvsfcphRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Mars Matrix: Hyper Solid Shooting (Hack, Improvement v1.0.0)
+// 20251204
+
+static struct BurnRomInfo MmatrixiRomDesc[] = {
+	{ "mmxiu.03",		0x080000, 0xa578097b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mmxu.04",		0x080000, 0x0135fc6c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mmxiu.05",		0x080000, 0xa1fbd3d8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mmx.13m",		0x400000, 0x04748718, CPS2_GFX | BRF_GRA },
+	{ "mmx.15m",		0x400000, 0x38074f44, CPS2_GFX | BRF_GRA },
+	{ "mmx.17m",		0x400000, 0xe4635e35, CPS2_GFX | BRF_GRA },
+	{ "mmx.19m",		0x400000, 0x4400a3f2, CPS2_GFX | BRF_GRA },
+	{ "mmx.14m",		0x400000, 0xd52bf491, CPS2_GFX | BRF_GRA },
+	{ "mmx.16m",		0x400000, 0x23f70780, CPS2_GFX | BRF_GRA },
+	{ "mmx.18m",		0x400000, 0x2562c9d5, CPS2_GFX | BRF_GRA },
+	{ "mmx.20m",		0x400000, 0x583a9687, CPS2_GFX | BRF_GRA },
+
+	{ "mmxi.01",		0x020000, 0x45a29ce5, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mmx.11m",		0x400000, 0x4180b39f, CPS2_QSND | BRF_SND },
+	{ "mmx.12m",		0x400000, 0x95e22a59, CPS2_QSND | BRF_SND },
+	
+	{ "mmatrix.key",	0x000014, 0x8ed66bc4, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mmatrixi)
+STD_ROM_FN(Mmatrixi)
+
+struct BurnDriver BurnDrvCpsMmatrixi = {
+	"mmatrixi", "mmatrix", NULL, NULL, "2025",
+	"Mars Matrix: Hyper Solid Shooting (Hack, Improvement v1.0.0)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VERSHOOT, 0,
+	NULL, MmatrixiRomInfo, MmatrixiRomName, NULL, NULL, NULL, NULL, MmatrixiInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

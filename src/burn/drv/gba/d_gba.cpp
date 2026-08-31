@@ -445,7 +445,8 @@ static INT32 DrvFrame()
 	double audioRate = nBurnSoundLen > 0 ? DrvAudioRate() : 0.0;
 	if (GbaCoreConfigureAudio(Gba, audioRate, nBurnSoundLen, !runAhead && nBurnSoundLen > 0))
 		return 1;
-	if (GbaCoreRunFrame(Gba))
+	// runahead frames skip PPU render
+	if (GbaCoreRunFrame(Gba, !runAhead))
 		return 1;
 	if (!runAhead && GbaCoreRenderAudio(Gba, pBurnSoundOut, nBurnSoundLen) != nBurnSoundLen)
 		return 1;

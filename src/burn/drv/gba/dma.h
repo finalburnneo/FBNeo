@@ -137,14 +137,16 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 					force_first_write_sequential = true;
 				} else {
 					if (gba->dma[i].dest_addr >= 0x08000000) {
-						// Allow the in process prefetech to finish before starting DMA
-						if (!gba->mem.prefetch_size && gba->mem.prefetch_en)
-							ticks += gba_compute_access_cycles_dma(gba, gba->dma[i].dest_addr, 2) > 4;
+						// 2-cycle wait for the in-progress prefetch to drain
+						// before DMA takes over the bus.
+						if (gba->mem.prefetch_size && gba->mem.prefetch_en)
+							ticks += 2;
 					}
 				}
 				if (gba->dma[i].source_addr >= 0x08000000) {
-					if (gba->mem.prefetch_en)
-						ticks += gba_compute_access_cycles_dma(gba, gba->dma[i].source_addr, 2) <= 4;
+					// Same 2-cycle wait when sourcing from ROM while prefetch is hot.
+					if (gba->mem.prefetch_size && gba->mem.prefetch_en)
+						ticks += 2;
 				}
 				gba->last_transaction_dma = true;
 				UINT32 cnt = gba->dma[i].latched_count;	// latched at enable / last completion

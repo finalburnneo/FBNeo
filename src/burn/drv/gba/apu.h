@@ -18,7 +18,7 @@ static inline float gba_polyblep(float t, float dt)
 {
 	if (t <= dt) {
 		t = t / dt;
-		return t + t - t * t - 1.0;;
+		return t + t - t * t - 1.0f;
 	} else if (t >= 1 - dt) {
 		t = (t - 1.0) / dt;
 		return t * t + t + t + 1.0;
@@ -105,13 +105,12 @@ static inline INT32 gba_audio_reg_to_mmio(INT32 gb_reg)
 		case SB_IO_SOUND_OUTPUT_SEL: return GBA_SOUNDCNT_L  + 1;
 		case SB_IO_SOUND_ON_OFF    : return GBA_SOUNDCNT_X;
 	}
-	printf("Unknown GB register:%04x\n", gb_reg);
 	return 0;
 }
 
-static inline INT32 gba_mmio_to_audio_reg(INT32 gb_reg)
+static inline INT32 gba_mmio_to_audio_reg(INT32 mmio_offset)
 {
-	switch (gb_reg) {
+	switch (mmio_offset) {
 		case GBA_SOUND1CNT_L    : return SB_IO_AUD1_TONE_SWEEP;
 		case GBA_SOUND1CNT_H    : return SB_IO_AUD1_LENGTH_DUTY;
 		case GBA_SOUND1CNT_H + 1: return SB_IO_AUD1_VOL_ENV;
@@ -259,7 +258,7 @@ static inline void sb_tick_frame_seq(sb_gb_t* gb, sb_frame_sequencer_t* seq)
 					if (volume > 0xf) {
 						volume = 0xf;
 						seq->env_overflow[i] = true;
-					};
+					}
 					seq->volume[i] = volume;
 				}
 			}

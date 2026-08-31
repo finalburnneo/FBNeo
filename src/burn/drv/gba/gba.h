@@ -702,7 +702,7 @@ void   GbaCoreSetRenderMode(GbaCore *core, INT32 perPixelMode);
 INT32  GbaCoreReset(GbaCore *core);
 void   GbaCoreSetInput(GbaCore *core, const GbaInput *input);
 INT32  GbaCoreConfigureAudio(GbaCore *core, double sourceRate, INT32 outputFrames, INT32 captureAudio);
-INT32  GbaCoreRunFrame(GbaCore *core);
+INT32  GbaCoreRunFrame(GbaCore *core, INT32 bDraw);
 UINT32 GbaCoreGetCartridgeFeatures(const GbaCore *core);
 UINT8  GbaCoreGetRumbleOutput(const GbaCore *core);
 

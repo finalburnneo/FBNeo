@@ -843,53 +843,61 @@ static inline void gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_
 		gba_send_interrupt(gba, 3, new_if);
 	}
 
-	if (!render)
-		return;
-
-	if (lcd_x == 0) {
-		// Affine reference updated at scanline start so the per-line increment uses
-		// the CURRENT line's PB/PD (sampled ~cycle 6)
+	// Affine BG increment / reload at lcd_x == 0.
+	// Must run on both render and non-render frames so affine reference
+	// points don't drift during frame-skip / fast-forward / runahead.
+	if (lcd_x == 0 && lcd_y < GBA_LCD_H) {
 		UINT16 dispcnt = gba->ppu.dispcnt_pipeline[0];
 		INT32  bg_mode = SB_BFE(dispcnt, 0, 3);
-		// Line 0 skips the increment and reloads from BG2X/BG2Y
+
 		if (bg_mode != 0 && lcd_y != 0) {
 			for (INT32 aff = 0; aff < 2; ++aff) {
 				bool bg_en = SB_BFE(dispcnt, 8 + aff + 2, 1);
-				if (!bg_en)
-					continue;
-				INT32  b = (INT16)gba_io_read16(gba, GBA_BG2PB  + (aff) * 0x10);
-				INT32  d = (INT16)gba_io_read16(gba, GBA_BG2PD  + (aff) * 0x10);
-				UINT16 bgcnt = gba_io_read16(gba, GBA_BG2CNT +  aff  * 2);
+				if (!bg_en) continue;
+
+				INT32  pb = (INT16)gba_io_read16(gba, GBA_BG2PB + aff * 0x10);
+				INT32  pd = (INT16)gba_io_read16(gba, GBA_BG2PD + aff * 0x10);
+				UINT16 bgcnt = gba_io_read16(gba, GBA_BG2CNT + aff * 2);
 				bool mosaic = SB_BFE(bgcnt, 6, 1);
-				if (mosaic) {
+
+				if (gba->ppu.aff[aff].wrote_bgx) {
+					gba->ppu.aff[aff].wrote_bgx = false;
+				} else if (mosaic) {
 					UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
 					INT32  mos_y   = SB_BFE(mos_reg, 4, 4) + 1;
 					if ((lcd_y % mos_y) == 0) {
-						gba->ppu.aff[aff].render_bgx += b * mos_y;
-						gba->ppu.aff[aff].render_bgy += d * mos_y;
+						gba->ppu.aff[aff].render_bgx += pb * mos_y;
+						gba->ppu.aff[aff].render_bgy += pd * mos_y;
 					}
 				} else {
-					gba->ppu.aff[aff].render_bgx += b;
-					gba->ppu.aff[aff].render_bgy += d;
+					gba->ppu.aff[aff].render_bgx += pb;
+					gba->ppu.aff[aff].render_bgy += pd;
 				}
+				if (gba->ppu.aff[aff].wrote_bgy)
+					gba->ppu.aff[aff].wrote_bgy = false;
 			}
 		}
-		// Reload from BG2X/BG2Y when written this scanline, or unconditionally on line 0
+
+		// Reload from BG2X/BG2Y when written this scanline, or unconditionally on line 0.
 		for (INT32 aff = 0; aff < 2; ++aff) {
 			if (gba->ppu.aff[aff].wrote_bgx || lcd_y == 0) {
-				gba->ppu.aff[aff].render_bgx = gba_io_read32(gba, GBA_BG2X + (aff) * 0x10);
+				gba->ppu.aff[aff].render_bgx = gba_io_read32(gba, GBA_BG2X + aff * 0x10);
 				gba->ppu.aff[aff].render_bgx = SB_BFE(gba->ppu.aff[aff].render_bgx, 0, 28);
 				gba->ppu.aff[aff].render_bgx = ((INT32)(gba->ppu.aff[aff].render_bgx << 4)) >> 4;
 				gba->ppu.aff[aff].wrote_bgx  = false;
 			}
 			if (gba->ppu.aff[aff].wrote_bgy || lcd_y == 0) {
-				gba->ppu.aff[aff].render_bgy = gba_io_read32(gba, GBA_BG2Y + (aff) * 0x10);
+				gba->ppu.aff[aff].render_bgy = gba_io_read32(gba, GBA_BG2Y + aff * 0x10);
 				gba->ppu.aff[aff].render_bgy = SB_BFE(gba->ppu.aff[aff].render_bgy, 0, 28);
 				gba->ppu.aff[aff].render_bgy = ((INT32)(gba->ppu.aff[aff].render_bgy << 4)) >> 4;
 				gba->ppu.aff[aff].wrote_bgy  = false;
 			}
 		}
 	}
+
+	if (!render)
+		return;
+
 	if (gba->ppu.render_per_pixel) {
 		//Render sprites over scanline when it completes
 		if ((lcd_y < 159 || lcd_y == 227) && lcd_x == GBA_LCD_HBLANK_START)

@@ -55793,6 +55793,25 @@ struct BurnDriver BurnDrvgba_apotris = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Ashen Relics (HB)
+
+static struct BurnRomInfo gba_ashenrelicsRomDesc[] = {
+	{ "Ashen Relics (2026)(Mikebloke).gba",	12156152,	0x2d007a3d,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ashenrelics, gba_ashenrelics, gba_gba)
+STD_ROM_FN(gba_ashenrelics)
+
+struct BurnDriver BurnDrvgba_ashenrelics = {
+	"gba_ashenrelics", NULL, "gba_gba", NULL, "2026",
+	"Ashen Relics (HB)\0", NULL, "Mikebloke", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_ashenrelicsRomInfo, gba_ashenrelicsRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Astro Smash GBA (HB)
 
 static struct BurnRomInfo gba_asmashRomDesc[] = {
@@ -56073,6 +56092,25 @@ struct BurnDriver BurnDrvgba_butanofight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
 	GbaGetZipName, gba_butanofightRomInfo, gba_butanofightRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Button Dash (HB)
+
+static struct BurnRomInfo gba_buttondashRomDesc[] = {
+	{ "Button Dash (2026)(Mikebloke).gba",	113860,	0xa83a39e8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_buttondash, gba_buttondash, gba_gba)
+STD_ROM_FN(gba_buttondash)
+
+struct BurnDriver BurnDrvgba_buttondash = {
+	"gba_buttondash", NULL, "gba_gba", NULL, "2026",
+	"Button Dash (HB)\0", NULL, "Mikebloke", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_buttondashRomInfo, gba_buttondashRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -56552,6 +56590,25 @@ struct BurnDriver BurnDrvgba_escape2042 = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Exploder (HB)
+
+static struct BurnRomInfo gba_exploderRomDesc[] = {
+	{ "Exploder (2026)(Mikebloke).gba",	18656,	0xa2ace720,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_exploder, gba_exploder, gba_gba)
+STD_ROM_FN(gba_exploder)
+
+struct BurnDriver BurnDrvgba_exploder = {
+	"gba_exploder", NULL, "gba_gba", NULL, "2026",
+	"Exploder (HB)\0", NULL, "Mikebloke", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BOARD | GBF_STRATEGY, 0,
+	GbaGetZipName, gba_exploderRomInfo, gba_exploderRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Factory Bots (HB)
 
 static struct BurnRomInfo gba_factbotsRomDesc[] = {
@@ -56719,6 +56776,25 @@ struct BurnDriver BurnDrvgba_fzerovvz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_fzerovvzRomInfo, gba_fzerovvzRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Geekdash (HB)
+
+static struct BurnRomInfo gba_geekdashRomDesc[] = {
+	{ "Geekdash (2026)(Mikebloke).gba",	11384,	0x7896aa6f,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_geekdash, gba_geekdash, gba_gba)
+STD_ROM_FN(gba_geekdash)
+
+struct BurnDriver BurnDrvgba_geekdash = {
+	"gba_geekdash", NULL, "gba_gba", NULL, "2026",
+	"Geekdash (HB)\0", NULL, "Mikebloke", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BOARD | GBF_STRATEGY, 0,
+	GbaGetZipName, gba_geekdashRomInfo, gba_geekdashRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

@@ -41987,6 +41987,7 @@ struct BurnDriver BurnDrvmd_papriumunlck = {
 };
 
 // Phantom Gear (HB, v1.00 Demo)
+// https://bitsrulegames.itch.io/phantom-gear-demo
 static struct BurnRomInfo md_phantomgearRomDesc[] = {
 	{ "Phantom Gear v1.00 Demo (2026)(Bits Rule Games).bin", 2492316, 0x49662ded, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };

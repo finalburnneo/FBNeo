@@ -41986,9 +41986,9 @@ struct BurnDriver BurnDrvmd_papriumunlck = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Phantom Gear (HB, v0.94 Demo)
+// Phantom Gear (HB, v1.00 Demo)
 static struct BurnRomInfo md_phantomgearRomDesc[] = {
-	{ "Phantom Gear v0.94 Demo (2026)(Bits Rule Games).bin", 2380236, 0x3a771364, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Phantom Gear v1.00 Demo (2026)(Bits Rule Games).bin", 2492316, 0x49662ded, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_phantomgear)
@@ -41996,7 +41996,7 @@ STD_ROM_FN(md_phantomgear)
 
 struct BurnDriver BurnDrvmd_phantomgear = {
 	"md_phantomgear", NULL, NULL, NULL, "2026",
-	"Phantom Gear (HB, v0.94 Demo)\0", NULL, "Bits Rule Games", "Genesis / Mega Drive",
+	"Phantom Gear (HB, v1.00 Demo)\0", NULL, "Bits Rule Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_phantomgearRomInfo, md_phantomgearRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

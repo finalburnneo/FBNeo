@@ -22944,6 +22944,24 @@ struct BurnDriver BurnDrvsms_had = {
 	256, 192, 4, 3
 };
 
+// Hong Kong '97 (HB, v0.0.1)
+static struct BurnRomInfo sms_hongkong97RomDesc[] = {
+	{ "Hong Kong '97 v0.0.1 (2026)(SirVH).sms",	491520, 0xef93e8da, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hongkong97)
+STD_ROM_FN(sms_hongkong97)
+
+struct BurnDriver BurnDrvsms_hongkong97 = {
+	"sms_hongkong97", NULL, NULL, NULL, "2026",
+	"Hong Kong '97 (HB, v0.0.1)\0", NULL, "SirVH", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_hongkong97RomInfo, sms_hongkong97RomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Hopman (HB)
 static struct BurnRomInfo sms_hopmanRomDesc[] = {
 	{ "Hopman (2023)(Inufuto).sms",	13037, 0x06090a9a, BRF_PRG | BRF_ESS },
@@ -24554,9 +24572,9 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 	256, 192, 4, 3
 };
 
-// Super Mario Bros. (HB, v0.12.e83b808)
+// Super Mario Bros. (HB, v1.00)
 static struct BurnRomInfo sms_smbRomDesc[] = {
-	{ "Super Mario Bros. v0.12.e83b808 (2026)(Lack of Track).sms",	262144, 0xb209d7a8, BRF_PRG | BRF_ESS },
+	{ "Super Mario Bros. v1.00 (2026)(Lack of Track).sms",	262144, 0x5a74f2b6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_smb)
@@ -24564,7 +24582,7 @@ STD_ROM_FN(sms_smb)
 
 struct BurnDriver BurnDrvsms_smb = {
 	"sms_smb", NULL, NULL, NULL, "2026",
-	"Super Mario Bros. (HB, v0.12.e83b808)\0", "YM2413 FM sound chip supported", "Lack of Track", "Sega Master System",
+	"Super Mario Bros. (HB, v1.00)\0", "YM2413 FM sound chip supported", "Lack of Track", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
@@ -24784,6 +24802,24 @@ struct BurnDriver BurnDrvsms_tetrisse = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_tetrisseRomInfo, sms_tetrisseRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Tetris4GG (HB)
+static struct BurnRomInfo sms_tetris4ggRomDesc[] = {
+	{ "Tetris4GG (2026)(Armix).sms",	131072, 0x549390e6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_tetris4gg)
+STD_ROM_FN(sms_tetris4gg)
+
+struct BurnDriver BurnDrvsms_tetris4gg = {
+	"sms_tetris4gg", NULL, NULL, NULL, "2026",
+	"Tetris4GG (HB)\0", NULL, "Armix", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_tetris4ggRomInfo, sms_tetris4ggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

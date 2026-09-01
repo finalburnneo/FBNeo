@@ -41319,6 +41319,25 @@ struct BurnDriver BurnDrvmd_megaturrdc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// MegaBox Reloaded (HB)
+// https://playonretro.itch.io/megabox-reloaded-megadrivegenesis-16-bits-game
+static struct BurnRomInfo md_megaboxrRomDesc[] = {
+	{ "MegaBox Reloaded (2026)(PlayOnRetro).bin", 1589592, 0x1a90be2d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megaboxr)
+STD_ROM_FN(md_megaboxr)
+
+struct BurnDriver BurnDrvmd_megaboxr = {
+	"md_megaboxr", NULL, NULL, NULL, "2026",
+	"MegaBox Reloaded (HB)\0", NULL, "PlayOnRetro", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_megaboxrRomInfo, md_megaboxrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // MegaXmas (HB)
 static struct BurnRomInfo md_megaxmasRomDesc[] = {
 	{ "MegaXmas (2020)(Nekojita).bin", 393216, 0x50348291, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

@@ -44718,6 +44718,24 @@ struct BurnDriver BurnDrvgba_sma4 = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Super Mario Advance 4 - Super Mario Bros. 3 (Virtual Console) (Europe, M5, Rev. 1)
+static struct BurnRomInfo gba_sma4vcRomDesc[] = {
+	{ "Super Mario Advance 4 - Super Mario Bros. 3 (VC) (E, M5, Rev 1) (2003)(Nintendo).gba",	8388608,	0xd4f45b01,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sma4vc, gba_sma4vc, gba_gba)
+STD_ROM_FN(gba_sma4vc)
+
+struct BurnDriver BurnDrvgba_sma4vc = {
+	"gba_sma4vc", "gba_sma4", "gba_gba", NULL, "2003",
+	"Super Mario Advance 4 - Super Mario Bros. 3 (Virtual Console) (Europe, M5, Rev. 1)\0", "Version with access to World-e: use 4th save slot", "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_sma4vcRomInfo, gba_sma4vcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Super Mario Advance 4 - Super Mario Bros. 3 (Europe)
 static struct BurnRomInfo gba_sma4aRomDesc[] = {
 	{ "agb-ax4p-0.u1",	0x0800000,	0x37141f32,	BRF_ESS | BRF_PRG },
@@ -50228,7 +50246,7 @@ struct BurnDriver BurnDrvgba_wizardry1 = {
 
 // Wolfenstein 3D (Europe, USA)
 static struct BurnRomInfo gba_wolfn3dRomDesc[] = {
-	{ "agb-awop-0.u1",	0x0800000,	0xc4aa2b7b,	BRF_ESS | BRF_PRG },
+	{ "Wolfenstein 3D (E, U)(2002)(BAM! Entertainment).gba",	0x0800000,	0xc4aa2b7b,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_wolfn3d, gba_wolfn3d, gba_gba)
@@ -56893,6 +56911,25 @@ struct BurnDriver BurnDrvgba_galacard = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Galaxy Wall (HB)
+
+static struct BurnRomInfo gba_galaxywallRomDesc[] = {
+	{ "Galaxy Wall (2015)(Choi Kyun).gba",	441552,	0x62662275,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_galaxywall, gba_galaxywall, gba_gba)
+STD_ROM_FN(gba_galaxywall)
+
+struct BurnDriver BurnDrvgba_galaxywall = {
+	"gba_galaxywall", NULL, "gba_gba", NULL, "2015",
+	"Galaxy Wall (HB)\0", NULL, "Choi Kyun", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_galaxywallRomInfo, gba_galaxywallRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // GBAtris (HB)
 
 static struct BurnRomInfo gba_gbatrisRomDesc[] = {
@@ -57137,6 +57174,25 @@ struct BurnDriver BurnDrvgba_jurl = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Light Cycle GBA (HB)
+
+static struct BurnRomInfo gba_lightcycleRomDesc[] = {
+	{ "Light Cycle GBA (2015)(Choi Kyun).gba",	717428,	0xed3ae715,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_lightcycle, gba_lightcycle, gba_gba)
+STD_ROM_FN(gba_lightcycle)
+
+struct BurnDriver BurnDrvgba_lightcycle = {
+	"gba_lightcycle", NULL, "gba_gba", NULL, "2015",
+	"Light Cycle GBA (HB)\0", NULL, "Choi Kyun", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_lightcycleRomInfo, gba_lightcycleRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Lost Vikings, The - Palette Restoration (Hack)
 // https://www.romhacking.net/hacks/3581/
 static struct BurnRomInfo gba_lostvikcRomDesc[] = {
@@ -57285,6 +57341,44 @@ struct BurnDriver BurnDrvgba_moonbeam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV | GBF_PLATFORM, 0,
 	GbaGetZipName, gba_moonbeamRomInfo, gba_moonbeamRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Moon Defender (HB)
+
+static struct BurnRomInfo gba_moondefenderRomDesc[] = {
+	{ "Moon Defender (2017)(Choe Gyun).gba",	889960,	0x7f5a50e0,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_moondefender, gba_moondefender, gba_gba)
+STD_ROM_FN(gba_moondefender)
+
+struct BurnDriver BurnDrvgba_moondefender = {
+	"gba_moondefender", NULL, "gba_gba", NULL, "2017",
+	"Moon Defender (HB)\0", NULL, "Choe Gyun", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SHOOT, 0,
+	GbaGetZipName, gba_moondefenderRomInfo, gba_moondefenderRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Moon Rider (HB)
+
+static struct BurnRomInfo gba_moonriderRomDesc[] = {
+	{ "Moon Rider (2019)(Choi Gyun).gba",	1003160,	0xf8f76a53,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_moonrider, gba_moonrider, gba_gba)
+STD_ROM_FN(gba_moonrider)
+
+struct BurnDriver BurnDrvgba_moonrider = {
+	"gba_rider", NULL, "gba_gba", NULL, "2019",
+	"Moon Rider (HB)\0", NULL, "Choi Gyun", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
+	GbaGetZipName, gba_moonriderRomInfo, gba_moonriderRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57441,6 +57535,25 @@ struct BurnDriver BurnDrvgba_pphoenix = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Pokémon - Ghost Grey Version (Hack, v1.0.1)
+// https://www.pokecommunity.com/threads/pok%C3%A9mon-ghost-grey-version.543491/
+static struct BurnRomInfo gba_pokeghgreyRomDesc[] = {
+	{ "Pokemon - Ghost Grey Version v1.0.1 (2026)(Joey Zeed)",	33554432,	0xbe0375e2,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_pokeghgrey, gba_pokeghgrey, gba_gba)
+STD_ROM_FN(gba_pokeghgrey)
+
+struct BurnDriver BurnDrvgba_pokeghgrey = {
+	"gba_pokeghgrey", "gba_pokefird", "gba_gba", NULL, "2026",
+	"Pokemon - Ghost Grey Version (Hack, v1.0.1)\0", NULL, "Joey Zeed", "Game Boy Advance",
+	L"Pok\u00e9mon - Ghost Grey Version (Hack, v1.0.1)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV, 0,
+	GbaGetZipName, gba_pokeghgreyRomInfo, gba_pokeghgreyRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Polybius (HB)
 
 static struct BurnRomInfo gba_polybiusRomDesc[] = {
@@ -57494,6 +57607,25 @@ struct BurnDriver BurnDrvgba_powerpig = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_PUZZLE, 0,
 	GbaGetZipName, gba_powerpigRomInfo, gba_powerpigRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Qix: Space Qix (HB, v1.3)
+
+static struct BurnRomInfo gba_spaceqixRomDesc[] = {
+	{ "Qix - Space Qix v1.3 (2015)(Choi Kyun).gba",	2043248,	0xba37db65,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_spaceqix, gba_spaceqix, gba_gba)
+STD_ROM_FN(gba_spaceqix)
+
+struct BurnDriver BurnDrvgba_spaceqix = {
+	"gba_spaceqix", NULL, "gba_gba", NULL, "2015",
+	"Qix: Space Qix (HB, v1.3)\0", NULL, "Choi Kyun", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
+	GbaGetZipName, gba_spaceqixRomInfo, gba_spaceqixRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57835,6 +57967,25 @@ struct BurnDriver BurnDrvgba_syscrusher = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Super Mario Advance 4 - Super Mario Bros. 3 (GBP/SNES Palette Hack) (Hack, M5)
+// https://www.romhacking.net/hacks/6227/
+static struct BurnRomInfo gba_sma4phRomDesc[] = {
+	{ "Super Mario Advance 4 - Super Mario Bros. 3 (GBP/SNES Palette Hack) (M5) (2021)(djedditt).gba",	8388608,	0x60e63e19,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_sma4ph, gba_sma4ph, gba_gba)
+STD_ROM_FN(gba_sma4ph)
+
+struct BurnDriver BurnDrvgba_sma4ph = {
+	"gba_sma4ph", "gba_sma4", "gba_gba", NULL, "2021",
+	"Super Mario Advance 4 - Super Mario Bros. 3 (GBP/SNES Palette Hack) (Hack, M5)\0", "Version with access to World-e: use 4th save slot", "djedditt", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_sma4phRomInfo, gba_sma4phRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Tetris: The Soviet Mind Game (HB)
 
 static struct BurnRomInfo gba_tetristsmdRomDesc[] = {
@@ -58101,7 +58252,27 @@ struct BurnDriver BurnDrvgba_warioln4pw = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Wolfenstein 3D Enhanced (Hack)
+
+static struct BurnRomInfo gba_wolfn3denhRomDesc[] = {
+	{ "Wolfenstein 3D Enhanced (2026)(Bazooka_Face).gba",	33554432,	0xe2886318,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_wolfn3denh, gba_wolfn3denh, gba_gba)
+STD_ROM_FN(gba_wolfn3denh)
+
+struct BurnDriver BurnDrvgba_wolfn3denh = {
+	"gba_wolfn3denh", "gba_wolfn3d", "gba_gba", NULL, "2026",
+	"Wolfenstein 3D Enhanced (Hack)\0", NULL, "Bazooka_Face", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SHOOT, 0,
+	GbaGetZipName, gba_wolfn3denhRomInfo, gba_wolfn3denhRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // World Reborn (World)
+
 static struct BurnRomInfo gba_worldrebRomDesc[] = {
 	{ "World Reborn (World)(2015)(Piko Interactive).gba",	4194304,	0xeefb32ff,	BRF_ESS | BRF_PRG },
 };

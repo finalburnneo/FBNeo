@@ -57535,10 +57535,10 @@ struct BurnDriver BurnDrvgba_pphoenix = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Pokémon - Ghost Grey Version (Hack, v1.0.1)
+// Pokemon - Ghost Grey Version (Hack, v1.0.1)
 // https://www.pokecommunity.com/threads/pok%C3%A9mon-ghost-grey-version.543491/
 static struct BurnRomInfo gba_pokeghgreyRomDesc[] = {
-	{ "Pokemon - Ghost Grey Version v1.0.1 (2026)(Joey Zeed)",	33554432,	0xbe0375e2,	BRF_ESS | BRF_PRG },
+	{ "Pokemon - Ghost Grey Version v1.0.1 (2026)(Joey Zeed).gba",	33554432,	0xbe0375e2,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_pokeghgrey, gba_pokeghgrey, gba_gba)
@@ -57970,7 +57970,7 @@ struct BurnDriver BurnDrvgba_syscrusher = {
 // Super Mario Advance 4 - Super Mario Bros. 3 (GBP/SNES Palette Hack) (Hack, M5)
 // https://www.romhacking.net/hacks/6227/
 static struct BurnRomInfo gba_sma4phRomDesc[] = {
-	{ "Super Mario Advance 4 - Super Mario Bros. 3 (GBP/SNES Palette Hack) (M5) (2021)(djedditt).gba",	8388608,	0x60e63e19,	BRF_ESS | BRF_PRG },
+	{ "Super Mario Advance 4 - Super Mario Bros. 3 (GBP-SNES Palette Hack) (M5) (2021)(djedditt).gba",	8388608,	0x60e63e19,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_sma4ph, gba_sma4ph, gba_gba)

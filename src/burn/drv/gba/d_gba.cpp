@@ -57374,7 +57374,7 @@ STDROMPICKEXT(gba_moonrider, gba_moonrider, gba_gba)
 STD_ROM_FN(gba_moonrider)
 
 struct BurnDriver BurnDrvgba_moonrider = {
-	"gba_rider", NULL, "gba_gba", NULL, "2019",
+	"gba_moonrider", NULL, "gba_gba", NULL, "2019",
 	"Moon Rider (HB)\0", NULL, "Choi Gyun", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,

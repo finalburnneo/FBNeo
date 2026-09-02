@@ -34,6 +34,7 @@ struct _MSM5205_state
 	INT32 data;               /* next adpcm data              */
 	INT32 vclk;               /* vclk signal (external mode)  */
 	INT32 reset;              /* reset pin signal             */
+	INT32 resetlatch;         /* reset pin signal latched	  */
 	INT32 prescaler;          /* prescaler selector S1 and S2 */
 	INT32 bitwidth;           /* bit width selector -3B/4B    */
 	INT32 signal;             /* current ADPCM signal         */
@@ -174,11 +175,18 @@ static void MSM5205_vclk_callback(INT32 chip)
 
 	if(voice->reset)
 	{
+		voice->resetlatch = 0;
 		new_signal = 0;
 		voice->step = 0;
 	}
 	else
 	{
+		if(voice->resetlatch)
+		{
+			voice->resetlatch = 0;
+			new_signal = 0;
+			voice->step = 0;
+		}
 		INT32 val = voice->data;
 		new_signal = voice->signal + voice->diff_lookup[voice->step * 16 + (val & 15)];
 		if (new_signal > 2047) new_signal = 2047;
@@ -293,6 +301,7 @@ void MSM5205Reset()
 		voice->data    = 0;
 		voice->vclk    = 0;
 		voice->reset   = 0;
+		voice->resetlatch = 0;
 		voice->signal  = 0;
 		voice->step    = 0;
 
@@ -437,6 +446,8 @@ void MSM5205ResetWrite(INT32 chip, INT32 reset)
 #endif
 
 	voice = &chips[chip];
+	// make sure to clear accumulator.  TC: Super Air Zonk pce-cd, standard shot sample growing in volume w/ repetition
+	if (!voice->reset && reset) voice->resetlatch = 1;
 	voice->reset = reset;
 }
 
@@ -569,6 +580,7 @@ void MSM5205Scan(INT32 nAction, INT32 *pnMin)
 
 			SCAN_VAR(voice->vclk);
 			SCAN_VAR(voice->reset);
+			SCAN_VAR(voice->resetlatch);
 			SCAN_VAR(voice->prescaler);
 			SCAN_VAR(voice->bitwidth);
 			SCAN_VAR(voice->signal);

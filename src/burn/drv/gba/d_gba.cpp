@@ -55810,6 +55810,25 @@ struct BurnDriver BurnDrvgba_apotris = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Arkanoid Advance (HB)
+
+static struct BurnRomInfo gba_arkanoidadvRomDesc[] = {
+	{ "Arkanoid Advance (2004)(Yodajr).gba",	1742192,	0xd2db954c,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_arkanoidadv, gba_arkanoidadv, gba_gba)
+STD_ROM_FN(gba_arkanoidadv)
+
+struct BurnDriver BurnDrvgba_arkanoidadv = {
+	"gba_arkanoidadv", NULL, "gba_gba", NULL, "2004",
+	"Arkanoid Advance (HB)\0", NULL, "Yodajr", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BREAKOUT, 0,
+	GbaGetZipName, gba_arkanoidadvRomInfo, gba_arkanoidadvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Ashen Relics (HB)
 
 static struct BurnRomInfo gba_ashenrelicsRomDesc[] = {
@@ -55863,6 +55882,25 @@ struct BurnDriver BurnDrvgba_atomix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_atomixRomInfo, gba_atomixRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Aunt Flora's Mansion (HB)
+
+static struct BurnRomInfo gba_auntfloraRomDesc[] = {
+	{ "Aunt Flora's Mansion (2024)(Pocket Pulp, Anna Anthropy).gba",	2097152,	0xfcdc6168,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_auntflora, gba_auntflora, gba_gba)
+STD_ROM_FN(gba_auntflora)
+
+struct BurnDriver BurnDrvgba_auntflora = {
+	"gba_auntflora", NULL, "gba_gba", NULL, "2024",
+	"Aunt Flora's Mansion (HB)\0", NULL, "Pocket Pulp, Anna Anthropy", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_auntfloraRomInfo, gba_auntfloraRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -56987,6 +57025,25 @@ struct BurnDriver BurnDrvgba_geodasadv = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Gleam (HB)
+
+static struct BurnRomInfo gba_gleamRomDesc[] = {
+	{ "Gleam (2006)(AkumaATR).gba",	30709368,	0xc4b63fe6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_gleam, gba_gleam, gba_gba)
+STD_ROM_FN(gba_gleam)
+
+struct BurnDriver BurnDrvgba_gleam = {
+	"gba_gleam", NULL, "gba_gba", NULL, "2006",
+	"Gleam (HB)\0", NULL, "AkumaATR", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_gleamRomInfo, gba_gleamRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {
@@ -57459,6 +57516,44 @@ struct BurnDriver BurnDrvgba_neonnoir = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Notebook Adventure (HB, v1.3)
+
+static struct BurnRomInfo gba_notebookadvRomDesc[] = {
+	{ "Notebook Adventure v1.3 (2022)(NotImplementedLife).gba",	476392,	0xcc110502,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_notebookadv, gba_notebookadv, gba_gba)
+STD_ROM_FN(gba_notebookadv)
+
+struct BurnDriver BurnDrvgba_notebookadv = {
+	"gba_notebookadv", NULL, "gba_gba", NULL, "2022",
+	"Notebook Adventure (HB, v1.3)\0", NULL, "NotImplementedLife", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_notebookadvRomInfo, gba_notebookadvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Notenogram (HB)
+
+static struct BurnRomInfo gba_notenogramRomDesc[] = {
+	{ "Notenogram (2022)(kva64).gba",	807876,	0x28108d5e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_notenogram, gba_notenogram, gba_gba)
+STD_ROM_FN(gba_notenogram)
+
+struct BurnDriver BurnDrvgba_notenogram = {
+	"gba_notenogram", NULL, "gba_gba", NULL, "2022",
+	"Notenogram (HB)\0", NULL, "kva64", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_notenogramRomInfo, gba_notenogramRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Inheritors of the Oubliette (HB, v1.2)
 
 static struct BurnRomInfo gba_oublietteRomDesc[] = {
@@ -57535,7 +57630,7 @@ struct BurnDriver BurnDrvgba_pphoenix = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Pokemon - Ghost Grey Version (Hack, v1.0.1)
+// Pokémon - Ghost Grey Version (Hack, v1.0.1)
 // https://www.pokecommunity.com/threads/pok%C3%A9mon-ghost-grey-version.543491/
 static struct BurnRomInfo gba_pokeghgreyRomDesc[] = {
 	{ "Pokemon - Ghost Grey Version v1.0.1 (2026)(Joey Zeed).gba",	33554432,	0xbe0375e2,	BRF_ESS | BRF_PRG },

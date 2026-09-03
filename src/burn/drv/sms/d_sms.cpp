@@ -25750,6 +25750,24 @@ struct BurnDriver BurnDrvgg_guntusm = {
 	256, 192, 4, 3
 };
 
+// Hong Kong '97 (HB, v0.0.1)
+static struct BurnRomInfo gg_hongkong97RomDesc[] = {
+	{ "Hong Kong '97 v0.0.1 (2026)(SirVH).gg",	524288, 0xd2f8b283, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_hongkong97)
+STD_ROM_FN(gg_hongkong97)
+
+struct BurnDriver BurnDrvgg_hongkong97 = {
+	"gg_hongkong97", NULL, NULL, NULL, "2026",
+	"Hong Kong '97 (HB, v0.0.1)\0", NULL, "SirVH", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
+	GGGetZipName, gg_hongkong97RomInfo, gg_hongkong97RomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Hopman Mini (HB)
 static struct BurnRomInfo gg_hopmanmRomDesc[] = {
 	{ "Hopman Mini (2023)(Inufuto).gg",	16368, 0x84fd672d, BRF_PRG | BRF_ESS },

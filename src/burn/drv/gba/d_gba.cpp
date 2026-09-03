@@ -56664,6 +56664,25 @@ struct BurnDriver BurnDrvgba_eliteagb = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Elland: The Crystal Wars (HB)
+
+static struct BurnRomInfo gba_ellandtcwRomDesc[] = {
+	{ "Elland - The Crystal Wars (2022)(The Retro Room Games).gba",	4016344,	0xe3128bcb,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ellandtcw, gba_ellandtcw, gba_gba)
+STD_ROM_FN(gba_ellandtcw)
+
+struct BurnDriver BurnDrvgba_ellandtcw = {
+	"gba_ellandtcw", NULL, "gba_gba", NULL, "2022",
+	"Elland: The Crystal Wars (HB)\0", "Published by The Retro Room Games", "The Retro Room Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SIM | GBF_SHOOT, 0,
+	GbaGetZipName, gba_ellandtcwRomInfo, gba_ellandtcwRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Escape 2042: The Truth Defenders (M4) (HB)
 
 static struct BurnRomInfo gba_escape2042RomDesc[] = {
@@ -57044,6 +57063,25 @@ struct BurnDriver BurnDrvgba_gleam = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Glory Hunters (HB, v1.3)
+
+static struct BurnRomInfo gba_gloryhuntRomDesc[] = {
+	{ "Glory Hunters v1.3 (World)(2025)(2think Design Studio).gba",	4270324,	0xf031b45e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_gloryhunt, gba_gloryhunt, gba_gba)
+STD_ROM_FN(gba_gloryhunt)
+
+struct BurnDriver BurnDrvgba_gloryhunt = {
+	"gba_gloryhunt", NULL, "gba_gba", NULL, "2025",
+	"Glory Hunters (HB, v1.3)\0", NULL, "2think Design Studio", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV, 0,
+	GbaGetZipName, gba_gloryhuntRomInfo, gba_gloryhuntRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {
@@ -57078,6 +57116,25 @@ struct BurnDriver BurnDrvgba_gorf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
 	GbaGetZipName, gba_gorfRomInfo, gba_gorfRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Gravity (HB)
+
+static struct BurnRomInfo gba_gravityRomDesc[] = {
+	{ "Gravity (2025)(VG Source Game Studio).gba",	4194304,	0x15e60fb1,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_gravity, gba_gravity, gba_gba)
+STD_ROM_FN(gba_gravity)
+
+struct BurnDriver BurnDrvgba_gravity = {
+	"gba_gravity", NULL, "gba_gba", NULL, "2025",
+	"Gravity (HB)\0", NULL, "VG Source Game Studio", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PUZZLE, 0,
+	GbaGetZipName, gba_gravityRomInfo, gba_gravityRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57303,6 +57360,25 @@ struct BurnDriver BurnDrvgba_lro = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_lroRomInfo, gba_lroRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Magic and Legend: Time Knights (HB)
+
+static struct BurnRomInfo gba_magiclegendtkRomDesc[] = {
+	{ "Magic and Legend - Time Knights (2023)(Giles Hamson).gba",	1048576,	0x6d890405,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_magiclegendtk, gba_magiclegendtk, gba_gba)
+STD_ROM_FN(gba_magiclegendtk)
+
+struct BurnDriver BurnDrvgba_magiclegendtk = {
+	"gba_magiclegendtk", NULL, "gba_gba", NULL, "2023",
+	"Magic and Legend: Time Knights (HB)\0", "Published by The Retro Room Games, press Start to close textual menu", "Giles Hamson", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_magiclegendtkRomInfo, gba_magiclegendtkRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57719,7 +57795,7 @@ struct BurnDriver BurnDrvgba_spaceqix = {
 	"gba_spaceqix", NULL, "gba_gba", NULL, "2015",
 	"Qix: Space Qix (HB, v1.3)\0", NULL, "Choi Kyun", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PUZZLE, 0,
 	GbaGetZipName, gba_spaceqixRomInfo, gba_spaceqixRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2

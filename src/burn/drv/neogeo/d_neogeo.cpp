@@ -30158,6 +30158,35 @@ struct BurnDriver BurnDrvCaptainBarrel = {
 };
 
 
+// Food Fight - Neo Geo Conversion (HB)
+
+static struct BurnRomInfo foodfightRomDesc[] = {
+	{ "foodfight_p1.p1",    0x080000, 0x455a609f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "foodfight_s1.s1",    0x020000, 0x6956d778, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "foodfight_c1.c1",    0x080000, 0x7b4ca9e3, 3 | BRF_GRA },           //  2 Sprite data
+	{ "foodfight_c2.c2",    0x080000, 0xd9f831bb, 3 | BRF_GRA },           //  3
+
+	{ "foodfight_m1.m1",    0x040000, 0x35cb565b, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "foodfight_v1.v1",    0x080000, 0x16d20386, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(foodfight, foodfight, neogeo)
+STD_ROM_FN(foodfight)
+
+struct BurnDriver BurnDrvFoodfight = {
+	"foodfight", NULL, "neogeo", NULL, "2025",
+	"Food Fight - Neo Geo Conversion (HB)\0", "Initial screen takes so much time to be dismissed. Hold F1 to accelerate the process.", "iq_132", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_ACTION, 0,
+	NULL, foodfightRomInfo, foodfightRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Golden Axe Neo Geo (HB)
 // https://h0ffman.itch.io/golden-axe
 

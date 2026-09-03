@@ -11727,40 +11727,79 @@ struct BurnDriver BurnSpecfred = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Freddy Hardest - Part 1 (English) (48K)
+
+static struct BurnRomInfo SpecFredhardp1enRomDesc[] = {
+	{ "Freddy Hardest - Part 1 EN 48K (1987)(Dinamic Software).tzx", 49371, 0x05a97024, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFredhardp1en, SpecFredhardp1en, Spectrum)
+STD_ROM_FN(SpecFredhardp1en)
+
+struct BurnDriver BurnSpecFredhardp1en = {
+	"spec_fredhardp1en", NULL, "spec_spectrum", NULL, "1987",
+	"Freddy Hardest - Part 1 (English) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecFredhardp1enRomInfo, SpecFredhardp1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Freddy Hardest - Part 2 (English) (48K)
+
+static struct BurnRomInfo SpecFredhardp2enRomDesc[] = {
+	{ "Freddy Hardest - Part 2 EN 48K (1987)(Dinamic Software).tzx", 42742, 0x64de69ec, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecFredhardp2en, SpecFredhardp2en, Spectrum)
+STD_ROM_FN(SpecFredhardp2en)
+
+struct BurnDriver BurnSpecFredhardp2en = {
+	"spec_fredhardp2en", "spec_fredhardp1en", "spec_spectrum", NULL, "1987",
+	"Freddy Hardest - Part 2 (English) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecFredhardp2enRomInfo, SpecFredhardp2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Freddy Hardest - Part 1 (Spanish) (48K)
 
-static struct BurnRomInfo SpecFredhardp1RomDesc[] = {
+static struct BurnRomInfo SpecFredhardp1esRomDesc[] = {
 	{ "Freddy Hardest - Part 1 ES 48K (1987)(Dinamic Software).tzx", 48084, 0xddbebd84, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecFredhardp1, SpecFredhardp1, Spectrum)
-STD_ROM_FN(SpecFredhardp1)
+STDROMPICKEXT(SpecFredhardp1es, SpecFredhardp1es, Spectrum)
+STD_ROM_FN(SpecFredhardp1es)
 
-struct BurnDriver BurnSpecFredhardp1 = {
-	"spec_fredhardp1", NULL, "spec_spectrum", NULL, "1987",
+struct BurnDriver BurnSpecFredhardp1es = {
+	"spec_fredhardp1es", "spec_fredhardp1en", "spec_spectrum", NULL, "1987",
 	"Freddy Hardest - Part 1 (Spanish) (48K)\0", NULL, "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
-	SpectrumGetZipName, SpecFredhardp1RomInfo, SpecFredhardp1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
+	SpectrumGetZipName, SpecFredhardp1esRomInfo, SpecFredhardp1esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
 // Freddy Hardest - Part 2 (Spanish) (48K)
 
-static struct BurnRomInfo SpecFredhardp2RomDesc[] = {
+static struct BurnRomInfo SpecFredhardp2esRomDesc[] = {
 	{ "Freddy Hardest - Part 2 ES 48K (1987)(Dinamic Software).tzx", 47840, 0x78a39997, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecFredhardp2, SpecFredhardp2, Spectrum)
-STD_ROM_FN(SpecFredhardp2)
+STDROMPICKEXT(SpecFredhardp2es, SpecFredhardp2es, Spectrum)
+STD_ROM_FN(SpecFredhardp2es)
 
-struct BurnDriver BurnSpecFredhardp2 = {
-	"spec_fredhardp2", "spec_fredhardp1", "spec_spectrum", NULL, "1987",
+struct BurnDriver BurnSpecFredhardp2es = {
+	"spec_fredhardp2es", "spec_fredhardp1en", "spec_spectrum", NULL, "1987",
 	"Freddy Hardest - Part 2 (Spanish) (48K)\0", "Password: 897653", "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_RUNGUN, 0,
-	SpectrumGetZipName, SpecFredhardp2RomInfo, SpecFredhardp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecFredhardp2esRomInfo, SpecFredhardp2esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -11775,10 +11814,10 @@ STDROMPICKEXT(SpecFreddyhardestsouthman, SpecFreddyhardestsouthman, Spectrum)
 STD_ROM_FN(SpecFreddyhardestsouthman)
 
 struct BurnDriver BurnSpecFreddyhardestsouthman = {
-	"spec_freddyhardestsouthman", NULL, "spec_spectrum", NULL, "1989",
+	"spec_freddyhardestsouthman", "spec_guardianangel", "spec_spectrum", NULL, "1989",
 	"Freddy Hardest in South Manhattan (Spanish) (48K)\0", "Set 'S - Sinclair' to use controller", "Dinamic Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_SCRFIGHT, 0,
 	SpectrumGetZipName, SpecFreddyhardestsouthmanRomInfo, SpecFreddyhardestsouthmanRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -13338,6 +13377,25 @@ struct BurnDriver BurnSpecGuardian = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_SHOOT, 0,
 	SpectrumGetZipName, SpecGuardianRomInfo, SpecGuardianRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Guardian Angel, The (48K)
+
+static struct BurnRomInfo SpecGuardianangelRomDesc[] = {
+	{ "Guardian Angel, The 48K (1989)(Dinamic Software).tzx", 44481, 0xce4a8c97, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecGuardianangel, SpecGuardianangel, Spectrum)
+STD_ROM_FN(SpecGuardianangel)
+
+struct BurnDriver BurnSpecGuardianangel = {
+	"spec_guardianangel", NULL, "spec_spectrum", NULL, "1989",
+	"Guardian Angel, The (48K)\0", NULL, "Set 'S - Sinclair' to use controller", "Dinamic Software",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_SCRFIGHT, 0,
+	SpectrumGetZipName, SpecGuardianangelRomInfo, SpecGuardianangelRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

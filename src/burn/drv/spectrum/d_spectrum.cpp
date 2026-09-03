@@ -727,7 +727,7 @@ struct BurnDriver BurnSpec180 = {
 // 720 Degrees (48K)
 
 static struct BurnRomInfo Spec720degRomDesc[] = {
-	{ "720 Degrees 48K (1987)(U.S. Gold).tap", 50644, 0x842e1279, BRF_ESS | BRF_PRG },
+	{ "720 Degrees 48K (1987)(U.S. Gold).tzx", 60492, 0x3640abef, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec720deg, Spec720deg, Spectrum)
@@ -1621,7 +1621,7 @@ struct BurnDriver BurnSpecAlcaharry = {
 // Alchemist (48K)
 
 static struct BurnRomInfo SpecAlchemistRomDesc[] = {
-	{ "Alchemist 48K (1983)(Imagine Software).z80", 37807, 0xe6f0df00, BRF_ESS | BRF_PRG },
+	{ "Alchemist 48K (1983)(Imagine Software).tzx", 47321, 0x03e190d7, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAlchemist, SpecAlchemist, Spectrum)
@@ -34593,6 +34593,44 @@ struct BurnDriver BurnSpecBabymonkeyalba = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Backrooms ZX (English) (128K) (HB)
+
+static struct BurnRomInfo SpecBackrzxenRomDesc[] = {
+	{ "Backrooms ZX EN 128K (2026)(AmikoSoft).tap", 81568, 0x097f35d6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBackrzxen, SpecBackrzxen, Spec128)
+STD_ROM_FN(SpecBackrzxen)
+
+struct BurnDriver BurnSpecBackrzxen = {
+	"spec_backrzxen", NULL, "spec_spec128", NULL, "2026",
+	"Backrooms ZX (English) (128K) (HB)\0", NULL, "AmikoSoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBackrzxenRomInfo, SpecBackrzxenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Backrooms ZX (Spanish) (128K) (HB)
+
+static struct BurnRomInfo SpecBackrzxesRomDesc[] = {
+	{ "Backrooms ZX ES 128K (2026)(AmikoSoft).tap", 82158, 0x5a4de3db, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBackrzxes, SpecBackrzxes, Spec128)
+STD_ROM_FN(SpecBackrzxes)
+
+struct BurnDriver BurnSpecBackrzxes = {
+	"spec_backrzxes", "spec_backrzxen", "spec_spec128", NULL, "2026",
+	"Backrooms ZX (Spanish) (128K) (HB)\0", NULL, "AmikoSoft", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBackrzxesRomInfo, SpecBackrzxesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Baffo Jones (48K) (HB)
 
 static struct BurnRomInfo SpecBaffojonesRomDesc[] = {
@@ -54586,7 +54624,7 @@ struct BurnDriver BurnSpecPutamili = {
 // Pyramid, The (128K) (HB)
 
 static struct BurnRomInfo SpecPyramidRomDesc[] = {
-	{ "Pyramid, The 128K (2025)(Amikosoft).tap", 62761, 0x8bea7ad5, BRF_ESS | BRF_PRG },
+	{ "Pyramid, The 128K (2025)(AmikoSoft).tap", 62761, 0x8bea7ad5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPyramid, SpecPyramid, Spec128)
@@ -54594,7 +54632,7 @@ STD_ROM_FN(SpecPyramid)
 
 struct BurnDriver BurnSpecPyramid = {
 	"spec_pyramid", NULL, "spec_spec128", NULL, "2025",
-	"Pyramid, The (128K) (HB)\0", NULL, "Amikosoft", "ZX Spectrum",
+	"Pyramid, The (128K) (HB)\0", NULL, "AmikoSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecPyramidRomInfo, SpecPyramidRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54712,6 +54750,25 @@ struct BurnDriver BurnSpecQuahappy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_MAZE, 0,
 	SpectrumGetZipName, SpecQuahappyRomInfo, SpecQuahappyRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Quantum Hop (48K-128K) (HB)
+
+static struct BurnRomInfo SpecQuanthopRomDesc[] = {
+	{ "Quantum Hop 48K-128K (2026)(Tonsomo Entertainment).tzx", 41178, 0xac0c49c6, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecQuanthop, SpecQuanthop, Spec128)
+STD_ROM_FN(SpecQuanthop)
+
+struct BurnDriver BurnSpecQuanthop = {
+	"spec_quanthop", NULL, "spec_spec128", NULL, "2026",
+	"Quantum Hop (48K-128K) (HB)\0", NULL, "Tonsomo Entertainment", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecQuanthopRomInfo, SpecQuanthopRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

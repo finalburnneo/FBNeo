@@ -17227,6 +17227,39 @@ struct BurnDriver BurnDrvKarnovre = {
 };
 
 
+// Last Hope - Pink Bullets (bootleg AES to MVS conversion, no coin support) (Hack)
+
+static struct BurnRomInfo lasthopepbRomDesc[] = {
+	{ "ngdt-300-p1pb.bin", 0x100000, 0xb81dd2e0, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
+
+	{ "ngdt-300-s1pb.bin", 0x020000, 0xf0719dbb, 2 | BRF_GRA },		 	//  1 Text data
+
+	{ "ngdt-300-c1pb.bin", 0x400000, 0xbc2d2a8b, 3 | BRF_GRA },		 	//  2 Sprite data
+	{ "ngdt-300-c2pb.bin", 0x400000, 0x1673318d, 3 | BRF_GRA },		 	//  3
+	{ "ngdt-300-c3pb.bin", 0x400000, 0xbf0e4af1, 3 | BRF_GRA },		 	//  4
+	{ "ngdt-300-c4pb.bin", 0x400000, 0x6b44c6a0, 3 | BRF_GRA },		 	//  5
+
+	{ "ngdt-300-m1pb.bin", 0x020000, 0x4b395814, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "ngdt-300-v1pb.bin", 0x200000, 0x2dda0948, 5 | BRF_SND },		 	//  7 Sound data
+	{ "ngdt-300-v2pb.bin", 0x200000, 0x056f66ef, 5 | BRF_SND },		 	//  8
+	{ "ngdt-300-v3pb.bin", 0x200000, 0x3754d8f9, 5 | BRF_SND },		 	//  9
+};
+
+STDROMPICKEXT(lasthopepb, lasthopepb, neogeo)
+STD_ROM_FN(lasthopepb)
+
+struct BurnDriver BurnDrvLasthopepb = {
+	"lasthopepb", "lasthope", "neogeo", NULL, "2026",
+	"Last Hope - Pink Bullets (bootleg AES to MVS conversion, no coin support) (Hack)\0", NULL, "LoW", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HACK | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
+	NULL, lasthopepbRomInfo, lasthopepbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Magician Lord - Again Changes from Hell (Hack, English v1.0.0)
 // https://github.com/Boomchil/maglord-acfh/
 

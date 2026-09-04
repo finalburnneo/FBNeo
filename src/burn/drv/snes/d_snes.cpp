@@ -48477,18 +48477,18 @@ struct BurnDriver BurnDrvsnes_Magicalquestfr = {
 	512, 448, 4, 3
 };
 
-// Marvel Super Heroes - War of the Gems Redux (Hack)
-// https://romhackplaza.org/romhacks/marvel-super-heroes-in-war-of-the-gems-redux-snes/
+// Marvel Super Heroes: War of the Gems Redux (Hack, v2.1)
+// https://romhackplaza.org/romhacks/marvel-super-heroes-in-war-of-the-gems-redux-super-nintendo-romhack
 static struct BurnRomInfo snes_MshwargemsrRomDesc[] = {
-	{ "Marvel Super Heroes - War of the Gems Redux (2025)(BillyTime! Games).sfc", 2097152, 0x2dc14312, BRF_ESS | BRF_PRG },
+	{ "Marvel Super Heroes - War of the Gems Redux v2.1 (2025-26)(BillyTime! Games).sfc", 2097152, 0xce4eb55c, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Mshwargemsr)
 STD_ROM_FN(snes_Mshwargemsr)
 
 struct BurnDriver BurnDrvsnes_Mshwargemsr = {
-	"snes_mshwargemsr", "snes_mshwargems", NULL, NULL, "2025",
-	"Marvel Super Heroes - War of the Gems Redux (Hack)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
+	"snes_mshwargemsr", "snes_mshwargems", NULL, NULL, "2025-26",
+	"Marvel Super Heroes: War of the Gems Redux (Hack, v2.1)\0", NULL, "BillyTime! Games", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MshwargemsrRomInfo, snes_MshwargemsrRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

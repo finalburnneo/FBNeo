@@ -1111,6 +1111,9 @@
 #define GAMESEL_MENU_VIEWEMMA				11902
 #define GAMESEL_MENU_FAVORITE				11903
 #define GAMESEL_MENU_ROMDATA				11904
+#define MENU_DEFAULT_DARK_MODE              11905
+#define MENU_DEFAULT_LIGHT_MODE             11906
+#define BMP_DARK_MODE_SPLASH                11907 
 
 // Next default values for new objects
 //

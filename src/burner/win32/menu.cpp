@@ -1,6 +1,7 @@
 // Menu handling
 
 #include "burner.h"
+#define TBCDRF_USECDCOLORS      0x00800000 // adding constant so NM_CUSTOMDRAW doesnt get ignored
 
 #ifdef _MSC_VER
 // #include <winable.h>
@@ -41,6 +42,12 @@ static HHOOK hMenuHook;
 static bool bTest = false;
 static RECT PopupRect = { 0,0,0,0, };
 
+struct MenuItemTextAndToggle 
+{
+	TCHAR sText[256];
+	bool isItemChecked;
+};
+
 static INT32 GetCurrentMonitorHigh() {
 	HMONITOR hMonitor = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
 	if (NULL == hMonitor) return -1;
@@ -50,6 +57,50 @@ static INT32 GetCurrentMonitorHigh() {
 	if (!GetMonitorInfo(hMonitor, &monitorInfo)) return -1;
 
 	return monitorInfo.rcMonitor.bottom;
+}
+
+void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
+{
+    MENUINFO mi = { sizeof(MENUINFO) };
+    mi.fMask   = MIM_BACKGROUND;
+    mi.hbrBack = hbr;
+    SetMenuInfo(hMenu, &mi);
+
+    int count = GetMenuItemCount(hMenu);
+    for (int i = 0; i < count; i++) {
+        MENUITEMINFO mii = { sizeof(MENUITEMINFO) };
+        mii.fMask = MIIM_FTYPE | MIIM_DATA;
+        GetMenuItemInfo(hMenu, i, TRUE, &mii); 
+
+		MENUITEMINFO miiState = { sizeof(MENUITEMINFO) };
+		miiState.fMask = MIIM_STATE;
+		GetMenuItemInfo(hMenu, i, TRUE, &miiState);
+		bool isChecked = (miiState.fState & MFS_CHECKED) != 0;
+
+		//in order to make the toggle background follow the ui color we must bring responsibility to the owner 
+		//to do this while still telling windows to draw dots on the checked items the MenuItemTextAndToggle struct was created so that booleans can be informed along with text
+		//on line mii.dwItemData = (ULONG_PTR)MenuItemInfo;
+		MenuItemTextAndToggle* MenuItemInfo = new MenuItemTextAndToggle();
+
+        TCHAR szText[256] = { 0 };
+        MENUITEMINFO miiText = { sizeof(MENUITEMINFO) };
+        miiText.fMask = MIIM_STRING;
+        miiText.dwTypeData = szText;
+        miiText.cch = 256;
+        GetMenuItemInfo(hMenu, i, TRUE, &miiText);
+
+		MenuItemInfo->isItemChecked = isChecked;
+		_tcscpy_s(MenuItemInfo->sText, _countof(MenuItemInfo->sText), szText);
+
+        mii.fType    |= MFT_OWNERDRAW;
+        mii.dwItemData = (ULONG_PTR)MenuItemInfo; 
+        SetMenuItemInfo(hMenu, i, TRUE, &mii);
+
+        HMENU hSub = GetSubMenu(hMenu, i);
+        if (hSub) {
+            ApplyMenuBackground(hSub, hbr);
+        }
+    }
 }
 
 static LRESULT CALLBACK MenuHook(INT32 nCode, WPARAM wParam, LPARAM lParam)
@@ -205,6 +256,13 @@ void DisplayPopupMenu(int nMenu)
 		RECT clientRect;
 		RECT buttonRect;
 
+		COLORREF color = RGB((uiMenuItemColor >> 16) & 0xFF,     // R
+                      		 (uiMenuItemColor >> 8) & 0xFF,      // G
+                      		  uiMenuItemColor & 0xFF);           // B
+		HBRUSH hbrColor = CreateSolidBrush(color);
+
+		ApplyMenuBackground(hPopupMenu, hbrColor);
+
 		nLastMenu         = nMenu;
 		nRecursions       = 0;
 		nCurrentItemFlags = 0;
@@ -279,6 +337,20 @@ int OnNotify(HWND, int, NMHDR* lpnmhdr)		// HWND hwnd, int id, NMHDR* lpnmhdr
 				nLastMenu = ((TBNOTIFY*)lpnmhdr)->iItem - MENU_MENU_0;
 			}
 			return TBDDRET_DEFAULT;
+		}
+
+		//adds a custom draw event to change the text font color in the button bar
+		case NM_CUSTOMDRAW: {
+			LPNMTBCUSTOMDRAW lpnmtbcd = (LPNMTBCUSTOMDRAW)lpnmhdr;
+			switch (lpnmtbcd->nmcd.dwDrawStage) {
+				case CDDS_PREPAINT:
+					return CDRF_NOTIFYITEMDRAW;
+
+				case CDDS_ITEMPREPAINT:
+					lpnmtbcd->clrText = (COLORREF) uiTextFontColor; 
+					return TBCDRF_USECDCOLORS;
+			}
+			return CDRF_DODEFAULT;
 		}
 
 		case TBN_HOTITEMCHANGE: {
@@ -1294,6 +1366,8 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, bBurnUseASMCPUEmulation ? MF_CHECKED : MF_UNCHECKED);
 #endif
 
+	UpdateUiColorMode(nUiColorTheme);
+
 	var = MENU_ICONS_SIZE_16;
 	switch (nIconsSize) {
 		case ICON_16x16: var = MENU_ICONS_SIZE_16;	break;
@@ -1862,4 +1936,3 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
 	}
 }
-

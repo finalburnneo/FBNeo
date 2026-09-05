@@ -58529,7 +58529,7 @@ struct BurnDriver BurnDrvgba_magicltkgbc = {
 // Pitman - GB2GBA (Japan)
 
 static struct BurnRomInfo gba_pitmangbRomDesc[] = {
-	{ "Pitman - GB2GBA (J) (1990)(Ask Kodansha).gba",	108700,	0x2571591e,	BRF_ESS | BRF_PRG },
+	{ "Pitman - GB2GBA (J) (1990)(Ask Kodansha).gba",	108700,	0x4c32e350,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_pitmangb, gba_pitmangb, gba_gba)

@@ -41301,6 +41301,25 @@ struct BurnDriver BurnDrvmd_megasmole = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mega Tetris (HB)
+// https://davidsgame.itch.io/megatetris
+static struct BurnRomInfo md_megatetrisRomDesc[] = {
+	{ "Mega Tetris (2026)(DavidGames).bin", 1441792, 0x8d647d1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megatetris)
+STD_ROM_FN(md_megatetris)
+
+struct BurnDriver BurnDrvmd_megatetris = {
+	"md_megatetris", NULL, NULL, NULL, "2026",
+	"Mega Tetris (HB)\0", NULL, "DavidGames", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_megatetrisRomInfo, md_megatetrisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mega Turrican - Director's Cut (World)
 static struct BurnRomInfo md_megaturrdcRomDesc[] = {
 	{ "Mega Turrican - Director's Cut (2021)(Strictly Limited Games).bin", 5242880, 0x3226ec36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

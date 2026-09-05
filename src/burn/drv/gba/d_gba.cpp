@@ -58469,6 +58469,44 @@ struct BurnDriver BurnDrvgba_zipline = {
 // ----------------
 
 
+// Alleyway - GB2GBA
+
+static struct BurnRomInfo gba_alleywaygbRomDesc[] = {
+	{ "Alleyway - GB2GBA (1989)(Nintendo).gba",	108700,	0x61d2ce4d,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_alleywaygb, gba_alleywaygb, gba_gba)
+STD_ROM_FN(gba_alleywaygb)
+
+struct BurnDriver BurnDrvgba_alleywaygb = {
+	"gba_alleywaygb", NULL, "gba_gba", NULL, "1989",
+	"Alleyway - GB2GBA\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BREAKOUT, 0,
+	GbaGetZipName, gba_alleywaygbRomInfo, gba_alleywaygbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Baseball - GB2GBA
+
+static struct BurnRomInfo gba_baseballgbRomDesc[] = {
+	{ "Baseball - GB2GBA (1989)(Nintendo).gba",	141468,	0x99595aac,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_baseballgb, gba_baseballgb, gba_gba)
+STD_ROM_FN(gba_baseballgb)
+
+struct BurnDriver BurnDrvgba_baseballgb = {
+	"gba_baseballgb", NULL, "gba_gba", NULL, "1989",
+	"Baseball - GB2GBA\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SPORTSMISC, 0,
+	GbaGetZipName, gba_baseballgbRomInfo, gba_baseballgbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Chase H.Q. Game Boy Collection - GBC2GBA
 
 static struct BurnRomInfo gba_chasehqgbcRomDesc[] = {
@@ -58507,6 +58545,44 @@ struct BurnDriver BurnDrvgba_gloryhuntgb = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Heiankyo Alien - GB2GBA
+
+static struct BurnRomInfo gba_heiankyogbRomDesc[] = {
+	{ "Heiankyo Alien - GB2GBA (1989)(Meldac).gba",	108700,	0x6d848de7,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_heiankyogb, gba_heiankyogb, gba_gba)
+STD_ROM_FN(gba_heiankyogb)
+
+struct BurnDriver BurnDrvgba_heiankyogb = {
+	"gba_heiankyogb", NULL, "gba_gba", NULL, "1989",
+	"Heiankyo Alien - GB2GBA\0", NULL, "Meldac", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MAZE | GBF_ACTION, 0,
+	GbaGetZipName, gba_heiankyogbRomInfo, gba_heiankyogbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Koro Dice - GB2GBA
+
+static struct BurnRomInfo gba_korodicegbRomDesc[] = {
+	{ "Koro Dice - GB2GBA (1990)(King Records).gba",	108700,	0x795da416,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_korodicegb, gba_korodicegb, gba_gba)
+STD_ROM_FN(gba_korodicegb)
+
+struct BurnDriver BurnDrvgba_korodicegb = {
+	"gba_korodicegb", NULL, "gba_gba", NULL, "1990",
+	"Koro Dice - GB2GBA\0", NULL, "King Records", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_korodicegbRomInfo, gba_korodicegbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Magic & Legend: Time Knights - GBC2GBA (HB)
 
 static struct BurnRomInfo gba_magicltkgbcRomDesc[] = {
@@ -58526,10 +58602,29 @@ struct BurnDriver BurnDrvgba_magicltkgbc = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Pitman - GB2GBA (Japan)
+// Motocross Maniacs Game Boy Collection - GBC2GBA
+
+static struct BurnRomInfo gba_motomanigbcRomDesc[] = {
+	{ "Motocross Maniacs Game Boy Collection - GBC2GBA (1990-92)(Sammy).gba",	1266844,	0x7c40a0f8,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_motomanigbc, gba_motomanigbc, gba_gba)
+STD_ROM_FN(gba_motomanigbc)
+
+struct BurnDriver BurnDrvgba_motomanigbc = {
+	"gba_motomanigbc", NULL, "gba_gba", NULL, "1990-92",
+	"Motocross Maniacs Game Boy Collection - GBC2GBA\0", NULL, "Sammy", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING | GBF_ACTION | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_motomanigbcRomInfo, gba_motomanigbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Pitman - GB2GBA
 
 static struct BurnRomInfo gba_pitmangbRomDesc[] = {
-	{ "Pitman - GB2GBA (J) (1990)(Ask Kodansha).gba",	108700,	0x4c32e350,	BRF_ESS | BRF_PRG },
+	{ "Pitman - GB2GBA (1990)(Ask Kodansha).gba",	108700,	0x4c32e350,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_pitmangb, gba_pitmangb, gba_gba)
@@ -58537,10 +58632,48 @@ STD_ROM_FN(gba_pitmangb)
 
 struct BurnDriver BurnDrvgba_pitmangb = {
 	"gba_pitmangb", NULL, "gba_gba", NULL, "1990",
-	"Pitman - GB2GBA (Japan)\0", NULL, "Ask Kodansha", "Game Boy Advance",
+	"Pitman - GB2GBA\0", NULL, "Ask Kodansha", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_pitmangbRomInfo, gba_pitmangbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Qix - GB2GBA
+
+static struct BurnRomInfo gba_qixgbRomDesc[] = {
+	{ "Qix - GB2GBA (1990)(Taito).gba",	108708,	0x57bb3162,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_qixgb, gba_qixgb, gba_gba)
+STD_ROM_FN(gba_qixgb)
+
+struct BurnDriver BurnDrvgba_qixgb = {
+	"gba_qixgb", NULL, "gba_gba", NULL, "1990",
+	"Qix - GB2GBA\0", NULL, "Taito", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE | GBF_ACTION, 0,
+	GbaGetZipName, gba_qixgbRomInfo, gba_qixgbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Rolan's Curse Game Boy Collection - GB2GBA
+
+static struct BurnRomInfo gba_rolancurgbRomDesc[] = {
+	{ "Rolan's Curse Game Boy Collection - GB2GBA (1990-92)(Sammy).gba",	349340,	0xa2fa8afd,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_rolancurgb, gba_rolancurgb, gba_gba)
+STD_ROM_FN(gba_rolancurgb)
+
+struct BurnDriver BurnDrvgba_rolancurgb = {
+	"gba_rolancurgb", NULL, "gba_gba", NULL, "1990-92",
+	"Rolan's Curse Game Boy Collection - GB2GBA\0", NULL, "Sammy", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
+	GbaGetZipName, gba_rolancurgbRomInfo, gba_rolancurgbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -58578,6 +58711,25 @@ struct BurnDriver BurnDrvgba_smlwlgbc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_smlwlgbcRomInfo, gba_smlwlgbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Tennis - GB2GBA
+
+static struct BurnRomInfo gba_tennisgbRomDesc[] = {
+	{ "Tennis - GB2GBA (1989)(Nintendo).gba",	108700,	0xbeaf2056,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tennisgb, gba_tennisgb, gba_gba)
+STD_ROM_FN(gba_tennisgb)
+
+struct BurnDriver BurnDrvgba_tennisgb = {
+	"gba_tennisgb", NULL, "gba_gba", NULL, "1989",
+	"Tennis - GB2GBA\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SPORTSMISC, 0,
+	GbaGetZipName, gba_tennisgbRomInfo, gba_tennisgbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

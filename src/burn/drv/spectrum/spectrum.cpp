@@ -792,7 +792,7 @@ static INT32 load_check = 0;
 static INT64 last_cycle = 0;
 static INT32 last_bc = 0;
 
-#define DEBUG_TAP 1
+#define DEBUG_TAP 0
 #define TAPERAW 0
 #if TAPERAW
 // Note:
@@ -1019,8 +1019,8 @@ static void SpecTZXOperation()
 					leader_pulse_count = tapword();
 					last8 = tapbyte();
 					pause_len = tapword();
-					block_len = tapword();
-					block_len |= (tapbyte() << 16);
+					block_len = tapword(); // this and the next line must not be optimized into 1 line, MS compiler is retarted
+					block_len |= tapbyte() << 16;
 					emit_leader(leader_pulse_len, leader_pulse_count);
 					tap_op_num++;
 					break;
@@ -1065,7 +1065,7 @@ static void SpecTZXOperation()
 					one_bit_len = tapword();
 					last8 = tapbyte();
 					pause_len = tapword();
-					block_len = tapword();
+					block_len = tapword(); // this and the next line must not be optimized into 1 line, MS compiler is retarted
 					block_len |= tapbyte() << 16;
 					emit_block(block_len, zero_bit_len, one_bit_len, last8);
 					tap_op_num++;

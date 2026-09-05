@@ -1,3 +1,4 @@
+
 #include "burnint.h"
 #include "gba.h"
 
@@ -29,7 +30,7 @@ static inline void    gba_tick_keypad(sb_joy_t* joy, gba_t* gba);
 static inline UINT16  gba_rom_read16(const gba_t* gba, UINT32 address);
 
 // timer.h
-static inline void                  gba_compute_timers(gba_t* gba);
+static inline void    gba_compute_timers(gba_t* gba);
 static inline void    gba_tick_interrupts(gba_t* gba);
 static inline void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
 
@@ -50,9 +51,24 @@ static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycl
 #include "sio.h"
 #include "apu.h"
 
+// ppu_worker.h — PPU worker thread component (single-header).  Must be included after ppu.h/dma.h.
+#include "ppu_worker.h"
+
 void gba_cpu_trigger_breakpoint(void* data);
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);
-void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch);
+void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worker_t* worker);
+
+// Thread-local pointer to the active ppu_worker_t instance.  Set at the top
+// of gba_tick() so that gba_ppu_event_worker() (a static-inline inside
+// ppu_worker.h) can reach the snapshot buffers and worker state without
+// having to plumb the pointer through every PPU event call site.
+ppu_worker_t* g_ppu_worker_current = NULL;
+
+// ---------------------------------------------------------------------------
+// ppu_worker_render_frame_into and gba_ppu_event_worker are both static-inlines
+// defined in ppu_worker.h.  The back-end worker thread functions (POSIX / Win32)
+// inside ppu_worker.h call ppu_worker_render_frame_into directly.
+// ---------------------------------------------------------------------------
 struct GbaCore {
 	gba_t state;
 	gba_scratch_t  scratch;
@@ -68,6 +84,7 @@ struct GbaCore {
 	UINT8  cartridgeBackupType;
 	double sourceRate;
 	INT32  outputFrames;
+	ppu_worker_t worker;                // PPU worker control block; disabled if worker.enabled == 0
 };
 
 struct GbaCartridgeProfile {
@@ -400,6 +417,8 @@ INT32 GbaCoreInit(GbaCore **core)
 	memset(*core, 0, sizeof(GbaCore));
 	(*core)->host.render_frame  = true;
 	(*core)->host.capture_audio = true;
+	// Spin up the PPU worker; falls back to ST if init fails.
+	ppu_worker_init(&(*core)->worker);
 	return 0;
 }
 
@@ -407,6 +426,8 @@ void GbaCoreExit(GbaCore **core)
 {
 	if (core == NULL || *core == NULL)
 		return;
+	// Shut down the worker first (join thread) before freeing core state.
+	ppu_worker_exit(&(*core)->worker);
 	gba_unload(&(*core)->state, &(*core)->scratch);
 	if ((*core)->ownsRom)
 		BurnFree((*core)->rom);
@@ -455,6 +476,8 @@ INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaR
 	gba_rtc_cold_init(&core->state.rtc, rtcSeed ? &seed : NULL);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
+	// Discard worker snapshots / backbuffers from previous ROM.
+	ppu_worker_reset(&core->worker);
 	GbaCoreClearPresentation(core);
 	return 0;
 }
@@ -475,6 +498,19 @@ INT32 GbaCoreLoadBios(GbaCore *core, const UINT8 *bios, size_t biosSize)
 		return 1;
 	memcpy(core->externalBios, bios, sizeof(core->externalBios));
 	core->externalBiosLoaded = true;
+	return 0;
+}
+
+INT32 GbaCoreRunFrame(GbaCore *core, INT32 bDraw)
+{
+	if (core == NULL || core->rom == NULL)
+		return 1;
+	// bDraw: 1=normal render, 0=runahead/fast-forward (skip pixel output)
+	core->host.render_frame = (bDraw != 0);
+
+	// Prepare worker write slot (prefill defaults, rotate slot).  Called before tick.
+	ppu_worker_begin_frame(&core->worker, &core->state, &core->host);
+	gba_tick(&core->host, &core->state, &core->scratch, &core->worker);
 	return 0;
 }
 
@@ -521,6 +557,8 @@ INT32 GbaCoreReset(GbaCore *core)
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
 	GbaCoreClearAudio(core);
+	// Reset the PPU worker (flush slots, discard in-flight job).
+	ppu_worker_reset(&core->worker);
 	return 0;
 }
 
@@ -545,15 +583,6 @@ INT32 GbaCoreConfigureAudio(GbaCore *core, double sourceRate, INT32 outputFrames
 		core->host.audio_sample_rate = sourceRate;
 		GbaCoreClearPresentation(core);
 	}
-	return 0;
-}
-
-INT32 GbaCoreRunFrame(GbaCore *core)
-{
-	if (core == NULL || core->rom == NULL)
-		return 1;
-	core->host.render_frame = true;
-	gba_tick(&core->host, &core->state, &core->scratch);
 	return 0;
 }
 
@@ -717,6 +746,7 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	return 0;
 }
 
+
 INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preserveAudio)
 {
 	if (core == NULL || data == NULL || size < sizeof(gba_t) || core->rom == NULL)
@@ -729,6 +759,12 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 	gba_timing_rebind(&core->state);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
+	// Runahead rollback (preserveAudio=1): FF frames never touch worker state,
+	// backbufs/snapshots still match the restored gba_t. Reset would clear
+	// them → blank/partial frames due to pipeline latency.
+	// Full state load (preserveAudio=0): reset worker, discard stale content.
+	if (!preserveAudio)
+		ppu_worker_reset(&core->worker);
 	if (!preserveAudio)
 		GbaCoreClearAudio(core);
 	return 0;
@@ -764,6 +800,9 @@ void gba_timing_init(gba_t* gba)
 	gba->ppu_event.next       = NULL;
 	gba->ppu_event.when       = 0;
 	gba->ppu_event.priority   = GBA_EVENT_PRIORITY_PPU;
+	// Default callback is the original single-threaded PPU event.  If
+	// the worker is enabled, gba_tick() rebinds this to gba_ppu_event_worker
+	// at the start of every frame.
 	gba->ppu_event.callback   = gba_ppu_event;
 	gba->ppu_event.active     = false;
 	gba->sio_event.next       = NULL;
@@ -792,6 +831,8 @@ void gba_timing_rebind(gba_t* gba)
 	gba->timer_event.priority = GBA_EVENT_PRIORITY_TIMER;
 	gba->timer_event.callback = gba_timer_event;
 	gba->ppu_event.priority   = GBA_EVENT_PRIORITY_PPU;
+	// Revert to the original callback after a state load / rebind; gba_tick()
+	// will reinstall the worker wrapper on the next frame if enabled.
 	gba->ppu_event.callback   = gba_ppu_event;
 	gba->sio_event.priority   = GBA_EVENT_PRIORITY_SIO;
 	gba->sio_event.callback   = gba_sio_event;
@@ -911,12 +952,19 @@ void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data)
 	gba->cpu.user_data  = gba;
 }
 
-void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
+void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worker_t* worker)
 {
 	gba_ptrs_init(gba, scratch, emu->rom_data);
 	gba->cpu.user_data          = gba;
 	gba->cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
 
+	// Pick PPU event callback: worker snapshot/async vs original single-thread.
+	if (worker && worker->enabled) {
+		g_ppu_worker_current = worker;
+		gba->ppu_event.callback = gba_ppu_event_worker;
+	} else {
+		gba->ppu_event.callback = gba_ppu_event;
+	}
 
 	gba_tick_keypad(&emu->joy, gba);
 	gba->frame_in_progress = true;
@@ -961,6 +1009,12 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		}
 		gba_advance(gba, emu, ticks);
 	}
+	// VBlank frame boundary: publish worker result or point to scratch (ST).
+	if (worker && worker->enabled) {
+		ppu_worker_vblank_publish(worker, gba, scratch);
+	} else {
+		gba->framebuffer = scratch->framebuffer;
+	}
 	gba_gpio_update_rumble(gba);
 	emu->joy.rumble = gba->cart.gpio.rumble;
 	//LCD turns off in stop mode
@@ -970,5 +1024,8 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		emu->run_mode          = SB_MODE_PAUSE;
 		gba->pause_after_frame = false;
 	}
+	// Clear thread-local worker pointer so out-of-frame code never sees stale value.
+	if (worker && worker->enabled) {
+		g_ppu_worker_current = NULL;
+	}
 }
-

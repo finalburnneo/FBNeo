@@ -57064,25 +57064,6 @@ struct BurnDriver BurnDrvgba_gleam = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Glory Hunters (HB, v1.3)
-
-static struct BurnRomInfo gba_gloryhuntRomDesc[] = {
-	{ "Glory Hunters v1.3 (World)(2025)(2think Design Studio).gba",	4270324,	0xf031b45e,	BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(gba_gloryhunt, gba_gloryhunt, gba_gba)
-STD_ROM_FN(gba_gloryhunt)
-
-struct BurnDriver BurnDrvgba_gloryhunt = {
-	"gba_gloryhunt", NULL, "gba_gba", NULL, "2025",
-	"Glory Hunters (HB, v1.3)\0", NULL, "2think Design Studio", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV, 0,
-	GbaGetZipName, gba_gloryhuntRomInfo, gba_gloryhuntRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
-	GBA_WIDTH, GBA_HEIGHT, 3, 2
-};
-
 // Goodboy Galaxy (M8) (HB, v1.3)
 
 static struct BurnRomInfo gba_goodboyRomDesc[] = {
@@ -57361,25 +57342,6 @@ struct BurnDriver BurnDrvgba_lro = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_lroRomInfo, gba_lroRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
-	GBA_WIDTH, GBA_HEIGHT, 3, 2
-};
-
-// Magic and Legend: Time Knights (HB)
-
-static struct BurnRomInfo gba_magiclegendtkRomDesc[] = {
-	{ "Magic and Legend - Time Knights (2023)(Giles Hamson).gba",	1048576,	0x6d890405,	BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(gba_magiclegendtk, gba_magiclegendtk, gba_gba)
-STD_ROM_FN(gba_magiclegendtk)
-
-struct BurnDriver BurnDrvgba_magiclegendtk = {
-	"gba_magiclegendtk", NULL, "gba_gba", NULL, "2023",
-	"Magic and Legend: Time Knights (HB)\0", "Published by The Retro Room Games, press Start to close textual menu", "Giles Hamson", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PLATFORM, 0,
-	GbaGetZipName, gba_magiclegendtkRomInfo, gba_magiclegendtkRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57954,24 +57916,6 @@ struct BurnDriver BurnDrvgba_sekhmets = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Shantae - GBC2GBA (HB)
-static struct BurnRomInfo gba_shantaegbcRomDesc[] = {
-	{ "Shantae - GBC2GBA (2025)(WayForward).gba",	4270208,	0x137b5a1c,	BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(gba_shantaegbc, gba_shantaegbc, gba_gba)
-STD_ROM_FN(gba_shantaegbc)
-
-struct BurnDriver BurnDrvgba_shantaegbc = {
-	"gba_shantaegbc", NULL, "gba_gba", NULL, "2025",
-	"Shantae - GBC2GBA (HB)\0", "Game Boy Color to GBA porting", "WayForward", "Game Boy Advance",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
-	GbaGetZipName, gba_shantaegbcRomInfo, gba_shantaegbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
-	GBA_WIDTH, GBA_HEIGHT, 3, 2
-};
-
 // Shantae Advance: Risky Revolution (World)
 static struct BurnRomInfo gba_shantaerrRomDesc[] = {
 	{ "Shantae Advance - Risky Revolution (World)(2025)(Limited Run Games).gba",	16777216,	0x31265c5d,	BRF_ESS | BRF_PRG },
@@ -58519,3 +58463,139 @@ struct BurnDriver BurnDrvgba_zipline = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+
+// ----------------
+// GB2GBA / GBC2GBA
+// ----------------
+
+
+// Chase H.Q. Game Boy Collection - GBC2GBA
+
+static struct BurnRomInfo gba_chasehqgbcRomDesc[] = {
+	{ "Chase H.Q. Game Boy Collection - GBC2GBA (1990-99)(Taito).gba",	1463452,	0x14a937f5,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_chasehqgbc, gba_chasehqgbc, gba_gba)
+STD_ROM_FN(gba_chasehqgbc)
+
+struct BurnDriver BurnDrvgba_chasehqgbc = {
+	"gba_chasehqgbc", NULL, "gba_gba", NULL, "1990-99",
+	"Chase H.Q. Game Boy Collection - GBC2GBA\0", NULL, "Taito", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
+	GbaGetZipName, gba_chasehqgbcRomInfo, gba_chasehqgbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+	
+// Glory Hunters - GB2GBA (HB, v2.0.1)
+
+static struct BurnRomInfo gba_gloryhuntgbRomDesc[] = {
+	{ "Glory Hunters - GB2GBA v2.0.1 (2025)(2think Design Studio).gba",	4270324,	0x6bf1e84e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_gloryhuntgb, gba_gloryhuntgb, gba_gba)
+STD_ROM_FN(gba_gloryhuntgb)
+
+struct BurnDriver BurnDrvgba_gloryhuntgb = {
+	"gba_gloryhuntgb", NULL, "gba_gba", NULL, "2025",
+	"Glory Hunters - GB2GBA (HB, v2.0.1)\0", NULL, "2think Design Studio", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV, 0,
+	GbaGetZipName, gba_gloryhuntgbRomInfo, gba_gloryhuntgbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Magic & Legend: Time Knights - GBC2GBA (HB)
+
+static struct BurnRomInfo gba_magicltkgbcRomDesc[] = {
+	{ "Magic & Legend - Time Knights - GBC2GBA (2023)(Giles Hamson).gba",	1048576,	0x6d890405,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_magicltkgbc, gba_magicltkgbc, gba_gba)
+STD_ROM_FN(gba_magicltkgbc)
+
+struct BurnDriver BurnDrvgba_magicltkgbc = {
+	"gba_magicltkgbc", NULL, "gba_gba", NULL, "2023",
+	"Magic & Legend: Time Knights - GBC2GBA (HB)\0", "Published by The Retro Room Games", "Giles Hamson", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PLATFORM, 0,
+	GbaGetZipName, gba_magicltkgbcRomInfo, gba_magicltkgbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Pitman - GB2GBA (Japan)
+
+static struct BurnRomInfo gba_pitmangbRomDesc[] = {
+	{ "Pitman - GB2GBA (J) (1990)(Ask Kodansha).gba",	108700,	0x2571591e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_pitmangb, gba_pitmangb, gba_gba)
+STD_ROM_FN(gba_pitmangb)
+
+struct BurnDriver BurnDrvgba_pitmangb = {
+	"gba_pitmangb", NULL, "gba_gba", NULL, "1990",
+	"Pitman - GB2GBA (Japan)\0", NULL, "Ask Kodansha", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_pitmangbRomInfo, gba_pitmangbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Shantae - GBC2GBA (HB)
+static struct BurnRomInfo gba_shantaegbcRomDesc[] = {
+	{ "Shantae - GBC2GBA (2025)(WayForward).gba",	4270208,	0x137b5a1c,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_shantaegbc, gba_shantaegbc, gba_gba)
+STD_ROM_FN(gba_shantaegbc)
+
+struct BurnDriver BurnDrvgba_shantaegbc = {
+	"gba_shantaegbc", NULL, "gba_gba", NULL, "2025",
+	"Shantae - GBC2GBA (HB)\0", NULL, "WayForward", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_shantaegbcRomInfo, gba_shantaegbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Super Mario Land & Wario Land Game Boy Collection - GBC2GBA
+
+static struct BurnRomInfo gba_smlwlgbcRomDesc[] = {
+	{ "Super Mario Land & Wario Land Game Boy Collection - GBC2GBA (1989-2000)(Nintendo).gba",	5461148,	0x71f4c009,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_smlwlgbc, gba_smlwlgbc, gba_gba)
+STD_ROM_FN(gba_smlwlgbc)
+
+struct BurnDriver BurnDrvgba_smlwlgbc = {
+	"gba_smlwlgbc", NULL, "gba_gba", NULL, "1989-2000",
+	"Super Mario Land & Wario Land Game Boy Collection - GBC2GBA\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_smlwlgbcRomInfo, gba_smlwlgbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Tetris Game Boy Collection - GBC2GBA
+
+static struct BurnRomInfo gba_tetrisgbcRomDesc[] = {
+	{ "Tetris Game Boy Collection - GBC2GBA (1989-98)(Nintendo).gba",	1758364,	0xd45a3788,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tetrisgbc, gba_tetrisgbc, gba_gba)
+STD_ROM_FN(gba_tetrisgbc)
+
+struct BurnDriver BurnDrvgba_tetrisgbc = {
+	"gba_tetrisgbc", NULL, "gba_gba", NULL, "1989-98",
+	"Tetris Game Boy Collection - GBC2GBA\0", NULL, "Nintendo", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_tetrisgbcRomInfo, gba_tetrisgbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2};

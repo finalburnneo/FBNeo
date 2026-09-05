@@ -11,11 +11,14 @@ int nActiveGame;
 
 static bool bLoading = 0;
 
-struct MenuItemTextAndToggle 
+struct CurrentItemInfo 
 {
 	TCHAR sText[256];
-	bool isItemChecked;
+	UINT menuItemTypeFlag; // all the other little icons in Win32 have their own specific hexCode
+	UINT menuItemStateFlag;
+	bool itemHasArrow; //the arrow icon in Win32 needs its own special treatment determined by pItemInfo->hasSubmenu = (hSub != NULL);
 };
+
 
 #ifdef BUILD_PCE
 static void SetPCECDTitle()
@@ -137,6 +140,27 @@ static int OnRButtonDown(HWND, BOOL, int, int, UINT);
 static int OnDisplayChange(HWND, UINT, UINT, UINT);
 
 int OnNotify(HWND, int, NMHDR* lpnmhdr);
+
+void DrawItemState(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
+{
+    UINT ItemFlagType = ItemInfo.menuItemStateFlag;
+    switch (ItemFlagType)
+    {
+        case MFS_CHECKED:
+        {
+            int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+            int cx = pdis->rcItem.left + 12;
+            HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
+            HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
+            HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
+            Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
+            SelectObject(pdis->hDC, oldBrush);
+            SelectObject(pdis->hDC, oldPen);
+            DeleteObject(dotBrush);
+            break;
+        }
+    }
+}
 
 static bool UseDialogs()
 {
@@ -629,7 +653,7 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		{
 			LPMEASUREITEMSTRUCT pmis = (LPMEASUREITEMSTRUCT)lParam;
 			 if (pmis->CtlType == ODT_MENU) {
-				MenuItemTextAndToggle* data = (MenuItemTextAndToggle*) pmis->itemData;
+				CurrentItemInfo* data = (CurrentItemInfo*) pmis->itemData;
 				HDC hdc = GetDC(hWnd);
 				SIZE sz;
 				GetTextExtentPoint32(hdc, data->sText, _tcslen(data->sText), &sz);
@@ -644,10 +668,9 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		case WM_DRAWITEM:
 		{
 			LPDRAWITEMSTRUCT pdis = (LPDRAWITEMSTRUCT)lParam;
-			MenuItemTextAndToggle* data = (MenuItemTextAndToggle*) pdis->itemData;
+			CurrentItemInfo* data = (CurrentItemInfo*) pdis->itemData;
 			if (pdis->CtlType == ODT_MENU) {
 				BOOL bSelected = (pdis->itemState & ODS_SELECTED) != 0;
-				BOOL bChecked  = (data->isItemChecked);
 
 				COLORREF clr;
 
@@ -668,18 +691,10 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 				FillRect(pdis->hDC, &pdis->rcItem, hbr);
 				DeleteObject(hbr);
 
-				if (bChecked) 
+				// create a function that receives two parameters CurrentItemInfo for the item information and pdis to draw into the window
+				if (data->menuItemStateFlag != -1) 
 				{
-					int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
-					int cx =  pdis->rcItem.left + 12;
-					HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);     
-
-					HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
-					HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
-					Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
-					SelectObject(pdis->hDC, oldBrush);
-					SelectObject(pdis->hDC, oldPen);
-					DeleteObject(dotBrush);
+					DrawItemState(pdis, *data);
 				}	
 
 				SetBkMode(pdis->hDC, TRANSPARENT);
@@ -698,7 +713,7 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
 				if (pszText) {
 					RECT rcText = pdis->rcItem;
-					if(bChecked){rcText.left += 24;}
+					rcText.left += 24;
 					DrawText(pdis->hDC, pszText, -1, &rcText, DT_SINGLELINE | DT_VCENTER | DT_LEFT);
 				}
 			}

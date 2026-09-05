@@ -2,6 +2,8 @@
 
 #include "burner.h"
 #define TBCDRF_USECDCOLORS      0x00800000 // adding constant so NM_CUSTOMDRAW doesnt get ignored
+#define MFT_STRING          MF_STRING       
+#define MFT_SEPARATOR       MF_SEPARATOR    
 
 #ifdef _MSC_VER
 // #include <winable.h>
@@ -42,11 +44,21 @@ static HHOOK hMenuHook;
 static bool bTest = false;
 static RECT PopupRect = { 0,0,0,0, };
 
-struct MenuItemTextAndToggle 
+UINT aMenuFTypeFlagsArray[]  = { MFT_STRING, MFT_SEPARATOR, MFT_RADIOCHECK, MFT_RIGHTJUSTIFY };
+UINT aMenuFStateFlagsArray[] = { MFS_CHECKED, MFS_GRAYED, MFS_DEFAULT};
+
+struct CurrentItemInfo 
 {
 	TCHAR sText[256];
-	bool isItemChecked;
+	UINT menuItemTypeFlag; // all the other little icons in Win32 have their own specific hexCode
+	UINT menuItemStateFlag;
+	bool itemHasArrow; //the arrow icon in Win32 needs its own special treatment determined by pItemInfo->hasSubmenu = (hSub != NULL);
 };
+
+bool checkMenuItemFlag(UINT iMenuItemFMask, UINT iMaskTypeFlag)
+{
+	return (iMenuItemFMask & iMaskTypeFlag) != 0;
+}
 
 static INT32 GetCurrentMonitorHigh() {
 	HMONITOR hMonitor = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
@@ -67,7 +79,12 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
     SetMenuInfo(hMenu, &mi);
 
     int count = GetMenuItemCount(hMenu);
+	int aMenuTypeFlagsArraySize   = sizeof(aMenuFTypeFlagsArray)  / sizeof(UINT);
+	int aMenuFStateFlagsArraySize = sizeof(aMenuFStateFlagsArray) / sizeof(UINT);
+
     for (int i = 0; i < count; i++) {
+		HMENU hSub = GetSubMenu(hMenu, i);
+
         MENUITEMINFO mii = { sizeof(MENUITEMINFO) };
         mii.fMask = MIIM_FTYPE | MIIM_DATA;
         GetMenuItemInfo(hMenu, i, TRUE, &mii); 
@@ -75,12 +92,38 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
 		MENUITEMINFO miiState = { sizeof(MENUITEMINFO) };
 		miiState.fMask = MIIM_STATE;
 		GetMenuItemInfo(hMenu, i, TRUE, &miiState);
-		bool isChecked = (miiState.fState & MFS_CHECKED) != 0;
 
+		UINT ItemTypeFlag = -1;
+		UINT ItemStateFlag = -1;
+
+		for(int currentTypeFlag = 0; currentTypeFlag < aMenuTypeFlagsArraySize; currentTypeFlag++)
+		{
+			if(checkMenuItemFlag(mii.fType, aMenuFTypeFlagsArray[currentTypeFlag]))
+			{
+				ItemTypeFlag = aMenuFTypeFlagsArray[currentTypeFlag];
+				break;
+			}
+		}
+
+		for(int currentStateFlag = 0; currentStateFlag < aMenuFStateFlagsArraySize; currentStateFlag++)
+		{
+			if(checkMenuItemFlag(miiState.fState, aMenuFStateFlagsArray[currentStateFlag]))
+			{
+				ItemStateFlag = aMenuFStateFlagsArray[currentStateFlag];
+				break;
+			}
+		}
+		
 		//in order to make the toggle background follow the ui color we must bring responsibility to the owner 
-		//to do this while still telling windows to draw dots on the checked items the MenuItemTextAndToggle struct was created so that booleans can be informed along with text
-		//on line mii.dwItemData = (ULONG_PTR)MenuItemInfo;
-		MenuItemTextAndToggle* MenuItemInfo = new MenuItemTextAndToggle();
+		//to do this while still telling windows to draw the menuItem it was necessary to create a struct holding the currentMenu item info
+		CurrentItemInfo* currentMenuInfo = new CurrentItemInfo();
+
+		currentMenuInfo->menuItemTypeFlag = ItemTypeFlag;
+		currentMenuInfo->menuItemStateFlag = ItemStateFlag;
+		currentMenuInfo->itemHasArrow = false;
+
+		currentMenuInfo->itemHasArrow = (hSub != NULL);
+			
 
         TCHAR szText[256] = { 0 };
         MENUITEMINFO miiText = { sizeof(MENUITEMINFO) };
@@ -89,14 +132,12 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
         miiText.cch = 256;
         GetMenuItemInfo(hMenu, i, TRUE, &miiText);
 
-		MenuItemInfo->isItemChecked = isChecked;
-		_tcscpy_s(MenuItemInfo->sText, _countof(MenuItemInfo->sText), szText);
+		_tcscpy_s(currentMenuInfo->sText, _countof(currentMenuInfo->sText), szText);
 
         mii.fType    |= MFT_OWNERDRAW;
-        mii.dwItemData = (ULONG_PTR)MenuItemInfo; 
+        mii.dwItemData = (ULONG_PTR)currentMenuInfo; 
         SetMenuItemInfo(hMenu, i, TRUE, &mii);
 
-        HMENU hSub = GetSubMenu(hMenu, i);
         if (hSub) {
             ApplyMenuBackground(hSub, hbr);
         }

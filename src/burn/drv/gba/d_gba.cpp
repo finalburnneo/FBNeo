@@ -371,7 +371,8 @@ static INT32 DrvExit()
 
 static double DrvAudioRate()
 {
-	return nBurnSoundLen * (GBA_MASTER_CLOCK / 280896.0);
+	// match output sample rate; nBurnSoundLen rounding is absorbed by ring underflow
+	return nBurnSoundLen > 0 ? nBurnSoundRate : 0.0;
 }
 
 static INT32 DrvDraw()

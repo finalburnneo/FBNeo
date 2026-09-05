@@ -792,7 +792,7 @@ static INT32 load_check = 0;
 static INT64 last_cycle = 0;
 static INT32 last_bc = 0;
 
-#define DEBUG_TAP 0
+#define DEBUG_TAP 1
 #define TAPERAW 0
 #if TAPERAW
 // Note:

@@ -1019,7 +1019,8 @@ static void SpecTZXOperation()
 					leader_pulse_count = tapword();
 					last8 = tapbyte();
 					pause_len = tapword();
-					block_len = tapword() | (tapbyte() << 16);
+					block_len = tapword();
+					block_len |= (tapbyte() << 16);
 					emit_leader(leader_pulse_len, leader_pulse_count);
 					tap_op_num++;
 					break;
@@ -1064,7 +1065,8 @@ static void SpecTZXOperation()
 					one_bit_len = tapword();
 					last8 = tapbyte();
 					pause_len = tapword();
-					block_len = tapword() | tapbyte() << 16;
+					block_len = tapword();
+					block_len |= tapbyte() << 16;
 					emit_block(block_len, zero_bit_len, one_bit_len, last8);
 					tap_op_num++;
 					break;

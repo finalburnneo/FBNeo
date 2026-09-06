@@ -55944,21 +55944,21 @@ struct BurnDriver BurnDrvgba_battleaf = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Balatro (HB, v0.2.2)
+// GBalatro (HB, v0.2.2)
 
-static struct BurnRomInfo gba_balatroRomDesc[] = {
-	{ "Balatro v0.2.2 (2025)(Various).gba",	5061324,	0x008d8f50,	BRF_ESS | BRF_PRG },
+static struct BurnRomInfo gba_gbalatroRomDesc[] = {
+	{ "GBalatro v0.2.2 (2025)(Various).gba",	5061324,	0x008d8f50,	BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(gba_balatro, gba_balatro, gba_gba)
-STD_ROM_FN(gba_balatro)
+STDROMPICKEXT(gba_gbalatro, gba_gbalatro, gba_gba)
+STD_ROM_FN(gba_gbalatro)
 
-struct BurnDriver BurnDrvgba_balatro = {
-	"gba_balatro", NULL, "gba_gba", NULL, "2025",
-	"Balatro (HB, v0.2.2)\0", NULL, "Various", "Game Boy Advance",
+struct BurnDriver BurnDrvgba_gbalatro = {
+	"gba_gbalatro", NULL, "gba_gba", NULL, "2025",
+	"GBalatro (HB, v0.2.2)\0", NULL, "Various", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_CARD, 0,
-	GbaGetZipName, gba_balatroRomInfo, gba_balatroRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	GbaGetZipName, gba_gbalatroRomInfo, gba_gbalatroRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

@@ -11,15 +11,6 @@ int nActiveGame;
 
 static bool bLoading = 0;
 
-struct CurrentItemInfo 
-{
-	TCHAR sText[256];
-	UINT menuItemTypeFlag; // all the other little icons in Win32 have their own specific hexCode
-	UINT menuItemStateFlag;
-	bool itemHasArrow; //the arrow icon in Win32 needs its own special treatment determined by pItemInfo->hasSubmenu = (hSub != NULL);
-};
-
-
 #ifdef BUILD_PCE
 static void SetPCECDTitle()
 {
@@ -141,25 +132,83 @@ static int OnDisplayChange(HWND, UINT, UINT, UINT);
 
 int OnNotify(HWND, int, NMHDR* lpnmhdr);
 
+void DrawItemType(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
+{
+	UINT ItemStateType = ItemInfo.menuItemTypeFlag;
+	switch (ItemStateType)
+    {
+		case MFT_SEPARATOR:
+		{
+			COLORREF bg = RGB((uiMenuItemColor >> 16) & 0xFF, (uiMenuItemColor >> 8) & 0xFF, uiMenuItemColor & 0xFF);
+			HBRUSH hbr = CreateSolidBrush(bg);
+			FillRect(pdis->hDC, &pdis->rcItem, hbr);
+			DeleteObject(hbr);
+
+			int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+			HPEN pen = CreatePen(PS_SOLID, 1, (COLORREF)uiTextFontColor);
+			HPEN oldPen = (HPEN)SelectObject(pdis->hDC, pen);
+			MoveToEx(pdis->hDC, pdis->rcItem.left + 4, cy, NULL);
+			LineTo(pdis->hDC, pdis->rcItem.right - 4, cy);
+			SelectObject(pdis->hDC, oldPen);
+			DeleteObject(pen);
+			break;
+		}
+
+		case MFT_RADIOCHECK:
+		{
+			int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+			int cx = pdis->rcItem.left + 12;
+			HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
+			HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
+			HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
+			Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
+			SelectObject(pdis->hDC, oldBrush);
+			SelectObject(pdis->hDC, oldPen);
+			DeleteObject(dotBrush);
+			break;
+		}
+	}
+}
+
 void DrawItemState(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
 {
-    UINT ItemFlagType = ItemInfo.menuItemStateFlag;
-    switch (ItemFlagType)
-    {
-        case MFS_CHECKED:
-        {
-            int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
-            int cx = pdis->rcItem.left + 12;
-            HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
-            HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
-            HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
-            Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
-            SelectObject(pdis->hDC, oldBrush);
-            SelectObject(pdis->hDC, oldPen);
-            DeleteObject(dotBrush);
-            break;
-        }
-    }
+    UINT ItemStateType = ItemInfo.menuItemStateFlag;
+
+	switch (ItemStateType)
+	{
+		case MFS_CHECKED:
+		{
+			if(ItemInfo.itemHasCheckMark)
+			{
+				int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+				int cx = pdis->rcItem.left + 12;
+
+				HPEN pen = CreatePen(PS_SOLID, 2, (COLORREF)uiTextFontColor);
+				HPEN oldPen = (HPEN)SelectObject(pdis->hDC, pen);
+
+				MoveToEx(pdis->hDC, cx - 5, cy,     NULL);
+				LineTo  (pdis->hDC, cx - 1, cy + 4);
+				LineTo  (pdis->hDC, cx + 6, cy - 5);
+
+				SelectObject(pdis->hDC, oldPen);
+				DeleteObject(pen);
+			}
+			else
+			{
+				int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+				int cx = pdis->rcItem.left + 12;
+				HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
+				HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
+				HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
+				Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
+				SelectObject(pdis->hDC, oldBrush);
+				SelectObject(pdis->hDC, oldPen);
+				DeleteObject(dotBrush);
+				break;
+			}
+		}
+	}
+	
 }
 
 static bool UseDialogs()
@@ -691,11 +740,16 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 				FillRect(pdis->hDC, &pdis->rcItem, hbr);
 				DeleteObject(hbr);
 
-				// create a function that receives two parameters CurrentItemInfo for the item information and pdis to draw into the window
-				if (data->menuItemStateFlag != -1) 
+				// if the item has flags associate draw its state, separator lines are ignored because they cant have states
+				if (data->menuItemStateFlag != 0 && ((data->menuItemTypeFlag & MFT_SEPARATOR) == 0) ) 
 				{
 					DrawItemState(pdis, *data);
 				}	
+
+				if(data->menuItemTypeFlag != 0)
+				{
+					DrawItemType(pdis, *data);
+				}
 
 				SetBkMode(pdis->hDC, TRANSPARENT);
 				SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);          

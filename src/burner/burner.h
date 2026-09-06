@@ -174,6 +174,14 @@ extern UINT8 macroSystemLuaHotkey9;
 extern void scrnSSUndo();
 extern bool bHasFocus;
 
+struct CurrentItemInfo 
+{
+	TCHAR sText[256];
+	UINT menuItemTypeFlag; 
+	UINT menuItemStateFlag;
+	bool itemHasCheckMark; 
+};
+
 // cong.cpp
 extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid
 extern bool bSaveInputs;

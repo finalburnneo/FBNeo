@@ -47,14 +47,6 @@ static RECT PopupRect = { 0,0,0,0, };
 UINT aMenuFTypeFlagsArray[]  = { MFT_STRING, MFT_SEPARATOR, MFT_RADIOCHECK, MFT_RIGHTJUSTIFY };
 UINT aMenuFStateFlagsArray[] = { MFS_CHECKED, MFS_GRAYED, MFS_DEFAULT};
 
-struct CurrentItemInfo 
-{
-	TCHAR sText[256];
-	UINT menuItemTypeFlag; // all the other little icons in Win32 have their own specific hexCode
-	UINT menuItemStateFlag;
-	bool itemHasArrow; //the arrow icon in Win32 needs its own special treatment determined by pItemInfo->hasSubmenu = (hSub != NULL);
-};
-
 bool checkMenuItemFlag(UINT iMenuItemFMask, UINT iMaskTypeFlag)
 {
 	return (iMenuItemFMask & iMaskTypeFlag) != 0;
@@ -93,15 +85,14 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
 		miiState.fMask = MIIM_STATE;
 		GetMenuItemInfo(hMenu, i, TRUE, &miiState);
 
-		UINT ItemTypeFlag = -1;
-		UINT ItemStateFlag = -1;
+		UINT ItemTypeFlag = 0;
+		UINT ItemStateFlag = 0;
 
 		for(int currentTypeFlag = 0; currentTypeFlag < aMenuTypeFlagsArraySize; currentTypeFlag++)
 		{
 			if(checkMenuItemFlag(mii.fType, aMenuFTypeFlagsArray[currentTypeFlag]))
 			{
-				ItemTypeFlag = aMenuFTypeFlagsArray[currentTypeFlag];
-				break;
+				ItemTypeFlag |= aMenuFTypeFlagsArray[currentTypeFlag];
 			}
 		}
 
@@ -109,10 +100,12 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
 		{
 			if(checkMenuItemFlag(miiState.fState, aMenuFStateFlagsArray[currentStateFlag]))
 			{
-				ItemStateFlag = aMenuFStateFlagsArray[currentStateFlag];
-				break;
+				ItemStateFlag |= aMenuFStateFlagsArray[currentStateFlag];
 			}
 		}
+
+		//drawing checkmarks requires us to keep track of a combinantion of bitFlags
+		bool isRadioCheck = (ItemTypeFlag & MFT_RADIOCHECK) != 0;
 		
 		//in order to make the toggle background follow the ui color we must bring responsibility to the owner 
 		//to do this while still telling windows to draw the menuItem it was necessary to create a struct holding the currentMenu item info
@@ -120,10 +113,7 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
 
 		currentMenuInfo->menuItemTypeFlag = ItemTypeFlag;
 		currentMenuInfo->menuItemStateFlag = ItemStateFlag;
-		currentMenuInfo->itemHasArrow = false;
-
-		currentMenuInfo->itemHasArrow = (hSub != NULL);
-			
+		currentMenuInfo->itemHasCheckMark = !isRadioCheck;		
 
         TCHAR szText[256] = { 0 };
         MENUITEMINFO miiText = { sizeof(MENUITEMINFO) };

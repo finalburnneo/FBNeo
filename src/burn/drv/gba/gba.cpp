@@ -673,15 +673,18 @@ void GbaCoreClearBatteryDirty(GbaCore *core)
 
 size_t GbaCoreStateSize()
 {
-	return sizeof(gba_t);
+	return sizeof(gba_t) + 8;
 }
 
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 {
-	if (core == NULL || data == NULL || size < sizeof(gba_t))
+	// magic + sizeof(gba_t) guards against layout drift when pnMin is not bumped
+	if (core == NULL || data == NULL || size < sizeof(gba_t) + 8)
 		return 1;
-	memcpy(data, &core->state, sizeof(gba_t));
-	UINT8 *state = (UINT8 *)data;
+	UINT32 head[2] = { 0x53414247, (UINT32)sizeof(gba_t) };
+	memcpy(data, head, sizeof(head));
+	UINT8 *state = (UINT8 *)data + 8;
+	memcpy(state, &core->state, sizeof(gba_t));
 // pointer fields: nulls the pointer, not the pointee
 #define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, sizeof(((type *)0)->field))
 	const size_t mem = offsetof(gba_t, mem);
@@ -719,11 +722,15 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 
 INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preserveAudio)
 {
-	if (core == NULL || data == NULL || size < sizeof(gba_t) || core->rom == NULL)
+	if (core == NULL || data == NULL || size < sizeof(gba_t) + 8 || core->rom == NULL)
+		return 1;
+	UINT32 head[2];
+	memcpy(head, data, sizeof(head));
+	if (head[0] != 0x53414247 || head[1] != (UINT32)sizeof(gba_t))
 		return 1;
 	UINT8 battery[GBA_BATTERY_CAPACITY];
 	memcpy(battery, core->state.mem.cart_backup, sizeof(battery));
-	memcpy(&core->state, data, sizeof(gba_t));
+	memcpy(&core->state, (const UINT8 *)data + 8, sizeof(gba_t));
 	memcpy(core->state.mem.cart_backup, battery, sizeof(battery));
 	core->state.ppu.render_per_pixel = core->perPixelRender;
 	gba_timing_rebind(&core->state);

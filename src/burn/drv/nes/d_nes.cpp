@@ -17885,6 +17885,25 @@ struct BurnDriver BurnDrvnes_doubledream = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Dragon's Puzzle Challenge (HB)
+// https://bmo-studios.itch.io/dragons-puzzle-challenge
+static struct BurnRomInfo nes_drapuzzchRomDesc[] = {
+	{ "Dragon's Puzzle Challenge (2026)(BMO Studios).nes",          131088, 0x283ef285, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_drapuzzch)
+STD_ROM_FN(nes_drapuzzch)
+
+struct BurnDriver BurnDrvnes_drapuzzch = {
+	"nes_drapuzzch", NULL, NULL, NULL, "2026",
+	"Dragon's Puzzle Challenge (HB)\0", NULL, "BMO Studios", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_drapuzzchRomInfo, nes_drapuzzchRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Draiocht (HB)
 static struct BurnRomInfo nes_draiochtRomDesc[] = {
 	{ "Draiocht (2019)(Mega Cat Studios).nes",          40976, 0x3e7aa82d, BRF_ESS | BRF_PRG },
@@ -19117,6 +19136,25 @@ struct BurnDriver BurnDrvnes_getemgary = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_getemgaryRomInfo, nes_getemgaryRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Get It Together! (HB)
+// https://scinestist.itch.io/get-it-together
+static struct BurnRomInfo nes_getittogRomDesc[] = {
+	{ "Get It Together! (2026)(IMP Games).nes",          524304, 0xc05c17f1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_getittog)
+STD_ROM_FN(nes_getittog)
+
+struct BurnDriver BurnDrvnes_getittog = {
+	"nes_getittog", NULL, NULL, NULL, "2026",
+	"Get It Together! (HB)\0", NULL, "IMP Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_PUZZLE, 0,
+	NESGetZipName, nes_getittogRomInfo, nes_getittogRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -20784,6 +20822,25 @@ struct BurnDriver BurnDrvnes_kosatak = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_kosatakRomInfo, nes_kosatakRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// KUBO 3 (HB, Rev. J)
+// https://dale-coop.itch.io/kubo-3-nes-game-by-sj-games
+static struct BurnRomInfo nes_kubo3RomDesc[] = {
+	{ "KUBO 3 Rev J (2022)(SJ Games).nes",          524304, 0x0f1462fb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_kubo3)
+STD_ROM_FN(nes_kubo3)
+
+struct BurnDriver BurnDrvnes_kubo3 = {
+	"nes_kubo3", NULL, NULL, NULL, "2022",
+	"KUBO 3 (HB, Rev. J)\0", NULL, "SJ Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_kubo3RomInfo, nes_kubo3RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

@@ -79,7 +79,7 @@ static UINT8 transparent_check[32][256];
 struct extents_list
 {
 	UINT8	scan_extent[256];
-	UINT16	extent[32][16];
+	UINT16	extent[256][16];
 };
 
 static UINT16 mixer_control[2][0x40];
@@ -2692,6 +2692,15 @@ static INT32 DrvExit()
 #define MIXER_LAYER_MULTISPR    9
 #define MIXER_LAYER_MULTISPR_2  10
 
+static void secty(clip_struct &a, clip_struct &b)
+{
+	if (a.nMinx < b.nMinx) a.nMinx = b.nMinx;
+	if (a.nMiny < b.nMiny) a.nMiny = b.nMiny;
+	if (a.nMaxx > b.nMaxx) a.nMaxx = b.nMaxx;
+	if (a.nMaxy > b.nMaxy) a.nMaxy = b.nMaxy;
+	if (a.nMiny > a.nMaxy) a.nMiny = a.nMaxy;
+	if (a.nMinx > a.nMaxx) a.nMinx = a.nMaxx;
+}
 
 static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmask, const clip_struct &cliprect, extents_list *list)
 {
@@ -2701,9 +2710,8 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 	clip_struct tempclip;
 	clip_struct clips[5];
 	INT32 sorted[5];
-	INT32 i, j, y;
 
-	/* expand our cliprect to exclude the bottom-right */
+	/* expand our cliprect to include the bottom-right */
 	tempclip = cliprect;
 	tempclip.nMaxx++;
 	tempclip.nMaxy++;
@@ -2719,8 +2727,8 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 		return 1;
 	}
 
-	/* extract the from videoram into locals, and apply the cliprect */
-	for (i = 0; i < 5; i++)
+	/* extract the clips from videoram into locals, and apply the cliprect */
+	for (int i = 0; i < 5; i++)
 	{
 		if (!flip)
 		{
@@ -2745,12 +2753,12 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 	}
 
 	/* bubble sort them by nMinx */
-	for (i = 0; i < 5; i++)
-		for (j = i + 1; j < 5; j++)
+	for (int i = 0; i < 5; i++)
+		for (int j = i + 1; j < 5; j++)
 			if (clips[sorted[i]].nMinx > clips[sorted[j]].nMinx) { INT32 temp = sorted[i]; sorted[i] = sorted[j]; sorted[j] = temp; }
 
 	/* create all valid extent combinations */
-	for (i = 1; i < 32; i++)
+	for (int i = 1; i < 32; i++)
 		if (i & clipmask)
 		{
 			UINT16 *extent = &list->extent[i][0];
@@ -2759,7 +2767,7 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 			*extent++ = tempclip.nMinx;
 
 			/* loop in sorted order over extents */
-			for (j = 0; j < 5; j++)
+			for (int j = 0; j < 5; j++)
 				if (i & (1 << sorted[j]))
 				{
 					const clip_struct &cur = clips[sorted[j]];
@@ -2784,15 +2792,144 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 		}
 
 	/* loop over scanlines and build extents */
-	for (y = tempclip.nMiny; y < tempclip.nMaxy; y++)
+	for (int y = tempclip.nMiny; y < tempclip.nMaxy; y++)
 	{
 		INT32 sect = 0;
 
 		/* figure out all the clips that intersect this scanline */
-		for (i = 0; i < 5; i++)
+		for (int i = 0; i < 5; i++)
 			if ((clipmask & (1 << i)) && y >= clips[i].nMiny && y < clips[i].nMaxy)
 				sect |= 1 << i;
-		list->scan_extent[y] = sect;
+
+		/*
+		 * $1FF04 bits 4/5 enable per-line clip windows.
+		 *
+		 * clip 2:
+		 *   +000 = min X
+		 *   +200 = max X
+		 *
+		 * clip 3:
+		 *   +100 = min X
+		 *   +300 = max X
+		 */
+		if (BIT(m_videoram[0x1ff04 / 2], 4) || BIT(m_videoram[0x1ff04 / 2], 5))
+		{
+			clip_struct lineclips[5];
+			int linesorted[5];
+		   // const clip_struct &visarea = screen.visible_area();
+			int line = flip ? cliprect.nMaxy - y : y;
+			UINT16 *table = &m_videoram[(m_videoram[0x1ff04/2] >> 10) * 0x400];
+
+			for (int i = 0; i < 5; i++)
+			{
+				lineclips[i] = clips[i];
+				linesorted[i] = i;
+			}
+
+			// clip window 2
+			if (BIT(m_videoram[0x1ff04 / 2], 4) && BIT(clipmask, 2))
+			{
+				UINT16 minx = table[0x000 + line];
+				UINT16 maxx = table[0x200 + line];
+
+				if (minx == 0xffff || maxx == 0xffff)
+				{
+					sect &= ~(1 << 2);
+				}
+				else if (!flip)
+				{
+					lineclips[2].nMinx = minx & 0x1ff;
+					lineclips[2].nMaxx = (maxx & 0x1ff) + 1;
+				}
+				else
+				{
+					lineclips[2].nMinx = tempclip.nMaxx - ((maxx & 0x1ff) + 1);
+					lineclips[2].nMaxx = tempclip.nMaxx - (minx & 0x1ff);
+				}
+
+				secty(lineclips[2], tempclip); //lineclips[2] &= tempclip;
+
+				if (lineclips[2].nMinx >= lineclips[2].nMaxx)
+					sect &= ~(1 << 2);
+			}
+
+			// clip window 3
+			if (BIT(m_videoram[0x1ff04 / 2], 5) && BIT(clipmask, 3))
+			{
+				UINT16 minx = table[0x100 + line];
+				UINT16 maxx = table[0x300 + line];
+
+				if (minx == 0xffff || maxx == 0xffff)
+				{
+					sect &= ~(1 << 3);
+				}
+				else if (!flip)
+				{
+					lineclips[3].nMinx = minx & 0x1ff;
+					lineclips[3].nMaxx = (maxx & 0x1ff) + 1;
+				}
+				else
+				{
+					lineclips[3].nMinx = tempclip.nMaxx - ((maxx & 0x1ff) + 1);
+					lineclips[3].nMaxx = tempclip.nMaxx - (minx & 0x1ff);
+				}
+
+				secty(lineclips[3], tempclip); //lineclips[3] &= tempclip;
+
+				if (lineclips[3].nMinx >= lineclips[3].nMaxx)
+					sect &= ~(1 << 3);
+			}
+
+			/*
+			 * Build the extent for this individual scanline.
+			 * 0-31 remain the normal combinations.
+			 * 32+y is the per-line extent.
+			 */
+			{
+				UINT16 *extent = &list->extent[32 + y][0];
+
+				for (int i = 0; i < 5; i++)
+					linesorted[i] = i;
+
+				for (int i = 0; i < 5; i++)
+					for (int j = i + 1; j < 5; j++)
+						if (lineclips[linesorted[i]].nMinx > lineclips[linesorted[j]].nMinx)
+						{
+							int temp = linesorted[i];
+							linesorted[i] = linesorted[j];
+							linesorted[j] = temp;
+						}
+
+				*extent++ = tempclip.nMinx;
+
+				for (int j = 0; j < 5; j++)
+				{
+					if (BIT(sect, linesorted[j]))
+					{
+						const clip_struct &cur = lineclips[linesorted[j]];
+
+						if (extent != &list->extent[32 + y][1] && cur.nMinx <= extent[-1])
+						{
+							if (cur.nMaxx > extent[-1])
+								extent[-1] = cur.nMaxx;
+						}
+						else
+						{
+							*extent++ = cur.nMinx;
+							*extent++ = cur.nMaxx;
+						}
+					}
+				}
+
+				*extent++ = tempclip.nMaxx;
+			}
+
+			list->scan_extent[y] = 32 + y;
+		}
+		else
+		{
+			list->scan_extent[y] = sect;
+		}
 	}
 
 	return clipout;
@@ -3270,9 +3407,14 @@ static void update_tilemap_text(clip_struct cliprect, UINT16 *ram, INT32 destbmp
 
 static void update_background(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 {
+	UINT16 *m_videoram = (UINT16*)DrvVidRAM;
+
+	// determine if we're flipped
+	bool flip = BIT(m_videoram[0x1ff00 / 2], 9);
+
 	for (INT32 y = cliprect.nMiny; y <= cliprect.nMaxy; y++)
 	{
-		UINT16 *const dst = BurnBitmapGetPosition(destbmp+5, 0, y);
+		UINT16 *const dst = BurnBitmapGetPosition(destbmp+5, 0, flip ? cliprect.nMaxy - y : y);
 		INT32 color;
 
 		/* determine the color */

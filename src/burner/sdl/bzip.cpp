@@ -329,6 +329,7 @@ static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 	struct BurnRomInfo ri;
 	int   nWantZip = 0;
 	TCHAR szText[128];
+	const size_t nTextSize = sizeof(szText) / sizeof(szText[0]);	// guard against buffer overflow with long rom names
 	char* pszRomName = NULL;
 	int   nRet = 0;
 
@@ -351,25 +352,27 @@ static int __cdecl BzipBurnLoadRom(unsigned char* Dest, int* pnWrote, int i)
 	{
 		if (ri.nType & BRF_BIOS)
 		{
-			_stprintf(szText + _tcslen(szText), _T(" %s"), _T("BIOS "));
+			_sntprintf(szText + _tcslen(szText), nTextSize - _tcslen(szText) - 1, _T(" %s"), _T("BIOS "));
 		}
 		if (ri.nType & BRF_PRG)
 		{
-			_stprintf(szText + _tcslen(szText), _T(" %s"), _T("program "));
+			_sntprintf(szText + _tcslen(szText), nTextSize - _tcslen(szText) - 1, _T(" %s"), _T("program "));
 		}
 		if (ri.nType & BRF_GRA)
 		{
-			_stprintf(szText + _tcslen(szText), _T(" %s"), _T("graphics "));
+			_sntprintf(szText + _tcslen(szText), nTextSize - _tcslen(szText) - 1, _T(" %s"), _T("graphics "));
 		}
 		if (ri.nType & BRF_SND)
 		{
-			_stprintf(szText + _tcslen(szText), _T(" %s"), _T("sound "));
+			_sntprintf(szText + _tcslen(szText), nTextSize - _tcslen(szText) - 1, _T(" %s"), _T("sound "));
 		}
-		_stprintf(szText + _tcslen(szText), _T("(%hs)..."), pszRomName);
+		_sntprintf(szText + _tcslen(szText), nTextSize - _tcslen(szText) - 1, _T("(%hs)..."), pszRomName);
+		szText[nTextSize - 1] = _T('\0');
 	}
 	else
 	{
-		_stprintf(szText + _tcslen(szText), _T(" %hs..."), pszRomName);
+		_sntprintf(szText + _tcslen(szText), nTextSize - _tcslen(szText) - 1, _T(" %hs..."), pszRomName);
+		szText[nTextSize - 1] = _T('\0');
 	}
 	ProgressUpdateBurner(ri.nLen ? 1.0 / ((double)nTotalSize / ri.nLen) : 0, szText, 0);
 

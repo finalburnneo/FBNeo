@@ -56323,7 +56323,7 @@ struct BurnDriver BurnDrvgba_celeste2 = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Chip's Advance (HB, v2.1)
+// Chip's Advance (M2) (HB, v2.1)
 
 static struct BurnRomInfo gba_chipsadvRomDesc[] = {
 	{ "Chip's Advance v2.1 (2007)(PortableDev - Alekmaul).gba",	10498128,	0x586c4345,	BRF_ESS | BRF_PRG },
@@ -56334,7 +56334,7 @@ STD_ROM_FN(gba_chipsadv)
 
 struct BurnDriver BurnDrvgba_chipsadv = {
 	"gba_chipsadv", "gba_chipsch", "gba_gba", NULL, "2007",
-	"Chip's Advance (HB, v2.1)\0", NULL, "PortableDev - Alekmaul", "Game Boy Advance",
+	"Chip's Advance (M2) (HB, v2.1)\0", NULL, "PortableDev - Alekmaul", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_chipsadvRomInfo, gba_chipsadvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
@@ -56414,6 +56414,25 @@ struct BurnDriver BurnDrvgba_clocktower = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV, 0,
 	GbaGetZipName, gba_clocktowerRomInfo, gba_clocktowerRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Codename Hacker (M2) (HB)
+
+static struct BurnRomInfo gba_codenamehckRomDesc[] = {
+	{ "Codename Hacker (2007)(Alekmaul).gba",	4058684,	0x1ccfbe29,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_codenamehck, gba_codenamehck, gba_gba)
+STD_ROM_FN(gba_codenamehck)
+
+struct BurnDriver BurnDrvgba_codenamehck = {
+	"gba_codenamehck", "gba_chipsch", "gba_gba", NULL, "2007",
+	"Codename Hacker (M2) (HB)\0", NULL, "Alekmaul", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_codenamehckRomInfo, gba_codenamehckRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57536,6 +57555,26 @@ struct BurnDriver BurnDrvgba_meating = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+
+// Mini Mines (HB, v1.1)
+
+static struct BurnRomInfo gba_miniminesRomDesc[] = {
+	{ "Mini Mines v1.1 (2024)(Lazuli Software).gba",	1048576,	0x2b6f3c3a,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_minimines, gba_minimines, gba_gba)
+STD_ROM_FN(gba_minimines)
+
+struct BurnDriver BurnDrvgba_minimines = {
+	"gba_minimines", NULL, "gba_gba", NULL, "2024",
+	"Mini Mines (HB, v1.1)\0", NULL, "Lazuli Software", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_miniminesRomInfo, gba_miniminesRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // With the last Moonbeam (HB, v1.0.1)
 
 static struct BurnRomInfo gba_moonbeamRomDesc[] = {
@@ -58178,10 +58217,10 @@ struct BurnDriver BurnDrvgba_spacetwins = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
-// Stack a Tower (HB)
+// Stack a Tower (HB, v1.1)
 
 static struct BurnRomInfo gba_stacktowerRomDesc[] = {
-	{ "Stack a Tower (2026)(Laluigi).gba",	45772,	0x7a420f95,	BRF_ESS | BRF_PRG },
+	{ "Stack a Tower v1.1 (2026)(Laluigi).gba",	56032,	0xa1c57753,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_stacktower, gba_stacktower, gba_gba)
@@ -58189,7 +58228,7 @@ STD_ROM_FN(gba_stacktower)
 
 struct BurnDriver BurnDrvgba_stacktower = {
 	"gba_stacktower", NULL, "gba_gba", NULL, "2026",
-	"Stack a Tower (HB)\0", NULL, "LaLuigi", "Game Boy Advance",
+	"Stack a Tower (HB, v1.1)\0", NULL, "LaLuigi", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_stacktowerRomInfo, gba_stacktowerRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
@@ -58830,6 +58869,24 @@ struct BurnDriver BurnDrvgba_rolancurgb = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Shantae (GBA Enhanced) - GBC2GBA (HB)
+static struct BurnRomInfo gba_shantaeegbcRomDesc[] = {
+	{ "Shantae (GBA Enhanced) - GBC2GBA (2021)(Limited Run Games).gba",	4270236,	0x41a280fb,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_shantaeegbc, gba_shantaeegbc, gba_gba)
+STD_ROM_FN(gba_shantaeegbc)
+
+struct BurnDriver BurnDrvgba_shantaeegbc = {
+	"gba_shantaeegbc", NULL, "gba_gba", NULL, "2021",
+	"Shantae (GBA Enhanced) - GBC2GBA (HB)\0", NULL, "Limited Run Games - WayForward", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	GbaGetZipName, gba_shantaeegbcRomInfo, gba_shantaeegbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Shantae - GBC2GBA (HB)
 static struct BurnRomInfo gba_shantaegbcRomDesc[] = {
 	{ "Shantae - GBC2GBA (2002)(WayForward).gba",	4270208,	0x137b5a1c,	BRF_ESS | BRF_PRG },
@@ -58839,10 +58896,10 @@ STDROMPICKEXT(gba_shantaegbc, gba_shantaegbc, gba_gba)
 STD_ROM_FN(gba_shantaegbc)
 
 struct BurnDriver BurnDrvgba_shantaegbc = {
-	"gba_shantaegbc", NULL, "gba_gba", NULL, "2002",
+	"gba_shantaegbc", "gba_shantaeegbc", "gba_gba", NULL, "2002",
 	"Shantae - GBC2GBA (HB)\0", NULL, "WayForward", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_shantaegbcRomInfo, gba_shantaegbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2

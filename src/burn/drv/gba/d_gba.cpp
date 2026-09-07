@@ -41517,7 +41517,7 @@ struct BurnDriver BurnDrvgba_smurfs = {
 
 // SN Systems - Test Program (Japan)
 static struct BurnRomInfo gba_snsystemRomDesc[] = {
-	{ "SN Systems (J)(200?).gba",	0x2000000,	0x00f5687a,	BRF_ESS | BRF_PRG },
+	{ "SN Systems (J)(200x).gba",	0x2000000,	0x00f5687a,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_snsystem, gba_snsystem, gba_gba)

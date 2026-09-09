@@ -5800,6 +5800,7 @@ static void tnk3_draw_sprites(const int xscroll, const int yscroll)
 	}
 }
 
+template<bool is_gwar>
 static void tdfever_draw_sprites(INT32 xscroll, INT32 yscroll, UINT8 *source, UINT8 *gfx, const int hw_xflip, const int from, const int to, INT32 color_offset)
 {
 	int size = (gfx == DrvGfxROM3) ? 32 : 16;
@@ -5863,16 +5864,20 @@ static void tdfever_draw_sprites(INT32 xscroll, INT32 yscroll, UINT8 *source, UI
 				for (INT32 x = 0; x < size; x++) {
 					if ((sx+x) < 0 || (sx+x) >= nScreenWidth) continue;
 
-					INT32 pxl = gfxbase[((y*size)+x)^flip];
+					INT32 pxl = gfxbase[((y*size)+x)^flip] & 0xf;
 					if (pxl == 15) continue;
-					if (pxl == 14) {
-						if (pTransDraw[(sy+y)*nScreenWidth+(sx+x)] & 0x200) {
-							pTransDraw[(sy+y)*nScreenWidth+(sx+x)] += 0x100;
-						} else {
-							pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl + color;
+					if (is_gwar) {
+						if (pxl <= 14) pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl + color;
+					} else {
+						if (pxl == 14) {
+							if (pTransDraw[(sy+y)*nScreenWidth+(sx+x)] & 0x200) {
+								pTransDraw[(sy+y)*nScreenWidth+(sx+x)] += 0x100;
+							} else {
+								pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl + color;
+							}
 						}
+						if (pxl <= 13) pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl + color;
 					}
-					if (pxl <= 13) pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl + color;
 				}
 			}
 		}
@@ -5951,9 +5956,9 @@ static INT32 GwarDraw()
 
 	if (nBurnLayer & 1) gwar_draw_layer_bg(0x300,15,0);
 
-	if (nSpriteEnable & 1) tdfever_draw_sprites(sp16_scrollx, sp16_scrolly, DrvSprRAM + 0x800, DrvGfxROM2, 0, 0, sprite_split_point, 0x100 );
-	if (nSpriteEnable & 2) tdfever_draw_sprites(sp32_scrollx, sp32_scrolly, DrvSprRAM,         DrvGfxROM3, 0, 0, 32, 0x200 );
-	if (nSpriteEnable & 4) tdfever_draw_sprites(sp16_scrollx, sp16_scrolly, DrvSprRAM + 0x800, DrvGfxROM2, 0, sprite_split_point, 64, 0x100 );
+	if (nSpriteEnable & 1) tdfever_draw_sprites<true>(sp16_scrollx, sp16_scrolly, DrvSprRAM + 0x800, DrvGfxROM2, 0, 0, sprite_split_point, 0x100 );
+	if (nSpriteEnable & 2) tdfever_draw_sprites<true>(sp32_scrollx, sp32_scrolly, DrvSprRAM,         DrvGfxROM3, 0, 0, 32, 0x200 );
+	if (nSpriteEnable & 4) tdfever_draw_sprites<true>(sp16_scrollx, sp16_scrolly, DrvSprRAM + 0x800, DrvGfxROM2, 0, sprite_split_point, 64, 0x100 );
 
 	if (nBurnLayer & 2) gwar_draw_layer_tx(0);
 
@@ -5973,7 +5978,7 @@ static INT32 TdfeverDraw()
 
 	if (nBurnLayer & 1) gwar_draw_layer_bg(0x200,143,-32);
 
-	if (nSpriteEnable & 2) tdfever_draw_sprites(sp32_scrollx, sp32_scrolly, DrvSprRAM, DrvGfxROM3, 0, 0, 32, 0x100 );
+	if (nSpriteEnable & 2) tdfever_draw_sprites<false>(sp32_scrollx, sp32_scrolly, DrvSprRAM, DrvGfxROM3, 0, 0, 32, 0x100 );
 
 	if (nBurnLayer & 2) gwar_draw_layer_tx(0);
 
@@ -5993,7 +5998,7 @@ static INT32 FsoccerDraw()
 
 	if (nBurnLayer & 1) gwar_draw_layer_bg(0x200,16,0);
 
-	if (nSpriteEnable & 2) tdfever_draw_sprites(sp32_scrollx, sp32_scrolly, DrvSprRAM, DrvGfxROM3, 1, 0, 32, 0x100 );
+	if (nSpriteEnable & 2) tdfever_draw_sprites<false>(sp32_scrollx, sp32_scrolly, DrvSprRAM, DrvGfxROM3, 1, 0, 32, 0x100 );
 
 	if (nBurnLayer & 2) gwar_draw_layer_tx(0);
 

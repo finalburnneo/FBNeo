@@ -371,8 +371,9 @@ static INT32 DrvExit()
 
 static double DrvAudioRate()
 {
-	// match output sample rate; nBurnSoundLen rounding is absorbed by ring underflow
-	return nBurnSoundLen > 0 ? nBurnSoundRate : 0.0;
+	// frame-synced rate: exactly nBurnSoundLen samples per frame, so producer == consumer
+	// (nominal nBurnSoundRate leaves a ~478ppm excess that the ring converts to drift)
+	return nBurnSoundLen > 0 ? nBurnSoundLen * (16777216.0 / 280896.0) : 0.0;
 }
 
 static INT32 DrvDraw()

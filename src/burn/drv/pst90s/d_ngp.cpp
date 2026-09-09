@@ -3688,7 +3688,7 @@ struct BurnDriver BurnDrvngpc_fruitypalsr = {
 
 // Gardenia (HB)
 static struct BurnRomInfo ngpc_gardeniaRomDesc[] = {
-	{ "Gardenia (2026)(Chris Ahchay).ngp", 2097152, 0xede2861a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Gardenia (2026)(Chris Ahchay).ngp", 2097152, 0x0ae9466a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_gardenia, ngpc_gardenia, ngpc_ngp)

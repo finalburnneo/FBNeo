@@ -56172,6 +56172,25 @@ struct BurnDriver BurnDrvgba_brokenc = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Bugtris (HB)
+
+static struct BurnRomInfo gba_bugtrisRomDesc[] = {
+	{ "Bugtris (2022)(NotImpLife).gba",	422596,	0x408e6ac5,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_bugtris, gba_bugtris, gba_gba)
+STD_ROM_FN(gba_bugtris)
+
+struct BurnDriver BurnDrvgba_bugtris = {
+	"gba_bugtris", NULL, "gba_gba", NULL, "2022",
+	"Bugtris (HB)\0", NULL, "NotImpLife", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_bugtrisRomInfo, gba_bugtrisRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Butano Fighter (HB)
 
 static struct BurnRomInfo gba_butanofightRomDesc[] = {
@@ -56552,6 +56571,44 @@ struct BurnDriver BurnDrvgba_dangxmas = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Dare To Doku (HB)
+
+static struct BurnRomInfo gba_daretodokuRomDesc[] = {
+	{ "Dare To Doku (2026)(DeDefourkes).gba",	2136888,	0x88f7027e,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_daretodoku, gba_daretodoku, gba_gba)
+STD_ROM_FN(gba_daretodoku)
+
+struct BurnDriver BurnDrvgba_daretodoku = {
+	"gba_daretodoku", NULL, "gba_gba", NULL, "2026",
+	"Dare To Doku (HB)\0", NULL, "DeDefourkes", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
+	GbaGetZipName, gba_daretodokuRomInfo, gba_daretodokuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Dare To Square (HB, Demo)
+
+static struct BurnRomInfo gba_daretosqrRomDesc[] = {
+	{ "Dare To Square Demo (2026)(DeDefourkes).gba",	3151136,	0x291350e7,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_daretosqr, gba_daretosqr, gba_gba)
+STD_ROM_FN(gba_daretosqr)
+
+struct BurnDriver BurnDrvgba_daretosqr = {
+	"gba_daretosqr", NULL, "gba_gba", NULL, "2026",
+	"Dare To Square (HB, Demo)\0", NULL, "DeDefourkes", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_PUZZLE, 0,
+	GbaGetZipName, gba_daretosqrRomInfo, gba_daretosqrRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Double Maze (HB)
 
 static struct BurnRomInfo gba_dblmazeRomDesc[] = {
@@ -56609,6 +56666,25 @@ struct BurnDriver BurnDrvgba_deflektor = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Deimos Defender (HB)
+
+static struct BurnRomInfo gba_deimosdefRomDesc[] = {
+	{ "Deimos Defender (2026)(BraindeaD Games).gba",	141744,	0x5d69858b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_deimosdef, gba_deimosdef, gba_gba)
+STD_ROM_FN(gba_deimosdef)
+
+struct BurnDriver BurnDrvgba_deimosdef = {
+	"gba_deimosdef", NULL, "gba_gba", NULL, "2026",
+	"Deimos Defender (HB)\0", NULL, "BraindeaD Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_HORSHOOT, 0,
+	GbaGetZipName, gba_deimosdefRomInfo, gba_deimosdefRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Detective Monroe: Murder at Sea (HB)
 
 static struct BurnRomInfo gba_detmonroeRomDesc[] = {
@@ -56662,6 +56738,25 @@ struct BurnDriver BurnDrvgba_dkongcc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM, 0,
 	GbaGetZipName, gba_dkongccRomInfo, gba_dkongccRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Donsol (HB)
+
+static struct BurnRomInfo gba_donsolRomDesc[] = {
+	{ "Donsol (2022)(Hundred Rabbits).gba",	52520,	0xaec144b3,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_donsol, gba_donsol, gba_gba)
+STD_ROM_FN(gba_donsol)
+
+struct BurnDriver BurnDrvgba_donsol = {
+	"gba_donsol", NULL, "gba_gba", NULL, "2022",
+	"Donsol (HB)\0", NULL, "Hundred Rabbits", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_CARD | GBF_RPG, 0,
+	GbaGetZipName, gba_donsolRomInfo, gba_donsolRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -56890,6 +56985,25 @@ struct BurnDriver BurnDrvgba_fill2grid = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_fill2gridRomInfo, gba_fill2gridRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Final Fight One - All Unlocks (Hack)
+// https://www.romhacking.net/hacks/9982/
+static struct BurnRomInfo gba_ffight1auRomDesc[] = {
+	{ "Final Fight One - All Unlocks (2026)(KleberDicas).gba",	4194304,	0x37345cec,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_ffight1au, gba_ffight1au, gba_gba)
+STD_ROM_FN(gba_ffight1au)
+
+struct BurnDriver BurnDrvgba_ffight1au = {
+	"gba_ffight1au", "gba_ffight1", "gba_gba", NULL, "2026",
+	"Final Fight One - All Unlocks (Hack)\0", NULL, "KleberDicas", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SCRFIGHT, 0,
+	GbaGetZipName, gba_ffight1auRomInfo, gba_ffight1auRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -57712,7 +57826,7 @@ struct BurnDriver BurnDrvgba_neonnoir = {
 // Notebook Adventure (HB, v1.3)
 
 static struct BurnRomInfo gba_notebookadvRomDesc[] = {
-	{ "Notebook Adventure v1.3 (2022)(NotImplementedLife).gba",	476392,	0xcc110502,	BRF_ESS | BRF_PRG },
+	{ "Notebook Adventure v1.3 (2022)(NotImpLife).gba",	476392,	0xcc110502,	BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(gba_notebookadv, gba_notebookadv, gba_gba)
@@ -57720,7 +57834,7 @@ STD_ROM_FN(gba_notebookadv)
 
 struct BurnDriver BurnDrvgba_notebookadv = {
 	"gba_notebookadv", NULL, "gba_gba", NULL, "2022",
-	"Notebook Adventure (HB, v1.3)\0", NULL, "NotImplementedLife", "Game Boy Advance",
+	"Notebook Adventure (HB, v1.3)\0", NULL, "NotImpLife", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE | GBF_PLATFORM, 0,
 	GbaGetZipName, gba_notebookadvRomInfo, gba_notebookadvRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
@@ -58427,6 +58541,25 @@ struct BurnDriver BurnDrvgba_tortoises = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Tremblay Island (HB, v1.10)
+
+static struct BurnRomInfo gba_tremblayRomDesc[] = {
+	{ "Tremblay Island v1.10 (2021)(Cinemint Games).gba",	16239516,	0xce85ba07,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_tremblay, gba_tremblay, gba_gba)
+STD_ROM_FN(gba_tremblay)
+
+struct BurnDriver BurnDrvgba_tremblay = {
+	"gba_tremblay", NULL, "gba_gba", NULL, "2021",
+	"Tremblay Island (HB, v1.10)\0", NULL, "Cinemint Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ADV, 0,
+	GbaGetZipName, gba_tremblayRomInfo, gba_tremblayRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Trun (HB)
 
 static struct BurnRomInfo gba_trunRomDesc[] = {
@@ -58866,6 +58999,25 @@ struct BurnDriver BurnDrvgba_rolancurgb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
 	GbaGetZipName, gba_rolancurgbRomInfo, gba_rolancurgbRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Serpent - GB2GBA
+
+static struct BurnRomInfo gba_serpentRomDesc[] = {
+	{ "Serpent - GB2GBA (1990)(Naxat Soft).gba",	108700,	0x619e2e89,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_serpent, gba_serpent, gba_gba)
+STD_ROM_FN(gba_serpent)
+
+struct BurnDriver BurnDrvgba_serpent = {
+	"gba_serpent", NULL, "gba_gba", NULL, "1990",
+	"Serpent - GB2GBA\0", NULL, "Naxat Soft", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
+	GbaGetZipName, gba_serpentRomInfo, gba_serpentRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

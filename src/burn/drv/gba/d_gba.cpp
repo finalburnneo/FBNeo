@@ -56585,7 +56585,7 @@ struct BurnDriver BurnDrvgba_daretodoku = {
 	"Dare To Doku (HB)\0", NULL, "DeDefourkes", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
-	GbaGetZipName, gba_daretodokuRomInfo, gba_daretodokuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
+	GbaGetZipName, gba_daretodokuRomInfo, gba_daretodokuRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -56604,7 +56604,7 @@ struct BurnDriver BurnDrvgba_daretosqr = {
 	"Dare To Square (HB, Demo)\0", NULL, "DeDefourkes", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PLATFORM | GBF_PUZZLE, 0,
-	GbaGetZipName, gba_daretosqrRomInfo, gba_daretosqrRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,
+	GbaGetZipName, gba_daretosqrRomInfo, gba_daretosqrRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

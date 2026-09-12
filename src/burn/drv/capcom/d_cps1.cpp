@@ -22196,7 +22196,7 @@ static void Varthb2Callback()
 	// bootleg sprites index tiles from 0x8000 upwards; mirror the graphics
 	// so those tiles resolve into a valid copy at 0x400000
 	memcpy(CpsGfx + 0x400000, CpsGfx, 0x200000);
-};
+}
 
 static INT32 Varthb2Init()
 {

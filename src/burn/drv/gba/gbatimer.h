@@ -5,7 +5,7 @@
 
 #include "gba.h"
 
-static inline void gba_compute_timers(gba_t* gba)
+static void gba_compute_timers(gba_t* gba)
 {
 	// event fires count the firing cycle; register accesses stop one short
 	bool   from_event = !gba->timer_event.active;
@@ -102,12 +102,12 @@ static inline void gba_compute_timers(gba_t* gba)
 	gba_timing_schedule(gba, &gba->timer_event, when_rel);
 }
 
-static inline void gba_timer_event(gba_t* gba, sb_emu_state_t* /*emu*/, UINT32 /*cycles_late*/)
+static void gba_timer_event(gba_t* gba, sb_emu_state_t* /*emu*/, UINT32 /*cycles_late*/)
 {
 	gba_compute_timers(gba);
 }
 
-static inline void gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit)
+static void gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit)
 {
 	if (if_bit) {
 		gba->active_if_pipe_stages |= 1 << pipe_stage;
@@ -115,7 +115,7 @@ static inline void gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit
 	}
 }
 
-static inline void gba_tick_interrupts(gba_t* gba)
+static void gba_tick_interrupts(gba_t* gba)
 {
 	if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
 		UINT16 if_bit = gba->pipelined_if[0];

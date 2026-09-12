@@ -29,9 +29,10 @@ static inline void    gba_tick_keypad(sb_joy_t* joy, gba_t* gba);
 static inline UINT16  gba_rom_read16(const gba_t* gba, UINT32 address);
 
 // timer.h
-static inline void                  gba_compute_timers(gba_t* gba);
-static inline void    gba_tick_interrupts(gba_t* gba);
-static inline void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
+static void    gba_compute_timers(gba_t* gba);
+static void    gba_tick_interrupts(gba_t* gba);
+static void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
+static void    gba_timer_event(gba_t* gba, sb_emu_state_t* /*emu*/, UINT32 /*cycles_late*/);
 
 // ppu.h
 static inline void    gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
@@ -41,14 +42,14 @@ static inline void    gba_ppu_refresh_status(gba_t* gba);
 #define GBA_SIO_TRANSFER_TICKS	(8 * 8)
 static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 
-#include "gpio.h"
-#include "cart.h"
-#include "bus.h"
-#include "timer.h"
-#include "ppu.h"
-#include "dma.h"
-#include "sio.h"
-#include "apu.h"
+#include "gbagpio.h"
+#include "gbacart.h"
+#include "gbabus.h"
+#include "gbatimer.h"
+#include "gbappu.h"
+#include "gbadma.h"
+#include "gbasio.h"
+#include "gbaapu.h"
 
 void gba_cpu_trigger_breakpoint(void* data);
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);

@@ -190,7 +190,7 @@ static inline UINT8 gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 
 		seq->frequency[i] = freq_lo | ((int)(SB_BFE(freq_hi, 0, 3)) << 8u);
 	}
 	return value;
-};
+}
 
 static inline UINT8 sb_read_wave_ram(sb_gb_t* gb, INT32 byte)
 {

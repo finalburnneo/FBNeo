@@ -20,7 +20,7 @@
 extern "C" int stb_vorbis_decode_memory(const unsigned char* mem, int len, int* channels, int* sample_rate, short** output);
 
 #if defined(BUILD_WIN32) || defined(__LIBRETRO__) || defined(__x86_64__) || defined(__i386__)
-#define MSU1_USE_R8B_RESAMPLE
+//#define MSU1_USE_R8B_RESAMPLE disabled R8B resampler, causing trouble..
 #endif
 #ifdef MSU1_USE_R8B_RESAMPLE
 #include <new>

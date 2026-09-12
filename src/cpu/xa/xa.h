@@ -26,7 +26,7 @@ enum {
 	XA_EXT_IRQ0 = 0,
 	XA_EXT_IRQ1,
 	XA_EXT_IRQ2,
-	XA_EXT_IRQ3,
+	XA_EXT_IRQ3
 };
 
 class xa_cpu

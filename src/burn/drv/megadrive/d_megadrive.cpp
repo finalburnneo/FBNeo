@@ -10526,6 +10526,24 @@ struct BurnDriver BurnDrvmd_bighurt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Frog Dude (Prototype)
+static struct BurnRomInfo md_frogdudeRomDesc[] = {
+	{ "Frog Dude (Proto)(1993)(Twilight).bin", 99792, 0xc5e80ce2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_frogdude)
+STD_ROM_FN(md_frogdude)
+
+struct BurnDriver BurnDrvmd_frogdude = {
+	"md_frogdude", NULL, NULL, NULL, "1993",
+	"Frog Dude (Prototype)\0", "No sound", "Twilight", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_frogdudeRomInfo, md_frogdudeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Frogger (USA)
 static struct BurnRomInfo md_froggerRomDesc[] = {
 	{ "Frogger (USA)(1998)(Majesco).bin", 0x080000, 0xea2e48c0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -36292,6 +36310,24 @@ struct BurnDriver BurnDrvmd_dinho98 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Rook Mann - RockHeaven (Japan) (Unl)
+static struct BurnRomInfo md_rookmannRomDesc[] = {
+	{ "Rook Mann - RockHeaven (Japan)(Unl)(199x).bin", 524288, 0x274c2a1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rookmann)
+STD_ROM_FN(md_rookmann)
+
+struct BurnDriver BurnDrvmd_rookmann = {
+	"md_rookmann", "md_alexkidd", NULL, NULL, "199?",
+	"Rook Mann - RockHeaven (Japan) (Unl)\0", NULL, "<unknown>", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_rookmannRomInfo, md_rookmannRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Samurai Spirits II (China) (Unl)
 static struct BurnRomInfo md_Samsho2RomDesc[] = {
 	{ "Samurai Spirits II (China)(Unl)(1998).bin", 2097152, 0x2942f180, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000 },
@@ -39440,8 +39476,26 @@ struct BurnDriver BurnDrvmd_debtor = {
 	"md_debtor", NULL, NULL, NULL, "2020",
 	"Debtor (HB)\0", NULL, "PSCD Games, SharkGame", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_debtorRomInfo, md_debtorRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Debtor (HB, Alt)
+static struct BurnRomInfo md_debtoraRomDesc[] = {
+	{ "Debtor (Alt) (2020)(PSCD Games).bin", 2228224, 0x7bb67106, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_debtora)
+STD_ROM_FN(md_debtora)
+
+struct BurnDriver BurnDrvmd_debtora = {
+	"md_debtora", "md_debtor", NULL, NULL, "2020",
+	"Debtor (HB, Alt)\0", NULL, "PSCD Games, SharkGame", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_debtoraRomInfo, md_debtoraRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -41100,6 +41154,25 @@ struct BurnDriver BurnDrvmd_masiaka = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_DEMO | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_masiakaRomInfo, md_masiakaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mazinger Z (HB)
+// https://warasibe1192.itch.io/mazinger-z
+static struct BurnRomInfo md_mazingerzRomDesc[] = {
+	{ "Mazinger Z (2026)(NK Soft).bin", 262144, 0x51edfae2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mazingerz)
+STD_ROM_FN(md_mazingerz)
+
+struct BurnDriver BurnDrvmd_mazingerz = {
+	"md_mazingerz", NULL, NULL, NULL, "2026",
+	"Mazinger Z (HB)\0", NULL, "NK Soft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_mazingerzRomInfo, md_mazingerzRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

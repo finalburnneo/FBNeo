@@ -701,14 +701,31 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		case WM_MEASUREITEM:
 		{
 			LPMEASUREITEMSTRUCT pmis = (LPMEASUREITEMSTRUCT)lParam;
-			 if (pmis->CtlType == ODT_MENU) {
+			if (pmis->CtlType == ODT_MENU) {
 				CurrentItemInfo* data = (CurrentItemInfo*) pmis->itemData;
+
+				if (!data) { pmis->itemWidth = 20; pmis->itemHeight = 20; return TRUE; }
+
 				HDC hdc = GetDC(hWnd);
-				SIZE sz;
-				GetTextExtentPoint32(hdc, data->sText, _tcslen(data->sText), &sz);
+				SIZE szLabel = { 0, 0 };
+        		SIZE szAccel = { 0, 0 };
+
+				TCHAR* rightAlignChar = _tcschr(data->sText, _T('\t'));
+				if (rightAlignChar) {
+					// in case a string contains the special char \t its necessary ot capture its position
+					// the string of the item will have normal behavior up to the \t char
+					// after \t we will align everything to the right
+					GetTextExtentPoint32(hdc, data->sText, (int)(rightAlignChar - data->sText), &szLabel);
+					GetTextExtentPoint32(hdc, rightAlignChar + 1, (int)_tcslen(rightAlignChar + 1), &szAccel);
+				} else {
+					//no \t found keep going as normal
+					GetTextExtentPoint32(hdc, data->sText, (int)_tcslen(data->sText), &szLabel);
+				}
 				ReleaseDC(hWnd, hdc);
-				pmis->itemWidth  = sz.cx + 40; 
-				pmis->itemHeight = fmax(sz.cy, 20);
+
+				int accelGap = szAccel.cx > 0 ? (szAccel.cx + 24) : 0; 
+				pmis->itemWidth  = szLabel.cx + 40 + accelGap;
+				pmis->itemHeight = (int)fmax(fmax(szLabel.cy, szAccel.cy), 20);
 			}
 			return TRUE;
 		}
@@ -765,10 +782,23 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 					pszText = nullptr;
 				}
 
-				if (pszText) {
-					RECT rcText = pdis->rcItem;
-					rcText.left += 24;
-					DrawText(pdis->hDC, pszText, -1, &rcText, DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+				RECT rcText = pdis->rcItem;
+				rcText.left += 24; // your existing dot/checkmark margin
+
+				TCHAR* rightAlignChar = _tcschr(pszText, _T('\t'));
+				if (rightAlignChar) {
+					// \t char found align the text to the right
+					DrawText(pdis->hDC, pszText, (int)(rightAlignChar - pszText), &rcText,
+							DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+
+					RECT rcAccel = pdis->rcItem;
+					rcAccel.right -= 8; 
+					DrawText(pdis->hDC, rightAlignChar + 1, -1, &rcAccel,
+							DT_SINGLELINE | DT_VCENTER | DT_RIGHT);
+				} else {
+					// no \t char keep goign as usual
+					DrawText(pdis->hDC, pszText, -1, &rcText,
+							DT_SINGLELINE | DT_VCENTER | DT_LEFT);
 				}
 			}
 			return TRUE;

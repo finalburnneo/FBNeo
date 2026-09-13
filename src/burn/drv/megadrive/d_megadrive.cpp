@@ -41555,7 +41555,7 @@ struct BurnDriver BurnDrvmd_memorialoca = {
 	"md_memorialoca", NULL, NULL, NULL, "2026",
 	"Memoria de Locadora: The Game (HB)\0", NULL, "Memoria de Locadora", "Genesis / Mega Drive",
 	L"Mem\u00f3ria de Locadora: The Game (HB, Portuguese)\0", NULL, L"Mem\u00f3ria de Locadora\0", NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_memorialocaRomInfo, md_memorialocaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

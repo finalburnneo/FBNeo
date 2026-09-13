@@ -41545,7 +41545,7 @@ struct BurnDriver BurnDrvmd_megaxmas = {
 
 // Memória de Locadora: The Game (HB, Portuguese)
 static struct BurnRomInfo md_memorialocaRomDesc[] = {
-	{ "Memoria de Locadora - The Game (2026)(Nekojita).bin", 2228224, 0x9fd9aae2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Memoria de Locadora - The Game (2026)(Memoria de Locadora).bin", 2228224, 0x9fd9aae2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_memorialoca)

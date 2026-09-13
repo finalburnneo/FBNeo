@@ -17332,7 +17332,7 @@ struct BurnDriver BurnDrvmd_mworld4eng2 = {
 
 // Mortal Kombat (World, Rev. 1)
 static struct BurnRomInfo md_mkRomDesc[] = {
-	{ "Mortal kombat (World, Rev 1)(1993)(Arena Entertainment).bin", 0x200000, 0x33f19ab6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat (World, Rev 1)(1993)(Arena Entertainment).bin", 0x200000, 0x33f19ab6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mk)
@@ -17350,7 +17350,7 @@ struct BurnDriver BurnDrvmd_mk = {
 
 // Mortal Kombat (World)
 static struct BurnRomInfo md_mkaRomDesc[] = {
-	{ "Mortal kombat (World)(1993)(Arena Entertainment).bin", 0x200000, 0x1aa3a207, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat (World)(1993)(Arena Entertainment).bin", 0x200000, 0x1aa3a207, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mka)
@@ -41543,6 +41543,24 @@ struct BurnDriver BurnDrvmd_megaxmas = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Memória de Locadora: The Game (HB, Portuguese)
+static struct BurnRomInfo md_memorialocaRomDesc[] = {
+	{ "Memoria de Locadora - The Game (2026)(Nekojita).bin", 2228224, 0x9fd9aae2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_memorialoca)
+STD_ROM_FN(md_memorialoca)
+
+struct BurnDriver BurnDrvmd_memorialoca = {
+	"md_memorialoca", NULL, NULL, NULL, "2026",
+	"Memoria de Locadora: The Game (HB)\0", NULL, "Memoria de Locadora", "Genesis / Mega Drive",
+	L"Mem\u00f3ria de Locadora: The Game (HB, Portuguese)\0", NULL, L"Mem\u00f3ria de Locadora\0", NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_memorialocaRomInfo, md_memorialocaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Metal Blast 2277 (HB, v1.25)
 static struct BurnRomInfo md_mb2277RomDesc[] = {
 	{ "Metal Blast 2277 v1.25 (2017-2019)(T-Arts Studio).bin", 2647322, 0xdfd4fe49, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -45562,10 +45580,10 @@ struct BurnDriver BurnDrvmd_mkae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat Arcade Edition (Hack, v2.7)
+// Mortal Kombat Arcade Edition Enhanced (Hack, v2.8)
 // https://romhackplaza.org/romhacks/mortal-kombat-arcade-edition-enhanced-sega-genesis-romhack
 static struct BurnRomInfo md_mkaeeRomDesc[] = {
-	{ "Mortal Kombat Arcade Edition Enhanced v2.7 (2026)(Rael G.C.).bin", 4194304, 0xb9fa989e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat Arcade Edition Enhanced v2.8 (2026)(Rael G.C.).bin", 4194304, 0xebc90098, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mkaee)
@@ -45573,7 +45591,7 @@ STD_ROM_FN(md_mkaee)
 
 struct BurnDriver BurnDrvmd_mkaee = {
 	"md_mkaee", "md_mk", NULL, NULL, "2026",
-	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.7)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
+	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.8)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkaeeRomInfo, md_mkaeeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

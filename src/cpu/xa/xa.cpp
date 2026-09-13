@@ -2376,7 +2376,7 @@ INT32 xa_cpu::Run(INT32 cycles)
 	m_start_cycles = cycles;
 	m_run_end = 0;
 
-	{
+	do {
 		check_interrupts();
 
 		//debugger_instruction_hook(m_pc);
@@ -2387,9 +2387,9 @@ INT32 xa_cpu::Run(INT32 cycles)
 		if (m_icount == old_icount) {
 			m_icount = 0;
 			bprintf(0, _T("xa, cpu probably deadlocked. ppc / pc: %x / %x?\n"), oldpc, m_pc);
-			////	fatalerror("op at %06x took no cycles\n", oldpc);
+			//fatalerror("op at %06x took no cycles\n", oldpc);
 		}
-	} while (m_icount > 0 && !m_run_end)
+	} while (m_icount > 0 && !m_run_end);
 
 	cycles = m_start_cycles - m_icount;
 	m_start_cycles = m_icount = 0;

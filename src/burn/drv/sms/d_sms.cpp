@@ -22530,24 +22530,6 @@ struct BurnDriver BurnDrvsms_frontierforce = {
 	256, 192, 4, 3
 };
 
-// Frontier Force (HB, Alpha Demo v0.1.2.3)
-static struct BurnRomInfo sms_frontierforcedRomDesc[] = {
-	{ "Frontier Force - Alpha Demo v0.1.2.3 (2024)(BadComputer).sms",	262144, 0xdef51eb0, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(sms_frontierforced)
-STD_ROM_FN(sms_frontierforced)
-
-struct BurnDriver BurnDrvsms_frontierforced = {
-	"sms_frontierforced", "sms_frontierforce", NULL, NULL, "2024",
-	"Frontier Force (HB, Alpha Demo v0.1.2.3)\0", NULL, "BadComputer", "Sega Master System",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
-	SMSGetZipName, sms_frontierforcedRomInfo, sms_frontierforcedRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
-};
-
 // Galactic Boogers (GlobalHack)
 static struct BurnRomInfo sms_gboogersRomDesc[] = {
 	{ "Galactic Boogers (GlobalHack)(2020)(Yeti).sms",	1048576, 0xb5dac318, BRF_PRG | BRF_ESS },
@@ -23954,6 +23936,24 @@ struct BurnDriver BurnDrvsms_raymanrr = {
     SMSGetZipName, sms_raymanrrRomInfo, sms_raymanrrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
     SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
     256, 192, 4, 3
+};
+
+// Razing Core (HB, v1.1)
+static struct BurnRomInfo sms_razingcoreRomDesc[] = {
+	{ "Razing Core v1.1 (2026)(Bad Computer).sms",	524288, 0x811b0309, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_razingcore)
+STD_ROM_FN(sms_razingcore)
+
+struct BurnDriver BurnDrvsms_razingcore = {
+	"sms_razingcore", NULL, NULL, NULL, "2026",
+	"Razing Core (HB, v1.1)\0", NULL, "Bad Computer", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_VERSHOOT, 0,
+	SMSGetZipName, sms_razingcoreRomInfo, sms_razingcoreRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
 };
 
 // Ring Dash SMS (HB)

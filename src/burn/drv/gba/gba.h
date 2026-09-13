@@ -118,7 +118,7 @@ typedef struct {
 #define GBA_EVENT_PRIORITY_AUDIO	4
 #define GBA_EVENT_PRIORITY_DMA		5
 
-#include "cpu.h"
+#include "gbacpu.h"
 
 //////////////////////////////////////////////////////////////////////////////////////////
 // MMIO Register listing from GBATEK (https://problemkaputt.de/gbatek.htm#gbamemorymap) //
@@ -298,7 +298,7 @@ enum gba_rtc_phase {
 	GBA_RTC_COMMAND,
 	GBA_RTC_RECEIVE,
 	GBA_RTC_SEND,
-	GBA_RTC_COMPLETE,
+	GBA_RTC_COMPLETE
 };
 
 enum gba_rtc_register {
@@ -309,7 +309,7 @@ enum gba_rtc_register {
 	GBA_RTC_STATUS,
 	GBA_RTC_UNUSED2,
 	GBA_RTC_TIME,
-	GBA_RTC_UNUSED3,
+	GBA_RTC_UNUSED3
 };
 
 typedef struct {
@@ -653,13 +653,13 @@ enum GbaButton {
 	GBA_BUTTON_UP,
 	GBA_BUTTON_DOWN,
 	GBA_BUTTON_R,
-	GBA_BUTTON_L,
+	GBA_BUTTON_L
 };
 
 enum GbaDipSwitch {
 	GBA_DIPSWITCH_01 = 0,	// video rendering: 0 = scanline, 1 = per-pixel
 	GBA_DIPSWITCH_02,		// BIOS selection:  0 = optional, 1 = custom
-	GBA_DIPSWITCH_03,		// per-game patch
+	GBA_DIPSWITCH_03		// per-game patch
 };
 
 enum GbaCartridgeFeature {
@@ -667,7 +667,7 @@ enum GbaCartridgeFeature {
 	GBA_CART_SOLAR  = 1 << 1,
 	GBA_CART_RUMBLE = 1 << 2,
 	GBA_CART_GYRO   = 1 << 3,
-	GBA_CART_TILT   = 1 << 4,
+	GBA_CART_TILT   = 1 << 4
 };
 
 struct GbaInput {

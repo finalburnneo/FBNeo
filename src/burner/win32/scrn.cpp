@@ -71,6 +71,7 @@ void DisplayPopupMenu(int nMenu);
 // Double-clicking the titlebar, or clicking the Maximize button on titlebar
 // can also be problematic, sometimes creating a window that is too wide.
 
+typedef HRESULT (WINAPI *SetWindowThemeFn)(HWND, LPCWSTR, LPCWSTR);
 static HBITMAP hBezelBitmap = NULL;
 static int nBezelCacheX = 0;
 static int nBezelCacheY = 0;
@@ -130,6 +131,85 @@ static int OnRButtonDown(HWND, BOOL, int, int, UINT);
 static int OnDisplayChange(HWND, UINT, UINT, UINT);
 
 int OnNotify(HWND, int, NMHDR* lpnmhdr);
+
+void DrawItemType(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
+{
+	UINT ItemStateType = ItemInfo.menuItemTypeFlag;
+	switch (ItemStateType)
+    {
+		case MFT_SEPARATOR:
+		{
+			COLORREF bg = RGB((uiMenuItemColor >> 16) & 0xFF, (uiMenuItemColor >> 8) & 0xFF, uiMenuItemColor & 0xFF);
+			HBRUSH hbr = CreateSolidBrush(bg);
+			FillRect(pdis->hDC, &pdis->rcItem, hbr);
+			DeleteObject(hbr);
+
+			int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+			HPEN pen = CreatePen(PS_SOLID, 1, (COLORREF)uiTextFontColor);
+			HPEN oldPen = (HPEN)SelectObject(pdis->hDC, pen);
+			MoveToEx(pdis->hDC, pdis->rcItem.left + 4, cy, NULL);
+			LineTo(pdis->hDC, pdis->rcItem.right - 4, cy);
+			SelectObject(pdis->hDC, oldPen);
+			DeleteObject(pen);
+			break;
+		}
+
+		case MFT_RADIOCHECK:
+		{
+			int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+			int cx = pdis->rcItem.left + 12;
+			HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
+			HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
+			HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
+			Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
+			SelectObject(pdis->hDC, oldBrush);
+			SelectObject(pdis->hDC, oldPen);
+			DeleteObject(dotBrush);
+			break;
+		}
+	}
+}
+
+void DrawItemState(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
+{
+    UINT ItemStateType = ItemInfo.menuItemStateFlag;
+
+	switch (ItemStateType)
+	{
+		case MFS_CHECKED:
+		{
+			if(ItemInfo.itemHasCheckMark)
+			{
+				int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+				int cx = pdis->rcItem.left + 12;
+
+				HPEN pen = CreatePen(PS_SOLID, 2, (COLORREF)uiTextFontColor);
+				HPEN oldPen = (HPEN)SelectObject(pdis->hDC, pen);
+
+				MoveToEx(pdis->hDC, cx - 5, cy,     NULL);
+				LineTo  (pdis->hDC, cx - 1, cy + 4);
+				LineTo  (pdis->hDC, cx + 6, cy - 5);
+
+				SelectObject(pdis->hDC, oldPen);
+				DeleteObject(pen);
+			}
+			else
+			{
+				int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
+				int cx = pdis->rcItem.left + 12;
+				HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
+				HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
+				HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
+				Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
+				SelectObject(pdis->hDC, oldBrush);
+				SelectObject(pdis->hDC, oldPen);
+				DeleteObject(dotBrush);
+				break;
+			}
+		}
+	}
+	
+}
 
 static bool UseDialogs()
 {
@@ -617,6 +697,82 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 			}
 			break;
 		}
+
+		case WM_MEASUREITEM:
+		{
+			LPMEASUREITEMSTRUCT pmis = (LPMEASUREITEMSTRUCT)lParam;
+			 if (pmis->CtlType == ODT_MENU) {
+				CurrentItemInfo* data = (CurrentItemInfo*) pmis->itemData;
+				HDC hdc = GetDC(hWnd);
+				SIZE sz;
+				GetTextExtentPoint32(hdc, data->sText, _tcslen(data->sText), &sz);
+				ReleaseDC(hWnd, hdc);
+				pmis->itemWidth  = sz.cx + 40; 
+				pmis->itemHeight = fmax(sz.cy, 20);
+			}
+			return TRUE;
+		}
+		
+		// doing a drawItem case to control the shading of the selected item
+		case WM_DRAWITEM:
+		{
+			LPDRAWITEMSTRUCT pdis = (LPDRAWITEMSTRUCT)lParam;
+			CurrentItemInfo* data = (CurrentItemInfo*) pdis->itemData;
+			if (pdis->CtlType == ODT_MENU) {
+				BOOL bSelected = (pdis->itemState & ODS_SELECTED) != 0;
+
+				COLORREF clr;
+
+				if(bSelected) 
+				{
+					clr = RGB((uiSelectedMenuItemColor >> 16) & 0xFF,   // R
+                      		  (uiSelectedMenuItemColor >> 8) & 0xFF,    // G
+                      		   uiSelectedMenuItemColor & 0xFF);         // B 
+				}
+				else
+				{
+					clr = RGB((uiMenuItemColor >> 16) & 0xFF,   // R
+                      		  (uiMenuItemColor >> 8) & 0xFF,    // G
+                      		   uiMenuItemColor & 0xFF);         // B
+				}
+
+				HBRUSH hbr = CreateSolidBrush(clr);
+				FillRect(pdis->hDC, &pdis->rcItem, hbr);
+				DeleteObject(hbr);
+
+				// if the item has flags associate draw its state, separator lines are ignored because they cant have states
+				if (data->menuItemStateFlag != 0 && ((data->menuItemTypeFlag & MFT_SEPARATOR) == 0) ) 
+				{
+					DrawItemState(pdis, *data);
+				}	
+
+				if(data->menuItemTypeFlag != 0)
+				{
+					DrawItemType(pdis, *data);
+				}
+
+				SetBkMode(pdis->hDC, TRANSPARENT);
+				SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);          
+
+				TCHAR* pszText;
+
+				if(data)
+				{
+					pszText = data->sText;
+				}
+				else
+				{
+					pszText = nullptr;
+				}
+
+				if (pszText) {
+					RECT rcText = pdis->rcItem;
+					rcText.left += 24;
+					DrawText(pdis->hDC, pszText, -1, &rcText, DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+				}
+			}
+			return TRUE;
+	 	} 
 		// - dink - end
 		HANDLE_MSG(hWnd, WM_SIZE,			OnSize);
 		HANDLE_MSG(hWnd, WM_ENTERSIZEMOVE,	OnEnterSizeMove);
@@ -2815,6 +2971,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			ResetPlaceHolder();
 			POST_INITIALISE_MESSAGE;
 			break;
+		
+		case MENU_DEFAULT_LIGHT_MODE:
+ 			nUiColorTheme = 0;
+			UpdateUiColorMode(nUiColorTheme);
+			POST_INITIALISE_MESSAGE;
+			break;
+
+		case MENU_DEFAULT_DARK_MODE:
+			nUiColorTheme = 1;
+			UpdateUiColorMode(nUiColorTheme);
+			POST_INITIALISE_MESSAGE;
+			break;	
 
 		case MENU_LANGUAGE_SELECT:
 			if (UseDialogs()) {
@@ -4349,6 +4517,7 @@ int ScrnTitle()
 // Init the screen window (create it)
 int ScrnInit()
 {
+
 	REBARINFO rebarInfo;
 	REBARBANDINFO rebarBandInfo;
 	RECT rect;
@@ -4378,6 +4547,7 @@ int ScrnInit()
 		0, 0, 0, 0,									   			// size of window
 		NULL, NULL, hAppInst, NULL);
 
+
 	if (hScrnWnd == NULL) {
 		ScrnExit();
 		return 1;
@@ -4398,22 +4568,36 @@ int ScrnInit()
 				0, 0, 0, 0,
 				hScrnWnd, NULL, hAppInst, NULL);
 
+			HMODULE hUxTheme = LoadLibrary(L"uxtheme.dll");
+			if (hUxTheme) {
+				SetWindowThemeFn pSetWindowTheme = 
+					(SetWindowThemeFn)GetProcAddress(hUxTheme, "SetWindowTheme");
+				if (pSetWindowTheme) {
+					pSetWindowTheme(hRebar, L"", L"");
+				}
+				FreeLibrary(hUxTheme);
+			}
+
+
 			rebarInfo.cbSize = sizeof(REBARINFO);
 			rebarInfo.fMask = 0;
 			rebarInfo.himl = NULL;
 
 			SendMessage(hRebar, RB_SETBARINFO, 0, (LPARAM)&rebarInfo);
 
-			// Add the menu toolbar to the rebar
+			//SendMessage(hRebar, RB_SETBKCOLOR, 0, (LPARAM)RGB(0, 255, 0));
+
+			//Add the menu toolbar to the rebar
 			GetWindowRect(hMenubar, &rect);
 
 			rebarBandInfo.cbSize		= sizeof(REBARBANDINFO);
-			rebarBandInfo.fMask			= RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_SIZE | RBBIM_STYLE;// | RBBIM_BACKGROUND;
+			rebarBandInfo.fMask			= RBBIM_CHILD | RBBIM_CHILDSIZE | RBBIM_SIZE | RBBIM_STYLE | RBBIM_COLORS;// | RBBIM_BACKGROUND;
 			rebarBandInfo.fStyle		= 0;//RBBS_GRIPPERALWAYS;// | RBBS_FIXEDBMP;
 			rebarBandInfo.hwndChild		= hMenubar;
 			rebarBandInfo.cxMinChild	= 100;
 			rebarBandInfo.cyMinChild	= ((SendMessage(hMenubar, TB_GETBUTTONSIZE, 0, 0)) >> 16) + 1;
 			rebarBandInfo.cx			= rect.right - rect.left;
+    		rebarBandInfo.clrBack    = uiBackGroundColor;
 
 			SendMessage(hRebar, RB_INSERTBAND, (WPARAM)-1, (LPARAM)&rebarBandInfo);
 

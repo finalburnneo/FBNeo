@@ -38709,7 +38709,7 @@ struct BurnDriver BurnDrvmd_bobcse = {
 	"md_bobcse", NULL, NULL, NULL, "2018",
 	"Bomb on Basic City Special Edition (HB)\0", "Included a demo of Papi Commando Tennis", "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_bobcseRomInfo, md_bobcseRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40338,6 +40338,24 @@ struct BurnDriver BurnDrvmd_galaxianpp = {
 	MegadriveGetZipName, md_galaxianppRomInfo, md_galaxianppRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 224, 320, 3, 4
+};
+
+// Garfield: Caught in the Act - Complete (Hack, v1.1)
+static struct BurnRomInfo md_garfieldcRomDesc[] = {
+	{ "Garfield - Caught in the Act - Complete v1.1 (2026)(BillyTime! Games).bin", 4194304, 0x1cd79306, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_garfieldc)
+STD_ROM_FN(md_garfieldc)
+
+struct BurnDriver BurnDrvmd_garfieldc = {
+	"md_garfieldc", "md_garfield", NULL, NULL, "2026",
+	"Garfield: Caught in the Act - Complete (Hack, v1.1)\0", NULL, "BillyTime! Games", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_garfieldcRomInfo, md_garfieldcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
 // Gemesis (HB, v1.1)
@@ -42109,16 +42127,16 @@ struct BurnDriver BurnDrvmd_papi = {
 	"md_papi", "md_papirmxdx", NULL, NULL, "2015",
 	"Papi Commando (HB)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papiRomInfo, md_papiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Papi Commando Reload (HB, TecToy Demo)
+// Papi Commando Reload (HB, TecToy Demo !)
 // https://vetea.itch.io/papi-commando-reload-free-demo-tectoy
 static struct BurnRomInfo md_papirldRomDesc[] = {
-	{ "Papi Commando Reload TecToy Demo (2017)(Studio Vetea).bin", 1572864, 0xd73e6ad5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Papi Commando Reload TecToy Demo ! (2017)(Studio Vetea).bin", 1572864, 0xd73e6ad5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_papirld)
@@ -42126,7 +42144,7 @@ STD_ROM_FN(md_papirld)
 
 struct BurnDriver BurnDrvmd_papirld = {
 	"md_papirld", NULL, NULL, NULL, "2017",
-	"Papi Commando Reload (HB, TecToy Demo)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
+	"Papi Commando Reload (HB, TecToy Demo !)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papirldRomInfo, md_papirldRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42147,7 +42165,7 @@ struct BurnDriver BurnDrvmd_papirmx = {
 	"md_papirmx", "md_papirmxdx", NULL, NULL, "2018",
 	"Papi Commando Remix ! (HB)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papirmxRomInfo, md_papirmxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42166,7 +42184,7 @@ struct BurnDriver BurnDrvmd_papirmxdx = {
 	"md_papirmxdx", NULL, NULL, NULL, "2020",
 	"Papi Commando Remix Deluxe (HB)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papirmxdxRomInfo, md_papirmxdxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42184,7 +42202,7 @@ struct BurnDriver BurnDrvmd_papi2 = {
 	"md_papi2", NULL, NULL, NULL, "2020",
 	"Papi Commando - Second Blood (HB)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papi2RomInfo, md_papi2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42203,7 +42221,7 @@ struct BurnDriver BurnDrvmd_papitennis = {
 	"md_papitennis", NULL, NULL, NULL, "2018",
 	"Papi Commando Tennis (HB, Demo)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
 	MegadriveGetZipName, md_papitennisRomInfo, md_papitennisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

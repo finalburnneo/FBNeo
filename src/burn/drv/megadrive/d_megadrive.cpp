@@ -41619,10 +41619,10 @@ struct BurnDriver BurnDrvmd_metalgear = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Metal Slug Warfare (HB, v2.3 Demo)
+// Metal Slug Warfare!! (HB, v2.3 Demo)
 // https://vetea.itch.io/metal-slug-warfare-demo-megadrive
 static struct BurnRomInfo md_mslugwRomDesc[] = {
-	{ "Metal Slug Warfare v2.3 Demo (2021)(Studio Vetea).bin", 1433692, 0xbeba682b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Metal Slug Warfare!! v2.3 Demo (2021)(Studio Vetea).bin", 1433692, 0xbeba682b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mslugw)
@@ -41630,7 +41630,7 @@ STD_ROM_FN(md_mslugw)
 
 struct BurnDriver BurnDrvmd_mslugw = {
 	"md_mslugw", NULL, NULL, NULL, "2021",
-	"Metal Slug Warfare (HB, v2.3 Demo)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
+	"Metal Slug Warfare!! (HB, v2.3 Demo)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mslugwRomInfo, md_mslugwRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42115,10 +42115,10 @@ struct BurnDriver BurnDrvmd_papi = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Papi Commando Reload (HB, Tec Toy Demo)
+// Papi Commando Reload (HB, TecToy Demo)
 // https://vetea.itch.io/papi-commando-reload-free-demo-tectoy
 static struct BurnRomInfo md_papirldRomDesc[] = {
-	{ "Papi Commando Reload Tec Toy Demo (2017)(Studio Vetea).bin", 1572864, 0xd73e6ad5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Papi Commando Reload TecToy Demo (2017)(Studio Vetea).bin", 1572864, 0xd73e6ad5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_papirld)
@@ -42126,7 +42126,7 @@ STD_ROM_FN(md_papirld)
 
 struct BurnDriver BurnDrvmd_papirld = {
 	"md_papirld", NULL, NULL, NULL, "2017",
-	"Papi Commando Reload (HB, Tec Toy Demo)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
+	"Papi Commando Reload (HB, TecToy Demo)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papirldRomInfo, md_papirldRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42134,10 +42134,10 @@ struct BurnDriver BurnDrvmd_papirld = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Papi Commando Remix (HB)
+// Papi Commando Remix ! (HB)
 // https://vetea.itch.io/papi-commando-remix-megadrive
 static struct BurnRomInfo md_papirmxRomDesc[] = {
-	{ "Papi Commando Remix (2018)(Studio Vetea).bin", 3698576, 0xd15c6391, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Papi Commando Remix ! (2018)(Studio Vetea).bin", 3698576, 0xd15c6391, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_papirmx)
@@ -42145,7 +42145,7 @@ STD_ROM_FN(md_papirmx)
 
 struct BurnDriver BurnDrvmd_papirmx = {
 	"md_papirmx", "md_papirmxdx", NULL, NULL, "2018",
-	"Papi Commando Remix (HB)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
+	"Papi Commando Remix ! (HB)\0", NULL, "Studio Vetea", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_papirmxRomInfo, md_papirmxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

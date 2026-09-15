@@ -750,7 +750,7 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 		if (~control1 & 0x20) {
 			deco16_scroll_cols[tmap] = 0x8000;
-			deco16_scroll_y[tmap][0] = (scrolly + deco16_global_y_offset) & 0x1ff;
+			deco16_scroll_y[tmap][0] = scrolly + deco16_global_y_offset;
 		}
 	}
 
@@ -796,12 +796,12 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 		deco16_scroll_rows[tmap] = 0x8000;
 		deco16_scroll_cols[tmap] = 0x8000;
 
-		deco16_scroll_y[tmap][0] = (scrolly + deco16_global_y_offset) & 0x1ff;
+		deco16_scroll_y[tmap][0] = scrolly + deco16_global_y_offset;
 
 		INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
 		deco16_scroll_x[tmap][0] = xscroll;
-	}	
+	}
 }
 
 void deco16_pf12_update()

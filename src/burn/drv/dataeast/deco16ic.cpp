@@ -3,9 +3,9 @@
 #include "deco146.h"
 #include "deco16ic.h"
 
-static INT32 deco16_layer_size[4];
+static INT32 deco16_layer_width[4];
 static INT32 deco16_layer_height[4];
-static INT32 deco16_layer_size_select[4];
+static INT32 deco16_layer_tile_size_select[4];
 
 static INT32 (*deco16_bank_callback[4])(const INT32 bank);
 
@@ -20,18 +20,13 @@ static INT32 deco16_pf_gfx_bank[4]; // (1/2) 8x8, 16x16, (2/3) 8x8, 16x16
 
 static UINT16 deco16_scroll_x[4][512];	// 512  (rowscroll)
 static UINT16 deco16_scroll_y[4][1024];	// 1024 (colscroll)
+static UINT32 deco16_yscroll[4];		// cache of scrolly
 
 static INT32 deco16_scroll_rows[4];
 static INT32 deco16_scroll_cols[4];
 
-static INT32 deco16_enable_rowscroll[4];
-static INT32 deco16_enable_colscroll[4];
-
 static INT32 deco16_global_x_offset = 0;
 static INT32 deco16_global_y_offset = 0;
-
-static INT32 deco16_yscroll[4];
-static INT32 deco16_xscroll[4];
 
 static INT32 deco16_scroll_offset[4][2][2]; // tmap, size, x, y
 
@@ -61,7 +56,7 @@ void deco16ProtReset();
 
 INT32 deco16_get_tilemap_size(INT32 tmap)
 {
-	return deco16_layer_size_select[tmap];
+	return deco16_layer_tile_size_select[tmap];
 }
 
 void deco16_draw_prio_sprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 pri, INT32 spri)
@@ -322,7 +317,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	UINT8 control0 = BURN_ENDIAN_SWAP_INT16(deco16_pf_control[tmap >> 1][5]) >> ((tmap & 1) << 3) & 0xff;
 	if (~control0 & 0x80) return; // layer disabled
 
-	INT32 size	= deco16_layer_size_select[tmap];
+	INT32 size	= deco16_layer_tile_size_select[tmap];
 	if (size == -1) return; // layer disabled (from pf_update, only for tmap 0, 1?)
 
 	INT32 control	= BURN_ENDIAN_SWAP_INT16(deco16_pf_control[tmap / 2][6]);
@@ -333,7 +328,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	size = size ? 16 : 8;
 
 	INT32 bpp = (flags & DECO16_LAYER_8BITSPERPIXEL) ? 8 : ((flags & DECO16_LAYER_5BITSPERPIXEL) ? 5 : 4);
-	
+
 	INT32 deco16_captaven = flags & DECO16_LAYER_CAPTAVEN;
 
 	UINT8 *gfx	= deco16_graphics[select];
@@ -352,10 +347,12 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	INT32 colbank	= deco16_pf_colorbank[tmap] >> bpp;
 
 	INT32 hmask	= (deco16_layer_height[tmap] * size) - 1;
-	INT32 wmask	= (deco16_layer_size[tmap] * size) - 1;
+	INT32 wmask	= (deco16_layer_width[tmap] * size) - 1;
 	INT32 shift	= (wmask & 0x100) ? 6 : 5;
 	INT32 smask	= size - 1;
 
+	//bprintf(0, _T("tmap %x: hmask %x  wmask %x  shift %x  smask %x\n"), tmap, hmask, wmask, shift, smask);
+	//bprintf(0, _T(" - layer width %x  height %x\n"), deco16_layer_width[tmap], deco16_layer_height[tmap]);
 	for (INT32 y = draw_start; y < draw_end; y++)
 	{
 		INT32 xoff = deco16_scroll_x[tmap][((y + deco16_yscroll[tmap] + deco16_global_y_offset)&hmask)/deco16_scroll_rows[tmap]] & wmask;
@@ -379,10 +376,10 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 			INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[ofst]);
 			INT32 color = code >> 12;
-	
+
 			INT32 flipx = 0;
 			INT32 flipy = 0;
-	
+
 			if ((color & 0x0008) && (control & 0x03)) {
 				flipx = control & 0x01;
 				flipy = control & 0x02;
@@ -554,7 +551,14 @@ void deco16_set_scroll_offs(INT32 tmap, INT32 size, INT32 offsetx, INT32 offsety
 	deco16_scroll_offset[tmap][size][1] = offsety;
 }
 
-void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
+// - tmap_size bits -
+//     tmap 0: 64 width (always)
+// 1 - tmap 1,2*,3*: 64 width
+// 2 - tmap 2,3: width 32, if 1 is used, too (*)
+// 4 - tmap 0: 64 height
+// 8 - tmap 1: 64 height
+
+void deco16Init(INT32 no_pf34, INT32 split, INT32 tmap_size)
 {
 	set_transmask(0, 0x0001, 0xffff);
 	set_transmask(1, 0x0001, 0xffff);
@@ -565,7 +569,7 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 		set_transmask(1, 0xff01, 0x00ff);
 	}
 
-	memset (deco16_scroll_offset, 0, 4 * 2 * 2 * sizeof(INT32));
+	memset (deco16_scroll_offset, 0, sizeof(deco16_scroll_offset));
 
 	deco16_pf_ram[0] = (UINT8*)BurnMalloc(0x2000);
 	deco16_pf_ram[1] = (UINT8*)BurnMalloc(0x2000);
@@ -573,8 +577,8 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 	deco16_pf_rowscroll[0] = (UINT8*)BurnMalloc(0x2000);
 	deco16_pf_rowscroll[1] = (UINT8*)BurnMalloc(0x2000);
 
-	deco16_pf_control[0]	= (UINT16*)BurnMalloc(0x10); // 1/2
-	deco16_pf_control[1]	= (UINT16*)BurnMalloc(0x10); // 3/4
+	deco16_pf_control[0]   = (UINT16*)BurnMalloc(0x10); // 1/2
+	deco16_pf_control[1]   = (UINT16*)BurnMalloc(0x10); // 3/4
 
 	if (no_pf34 == 0) {
 		deco16_pf_ram[2] = (UINT8*)BurnMalloc(0x2000);
@@ -592,16 +596,16 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 	deco16_bank_callback[2] = NULL;
 	deco16_bank_callback[3] = NULL;
 
-	deco16_layer_size[0] = 64;
-	deco16_layer_size[1] = (full_width & 1) ? 64 : 32;
+	deco16_layer_width[0] = 64;
+	deco16_layer_width[1] = (tmap_size & 1) ? 64 : 32;
 
-	INT32 pf34_width = (full_width & 1) ^ ((full_width >> 1) & 1);
+	INT32 pf34_width = (tmap_size & 1) ^ ((tmap_size >> 1) & 1);
 
-	deco16_layer_size[2] = (!no_pf34) ? (pf34_width ? 64 : 32) : 0;
-	deco16_layer_size[3] = (!no_pf34) ? (pf34_width ? 64 : 32) : 0;
+	deco16_layer_width[2] = (!no_pf34) ? (pf34_width ? 64 : 32) : 0;
+	deco16_layer_width[3] = (!no_pf34) ? (pf34_width ? 64 : 32) : 0;
 
-	deco16_layer_height[0] = (full_width & 4) ? 64 : 32;
-	deco16_layer_height[1] = 32;
+	deco16_layer_height[0] = (tmap_size & 4) ? 64 : 32;
+	deco16_layer_height[1] = (tmap_size & 8) ? 64 : 32;
 	deco16_layer_height[2] = 32;
 	deco16_layer_height[3] = 32;
 
@@ -624,10 +628,10 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 	deco16_pf_gfx_bank[1] = 1;
 	deco16_pf_gfx_bank[2] = 2;
 
-	deco16_layer_size_select[0] = 1; //16x16
-	deco16_layer_size_select[1] = 1;
-	deco16_layer_size_select[2] = 1;
-	deco16_layer_size_select[3] = 1;
+	deco16_layer_tile_size_select[0] = 1; //16x16
+	deco16_layer_tile_size_select[1] = 1;
+	deco16_layer_tile_size_select[2] = 1;
+	deco16_layer_tile_size_select[3] = 1;
 
 	deco16_global_x_offset = 0;
 	deco16_global_y_offset = 0;
@@ -639,12 +643,12 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 
 void deco16Reset()
 {
-	memset (deco16_pf_rowscroll[0], 0, 0x1000);
-	memset (deco16_pf_rowscroll[1], 0, 0x1000);
+	memset (deco16_pf_rowscroll[0], 0, 0x2000);
+	memset (deco16_pf_rowscroll[1], 0, 0x2000);
 
 	if (deco16_pf_rowscroll[2]) {
-		memset (deco16_pf_rowscroll[2], 0, 0x1000);
-		memset (deco16_pf_rowscroll[3], 0, 0x1000);
+		memset (deco16_pf_rowscroll[2], 0, 0x2000);
+		memset (deco16_pf_rowscroll[3], 0, 0x2000);
 	}
 
 	memset (deco16_pf_control[0], 0, 16);
@@ -692,23 +696,19 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 {
 	if (~tmap & 2) {
 		if (control1 & 0x80) {
-			deco16_layer_size_select[tmap] = (control0 & 0x80) ? 0 : -1; // 8x8
+			deco16_layer_tile_size_select[tmap] = (control0 & 0x80) ? 0 : -1; // 8x8
 		} else {
-			deco16_layer_size_select[tmap] = (control0 & 0x80) ? 1 : -1; // 16x16
+			deco16_layer_tile_size_select[tmap] = (control0 & 0x80) ? 1 : -1; // 16x16
 		}
 	}
 
-	if (deco16_layer_size_select[tmap] == -1) return; // don't bother
-
-	deco16_enable_rowscroll[tmap] = 0;
-	deco16_enable_colscroll[tmap] = 0;
+	if (deco16_layer_tile_size_select[tmap] == -1) return; // don't bother
 
 	deco16_yscroll[tmap] = scrolly;
-	deco16_xscroll[tmap] = scrollx;
 
 	if ((control1 & 0x40) == 0x40 && rowscroll != NULL) // row scroll
 	{
-		INT32 size = deco16_layer_size_select[tmap] ? 16 : 8;
+		INT32 size = deco16_layer_tile_size_select[tmap] ? 16 : 8;
 
 		INT32 rows = 1;
 		INT32 row_sel = (control0 >> 3) & 0x0f;
@@ -723,8 +723,6 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 			}
 			if (rows == 0) rows = 1;
 		}
-
-		if (rows != 1) deco16_enable_colscroll[tmap] = 1;
 
 		INT32 rsize = rownum / rows;
 
@@ -756,7 +754,7 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 	if ((control1 & 0x20) == 0x20 && rowscroll != NULL) // column scroll
 	{
-		INT32 size = deco16_layer_size_select[tmap] ? 16 : 8;
+		INT32 size = deco16_layer_tile_size_select[tmap] ? 16 : 8;
 
 		INT32 mask = (0x40 >> (control0 & 0x07)) - 1;
 		if (mask < 0) mask = 0;
@@ -770,8 +768,6 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 			colnum /= 2;
 			if (cols == 0) cols = 1;
 		}
-
-		if (cols != 1) deco16_enable_rowscroll[tmap] = 1;
 
 		INT32 rsize = colnum / cols;
 
@@ -791,7 +787,7 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 	if ((control1 & 0x60) == 0x00) // normal scroll
 	{
-		INT32 size = deco16_layer_size_select[tmap] ? 16 : 8;
+		INT32 size = deco16_layer_tile_size_select[tmap] ? 16 : 8;
 
 		deco16_scroll_rows[tmap] = 0x8000;
 		deco16_scroll_cols[tmap] = 0x8000;
@@ -1097,9 +1093,9 @@ void deco16SoundScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		h6280Scan(nAction);
-	
+
 		SCAN_VAR(deco16_soundlatch);
-		
+
 		if (deco16_sound_enable[0]) BurnYM2151Scan(nAction, pnMin);
 		if (deco16_sound_enable[1]) BurnYM2203Scan(nAction, pnMin);
 		if (deco16_sound_enable[2]) MSM6295Scan(nAction, pnMin);

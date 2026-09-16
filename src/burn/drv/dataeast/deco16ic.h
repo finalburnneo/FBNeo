@@ -33,7 +33,7 @@ void deco16_set_graphics(INT32 num, UINT8 *gfx, INT32 len, INT32 size /*tile siz
 
 void deco16_create_transtable(INT32 select, INT32 trans); // speedup!
 
-void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width);
+void deco16Init(INT32 no_pf34, INT32 split, INT32 tmap_size);
 void deco16Reset();
 void deco16Exit();
 

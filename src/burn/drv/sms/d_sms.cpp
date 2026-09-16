@@ -23685,6 +23685,24 @@ struct BurnDriver BurnDrvsms_noturnomg = {
 	256, 192, 4, 3
 };
 
+// Oriflame (HB)
+static struct BurnRomInfo sms_oriflameRomDesc[] = {
+	{ "Oriflame (2026)(Altair).sms",	1048576, 0xfee8077a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_oriflame)
+STD_ROM_FN(sms_oriflame)
+
+struct BurnDriver BurnDrvsms_oriflame = {
+	"sms_oriflame", NULL, NULL, NULL, "2026",
+	"Oriflame (HB)\0", NULL, "Altair", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_oriflameRomInfo, sms_oriflameRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Osotos (HB)
 static struct BurnRomInfo sms_osotosRomDesc[] = {
 	{ "Osotos (2024)(Inufuto).sms",	16384, 0xb8569995, BRF_PRG | BRF_ESS },

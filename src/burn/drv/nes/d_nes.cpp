@@ -20136,6 +20136,25 @@ struct BurnDriver BurnDrvnes_isostasy = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Jacob's Elevator (HB)
+// https://gamma-correction.itch.io/jacobs-elevator
+static struct BurnRomInfo nes_jacobselevRomDesc[] = {
+	{ "Jacob's Elevator (2026)(gamma_correction).nes",          40976, 0xd8bb43f6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_jacobselev)
+STD_ROM_FN(nes_jacobselev)
+
+struct BurnDriver BurnDrvnes_jacobselev = {
+	"nes_jacobselev", NULL, NULL, NULL, "2026",
+	"Jacob's Elevator (HB)\0", NULL, "gamma_correction", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION | GBF_PLATFORM, 0,
+	NESGetZipName, nes_jacobselevRomInfo, nes_jacobselevRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // JAMG: The Lost Coins (HB)
 static struct BurnRomInfo nes_jamgRomDesc[] = {
 	{ "JAMG - The Lost Coins (2018)(OCDreproductions).nes",          262160, 0x7a8877aa, BRF_ESS | BRF_PRG },
@@ -21625,6 +21644,25 @@ struct BurnDriver BurnDrvnes_mapperless = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_DEMO | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_MISC, 0,
 	NESGetZipName, nes_mapperlessRomInfo, nes_mapperlessRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mariana Sequence, The (HB, v1.1)
+// https://crazygrouptrio.itch.io/the-mariana-sequence
+static struct BurnRomInfo nes_marianaseqRomDesc[] = {
+	{ "Mariana Sequence, The v1.1(HB) (2026)(CGT Games).nes",          524304, 0x63307f67, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_marianaseq)
+STD_ROM_FN(nes_marianaseq)
+
+struct BurnDriver BurnDrvnes_marianaseq = {
+	"nes_marianaseq", NULL, NULL, NULL, "2026",
+	"Mariana Sequence, The (HB, v1.1)\0", NULL, "CGT Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ADV | GBF_PLATFORM, 0,
+	NESGetZipName, nes_marianaseqRomInfo, nes_marianaseqRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -23356,6 +23394,25 @@ struct BurnDriver BurnDrvnes_overobj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// OWARE: Abapa (HB)
+// https://aspirinechou.itch.io/oware-abapa-for-nes
+static struct BurnRomInfo nes_owareabapaRomDesc[] = {
+	{ "OWARE - Abapa (2026)(Jiucai Baobao).nes",          40976, 0x89983b27, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_owareabapa)
+STD_ROM_FN(nes_owareabapa)
+
+struct BurnDriver BurnDrvnes_owareabapa = {
+	"nes_owareabapa", NULL, NULL, NULL, "2026",
+	"OWARE: Abapa (HB)\0", NULL, "Jiucai Baobao", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_owareabapaRomInfo, nes_owareabapaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Pacifister, The (HB)
 static struct BurnRomInfo nes_pacifisterRomDesc[] = {
 	{ "Pacifister, The (2026)(Musikai).nes",          524304, 0xc0763d59, BRF_ESS | BRF_PRG },
@@ -23949,6 +24006,25 @@ struct BurnDriver BurnDrvnes_pyramidsra = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
 	NESGetZipName, nes_pyramidsraRomInfo, nes_pyramidsraRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Pyrga (HB, v1.43)
+// https://aspirinechou.itch.io/pyrga-nes
+static struct BurnRomInfo nes_pyrgaRomDesc[] = {
+	{ "Pyrga v1.43 (2026)(Jiucai Baobao).nes",          32784, 0xdd99157c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_pyrga)
+STD_ROM_FN(nes_pyrga)
+
+struct BurnDriver BurnDrvnes_pyrga = {
+	"nes_pyrga", NULL, NULL, NULL, "2026",
+	"Pyrga (HB, v1.43)\0", NULL, "Jiucai Baobao", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_pyrgaRomInfo, nes_pyrgaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

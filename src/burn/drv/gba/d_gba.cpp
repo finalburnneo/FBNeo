@@ -57910,7 +57910,7 @@ STD_ROM_FN(gba_nonacorn)
 
 struct BurnDriver BurnDrvgba_nonacorn = {
 	"gba_nonacorn", NULL, "gba_gba", NULL, "2023",
-	"Fpalam\0", NULL, "Hugo Adams", "Game Boy Advance",
+	"Nonacorn (HB, v1.11)\0", NULL, "Hugo Adams", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_PUZZLE, 0,
 	GbaGetZipName, gba_nonacornRomInfo, gba_nonacornRomName, NULL, NULL, NULL, NULL, GbaInputInfo, CusDIPInfo,

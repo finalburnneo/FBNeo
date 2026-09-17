@@ -3686,9 +3686,9 @@ struct BurnDriver BurnDrvngpc_fruitypalsr = {
 	160, 152, 4, 3
 };
 
-// Gardenia (HB)
+// Gardenia (HB, v1.4)
 static struct BurnRomInfo ngpc_gardeniaRomDesc[] = {
-	{ "Gardenia (2026)(Chris Ahchay).ngp", 2097152, 0xefde5b4d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Gardenia v1.4 (2026)(Chris Ahchay).ngp", 2097152, 0xb571eb5b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_gardenia, ngpc_gardenia, ngpc_ngp)
@@ -3696,7 +3696,7 @@ STD_ROM_FN(ngpc_gardenia)
 
 struct BurnDriver BurnDrvngpc_gardenia = {
 	"ngp_gardenia", NULL, "ngp_ngp", NULL, "2026",
-	"Gardenia (HB)\0", NULL, "Chris Ahchay", "NeoGeo Pocket Color",
+	"Gardenia (HB, v1.4)\0", NULL, "Chris Ahchay", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_VERSHOOT, 0,
 	NgpGetZipName, ngpc_gardeniaRomInfo, ngpc_gardeniaRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,

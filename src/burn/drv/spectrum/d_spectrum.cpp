@@ -33262,10 +33262,10 @@ struct BurnDriver BurnSpec8chs = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// 13 Rue del Percebe (48K) (HB)
+// 13 Rue del Percebe (Spanish) (48K) (HB)
 
 static struct BurnRomInfo Spec13ruepercRomDesc[] = {
-	{ "13 Rue del Percebe 48K (2019)(Pepsi Soft).tzx", 31070, 0xe6c6fc6f, BRF_ESS | BRF_PRG },
+	{ "13 Rue del Percebe ES 48K (2019)(Pepsi Soft).tzx", 31070, 0xe6c6fc6f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec13rueperc, Spec13rueperc, Spectrum)
@@ -33273,7 +33273,7 @@ STD_ROM_FN(Spec13rueperc)
 
 struct BurnDriver BurnSpec13rueperc = {
 	"spec_13rueperc", NULL, "spec_spectrum", NULL, "2019",
-	"13 Rue del Percebe (48K) (HB)\0", NULL, "Pepsi Soft", "ZX Spectrum",
+	"13 Rue del Percebe (Spanish) (48K) (HB)\0", NULL, "Pepsi Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, Spec13ruepercRomInfo, Spec13ruepercRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -33281,10 +33281,10 @@ struct BurnDriver BurnSpec13rueperc = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// 13 Rue del Percebe: El nacimiento de la leyenda (128K) (HB)
+// 13 Rue del Percebe: El nacimiento de la leyenda (Spanish) (128K) (HB)
 
 static struct BurnRomInfo Spec13ruepercnlRomDesc[] = {
-	{ "13 Rue del Percebe - El nacimiento de la leyenda 128K (2023)(Manuel Martinez Pena).tap", 106807, 0x3ea532a4, BRF_ESS | BRF_PRG },
+	{ "13 Rue del Percebe - El nacimiento de la leyenda ES 128K (2023)(Manuel Martinez Pena).tap", 106807, 0x3ea532a4, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(Spec13ruepercnl, Spec13ruepercnl, Spec128)
@@ -33292,7 +33292,7 @@ STD_ROM_FN(Spec13ruepercnl)
 
 struct BurnDriver BurnSpec13ruepercnl = {
 	"spec_13ruepercnl", NULL, "spec_spec128", NULL, "2023",
-	"13 Rue del Percebe: El nacimiento de la leyenda (128K) (HB)\0", NULL, "Manuel Martinez Pena", "ZX Spectrum",
+	"13 Rue del Percebe: El nacimiento de la leyenda (Spanish) (128K) (HB)\0", NULL, "Manuel Martinez Pena", "ZX Spectrum",
 	NULL, NULL, L"Manuel Mart\u00ednez Pe\u00f1a", NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, Spec13ruepercnlRomInfo, Spec13ruepercnlRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -34973,10 +34973,10 @@ struct BurnDriver BurnSpecAwass = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aznar, The Sport Star (48K) (HB)
+// Aznar, The Sport Star (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecAznarssRomDesc[] = {
-	{ "Aznar, The Sport Star 48K (2019)(Ivan Gomez Marquez).tap", 45304, 0x1a9a359b, BRF_ESS | BRF_PRG },
+	{ "Aznar, The Sport Star ES 48K (2019)(Ivan Gomez Marquez).tap", 45304, 0x1a9a359b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAznarss, SpecAznarss, Spectrum)
@@ -34984,7 +34984,7 @@ STD_ROM_FN(SpecAznarss)
 
 struct BurnDriver BurnSpecAznarss = {
 	"spec_aznarss", NULL, "spec_spectrum", NULL, "2019",
-	"Aznar, The Sport Star (48K) (HB)\0", NULL, "Ivan Gomez Marquez", "ZX Spectrum",
+	"Aznar, The Sport Star (Spanish) (48K) (HB)\0", NULL, "Ivan Gomez Marquez", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
 	SpectrumGetZipName, SpecAznarssRomInfo, SpecAznarssRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54374,10 +54374,10 @@ struct BurnDriver BurnSpecPedroisland = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Pedro Pomez (48K) (HB)
+// Pedro Pomez (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecPedropomezRomDesc[] = {
-	{ "Pedro Pomez 48K (2020)(Ivan Gomez Marquez).tap", 46270, 0x1b2aef4e, BRF_ESS | BRF_PRG },
+	{ "Pedro Pomez 48K ES (2020)(Ivan Gomez Marquez).tap", 46270, 0x1b2aef4e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPedropomez, SpecPedropomez, Spectrum)
@@ -54385,7 +54385,7 @@ STD_ROM_FN(SpecPedropomez)
 
 struct BurnDriver BurnSpecPedropomez = {
 	"spec_pedropomez", NULL, "spec_spectrum", NULL, "2020",
-	"Pedro Pomez (48K) (HB)\0", NULL, "Ivan Gomez Marquez", "ZX Spectrum",
+	"Pedro Pomez (Spanish) (48K) (HB)\0", NULL, "Ivan Gomez Marquez", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV | GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecPedropomezRomInfo, SpecPedropomezRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,

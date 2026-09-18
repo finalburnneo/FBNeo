@@ -59187,7 +59187,7 @@ struct BurnDriver BurnDrvgba_cerdagbc = {
 	"gba_cerdagbc", NULL, "gba_gba", NULL, "1999",
 	"Lellenda de la Cerda DX, La: Ed. Charnega - GBC2GBA (Hack, Spanish v2.0)\0", NULL, "Charnego Translations", "Game Boy Advance",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
 	GbaGetZipName, gba_cerdagbcRomInfo, gba_cerdagbcRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2

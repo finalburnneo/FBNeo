@@ -1,6 +1,9 @@
 // Menu handling
 
 #include "burner.h"
+#define TBCDRF_USECDCOLORS      0x00800000 // adding constant so NM_CUSTOMDRAW doesnt get ignored
+#define MFT_STRING          MF_STRING       
+#define MFT_SEPARATOR       MF_SEPARATOR    
 
 #ifdef _MSC_VER
 // #include <winable.h>
@@ -41,6 +44,14 @@ static HHOOK hMenuHook;
 static bool bTest = false;
 static RECT PopupRect = { 0,0,0,0, };
 
+UINT aMenuFTypeFlagsArray[]  = { MFT_STRING, MFT_SEPARATOR, MFT_RADIOCHECK, MFT_RIGHTJUSTIFY };
+UINT aMenuFStateFlagsArray[] = { MFS_CHECKED, MFS_GRAYED, MFS_DEFAULT};
+
+bool checkMenuItemFlag(UINT iMenuItemFMask, UINT iMaskTypeFlag)
+{
+	return (iMenuItemFMask & iMaskTypeFlag) != 0;
+}
+
 static INT32 GetCurrentMonitorHigh() {
 	HMONITOR hMonitor = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
 	if (NULL == hMonitor) return -1;
@@ -50,6 +61,77 @@ static INT32 GetCurrentMonitorHigh() {
 	if (!GetMonitorInfo(hMonitor, &monitorInfo)) return -1;
 
 	return monitorInfo.rcMonitor.bottom;
+}
+
+void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
+{
+    MENUINFO mi = { sizeof(MENUINFO) };
+    mi.fMask   = MIM_BACKGROUND;
+    mi.hbrBack = hbr;
+    SetMenuInfo(hMenu, &mi);
+
+    int count = GetMenuItemCount(hMenu);
+	int aMenuTypeFlagsArraySize   = sizeof(aMenuFTypeFlagsArray)  / sizeof(UINT);
+	int aMenuFStateFlagsArraySize = sizeof(aMenuFStateFlagsArray) / sizeof(UINT);
+
+    for (int i = 0; i < count; i++) {
+		HMENU hSub = GetSubMenu(hMenu, i);
+
+        MENUITEMINFO mii = { sizeof(MENUITEMINFO) };
+        mii.fMask = MIIM_FTYPE | MIIM_DATA;
+        GetMenuItemInfo(hMenu, i, TRUE, &mii); 
+
+		MENUITEMINFO miiState = { sizeof(MENUITEMINFO) };
+		miiState.fMask = MIIM_STATE;
+		GetMenuItemInfo(hMenu, i, TRUE, &miiState);
+
+		UINT ItemTypeFlag = 0;
+		UINT ItemStateFlag = 0;
+
+		for(int currentTypeFlag = 0; currentTypeFlag < aMenuTypeFlagsArraySize; currentTypeFlag++)
+		{
+			if(checkMenuItemFlag(mii.fType, aMenuFTypeFlagsArray[currentTypeFlag]))
+			{
+				ItemTypeFlag |= aMenuFTypeFlagsArray[currentTypeFlag];
+			}
+		}
+
+		for(int currentStateFlag = 0; currentStateFlag < aMenuFStateFlagsArraySize; currentStateFlag++)
+		{
+			if(checkMenuItemFlag(miiState.fState, aMenuFStateFlagsArray[currentStateFlag]))
+			{
+				ItemStateFlag |= aMenuFStateFlagsArray[currentStateFlag];
+			}
+		}
+
+		//drawing checkmarks requires us to keep track of a combinantion of bitFlags
+		bool isRadioCheck = (ItemTypeFlag & MFT_RADIOCHECK) != 0;
+		
+		//in order to make the toggle background follow the ui color we must bring responsibility to the owner 
+		//to do this while still telling windows to draw the menuItem it was necessary to create a struct holding the currentMenu item info
+		CurrentItemInfo* currentMenuInfo = new CurrentItemInfo();
+
+		currentMenuInfo->menuItemTypeFlag = ItemTypeFlag;
+		currentMenuInfo->menuItemStateFlag = ItemStateFlag;
+		currentMenuInfo->itemHasCheckMark = !isRadioCheck;		
+
+        TCHAR szText[256] = { 0 };
+        MENUITEMINFO miiText = { sizeof(MENUITEMINFO) };
+        miiText.fMask = MIIM_STRING;
+        miiText.dwTypeData = szText;
+        miiText.cch = 256;
+        GetMenuItemInfo(hMenu, i, TRUE, &miiText);
+
+		_tcscpy_s(currentMenuInfo->sText, _countof(currentMenuInfo->sText), szText);
+
+        mii.fType    |= MFT_OWNERDRAW;
+        mii.dwItemData = (ULONG_PTR)currentMenuInfo; 
+        SetMenuItemInfo(hMenu, i, TRUE, &mii);
+
+        if (hSub) {
+            ApplyMenuBackground(hSub, hbr);
+        }
+    }
 }
 
 static LRESULT CALLBACK MenuHook(INT32 nCode, WPARAM wParam, LPARAM lParam)
@@ -205,6 +287,13 @@ void DisplayPopupMenu(int nMenu)
 		RECT clientRect;
 		RECT buttonRect;
 
+		COLORREF color = RGB((uiMenuItemColor >> 16) & 0xFF,     // R
+                      		 (uiMenuItemColor >> 8) & 0xFF,      // G
+                      		  uiMenuItemColor & 0xFF);           // B
+		HBRUSH hbrColor = CreateSolidBrush(color);
+
+		ApplyMenuBackground(hPopupMenu, hbrColor);
+
 		nLastMenu         = nMenu;
 		nRecursions       = 0;
 		nCurrentItemFlags = 0;
@@ -279,6 +368,20 @@ int OnNotify(HWND, int, NMHDR* lpnmhdr)		// HWND hwnd, int id, NMHDR* lpnmhdr
 				nLastMenu = ((TBNOTIFY*)lpnmhdr)->iItem - MENU_MENU_0;
 			}
 			return TBDDRET_DEFAULT;
+		}
+
+		//adds a custom draw event to change the text font color in the button bar
+		case NM_CUSTOMDRAW: {
+			LPNMTBCUSTOMDRAW lpnmtbcd = (LPNMTBCUSTOMDRAW)lpnmhdr;
+			switch (lpnmtbcd->nmcd.dwDrawStage) {
+				case CDDS_PREPAINT:
+					return CDRF_NOTIFYITEMDRAW;
+
+				case CDDS_ITEMPREPAINT:
+					lpnmtbcd->clrText = (COLORREF) uiTextFontColor; 
+					return TBCDRF_USECDCOLORS;
+			}
+			return CDRF_DODEFAULT;
 		}
 
 		case TBN_HOTITEMCHANGE: {
@@ -1294,6 +1397,8 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, bBurnUseASMCPUEmulation ? MF_CHECKED : MF_UNCHECKED);
 #endif
 
+	UpdateUiColorMode(nUiColorTheme);
+
 	var = MENU_ICONS_SIZE_16;
 	switch (nIconsSize) {
 		case ICON_16x16: var = MENU_ICONS_SIZE_16;	break;
@@ -1862,4 +1967,3 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
 	}
 }
-

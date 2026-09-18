@@ -49642,10 +49642,10 @@ struct BurnDriver BurnSpecMrage48 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Magic 2: The tech world - Part 1 (English) (48K) (HB)
+// Magic 2: The tech World - Part 1 (English) (48K) (HB)
 
 static struct BurnRomInfo SpecMagic2p1enRomDesc[] = {
-	{ "Magic 2 - The tech world - Part 1 EN 48K (2026)(MANSoft).tap", 44871, 0x735eaae0, BRF_ESS | BRF_PRG },
+	{ "Magic 2 - The tech World - Part 1 EN 48K (2026)(MANSoft).tap", 44871, 0x735eaae0, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMagic2p1en, SpecMagic2p1en, Spectrum)
@@ -49653,7 +49653,7 @@ STD_ROM_FN(SpecMagic2p1en)
 
 struct BurnDriver BurnSpecMagic2p1en = {
 	"spec_magic2p1en", NULL, "spec_spectrum", NULL, "2026",
-	"Magic 2: The tech world - Part 1 (English) (48K) (HB)\0", NULL, "MANSoft", "ZX Spectrum",
+	"Magic 2: The tech World - Part 1 (English) (48K) (HB)\0", NULL, "MANSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecMagic2p1enRomInfo, SpecMagic2p1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -49661,10 +49661,10 @@ struct BurnDriver BurnSpecMagic2p1en = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Magic 2: The tech world - Part 1 (Spanish) (48K) (HB)
+// Magic 2: The tech World - Part 1 (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecMagic2p1esRomDesc[] = {
-	{ "Magic 2 - The tech world - Part 1 ES 48K (2026)(MANSoft).tap", 44917, 0x16456426, BRF_ESS | BRF_PRG },
+	{ "Magic 2 - The tech World - Part 1 ES 48K (2026)(MANSoft).tap", 44917, 0x16456426, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMagic2p1es, SpecMagic2p1es, Spectrum)
@@ -49672,7 +49672,7 @@ STD_ROM_FN(SpecMagic2p1es)
 
 struct BurnDriver BurnSpecMagic2p1es = {
 	"spec_magic2p1es", "spec_magic2p1en", "spec_spectrum", NULL, "2026",
-	"Magic 2: The tech world - Part 1 (Spanish) (48K) (HB)\0", NULL, "MANSoft", "ZX Spectrum",
+	"Magic 2: The tech World - Part 1 (Spanish) (48K) (HB)\0", NULL, "MANSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecMagic2p1esRomInfo, SpecMagic2p1esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -49680,10 +49680,10 @@ struct BurnDriver BurnSpecMagic2p1es = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Magic 2: The tech world - Part 2 (English) (48K) (HB)
+// Magic 2: The tech World - Part 2 (English) (48K) (HB)
 
 static struct BurnRomInfo SpecMagic2p2enRomDesc[] = {
-	{ "Magic 2 - The tech world - Part 2 EN 48K (2026)(MANSoft).tap", 44514, 0xa42ca767, BRF_ESS | BRF_PRG },
+	{ "Magic 2 - The tech World - Part 2 EN 48K (2026)(MANSoft).tap", 44514, 0xa42ca767, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMagic2p2en, SpecMagic2p2en, Spectrum)
@@ -49691,7 +49691,7 @@ STD_ROM_FN(SpecMagic2p2en)
 
 struct BurnDriver BurnSpecMagic2p2en = {
 	"spec_magic2p2en", "spec_magic2p1en", "spec_spectrum", NULL, "2026",
-	"Magic 2: The tech world - Part 2 (English) (48K) (HB)\0", NULL, "MANSoft", "ZX Spectrum",
+	"Magic 2: The tech World - Part 2 (English) (48K) (HB)\0", "Password: 531452", "MANSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecMagic2p2enRomInfo, SpecMagic2p2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -49699,10 +49699,10 @@ struct BurnDriver BurnSpecMagic2p2en = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Magic 2: The tech world - Part 2 (Spanish) (48K) (HB)
+// Magic 2: The tech World - Part 2 (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecMagic2p2esRomDesc[] = {
-	{ "Magic 2 - The tech world - Part 2 ES 48K (2026)(MANSoft).tap", 44571, 0x0dc7dc95, BRF_ESS | BRF_PRG },
+	{ "Magic 2 - The tech World - Part 2 ES 48K (2026)(MANSoft).tap", 44571, 0x0dc7dc95, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecMagic2p2es, SpecMagic2p2es, Spectrum)
@@ -49710,7 +49710,7 @@ STD_ROM_FN(SpecMagic2p2es)
 
 struct BurnDriver BurnSpecMagic2p2es = {
 	"spec_magic2p2es", "spec_magic2p1en", "spec_spectrum", NULL, "2026",
-	"Magic 2: The tech world - Part 2 (Spanish) (48K) (HB)\0", NULL, "MANSoft", "ZX Spectrum",
+	"Magic 2: The tech World - Part 2 (Spanish) (48K) (HB)\0", "Password: 531452", "MANSoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
 	SpectrumGetZipName, SpecMagic2p2esRomInfo, SpecMagic2p2esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

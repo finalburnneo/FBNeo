@@ -26164,6 +26164,24 @@ struct BurnDriver BurnDrvgg_tetris4gg = {
 	256, 192, 4, 3
 };
 
+// Uchotos Micro (HB)
+static struct BurnRomInfo gg_uchotosmRomDesc[] = {
+	{ "Uchotos Micro (2026)(Inufuto).gg",	16384, 0xfcb06b02, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_uchotosm)
+STD_ROM_FN(gg_uchotosm)
+
+struct BurnDriver BurnDrvgg_uchotosm = {
+	"gg_uchotosm", NULL, NULL, NULL, "2026",
+	"Uchotos Micro (HB)\0", NULL, "Inufuto", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_PLATFORM, 0,
+	GGGetZipName, gg_uchotosmRomInfo, gg_uchotosmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Vexed (HB, v1.15)
 static struct BurnRomInfo gg_vexedRomDesc[] = {
 	{ "Vexed v1.15 (2023-24)(Under4Mhz).gg",	32768, 0x3c456bbf, BRF_PRG | BRF_ESS },

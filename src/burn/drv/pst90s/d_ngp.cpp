@@ -3688,7 +3688,7 @@ struct BurnDriver BurnDrvngpc_fruitypalsr = {
 
 // Gardenia (HB, v1.4)
 static struct BurnRomInfo ngpc_gardeniaRomDesc[] = {
-	{ "Gardenia v1.4 (2026)(Chris Ahchay).ngp", 2097152, 0xb571eb5b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Gardenia v1.4 (2026)(Chris Ahchay).ngp", 2097152, 0x01f824a6, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_gardenia, ngpc_gardenia, ngpc_ngp)
@@ -4186,6 +4186,24 @@ struct BurnDriver BurnDrvngpc_tripledef = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_MULTISHOOT, 0,
 	NgpGetZipName, ngpc_tripledefRomInfo, ngpc_tripledefRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Uchotos Micro (HB)
+static struct BurnRomInfo ngpc_uchotosmRomDesc[] = {
+	{ "Uchotos Micro (2026)(Inufuto).ngp", 524288, 0x3f03428d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_uchotosm, ngpc_uchotosm, ngpc_ngp)
+STD_ROM_FN(ngpc_uchotosm)
+
+struct BurnDriver BurnDrvngpc_uchotosm = {
+	"ngp_uchotosm", NULL, "ngp_ngp", NULL, "2026",
+	"Uchotos Micro (HB)\0", NULL, "Inufuto", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_PLATFORM, 0,
+	NgpGetZipName, ngpc_uchotosmRomInfo, ngpc_uchotosmRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };

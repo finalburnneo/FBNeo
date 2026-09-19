@@ -43619,7 +43619,7 @@ struct BurnDriver BurnDrvmd_superstarwarsmd = {
 // Supertripper (HB, Demo)
 // https://playonretro.itch.io/supertripper-megadrivegenesis-16-bits-demo
 static struct BurnRomInfo md_supertripperRomDesc[] = {
-	{ "Supertripper Demo (2026)(PlayOnRetro).bin", 2097152, 0x9c1b4ec6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Supertripper Demo (2026)(PlayOnRetro).bin", 2097152, 0xf35320d8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_supertripper)

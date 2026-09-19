@@ -11,7 +11,7 @@
 #include "ay8910.h"
 #include <math.h>
 
-#if defined (_MSC_VER)
+#if defined (_MSC_VER) && !defined(strcasecmp)
 #define strcasecmp stricmp
 #endif
 

@@ -17247,8 +17247,9 @@ struct BurnDriver BurnDrvnes_cowligamlostadv = {
 };
 
 // Crabbie Attack! (HB)
+// https://turtlerescuenes.itch.io/crabbie-attack-nes
 static struct BurnRomInfo nes_crabbieatkRomDesc[] = {
-	{ "Crabbie Attack! (2023)(TurtleRescueNES).nes",          524304, 0x9838a3d0, BRF_ESS | BRF_PRG },
+	{ "Crabbie Attack! (2023)(Joe Sherman).nes",          524304, 0x9838a3d0, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_crabbieatk)
@@ -17256,7 +17257,7 @@ STD_ROM_FN(nes_crabbieatk)
 
 struct BurnDriver BurnDrvnes_crabbieatk = {
 	"nes_crabbieatk", NULL, NULL, NULL, "2023",
-	"Crabbie Attack! (HB)\0", NULL, "TurtleRescueNES", "NES / Famicom",
+	"Crabbie Attack! (HB)\0", NULL, "Joe Sherman", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_SHOOT, 0,
 	NESGetZipName, nes_crabbieatkRomInfo, nes_crabbieatkRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -23394,10 +23395,10 @@ struct BurnDriver BurnDrvnes_overobj = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// OWARE: Abapa (HB)
+// OWARE: Abapa (HB, v2.30)
 // https://aspirinechou.itch.io/oware-abapa-for-nes
 static struct BurnRomInfo nes_owareabapaRomDesc[] = {
-	{ "OWARE - Abapa (2026)(Jiucai Baobao).nes",          40976, 0x89983b27, BRF_ESS | BRF_PRG },
+	{ "OWARE - Abapa v2.30 (2026)(Jiucai Baobao).nes",          40976, 0x6ca55989, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_owareabapa)
@@ -23405,7 +23406,7 @@ STD_ROM_FN(nes_owareabapa)
 
 struct BurnDriver BurnDrvnes_owareabapa = {
 	"nes_owareabapa", NULL, NULL, NULL, "2026",
-	"OWARE: Abapa (HB)\0", NULL, "Jiucai Baobao", "NES / Famicom",
+	"OWARE: Abapa (HB, v2.30)\0", NULL, "Jiucai Baobao", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_owareabapaRomInfo, nes_owareabapaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
@@ -23427,6 +23428,25 @@ struct BurnDriver BurnDrvnes_pacifister = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_pacifisterRomInfo, nes_pacifisterRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Packet (HB)
+// https://turtlerescuenes.itch.io/packet-nes
+static struct BurnRomInfo nes_packetRomDesc[] = {
+	{ "Packet (2026)(Joe Sherman).nes",          524304, 0xf437e3b4, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_packet)
+STD_ROM_FN(nes_packet)
+
+struct BurnDriver BurnDrvnes_packet = {
+	"nes_packet", NULL, NULL, NULL, "2026",
+	"Packet (HB)\0", NULL, "Joe Sherman", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION | GBF_MAZE, 0,
+	NESGetZipName, nes_packetRomInfo, nes_packetRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

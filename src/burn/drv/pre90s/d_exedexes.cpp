@@ -686,6 +686,57 @@ struct BurnDriver BurnDrvExedexes = {
 };
 
 
+// Exed Exes (Recreation of location test version, Hack, 2026-09-21)
+
+static struct BurnRomInfo exedexesrtRomDesc[] = {
+	{ "rt_11m_ee04.bin", 0x4000, 0xe1b7ee12, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "rt_10m_ee03.bin", 0x4000, 0xceef62f6, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rt_09m_ee02.bin", 0x4000, 0x9a93c1c2, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "11e_ee01.bin",    0x4000, 0x73cdf3b2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "05c_ee00.bin",    0x2000, 0xcadb75bd, 3 | BRF_GRA },	          //  4 Characters
+
+	{ "h01_ee08.bin",    0x4000, 0x96a65c1d, 4 | BRF_GRA },	          //  5 32x32 tiles
+
+	{ "a03_ee06.bin",    0x4000, 0x6039bdd1, 5 | BRF_GRA },	          //  6 16x16 tiles
+	{ "a02_ee05.bin",    0x4000, 0xb32d8252, 5 | BRF_GRA },	          //  7
+
+	{ "j11_ee10.bin",    0x4000, 0xbc83e265, 6 | BRF_GRA },	          //  8 Sprites
+	{ "j12_ee11.bin",    0x4000, 0x0e0f300d, 6 | BRF_GRA },	          //  9
+
+	{ "rt_c01_ee07.bin", 0x4000, 0x3b6f6490, 7 | BRF_GRA },	          // 10 Tile Maps
+	{ "h04_ee09.bin",    0x2000, 0x6057c907, 7 | BRF_GRA },	          // 11
+
+	{ "02d_e-02.bin",    0x0100, 0x8d0d5935, 8 | BRF_GRA },	          // 12 Color Proms
+	{ "03d_e-03.bin",    0x0100, 0xd3c17efc, 8 | BRF_GRA },	          // 13
+	{ "04d_e-04.bin",    0x0100, 0x58ba964c, 8 | BRF_GRA },	          // 14
+	{ "06f_e-05.bin",    0x0100, 0x35a03579, 8 | BRF_GRA },	          // 15
+	{ "l04_e-10.bin",    0x0100, 0x1dfad87a, 8 | BRF_GRA },	          // 16
+	{ "c04_e-07.bin",    0x0100, 0x850064e0, 8 | BRF_GRA },	          // 17
+	{ "l09_e-11.bin",    0x0100, 0x2bb68710, 8 | BRF_GRA },	          // 18
+	{ "l10_e-12.bin",    0x0100, 0x173184ef, 8 | BRF_GRA },	          // 19
+
+	{ "06l_e-06.bin",    0x0100, 0x712ac508, 0 | BRF_OPT },	          // 20 Misc. Proms
+	{ "k06_e-08.bin",    0x0100, 0x0eaf5158, 0 | BRF_OPT },	          // 21
+	{ "l03_e-09.bin",    0x0100, 0x0d968558, 0 | BRF_OPT },	          // 22
+	{ "03e_e-01.bin",    0x0020, 0x1acee376, 0 | BRF_OPT },	          // 23
+};
+
+STD_ROM_PICK(exedexesrt)
+STD_ROM_FN(exedexesrt)
+
+struct BurnDriver BurnDrvExedexesrt = {
+	"exedexesrt", "exedexes", NULL, NULL, "2026",
+	"Exed Exes (Recreation of location test version, Hack, 2026-09-21)\0", NULL, "zeroco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, exedexesrtRomInfo, exedexesrtRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	224, 256, 3, 4
+};
+
+
 // Savage Bees
 
 static struct BurnRomInfo savgbeesRomDesc[] = {

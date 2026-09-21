@@ -33610,6 +33610,25 @@ struct BurnDriver BurnDrvmd_yuyug = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Yu Yu Hakusho Gaiden (Hack, English v1.0 Build 9)
+// https://romhackplaza.org/translations/yuyu-hakusho-gaiden-english-translation-sega-genesis
+static struct BurnRomInfo md_yuyugteRomDesc[] = {
+	{ "Yu Yu Hakusho Gaiden T-Eng v1.0 Build 9 (2026)(Patch Clan).bin", 4194304, 0xfadb2b33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_yuyugte)
+STD_ROM_FN(md_yuyugte)
+
+struct BurnDriver BurnDrvmd_yuyugte = {
+	"md_yuyugte", "md_yuyug", NULL, NULL, "2026",
+	"Yu Yu Hakusho Gaiden (Hack, English v1.0 Build 9)\0", NULL, "Patch Clan", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_yuyugteRomInfo, md_yuyugteRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Zan Yasha Enbukyoku (Japan)
 static struct BurnRomInfo md_zanyashaRomDesc[] = {
 	{ "Zan Yasha Enbukyoku (Japan)(1991)(Wolf Team).bin", 0x080000, 0x637fe8f3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -38933,6 +38952,7 @@ struct BurnDriver BurnDrvmd_cvaniacotm = {
 };
 
 // Cavaleiro (HB, Prototype)
+// https://mangangateam.com/cavaleiro
 static struct BurnRomInfo md_cavaleiropRomDesc[] = {
 	{ "Cavaleiro (Proto)(2025)(Manganga Team).bin", 524288, 0xb358d781, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -38950,9 +38970,10 @@ struct BurnDriver BurnDrvmd_cavaleirop = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Cavaleiro: Director's Cut v3 (HB, Prototype)
+// Cavaleiro: Director's Cut v3 (HB)
+// https://mangangateam.com/cavaleiro
 static struct BurnRomInfo md_cavaleirodcpRomDesc[] = {
-	{ "Cavaleiro - Director's Cut v3 (Proto)(2025)(Manganga Team).bin", 786432, 0x796ee6a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Cavaleiro - Director's Cut v3 (2025)(Manganga Team).bin", 786432, 0x796ee6a6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cavaleirodcp)
@@ -38960,9 +38981,9 @@ STD_ROM_FN(md_cavaleirodcp)
 
 struct BurnDriver BurnDrvmd_cavaleirodcp = {
 	"md_cavaleirodcp", NULL, NULL, NULL, "2025",
-	"Cavaleiro: Director's Cut v3 (HB, Prototype)\0", NULL, "Manganga Team", "Genesis / Mega Drive",
+	"Cavaleiro: Director's Cut v3 (HB)\0", NULL, "Manganga Team", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_cavaleirodcpRomInfo, md_cavaleirodcpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -40391,6 +40412,25 @@ struct BurnDriver BurnDrvmd_genmtetris = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_genmtetrisRomInfo, md_genmtetrisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// GenThrees (HB)
+// https://abadede919302.itch.io/genthrees
+static struct BurnRomInfo md_genthreesRomDesc[] = {
+	{ "GenThrees (2026)(abadede919302).bin", 262144, 0x0098a44a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_genthrees)
+STD_ROM_FN(md_genthrees)
+
+struct BurnDriver BurnDrvmd_genthrees = {
+	"md_genthrees", NULL, NULL, NULL, "2026",
+	"GenThrees (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_genthreesRomInfo, md_genthreesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43199,7 +43239,7 @@ struct BurnDriver BurnDrvmd_shmupthulhu = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shaolin Carcara (HB, Rev. 1)
+// Shaolin Carcará (HB, Rev. 1)
 static struct BurnRomInfo md_shaolincarcaraRomDesc[] = {
 	{ "Shaolin Carcara (Rev 1)(2020-22)(Manganga Team).bin", 2359296, 0x7bd5e34f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -43210,9 +43250,28 @@ STD_ROM_FN(md_shaolincarcara)
 struct BurnDriver BurnDrvmd_shaolincarcara = {
 	"md_shaolincarcara", NULL, NULL, NULL, "2020-22",
 	"Shaolin Carcara (HB, Rev. 1)\0", NULL, "Manganga Team", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
+	L"Shaolin Carcar\u00e1 (HB, Rev. 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_shaolincarcaraRomInfo, md_shaolincarcaraRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shaolin Carcará 2 (HB, Demo)
+// https://mangangateam.com/shaolin
+static struct BurnRomInfo md_shaolincarcara2RomDesc[] = {
+	{ "Shaolin Carcara 2 Demo (2025)(Manganga Team).bin", 1310720, 0xe7e0edfb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shaolincarcara2)
+STD_ROM_FN(md_shaolincarcara2)
+
+struct BurnDriver BurnDrvmd_shaolincarcara2 = {
+	"md_shaolincarcara2", NULL, NULL, NULL, "2025",
+	"Shaolin Carcara 2 (HB, Demo)\0", NULL, "Manganga Team", "Genesis / Mega Drive",
+	L"Shaolin Carcar\u00e1 2 (HB, Demo)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_shaolincarcara2RomInfo, md_shaolincarcara2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

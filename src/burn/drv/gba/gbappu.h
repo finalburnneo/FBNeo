@@ -700,14 +700,7 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 					gba->second_target_buffer[lcd_x] = col;
 			}
 		}
-		// Backdrop is read per-dot on real hardware; refresh any type==5 slot.
-		{
-			UINT32 live_bd = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE)) | (5u << 17);
-			if (SB_BFE(gba->first_target_buffer[lcd_x], 17, 3) == 5)
-				gba->first_target_buffer[lcd_x]  = live_bd;
-			if (SB_BFE(gba->second_target_buffer[lcd_x], 17, 3) == 5)
-				gba->second_target_buffer[lcd_x] = live_bd;
-		}
+
 		UINT32 col  = gba->first_target_buffer[lcd_x];
 		INT32  r    = SB_BFE(col,  0, 5);
 		INT32  g    = SB_BFE(col,  5, 5);

@@ -24030,10 +24030,10 @@ struct BurnDriver BurnDrvnes_pyramidsra = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
-// Pyrga (HB, v1.51)
+// Pyrga (HB, v1.52)
 // https://aspirinechou.itch.io/pyrga-nes
 static struct BurnRomInfo nes_pyrgaRomDesc[] = {
-	{ "Pyrga v1.51 (2026)(Jiucai Baobao).nes",          32784, 0xeacc008d, BRF_ESS | BRF_PRG },
+	{ "Pyrga v1.52 (2026)(Jiucai Baobao).nes",          32784, 0xa97601c5, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_pyrga)
@@ -24041,7 +24041,7 @@ STD_ROM_FN(nes_pyrga)
 
 struct BurnDriver BurnDrvnes_pyrga = {
 	"nes_pyrga", NULL, NULL, NULL, "2026",
-	"Pyrga (HB, v1.51)\0", NULL, "Jiucai Baobao", "NES / Famicom",
+	"Pyrga (HB, v1.52)\0", NULL, "Jiucai Baobao", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BOARD, 0,
 	NESGetZipName, nes_pyrgaRomInfo, nes_pyrgaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,

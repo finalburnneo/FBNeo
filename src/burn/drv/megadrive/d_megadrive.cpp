@@ -40416,10 +40416,10 @@ struct BurnDriver BurnDrvmd_genmtetris = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// GenThrees (HB)
+// GenThrees (HB, v1.01)
 // https://abadede919302.itch.io/genthrees
 static struct BurnRomInfo md_genthreesRomDesc[] = {
-	{ "GenThrees (2026)(abadede919302).bin", 262144, 0x0098a44a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "GenThrees v1.01 (2026)(abadede919302).bin", 262144, 0x657b99a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_genthrees)
@@ -40427,7 +40427,7 @@ STD_ROM_FN(md_genthrees)
 
 struct BurnDriver BurnDrvmd_genthrees = {
 	"md_genthrees", NULL, NULL, NULL, "2026",
-	"GenThrees (HB)\0", NULL, "abadede919302", "Genesis / Mega Drive",
+	"GenThrees (HB, v1.01)\0", NULL, "abadede919302", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_genthreesRomInfo, md_genthreesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43678,7 +43678,7 @@ struct BurnDriver BurnDrvmd_superstarwarsmd = {
 // Supertripper (HB, Demo)
 // https://playonretro.itch.io/supertripper-megadrivegenesis-16-bits-demo
 static struct BurnRomInfo md_supertripperRomDesc[] = {
-	{ "Supertripper Demo (2026)(PlayOnRetro).bin", 2097152, 0xf35320d8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Supertripper Demo (2026)(PlayOnRetro).bin", 2097152, 0xa20cfd60, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_supertripper)

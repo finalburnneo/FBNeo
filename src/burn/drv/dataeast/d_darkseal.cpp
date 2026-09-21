@@ -9,7 +9,6 @@
 #include "burn_ym2203.h"
 #include "burn_ym2151.h"
 #include "msm6295.h"
-#include "timer.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -28,10 +27,12 @@ static UINT8 *DrvSprBuf;
 static UINT8 *DrvPalRAM;
 
 static UINT32 *DrvPalette;
-static UINT8 DrvRecalc = 0;
+static UINT8 DrvRecalc;
 
-static INT32 vblank = 0;
 static INT32 nCyclesExtra;
+
+static INT32 vblank;
+static INT32 scanline;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -124,7 +125,7 @@ static struct BurnDIPInfo DarksealDIPList[]=
 
 STDDIPINFO(Darkseal)
 
-static inline void palette_write(INT32 offset)
+static void palette_write(INT32 offset)
 {
 	UINT16 *data = (UINT16*)(DrvPalRAM + offset);
 
@@ -135,10 +136,33 @@ static inline void palette_write(INT32 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
+static void buscontention_effect(UINT32 address)
+{
+	if (!(scanline >= 0 && scanline < nScreenHeight)) return;
+
+	const INT32 line_cyc = 12000000 / 58 / 256;
+
+	INT32 cycle = SekTotalCycles() % line_cyc;
+
+	INT32 x = cycle * 320 / line_cyc;
+	if (x >= 256) return;
+	UINT16 *src = BurnBitmapGetBitmap(3) + scanline * nScreenWidth;
+	const UINT16 pxl = (address >> 1) & 0x7ff;
+	src[x] = (DrvPalette[pxl] != 0) ? pxl : 0;
+}
+
 static void __fastcall darkseal_write_byte(UINT32 address, UINT8 data)
 {
 	deco16_write_control_byte(1, address, 0x240000, data)
 	deco16_write_control_byte(0, address, 0x2a0000, data)
+
+	// PAL RAM
+	if (address >= 0x140000 && address <= 0x141fff) {
+		DrvPalRAM[(address & 0x1fff)^1] = data;
+		palette_write(address & 0xfff);
+		buscontention_effect(address);
+		return;
+	}
 
 	switch (address & ~1)
 	{
@@ -165,6 +189,14 @@ static void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
 	deco16_write_control_word(1, address, 0x240000, data)
 	deco16_write_control_word(0, address, 0x2a0000, data)
 
+	// PAL RAM
+	if (address >= 0x140000 && address <= 0x141fff) {
+		*(UINT16*)(DrvPalRAM + (address & 0x1ffe)) = data;
+		palette_write(address & 0xfff);
+		buscontention_effect(address);
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x180006:
@@ -186,6 +218,12 @@ static void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
 
 static UINT8 __fastcall darkseal_read_byte(UINT32 address)
 {
+	// PAL RAM
+	if (address >= 0x140000 && address <= 0x141fff) {
+		buscontention_effect(address);
+		return DrvPalRAM[(address & 0x1fff)^1];
+	}
+
 	switch (address)
 	{
 		case 0x180000:
@@ -214,6 +252,12 @@ static UINT8 __fastcall darkseal_read_byte(UINT32 address)
 
 static UINT16 __fastcall darkseal_read_word(UINT32 address)
 {
+	// PAL RAM
+	if (address >= 0x140000 && address <= 0x141fff) {
+		buscontention_effect(address);
+		return *(UINT16*)(DrvPalRAM + (address & 0x1ffe));
+	}
+
 	switch (address)
 	{
 		case 0x180000:
@@ -263,8 +307,7 @@ static INT32 MemIndex()
 	DrvGfxROM3	= Next; Next += 0x200000;
 
 	MSM6295ROM	= Next; Next += 0x140000;
-
-	DrvPalette	= (UINT32*)Next; Next += 0x00801 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x00800 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -358,7 +401,7 @@ static INT32 DrvInit()
 	deco16_set_graphics(DrvGfxROM0, 0x40000, DrvGfxROM1, 0x100000, DrvGfxROM2, 0x100000);
 	deco16_set_color_base(0, 0x300);
 	deco16_set_color_base(1, 0x000);
-	deco16_set_color_base(2, 0x000);
+	deco16_set_color_base(2, 0x200);
 	deco16_set_color_base(3, 0x400);
 	deco16_set_transparency_mask(0, 0xf);
 	deco16_set_transparency_mask(1, 0xf);
@@ -374,11 +417,11 @@ static INT32 DrvInit()
 	SekMapMemory(Drv68KROM,						0x000000, 0x07ffff, MAP_ROM);
 	SekMapMemory(Drv68KRAM,						0x100000, 0x103fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,						0x120000, 0x1207ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,						0x140000, 0x141fff, MAP_RAM); // split
+	//SekMapMemory(DrvPalRAM,						0x140000, 0x141fff, MAP_RAM); // split, handler
 	SekMapMemory(deco16_pf_ram[2],				0x200000, 0x201fff, MAP_RAM);
 	SekMapMemory(deco16_pf_ram[3],				0x202000, 0x203fff, MAP_RAM);
-	SekMapMemory(deco16_pf_rowscroll[0],		0x220000, 0x220fff, MAP_RAM);
-	SekMapMemory(deco16_pf_rowscroll[2],		0x222000, 0x222fff, MAP_RAM);
+	SekMapMemory(deco16_pf_rowscroll[2],		0x220000, 0x220fff, MAP_RAM);
+	SekMapMemory(deco16_pf_rowscroll[0],		0x222000, 0x222fff, MAP_RAM);
 	SekMapMemory(deco16_pf_ram[0],				0x260000, 0x261fff, MAP_RAM);
 	SekMapMemory(deco16_pf_ram[1],				0x262000, 0x263fff, MAP_RAM);
 	SekSetWriteWordHandler(0,					darkseal_write_word);
@@ -391,6 +434,9 @@ static INT32 DrvInit()
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
 
 	deco16_music_tempofix = 1;
+
+	// static / vdp bus contention effect
+	BurnBitmapAllocate(3, 256, 240, false);
 
 	GenericTilesInit();
 
@@ -424,11 +470,10 @@ static void draw_sprites()
 
 		INT32 y = BURN_ENDIAN_SWAP_INT16(SprRAM[offs]);
 		INT32 x = BURN_ENDIAN_SWAP_INT16(SprRAM[offs+2]);
+		INT32 color = ((x >> 9) & 0x1f) + 0x10;
 
 		INT32 flash = ((y >> 12) & 1) & GetCurrentFrame();
 		if (flash) continue;
-
-		INT32 color = ((x >> 9) & 0x1f) + 0x10;
 
 		INT32 fx = y & 0x2000;
 		INT32 fy = y & 0x4000;
@@ -452,11 +497,25 @@ static void draw_sprites()
 			inc = 1;
 		}
 
-		while (multi >= 0)
-		{
+		while (multi >= 0) {
 			Draw16x16MaskTile(pTransDraw, sprite - multi * inc, x, y+-16*multi, fx, fy, color, 4, 0, 0, DrvGfxROM3);
 
 			multi--;
+		}
+	}
+}
+
+
+static void staticeffect_mixer()
+{
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		UINT16 *src = BurnBitmapGetBitmap(3) + y * nScreenWidth;
+		UINT16 *dst = pTransDraw + y * nScreenWidth;
+
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			if (src[x] != 0) {
+				dst[x] = src[x];
+			}
 		}
 	}
 }
@@ -467,25 +526,26 @@ static INT32 DrvDraw()
 		for (INT32 i = 0; i < 0x1000; i+=2) {
 			palette_write(i);
 		}
-		DrvPalette[0x800] = 0; // black
 		DrvRecalc = 1;
 	}
 
-	memcpy(deco16_pf_rowscroll[1], deco16_pf_rowscroll[0], 0x2000);
-	memcpy(deco16_pf_rowscroll[3], deco16_pf_rowscroll[2], 0x2000);
+	memcpy(deco16_pf_rowscroll[1], deco16_pf_rowscroll[2], 0x2000);
+	memcpy(deco16_pf_rowscroll[3], deco16_pf_rowscroll[0], 0x2000);
 
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	BurnTransferClear(0x800);
+	BurnTransferClear(0);
 
-	if (nBurnLayer & 1) deco16_draw_layer(2, pTransDraw, 0);
-	if (nBurnLayer & 2) deco16_draw_layer(3, pTransDraw, 0);
-	if (nBurnLayer & 4) deco16_draw_layer(0, pTransDraw, 0);
+	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, 0);
+	if (nBurnLayer & 2) deco16_draw_layer(0, pTransDraw, 0);
+	if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 0); // <- pre-end boss "erase" effect here
 
 	if (nSpriteEnable & 1) draw_sprites();
 
 	if (nBurnLayer & 8) deco16_draw_layer(1, pTransDraw, 0);
+
+	if (nSpriteEnable & 2) staticeffect_mixer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -511,19 +571,21 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { nCyclesExtra, 0 };
 
+	SekNewFrame();
 	h6280NewFrame();
+
+	BurnBitmapFill(3, 0); // "static" effect start-frame init
 
 	SekOpen(0);
 	h6280Open(0);
 
-	vblank = 8;
+	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		int scanline = (i + 248) % 256;
+		scanline = (i + 240) % 256;
 		if (scanline ==   0) vblank = 0;
-		if (scanline == 248)
-		{
+		if (scanline == 240) {
 			vblank = 8;
 
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);

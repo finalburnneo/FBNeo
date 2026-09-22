@@ -45,6 +45,15 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 	for (INT32 x = 0; x < 240; ++x) {
 		gba->window[x] = default_window_control;
 	}
+	// Seed compositing targets with backdrop so stale data from the prior line
+	// cannot bleed through when windows are disabled.
+	{
+		UINT32 bd_col = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE)) | (5u << 17);
+		for (INT32 x = 0; x < 240; ++x) {
+			gba->first_target_buffer[x]  = bd_col;
+			gba->second_target_buffer[x] = bd_col;
+		}
+	}
 	UINT8 obj_window_control = default_window_control;
 	bool  obj_window_enable  = SB_BFE(dispcnt, 15, 1);
 	if (obj_window_enable)
@@ -217,14 +226,15 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 			INT32  win_xmax = SB_BFE(WINH, 0, 8);
 			INT32  win_ymin = SB_BFE(WINV, 8, 8);
 			INT32  win_ymax = SB_BFE(WINV, 0, 8);
-			// Garbage values of X2>240 or X1>X2 are interpreted as X2=240.
-			// Garbage values of Y2>160 or Y1>Y2 are interpreted as Y2=160.
+			// Hardware clamps: X2>240 or X1>X2 -> X2=240; Y2>160 or Y1>Y2 -> Y2=160
 			if (win_xmin > win_xmax)
 				win_xmax = 240;
 			if (win_ymin > win_ymax)
-				win_ymax = 161;
+				win_ymax = 160;
 			if (win_xmax > 240)
 				win_xmax = 240;
+			if (win_ymax > 160)
+				win_ymax = 160;
 			if (sprite_lcd_y < win_ymin || sprite_lcd_y >= win_ymax)
 				continue;
 			UINT16 winin = gba_io_read16(gba, GBA_WININ);
@@ -312,8 +322,9 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 					if (bg_x < 0 || bg_x >= screen_size_x || bg_y < 0 || bg_y >= screen_size_y)
 						continue;
 				} else {
-					bg_x %= screen_size_x;
-					bg_y %= screen_size_y;
+					// wraparound: hardware uses bitwise mask, not %
+					bg_x &= screen_size_x - 1;
+					bg_y &= screen_size_y - 1;
 				}
 			} else {
 				INT16 hoff = gba_io_read16(gba, GBA_BG0HOFS + bg * 4);
@@ -411,6 +422,15 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 				gba->second_target_buffer[lcd_x] = col;
 		}
 	}
+	// Backdrop (palette[0]) is read live per-dot on real hardware; refresh
+	// any slot still at type==5 so mid-line palette writes take effect.
+	{
+		UINT32 live_bd = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE)) | (5u << 17);
+		if (SB_BFE(gba->first_target_buffer[lcd_x], 17, 3) == 5)
+			gba->first_target_buffer[lcd_x]  = live_bd;
+		if (SB_BFE(gba->second_target_buffer[lcd_x], 17, 3) == 5)
+			gba->second_target_buffer[lcd_x] = live_bd;
+	}
 	UINT32 col  = gba->first_target_buffer[lcd_x];
 	INT32  r    = SB_BFE(col,  0, 5);
 	INT32  g    = SB_BFE(col,  5, 5);
@@ -474,7 +494,7 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 		}
 	}
 	if (forced_blank) {
-		r = g = b = 255;
+		r = g = b = 31;
 		if (gba->stop_mode)
 			r = g = b = 0;
 	}
@@ -487,16 +507,16 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 	INT32  p = (lcd_x + lcd_y * 240) * 4;
 	float  screen_blend_factor = 0.3 * gba->ppu.ghosting_strength;
 	UINT16 green_swap = gba_io_read16(gba, GBA_GREENSWP);
-	gba->framebuffer[p + 0] = r * 8 * (1.0 - screen_blend_factor) + gba->framebuffer[p + 0] * screen_blend_factor;
-	gba->framebuffer[p + 2] = b * 8 * (1.0 - screen_blend_factor) + gba->framebuffer[p + 2] * screen_blend_factor;
+	gba->framebuffer[p + 0] = ((r << 3) | (r >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 0] * screen_blend_factor;
+	gba->framebuffer[p + 2] = ((b << 3) | (b >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 2] * screen_blend_factor;
 
 	if (green_swap & 1) {
 		if (p & 4)
-			gba->framebuffer[p + 1 - 4] = g * 8 * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1 - 4] * screen_blend_factor;
+			gba->framebuffer[p + 1 - 4] = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1 - 4] * screen_blend_factor;
 		else
-			gba->framebuffer[p + 1 + 4] = g * 8 * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1 + 4] * screen_blend_factor;
+			gba->framebuffer[p + 1 + 4] = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1 + 4] * screen_blend_factor;
 	} else {
-		gba->framebuffer[p + 1] = g * 8 * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1] * screen_blend_factor;
+		gba->framebuffer[p + 1] = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1] * screen_blend_factor;
 	}
 }
 
@@ -680,6 +700,7 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 					gba->second_target_buffer[lcd_x] = col;
 			}
 		}
+
 		UINT32 col  = gba->first_target_buffer[lcd_x];
 		INT32  r    = SB_BFE(col,  0, 5);
 		INT32  g    = SB_BFE(col,  5, 5);
@@ -737,7 +758,7 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 			}
 		}
 		if (forced_blank) {
-			r = g = b = 255;
+			r = g = b = 31;
 			if (gba->stop_mode)
 				r = g = b = 0;
 		}
@@ -746,16 +767,16 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 		gba->second_target_buffer[lcd_x] = backdrop_col;
 
 		INT32 p = (lcd_x + lcd_y * 240) * 4;
-		gba->framebuffer[p + 0] = r * 8 * (1.0 - sbf) + gba->framebuffer[p + 0] * sbf;
-		gba->framebuffer[p + 2] = b * 8 * (1.0 - sbf) + gba->framebuffer[p + 2] * sbf;
+		gba->framebuffer[p + 0] = ((r << 3) | (r >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 0] * sbf;
+		gba->framebuffer[p + 2] = ((b << 3) | (b >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 2] * sbf;
 
 		if (green_swap & 1) {
 			if (p & 4)
-				gba->framebuffer[p + 1 - 4] = g * 8 * (1.0 - sbf) + gba->framebuffer[p + 1 - 4] * sbf;
+				gba->framebuffer[p + 1 - 4] = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 1 - 4] * sbf;
 			else
-				gba->framebuffer[p + 1 + 4] = g * 8 * (1.0 - sbf) + gba->framebuffer[p + 1 + 4] * sbf;
+				gba->framebuffer[p + 1 + 4] = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 1 + 4] * sbf;
 		} else {
-			gba->framebuffer[p + 1] = g * 8 * (1.0 - sbf) + gba->framebuffer[p + 1] * sbf;
+			gba->framebuffer[p + 1] = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 1] * sbf;
 		}
 	}
 }
@@ -774,7 +795,7 @@ static inline void gba_ppu_refresh_status(gba_t* gba)
 	INT32 lcd_y  = beam / 1232;
 	INT32 lcd_x  = (beam % 1232) / 4;
 	INT32 vcount = (lcd_y + (lcd_x >= GBA_LCD_HBLANK_END)) % 228;
-	bool  vblank = lcd_y >= 160 && lcd_y < 227;
+	bool  vblank = lcd_y >= 160 && lcd_y < 228;
 	bool  hblank = lcd_x >= GBA_LCD_HBLANK_START && lcd_x < GBA_LCD_HBLANK_END;
 	UINT16 disp_stat = gba_io_read16(gba, GBA_DISPSTAT) & ~0x7;
 	disp_stat |= vblank ? 0x1 : 0;
@@ -798,7 +819,7 @@ static inline void gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_
 		UINT16 disp_stat  = gba_io_read16(gba, GBA_DISPSTAT) & ~0x7;
 		UINT16 vcount_cmp = SB_BFE(disp_stat, 8, 8);
 		INT32  vcount = (lcd_y + (lcd_x >= GBA_LCD_HBLANK_END)) % 228;
-		bool   vblank = lcd_y >= 160 && lcd_y < 227;
+		bool   vblank = lcd_y >= 160 && lcd_y < 228;
 		bool   hblank = lcd_x >= GBA_LCD_HBLANK_START && lcd_x < GBA_LCD_HBLANK_END;
 		disp_stat |= vblank ? 0x1 : 0;
 		disp_stat |= hblank ? 0x2 : 0;

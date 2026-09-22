@@ -38046,6 +38046,120 @@ struct BurnDriver BurnDrvsnes_Superfsoccer = {
 	512, 448, 4, 3
 };
 
+// Super Formation Soccer II (Japan)
+
+static struct BurnRomInfo snes_Superfsoccer2RomDesc[] = {
+	{ "Super Formation Soccer II (J)(1993)(Human Entertainment).sfc", 524288, 0x74c75074, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfsoccer2)
+STD_ROM_FN(snes_Superfsoccer2)
+
+struct BurnDriver BurnDrvsnes_Superfsoccer2 = {
+	"snes_superfsoccer2", NULL, NULL, NULL, "1993",
+	"Super Formation Soccer II (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Superfsoccer2RomInfo, snes_Superfsoccer2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Formation Soccer 94 - World Cup Edition (Japan)
+
+static struct BurnRomInfo snes_Superfsoccer94RomDesc[] = {
+	{ "Super Formation Soccer 94 - World Cup Edition (J)(1994)(Human Entertainment).sfc", 1048576, 0xd547c5d2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfsoccer94)
+STD_ROM_FN(snes_Superfsoccer94)
+
+struct BurnDriver BurnDrvsnes_Superfsoccer94 = {
+	"snes_superfsoccer94", "snes_superfsoccer94fd", NULL, NULL, "1994",
+	"Super Formation Soccer 94 - World Cup Edition (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Superfsoccer94RomInfo, snes_Superfsoccer94RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Formation Soccer 94 - World Cup Final Data (Japan)
+
+static struct BurnRomInfo snes_Superfsoccer94fdRomDesc[] = {
+	{ "Super Formation Soccer 94 - World Cup Final Data (J)(1994)(Human Entertainment).sfc", 1048576, 0xbf1f2e16, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfsoccer94fd)
+STD_ROM_FN(snes_Superfsoccer94fd)
+
+struct BurnDriver BurnDrvsnes_Superfsoccer94fd = {
+	"snes_superfsoccer94fd", NULL, NULL, NULL, "1994",
+	"Super Formation Soccer 94 - World Cup Final Data (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Superfsoccer94fdRomInfo, snes_Superfsoccer94fdRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Formation Soccer 95 - della Serie A (Japan)
+
+static struct BurnRomInfo snes_Superfsoccer95RomDesc[] = {
+	{ "Super Formation Soccer 95 - della Serie A (J)(1995)(Human Entertainment).sfc", 1572864, 0x798352bf, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfsoccer95)
+STD_ROM_FN(snes_Superfsoccer95)
+
+struct BurnDriver BurnDrvsnes_Superfsoccer95 = {
+	"snes_superfsoccer95", NULL, NULL, NULL, "1995",
+	"Super Formation Soccer 95 - della Serie A (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Superfsoccer95RomInfo, snes_Superfsoccer95RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Formation Soccer 95 - della Serie A - UCC Xaqua Version (Japan)
+
+static struct BurnRomInfo snes_Superfsoccer95xRomDesc[] = {
+	{ "Super Formation Soccer 95 - della Serie A - UCC Xaqua Version (J)(1995)(Human Entertainment).sfc", 1572864, 0x1cf83bc2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfsoccer95x)
+STD_ROM_FN(snes_Superfsoccer95x)
+
+struct BurnDriver BurnDrvsnes_Superfsoccer95x = {
+	"snes_superfsoccer95x", "snes_superfsoccer95", NULL, NULL, "1995",
+	"Super Formation Soccer 95 - della Serie A - UCC Xaqua Version (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Superfsoccer95xRomInfo, snes_Superfsoccer95xRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Formation Soccer 96 - World Club Edition (Japan)
+
+static struct BurnRomInfo snes_Superfsoccer96RomDesc[] = {
+	{ "Super Formation Soccer 96 - World Club Edition (J)(1996)(Human Entertainment).sfc", 1572864, 0xf42272cb, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superfsoccer96)
+STD_ROM_FN(snes_Superfsoccer96)
+
+struct BurnDriver BurnDrvsnes_Superfsoccer96 = {
+	"snes_superfsoccer96", NULL, NULL, NULL, "1996",
+	"Super Formation Soccer 96 - World Club Edition (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SPORTSFOOTBALL, 0,
+	SNESGetZipName, snes_Superfsoccer96RomInfo, snes_Superfsoccer96RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Super Genjin (Japan)
 
 static struct BurnRomInfo snes_SupergenjinRomDesc[] = {
@@ -47622,6 +47736,25 @@ struct BurnDriver BurnDrvsnes_Ffight3te = {
 	512, 448, 4, 3
 };
 
+// Firewall (HB)
+// https://colpanic.itch.io/firewall-snes
+static struct BurnRomInfo snes_FirewallRomDesc[] = {
+	{ "Firewall (2026)(ColPanic).sfc", 524288, 0xc7b83d03, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Firewall)
+STD_ROM_FN(snes_Firewall)
+
+struct BurnDriver BurnDrvsnes_Firewall = {
+	"snes_firewall", NULL, NULL, NULL, "2026",
+	"Firewall (HB)\0", NULL, "ColPanic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNES, GBF_PUZZLE, 0,
+	SNESGetZipName, snes_FirewallRomInfo, snes_FirewallRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Fork Parker's Crunch Out (HB)
 
 static struct BurnRomInfo snes_ForkparkerRomDesc[] = {
@@ -50151,6 +50284,25 @@ struct BurnDriver BurnDrvsnes_starfoxfx3j = {
 	512, 448, 4, 3
 };
 
+// Star Fox Unleashed (Hack, Preview 1)
+// https://romhackplaza.org/romhacks/star-fox-unleashed-silky-smooth-gameplay-super-nintendo-romhack
+static struct BurnRomInfo snes_starfoxunRomDesc[] = {
+	{ "Star Fox Unleashed Preview 1 (2026)(Ensign Salt).sfc", 2097152, 0xaaf4d919, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfoxun)
+STD_ROM_FN(snes_starfoxun)
+
+struct BurnDriver BurnDrvsnes_starfoxun = {
+	"snes_starfoxun", "snes_starfox", NULL, NULL, "2026",
+	"Star Fox Unleashed (Hack, Preview 1)\0", "Super FX GSU-1 enhancement chip", "Ensign Salt", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfoxunRomInfo, snes_starfoxunRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Star Fox 2 (USA, Europe, Classic Mini, Switch Online)
 // GSU‑2
 static struct BurnRomInfo snes_starfox2RomDesc[] = {
@@ -50986,6 +51138,25 @@ struct BurnDriver BurnDrvsnes_Tmntfightgme = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TmntfightgmeRomInfo, snes_TmntfightgmeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// TMNT x Street Fighter II Turbo (Hack, v29)
+// https://github.com/ryanfoxeth/tmnt-sfii-turbo
+static struct BurnRomInfo snes_Tmntsf2tRomDesc[] = {
+	{ "TMNT x Street Fighter II Turbo v29 (2026)(RyanFox.eth).sfc", 4194304, 0x094ddc93, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Tmntsf2t)
+STD_ROM_FN(snes_Tmntsf2t)
+
+struct BurnDriver BurnDrvsnes_Tmntsf2t = {
+	"snes_tmntsf2t", "snes_sf2turbo", NULL, NULL, "2026",
+	"TMNT x Street Fighter II Turbo (Hack, v29)\0", NULL, "RyanFox.eth", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Tmntsf2tRomInfo, snes_Tmntsf2tRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

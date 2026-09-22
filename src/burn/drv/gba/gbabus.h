@@ -7,6 +7,34 @@
 
 static inline UINT32 gba_read32(gba_t* gba, UINT32 baddr)
 {
+	UINT32 region = baddr >> 24;
+	// WRAM fast path: strictly replicates original alignment logic (4-byte aligned reads)
+	if (region == 0x02) {
+		UINT32* p = (UINT32*)(gba->mem.wram0 + (baddr & 0x3fffc));
+		gba->mem.openbus_word = *p;
+		return *p;
+	}
+	if (region == 0x03) {
+		UINT32* p = (UINT32*)(gba->mem.wram1 + (baddr & 0x7ffc));
+		gba->mem.openbus_word = *p;
+		return *p;
+	}
+	// VRAM/Palette/OAM fast path: 96KB/1KB/1KB fixed regions, no MMIO side effects
+	if (region == 0x06) {
+		UINT32* p = (UINT32*)(gba->mem.vram + (baddr & 0x1fffc));
+		gba->mem.openbus_word = *p;
+		return *p;
+	}
+	if (region == 0x05) {
+		UINT32* p = (UINT32*)(gba->mem.palette + (baddr & 0x3fc));
+		gba->mem.openbus_word = *p;
+		return *p;
+	}
+	if (region == 0x07) {
+		UINT32* p = (UINT32*)(gba->mem.oam + (baddr & 0x3fc));
+		gba->mem.openbus_word = *p;
+		return *p;
+	}
 	if (gba_gpio_address(gba, baddr)) {
 		UINT32 address = baddr & ~3;
 		UINT32 low     = gba_gpio_read16(gba, address);
@@ -20,6 +48,32 @@ static inline UINT32 gba_read32(gba_t* gba, UINT32 baddr)
 
 static inline UINT16 gba_read16(gba_t* gba, UINT32 baddr)
 {
+	UINT32 region = baddr >> 24;
+	if (region == 0x02) {
+		UINT32* p = (UINT32*)(gba->mem.wram0 + (baddr & 0x3fffc));
+		gba->mem.openbus_word = *p;
+		return ((UINT16*)p)[SB_BFE(baddr, 1, 1)];
+	}
+	if (region == 0x03) {
+		UINT32* p = (UINT32*)(gba->mem.wram1 + (baddr & 0x7ffc));
+		gba->mem.openbus_word = *p;
+		return ((UINT16*)p)[SB_BFE(baddr, 1, 1)];
+	}
+	if (region == 0x06) {
+		UINT32* p = (UINT32*)(gba->mem.vram + (baddr & 0x1fffc));
+		gba->mem.openbus_word = *p;
+		return ((UINT16*)p)[SB_BFE(baddr, 1, 1)];
+	}
+	if (region == 0x05) {
+		UINT32* p = (UINT32*)(gba->mem.palette + (baddr & 0x3fc));
+		gba->mem.openbus_word = *p;
+		return ((UINT16*)p)[SB_BFE(baddr, 1, 1)];
+	}
+	if (region == 0x07) {
+		UINT32* p = (UINT32*)(gba->mem.oam + (baddr & 0x3fc));
+		gba->mem.openbus_word = *p;
+		return ((UINT16*)p)[SB_BFE(baddr, 1, 1)];
+	}
 	if (gba_gpio_address(gba, baddr))
 		return gba_gpio_read16(gba, baddr);
 	UINT32* val    = gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_2B);
@@ -29,6 +83,32 @@ static inline UINT16 gba_read16(gba_t* gba, UINT32 baddr)
 
 static inline UINT8 gba_read8(gba_t* gba, UINT32 baddr)
 {
+	UINT32 region = baddr >> 24;
+	if (region == 0x02) {
+		UINT32* p = (UINT32*)(gba->mem.wram0 + (baddr & 0x3fffc));
+		gba->mem.openbus_word = *p;
+		return ((UINT8*)p)[baddr & 3];
+	}
+	if (region == 0x03) {
+		UINT32* p = (UINT32*)(gba->mem.wram1 + (baddr & 0x7ffc));
+		gba->mem.openbus_word = *p;
+		return ((UINT8*)p)[baddr & 3];
+	}
+	if (region == 0x06) {
+		UINT32* p = (UINT32*)(gba->mem.vram + (baddr & 0x1fffc));
+		gba->mem.openbus_word = *p;
+		return ((UINT8*)p)[baddr & 3];
+	}
+	if (region == 0x05) {
+		UINT32* p = (UINT32*)(gba->mem.palette + (baddr & 0x3fc));
+		gba->mem.openbus_word = *p;
+		return ((UINT8*)p)[baddr & 3];
+	}
+	if (region == 0x07) {
+		UINT32* p = (UINT32*)(gba->mem.oam + (baddr & 0x3fc));
+		gba->mem.openbus_word = *p;
+		return ((UINT8*)p)[baddr & 3];
+	}
 	if (gba_gpio_address(gba, baddr))
 		return (gba_gpio_read16(gba, baddr) >> ((baddr & 1) * 8)) & 0xff;
 	UINT32* val    = gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_1B);
@@ -39,6 +119,37 @@ static inline UINT8 gba_read8(gba_t* gba, UINT32 baddr)
 
 static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	UINT32 region = baddr >> 24;
+	if (region == 0x02) {
+		UINT32* p = (UINT32*)(gba->mem.wram0 + (baddr & 0x3fffc));
+		*p = data;
+		gba->mem.openbus_word = data;
+		return;
+	}
+	if (region == 0x03) {
+		UINT32* p = (UINT32*)(gba->mem.wram1 + (baddr & 0x7ffc));
+		*p = data;
+		gba->mem.openbus_word = data;
+		return;
+	}
+	if (region == 0x06) {
+		UINT32* p = (UINT32*)(gba->mem.vram + (baddr & 0x1fffc));
+		*p = data;
+		gba->mem.openbus_word = data;
+		return;
+	}
+	if (region == 0x05) {
+		UINT32* p = (UINT32*)(gba->mem.palette + (baddr & 0x3fc));
+		*p = data;
+		gba->mem.openbus_word = data;
+		return;
+	}
+	if (region == 0x07) {
+		UINT32* p = (UINT32*)(gba->mem.oam + (baddr & 0x3fc));
+		*p = data;
+		gba->mem.openbus_word = data;
+		return;
+	}
 	if (baddr >= 0x08000000) {
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
 		if ((baddr & 0xfe000000) == 0xe000000) {
@@ -60,6 +171,37 @@ static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 
 static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	UINT32 region = baddr >> 24;
+	if (region == 0x02) {
+		UINT32* p = (UINT32*)(gba->mem.wram0 + (baddr & 0x3fffc));
+		((UINT16*)p)[SB_BFE(baddr, 1, 1)] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
+	if (region == 0x03) {
+		UINT32* p = (UINT32*)(gba->mem.wram1 + (baddr & 0x7ffc));
+		((UINT16*)p)[SB_BFE(baddr, 1, 1)] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
+	if (region == 0x06) {
+		UINT32* p = (UINT32*)(gba->mem.vram + (baddr & 0x1fffc));
+		((UINT16*)p)[SB_BFE(baddr, 1, 1)] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
+	if (region == 0x05) {
+		UINT32* p = (UINT32*)(gba->mem.palette + (baddr & 0x3fc));
+		((UINT16*)p)[SB_BFE(baddr, 1, 1)] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
+	if (region == 0x07) {
+		UINT32* p = (UINT32*)(gba->mem.oam + (baddr & 0x3fc));
+		((UINT16*)p)[SB_BFE(baddr, 1, 1)] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
 	if (baddr >= 0x08000000) {
 		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
 		if ((baddr & 0xfe000000) == 0xe000000) {
@@ -85,6 +227,19 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 
 static inline void gba_store8(gba_t* gba, UINT32 baddr, UINT32 data)
 {
+	UINT32 region = baddr >> 24;
+	if (region == 0x02) {
+		UINT32* p = (UINT32*)(gba->mem.wram0 + (baddr & 0x3fffc));
+		((UINT8*)p)[baddr & 3] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
+	if (region == 0x03) {
+		UINT32* p = (UINT32*)(gba->mem.wram1 + (baddr & 0x7ffc));
+		((UINT8*)p)[baddr & 3] = data;
+		gba->mem.openbus_word = *p;
+		return;
+	}
 	if (baddr >= 0x05000000) {
 		// 8 bit stores to palette mirror across 8 bit halves
 		if ((baddr & 0xff000000) == 0x5000000) {
@@ -344,6 +499,102 @@ static inline void arm7_write8(void* user_data, UINT32 address, UINT8 data)
 	}
 	gba_store8((gba_t*)user_data, address, data);
 }
+
+// Direct GBA memory access — inlines into CPU core to avoid function-pointer overhead.
+
+static inline UINT32 gba_cpu_read32(gba_t* gba, UINT32 address)
+{
+	gba_compute_access_cycles(gba, address, 3);
+	return gba_read32(gba, address);
+}
+
+static inline UINT32 gba_cpu_read16(gba_t* gba, UINT32 address)
+{
+	gba_compute_access_cycles(gba, address, 1);
+	return gba_read16(gba, address);
+}
+
+static inline UINT8  gba_cpu_read8(gba_t* gba, UINT32 address)
+{
+	gba_compute_access_cycles(gba, address, 1);
+	return gba_read8(gba, address);
+}
+
+static inline UINT32 gba_cpu_read32_seq(gba_t* gba, UINT32 address, bool seq)
+{
+	gba_compute_access_cycles(gba, address, seq ? 2 : 3);
+	return gba_read32(gba, address);
+}
+
+static inline UINT32 gba_cpu_read16_seq(gba_t* gba, UINT32 address, bool seq)
+{
+	gba_compute_access_cycles(gba, address, seq ? 0 : 1);
+	return gba_read16(gba, address);
+}
+
+static inline void gba_cpu_write32(gba_t* gba, UINT32 address, UINT32 data)
+{
+	gba_compute_access_cycles(gba, address, 3);
+	gba_dma_write32(gba, address, data);
+}
+
+static inline void gba_cpu_write16(gba_t* gba, UINT32 address, UINT16 data)
+{
+	gba_compute_access_cycles(gba, address, 1);
+	gba_dma_write16(gba, address, data);
+}
+
+static inline void gba_cpu_write8(gba_t* gba, UINT32 address, UINT8 data)
+{
+	gba_compute_access_cycles(gba, address, 1);
+	if ((address & 0xfffff000) == 0x04000000) {
+		if (gba_process_mmio_write(gba, address, data, 1))
+			return;
+	}
+	gba_store8(gba, address, data);
+}
+
+// Override GBA_CPU memory access macros with direct inline calls.
+
+#ifdef GBA_CPU_UD
+  #undef GBA_CPU_UD
+#endif
+#ifdef GBA_CPU_READ32
+  #undef GBA_CPU_READ32
+#endif
+#ifdef GBA_CPU_READ16
+  #undef GBA_CPU_READ16
+#endif
+#ifdef GBA_CPU_READ8
+  #undef GBA_CPU_READ8
+#endif
+#ifdef GBA_CPU_READ32_SEQ
+  #undef GBA_CPU_READ32_SEQ
+#endif
+#ifdef GBA_CPU_READ16_SEQ
+  #undef GBA_CPU_READ16_SEQ
+#endif
+#ifdef GBA_CPU_WRITE32
+  #undef GBA_CPU_WRITE32
+#endif
+#ifdef GBA_CPU_WRITE16
+  #undef GBA_CPU_WRITE16
+#endif
+#ifdef GBA_CPU_WRITE8
+  #undef GBA_CPU_WRITE8
+#endif
+
+#define GBA_CPU_FROM_CPU(cpu)   ((gba_t*)((cpu)->user_data))
+#define GBA_CPU_UD(cpu)             (GBA_CPU_FROM_CPU(cpu))
+#define GBA_CPU_READ32(cpu, a)      gba_cpu_read32    (GBA_CPU_FROM_CPU(cpu), (a))
+#define GBA_CPU_READ16(cpu, a)      gba_cpu_read16    (GBA_CPU_FROM_CPU(cpu), (a))
+#define GBA_CPU_READ8(cpu, a)       gba_cpu_read8     (GBA_CPU_FROM_CPU(cpu), (a))
+#define GBA_CPU_READ32_SEQ(cpu,a,s) gba_cpu_read32_seq(GBA_CPU_FROM_CPU(cpu), (a), (s))
+#define GBA_CPU_READ16_SEQ(cpu,a,s) gba_cpu_read16_seq(GBA_CPU_FROM_CPU(cpu), (a), (s))
+#define GBA_CPU_WRITE32(cpu,a,d)    gba_cpu_write32   (GBA_CPU_FROM_CPU(cpu), (a), (d))
+#define GBA_CPU_WRITE16(cpu,a,d)    gba_cpu_write16   (GBA_CPU_FROM_CPU(cpu), (a), (d))
+#define GBA_CPU_WRITE8(cpu,a,d)     gba_cpu_write8    (GBA_CPU_FROM_CPU(cpu), (a), (d))
+
 
 static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 {

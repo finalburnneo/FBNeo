@@ -909,8 +909,11 @@ static INT32 MegaphxInit()
 	ZetSetOutHandler(inder_sb_write_port);
 	ZetSetInHandler(inder_sb_read_port);
 	ZetClose();
-
-	inder_4bpp = !strncmp(BurnDrvGetTextA(DRV_NAME), "hamboy", 6);
+	
+	inder_4bpp = false;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "afterwar") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "hamboy") == 0) {
+		inder_4bpp = true;
+	} 
 	TMS34010Init(0);
 	TMS34010Open(0);
 	TMS34010MapMemory(DrvVidRAM,	0x00000000, 0x003fffff, MAP_RAM);
@@ -1113,6 +1116,40 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
+
+
+// After the War
+
+static struct BurnRomInfo afterwarRomDesc[] = {
+	{ "aw.u32",						0x020000, 0xb99703d4,  1 | BRF_PRG | BRF_ESS },	//  0 68K Boot Code
+	{ "aw.u21",						0x020000, 0xf11e7449,  1 | BRF_PRG | BRF_ESS },	//  1 
+
+	{ "aw0.u38",						0x020000, 0x91a80067,  2 | BRF_PRG | BRF_ESS },	//  2 68K Code
+	{ "aw1.u27",						0x020000, 0x43812d35,  2 | BRF_PRG | BRF_ESS },	//  3 
+	{ "aw2.u37",						0x020000, 0xbcb7be40,  2 | BRF_PRG | BRF_ESS },	//  4 
+	{ "aw3.u26",						0x020000, 0x45963256,  2 | BRF_PRG | BRF_ESS },	//  5 
+	{ "aw4.u36",						0x020000, 0x93d091a7,  2 | BRF_PRG | BRF_ESS },	//  6 
+	{ "aw5.u25",						0x020000, 0xe6044d6e,  2 | BRF_PRG | BRF_ESS },	//  7 
+
+	{ "sonido_aw1.u39",				0x020000, 0x14368d11,  3 | BRF_PRG | BRF_ESS },	//  8 Z80 Bank Data
+
+	{ "sonido_aw0.u35",				0x002000, 0xcd22f2a4,  4 | BRF_PRG | BRF_ESS },	//  9 Z80 Code
+
+	{ "pic16c54.bin",				0x000400, 0x89e74d49,  5 | BRF_PRG | BRF_ESS },	// 10 pic16C54 Code
+};
+
+STD_ROM_PICK(afterwar)
+STD_ROM_FN(afterwar)
+
+struct BurnDriver BurnDrvAfterwar = {
+	"afterwar", NULL, NULL, NULL, "1991",
+	"After the War\0", NULL, "Dinamic / Inder", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, afterwarRomInfo, afterwarRomName, NULL, NULL, NULL, NULL, MegaphxInputInfo, HamboyDIPInfo,
+	MegaphxInit, DrvExit, DrvFrame, IndervidDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 200, 4, 3
+};
 
 
 // Mega Phoenix

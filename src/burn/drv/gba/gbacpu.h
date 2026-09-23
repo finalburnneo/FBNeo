@@ -3,19 +3,6 @@
 #ifndef GBA_ARM7_H
 #define GBA_ARM7_H 1
 
-// Memory access macros — may be overridden for direct inline access.
-#ifndef GBA_CPU_UD
-  #define GBA_CPU_UD(cpu)              ((cpu)->user_data)
-  #define GBA_CPU_READ32(cpu, a)       ((cpu)->read32     ((cpu)->user_data, (a)))
-  #define GBA_CPU_READ16(cpu, a)       ((cpu)->read16     ((cpu)->user_data, (a)))
-  #define GBA_CPU_READ8(cpu, a)        ((cpu)->read8      ((cpu)->user_data, (a)))
-  #define GBA_CPU_READ32_SEQ(cpu,a,s)  ((cpu)->read32_seq ((cpu)->user_data, (a), (s)))
-  #define GBA_CPU_READ16_SEQ(cpu,a,s)  ((cpu)->read16_seq ((cpu)->user_data, (a), (s)))
-  #define GBA_CPU_WRITE32(cpu, a, d)   ((cpu)->write32    ((cpu)->user_data, (a), (d)))
-  #define GBA_CPU_WRITE16(cpu, a, d)   ((cpu)->write16    ((cpu)->user_data, (a), (d)))
-  #define GBA_CPU_WRITE8(cpu, a, d)    ((cpu)->write8     ((cpu)->user_data, (a), (d)))
-#endif
-
 #include <stdint.h>
 #include <stdio.h>
 #include <string.h>
@@ -525,10 +512,10 @@ static inline void arm7_fill_pipeline(arm7_t* cpu)
 	bool thumb = arm7_get_thumb_bit(cpu);
 	if (thumb) {
 		cpu->registers[PC] &= ~1;
-		cpu->prefetch_opcode[cpu->phase] = GBA_CPU_READ16_SEQ(cpu, cpu->registers[PC] + 2 * cpu->phase, cpu->phase != 0);
+		cpu->prefetch_opcode[cpu->phase] = cpu->read16_seq(cpu->user_data, cpu->registers[PC] + 2 * cpu->phase, cpu->phase != 0);
 	} else {
 		cpu->registers[PC] &= ~3;
-		cpu->prefetch_opcode[cpu->phase] = GBA_CPU_READ32_SEQ(cpu, cpu->registers[PC] + 4 * cpu->phase, cpu->phase != 0);
+		cpu->prefetch_opcode[cpu->phase] = cpu->read32_seq(cpu->user_data, cpu->registers[PC] + 4 * cpu->phase, cpu->phase != 0);
 	}
 	++cpu->phase;
 	if (cpu->phase != 2)
@@ -594,12 +581,12 @@ static inline void arm7_exec_instruction(arm7_t* cpu)
 		return;
 	if (thumb == false) {
 		if (SB_LIKELY(cpu->prefetch_pc == cpu->registers[PC]))
-			cpu->prefetch_opcode[2] = GBA_CPU_READ32_SEQ(cpu, cpu->registers[PC] + 8, cpu->next_fetch_sequential);
+			cpu->prefetch_opcode[2] = cpu->read32_seq(cpu->user_data, cpu->registers[PC] + 8, cpu->next_fetch_sequential);
 		else
 			cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
 	} else {
 		if (SB_LIKELY(cpu->prefetch_pc == cpu->registers[PC]))
-			cpu->prefetch_opcode[2] = GBA_CPU_READ16_SEQ(cpu, cpu->registers[PC] + 4, cpu->next_fetch_sequential);
+			cpu->prefetch_opcode[2] = cpu->read16_seq(cpu->user_data, cpu->registers[PC] + 4, cpu->next_fetch_sequential);
 		else
 			cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
 	}
@@ -898,13 +885,13 @@ static inline void arm7_single_data_swap(arm7_t* cpu, UINT32 opcode)
 	UINT32 Rd   = ARM7_BFE(opcode, 12, 4);
 	UINT32 Rm   = ARM7_BFE(opcode,  0, 4);
 	// Load
-	UINT32 read_data = B ? GBA_CPU_READ8(cpu, addr) : arm7_rotr(GBA_CPU_READ32(cpu, addr), (addr & 0x3) * 8);
+	UINT32 read_data = B ? cpu->read8(cpu->user_data, addr) : arm7_rotr(cpu->read32(cpu->user_data, addr), (addr & 0x3) * 8);
 
 	UINT32 store_data = arm7_reg_read_r15_adj(cpu, Rm, 8);
 	if (B == 1)
-		GBA_CPU_WRITE8(cpu, addr, store_data);
+		cpu->write8( cpu->user_data, addr, store_data);
 	else
-		GBA_CPU_WRITE32(cpu, addr, store_data);
+		cpu->write32(cpu->user_data, addr, store_data);
 
 	arm7_reg_write(cpu, Rd, read_data);
 	cpu->i_cycles += 1;
@@ -948,9 +935,9 @@ static inline void arm7_half_word_transfer(arm7_t* cpu, UINT32 opcode)
 	if (L == 0) {
 		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, 8);
 		if (H == 1)
-			GBA_CPU_WRITE16(cpu, addr, data);
+			cpu->write16(cpu->user_data, addr, data);
 		else
-			GBA_CPU_WRITE8(cpu, addr, data);
+			cpu->write8(cpu->user_data, addr, data);
 	}
 	UINT32 write_back_addr = addr;
 	if (!P) {
@@ -960,7 +947,7 @@ static inline void arm7_half_word_transfer(arm7_t* cpu, UINT32 opcode)
 	if (W)
 		arm7_reg_write(cpu, Rn, write_back_addr);
 	if (L == 1) {	// Load
-		UINT32 data = H ? arm7_rotr(GBA_CPU_READ16(cpu, addr), (addr & 0x1) * 8) : GBA_CPU_READ8(cpu, addr);
+		UINT32 data = H ? arm7_rotr(cpu->read16(cpu->user_data, addr), (addr & 0x1) * 8) : cpu->read8(cpu->user_data, addr);
 		if (S) {
 			data &= 0xffff;
 			// Unaligned signed half words and signed byte loads sign extend the byte
@@ -998,9 +985,9 @@ static inline void arm7_single_word_transfer(arm7_t* cpu, UINT32 opcode)
 	if (L == 0) {
 		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, 8);
 		if (B == 1)
-			GBA_CPU_WRITE8(cpu, addr, data);
+			cpu->write8( cpu->user_data, addr, data);
 		else
-			GBA_CPU_WRITE32(cpu, addr, data);
+			cpu->write32(cpu->user_data, addr, data);
 	}
 
 	//Write back address before load
@@ -1013,7 +1000,7 @@ static inline void arm7_single_word_transfer(arm7_t* cpu, UINT32 opcode)
 		arm7_reg_write(cpu, Rn, write_back_addr);
 
 	if (L == 1) {	// Load
-		UINT32 data = B ? GBA_CPU_READ8(cpu, addr) : arm7_rotr(GBA_CPU_READ32(cpu, addr), (addr & 0x3) * 8);
+		UINT32 data = B ? cpu->read8(cpu->user_data, addr) : arm7_rotr(cpu->read32(cpu->user_data, addr), (addr & 0x3) * 8);
 		arm7_reg_write(cpu, Rd, data);
 		cpu->i_cycles += 1;
 	}
@@ -1121,7 +1108,7 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 		if ((a & 0xfe000000) != 0x0e000000)
 			a &= ~3;
 		if (!L)
-			GBA_CPU_WRITE32(cpu, a, cpu->registers[reg_index] + (i == 15 ? cpu->block.r15_off : 0));
+			cpu->write32(cpu->user_data, a, cpu->registers[reg_index] + (i == 15 ? cpu->block.r15_off : 0));
 
 		//Writeback happens on second cycle
 		if (++cpu->block.cycle == 1 && w) {
@@ -1131,7 +1118,7 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 		// R15 is stored at PC+12
 		if (L) {
 			INT32 bank = ARM7_BFE(a, 24, 8);
-			cpu->registers[reg_index] = GBA_CPU_READ32_SEQ(cpu, a, bank == cpu->block.last_bank);
+			cpu->registers[reg_index] = cpu->read32_seq(cpu->user_data, a, bank == cpu->block.last_bank);
 			cpu->block.last_bank = bank;
 		}
 
@@ -1359,7 +1346,7 @@ static inline void arm7t_pc_rel_ldst(arm7_t* cpu, UINT32 opcode)
 	INT32  offset = ARM7_BFE(opcode, 0, 8) * 4;
 	INT32  Rd     = ARM7_BFE(opcode, 8, 3);
 	UINT32 addr   = (cpu->registers[PC] + offset + 2) & (~3);
-	UINT32 data   =  GBA_CPU_READ32(cpu, addr);
+	UINT32 data   =  cpu->read32(cpu->user_data, addr);
 	arm7_reg_write(cpu, Rd, data);
 	cpu->i_cycles++;
 }
@@ -1381,11 +1368,11 @@ static inline void arm7t_reg_off_ldst(arm7_t* cpu, UINT32 opcode)
 	if (L == 0) {
 		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, r15_off);
 		if (B == 1)
-			GBA_CPU_WRITE8(cpu, addr, data);
+			cpu->write8( cpu->user_data, addr, data);
 		else
-			GBA_CPU_WRITE32(cpu, addr, data);
+			cpu->write32(cpu->user_data, addr, data);
 	} else { // Load
-		UINT32 data = B ? GBA_CPU_READ8(cpu, addr) : arm7_rotr(GBA_CPU_READ32(cpu, addr), (addr & 0x3) * 8);
+		UINT32 data = B ? cpu->read8(cpu->user_data, addr) : arm7_rotr(cpu->read32(cpu->user_data, addr), (addr & 0x3) * 8);
 		arm7_reg_write(cpu, Rd, data);
 		cpu->i_cycles++;
 	}
@@ -1411,17 +1398,17 @@ static inline void arm7t_ldst_bh(arm7_t* cpu, UINT32 opcode)
 			data = arm7_reg_read_r15_adj(cpu, Rd, r15_off);
 			break;
 		case 1: //Load Sign Extended Byte
-			data = GBA_CPU_READ8(cpu, addr);
+			data = cpu->read8(cpu->user_data, addr);
 			cpu->i_cycles++;
 			if (ARM7_BFE(data, 7, 1))
 				data |= 0xffffff00;
 			break;
 		case 2: //Load Halfword
-			data = arm7_rotr(GBA_CPU_READ16(cpu, addr), (addr & 0x1) * 8);
+			data = arm7_rotr(cpu->read16(cpu->user_data, addr), (addr & 0x1) * 8);
 			cpu->i_cycles++;
 			break;
 		case 3: //Load Sign Extended Half
-			data = arm7_rotr(GBA_CPU_READ16(cpu, addr), (addr & 0x1) * 8) & 0xffff;
+			data = arm7_rotr(cpu->read16(cpu->user_data, addr), (addr & 0x1) * 8) & 0xffff;
 			cpu->i_cycles++;
 			//Unaligned halfwords sign extend the byte
 			if ((addr & 1) && ARM7_BFE(data, 7, 1))
@@ -1431,7 +1418,7 @@ static inline void arm7t_ldst_bh(arm7_t* cpu, UINT32 opcode)
 			break;
 	}
 	if (op == 0)
-		GBA_CPU_WRITE16(cpu, addr, data);
+		cpu->write16(cpu->user_data, addr, data);
 	else
 		arm7_reg_write(cpu, Rd, data);
 }
@@ -1451,11 +1438,11 @@ static inline void arm7t_imm_off_ldst(arm7_t* cpu, UINT32 opcode) {
 	if (L == 0) {	// Store
 		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, 8);
 		if (B == 1)
-			GBA_CPU_WRITE8(cpu, addr, data);
+			cpu->write8( cpu->user_data, addr, data);
 		else
-			GBA_CPU_WRITE32(cpu, addr, data);
+			cpu->write32(cpu->user_data, addr, data);
 	} else {		// Load
-		UINT32 data = B ? GBA_CPU_READ8(cpu, addr) : arm7_rotr(GBA_CPU_READ32(cpu, addr), (addr & 0x3) * 8);
+		UINT32 data = B ? cpu->read8(cpu->user_data, addr) : arm7_rotr(cpu->read32(cpu->user_data, addr), (addr & 0x3) * 8);
 		cpu->i_cycles++;
 		arm7_reg_write(cpu, Rd, data);
 	}
@@ -1474,9 +1461,9 @@ static inline void arm7t_imm_off_ldst_bh(arm7_t* cpu, UINT32 opcode)
 	UINT32 data = 0;
 	if (L == 0) {	// Store
 		data = arm7_reg_read_r15_adj(cpu, Rd, 8);
-		GBA_CPU_WRITE16(cpu, addr, data);
+		cpu->write16(cpu->user_data, addr, data);
 	} else {		// Load
-		data = arm7_rotr(GBA_CPU_READ16(cpu, addr), (addr & 0x1) * 8);
+		data = arm7_rotr(cpu->read16(cpu->user_data, addr), (addr & 0x1) * 8);
 		arm7_reg_write(cpu, Rd, data);
 		cpu->i_cycles++;
 	}
@@ -1493,9 +1480,9 @@ static inline void arm7t_stack_off_ldst(arm7_t* cpu, UINT32 opcode)
 	UINT32 data;
 	if (L == 0) {	// Store
 		data = arm7_reg_read_r15_adj(cpu, Rd, 8);
-		GBA_CPU_WRITE32(cpu, addr, data);
+		cpu->write32(cpu->user_data, addr, data);
 	} else {		// Load
-		data = arm7_rotr(GBA_CPU_READ32(cpu, addr), (addr & 0x3) * 8);
+		data = arm7_rotr(cpu->read32(cpu->user_data, addr), (addr & 0x3) * 8);
 		arm7_reg_write(cpu, Rd, data);
 		cpu->i_cycles++;
 	}

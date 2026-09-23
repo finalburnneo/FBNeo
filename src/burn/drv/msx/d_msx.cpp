@@ -27621,9 +27621,9 @@ struct BurnDriver BurnDrvMSX_zoot = {
 };
 
 
-// ----------------------------------------------------
-// Aftermarket/Homebrew/Improved-hack Games (Post-2000)
-// ----------------------------------------------------
+// ----------------------------------------
+// Aftermarket/Homebrew/Improved-hack Games 
+// ----------------------------------------
 
 
 // 50 Metres (HB)
@@ -28400,6 +28400,24 @@ struct BurnDriver BurnDrvMSX_beez = {
 	272, 228, 4, 3
 };
 
+// Berserk (HB)
+static struct BurnRomInfo MSX_berserkRomDesc[] = {
+	{ "Berzerk (2026)(Pixel Forge).rom",	32768, 0xd129de5d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_berserk, MSX_berserk, msx_msx)
+STD_ROM_FN(MSX_berserk)
+
+struct BurnDriver BurnDrvMSX_berserk = {
+	"msx_berserk", NULL, "msx_msx", NULL, "2026",
+	"Berserk (HB)\0", NULL, "Pixel Forge", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
+	MSXGetZipName, MSX_berserkRomInfo, MSX_berserkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Betiled! (HB)
 static struct BurnRomInfo MSX_betiledRomDesc[] = {
 	{ "BeTiled! (2007)(CEZ GS).rom",	0x0c000, 0x4f89a784, BRF_PRG | BRF_ESS },
@@ -28780,7 +28798,7 @@ struct BurnDriver BurnDrvMSX_bubboworld2 = {
 
 // Buddhagillie (HB, v1.1)
 static struct BurnRomInfo MSX_bdg110RomDesc[] = {
-	{ "Buddhagillie v1.1 (2018)(GW's Workshop).rom",	0x08000, 0x906e2ce6, BRF_PRG | BRF_ESS },
+	{ "Buddhagillie v1.1 (2018)(GW's Workshop).rom",	32768, 0x906e2ce6, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_bdg110, MSX_bdg110, msx_msx)
@@ -29988,7 +30006,7 @@ struct BurnDriver BurnDrvMSX_drpill = {
 
 // Draconic Throne (HB)
 static struct BurnRomInfo MSX_draconicRomDesc[] = {
-	{ "Draconic Throne v1.1.2 (2017)(GW's Workshop).rom",	0x08000, 0x1109499f, BRF_PRG | BRF_ESS },
+	{ "Draconic Throne v1.1.2 (2017)(GW's Workshop).rom",	32768, 0x1109499f, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_draconic, MSX_draconic, msx_msx)
@@ -30378,6 +30396,24 @@ struct BurnDriver BurnDrvMSX_flubber = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_flubberRomInfo, MSX_flubberRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Flying Shark - TI992MSX (HB)
+static struct BurnRomInfo MSX_flyingsharkRomDesc[] = {
+	{ "Flying Shark - TI992MSX (2026)(Maggoo).rom",	524288, 0x35310951, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_flyingshark, MSX_flyingshark, msx_msx)
+STD_ROM_FN(MSX_flyingshark)
+
+struct BurnDriver BurnDrvMSX_flyingshark = {
+	"msx_flyingshark", NULL, "msx_msx", NULL, "2026",
+	"Flying Shark - TI992MSX (HB)\0", "TI-99 version made by Rasmus", "Maggoo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_VERSHOOT, 0,
+	MSXGetZipName, MSX_flyingsharkRomInfo, MSX_flyingsharkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -31746,6 +31782,24 @@ struct BurnDriver BurnDrvMSX_magical = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_magicalRomInfo, MSX_magicalRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Magic Knight Anniversary Collection (World)
+static struct BurnRomInfo MSX_mknight26RomDesc[] = {
+	{ "Magic Knight Anniversary Collection (2026)(Mastertronic).rom",	172032, 0xeaeb6972, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mknight26, MSX_mknight26, msx_msx)
+STD_ROM_FN(MSX_mknight26)
+
+struct BurnDriver BurnDrvMSX_mknight26 = {
+	"msx_mknight26", NULL, "msx_msx", NULL, "2026",
+	"Magic Knight Anniversary Collection (World)\0", NULL, "Mastertronic", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_ADV | GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_mknight26RomInfo, MSX_mknight26RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -33475,6 +33529,24 @@ struct BurnDriver BurnDrvMSX_picpuzzle2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_picpuzzle2RomInfo, MSX_picpuzzle2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Pinball 99 - TI992MSX (HB)
+static struct BurnRomInfo MSX_pinball99RomDesc[] = {
+	{ "Pinball 99 - TI992MSX (2026)(Maggoo).rom",	360448, 0xe555fef4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_pinball99, MSX_pinball99, msx_msx)
+STD_ROM_FN(MSX_pinball99)
+
+struct BurnDriver BurnDrvMSX_pinball99 = {
+	"msx_pinball99", NULL, "msx_msx", NULL, "2026",
+	"Pinball 99 - TI992MSX (HB)\0", "TI-99 version made by Rasmus", "Maggoo", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_PINBALL, 0,
+	MSXGetZipName, MSX_pinball99RomInfo, MSX_pinball99RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -36140,6 +36212,24 @@ struct BurnDriver BurnDrvMSX_yokaibattle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION, 0,
 	MSXGetZipName, MSX_yokaibattleRomInfo, MSX_yokaibattleRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// YokoXevi (HB, v1.1)
+static struct BurnRomInfo MSX_yokoxeviRomDesc[] = {
+	{ "YokoXevi v1.1 (2026)(GW's Workshop).rom",	49152, 0x2c6a13f9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_yokoxevi, MSX_yokoxevi, msx_msx)
+STD_ROM_FN(MSX_yokoxevi)
+
+struct BurnDriver BurnDrvMSX_yokoxevi = {
+	"msx_yokoxevi", NULL, "msx_msx", NULL, "2026",
+	"YokoXevi (HB, v1.1)\0", NULL, "GW's Workshop", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_HORSHOOT, 0,
+	MSXGetZipName, MSX_yokoxeviRomInfo, MSX_yokoxeviRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

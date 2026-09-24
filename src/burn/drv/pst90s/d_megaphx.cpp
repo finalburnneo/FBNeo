@@ -909,7 +909,7 @@ static INT32 MegaphxInit()
 	ZetSetOutHandler(inder_sb_write_port);
 	ZetSetInHandler(inder_sb_read_port);
 	ZetClose();
-	
+
 	inder_4bpp = false;
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "afterwar") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "hamboy") == 0) {
 		inder_4bpp = true;
@@ -1124,12 +1124,12 @@ static struct BurnRomInfo afterwarRomDesc[] = {
 	{ "aw.u32",						0x020000, 0xb99703d4,  1 | BRF_PRG | BRF_ESS },	//  0 68K Boot Code
 	{ "aw.u21",						0x020000, 0xf11e7449,  1 | BRF_PRG | BRF_ESS },	//  1 
 
-	{ "aw0.u38",						0x020000, 0x91a80067,  2 | BRF_PRG | BRF_ESS },	//  2 68K Code
-	{ "aw1.u27",						0x020000, 0x43812d35,  2 | BRF_PRG | BRF_ESS },	//  3 
-	{ "aw2.u37",						0x020000, 0xbcb7be40,  2 | BRF_PRG | BRF_ESS },	//  4 
-	{ "aw3.u26",						0x020000, 0x45963256,  2 | BRF_PRG | BRF_ESS },	//  5 
-	{ "aw4.u36",						0x020000, 0x93d091a7,  2 | BRF_PRG | BRF_ESS },	//  6 
-	{ "aw5.u25",						0x020000, 0xe6044d6e,  2 | BRF_PRG | BRF_ESS },	//  7 
+	{ "aw0.u38",					0x020000, 0x91a80067,  2 | BRF_PRG | BRF_ESS },	//  2 68K Code
+	{ "aw1.u27",					0x020000, 0x43812d35,  2 | BRF_PRG | BRF_ESS },	//  3 
+	{ "aw2.u37",					0x020000, 0xbcb7be40,  2 | BRF_PRG | BRF_ESS },	//  4 
+	{ "aw3.u26",					0x020000, 0x45963256,  2 | BRF_PRG | BRF_ESS },	//  5 
+	{ "aw4.u36",					0x020000, 0x93d091a7,  2 | BRF_PRG | BRF_ESS },	//  6 
+	{ "aw5.u25",					0x020000, 0xe6044d6e,  2 | BRF_PRG | BRF_ESS },	//  7 
 
 	{ "sonido_aw1.u39",				0x020000, 0x14368d11,  3 | BRF_PRG | BRF_ESS },	//  8 Z80 Bank Data
 

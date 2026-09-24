@@ -28400,20 +28400,20 @@ struct BurnDriver BurnDrvMSX_beez = {
 	272, 228, 4, 3
 };
 
-// Berserk (HB)
-static struct BurnRomInfo MSX_berserkRomDesc[] = {
+// Berzerk (HB)
+static struct BurnRomInfo MSX_berzerkRomDesc[] = {
 	{ "Berzerk (2026)(Pixel Forge).rom",	32768, 0xd129de5d, BRF_PRG | BRF_ESS },
 };
 
-STDROMPICKEXT(MSX_berserk, MSX_berserk, msx_msx)
-STD_ROM_FN(MSX_berserk)
+STDROMPICKEXT(MSX_berzerk, MSX_berzerk, msx_msx)
+STD_ROM_FN(MSX_berzerk)
 
-struct BurnDriver BurnDrvMSX_berserk = {
-	"msx_berserk", NULL, "msx_msx", NULL, "2026",
-	"Berserk (HB)\0", NULL, "Pixel Forge", "MSX",
+struct BurnDriver BurnDrvMSX_berzerk = {
+	"msx_berzerk", NULL, "msx_msx", NULL, "2026",
+	"Berzerk (HB)\0", NULL, "Pixel Forge", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_RUNGUN, 0,
-	MSXGetZipName, MSX_berserkRomInfo, MSX_berserkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MAZE | GBF_RUNGUN, 0,
+	MSXGetZipName, MSX_berzerkRomInfo, MSX_berzerkRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -32831,6 +32831,24 @@ struct BurnDriver BurnDrvMSX_nenokatas = {
 	272, 228, 4, 3
 };
 
+// Neon Revenant (HB, Final)
+static struct BurnRomInfo MSX_neonrevRomDesc[] = {
+	{ "Neon Revenant Final (2026)(Kanon-ai).rom",	524288, 0x80def2d5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_neonrev, MSX_neonrev, msx_msx)
+STD_ROM_FN(MSX_neonrev)
+
+struct BurnDriver BurnDrvMSX_neonrev = {
+	"msx_neonrev", NULL, "msx_msx", NULL, "2026",
+	"Neon Revenant (HB, Final)\0", NULL, "Kanon-ai", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SHOOT, 0,
+	MSXGetZipName, MSX_neonrevRomInfo, MSX_neonrevRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Neuras (HB)
 static struct BurnRomInfo MSX_neurasRomDesc[] = {
 	{ "Neuras (2021)(Inufuto).cas",	8803, 0x68760271, BRF_PRG | BRF_ESS },
@@ -33097,6 +33115,24 @@ struct BurnDriver BurnDrvMSX_openwide = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_ACTION, 0,
 	MSXGetZipName, MSX_openwideRomInfo, MSX_openwideRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Opera Soft: Early Works (HB)
+static struct BurnRomInfo MSX_operaewRomDesc[] = {
+	{ "Opera Soft - Early Works (2026).rom",	770048, 0x82268c9a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_operaew, MSX_operaew, msx_msx)
+STD_ROM_FN(MSX_operaew)
+
+struct BurnDriver BurnDrvMSX_operaew = {
+	"msx_operaew", NULL, "msx_msx", NULL, "2026",
+	"Opera Soft: Early Works (HB)\0", "MSX2 games not working", "<unknown>", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_operaewRomInfo, MSX_operaewRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

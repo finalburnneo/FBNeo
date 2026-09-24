@@ -499,7 +499,11 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	}
 
 	bprintf(0, _T("Cartridge RAM: %d\n"), Cart.WorkRAMSize);
-	Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
+	if (PPUType > RP2C02 && Cart.WorkRAMSize == 0x800) {
+		Cart.WorkRAM = NES_CPU_RAM + 0x800; // VS. work ram directly follows cpu ram, so frontends can expose both as one block
+	} else {
+		Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
+	}
 	if (Cart.WorkRAMSize == 0) NESMode |= NO_WORKRAM;
 
 	if (Cart.Trainer) {
@@ -11918,7 +11922,7 @@ INT32 NESInit()
 
 	GenericTilesInit();
 
-	NES_CPU_RAM = (UINT8*)BurnMalloc(0x800);
+	NES_CPU_RAM = (UINT8*)BurnMalloc(0x800 + 0x800); // + VS. work ram, see cartridge_load()
 
 	cheats_active = 0;
 
@@ -12154,6 +12158,7 @@ INT32 NESExit()
 
 	BurnFree(Cart.CartOrig);
 	BurnFree(rom);
+	if (Cart.WorkRAM == NES_CPU_RAM + 0x800) Cart.WorkRAM = NULL;
 	BurnFree(NES_CPU_RAM);
 	BurnFree(Cart.WorkRAM);
 	BurnFree(Cart.CHRRam);

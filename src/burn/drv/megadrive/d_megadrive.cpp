@@ -38622,6 +38622,25 @@ struct BurnDriver BurnDrvmd_bigfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Black Tiger (HB, v1.1)
+// https://rester159.itch.io/black-tiger-md
+static struct BurnRomInfo md_blacktigerRomDesc[] = {
+	{ "Black Tiger v1.1 (2026)(rester159).bin", 4194304, 0x02262040, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_blacktiger)
+STD_ROM_FN(md_blacktiger)
+
+struct BurnDriver BurnDrvmd_blacktiger = {
+	"md_blacktiger", NULL, NULL, NULL, "2026",
+	"Black Tiger (HB, v1.1)\0", NULL, "rester159", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_blacktigerRomInfo, md_blacktigerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Black Jewel Reborn (HB, Alpha)
 // https://pscdgames.itch.io/black-jewel-reborn-sega-mega-drive-genesis-alpha
 static struct BurnRomInfo md_bjrebornRomDesc[] = {

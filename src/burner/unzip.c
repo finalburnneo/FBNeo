@@ -70,6 +70,7 @@
 
 #include "zlib.h"
 #include "unzip.h"
+#include "../dep/libs/zstd/zstd.h"
 
 #ifdef STDC
 #  include <stddef.h>
@@ -130,6 +131,7 @@ typedef struct
 #ifdef HAVE_BZIP2
     bz_stream bstream;          /* bzLib stream structure for bziped */
 #endif
+    ZSTD_DStream* zstream;      /* zstd stream for method 93 */
 
     ZPOS64_T pos_in_zipfile;       /* position in byte on the zipfile, for fseek*/
     uLong stream_initialised;   /* flag set if stream structure is initialised*/
@@ -1293,6 +1295,7 @@ local int unz64local_CheckCurrentFileCoherencyHeader(unz64_s* s, uInt* piSizeVar
 /* #ifdef HAVE_BZIP2 */
                          (s->cur_file_info.compression_method!=Z_BZIP2ED) &&
 /* #endif */
+                         (s->cur_file_info.compression_method!=Z_ZSTD) &&
                          (s->cur_file_info.compression_method!=Z_DEFLATED))
         err=UNZ_BADZIPFILE;
 
@@ -1399,6 +1402,7 @@ extern int ZEXPORT unzOpenCurrentFile3(unzFile file, int* method,
 /* #ifdef HAVE_BZIP2 */
         (s->cur_file_info.compression_method!=Z_BZIP2ED) &&
 /* #endif */
+        (s->cur_file_info.compression_method!=Z_ZSTD) &&
         (s->cur_file_info.compression_method!=Z_DEFLATED))
 
         err=UNZ_BADZIPFILE;
@@ -1439,6 +1443,21 @@ extern int ZEXPORT unzOpenCurrentFile3(unzFile file, int* method,
 #else
       pfile_in_zip_read_info->raw=1;
 #endif
+    }
+    else if ((s->cur_file_info.compression_method==Z_ZSTD) && (!raw))
+    {
+      pfile_in_zip_read_info->stream.next_in = 0;
+      pfile_in_zip_read_info->stream.avail_in = 0;
+
+      pfile_in_zip_read_info->zstream = ZSTD_createDStream();
+      if (pfile_in_zip_read_info->zstream != NULL)
+        pfile_in_zip_read_info->stream_initialised=Z_ZSTD;
+      else
+      {
+        free(pfile_in_zip_read_info->read_buffer);
+        free(pfile_in_zip_read_info);
+        return UNZ_INTERNALERROR;
+      }
     }
     else if ((s->cur_file_info.compression_method==Z_DEFLATED) && (!raw))
     {
@@ -1698,6 +1717,50 @@ extern int ZEXPORT unzReadCurrentFile(unzFile file, voidp buf, unsigned len) {
               break;
 #endif
         } // end Z_BZIP2ED
+        else if (pfile_in_zip_read_info->compression_method==Z_ZSTD)
+        {
+            ZSTD_inBuffer in;
+            ZSTD_outBuffer out;
+            size_t ret;
+            uLong uOutThis;
+
+            in.src = pfile_in_zip_read_info->stream.next_in;
+            in.size = pfile_in_zip_read_info->stream.avail_in;
+            in.pos = 0;
+            out.dst = pfile_in_zip_read_info->stream.next_out;
+            out.size = pfile_in_zip_read_info->stream.avail_out;
+            out.pos = 0;
+
+            ret = ZSTD_decompressStream(pfile_in_zip_read_info->zstream, &out, &in);
+            if (ZSTD_isError(ret))
+            {
+                err = Z_DATA_ERROR;
+                break;
+            }
+            uOutThis = (uLong)out.pos;
+
+            pfile_in_zip_read_info->total_out_64 = pfile_in_zip_read_info->total_out_64 + uOutThis;
+
+            pfile_in_zip_read_info->crc32 = crc32(pfile_in_zip_read_info->crc32,
+                                pfile_in_zip_read_info->stream.next_out,
+                                (uInt)uOutThis);
+            pfile_in_zip_read_info->rest_read_uncompressed -= uOutThis;
+            iRead += (uInt)uOutThis;
+
+            pfile_in_zip_read_info->stream.next_in   += in.pos;
+            pfile_in_zip_read_info->stream.avail_in  -= (uInt)in.pos;
+            pfile_in_zip_read_info->stream.total_in  += (uLong)in.pos;
+            pfile_in_zip_read_info->stream.next_out  += uOutThis;
+            pfile_in_zip_read_info->stream.avail_out -= (uInt)uOutThis;
+            pfile_in_zip_read_info->stream.total_out += uOutThis;
+
+            /* no progress: truncated or corrupt data */
+            if ((in.pos == 0) && (uOutThis == 0))
+            {
+                err = Z_DATA_ERROR;
+                break;
+            }
+        }
         else
         {
             ZPOS64_T uTotalOutBefore,uTotalOutAfter;
@@ -1893,6 +1956,8 @@ extern int ZEXPORT unzCloseCurrentFile(unzFile file) {
     else if (pfile_in_zip_read_info->stream_initialised == Z_BZIP2ED)
         BZ2_bzDecompressEnd(&pfile_in_zip_read_info->bstream);
 #endif
+    else if (pfile_in_zip_read_info->stream_initialised == Z_ZSTD)
+        ZSTD_freeDStream(pfile_in_zip_read_info->zstream);
 
 
     pfile_in_zip_read_info->stream_initialised = 0;

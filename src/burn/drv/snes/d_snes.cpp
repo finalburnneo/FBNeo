@@ -48895,6 +48895,25 @@ struct BurnDriver BurnDrvsnes_Mkbcf = {
 	512, 448, 4, 3
 };
 
+// Mortal Kombat MA-17 (Hack)
+// https://www.romhacking.net/hacks/10012/
+static struct BurnRomInfo snes_Mkma17RomDesc[] = {
+	{ "Mortal Kombat MA-17 (2026)(Yoshihiro).sfc", 4194304, 0xbe05b9c8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mkma17)
+STD_ROM_FN(snes_Mkma17)
+
+struct BurnDriver BurnDrvsnes_Mkma17 = {
+	"snes_mkma17", "snes_mk", NULL, NULL, "2026",
+	"Mortal Kombat MA-17 (Hack)\0", NULL, "Yoshihiro", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Mkma17RomInfo, snes_Mkma17RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mortal Kombat 3 New Edition (Hack)
 // https://www.romhacking.net/hacks/8869/
 static struct BurnRomInfo snes_Mk3neRomDesc[] = {

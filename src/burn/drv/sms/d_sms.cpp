@@ -22458,9 +22458,9 @@ struct BurnDriver BurnDrvsms_evil = {
 	256, 192, 4, 3
 };
 
-// Flashback (HB, v0.0.3)
+// Flashback (HB, v0.0.4)
 static struct BurnRomInfo sms_flashbackRomDesc[] = {
-	{ "Flashback v0.0.3 (2026)(haroldo-ok).sms",	4194304, 0xa1ae7b67, BRF_PRG | BRF_ESS },
+	{ "Flashback v0.0.4 (2026)(haroldo-ok).sms",	4194304, 0xe65f94ee, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_flashback)
@@ -22468,7 +22468,7 @@ STD_ROM_FN(sms_flashback)
 
 struct BurnDriver BurnDrvsms_flashback = {
 	"sms_flashback", NULL, NULL, NULL, "2026",
-	"Flashback (HB, v0.0.3)\0", NULL, "haroldo-ok", "Sega Master System",
+	"Flashback (HB, v0.0.4)\0", NULL, "haroldo-ok", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_flashbackRomInfo, sms_flashbackRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

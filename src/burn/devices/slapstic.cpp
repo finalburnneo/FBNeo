@@ -796,6 +796,11 @@ void SlapsticReset(void)
 	/* reset the chip */
 	state = DISABLED;
 
+	alt_bank = 0;
+	bit_bank = 0;
+	add_bank = 0;
+	bit_xor = 0;
+
 	/* the 111 and later chips seem to reset to bank 0 */
 	current_bank = slapstic.bankstart;
 }

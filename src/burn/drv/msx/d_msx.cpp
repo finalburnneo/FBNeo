@@ -32741,6 +32741,25 @@ struct BurnDriver BurnDrvMSX_msxcomp9 = {
 	272, 228, 4, 3
 };
 
+// MSX Tennis (HB)
+static struct BurnRomInfo MSX_msxtennisRomDesc[] = {
+	{ "MSX Tennis (2026)(Oldschool Is Beautiful).rom",	32768, 0xaf0a4f71, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_msxtennis, MSX_msxtennis, msx_msx)
+STD_ROM_FN(MSX_msxtennis)
+
+struct BurnDriver BurnDrvMSX_msxtennis = {
+	"msx_msxtennis", NULL, "msx_msx", NULL, "2026",
+	"MSX Tennis (HB)\0", NULL, "Oldschool Is Beautiful", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_SPORTSMISC, 0,
+	MSXGetZipName, MSX_msxtennisRomInfo, MSX_msxtennisRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+
+};
+
 // MSX Unleashed (HB, Tech-Demo)
 static struct BurnRomInfo MSX_unleashedRomDesc[] = {
 	{ "MSX Unleashed (2006)(dvik & joyrex).rom",	0x40000, 0x10f86aa9, BRF_PRG | BRF_ESS },

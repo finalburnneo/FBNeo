@@ -38622,10 +38622,10 @@ struct BurnDriver BurnDrvmd_bigfd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Black Tiger (HB, v1.1)
+// Black Tiger (HB, v1.2)
 // https://rester159.itch.io/black-tiger-md
 static struct BurnRomInfo md_blacktigerRomDesc[] = {
-	{ "Black Tiger v1.1 (2026)(rester159).bin", 4194304, 0x02262040, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Black Tiger v1.2 (2026)(rester159).bin", 4194304, 0xf534d2ff, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_blacktiger)
@@ -38633,7 +38633,7 @@ STD_ROM_FN(md_blacktiger)
 
 struct BurnDriver BurnDrvmd_blacktiger = {
 	"md_blacktiger", NULL, NULL, NULL, "2026",
-	"Black Tiger (HB, v1.1)\0", NULL, "rester159", "Genesis / Mega Drive",
+	"Black Tiger (HB, v1.2)\0", NULL, "rester159", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_blacktigerRomInfo, md_blacktigerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41527,6 +41527,25 @@ struct BurnDriver BurnDrvmd_queenjour = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_queenjourRomInfo, md_queenjourRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega R-Type (HB, Demo v1.3)
+// https://theroboz.itch.io/mega-r-type
+static struct BurnRomInfo md_megartypeRomDesc[] = {
+	{ "Mega R-Type Demo v1.3 (2022)(The_Roboz).bin", 2097152, 0x3acd1afb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megartype)
+STD_ROM_FN(md_megartype)
+
+struct BurnDriver BurnDrvmd_megartype = {
+	"md_megartype", NULL, NULL, NULL, "2022",
+	"Mega R-Type (HB, Demo v1.3)\0", NULL, "The_Roboz", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_megartypeRomInfo, md_megartypeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

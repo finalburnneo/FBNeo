@@ -57880,6 +57880,25 @@ struct BurnDriver BurnDrvgba_minimines = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Minicraft 3D (HB, v0.6.4)
+
+static struct BurnRomInfo gba_minicraft3dRomDesc[] = {
+	{ "Minicraft 3D v0.6.4 (2026)(GameOfTobi).gba",	800984,	0xa525a72c,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_minicraft3d, gba_minicraft3d, gba_gba)
+STD_ROM_FN(gba_minicraft3d)
+
+struct BurnDriver BurnDrvgba_minicraft3d = {
+	"gba_minicraft3d", NULL, "gba_gba", NULL, "2026",
+	"Minicraft 3D (HB, v0.6.4)\0", NULL, "GameOfTobi", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SIM, 0,
+	GbaGetZipName, gba_minicraft3dRomInfo, gba_minicraft3dRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // With the last Moonbeam (HB, v1.0.1)
 
 static struct BurnRomInfo gba_moonbeamRomDesc[] = {

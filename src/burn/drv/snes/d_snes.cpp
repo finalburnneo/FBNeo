@@ -3353,6 +3353,25 @@ struct BurnDriver BurnDrvsnes_Assaultsvj = {
 	512, 448, 4, 3
 };
 
+// Assault Suits Valken (USA) (Retro-bit)
+
+static struct BurnRomInfo snes_AssaultsvrbRomDesc[] = {
+	{ "Assault Suits Valken (U)(2024)(Retro-bit).sfc", 2097152, 0xb802fc5e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Assaultsvrb)
+STD_ROM_FN(snes_Assaultsvrb)
+
+struct BurnDriver BurnDrvsnes_Assaultsvrb = {
+	"snes_assaultsvrb", "snes_cybernator", NULL, NULL, "2024",
+	"Assault Suits Valken (USA) (Retro-bit)\0", NULL, "Retro-bit", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_AssaultsvrbRomInfo, snes_AssaultsvrbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Assault Suits Valken (Hack, English)
 // https://aeongenesis.net/projects/asv
 static struct BurnRomInfo snes_AssaultsvteRomDesc[] = {
@@ -48777,6 +48796,25 @@ struct BurnDriver BurnDrvsnes_Megamanxsa1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Megamanxsa1RomInfo, snes_Megamanxsa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mega Man X - SA-1 Plus (Hack, v1.0.1)
+// https://romhackplaza.org/romhacks/mega-man-x-sa-1-plus-super-nintendo-romhack
+static struct BurnRomInfo snes_Megamanxsa1pRomDesc[] = {
+	{ "Mega Man X - SA-1 Plus v1.0.1 (2026)(llethas).sfc", 1572864, 0x8e685ca9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanxsa1p)
+STD_ROM_FN(snes_Megamanxsa1p)
+
+struct BurnDriver BurnDrvsnes_Megamanxsa1p = {
+	"snes_megamanxsa1p", "snes_megamanx", NULL, NULL, "2026",
+	"Mega Man X - SA-1 Plus (Hack, v1.0.1)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megamanxsa1pRomInfo, snes_Megamanxsa1pRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

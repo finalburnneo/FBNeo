@@ -24262,6 +24262,24 @@ struct BurnDriver BurnDrvsms_skbnv2 = {
 	256, 192, 4, 3
 };
 
+// SkyHaul (HB, v0.0.1)
+static struct BurnRomInfo sms_skyhaulRomDesc[] = {
+	{ "SkyHaul v0.0.1 (2026)(haroldo-ok).sms",	32768, 0x51fc7c6b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_skyhaul)
+STD_ROM_FN(sms_skyhaul)
+
+struct BurnDriver BurnDrvsms_skyhaul = {
+	"sms_skyhaul", NULL, NULL, NULL, "2026",
+	"SkyHaul (HB, v0.0.1)\0", NULL, "haroldo-ok", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_skyhaulRomInfo, sms_skyhaulRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Snake (HB, v1.04)
 static struct BurnRomInfo sms_snakeRomDesc[] = {
 	{ "Snake v1.04 (2021)(Under4Mhz).sms",	32768, 0x995f8fd2, BRF_PRG | BRF_ESS },

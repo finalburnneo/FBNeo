@@ -499,7 +499,11 @@ static INT32 cartridge_load(UINT8* ROMData, UINT32 ROMSize, UINT32 ROMCRC)
 	}
 
 	bprintf(0, _T("Cartridge RAM: %d\n"), Cart.WorkRAMSize);
-	Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
+	if (PPUType > RP2C02 && Cart.WorkRAMSize == 0x800) {
+		Cart.WorkRAM = NES_CPU_RAM + 0x800; // VS. work ram directly follows cpu ram, so frontends can expose both as one block
+	} else {
+		Cart.WorkRAM = (UINT8*)BurnMalloc(Cart.WorkRAMSize);
+	}
 	if (Cart.WorkRAMSize == 0) NESMode |= NO_WORKRAM;
 
 	if (Cart.Trainer) {
@@ -2039,15 +2043,15 @@ static void mapper105_cycle()
 
 static void mapper01_exp_write(UINT16 address, UINT8 data) // 6000 - 7fff
 {
-	if (~mapper_regs[3] & 0x10) {
-		Cart.WorkRAM[PRGExpMap + (address & 0x1fff)] = data;
+	if ((~mapper_regs[3] & 0x10) && (~NESMode & NO_WORKRAM)) {
+		Cart.WorkRAM[PRGExpMap + (address & Cart.WorkRAMMask)] = data;
 	}
 	cart_exp_write_abort = 1; // don't fall-through after callback!
 }
 
 static UINT8 mapper01_exp_read(UINT16 address)             // 6000 - 7fff
 {
-	return (~mapper_regs[3] & 0x10) ? Cart.WorkRAM[PRGExpMap + (address & 0x1fff)] : cpu_open_bus;
+	return ((~mapper_regs[3] & 0x10) && (~NESMode & NO_WORKRAM)) ? Cart.WorkRAM[PRGExpMap + (address & Cart.WorkRAMMask)] : cpu_open_bus;
 }
 
 static void mapper01_map()
@@ -7248,8 +7252,8 @@ static INT32 *mapper68_timer = (INT32*)&mapper_regs16[0];
 
 static UINT8 mapper68_exp_read(UINT16 address) // 6000-7fff
 {
-	if (mapper68_wram_en) {
-		return Cart.WorkRAM[address & 0x1fff];
+	if (mapper68_wram_en && (~NESMode & NO_WORKRAM)) {
+		return Cart.WorkRAM[address & Cart.WorkRAMMask];
 	} else {
 		return cpu_open_bus;
 	}
@@ -11918,7 +11922,7 @@ INT32 NESInit()
 
 	GenericTilesInit();
 
-	NES_CPU_RAM = (UINT8*)BurnMalloc(0x800);
+	NES_CPU_RAM = (UINT8*)BurnMalloc(0x800 + 0x800); // + VS. work ram, see cartridge_load()
 
 	cheats_active = 0;
 
@@ -12154,6 +12158,7 @@ INT32 NESExit()
 
 	BurnFree(Cart.CartOrig);
 	BurnFree(rom);
+	if (Cart.WorkRAM == NES_CPU_RAM + 0x800) Cart.WorkRAM = NULL;
 	BurnFree(NES_CPU_RAM);
 	BurnFree(Cart.WorkRAM);
 	BurnFree(Cart.CHRRam);

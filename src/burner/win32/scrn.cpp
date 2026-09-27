@@ -4313,7 +4313,11 @@ int ScrnTitle()
 
 	// Create window title
 	if (bDrvOkay) {
-		int nGetTextFlags = (nLoadMenuShowY & (1<<31)) ? DRV_ASCIIONLY : 0; // (1<<31) ASCIIONLY from sel.cpp...
+
+		int nGetTextFlags = 0;
+		if ((pDataRomDesc == NULL) && (nLoadMenuShowY & (1<<31))) { // (1<<31) ASCIIONLY from sel.cpp...
+			nGetTextFlags = DRV_ASCIIONLY;
+		}
 
 		TCHAR* pszPosition = szText;
 		TCHAR* pszName = BurnDrvGetText(DRV_FULLNAME | nGetTextFlags);

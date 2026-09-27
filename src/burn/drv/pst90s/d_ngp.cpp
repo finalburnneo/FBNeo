@@ -3328,9 +3328,9 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 // Aftermarket/Homebrew Games
 // --------------------------
 
-// 2048 (HB)
+// 2048 (HB, v10)
 static struct BurnRomInfo ngpc_2048RomDesc[] = {
-	{ "2048 (2026)(Hardhat Warrior).ngp", 41900, 0x11875a09, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "2048 v10 (2026)(Hardhat Warrior).ngp", 42198, 0xa61a2ef9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_2048, ngpc_2048, ngpc_ngp)
@@ -3338,7 +3338,7 @@ STD_ROM_FN(ngpc_2048)
 
 struct BurnDriver BurnDrvngpc_2048 = {
 	"ngp_2048", NULL, "ngp_ngp", NULL, "2026",
-	"2048 (HB)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"2048 (HB, v10)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_2048RomInfo, ngpc_2048RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3544,9 +3544,9 @@ struct BurnDriver BurnDrvngpc_bootskellm = {
 	160, 152, 4, 3
 };
 
-// Breakout (HB, v20)
+// Breakout (HB, v22)
 static struct BurnRomInfo ngpc_breakoutRomDesc[] = {
-	{ "Breakout v20 (2026)(Hardhat Warrior).ngp", 2097152, 0x43bfb42b, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Breakout v22 (2026)(Hardhat Warrior).ngp", 2097152, 0xe65ba71a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_breakout, ngpc_breakout, ngpc_ngp)
@@ -3554,7 +3554,7 @@ STD_ROM_FN(ngpc_breakout)
 
 struct BurnDriver BurnDrvngpc_breakout = {
 	"ngp_breakout", NULL, "ngp_ngp", NULL, "2026",
-	"Breakout (HB, v20)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"Breakout (HB, v22)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_BREAKOUT, 0,
 	NgpGetZipName, ngpc_breakoutRomInfo, ngpc_breakoutRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3742,9 +3742,9 @@ struct BurnDriver BurnDrvngpc_fwdizzy = {
 	160, 152, 4, 3
 };
 
-// Farkle (HB)
+// Farkle (HB, v14)
 static struct BurnRomInfo ngpc_farkleRomDesc[] = {
-	{ "Farkle (2026)(Hardhat Warrior).ngp", 48528, 0xdff56749, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Farkle v14 (2026)(Hardhat Warrior).ngp", 48550, 0x41453ddd, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_farkle, ngpc_farkle, ngpc_ngp)
@@ -3752,7 +3752,7 @@ STD_ROM_FN(ngpc_farkle)
 
 struct BurnDriver BurnDrvngpc_farkle = {
 	"ngp_farkle", NULL, "ngp_ngp", NULL, "2026",
-	"Farkle (HB)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"Farkle (HB, v14)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_BOARD, 0,
 	NgpGetZipName, ngpc_farkleRomInfo, ngpc_farkleRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -4156,9 +4156,9 @@ struct BurnDriver BurnDrvngpc_neobowling = {
 	160, 152, 4, 3
 };
 
-// Neo Yahtzee (HB, v36)
+// Neo Yahtzee (HB, v38)
 static struct BurnRomInfo ngpc_neoyahtzeeRomDesc[] = {
-	{ "Neo Yahtzee v36 (2026)(Hardhat Warrior).ngp", 53670, 0xd7456c1f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Yahtzee v38 (2026)(Hardhat Warrior).ngp", 53780, 0xaadaf0ae, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neoyahtzee, ngpc_neoyahtzee, ngpc_ngp)
@@ -4166,7 +4166,7 @@ STD_ROM_FN(ngpc_neoyahtzee)
 
 struct BurnDriver BurnDrvngpc_neoyahtzee = {
 	"ngp_neoyahtzee", NULL, "ngp_ngp", NULL, "2026",
-	"Neo Yahtzee (HB, v36)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"Neo Yahtzee (HB, v38)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_BOARD, 0,
 	NgpGetZipName, ngpc_neoyahtzeeRomInfo, ngpc_neoyahtzeeRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -4408,9 +4408,9 @@ struct BurnDriver BurnDrvngpc_spaceinv = {
 	160, 152, 4, 3
 };
 
-// Sudoku (HB, v16)
+// Sudoku (HB, v17)
 static struct BurnRomInfo ngpc_sudokuRomDesc[] = {
-	{ "Sudoku v16 (2026)(Hardhat Warrior).ngp", 41565, 0xa1fe8aba, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Sudoku v17 (2026)(Hardhat Warrior).ngp", 42717, 0x9d522c5f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_sudoku, ngpc_sudoku, ngpc_ngp)
@@ -4418,7 +4418,7 @@ STD_ROM_FN(ngpc_sudoku)
 
 struct BurnDriver BurnDrvngpc_sudoku = {
 	"ngp_sudoku", NULL, "ngp_ngp", NULL, "2026",
-	"Sudoku (HB, v16)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"Sudoku (HB, v17)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_sudokuRomInfo, ngpc_sudokuRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -4462,9 +4462,9 @@ struct BurnDriver BurnDrvngpc_swordworkm = {
 	160, 152, 4, 3
 };
 
-// Tetris (HB, v44)
+// Tetris (HB, v55)
 static struct BurnRomInfo ngpc_tetrisRomDesc[] = {
-	{ "Tetris v44 (2026)(Hardhat Warrior).ngp", 44036, 0x85971788, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Tetris v55 (2026)(Hardhat Warrior).ngp", 43552, 0x7c0eae1d, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_tetris, ngpc_tetris, ngpc_ngp)
@@ -4472,7 +4472,7 @@ STD_ROM_FN(ngpc_tetris)
 
 struct BurnDriver BurnDrvngpc_tetris = {
 	"ngp_tetris", NULL, "ngp_ngp", NULL, "2026",
-	"Tetris (HB, v44)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"Tetris (HB, v55)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_tetrisRomInfo, ngpc_tetrisRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,

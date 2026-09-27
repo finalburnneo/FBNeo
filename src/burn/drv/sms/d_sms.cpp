@@ -22080,6 +22080,24 @@ struct BurnDriver BurnDrvsms_brucelee = {
 	256, 192, 4, 3
 };
 
+// Bubble Fight (HB, v1.1.0)
+static struct BurnRomInfo sms_bubblefightRomDesc[] = {
+	{ "Bubble Fight v1.1.0 (2026)(SiRioHD).sms",	262144, 0xd07abe60, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_bubblefight)
+STD_ROM_FN(sms_bubblefight)
+
+struct BurnDriver BurnDrvsms_bubblefight = {
+	"sms_bubblefight", NULL, NULL, NULL, "2026",
+	"Bubble Fight (HB, v1.1.0)\0", "YM2413 FM sound chip supported", "SiRioHD", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_bubblefightRomInfo, sms_bubblefightRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Cacorm (HB)
 static struct BurnRomInfo sms_cacormRomDesc[] = {
 	{ "Cacorm (2022)(Inufuto).sms",	12593, 0x78a26f50, BRF_PRG | BRF_ESS },
@@ -22458,9 +22476,9 @@ struct BurnDriver BurnDrvsms_evil = {
 	256, 192, 4, 3
 };
 
-// Flashback (HB, v0.0.4)
+// Flashback (HB, v0.0.5)
 static struct BurnRomInfo sms_flashbackRomDesc[] = {
-	{ "Flashback v0.0.4 (2026)(haroldo-ok).sms",	4194304, 0xe65f94ee, BRF_PRG | BRF_ESS },
+	{ "Flashback v0.0.5 (2026)(haroldo-ok).sms",	4194304, 0x9cb9e457, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_flashback)
@@ -22468,7 +22486,7 @@ STD_ROM_FN(sms_flashback)
 
 struct BurnDriver BurnDrvsms_flashback = {
 	"sms_flashback", NULL, NULL, NULL, "2026",
-	"Flashback (HB, v0.0.4)\0", NULL, "haroldo-ok", "Sega Master System",
+	"Flashback (HB, v0.0.5)\0", NULL, "haroldo-ok", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ADV | GBF_PLATFORM, 0,
 	SMSGetZipName, sms_flashbackRomInfo, sms_flashbackRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -22638,6 +22656,24 @@ struct BurnDriver BurnDrvsms_gemitas = {
 	256, 224, 4, 3
 };
 
+// Get Blue Spheres! (HB)
+static struct BurnRomInfo sms_getbluesphRomDesc[] = {
+	{ "Get Blue Spheres! (2026)(GuyDeNaville).sms",	262144, 0xc9d82c04, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_getbluesph)
+STD_ROM_FN(sms_getbluesph)
+
+struct BurnDriver BurnDrvsms_getbluesph = {
+	"sms_getbluesph", NULL, NULL, NULL, "2026",
+	"Get Blue Spheres! (HB)\0", "YM2413 FM sound chip supported", "GuyDeNaville", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_RACING, 0,
+	SMSGetZipName, sms_getbluesphRomInfo, sms_getbluesphRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // GLUF Tesla Frog (HB, v1.2)
 static struct BurnRomInfo sms_glufRomDesc[] = {
 	{ "GLUF Tesla Frog v1.2 (2026)(Tony & Co.).sms",	131072, 0xfbda1873, BRF_PRG | BRF_ESS },
@@ -22784,7 +22820,7 @@ struct BurnDriver BurnDrvsms_gotris = {
 
 // Grail of the Gods (HB, v0.99)
 static struct BurnRomInfo sms_grailgodsRomDesc[] = {
-	{ "Grail of the Gods v0.99 (2023-25)(Guydebaville).sms",	131072, 0xfb3a8ab3, BRF_PRG | BRF_ESS },
+	{ "Grail of the Gods v0.99 (2023-25)(GuyDeNaville).sms",	131072, 0xfb3a8ab3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_grailgods)
@@ -22792,7 +22828,7 @@ STD_ROM_FN(sms_grailgods)
 
 struct BurnDriver BurnDrvsms_grailgods = {
 	"sms_grailgods", NULL, NULL, NULL, "2023-25",
-	"Grail of the Gods (HB, v0.99)\0", NULL, "Guydebaville", "Sega Master System",
+	"Grail of the Gods (HB, v0.99)\0", NULL, "GuyDeNaville", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_STRATEGY, 0,
 	SMSGetZipName, sms_grailgodsRomInfo, sms_grailgodsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

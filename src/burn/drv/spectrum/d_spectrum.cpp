@@ -24669,19 +24669,19 @@ struct BurnDriver BurnSpecRobotriot = {
 
 // Robotron: 2084 (48K)
 
-static struct BurnRomInfo SpecRobo2048RomDesc[] = {
+static struct BurnRomInfo SpecRobo2084RomDesc[] = {
 	{ "Robotron - 2084 48K (1984)(Atarisoft).tap", 47360, 0x73c07f91, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecRobo2048, SpecRobo2048, Spectrum)
-STD_ROM_FN(SpecRobo2048)
+STDROMPICKEXT(SpecRobo2084, SpecRobo2084, Spectrum)
+STD_ROM_FN(SpecRobo2084)
 
-struct BurnDriver BurnSpecRobo2048 = {
-	"spec_robo2048", NULL, "spec_spectrum", NULL, "1984",
+struct BurnDriver BurnSpecRobo2084 = {
+	"spec_robo2084", NULL, "spec_spectrum", NULL, "1984",
 	"Robotron: 2084 (48K)\0", NULL, "Atarisoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
-	SpectrumGetZipName, SpecRobo2048RomInfo, SpecRobo2048RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecRobo2084RomInfo, SpecRobo2084RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

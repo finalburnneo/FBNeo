@@ -2039,15 +2039,15 @@ static void mapper105_cycle()
 
 static void mapper01_exp_write(UINT16 address, UINT8 data) // 6000 - 7fff
 {
-	if (~mapper_regs[3] & 0x10) {
-		Cart.WorkRAM[PRGExpMap + (address & 0x1fff)] = data;
+	if ((~mapper_regs[3] & 0x10) && (~NESMode & NO_WORKRAM)) {
+		Cart.WorkRAM[PRGExpMap + (address & Cart.WorkRAMMask)] = data;
 	}
 	cart_exp_write_abort = 1; // don't fall-through after callback!
 }
 
 static UINT8 mapper01_exp_read(UINT16 address)             // 6000 - 7fff
 {
-	return (~mapper_regs[3] & 0x10) ? Cart.WorkRAM[PRGExpMap + (address & 0x1fff)] : cpu_open_bus;
+	return ((~mapper_regs[3] & 0x10) && (~NESMode & NO_WORKRAM)) ? Cart.WorkRAM[PRGExpMap + (address & Cart.WorkRAMMask)] : cpu_open_bus;
 }
 
 static void mapper01_map()
@@ -7248,8 +7248,8 @@ static INT32 *mapper68_timer = (INT32*)&mapper_regs16[0];
 
 static UINT8 mapper68_exp_read(UINT16 address) // 6000-7fff
 {
-	if (mapper68_wram_en) {
-		return Cart.WorkRAM[address & 0x1fff];
+	if (mapper68_wram_en && (~NESMode & NO_WORKRAM)) {
+		return Cart.WorkRAM[address & Cart.WorkRAMMask];
 	} else {
 		return cpu_open_bus;
 	}

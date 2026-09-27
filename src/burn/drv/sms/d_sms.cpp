@@ -23425,8 +23425,26 @@ struct BurnDriver BurnDrvsms_mbarbarricade = {
 	"sms_mbarbarricade", NULL, NULL, NULL, "2026",
 	"Master Barbarricade (HB, 06-25-26)\0", NULL, "Jess Creations - ArugulaZ", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_MSX, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_BREAKOUT, 0,
 	SMSGetZipName, sms_mbarbarricadeRomInfo, sms_mbarbarricadeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Master Tennis (HB)
+static struct BurnRomInfo sms_mtennisRomDesc[] = {
+	{ "Master Tennis (2026)(Oldschool Is Beautiful).sms",	65536, 0x03afc794, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_mtennis)
+STD_ROM_FN(sms_mtennis)
+
+struct BurnDriver BurnDrvsms_mtennis = {
+	"sms_mtennis", NULL, NULL, NULL, "2026",
+	"Master Tennis (HB)\0", NULL, "Oldschool Is Beautiful", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
+	SMSGetZipName, sms_mtennisRomInfo, sms_mtennisRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

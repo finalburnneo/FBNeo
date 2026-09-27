@@ -60,6 +60,7 @@ extern "C" {
 #endif
 
 #define Z_BZIP2ED 12
+#define Z_ZSTD 93
 
 #if defined(STRICTUNZIP) || defined(STRICTZIPUNZIP)
 /* like the STRICT of WIN32, we define a pointer that cannot be converted

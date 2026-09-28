@@ -99,13 +99,8 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget
+          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget perl
           msystem: MINGW64
-
-      - name: Install perl
-        # 20260927: MSYS2 dropped perl from its base install:
-        # https://github.com/actions/runner-images/issues/14562
-        run: pacman --sync --refresh --needed --noconfirm perl
 
       - name: Clone
         uses: actions/checkout@v4
@@ -147,14 +142,9 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget
+          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget perl
           msystem: MINGW64
 
-      - name: Install perl
-        # 20260927: MSYS2 dropped perl from its base install:
-        # https://github.com/actions/runner-images/issues/14562
-        run: pacman --sync --refresh --needed --noconfirm perl
-        
       - name: Clone
         uses: actions/checkout@v4
 
@@ -196,13 +186,8 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget perl
           msystem: MINGW32
-
-      - name: Install perl
-        # 20260927: MSYS2 dropped perl from its base install:
-        # https://github.com/actions/runner-images/issues/14562
-        run: pacman --sync --refresh --needed --noconfirm perl
 
       - name: Clone
         uses: actions/checkout@v4
@@ -245,14 +230,9 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget
+          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain mingw-w64-i686-nasm zip wget perl
           msystem: MINGW32
 
-      - name: Install perl
-        # 20260927: MSYS2 dropped perl from its base install:
-        # https://github.com/actions/runner-images/issues/14562
-        run: pacman --sync --refresh --needed --noconfirm perl
-        
       - name: Clone
         uses: actions/checkout@v4
 

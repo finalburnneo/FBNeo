@@ -3328,9 +3328,9 @@ struct BurnDriverX BurnDrvngpc_ppaa01 = {
 // Aftermarket/Homebrew Games
 // --------------------------
 
-// 2048 (HB, v10)
+// 2048 (HB, v11)
 static struct BurnRomInfo ngpc_2048RomDesc[] = {
-	{ "2048 v10 (2026)(Hardhat Warrior).ngp", 42198, 0xa61a2ef9, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "2048 v11 (2026)(Hardhat Warrior).ngp", 42282, 0x336e0d6f, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_2048, ngpc_2048, ngpc_ngp)
@@ -3338,7 +3338,7 @@ STD_ROM_FN(ngpc_2048)
 
 struct BurnDriver BurnDrvngpc_2048 = {
 	"ngp_2048", NULL, "ngp_ngp", NULL, "2026",
-	"2048 (HB, v10)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
+	"2048 (HB, v11)\0", NULL, "Hardhat Warrior", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_2048RomInfo, ngpc_2048RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -3774,6 +3774,24 @@ struct BurnDriver BurnDrvngpc_fruitypalsr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PUZZLE, 0,
 	NgpGetZipName, ngpc_fruitypalsrRomInfo, ngpc_fruitypalsrRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Furry (HB)
+static struct BurnRomInfo ngpc_furryRomDesc[] = {
+	{ "Furry (2026)(Napomex).ngp", 2097152, 0xb12c2762, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_furry, ngpc_furry, ngpc_ngp)
+STD_ROM_FN(ngpc_furry)
+
+struct BurnDriver BurnDrvngpc_furry = {
+	"ngp_furry", NULL, "ngp_ngp", NULL, "2026",
+	"Furry (HB)\0", NULL, "Napomex", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NgpGetZipName, ngpc_furryRomInfo, ngpc_furryRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };

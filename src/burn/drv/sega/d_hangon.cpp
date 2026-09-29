@@ -1459,7 +1459,7 @@ static UINT16 __fastcall SharrierReadWord(UINT32 a)
 {
 	if (a >= 0x40000 && a <= 0x43fff) {
 		if (dontrecurse == 0) sys16_sync_mcu();
-		return *(UINT16*)(System16Ram + (a & 0x3fff));
+		return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(System16Ram + (a & 0x3fff)));
 	}
 
 	switch (a) {
@@ -1593,7 +1593,7 @@ static void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
 			bprintf(0, _T("[68k.b] frame: %d / cyc: %d  -  addr  %x   data %x\n"), nCurrentFrame, SekTotalCycles(), a, d);
 		}
 #endif
-		*(UINT16*)(System16Ram + (a & 0x3fff)) = d;
+		*(UINT16*)(System16Ram + (a & 0x3fff)) = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 

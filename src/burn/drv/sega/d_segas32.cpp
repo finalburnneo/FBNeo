@@ -2812,13 +2812,13 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 		 *   +100 = min X
 		 *   +300 = max X
 		 */
-		if (BIT(m_videoram[0x1ff04 / 2], 4) || BIT(m_videoram[0x1ff04 / 2], 5))
+		if (BIT(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04 / 2]), 4) || BIT(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04 / 2]), 5))
 		{
 			clip_struct lineclips[5];
 			int linesorted[5];
 		   // const clip_struct &visarea = screen.visible_area();
 			int line = flip ? cliprect.nMaxy - y : y;
-			UINT16 *table = &m_videoram[(m_videoram[0x1ff04/2] >> 10) * 0x400];
+			UINT16 *table = &m_videoram[(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04/2]) >> 10) * 0x400];
 
 			for (int i = 0; i < 5; i++)
 			{
@@ -2827,10 +2827,10 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 			}
 
 			// clip window 2
-			if (BIT(m_videoram[0x1ff04 / 2], 4) && BIT(clipmask, 2))
+			if (BIT(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04 / 2]), 4) && BIT(clipmask, 2))
 			{
-				UINT16 minx = table[0x000 + line];
-				UINT16 maxx = table[0x200 + line];
+				UINT16 minx = BURN_ENDIAN_SWAP_INT16(table[0x000 + line]);
+				UINT16 maxx = BURN_ENDIAN_SWAP_INT16(table[0x200 + line]);
 
 				if (minx == 0xffff || maxx == 0xffff)
 				{
@@ -2854,10 +2854,10 @@ static INT32 compute_clipping_extents(INT32 enable, INT32 clipout, INT32 clipmas
 			}
 
 			// clip window 3
-			if (BIT(m_videoram[0x1ff04 / 2], 5) && BIT(clipmask, 3))
+			if (BIT(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff04 / 2]), 5) && BIT(clipmask, 3))
 			{
-				UINT16 minx = table[0x100 + line];
-				UINT16 maxx = table[0x300 + line];
+				UINT16 minx = BURN_ENDIAN_SWAP_INT16(table[0x100 + line]);
+				UINT16 maxx = BURN_ENDIAN_SWAP_INT16(table[0x300 + line]);
 
 				if (minx == 0xffff || maxx == 0xffff)
 				{
@@ -3148,7 +3148,7 @@ static void update_tilemap_rowscroll(clip_struct cliprect, UINT16 *m_videoram, I
 		}
 	}
 
-	INT32 opaque = (opaquey_hack) ? ((m_videoram[0x1ff8e/2] >> (8 + bgnum)) & 1) : 0;
+	INT32 opaque = (opaquey_hack) ? ((BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff8e/2]) >> (8 + bgnum)) & 1) : 0;
 	INT32 flipx, flipy;
 
 	compute_tilemap_flips(bgnum, flipx, flipy);
@@ -3410,7 +3410,7 @@ static void update_background(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 	UINT16 *m_videoram = (UINT16*)DrvVidRAM;
 
 	// determine if we're flipped
-	bool flip = BIT(m_videoram[0x1ff00 / 2], 9);
+	bool flip = BIT(BURN_ENDIAN_SWAP_INT16(m_videoram[0x1ff00 / 2]), 9);
 
 	for (INT32 y = cliprect.nMiny; y <= cliprect.nMaxy; y++)
 	{
@@ -3480,7 +3480,7 @@ static void update_bitmap(clip_struct cliprect, UINT16 *ram, INT32 destbmp)
 						for (INT32 x = extents[0]; x < extents[1]; x++)
 						{
 							INT32 effx = (x + xscroll) & 0x1ff;
-							INT32 pix = BURN_ENDIAN_SWAP_INT16(src[(effx)]) + color;
+							INT32 pix = src[effx] + color;
 							if ((pix & 0xff) == 0)
 								pix = 0, transparent++;
 							dst[x] = BURN_ENDIAN_SWAP_INT16(pix);
@@ -6132,7 +6132,7 @@ static void brival_protection_write(UINT32 offset, UINT32 data, UINT32 mask)
 	UINT8 *ROM = DrvV60ROM;
 	UINT16 *protram = (UINT16*)DrvV25RAM;
 
-	protram[offset] = (protram[offset] & ~mask) | (data & mask);
+	protram[offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(protram[offset]) & ~mask) | (data & mask));
 
 	switch (offset)
 	{

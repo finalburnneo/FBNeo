@@ -318,7 +318,9 @@ static UINT32 __fastcall speedhack_read_long(UINT32 offset)
 		Sh3BurnCycles(speedhack_burn);
 	}
 	UINT32 V = *((UINT32 *)(DrvMainRAM + (offset & 0xfffffc)));
+#ifdef LSB_FIRST
 	V = (V << 16) | (V >> 16);
+#endif
 	return V;
 }
 
@@ -345,7 +347,10 @@ static UINT8 __fastcall speedhack_read_byte(UINT32 offset)
 		Sh3BurnCycles(speedhack_burn);
 	}
 #endif
-	return DrvMainRAM[(offset & 0xffffff) ^ 1];
+#ifdef LSB_FIRST
+	offset ^= 1;
+#endif
+	return DrvMainRAM[offset & 0xffffff];
 }
 
 static void speedhack_set(UINT32 ram, UINT32 pc)
@@ -416,6 +421,10 @@ static INT32 DrvLoadRoms()
 	if (BurnLoadRom(DrvMainROM,  0, 1)) return 1;
 	if (ri.nLen == 0x200000) memcpy (DrvMainROM + 0x200000, DrvMainROM, 0x200000);
 	//if (ri.nLen >= 0x400000) type_d = 1;
+#ifndef LSB_FIRST
+	// u4 is stored as little-endian 16-bit words; the SH-3 core wants native (big-endian) layout here
+	BurnByteswap(DrvMainROM, 0x400000);
+#endif
 
 	if (BurnLoadRom(DrvFlashROM, 1, 1)) return 1;
 

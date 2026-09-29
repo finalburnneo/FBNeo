@@ -84,7 +84,7 @@ typedef void (*dma_draw_func)(void);
 
 
 /*** fast pixel extractors ***/
-#ifndef __LIBRETRO__
+#if defined(LSB_FIRST) && !defined(__LIBRETRO__)
 #define EXTRACTGEN(m)   ((*(UINT16 *)&base[o >> 3] >> (o & 7)) & (m))
 #else
 #define EXTRACTGEN(m)   (((base[o >> 3] | (base[(o >> 3) + 1] << 8)) >> (o & 7)) & (m))

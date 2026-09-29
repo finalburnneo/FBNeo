@@ -16745,11 +16745,30 @@ STD_ROM_PICK(snes_Gsmikami)
 STD_ROM_FN(snes_Gsmikami)
 
 struct BurnDriver BurnDrvsnes_Gsmikami = {
-	"snes_gsmikami", NULL, NULL, NULL, "1993",
+	"snes_gsmikami", "snes_gsmikamite", NULL, NULL, "1993",
 	"Ghost Sweeper Mikami: Joreishi wa Nice Body (Japan)\0", NULL, "Banalex", "SNES / Super Famicom",
 	L"Ghost Sweeper Mikami: Joreishi wa Nice Body (Japan)\0GS\u7f8e\u795e \u9664\u970a\u5e2b\u306f\u30ca\u30a4\u30b9\u30d0\u30c7\u30a3\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_GsmikamiRomInfo, snes_GsmikamiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Ghost Sweeper Mikami: The Exorcist with a Nice Body (Hack, English)
+// https://www.romhacking.net/translations/7764/
+static struct BurnRomInfo snes_GsmikamiteRomDesc[] = {
+	{ "Ghost Sweeper Mikami - The Exorcist with a Nice Body T-Eng (2026)(Pizzano).sfc", 1048576, 0xa381ca79, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Gsmikamite)
+STD_ROM_FN(snes_Gsmikamite)
+
+struct BurnDriver BurnDrvsnes_Gsmikamite = {
+	"snes_gsmikamite", NULL, NULL, NULL, "2026",
+	"Ghost Sweeper Mikami: The Exorcist with a Nice Body (Hack, English)\0", NULL, "Pizzano", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_GsmikamiteRomInfo, snes_GsmikamiteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

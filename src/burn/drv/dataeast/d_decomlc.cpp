@@ -112,9 +112,9 @@ static inline void palette_write(INT32 offset)
 
 	UINT32 *p = (UINT32*)DrvPalRAM;
 
-	UINT8 b = (p[offset] >> 10) & 0x1f;
-	UINT8 g = (p[offset] >>  5) & 0x1f;
-	UINT8 r = (p[offset] >>  0) & 0x1f;
+	UINT8 b = ((use_sh2 ? p[offset] : BURN_ENDIAN_SWAP_INT32(p[offset])) >> 10) & 0x1f;
+	UINT8 g = ((use_sh2 ? p[offset] : BURN_ENDIAN_SWAP_INT32(p[offset])) >>  5) & 0x1f;
+	UINT8 r = ((use_sh2 ? p[offset] : BURN_ENDIAN_SWAP_INT32(p[offset])) >>  0) & 0x1f;
 
 	r = (r << 3) | (r >> 2);
 	g = (g << 3) | (g >> 2);
@@ -157,19 +157,31 @@ static void decomlc_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xff8000) == 0x300000) {
+#ifdef LSB_FIRST
 		DrvPalRAM[address & 0x7fff] = data;
+#else
+		DrvPalRAM[(address & 0x7fff) ^ (use_sh2 ? 3 : 0)] = data;
+#endif
 		palette_write(address);
 		return;
 	}
 
 	if ((address & 0xffff80) == 0x200000) {
+#ifdef LSB_FIRST
 		DrvIRQRAM[address & 0x7f] = data;
+#else
+		DrvIRQRAM[(address & 0x7f) ^ 3] = data;
+#endif
 		mlc_irq_write(address);
 		return;
 	}
 
 	if ((address & 0xffff80) == 0x200080) {
+#ifdef LSB_FIRST
 		DrvClipRAM[address & 0x7f] = data;
+#else
+		DrvClipRAM[(address & 0x7f) ^ 3] = data;
+#endif
 		return;
 	}
 
@@ -219,7 +231,7 @@ static void decomlc_write_long(UINT32 address, UINT32 data)
 	}
 
 	if ((address & 0xff8000) == 0x300000) {
-		*((UINT32*)(DrvPalRAM + (address & 0x7ffc))) = data;
+		*((UINT32*)(DrvPalRAM + (address & 0x7ffc))) = use_sh2 ? data : BURN_ENDIAN_SWAP_INT32(data);
 		palette_write(address);
 		return;
 	}
@@ -268,7 +280,11 @@ static void decomlc_write_long(UINT32 address, UINT32 data)
 static UINT8 decomlc_read_byte(UINT32 address)
 {
 	if ((address & 0xffff80) == 0x200080) {
+#ifdef LSB_FIRST
 		return DrvClipRAM[address & 0x7f];
+#else
+		return DrvClipRAM[(address & 0x7f) ^ 3];
+#endif
 	}
 
 	Read16Byte(DrvSprRAM, 0x204000, 0x206fff)
@@ -632,6 +648,10 @@ static INT32 CommonArmInit(INT32 game)
 				if (BurnLoadRomExt(DrvPrgROM + 0x000000, 0, 4, LD_GROUP(2))) return 1;
 				if (BurnLoadRomExt(DrvPrgROM + 0x000002, 1, 4, LD_GROUP(2))) return 1;
 
+				for (INT32 i = 0; i < 0x100000 / 4; i++) {
+					((UINT32*)DrvPrgROM)[i] = BURN_ENDIAN_SWAP_INT32(((UINT32*)DrvPrgROM)[i]);
+				}
+
 				DrvGfxROM0 = (UINT8*)BurnMalloc(((0x1800000/4)*8));
 
 				memset (DrvGfxROM0, 0, ((0x1800000/4)*8));
@@ -852,39 +872,39 @@ static void draw_sprites(INT32 scanline)
 
 	for (offs = 0; offs < (0x3000 / 4); offs += 8)
 	{
-		use8bppMode = (offs + 8 < (0x3000 / 4)) && (mlc_spriteram[offs + 8 + 1] & 0x1000) && (mlc_spriteram[offs + 8 + 0] & 0x8000);
+		use8bppMode = (offs + 8 < (0x3000 / 4)) && (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs + 8 + 1]) & 0x1000) && (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs + 8 + 0]) & 0x8000);
 		if (use8bppMode)
 			offs += 8;
 
-		if ((mlc_spriteram[offs+0]&0x8000)==0)
+		if ((BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+0])&0x8000)==0)
 			continue;
-		if ((mlc_spriteram[offs+1]&0x2000) && (nCurrentFrame & 1))
+		if ((BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])&0x2000) && (nCurrentFrame & 1))
 			continue;
 
-		y = mlc_spriteram[offs+2]&0x7ff;
-		x = mlc_spriteram[offs+3]&0x7ff;
+		y = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+2])&0x7ff;
+		x = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+3])&0x7ff;
 
 		if (x&0x400) x=-(0x400-(x&0x3ff));
 		if (y&0x400) y=-(0x400-(y&0x3ff));
 
-		fx = mlc_spriteram[offs+1]&0x8000;
-		fy = mlc_spriteram[offs+1]&0x4000;
-		color = mlc_spriteram[offs+1]&0xff;
+		fx = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])&0x8000;
+		fy = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])&0x4000;
+		color = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])&0xff;
 
-		INT32 raster_select = (mlc_spriteram[offs+1]&0x0180)>>7;
+		INT32 raster_select = (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])&0x0180)>>7;
 
-		rasterMode = (mlc_spriteram[offs+1]>>10)&0x1;
+		rasterMode = (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])>>10)&0x1;
 
-		clipper = (mlc_spriteram[offs+1]>>8)&0x3;
+		clipper = (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])>>8)&0x3;
 
-		indx = mlc_spriteram[offs+0]&0x3fff;
-		yscale = mlc_spriteram[offs+4]&0x3ff;
-		xscale = mlc_spriteram[offs+5]&0x3ff;
+		indx = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+0])&0x3fff;
+		yscale = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+4])&0x3ff;
+		xscale = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+5])&0x3ff;
 		colorOffset = 0;
 
 		clipper=((clipper&2)>>1)|((clipper&1)<<1); // Swap low two bits
 
-		INT32 upperclip = (mlc_spriteram[offs+1]>>10)&0x2;
+		INT32 upperclip = (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+1])>>10)&0x2;
 
 		if (upperclip)
 			clipper |= 0x4;
@@ -902,11 +922,11 @@ static void draw_sprites(INT32 scanline)
 		color&=sprite_color_mask;
 
 		if (use8bppMode) {
-			color = (mlc_spriteram[offs + 1 - 8] & 0x7f);
+			color = (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs + 1 - 8]) & 0x7f);
 		}
 
 		// Lookup tiles/size in sprite index ram OR in the lookup rom
-		if (mlc_spriteram[offs+0]&0x4000) {
+		if (BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs+0])&0x4000) {
 			index_ptr8=rom + indx*8; // Byte ptr
 
 			if (index_ptr8[5] & 0x01 && nCurrentFrame & 1)
@@ -939,36 +959,36 @@ static void draw_sprites(INT32 scanline)
 			indx&=0x1fff;
 			index_ptr=m_mlc_vram + indx*4;
 
-			if (index_ptr[2] & 0x0100 && nCurrentFrame & 1)
+			if ((use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2])) & 0x0100 && nCurrentFrame & 1)
 				continue;
 
-			h=(index_ptr[0]>>8)&0xf;
-			w=(index_ptr[1]>>8)&0xf;
+			h=((use_sh2 ? index_ptr[0] : BURN_ENDIAN_SWAP_INT32(index_ptr[0]))>>8)&0xf;
+			w=((use_sh2 ? index_ptr[1] : BURN_ENDIAN_SWAP_INT32(index_ptr[1]))>>8)&0xf;
 
 			if (!h) h=16;
 			if (!w) w=16;
 
-			sprite = ((index_ptr[2]&0x3)<<16) | (index_ptr[3]&0xffff);
-			if (index_ptr[2]&0xc0)
+			sprite = (((use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2]))&0x3)<<16) | ((use_sh2 ? index_ptr[3] : BURN_ENDIAN_SWAP_INT32(index_ptr[3]))&0xffff);
+			if ((use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2]))&0xc0)
 				blockIsTilemapIndex=1;
 			else
 				blockIsTilemapIndex=0;
 
-			tileFormat=index_ptr[2]&0x80;
+			tileFormat=(use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2]))&0x80;
 
-			hibits=(index_ptr[2]&0x3c)<<10;
-			useIndicesInRom=index_ptr[2]&3;
+			hibits=((use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2]))&0x3c)<<10;
+			useIndicesInRom=(use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2]))&3;
 
-			yoffs=index_ptr[0]&0xff;
-			xoffs=index_ptr[1]&0xff;
+			yoffs=(use_sh2 ? index_ptr[0] : BURN_ENDIAN_SWAP_INT32(index_ptr[0]))&0xff;
+			xoffs=(use_sh2 ? index_ptr[1] : BURN_ENDIAN_SWAP_INT32(index_ptr[1]))&0xff;
 
-			fy1=(index_ptr[0]&0x1000)>>12;
-			fx1=(index_ptr[1]&0x1000)>>12;
+			fy1=((use_sh2 ? index_ptr[0] : BURN_ENDIAN_SWAP_INT32(index_ptr[0]))&0x1000)>>12;
+			fx1=((use_sh2 ? index_ptr[1] : BURN_ENDIAN_SWAP_INT32(index_ptr[1]))&0x1000)>>12;
 		}
 
 		if (use8bppMode)
 		{
-			indx = mlc_spriteram[offs + 0 - 8] & 0x7fff;
+			indx = BURN_ENDIAN_SWAP_INT16(mlc_spriteram[offs + 0 - 8]) & 0x7fff;
 			if (indx & 0x4000)
 			{
 				index_ptr8 = rom + indx * 8;
@@ -978,7 +998,7 @@ static void draw_sprites(INT32 scanline)
 			{
 				indx &= 0x1fff;
 				index_ptr = m_mlc_vram + indx * 4;
-				sprite2 = ((index_ptr[2] & 0x3) << 16) | (index_ptr[3] & 0xffff);
+				sprite2 = (((use_sh2 ? index_ptr[2] : BURN_ENDIAN_SWAP_INT32(index_ptr[2])) & 0x3) << 16) | ((use_sh2 ? index_ptr[3] : BURN_ENDIAN_SWAP_INT32(index_ptr[3])) & 0xffff);
 			}
 		}
 
@@ -1114,7 +1134,7 @@ static void draw_sprites(INT32 scanline)
 				else
 				{
 					const UINT32 * ptr=m_mlc_vram + ((tile)&0x7fff);
-					tile=(*ptr)&0xffff;
+					tile=(use_sh2 ? *ptr : BURN_ENDIAN_SWAP_INT32(*ptr))&0xffff;
 
 					if (tileFormat)
 					{

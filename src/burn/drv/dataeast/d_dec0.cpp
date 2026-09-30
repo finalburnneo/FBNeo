@@ -2421,11 +2421,10 @@ static void deco_bac06_pf_control_0_w(INT32 Layer, UINT16 *Control0, INT32 Offse
 {
 	Offset &= 0x03;
 	
-	Control0[Offset] &= Mask;
-	Control0[Offset] += Data;
+	Control0[Offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(Control0[Offset]) & Mask) + Data);
 
 	if (Offset == 2) {
-		DrvTileRamBank[Layer] = Control0[Offset] & 0x01;
+		DrvTileRamBank[Layer] = BURN_ENDIAN_SWAP_INT16(Control0[Offset]) & 0x01;
 	}
 }
 
@@ -2433,23 +2432,21 @@ static void deco_bac06_pf_control_1_w(UINT16 *Control1, INT32 Offset, UINT16 Dat
 {
 	Offset &= 0x07;
 	
-	Control1[Offset] &= Mask;
-	Control1[Offset] += Data;
+	Control1[Offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(Control1[Offset]) & Mask) + Data);
 }
 
 static UINT16 deco_bac06_pf_data_r(INT32 Layer, UINT16 *RAM, INT32 Offset, UINT16 Mask)
 {
 	if (DrvTileRamBank[Layer] & 0x01) Offset += 0x1000;
 
-	return RAM[Offset] & Mask;
+	return BURN_ENDIAN_SWAP_INT16(RAM[Offset]) & Mask;
 }
 
 static void deco_bac06_pf_data_w(INT32 Layer, UINT16 *RAM, INT32 Offset, UINT16 Data, UINT16 Mask)
 {
 	if (DrvTileRamBank[Layer] & 0x01) Offset += 0x1000;
 	
-	RAM[Offset] &= Mask;
-	RAM[Offset] += Data;
+	RAM[Offset] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(RAM[Offset]) & Mask) + Data);
 }
 
 // Rotation-handler code
@@ -3294,7 +3291,7 @@ static UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 			case 0x06: return 0x02;
 			case 0x0c: {
 				UINT16 *mem = (UINT16*)Drv68KRam;
-				return mem[0x2028/2] >> 8;
+				return BURN_ENDIAN_SWAP_INT16(mem[0x2028/2]) >> 8;
 			}
 		}
 		
@@ -3390,7 +3387,7 @@ static UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
 			case 0x06: return 0x02;
 			case 0x0c: {
 				UINT16 *mem = (UINT16*)Drv68KRam;
-				return mem[0x2028/2] >> 8;
+				return BURN_ENDIAN_SWAP_INT16(mem[0x2028/2]) >> 8;
 			}
 		}
 		
@@ -3444,7 +3441,7 @@ static void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
 		case 0x300004:
 		case 0x300006: {		
 			UINT16 *Control0 = (UINT16*)DrvVideo2Ctrl0Ram;
-			Control0[(a - 0x300000) >> 1] = d;
+			Control0[(a - 0x300000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			if (a == 0x300004) {
 				DrvTileRamBank[2] = d & 0x01;
 				if (DrvTileRamBank[2]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 2\n"));
@@ -3457,7 +3454,7 @@ static void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
 		case 0x300014:
 		case 0x300016: {		
 			UINT16 *Control1 = (UINT16*)DrvVideo2Ctrl1Ram;
-			Control1[(a - 0x300010) >> 1] = d;
+			Control1[(a - 0x300010) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -3551,7 +3548,7 @@ static void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
 		case 0x240004:
 		case 0x240006: {		
 			UINT16 *Control0 = (UINT16*)DrvVideo1Ctrl0Ram;
-			Control0[(a - 0x240000) >> 1] = d;
+			Control0[(a - 0x240000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			if (a == 0x240004) {
 				DrvTileRamBank[1] = d & 0x01;
 				if (DrvTileRamBank[1]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 1\n"));
@@ -3564,7 +3561,7 @@ static void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
 		case 0x240014:
 		case 0x240016: {		
 			UINT16 *Control1 = (UINT16*)DrvVideo1Ctrl1Ram;
-			Control1[(a - 0x240010) >> 1] = d;
+			Control1[(a - 0x240010) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -3578,7 +3575,7 @@ static void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
 		case 0x248004:
 		case 0x248006: {		
 			UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
-			Control0[(a - 0x248000) >> 1] = d;
+			Control0[(a - 0x248000) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			if (a == 0x248004) {
 				DrvTileRamBank[0] = d & 0x01;
 				if (DrvTileRamBank[0]) bprintf(PRINT_IMPORTANT, _T("68K Set Tile RAM Bank 0\n"));
@@ -3591,7 +3588,7 @@ static void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
 		case 0x248014:
 		case 0x248016: {
 			UINT16 *Control1 = (UINT16*)DrvCharCtrl1Ram;
-			Control1[(a - 0x248010) >> 1] = d;
+			Control1[(a - 0x248010) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		

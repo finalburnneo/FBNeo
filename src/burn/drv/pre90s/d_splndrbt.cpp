@@ -316,7 +316,7 @@ static tilemap_callback( fg )
 
 static tilemap_callback( bg )
 {
-	UINT16 attr = *((UINT16*)(DrvBgRAM + (offs * 2)));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM + (offs * 2))));
 	const UINT16 color = attr >> 11;
 
 	TILE_SET_INFO(1, attr, color, TILE_FLIPXY(attr >> 9));
@@ -571,18 +571,18 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x3f; offs < 0x6f; offs += 2)
 	{
-		INT32 data = ram[0][offs];
+		INT32 data = BURN_ENDIAN_SWAP_INT16(ram[0][offs]);
 		INT32 tile = data & 0x007f;
 		INT32 fx = (data & 0x2000) >> 13;
 		INT32 fy = (data & 0x1000) >> 12;
 		INT32 scaley = (data & 0x0f00) >> 8;
 
-		INT32 data2 = ram[0][offs + 1];
+		INT32 data2 = BURN_ENDIAN_SWAP_INT16(ram[0][offs + 1]);
 		INT32 sx = data2 & 0x00ff;
 		INT32 color = (data2 & 0x1f00) >> 8;
 
-		INT32 sy = ram[1][offs + 0] & 0x00ff;
-		INT32 scalex = ram[1][offs + 1] & 0x000f;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(ram[1][offs + 0]) & 0x00ff;
+		INT32 scalex = BURN_ENDIAN_SWAP_INT16(ram[1][offs + 1]) & 0x000f;
 
 		const UINT8 * const yromline = yrom + (scaley << 4) + (15 - scaley);
 		const UINT8* const srcgfx = pGfx->gfxbase + ((tile % pGfx->code_mask) * pGfx->width * pGfx->height);

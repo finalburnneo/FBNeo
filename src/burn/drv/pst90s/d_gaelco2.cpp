@@ -7,6 +7,7 @@
 #include "gaelco.h"
 #include "burn_gun.h"
 #include "mcs51.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -572,7 +573,7 @@ static void __fastcall gaelco2_main_write_byte(UINT32 address, UINT8 data)
 		case 0x218008:
 		case 0x218009: {
 			UINT8 *r = (UINT8*)DrvVidRegs;
-			r[(address - 0x218004) ^ 1] = data;
+			r[BYTE_XOR_BE(address - 0x218004)] = data;
 		}
 		return;
 
@@ -687,7 +688,7 @@ static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)
 		case 0x218008:
 		case 0x218009: {
 			UINT8 *r = (UINT8*)DrvVidRegs;
-			return r[(address - 0x218004) ^ 1];
+			return r[BYTE_XOR_BE(address - 0x218004)];
 		}
 
 		case 0x300000:
@@ -1412,7 +1413,7 @@ static INT32 get_rowscrollmode_yscroll(INT32 first_screen)
 	{
 		INT32 checkoffset = (0x80 / 2) + ((checkoffsets[i] * 3) + 1);
 
-		if (ram[(base)+checkoffset] & 0x1000)
+		if (BURN_ENDIAN_SWAP_INT16(ram[(base)+checkoffset]) & 0x1000)
 		{
 			usescroll = 31 - i;
 		}
@@ -1495,8 +1496,8 @@ static void draw_layer(INT32 layer)
 
 				INT32 index = ((sxx / 16) + ((yy / 16) * 64)) * 2;
 
-				INT32 attr0 = ram[offset + index + 0];
-				INT32 attr1 = ram[offset + index + 1];
+				INT32 attr0 = BURN_ENDIAN_SWAP_INT16(ram[offset + index + 0]);
+				INT32 attr1 = BURN_ENDIAN_SWAP_INT16(ram[offset + index + 1]);
 
 				INT32 code  = (attr1 + ((attr0 & 0x07) << 16)) & gfxmask;
 

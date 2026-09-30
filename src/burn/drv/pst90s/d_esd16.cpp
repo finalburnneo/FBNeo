@@ -198,7 +198,7 @@ STDDIPINFO(Multchmp)
 
 static void palette_write(INT32 offset, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + offset)) = data;
+	*((UINT16*)(DrvPalRAM + offset)) = BURN_ENDIAN_SWAP_INT16(data);
 
 	INT32 r = (data >> 10) & 0x1f;
 	INT32 g = (data >>  5) & 0x1f;

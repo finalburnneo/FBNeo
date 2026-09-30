@@ -406,7 +406,7 @@ static tilemap_callback( fg )
 {
 	UINT16 *ram = (UINT16*)(DrvFgRAM + offs * 4);
 
-	INT32 bank = ((~ram[0] & 0x4000) << 2) | (~ram[0] & 0x8000);
+	INT32 bank = ((~BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x4000) << 2) | (~BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x8000);
 
 	TILE_SET_INFO(2, (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0xfff) | bank, BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPYX(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
 }

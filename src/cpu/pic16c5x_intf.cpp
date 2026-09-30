@@ -46,7 +46,7 @@ UINT16 pic16c5xFetch(UINT16 address)
 
 	UINT16 *ROM = (UINT16*)pic16c5x_rom;
 
-	return ROM[address & rom_address_mask];
+	return BURN_ENDIAN_SWAP_INT16(ROM[address & rom_address_mask]);
 }
 
 UINT8 pic16c5xRead(UINT16 address)
@@ -242,7 +242,7 @@ INT32 BurnLoadPicROM(UINT8 *src, INT32 offset, INT32 len)
 
 					if ((data_hi <= 0x0f) && (data_lo <= 0x0f)) {
 						data |= (data_hi << 12) | (data_lo << 8);
-						PICROM[dst_pos] = data;
+						PICROM[dst_pos] = BURN_ENDIAN_SWAP_INT16(data);
 						dst_pos += 1;
 					}
 				}

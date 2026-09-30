@@ -156,7 +156,7 @@ static UINT16 __fastcall mugsmash_read_word(UINT32 address)
 
 static void palette_write(INT32 offset)
 {
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	UINT8 r = (data >> 10);
 	UINT8 g = (data >>  5);
@@ -202,7 +202,7 @@ static void __fastcall mugsmash_write_byte(UINT32 address, UINT8 data)
 static void __fastcall mugsmash_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x100000 && address <= 0x1005ff) {
-		*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x7fe);
 		return;
 	}

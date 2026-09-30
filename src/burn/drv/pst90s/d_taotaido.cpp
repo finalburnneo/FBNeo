@@ -467,7 +467,7 @@ STDDIPINFO(Taotaido3)
 static void palette_write(INT32 offset)
 {
 	UINT8 r, g, b;
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	r = (data >> 10) & 0x1f;
 	r = (r << 3) | (r >> 2);
@@ -601,7 +601,7 @@ void __fastcall taotaido_write_byte(UINT32 address, UINT8 data)
 void __fastcall taotaido_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0xffc000) {
-		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0xffe);
 		return;
 	}		
@@ -872,8 +872,8 @@ static void draw_layer()
 
 	for (INT32 line = 0; line < 224; line++)
 	{
-		INT32 scrolly = ((scroll[(line << 1) | 1] >> 4) +  0) & 0x3ff;
-		INT32 scrollx = ((scroll[(line << 1) | 0] >> 4) + 30) & 0x7ff;
+		INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[(line << 1) | 1]) >> 4) +  0) & 0x3ff;
+		INT32 scrollx = ((BURN_ENDIAN_SWAP_INT16(scroll[(line << 1) | 0]) >> 4) + 30) & 0x7ff;
 
 		INT32 sy = scrolly >> 4;
 
@@ -882,7 +882,7 @@ static void draw_layer()
 			INT32 sx = (scrollx >> 4) + col;
 			INT32 ofst = (sy << 6) + (sx & 0x3f) + ((sx & 0x40) << 6);
 		
-			INT32 code = vram[ofst];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[ofst]);
 			INT32 bank = (code >> 9) & 7;
 			INT32 color = ((code >> 12) << 4) | 0x300;
 	
@@ -905,20 +905,20 @@ static void draw_sprite(INT32 spriteno)
 	UINT16 *source1 = (UINT16*)DrvSpr1Buf1;
 	source += spriteno*4;
 
-	INT32 yzoom = (source[0] & 0xf000) >> 12;
-	INT32 xzoom = (source[1] & 0xf000) >> 12;
+	INT32 yzoom = (BURN_ENDIAN_SWAP_INT16(source[0]) & 0xf000) >> 12;
+	INT32 xzoom = (BURN_ENDIAN_SWAP_INT16(source[1]) & 0xf000) >> 12;
 
-	INT32 ysize = (source[0] & 0x0e00) >> 9;
-	INT32 xsize = (source[1] & 0x0e00) >> 9;
+	INT32 ysize = (BURN_ENDIAN_SWAP_INT16(source[0]) & 0x0e00) >> 9;
+	INT32 xsize = (BURN_ENDIAN_SWAP_INT16(source[1]) & 0x0e00) >> 9;
 
-	INT32 ypos = source[0] & 0x01ff;
-	INT32 xpos = source[1] & 0x01ff;
+	INT32 ypos = BURN_ENDIAN_SWAP_INT16(source[0]) & 0x01ff;
+	INT32 xpos = BURN_ENDIAN_SWAP_INT16(source[1]) & 0x01ff;
 
-	INT32 yflip = source[2] & 0x8000;
-	INT32 xflip = source[2] & 0x4000;
-	INT32 color = (source[2] & 0x1f00) >> 8;
+	INT32 yflip = BURN_ENDIAN_SWAP_INT16(source[2]) & 0x8000;
+	INT32 xflip = BURN_ENDIAN_SWAP_INT16(source[2]) & 0x4000;
+	INT32 color = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x1f00) >> 8;
 
-	INT32 tile = source[3] & 0xffff;
+	INT32 tile = BURN_ENDIAN_SWAP_INT16(source[3]) & 0xffff;
 
 	xpos += (xsize*xzoom+2)/4;
 	ypos += (ysize*yzoom+2)/4;
@@ -935,7 +935,7 @@ static void draw_sprite(INT32 spriteno)
 
 		for (INT32 x = 0;x <= xsize;x++)
 		{
-			INT32 realtile = source1[tile & 0x7fff];
+			INT32 realtile = BURN_ENDIAN_SWAP_INT16(source1[tile & 0x7fff]);
 
 			if (realtile > 0x3fff)
 			{
@@ -976,9 +976,9 @@ static void draw_sprites()
 
 	while (source < finish)
 	{
-		if (source[0] == 0x4000) break;
+		if (BURN_ENDIAN_SWAP_INT16(source[0]) == 0x4000) break;
 
-		draw_sprite(source[0] & 0x3ff);
+		draw_sprite(BURN_ENDIAN_SWAP_INT16(source[0]) & 0x3ff);
 
 		source++;
 	}

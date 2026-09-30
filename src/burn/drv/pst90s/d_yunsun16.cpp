@@ -706,7 +706,7 @@ static inline void DrvRecalcPal()
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x2000; i++) {
 		if (i == 0x200) i = 0x1000;
-		INT32 d = p[i];
+		INT32 d = BURN_ENDIAN_SWAP_INT16(p[i]);
 
 		r = (d >> 10) & 0x1f;
 		g = (d >>  5) & 0x1f;
@@ -741,8 +741,8 @@ static void draw_layer(INT32 scr, INT32 pri)
 
 		INT32 ofst = (offs & 0xc00) + ((offs << 4) & 0x300) + ((offs >> 6) & 0x0f) + ((offs & 0x0f) << 4);
 
-		INT32 code = vram[ofst * 2 + 0] & 0x3fff;
-		INT32 attr = vram[ofst * 2 + 1];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[ofst * 2 + 0]) & 0x3fff;
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[ofst * 2 + 1]);
 
 		if (pri) {
 			if (attr & 0x20) {
@@ -769,10 +769,10 @@ static void draw_sprites(INT32 pri)
 
 	for (INT32 offs = 0; offs < 0x1000 / 2; offs += 8 / 2)
 	{
-		INT32 sx		= vram[offs + 0] - x_offset;
-		INT32 sy		= vram[offs + 1] - 0x0f;
-		INT32 code	= vram[offs + 2] & 0x1fff;
-		INT32 attr	= vram[offs + 3];
+		INT32 sx		= BURN_ENDIAN_SWAP_INT16(vram[offs + 0]) - x_offset;
+		INT32 sy		= BURN_ENDIAN_SWAP_INT16(vram[offs + 1]) - 0x0f;
+		INT32 code	= BURN_ENDIAN_SWAP_INT16(vram[offs + 2]) & 0x1fff;
+		INT32 attr	= BURN_ENDIAN_SWAP_INT16(vram[offs + 3]);
 		INT32 flipx	= attr & 0x20;
 		INT32 flipy	= attr & 0x40;
 

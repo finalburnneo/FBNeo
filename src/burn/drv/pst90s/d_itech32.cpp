@@ -8,6 +8,7 @@
 #include "watchdog.h"
 #include "timekpr.h"
 #include "burn_gun.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -1942,7 +1943,7 @@ static void __fastcall timekill_main_write_byte(UINT32 address, UINT8 data)
 	if ((address & 0xffff80) == 0x080000) {
 		UINT8 *r = (UINT8*)video_regs;
 		UINT16 old = video_regs[(address/2)&0x3f];
-		r[(address & 0x7f)^1] = data;
+		r[BYTE_XOR_BE(address & 0x7f)] = data;
 		itech32_video_write(address, old);
 		return;
 	}
@@ -2063,7 +2064,7 @@ static UINT8 __fastcall timekill_main_read_byte(UINT32 address)
 static void __fastcall common16_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfe0000) == 0x580000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x1fffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -2133,7 +2134,7 @@ static void __fastcall common16_main_write_byte(UINT32 address, UINT8 data)
 		address = ((address & 0xfc)/2) | (address & 1);
 		UINT8 *r = (UINT8*)video_regs;
 		UINT16 old = video_regs[address/2];
-		r[address^1] = data;
+		r[BYTE_XOR_BE(address)] = data;
 		itech32_video_write(address/2, old);
 		return;
 	}
@@ -2209,7 +2210,7 @@ static UINT16 __fastcall common16_main_read_word(UINT32 address)
 		}
 
 		case 0x680080:
-			return *((UINT16*)(Drv68KRAM + 0x111d)); // protection read
+			return Drv68KRAM[0x111d] | (Drv68KRAM[0x111e] << 8); // protection read
 
 		case 0x780000:
 			return DrvInputs[5];
@@ -2587,7 +2588,7 @@ static UINT32 __fastcall common32_main_read_long(UINT32 address)
 			bprintf (0, _T("Prot RL\n"));
 			if (is_shoottv) return 0x2000;
 			UINT32 *ram = (UINT32*)Drv68KRAM;
-			UINT8 ret = ram[prot_address / 4] >> ((~prot_address & 3) * 8);
+			UINT8 ret = BURN_ENDIAN_SWAP_INT32(ram[prot_address / 4]) >> ((~prot_address & 3) * 8);
 			return ret << 8;
 		}
 	}
@@ -2674,7 +2675,7 @@ static UINT16 __fastcall common32_main_read_word(UINT32 address)
 		case 0x680002: {
 			if (is_shoottv) return 0x2000;
 			UINT32 *ram = (UINT32*)Drv68KRAM;
-			UINT8 ret = ram[prot_address / 4] >> ((~prot_address & 3) * 8);
+			UINT8 ret = BURN_ENDIAN_SWAP_INT32(ram[prot_address / 4]) >> ((~prot_address & 3) * 8);
 			return ret << 8;
 		}
 	}
@@ -2781,7 +2782,7 @@ static UINT8 __fastcall common32_main_read_byte(UINT32 address)
 		case 0x680002: {
 			if (is_shoottv) return 0x20;
 			UINT32 *ram = (UINT32*)Drv68KRAM;
-			UINT32 ret = (ram[prot_address/4] << 16) | (ram[prot_address/4] >> 16);
+			UINT32 ret = (BURN_ENDIAN_SWAP_INT32(ram[prot_address/4]) << 16) | (BURN_ENDIAN_SWAP_INT32(ram[prot_address/4]) >> 16);
 		//	bprintf (0, _T("Prot RB %8.8x\n"), (ret >> ((~prot_address & 3) * 8))&0xff);
 			return ret >> ((~prot_address & 3) * 8);
 		}

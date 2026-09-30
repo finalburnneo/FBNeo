@@ -212,8 +212,8 @@ static UINT8 __fastcall sderby_read_byte(UINT32 address)
 static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
-	INT32 code  = ram[offs * 2];
-	INT32 color = ram[offs * 2 + 1];
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2]);
+	INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
 
 	TILE_SET_INFO(1, code, color, 0);
 }
@@ -221,8 +221,8 @@ static tilemap_callback( bg )
 static tilemap_callback( mg )
 {
 	UINT16 *ram = (UINT16*)DrvMgRAM;
-	INT32 code  = ram[offs * 2];
-	INT32 color = ram[offs * 2 + 1];
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2]);
+	INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
 
 	TILE_SET_INFO(2, code, color, 0);
 }
@@ -230,8 +230,8 @@ static tilemap_callback( mg )
 static tilemap_callback( fg )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
-	INT32 code  = ram[offs * 2];
-	INT32 color = ram[offs * 2 + 1];
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs * 2]);
+	INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
 
 	TILE_SET_INFO(0, code, color, 0);
 }
@@ -428,9 +428,9 @@ static void DrvPaletteUpdate()
 	UINT16 *p = (UINT16*)BurnPalRAM;
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		INT32 r = (p[i] >> 11) & 0x1f;
-		INT32 g = (p[i] >>  6) & 0x1f;
-		INT32 b = (p[i] >>  1) & 0x1f;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 11) & 0x1f;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  6) & 0x1f;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  1) & 0x1f;
 
 		BurnPalette[i] = BurnHighCol(pal5bit(r), pal5bit(g), pal5bit(b), 0);
 	}
@@ -442,14 +442,14 @@ static void draw_sprites()
 
 	for (INT32 offs = 4; offs < 0x1000 / 2; offs += 4)
 	{
-		INT32 sy = ram[offs + 3 - 4];
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(ram[offs + 3 - 4]);
 		if (sy == 0x2000) break;   // end of list marker
 
 		INT32 flipx = sy & 0x4000;
-		INT32 sx = (ram[offs + 1] & 0x01ff) - 16 - 7;
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x01ff) - 16 - 7;
 		sy = (256 - 8 - 16 - sy) & 0xff;
-		INT32 code = ram[offs + 2];
-		INT32 color = (ram[offs + 1] & 0x3e00) >> 9;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x3e00) >> 9;
 
 		DrawGfxMaskTile(0, 3, code, sx - 32, sy - 16, flipx, 0, color >> 1, 0);
 	}

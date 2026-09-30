@@ -719,7 +719,7 @@ static INT32 scanline_cb(INT32 s_scanline, TMS34010Display *params)
 	if (inder_4bpp) {
 		for (INT32 x = params->heblnk; x < params->hsblnk; x += 4)
 		{
-			UINT16 pixels = vram[coladdr++ & 0xff];
+			UINT16 pixels = BURN_ENDIAN_SWAP_INT16(vram[coladdr++ & 0xff]);
 			INT32 dx = x - params->heblnk; // side clip
 
 			if (dx < 0 || (dx+3) >= nScreenWidth) continue;
@@ -732,7 +732,7 @@ static INT32 scanline_cb(INT32 s_scanline, TMS34010Display *params)
 	} else {
 		for (INT32 x = params->heblnk; x < params->hsblnk; x += 2)
 		{
-			UINT16 pixels = vram[coladdr++ & 0xff];
+			UINT16 pixels = BURN_ENDIAN_SWAP_INT16(vram[coladdr++ & 0xff]);
 			INT32 dx = x - params->heblnk; // side clip
 
 			if (dx < 0 || (dx+1) >= nScreenWidth) continue;

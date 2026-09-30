@@ -941,7 +941,7 @@ static void draw_pixel_line(clip_struct clip, UINT16 *pDest, UINT8 *pPri, UINT16
 
 	for (INT32 x = clip.nMinx; x < clip.nMaxx; x += 2)
 	{
-		UINT16 data = *pSource++;
+		UINT16 data = BURN_ENDIAN_SWAP_INT16(*pSource++);
 		pPri[x + 0] = 0xff;
 		pPri[x + 1] = 0xff;
 		if (x >= clip.nMinx && x < clip.nMaxx)

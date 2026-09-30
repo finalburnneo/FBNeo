@@ -810,7 +810,14 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 
 	**- End of Comments -*/
 
-	UINT32 *source = spriteram_source;
+	static UINT32 sprbuf[0x4000/4];
+	UINT32 regs[0x40/4];
+
+	for (INT32 i = 0; i < spriteram_size/4; i++) sprbuf[i] = BURN_ENDIAN_SWAP_INT32(spriteram_source[i]);
+	for (INT32 i = 0; i < 0x40/4; i++) regs[i] = BURN_ENDIAN_SWAP_INT32(sprite_regs[i]);
+	sprite_regs = regs;
+
+	UINT32 *source = sprbuf;
 	UINT32 *finish = source + spriteram_size/4;
 
 	INT16 group_x_offset[4];

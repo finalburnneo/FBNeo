@@ -278,7 +278,7 @@ static inline void palette_write(INT32 offset)
 	g = (g * palette_fade) / 255;
 	b = (b * palette_fade) / 255;
 
-	Palette[offset/4] = BURN_ENDIAN_SWAP_INT32((r * 0x10000) + (g * 0x100) + b);
+	Palette[offset/4] = (r * 0x10000) + (g * 0x100) + b;
 	DrvPalette[offset/4] = BurnHighCol(r,g,b,0);
 }
 
@@ -696,7 +696,7 @@ static void palette_update()
 		g = (g * palette_fade) / 255;
 		b = (b * palette_fade) / 255;
 
-		Palette[i] = BURN_ENDIAN_SWAP_INT32((r * 0x10000) + (g * 0x100) + b);
+		Palette[i] = (r * 0x10000) + (g * 0x100) + b;
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }

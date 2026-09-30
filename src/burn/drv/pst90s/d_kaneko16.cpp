@@ -5761,7 +5761,7 @@ static INT32 ShogwarrInit()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x000000, 14, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 15, 1); if (nRet != 0) return 1;
 
-	memcpy (Kaneko16NVRam, shogwarr_default_eeprom, 0x80);
+	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(shogwarr_default_eeprom[i]);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -5863,7 +5863,7 @@ static INT32 ShogwarrkInit()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x000000, 15, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 16, 1); if (nRet != 0) return 1;
 
-	memcpy (Kaneko16NVRam, shogwarr_default_eeprom, 0x80);
+	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(shogwarr_default_eeprom[i]);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -5967,7 +5967,7 @@ static INT32 BrapboysInit()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 16, 1); if (nRet != 0) return 1;
 	memcpy (MSM6295ROM + 0x100000, MSM6295ROMData2,  0x20000);
 
-	memcpy (Kaneko16NVRam, brapboys_default_eeprom, 0x80);
+	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(brapboys_default_eeprom[i]);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -6075,7 +6075,7 @@ static INT32 Brapboysp2Init()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 17, 1); if (nRet != 0) return 1;
 	memcpy (MSM6295ROM + 0x100000, MSM6295ROMData2,  0x20000);
 
-	memcpy (Kaneko16NVRam, brapboys_default_eeprom, 0x80);
+	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(brapboys_default_eeprom[i]);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -7008,9 +7008,9 @@ Graphics Rendering
 	if (Layer##_N_##Enabled) { \
 		INT32 vScrollFast = 1; \
 		UINT16 *VSCROLLRAM = (UINT16*)Kaneko16VScrl##_N_##Ram; \
-		INT32 LineScroll = VSCROLLRAM[0]; \
+		INT32 LineScroll = BURN_ENDIAN_SWAP_INT16(VSCROLLRAM[0]); \
 		for (i = 0; i < 0x200; i++) { \
-			if (VSCROLLRAM[i] != LineScroll) { \
+			if (BURN_ENDIAN_SWAP_INT16(VSCROLLRAM[i]) != LineScroll) { \
 				vScrollFast = 0; \
 				break; \
 			} \
@@ -7152,7 +7152,7 @@ static INT32 ShogwarrFrameRender()
 		HANDLE_VSCROLL(0)
 	}
 
-	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4] & 0x008)) {
+	if (BURN_ENDIAN_SWAP_INT16(Kaneko16Layer0Regs[4]) & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
 

@@ -4405,16 +4405,16 @@ static void __fastcall msgundam_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x500000:
 		case 0x500001:
-			*((UINT16*)(DrvVideoRegs + 0)) = data;
+			*((UINT16*)(DrvVideoRegs + 0)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 		case 0x500002:
 		case 0x500003:
-			*((UINT16*)(DrvVideoRegs + 4)) = data;
+			*((UINT16*)(DrvVideoRegs + 4)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 
 		case 0x500004:
 		case 0x500005:
-			*((UINT16*)(DrvVideoRegs + 2)) = data;
+			*((UINT16*)(DrvVideoRegs + 2)) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 }
@@ -6756,11 +6756,11 @@ static void kiwame68kInit()
 	{
 		// give the game proper vectors
 		*((UINT16 *)(Drv68KROM + 0x00064)) = 0x0000;
-		*((UINT16 *)(Drv68KROM + 0x00066)) = 0x0dca;
+		*((UINT16 *)(Drv68KROM + 0x00066)) = BURN_ENDIAN_SWAP_INT16(0x0dca);
 
 		// get past backup ram error 
 		// the game never actually tests it before failing??
-		*((UINT16 *)(Drv68KROM + 0x136d2)) = 0x6052;
+		*((UINT16 *)(Drv68KROM + 0x136d2)) = BURN_ENDIAN_SWAP_INT16(0x6052);
 	}
 }
 
@@ -6843,7 +6843,7 @@ static void crazyfgt68kInit()
 	MSM6295SetBank(0, DrvSndROM, 0, 0x3ffff);
 
 	// Patch protection
-	*((UINT16*)(Drv68KROM + 0x1078)) = 0x4e71;
+	*((UINT16*)(Drv68KROM + 0x1078)) = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
 	BlandiaGfxRearrange(); // fix bg tiles
 }
@@ -7843,7 +7843,7 @@ static void sprite_buffer()
 	}
 }
 
-inline void ClearOppositesActiveLow(UINT8* nJoystickInputs)
+inline void ClearOppositesActiveLow(UINT16* nJoystickInputs)
 {
 	if ((*nJoystickInputs & 0x03) == 0x00) {
 		*nJoystickInputs |= 0x03;
@@ -7882,8 +7882,8 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 		}
 
 		if (clear_opposites) {
-			ClearOppositesActiveLow((UINT8*)&DrvInputs[0]);
-			ClearOppositesActiveLow((UINT8*)&DrvInputs[1]);
+			ClearOppositesActiveLow(&DrvInputs[0]);
+			ClearOppositesActiveLow(&DrvInputs[1]);
 		}
 
 		if (game_rotates) {

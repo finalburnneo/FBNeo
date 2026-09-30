@@ -468,7 +468,7 @@ static void __fastcall Wwfwfest68KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x0c0000 && a <= 0x0c1fff) {
 		UINT16 *CharRam = (UINT16*)DrvCharVideoRam;
-		CharRam[(a & 0x1fff) >> 1] = d;
+		CharRam[(a & 0x1fff) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -537,7 +537,7 @@ static void __fastcall Wwfwfest68KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x0c0000 && a <= 0x0c1fff) {
 		UINT16 *CharRam = (UINT16*)DrvCharVideoRam;
-		CharRam[(a & 0x1fff) >> 1] = d;
+		CharRam[(a & 0x1fff) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	
@@ -871,9 +871,9 @@ static void DrvRenderBg0Layer(INT32 Opaque)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
 			TileBase = &VideoRam[TileIndex * 2];
-			Code = TileBase[1] & 0xfff;
-			Colour = TileBase[0] & 0x0f;
-			Flip = (TileBase[0] & 0xc0) >> 6;
+			Code = BURN_ENDIAN_SWAP_INT16(TileBase[1]) & 0xfff;
+			Colour = BURN_ENDIAN_SWAP_INT16(TileBase[0]) & 0x0f;
+			Flip = (BURN_ENDIAN_SWAP_INT16(TileBase[0]) & 0xc0) >> 6;
 			xFlip = (Flip >> 0) & 0x01;
 			yFlip = (Flip >> 1) & 0x01;
 			
@@ -916,8 +916,8 @@ static void DrvRenderBg1Layer(INT32 Opaque)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
 			TileBase = &VideoRam[TileIndex];
-			Code = TileBase[0] & 0xfff;
-			Colour = (TileBase[0] & 0xf000) >> 12;
+			Code = BURN_ENDIAN_SWAP_INT16(TileBase[0]) & 0xfff;
+			Colour = (BURN_ENDIAN_SWAP_INT16(TileBase[0]) & 0xf000) >> 12;
 		
 			x = 16 * mx;
 			y = 16 * my;
@@ -948,22 +948,22 @@ static void DrvRenderSprites()
 	while (Source < Finish) {
 		INT32 x, y, Colour, xFlip, yFlip, Chain, Enable, Code, Count;
 		
-		Enable = Source[1] & 1;
+		Enable = BURN_ENDIAN_SWAP_INT16(Source[1]) & 1;
 		
 		if (Enable) {
-			x = +(Source[5] & 0x00ff) | (Source[1] & 0x0004) << 6;
+			x = +(BURN_ENDIAN_SWAP_INT16(Source[5]) & 0x00ff) | (BURN_ENDIAN_SWAP_INT16(Source[1]) & 0x0004) << 6;
 			if (x > 512 - 16) x -= 512;
 			x += DrvSpriteXOffset;
-			y = (Source[0] & 0x00ff) | (Source[1] & 0x0002) << 7;
+			y = (BURN_ENDIAN_SWAP_INT16(Source[0]) & 0x00ff) | (BURN_ENDIAN_SWAP_INT16(Source[1]) & 0x0002) << 7;
 			y = (256 - y) & 0x1ff;
 			y -= 16;
 			y -= 8;
-			xFlip = (Source[1] & 0x0010) >> 4;
-			yFlip = (Source[1] & 0x0008) >> 3;
-			Chain = (Source[1] & 0x00e0) >> 5;
+			xFlip = (BURN_ENDIAN_SWAP_INT16(Source[1]) & 0x0010) >> 4;
+			yFlip = (BURN_ENDIAN_SWAP_INT16(Source[1]) & 0x0008) >> 3;
+			Chain = (BURN_ENDIAN_SWAP_INT16(Source[1]) & 0x00e0) >> 5;
 			Chain += 1;
-			Code = (Source[2] & 0x00ff) | (Source[3] & 0x00ff) << 8;
-			Colour = (Source[4] & 0x000f);
+			Code = (BURN_ENDIAN_SWAP_INT16(Source[2]) & 0x00ff) | (BURN_ENDIAN_SWAP_INT16(Source[3]) & 0x00ff) << 8;
+			Colour = (BURN_ENDIAN_SWAP_INT16(Source[4]) & 0x000f);
 			
 			for (Count = 0; Count < Chain; Count++) {
 				INT32 yPos;
@@ -988,8 +988,8 @@ static void DrvRenderCharLayer()
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileBase = &VideoRam[TileIndex * 2];
-			Code = (TileBase[0] & 0xff) | ((TileBase[1] & 0x0f) << 8);
-			Colour = (TileBase[1] & 0xf0) >> 4;
+			Code = (BURN_ENDIAN_SWAP_INT16(TileBase[0]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(TileBase[1]) & 0x0f) << 8);
+			Colour = (BURN_ENDIAN_SWAP_INT16(TileBase[1]) & 0xf0) >> 4;
 			
 			x = 8 * mx;
 			y = 8 * my;

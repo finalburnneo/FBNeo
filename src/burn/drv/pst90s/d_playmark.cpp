@@ -678,7 +678,7 @@ static void __fastcall DrvWriteWord(UINT32 a, UINT16 d)
 
 	if ((a & 0xfff800) == 0x780000) {
 		UINT16 *PalRam = (UINT16*)BurnPalRAM;
-		PalRam[(a & 0x7ff) >> 1] = d;
+		PalRam[(a & 0x7ff) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		BurnPaletteWrite_RRRRGGGGBBBBRGBx(a & 0x7fe);
 		return;
 	}
@@ -814,7 +814,7 @@ static void __fastcall HotmindWriteWord(UINT32 a, UINT16 d)
 {
 	if ((a & 0xfff800) == 0x280000) {
 		UINT16 *PalRam = (UINT16*)BurnPalRAM;
-		PalRam[(a & 0x7ff) >> 1] = d;
+		PalRam[(a & 0x7ff) >> 1] = BURN_ENDIAN_SWAP_INT16(d);
 		BurnPaletteWrite_RRRRGGGGBBBBRGBx(a & 0x7fe);
 		return;
 	}
@@ -930,7 +930,7 @@ static void __fastcall WbeachvlWriteWord(UINT32 a, UINT16 d)
 	if ((a & 0xfff000) == 0x780000) {
 		UINT16 *PalRam = (UINT16*)BurnPalRAM;
 		INT32 Offset = (a & 0xfff) >> 1;
-		PalRam[Offset] = d;
+		PalRam[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		CalcCol(Offset, d);
 		return;
 	}
@@ -1244,7 +1244,7 @@ static tilemap_callback( tx )
 static tilemap_callback( hm_bg )
 {
 	UINT16 *VideoRam = (UINT16*)DrvBgVideoRAM;
-	INT32 attr = VideoRam[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(VideoRam[offs]);
 
 	TILE_SET_INFO(2, attr, attr >> 13, 0);
 }
@@ -1257,7 +1257,7 @@ static tilemap_scan( hardtimes )
 static tilemap_callback( hm_fg )
 {
 	UINT16 *VideoRam = (UINT16*)DrvFgVideoRAM;
-	INT32 attr = VideoRam[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(VideoRam[offs]);
 
 	TILE_SET_INFO(3, attr, attr >> 13, 0);
 }
@@ -1281,8 +1281,8 @@ static tilemap_callback( btb_tx )
 static tilemap_callback( wbv_tx )
 {
 	UINT16 *ram = (UINT16*)DrvTxVideoRAM;
-	INT32 code = ram[2 * offs];
-	INT32 color = ram[2 * offs + 1];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[2 * offs]);
+	INT32 color = BURN_ENDIAN_SWAP_INT16(ram[2 * offs + 1]);
 
 	TILE_SET_INFO(1, code, (color >> 2), 0);
 }
@@ -1290,8 +1290,8 @@ static tilemap_callback( wbv_tx )
 static tilemap_callback( wbv_fg )
 {
 	UINT16 *ram = (UINT16*)DrvFgVideoRAM;
-	INT32 code = ram[2 * offs];
-	INT32 color = ram[2 * offs + 1];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[2 * offs]);
+	INT32 color = BURN_ENDIAN_SWAP_INT16(ram[2 * offs + 1]);
 
 	TILE_SET_INFO(3, code & 0x7fff, color >> 2, (code & 0x8000) ? TILE_FLIPX : 0);
 }
@@ -1299,8 +1299,8 @@ static tilemap_callback( wbv_fg )
 static tilemap_callback( wbv_bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgVideoRAM;
-	INT32 code = ram[2 * offs];
-	INT32 color = ram[2 * offs + 1];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[2 * offs]);
+	INT32 color = BURN_ENDIAN_SWAP_INT16(ram[2 * offs + 1]);
 
 	TILE_SET_INFO(2, code & 0x7fff, color >> 2, (code & 0x8000) ? TILE_FLIPX : 0);
 }
@@ -1776,7 +1776,7 @@ static void bigtwinb_draw_sprites(INT32 xAdjust, INT32 yAdjust)
 
 	for (INT32 offs = 4; offs < 0x400 / 2; offs += 4)
 	{
-		if (SpriteRam[offs + 3 - 4] == 0x2000) // end of list marker
+		if (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 3 - 4]) == 0x2000) // end of list marker
 		{
 			start_offset = offs - 4;
 			break;
@@ -1785,13 +1785,13 @@ static void bigtwinb_draw_sprites(INT32 xAdjust, INT32 yAdjust)
 
 	for (INT32 offs = start_offset; offs >= 4; offs -= 4)
 	{
-		int sy = SpriteRam[offs + 3 - 4];   // -4? what the... ???
+		int sy = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 3 - 4]);   // -4? what the... ???
 
 		int flipx = sy & 0x4000;
-		int sx = (SpriteRam[offs + 1] & 0x01ff) - 16 - 7;
+		int sx = (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0x01ff) - 16 - 7;
 		sy = (256 - 8 - 16 - sy) & 0xff;
-		int code = SpriteRam[offs + 2] >> 4;
-		int color = ((SpriteRam[offs + 1] & 0xf000) >> 12);
+		int code = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 2]) >> 4;
+		int color = ((BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0xf000) >> 12);
 
 		DrawGfxMaskTile(0, 0, code, sx + xAdjust, sy + yAdjust, flipx, 0, color, 0);
 	}
@@ -1806,7 +1806,7 @@ static void draw_sprites(INT32 codeshift, INT32 ram_size, INT32 xAdjust, INT32 y
 
 	for (INT32 offs = 4; offs < ram_size / 2; offs += 4)
 	{
-		if (SpriteRam[offs + 3 - 4] == 0x2000) // end of list marker
+		if (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 3 - 4]) == 0x2000) // end of list marker
 		{
 			start_offset = offs - 4;
 			break;
@@ -1815,14 +1815,14 @@ static void draw_sprites(INT32 codeshift, INT32 ram_size, INT32 xAdjust, INT32 y
 
 	for (INT32 offs = start_offset; offs >= 4; offs -= 4)
 	{
-		INT32 sy = SpriteRam[offs + 3 - 4];
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 3 - 4]);
 
 		INT32 flipx = sy & 0x4000;
-		INT32 sx = (SpriteRam[offs + 1] & 0x01ff) - 16 - 7;
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0x01ff) - 16 - 7;
 		sy = (256 - 8 - pGfx->height - sy) & 0xff;
-		INT32 code = SpriteRam[offs + 2] >> codeshift;
-		INT32 color = ((SpriteRam[offs + 1] & 0x3e00) >> 9) / color_divider;
-		INT32 pri = (SpriteRam[offs + 1] & 0x8000) >> 15;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 2]) >> codeshift;
+		INT32 color = ((BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0x3e00) >> 9) / color_divider;
+		INT32 pri = (BURN_ENDIAN_SWAP_INT16(SpriteRam[offs + 1]) & 0x8000) >> 15;
 
 		if(!pri && (color & 0x0c) == 0x0c)
 			pri = 2;
@@ -1837,7 +1837,7 @@ static void DrvRenderBitmap()
 
 	for (INT32 y = 0, Count = 0; y < 512; y++) {
 		for (INT32 x = 0; x < 512; x++) {
-			INT32 Colour = VideoRam[Count] & 0xff;
+			INT32 Colour = BURN_ENDIAN_SWAP_INT16(VideoRam[Count]) & 0xff;
 
 			if (Colour) {
 				if (DrvBgFullSize) {
@@ -2003,7 +2003,7 @@ static INT32 WbeachvlRender()
 
 		for (INT32 i = 0; i < 256; i++)
 		{
-			GenericTilemapSetScrollRow(1, i+1, rs[i*8]);
+			GenericTilemapSetScrollRow(1, i+1, BURN_ENDIAN_SWAP_INT16(rs[i*8]));
 		}
 	}
 	else

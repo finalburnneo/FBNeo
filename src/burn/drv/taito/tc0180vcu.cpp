@@ -30,7 +30,7 @@ static INT32 framebuffer_page;
 void TC0180VCUFramebufferWrite(INT32 offset)
 {
 	offset &= 0x3fffe;
-	INT32 data = *((UINT16*)(TC0180VCUFbRAM + offset));
+	INT32 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(TC0180VCUFbRAM + offset)));
 
 	INT32 fb = (offset >> 17) & 1;
 

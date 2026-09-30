@@ -931,7 +931,7 @@ void TopspeedDrawBgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourC
 	do {
 		ySrcIndex = yIndex & 0x1ff;
 		RowIndex = (ySrcIndex - (BgScrollY[Chip] & 0x1ff)) & 0x1ff;
-		Colour = ColourCtrlRam[(RowIndex + PC080SNYOffset[Chip] - 2) & 0xff];
+		Colour = BURN_ENDIAN_SWAP_INT16(ColourCtrlRam[(RowIndex + PC080SNYOffset[Chip] - 2) & 0xff]);
 
 		if (!PC080SNDblWidth[Chip]) {
 			xIndex = sx - (BURN_ENDIAN_SWAP_INT16(BgScrollRam[RowIndex]) & 0x1ff);
@@ -994,7 +994,7 @@ void TopspeedDrawFgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourC
 	do {
 		ySrcIndex = yIndex & 0x1ff;
 		RowIndex = (ySrcIndex - (FgScrollY[Chip] & 0x1ff)) & 0x1ff;
-		Colour = ColourCtrlRam[(RowIndex + PC080SNYOffset[Chip] - 2) & 0xff];
+		Colour = BURN_ENDIAN_SWAP_INT16(ColourCtrlRam[(RowIndex + PC080SNYOffset[Chip] - 2) & 0xff]);
 
 		if (!PC080SNDblWidth[Chip]) {
 			xIndex = sx - (BURN_ENDIAN_SWAP_INT16(FgScrollRam[RowIndex]) & 0x1ff);

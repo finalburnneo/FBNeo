@@ -22080,9 +22080,9 @@ struct BurnDriver BurnDrvsms_brucelee = {
 	256, 192, 4, 3
 };
 
-// Bubble Fight (HB, v1.1.0)
+// Bubble Fight (HB, v1.2.0)
 static struct BurnRomInfo sms_bubblefightRomDesc[] = {
-	{ "Bubble Fight v1.1.0 (2026)(SiRioHD).sms",	262144, 0xd07abe60, BRF_PRG | BRF_ESS },
+	{ "Bubble Fight v1.2.0 (2026)(SiRioHD).sms",	262144, 0xcf50f7e5, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_bubblefight)
@@ -22090,7 +22090,7 @@ STD_ROM_FN(sms_bubblefight)
 
 struct BurnDriver BurnDrvsms_bubblefight = {
 	"sms_bubblefight", NULL, NULL, NULL, "2026",
-	"Bubble Fight (HB, v1.1.0)\0", "YM2413 FM sound chip supported", "SiRioHD", "Sega Master System",
+	"Bubble Fight (HB, v1.2.0)\0", "YM2413 FM sound chip supported", "SiRioHD", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_bubblefightRomInfo, sms_bubblefightRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

@@ -65927,10 +65927,10 @@ struct BurnDriver BurnSpecZxrobots = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// ZX Tennis (48K) (HB)
+// ZX Tennis (48K) (HB, v1.2)
 
 static struct BurnRomInfo SpecZxtennisRomDesc[] = {
-	{ "ZX Tennis 48K (2026)(Oldschool Is Beautiful).tap", 28676, 0xec136250, BRF_ESS | BRF_PRG },
+	{ "ZX Tennis v1.2 48K (2026)(Oldschool Is Beautiful).tap", 29544, 0x133a99ce, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecZxtennis, SpecZxtennis, Spectrum)
@@ -65938,9 +65938,9 @@ STD_ROM_FN(SpecZxtennis)
 
 struct BurnDriver BurnSpecZxtennis = {
 	"spec_zxtennis", NULL, "spec_spectrum", NULL, "2026",
-	"ZX Tennis (48K) (HB)\0", NULL, "Oldschool Is Beautiful", "ZX Spectrum",
+	"ZX Tennis (48K) (HB, v1.2)\0", NULL, "Oldschool Is Beautiful", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_SPORTSMISC, 0,
 	SpectrumGetZipName, SpecZxtennisRomInfo, SpecZxtennisRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3

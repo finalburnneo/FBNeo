@@ -267,7 +267,7 @@ static void update_timers(INT32 line)
 	{
 		if (base[link + 0x40] == 0xffff)
 		{
-			int data = base[link];
+			int data = BURN_ENDIAN_SWAP_INT16(base[link]);
 			int vsize = (data & 15) + 1;
 			int ypos = (256 - (data >> 5) - vsize * 8 - 1) & 0x1ff;
 
@@ -286,7 +286,7 @@ static void update_timers(INT32 line)
 		}
 
 		spritevisit[link] = 1;
-		link = base[link + 0xc0] & 0x3f;
+		link = BURN_ENDIAN_SWAP_INT16(base[link + 0xc0]) & 0x3f;
 	}
 
 	if (!found)
@@ -326,14 +326,14 @@ static void __fastcall main_write_word(UINT32 address, UINT16 data)
 		INT32 active_bank = atarimo_get_bank(0);
 		INT32 offset = (address & 0xfff) / 2;
 		UINT16 *ram = (UINT16*)DrvMobRAM;
-		INT32 oldword = ram[offset];
+		INT32 oldword = BURN_ENDIAN_SWAP_INT16(ram[offset]);
 
 		if (oldword != data && (offset >> 8) == active_bank)
 		{
 			if (((offset & 0xc0) == 0x00 && ram[offset | 0x40] == 0xffff) ||
 			    ((offset & 0xc0) == 0x40 && (data == 0xffff || oldword == 0xffff)))
 			{
-				ram[offset] = data;
+				ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 				AtariMoWrite(0, (address & 0x0fff) >> 1, data);
 				update_timers(scanline);
 			}
@@ -344,7 +344,7 @@ static void __fastcall main_write_word(UINT32 address, UINT16 data)
 				scanline -= 2;
 			}
 		}
-		ram[offset] = data;
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 		AtariMoWrite(0, (address & 0x0fff) >> 1, data);
 		return;
 	}
@@ -556,7 +556,7 @@ static UINT8 analog_pedal(INT32 address)
 
 static tilemap_callback( bg )
 {
-	UINT16 data = *((UINT16*)(DrvPfRAM + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPfRAM + (offs * 2))));
 
 	UINT16 lookup = playfield_lookup[((data >> 8) & 0x7f) | (playfield_tile_bank << 7)];
 	INT32 gfxindex = (lookup >> 8) & 0xf;
@@ -568,7 +568,7 @@ static tilemap_callback( bg )
 
 static tilemap_callback( alpha )
 {
-	UINT16 data = *((UINT16*)(DrvAlphaRAM + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvAlphaRAM + (offs * 2))));
 	INT32 code = data & 0x3ff;
 	INT32 color = (data >> 10) & 0x07;
 	INT32 opaque = data & 0x2000;

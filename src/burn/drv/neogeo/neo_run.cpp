@@ -1365,7 +1365,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 					bMemoryCardInserted = false;
 
 					// If a card is inserted, determine the size
-					if (*((UINT16*)NeoMemoryCard) != 0x8000) {
+					if (BURN_ENDIAN_SWAP_INT16(*((UINT16*)NeoMemoryCard)) != 0x8000) {
 						INT32 nSize = (NeoMemoryCard[21] << 8) | NeoMemoryCard[23];
 						if (nSize >= 0x1000) {
 							ba.nLen = nSize;

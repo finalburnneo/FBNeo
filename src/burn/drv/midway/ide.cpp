@@ -245,7 +245,7 @@ void ide_disk::write(unsigned offset, unsigned value)
     case REG_DATA:
         if (m_status & ST_DRQ) {
             if (m_transfer_operation == TRF_SECTOR_WRITE) {
-                m_buffer[m_buffer_pos++] = value;
+                m_buffer[m_buffer_pos++] = BURN_ENDIAN_SWAP_INT16(value);
                 //ata_log("ata_write_data: %02x\n", value);
                 if (m_buffer_pos >= m_num_bytes_per_sector / 2)
                     update_transfer();
@@ -301,7 +301,8 @@ unsigned ide_disk::read(unsigned offset)
         if (m_status & ST_DRQ) {
             if ((m_transfer_operation == TRF_SECTOR_READ) ||
                 (m_transfer_operation == TRF_IDENTIFY)) {
-                unsigned data = m_buffer[m_buffer_pos++];
+                unsigned data = BURN_ENDIAN_SWAP_INT16(m_buffer[m_buffer_pos]);
+                m_buffer_pos++;
 
                 if (m_transfer_operation == TRF_IDENTIFY) {
                 ata_log("ata_read_data: %02x\n", data);
@@ -413,7 +414,8 @@ void ide_disk::update_transfer()
     unsigned lba = 0;
     switch (m_transfer_operation) {
     case TRF_IDENTIFY:
-        memcpy(m_buffer, m_identify_buffer, sizeof(m_identify_buffer));
+        for (int i = 0; i < 256; i++)
+            m_buffer[i] = BURN_ENDIAN_SWAP_INT16(m_identify_buffer[i]);
         break;
 
     case TRF_SECTOR_WRITE:

@@ -260,16 +260,16 @@ static void midxunit_write(UINT32 address, UINT16 data)
 	if ((address & 0xffc00000) == 0x00000000) {
 		UINT32 offset = TOBYTE(address & 0x3fffff);
 		UINT16 *vram = (UINT16*)DrvVidRAM;
-		vram[offset+0] = (nDMA[DMA_PALETTE] << 8) | (data & 0x00ff);
-		vram[offset+1] = (nDMA[DMA_PALETTE] & 0xff00) | ((data >> 8) & 0xff);
+		vram[offset+0] = BURN_ENDIAN_SWAP_INT16((nDMA[DMA_PALETTE] << 8) | (data & 0x00ff));
+		vram[offset+1] = BURN_ENDIAN_SWAP_INT16((nDMA[DMA_PALETTE] & 0xff00) | ((data >> 8) & 0xff));
 		return;
 	}
 
 	if ((address & 0xffc00000) == 0x00800000) {
 		UINT32 offset = TOBYTE(address & 0x3fffff);
 		UINT16 *vram = (UINT16*)DrvVidRAM;
-		vram[offset+0] = (vram[offset+0] & 0x00ff) | ((data & 0xff) << 8);
-		vram[offset+1] = (vram[offset+1] & 0x00ff) | (data & 0xff00);
+		vram[offset+0] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(vram[offset+0]) & 0x00ff) | ((data & 0xff) << 8));
+		vram[offset+1] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(vram[offset+1]) & 0x00ff) | (data & 0xff00));
 		return;
 	}
 
@@ -325,13 +325,13 @@ static UINT16 midxunit_read(UINT32 address)
 	if ((address & 0xffc00000) == 0x00000000) {
 		UINT32 offset = TOBYTE(address & 0x3fffff);
 		UINT16 *vram = (UINT16*)DrvVidRAM;
-		return (vram[offset+0] & 0xff) | (vram[offset+1] << 8);
+		return (BURN_ENDIAN_SWAP_INT16(vram[offset+0]) & 0xff) | (BURN_ENDIAN_SWAP_INT16(vram[offset+1]) << 8);
 	}
 
 	if ((address & 0xffc00000) == 0x00800000) {
 		UINT32 offset = TOBYTE(address & 0x3fffff);
 		UINT16 *vram = (UINT16*)DrvVidRAM;
-		return (vram[offset+0] >> 8) | (vram[offset+1] & 0xff00);
+		return (BURN_ENDIAN_SWAP_INT16(vram[offset+0]) >> 8) | (BURN_ENDIAN_SWAP_INT16(vram[offset+1]) & 0xff00);
 	}
 
 	if ((address & 0xffffffe0) == 0x60400000) {
@@ -420,7 +420,7 @@ static INT32 scanline_callback(INT32 scanline, TMS34010Display *params)
 	for (INT32 x = params->heblnk; x < params->hsblnk; x++) {
 		INT32 ex = x - params->heblnk;
 		if (ex >= 0 && ex < nScreenWidth) {
-			dest[ex] = src[fulladdr++ & 0x1ff];
+			dest[ex] = BURN_ENDIAN_SWAP_INT16(src[fulladdr++ & 0x1ff]);
 		}
 	}
 
@@ -444,10 +444,10 @@ static UINT16 midxunit_romredirect(UINT32 address)
 	if ((address & 0xfffff000) == 0x20d31000) {
 		UINT32 offset = TOWORD(address & 0xffffff);
 		UINT16 *ram = (UINT16*)DrvTMSRAM;
-		if (address == 0x20d31550 && TMS34010GetPC() == 0x20d31560 && ram[offset] == 0x58e) {
+		if (address == 0x20d31550 && TMS34010GetPC() == 0x20d31560 && BURN_ENDIAN_SWAP_INT16(ram[offset]) == 0x58e) {
 			return 0x078e;
 		}
-		return ram[offset];
+		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
 	}
 
 	return 0;
@@ -458,10 +458,10 @@ static UINT16 midxunit_romredirectp5(UINT32 address)
 	if ((address & 0xfffff000) == 0x20d22000) {
 		UINT32 offset = TOWORD(address & 0xffffff);
 		UINT16 *ram = (UINT16*)DrvTMSRAM;
-		if (address == 0x20d22870 && TMS34010GetPC() == 0x20d22880 && ram[offset] == 0x58e) {
+		if (address == 0x20d22870 && TMS34010GetPC() == 0x20d22880 && BURN_ENDIAN_SWAP_INT16(ram[offset]) == 0x58e) {
 			return 0x078e;
 		}
-		return ram[offset];
+		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
 	}
 
 	return 0;

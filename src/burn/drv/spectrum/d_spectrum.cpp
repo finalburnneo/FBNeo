@@ -36325,7 +36325,7 @@ struct BurnDriver BurnSpecBinland16 = {
 // Bingueros, Los (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecBinguerosRomDesc[] = {
-	{ "Bingueros, Los ES 48K (2026)(Jordi).tap", 29263, 0x1ac2746d, BRF_ESS | BRF_PRG },
+	{ "Bingueros, Los ES 48K (2026)(Jordi).tap", 29434, 0xd48d5e78, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBingueros, SpecBingueros, Spectrum)
@@ -59165,7 +59165,7 @@ struct BurnDriver BurnSpecShadowfields = {
 // Shadows of Belial (English) (128K) (HB)
 
 static struct BurnRomInfo SpecShabelialenRomDesc[] = {
-	{ "Shadows of Belial EN 128K (2016)(RetroWorks).tap", 138984, 0x5484f32e, BRF_ESS | BRF_PRG },
+	{ "Shadows of Belial EN 128K (2016)(RetroWorks).tap", 138695, 0x38f3a36d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecShabelialen, SpecShabelialen, Spec128)
@@ -59180,11 +59180,11 @@ struct BurnDriver BurnSpecShabelialen = {
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
-
+	
 // Shadows of Belial (Spanish) (128K) (HB)
 
 static struct BurnRomInfo SpecShabelialesRomDesc[] = {
-	{ "Shadows of Belial ES 128K (2026)(RetroWorks).tap", 139578, 0x7df67cf9, BRF_ESS | BRF_PRG },
+	{ "Shadows of Belial ES 128K (2026)(RetroWorks).tap", 139285, 0xfebde4af, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecShabeliales, SpecShabeliales, Spec128)

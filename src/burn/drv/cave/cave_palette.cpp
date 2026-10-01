@@ -128,9 +128,10 @@ void CavePalWriteByte(UINT32 nAddress, UINT8 byteValue)
 	nAddress ^= 1;
 	CavePalSrc[nAddress] = byteValue;							// write byte
 
-	if (*((UINT8*)(CavePalCopy + nAddress)) != byteValue) {
-		*((UINT8*)(CavePalCopy + nAddress)) = byteValue;
-		CavePalette[nAddress >> 1] = CalcCol(*(UINT16*)(CavePalSrc + (nAddress & ~0x01)));
+	UINT16 c = *((UINT16*)(CavePalSrc + (nAddress & ~0x01)));
+	if (CavePalCopy[nAddress >> 1] != c) {
+		CavePalCopy[nAddress >> 1] = c;
+		CavePalette[nAddress >> 1] = CalcCol(BURN_ENDIAN_SWAP_INT16(c));
 	}
 }
 
@@ -140,8 +141,8 @@ void CavePalWriteWord(UINT32 nAddress, UINT16 wordValue)
 
 	((UINT16*)CavePalSrc)[nAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);		// write word
 
-	if (CavePalCopy[nAddress] != wordValue) {
-		CavePalCopy[nAddress] = wordValue;
+	if (CavePalCopy[nAddress] != BURN_ENDIAN_SWAP_INT16(wordValue)) {
+		CavePalCopy[nAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 		CavePalette[nAddress] = CalcCol(wordValue);
 	}
 }

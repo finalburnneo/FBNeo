@@ -306,13 +306,13 @@ static void dsp_bios_reform(UINT8* ori_bios, UINT8* new_bios, INT32 is_seta)
 	bprintf(0, _T("bios size / data size:  %x  %x\n"), bios_size, data_size);
 	UINT32* newbios = (UINT32*)new_bios;
 	for (INT32 i = 0; i < bios_size; i += 4) {
-		*newbios = (ori_bios[i + 0] << 24) | (ori_bios[i + 1] << 16) | (ori_bios[i + 2] << 8); // only uses 24bits!
+		*newbios = BURN_ENDIAN_SWAP_INT32((ori_bios[i + 0] << 24) | (ori_bios[i + 1] << 16) | (ori_bios[i + 2] << 8)); // only uses 24bits!
 		newbios++;
 	}
 
 	UINT16* newbios_data = (UINT16*)&new_bios[bios_size];
 	for (INT32 i = 0; i < data_size; i += 2) {
-		*newbios_data = (ori_bios[bios_size + i + 0] << 8) | (ori_bios[bios_size + i + 1] << 0);
+		*newbios_data = BURN_ENDIAN_SWAP_INT16((ori_bios[bios_size + i + 0] << 8) | (ori_bios[bios_size + i + 1] << 0));
 		newbios_data++;
 	}
 }

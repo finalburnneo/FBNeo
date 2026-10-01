@@ -299,10 +299,12 @@ void snes_st018_handleState(StateHandler* sh)
 {
 	// program RAM + bridge mailbox/timer/flags
 	sh_handleByteArray(sh, s_pram, ST018_PRAM_SIZE);
+	UINT8 running = s_running;
 	sh_handleBytes(sh,
 		&s_c2a_ready, &s_c2a_data, &s_a2c_ready, &s_a2c_data,
 		&s_reset, &s_ready, &s_signal,
-		(UINT8*)&s_running, NULL);
+		&running, NULL);
+	s_running = running;
 	sh_handleInts(sh, &s_timer, &s_timerlatch, NULL);
 
 	if (s_haveArm) {

@@ -674,7 +674,7 @@ static void run_insn()
 			break;
 
 		case 0x5800: // sign_extend A[?,8,16,? bit]
-			cx4.A = sign_extend(cx4.A, sub_op << 3) & 0xffffff;
+			cx4.A = (sub_op ? sign_extend(cx4.A, sub_op << 3) : cx4.A) & 0xffffff;
 			set_NZ(cx4.A);
 			break;
 
@@ -794,7 +794,7 @@ static void run_insn()
 		case 0xd000: // ROR A,imm
 		case 0xd400:
 			temp = get_immed() & 0x1f;
-			set_A((cx4.A >> temp) | (cx4.A << (24 - temp)));
+			set_A((cx4.A >> temp) | (cx4.A << ((24 - temp) & 0x1f)));
 			set_NZ(cx4.A);
 			break;
 

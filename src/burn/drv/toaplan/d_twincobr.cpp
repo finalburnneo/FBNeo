@@ -993,17 +993,10 @@ static INT32 LoadNibbles(UINT8 *dst, INT32 idx, INT32 len)
 {
 	UINT8 *tmp = (UINT8*)BurnMalloc(len*2);
 
-#ifdef LSB_FIRST
 	if (BurnLoadRom(dst + 0, idx + 1, 2)) return 1;
 	if (BurnLoadRom(dst + 1, idx + 3, 2)) return 1;
 	if (BurnLoadRom(tmp + 0, idx + 0, 2)) return 1;
 	if (BurnLoadRom(tmp + 1, idx + 2, 2)) return 1;
-#else
-	if (BurnLoadRom(dst + 0, idx + 3, 2)) return 1;
-	if (BurnLoadRom(dst + 1, idx + 1, 2)) return 1;
-	if (BurnLoadRom(tmp + 0, idx + 2, 2)) return 1;
-	if (BurnLoadRom(tmp + 1, idx + 0, 2)) return 1;
-#endif
 
 	for (INT32 i = 0; i < len * 2; i++) {
 		dst[i] = (dst[i] & 0xf) | (tmp[i] << 4);

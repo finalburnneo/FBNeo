@@ -56217,10 +56217,10 @@ struct BurnDriver BurnSpecQuahappy = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Quantum Hop (48K-128K) (HB)
+// Quantum Hop (48K-128K) (HB, 1.1A)
 
 static struct BurnRomInfo SpecQuanthopRomDesc[] = {
-	{ "Quantum Hop 48K-128K (2026)(Tonsomo Entertainment).tzx", 41178, 0xac0c49c6, BRF_ESS | BRF_PRG },
+	{ "Quantum Hop 1.1A 48K-128K (2026)(Tonsomo Entertainment).tzx", 41230, 0x2e8ed2d1, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecQuanthop, SpecQuanthop, Spec128)
@@ -56228,7 +56228,7 @@ STD_ROM_FN(SpecQuanthop)
 
 struct BurnDriver BurnSpecQuanthop = {
 	"spec_quanthop", NULL, "spec_spec128", NULL, "2026",
-	"Quantum Hop (48K-128K) (HB)\0", NULL, "Tonsomo Entertainment", "ZX Spectrum",
+	"Quantum Hop (48K-128K) (HB, 1.1A)\0", NULL, "Tonsomo Entertainment", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM | GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecQuanthopRomInfo, SpecQuanthopRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

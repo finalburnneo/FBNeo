@@ -48838,6 +48838,44 @@ struct BurnDriver BurnDrvsnes_Megamanxsa1p = {
 	512, 448, 4, 3
 };
 
+// Mega Man X2 - FastROM (Hack, v4.0)
+// https://www.patreon.com/Kandowontu/posts/megaman-x2-v3-0-78372605
+static struct BurnRomInfo snes_Megamanx2frRomDesc[] = {
+	{ "Mega Man X2 - FastROM v4.0 (2023)(kandowontu).sfc", 1572864, 0x84caa522, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanx2fr)
+STD_ROM_FN(snes_Megamanx2fr)
+
+struct BurnDriver BurnDrvsnes_Megamanx2fr = {
+	"snes_megamanx2fr", "snes_megamanx2", NULL, NULL, "2023",
+	"Mega Man X2 - FastROM (Hack, v4.0)\0", NULL, "kandowontu", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megamanx2frRomInfo, snes_Megamanx2frRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mega Man X2 - FastROM Plus (Hack, v1.0.1)
+// https://romhackplaza.org/romhacks/mega-man-x2-fastrom-plus-super-nintendo-romhack
+static struct BurnRomInfo snes_Megamanx2frpRomDesc[] = {
+	{ "Mega Man X2 - FastROM Plus v1.0.1 (2026)(llethas).sfc", 1572864, 0xe06039f1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanx2frp)
+STD_ROM_FN(snes_Megamanx2frp)
+
+struct BurnDriver BurnDrvsnes_Megamanx2frp = {
+	"snes_megamanx2frp", "snes_megamanx2", NULL, NULL, "2026",
+	"Mega Man X2 - FastROM Plus (Hack, v1.0.1)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megamanx2frpRomInfo, snes_Megamanx2frpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Megastalgia - Megaman Edition (GlobalHack)
 // https://www.romhacking.net/hacks/8423/
 static struct BurnRomInfo snes_MegastalgiaRomDesc[] = {
@@ -51084,7 +51122,6 @@ struct BurnDriver BurnDrvsnes_Sydneyhuntee = {
 
 // Teenage Queen (USA) (HB, v1.4)
 // https://www.portabledev.com/jeux/supernes/teenage-queen/
-
 static struct BurnRomInfo snes_TeenagequeenRomDesc[] = {
 	{ "Teenage Queen v1.4 (U)(2018)(Alekmaul).sfc", 1048576, 0x00e4c4e6, BRF_ESS | BRF_PRG },
 };
@@ -51104,7 +51141,6 @@ struct BurnDriver BurnDrvsnes_Teenagequeen = {
 
 // Teenage Queen (Euro) (HB, v1.4)
 // https://www.portabledev.com/jeux/supernes/teenage-queen/
-
 static struct BurnRomInfo snes_TeenagequeeneRomDesc[] = {
 	{ "Teenage Queen v1.4 (E)(2018)(Alekmaul).sfc", 1048576, 0x60b9ef27, BRF_ESS | BRF_PRG },
 };
@@ -51118,6 +51154,25 @@ struct BurnDriver BurnDrvsnes_Teenagequeene = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_CARD, 0,
 	SNESGetZipName, snes_TeenagequeeneRomInfo, snes_TeenagequeeneRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Thunder Spirits - FastROM + Optimized (Hack)
+
+static struct BurnRomInfo snes_ThunderspiritsfroRomDesc[] = {
+	{ "Thunder Spirits - FastROM + Optimized (2026)(MaxwelOlinda).sfc", 1048576, 0x52d44169, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Thunderspiritsfro)
+STD_ROM_FN(snes_Thunderspiritsfro)
+
+struct BurnDriver BurnDrvsnes_Thunderspiritsfro = {
+	"snes_thunderspiritsfro", "snes_thunderspirits", NULL, NULL, "2026",
+	"Thunder Spirits - FastROM + Optimized (Hack)\0", NULL, "MaxwelOlinda", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
+	SNESGetZipName, snes_ThunderspiritsfroRomInfo, snes_ThunderspiritsfroRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

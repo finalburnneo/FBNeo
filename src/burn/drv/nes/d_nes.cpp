@@ -19900,6 +19900,24 @@ struct BurnDriver BurnDrvnes_hoboalboha = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Hobo Albo's Halloween Adventure (HB, v1.5, Alt)
+static struct BurnRomInfo nes_hoboalbohaaRomDesc[] = {
+	{ "Hobo Albo's Halloween Adventure v1.5 (Alt)(2025)(RBG Entertainment).nes",          524304, 0xe3f081c6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoboalbohaa)
+STD_ROM_FN(nes_hoboalbohaa)
+
+struct BurnDriver BurnDrvnes_hoboalbohaa = {
+	"nes_hoboalbohaa", "nes_hoboalboha", NULL, NULL, "2025",
+	"Hobo Albo's Halloween Adventure (HB, v1.5, Alt)\0", NULL, "RBG Entertainment", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hoboalbohaaRomInfo, nes_hoboalbohaaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Hokuto no Ken - OVERHAUL Patch (Hack)
 static struct BurnRomInfo nes_hokutonokenopRomDesc[] = {
 	{ "Hokuto no Ken OVERHAUL Patch (2022)(Rani Baker).nes",          65552, 0xb02b18fa, BRF_ESS | BRF_PRG },

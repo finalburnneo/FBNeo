@@ -422,7 +422,11 @@ static INT32 mem_buildFromStereoPCM(INT16* pcm, UINT32 frames, INT32 pcmFromBurn
 	}
 	buf[0] = 'M'; buf[1] = 'S'; buf[2] = 'U'; buf[3] = '1';
 	buf[4] = 0; buf[5] = 0; buf[6] = 0; buf[7] = 0;
+#ifdef LSB_FIRST
+	memcpy(buf + 8, pcm, pcmBytes);
+#else
 	for (UINT32 i = 0; i < frames * 2; i++) ((UINT16*)(buf + 8))[i] = BURN_ENDIAN_SWAP_INT16(pcm[i]);
+#endif
 	if (pcmFromBurnFree) BurnFree(pcm); else free(pcm);
 
 	s_memCtx.buf  = buf;

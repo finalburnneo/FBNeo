@@ -610,7 +610,7 @@ static void sy2_main_write_word(UINT16 address, UINT16 data)
 	if ((address & 0xe000) == 0x2000)
 	{
 		INT32 offset = ((address & 0x1fff) >> 1) + videobank;
-		*((UINT16 *)(DrvVidRAM + (offset * 2))) = data;
+		*((UINT16 *)(DrvVidRAM + (offset * 2))) = BURN_ENDIAN_SWAP_INT16(data);
 
 		if ((offset & 0x3c00) == 0x0c00) {
 			if ((offset & 0x3ff) == 0x003) {
@@ -653,7 +653,7 @@ static UINT16 sy2_main_read_word(UINT16 address)
 	if ((address & 0xfe00) == 0x8000) {
 		SlapsticTweak((address & 0x1ff) >> 1);
 		videobank = SlapsticTweak(0x1234) * 0x1000;
-		return *((UINT16*)(DrvT11ROM + address));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvT11ROM + address)));
 	}
 
 	if ((address & 0xff80) == 0x1400) {
@@ -707,7 +707,7 @@ static UINT16 sy2_main_read_word(UINT16 address)
 
 	if ((address & 0xe000) == 0x2000) {
 		INT32 offset = ((address & 0x1fff) >> 1) + videobank;
-		return *((UINT16 *)(DrvVidRAM + offset * 2));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(DrvVidRAM + offset * 2)));
 	}
 
 	bprintf (0, _T("RW (missed): %4.4x\n"), address);
@@ -1342,7 +1342,7 @@ static void DrvPaletteUpdate()
 
 	for (INT32 n = 0; n < 0x200/2; n++)
 	{
-		INT32 v = p[n];
+		INT32 v = BURN_ENDIAN_SWAP_INT16(p[n]);
 		INT32 i = intensity_table[(v >>  0) & 0x0f];
 		INT32 r = (color_table[(v >> 12) & 0x0f] * i) >> 4;
 		INT32 g = (color_table[(v >>  8) & 0x0f] * i) >> 4;

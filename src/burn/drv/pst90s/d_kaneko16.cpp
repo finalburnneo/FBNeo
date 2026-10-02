@@ -5761,7 +5761,11 @@ static INT32 ShogwarrInit()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x000000, 14, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 15, 1); if (nRet != 0) return 1;
 
+#ifdef LSB_FIRST
+	memcpy (Kaneko16NVRam, shogwarr_default_eeprom, 0x80);
+#else
 	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(shogwarr_default_eeprom[i]);
+#endif
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -5863,7 +5867,11 @@ static INT32 ShogwarrkInit()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x000000, 15, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 16, 1); if (nRet != 0) return 1;
 
+#ifdef LSB_FIRST
+	memcpy (Kaneko16NVRam, shogwarr_default_eeprom, 0x80);
+#else
 	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(shogwarr_default_eeprom[i]);
+#endif
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -5967,7 +5975,11 @@ static INT32 BrapboysInit()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 16, 1); if (nRet != 0) return 1;
 	memcpy (MSM6295ROM + 0x100000, MSM6295ROMData2,  0x20000);
 
+#ifdef LSB_FIRST
+	memcpy (Kaneko16NVRam, brapboys_default_eeprom, 0x80);
+#else
 	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(brapboys_default_eeprom[i]);
+#endif
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -6075,7 +6087,11 @@ static INT32 Brapboysp2Init()
 	nRet = BurnLoadRom(MSM6295ROMData2 + 0x100000, 17, 1); if (nRet != 0) return 1;
 	memcpy (MSM6295ROM + 0x100000, MSM6295ROMData2,  0x20000);
 
+#ifdef LSB_FIRST
+	memcpy (Kaneko16NVRam, brapboys_default_eeprom, 0x80);
+#else
 	for (INT32 i = 0; i < 0x40; i++) ((UINT16*)Kaneko16NVRam)[i] = BURN_ENDIAN_SWAP_INT16(brapboys_default_eeprom[i]);
+#endif
 
 	SekInit(0, 0x68000);
 	SekOpen(0);

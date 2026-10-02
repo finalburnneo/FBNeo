@@ -336,16 +336,16 @@ static UINT8 __fastcall spbactnp_extra_read(UINT16 address)
 
 static tilemap_callback( bg )
 {
-	INT32 color =(*((UINT16*)(DrvBgRAM + 0x0000 + offs * 2)) & 0xf0) >> 4;
-	INT32 code  = *((UINT16*)(DrvBgRAM + 0x4000 + offs * 2));
+	INT32 color =(BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM + 0x0000 + offs * 2))) & 0xf0) >> 4;
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM + 0x4000 + offs * 2)));
 
 	TILE_SET_INFO(1, code, color, 0);
 }
 
 static tilemap_callback( fg )
 {
-	INT32 attr  = *((UINT16*)(DrvFgRAM + 0x0000 + offs * 2));
-	INT32 code  = *((UINT16*)(DrvFgRAM + 0x4000 + offs * 2));
+	INT32 attr  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvFgRAM + 0x0000 + offs * 2)));
+	INT32 code  = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvFgRAM + 0x4000 + offs * 2)));
 	INT32 color = ((attr & 0xf0) >> 4) | ((attr & 0x08) << 1);
 
 	TILE_SET_INFO(0, code, color, 0);
@@ -660,14 +660,14 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x1000/2; i+=8)
 	{
-		INT32 attr = source[i + 0];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(source[i + 0]);
 
 		if (attr & 4)
 		{
-			INT32 code  = source[i + 1];
-			INT32 color = source[i + 2];
-			INT32 ypos  = source[i + 3] & 0x1ff;
-			INT32 xpos  = (source[i + 4]) & 0x3ff;
+			INT32 code  = BURN_ENDIAN_SWAP_INT16(source[i + 1]);
+			INT32 color = BURN_ENDIAN_SWAP_INT16(source[i + 2]);
+			INT32 ypos  = BURN_ENDIAN_SWAP_INT16(source[i + 3]) & 0x1ff;
+			INT32 xpos  = (BURN_ENDIAN_SWAP_INT16(source[i + 4])) & 0x3ff;
 
 			INT32 flipx = attr & 1;
 			INT32 flipy = attr & 2;
@@ -887,9 +887,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x2800/2; i++)
 	{
-		UINT8 r = pal4bit(p[i] & 0xf);
-		UINT8 g = pal4bit((p[i] & 0xf0) >> 4);
-		UINT8 b = pal4bit((p[i] & 0xf00) >> 8);
+		UINT8 r = pal4bit(BURN_ENDIAN_SWAP_INT16(p[i]) & 0xf);
+		UINT8 g = pal4bit((BURN_ENDIAN_SWAP_INT16(p[i]) & 0xf0) >> 4);
+		UINT8 b = pal4bit((BURN_ENDIAN_SWAP_INT16(p[i]) & 0xf00) >> 8);
 
 		BurnPalette[i] = BurnHighCol(r,g,b,0);
 		DrvPalette32[i] = (r << 16) | (g << 8) | b;
@@ -931,7 +931,7 @@ static void SpbactnpPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x2800/2; i++) // xBRG
 	{
-		UINT16 c = p[i];
+		UINT16 c = BURN_ENDIAN_SWAP_INT16(p[i]);
 		UINT8 r = pal4bit((c & 0xf0) >> 4);
 		UINT8 g = pal4bit(c & 0xf);
 		UINT8 b = pal4bit((c & 0xf00) >> 8);
@@ -942,7 +942,7 @@ static void SpbactnpPaletteUpdate()
 
 	for (INT32 i = 0x2800/2; i < 0x2a00/2; i++) // xBRG
 	{
-		UINT16 c = (p[i] << 8) | (p[i] >> 8);
+		UINT16 c = (BURN_ENDIAN_SWAP_INT16(p[i]) << 8) | (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8);
 		UINT8 r = pal4bit((c & 0xf0) >> 4);
 		UINT8 g = pal4bit(c & 0xf);
 		UINT8 b = pal4bit((c & 0xf00) >> 8);

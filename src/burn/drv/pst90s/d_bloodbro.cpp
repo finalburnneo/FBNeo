@@ -831,9 +831,9 @@ static INT32 DrvFrame()
 
 		if (nGameSelect == 2) {
 			UINT16 *ram = (UINT16*)(Drv68KRAM + 0xb000);
-			ram[0] = (DrvDips[1] << 8) | (DrvDips[0]);
-			ram[1] = DrvInputs[1];
-			ram[2] = DrvInputs[2];
+			ram[0] = BURN_ENDIAN_SWAP_INT16((DrvDips[1] << 8) | (DrvDips[0]));
+			ram[1] = BURN_ENDIAN_SWAP_INT16(DrvInputs[1]);
+			ram[2] = BURN_ENDIAN_SWAP_INT16(DrvInputs[2]);
 		}
 
 		seibu_coin_input = (DrvJoy1[1] << 1) | DrvJoy1[0];

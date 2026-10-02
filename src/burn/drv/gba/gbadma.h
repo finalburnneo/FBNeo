@@ -184,13 +184,13 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 						// Write data 6 bit address
 						UINT32 addr = gba_read_eeprom_bitstream(gba, src, 2,      6, type ? 4 : 2, src_dir);
 						UINT64 data = gba_read_eeprom_bitstream(gba, src, 2 + 6, 64, type ? 4 : 2, src_dir);
-						((UINT64*)gba->mem.cart_backup)[addr] = data;
+						((UINT64*)gba->mem.cart_backup)[addr] = BURN_ENDIAN_SWAP_INT64(data);
 						gba->cart.backup_is_dirty = true;
 					} else if (cnt == 81) {
 						// Write data 14 bit address
 						UINT32 addr = gba_read_eeprom_bitstream(gba, src, 2,      14, type ? 4 : 2, src_dir) & 0x3ff;
 						UINT64 data = gba_read_eeprom_bitstream(gba, src, 2 + 14, 64, type ? 4 : 2, src_dir);
-						((UINT64*)gba->mem.cart_backup)[addr] = data;
+						((UINT64*)gba->mem.cart_backup)[addr] = BURN_ENDIAN_SWAP_INT64(data);
 						gba->cart.backup_is_dirty = true;
 					} else if (cnt ==  9) {
 						// read request: 2b "11" + 6b addr(MSB first) + 1b "0"

@@ -5959,7 +5959,7 @@ struct BurnDriver BurnDrvpce_soldblas = {
 // Son Son II (Japan)
 
 static struct BurnRomInfo pce_sonson2RomDesc[] = {
-	{ "son son ii (japan).pce", 0x040000, 0xd7921df2, BRF_PRG | BRF_ESS },
+	{ "Son Son II (Japan)(1989)(NEC).pce", 0x040000, 0xd7921df2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(pce_sonson2)
@@ -5971,6 +5971,26 @@ struct BurnDriver BurnDrvpce_sonson2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
 	PceGetZipName, pce_sonson2RomInfo, pce_sonson2RomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
+
+// Son Son II (Hack, English)
+// https://romhackplaza.org/translations/sonson-ii-pc-engine-english-translation-english-translation-pc-engine-supergrafx
+static struct BurnRomInfo pce_sonson2teRomDesc[] = {
+	{ "Son Son II T-Eng (2026)(Jackic).pce", 524288, 0xef783f57, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_sonson2te)
+STD_ROM_FN(pce_sonson2te)
+
+struct BurnDriver BurnDrvpce_sonson2te = {
+	"pce_sonson2te", "pce_sonson2", NULL, NULL, "2026",
+	"Son Son II (Hack, English)\0", NULL, "Jackic", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PCENGINE_PCENGINE, GBF_PLATFORM, 0,
+	PceGetZipName, pce_sonson2teRomInfo, pce_sonson2teRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };

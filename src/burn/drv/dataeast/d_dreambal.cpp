@@ -273,9 +273,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x400/2; i++)
 	{
-		UINT8 r = (p[i] >>  0) & 0xf;
-		UINT8 g = (p[i] >>  4) & 0xf;
-		UINT8 b = (p[i] >>  8) & 0xf;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0xf;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  4) & 0xf;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  8) & 0xf;
 
 		DrvPalette[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
 	}

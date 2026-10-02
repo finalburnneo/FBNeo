@@ -629,7 +629,7 @@ static INT32 DrvDraw()
 			// combine to 8bpp
 			for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++)
 			{
-				INT32 pixel = (BURN_ENDIAN_SWAP_INT16(bitmap0[i]) & 0xf) | ((BURN_ENDIAN_SWAP_INT16(bitmap1[i]) & 0xf) << 4);
+				INT32 pixel = (bitmap0[i] & 0xf) | ((bitmap1[i] & 0xf) << 4);
 
 				if ((pixel & 0xff) != 0xff) pTransDraw[i] = pixel + 0x200; 
 			}

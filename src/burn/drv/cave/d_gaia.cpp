@@ -1,6 +1,7 @@
 // Gaia Crusaders
 #include "cave.h"
 #include "ymz280b.h"
+#include "bitswap.h"
 
 #define CAVE_VBLANK_LINES 12
 
@@ -57,8 +58,8 @@ static struct BurnInputInfo gaiaInputList[] = {
 	{"Diagnostics",	BIT_DIGITAL,	DrvJoy2 +  2,	"diag"},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 +  3,	"service"},
 
-	{"DIP A",		BIT_DIPSWITCH,	(UINT8*)(DrvInput + 2) + 0,	"dip"},
-	{"DIP B",		BIT_DIPSWITCH,	(UINT8*)(DrvInput + 2) + 1,	"dip"},
+	{"DIP A",		BIT_DIPSWITCH,	(UINT8*)(DrvInput + 2) + BYTE_XOR_LE(0),	"dip"},
+	{"DIP B",		BIT_DIPSWITCH,	(UINT8*)(DrvInput + 2) + BYTE_XOR_LE(1),	"dip"},
 };
 
 STDINPUTINFO(gaia)

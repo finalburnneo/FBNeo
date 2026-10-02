@@ -243,7 +243,7 @@ static void __fastcall equites_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0x100000) {
 		if (data == 0x5555 && (address & 0xffe) == 0) data = 0;
-		*((UINT16*)(DrvSprRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvSprRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -447,7 +447,7 @@ static tilemap_callback( fg )
 
 static tilemap_callback( bg )
 {
-	UINT16 attr = *((UINT16*)(DrvBgRAM + (offs * 2)));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM + (offs * 2))));
 
 	TILE_SET_INFO(1, attr, attr >> 12, TILE_FLIPXY(attr >> 9));
 }
@@ -777,15 +777,15 @@ static void draw_sprites_block(INT32 start, INT32 end)
 
 	for (INT32 offs = end - 2; offs >= start; offs -= 2)
 	{
-		INT32 attr = ram[offs + 1] ^ 0xfe00;
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) ^ 0xfe00;
 		if (attr & 0x800)
 		{
 			INT32 code 	= attr & 0x1ff;
 			INT32 flipx = attr & 0x400;
 			INT32 flipy = attr & 0x200;
 			INT32 color = attr >> 12;
-			INT32 sx 	= ram[offs] >> 8;
-			INT32 sy 	= ram[offs] & 0xff;
+			INT32 sx 	= BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 8;
+			INT32 sy 	= BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xff;
 
 			if (flipscreen)
 			{

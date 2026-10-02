@@ -279,7 +279,7 @@ STDDIPINFO(Svolley)
 
 static inline void palette_write(INT32 offset)
 {
-	INT32 p = *((UINT16*)(DrvPalRAM + offset));
+	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >> 10) & 0x1f;
 	INT32 g = (p >>  5) & 0x1f;
@@ -297,13 +297,13 @@ static void __fastcall rpunch_main_write_word(UINT32 address, UINT16 data)
 	address &= 0x0fffff;
 
 	if ((address & 0x0ff800) == 0xa0000) {
-		*((UINT16*)(DrvPalRAM +(address & 0x7fe))) = data;
+		*((UINT16*)(DrvPalRAM +(address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x7fe);
 		return;
 	}
 
 	if ((address & 0x0fc000) == 0x80000) {
-		*((UINT16*)(DrvVidRAM + (address & 0x3ffe))) = data;
+		*((UINT16*)(DrvVidRAM + (address & 0x3ffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		SekCyclesBurnRun(4 * 2); // 4 cyc/byte penalty writing to vram
 		return;
 	}
@@ -642,7 +642,7 @@ static void draw_layer(INT32 layer, UINT8 *gfx)
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 attr  = ram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 		INT32 code  = (attr & 0x1fff) + bank;
 		INT32 color = ((attr >> 13) & 7) + colbank;
 
@@ -667,7 +667,7 @@ static void draw_bitmap()
 	{
 		for (INT32 x = 0; x < nScreenWidth; x+=4)
 		{
-			INT32 v, s = src[x/4];
+			INT32 v, s = BURN_ENDIAN_SWAP_INT16(src[x/4]);
 
 			v = (s >> 12) & 0x0f; if (v != 15) dst[x+0] = v + colorbase;
 			v = (s >>  8) & 0x0f; if (v != 15) dst[x+1] = v + colorbase;
@@ -687,9 +687,9 @@ static void draw_sprites(INT32 start, INT32 stop)
 
 	for (INT32 offs = start; offs < stop; offs += 4)
 	{
-		INT32 sy    = 512 - (ram[offs + 0] & 0x01ff);
-		INT32 attr  = ram[offs + 1];
-		INT32 sx    = ram[offs + 2] & 0x01ff;
+		INT32 sy    = 512 - (BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x01ff);
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) & 0x01ff;
 		INT32 code  = attr & 0x07ff;
 		INT32 flipy = attr & 0x0800;
 		INT32 flipx = attr & 0x1000;

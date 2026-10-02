@@ -315,8 +315,8 @@ static void __fastcall PgmVideoControllerWriteWord(UINT32 sekAddress, UINT16 wor
 {
 	switch (sekAddress & 0x0f000)
 	{
-		case 0x0000: PGMSprBuf[(sekAddress >> 1) & 0x7ff] = wordValue; bprintf(0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // Sprite buffer is not writeable by the 68K, but the BIOS tries anyway
-		case 0x1000: PGMZoomRAM[(sekAddress >> 1) & 0x1f] = wordValue; break; // size is guessed
+		case 0x0000: PGMSprBuf[(sekAddress >> 1) & 0x7ff] = BURN_ENDIAN_SWAP_INT16(wordValue); bprintf(0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue); break; // Sprite buffer is not writeable by the 68K, but the BIOS tries anyway
+		case 0x1000: PGMZoomRAM[(sekAddress >> 1) & 0x1f] = BURN_ENDIAN_SWAP_INT16(wordValue); break; // size is guessed
 		case 0x2000: pgm_bg_scrolly = wordValue; break;
 		case 0x3000: pgm_bg_scrollx = wordValue; break;
 		case 0x4000: /*bprintf (0, _T("VideoController write word: %5.5x, %4.4x\n"), sekAddress, wordValue);*/ pgm_unk_video_flags = wordValue; break; // 0610 is always written, but changing this seems to have no effect
@@ -346,7 +346,7 @@ static UINT16 __fastcall PgmVideoControllerReadWord(UINT32 sekAddress)
 	// ddp2 seems to read from the sprite buffer?
 	switch (sekAddress & 0x0f000)
 	{
-		case 0x0000: return PGMSprBuf[(sekAddress >> 1) & 0x7ff];
+		case 0x0000: return BURN_ENDIAN_SWAP_INT16(PGMSprBuf[(sekAddress >> 1) & 0x7ff]);
 		case 0x1000: return 0; // zoom ram is not readable by the 68K
 		case 0x2000: return pgm_bg_scrolly;
 		case 0x3000: return pgm_bg_scrollx;
@@ -372,7 +372,7 @@ static UINT8 __fastcall PgmVideoControllerReadByte(UINT32 sekAddress)
 	switch (sekAddress & 0x0f000)
 	{
 		case 0x0000:
-			return PGMSprBuf[(sekAddress >> 1) & 0x7ff] >> ((~sekAddress & 1) * 8);
+			return BURN_ENDIAN_SWAP_INT16(PGMSprBuf[(sekAddress >> 1) & 0x7ff]) >> ((~sekAddress & 1) * 8);
 	}
 
 	bprintf (0, _T("VideoController Read Byte: %5.5x, PC(%5.5x)\n"), sekAddress, SekGetPC(-1));
@@ -583,7 +583,7 @@ static void __fastcall PgmPaletteWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 	UINT8 *pal = (UINT8*)PGMPalRAM;
 	pal[sekAddress ^ 1] = byteValue;
-	RamCurPal[sekAddress >> 1] = CalcCol(PGMPalRAM[sekAddress >> 1]);
+	RamCurPal[sekAddress >> 1] = CalcCol(BURN_ENDIAN_SWAP_INT16(PGMPalRAM[sekAddress >> 1]));
 }
 
 static UINT8 __fastcall PgmZ80PortRead(UINT16 port)
@@ -1069,10 +1069,10 @@ static void pgm_sprite_buffer()
 		{
 			for (INT32 j = 0; j < 10 / 2; j++)
 			{
-				PGMSprBuf[(i / (10 / 2)) * (16 / 2) + j] = ram16[i + j] & mask[nPGMSpriteBufferHack][j];
+				PGMSprBuf[(i / (10 / 2)) * (16 / 2) + j] = ram16[i + j] & BURN_ENDIAN_SWAP_INT16(mask[nPGMSpriteBufferHack][j]);
 			} 
 
-			if ((ram16[i+4] & 0x7fff) == 0) break; // verified on hardware
+			if ((BURN_ENDIAN_SWAP_INT16(ram16[i+4]) & 0x7fff) == 0) break; // verified on hardware
 		}
 	}
 }

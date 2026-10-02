@@ -442,7 +442,7 @@ static void __fastcall sound_write_port(UINT16 port, UINT8 data)
 static tilemap_callback( tx )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
-	INT32 attr = ram[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(0, attr, 0, 0);
 }
@@ -450,7 +450,7 @@ static tilemap_callback( tx )
 static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
-	INT32 attr = ram[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(1, attr, attr >> 11, 0);
 }
@@ -458,7 +458,7 @@ static tilemap_callback( bg )
 static tilemap_callback( bgX )
 {
 	UINT16 *ram = (UINT16*)(Drv68KROM + 0x18000);
-	INT32 attr = ram[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(1, attr, attr >> 11, 0);
 }
@@ -710,13 +710,13 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x200; i += 8, spr16 += 4)
 	{
-		INT32 code = spr16[1] & 0xff;
-		INT32 attr = spr16[2];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(spr16[1]) & 0xff;
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(spr16[2]);
 		INT32 flip_x = attr & 0x04;
 		INT32 flip_y = attr & 0x08;
 		INT32 color = (attr & 0xf0) >> 4;
-		INT32 sx = (spr16[3] & 0xff) - 0x80 + 256 * (attr & 1);
-		INT32 sy = 240 - (spr16[0] & 0xff);
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(spr16[3]) & 0xff) - 0x80 + 256 * (attr & 1);
+		INT32 sy = 240 - (BURN_ENDIAN_SWAP_INT16(spr16[0]) & 0xff);
 
 		if (is_horekid)
 		{

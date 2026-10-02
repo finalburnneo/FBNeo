@@ -937,13 +937,13 @@ static UINT16 midyunit_mkyturbo_hack(UINT32 address)
 		return BurnRandom() & 0xffff;
 	}
 	INT32 offset = (address & 0x7fffff) >> 3;
-	return *((UINT16*)(DrvMainROM + offset));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMainROM + offset)));
 }
 
 static void midyunit_term2_hack(UINT32 address, UINT16 data)
 {
 	INT32 offset = (address & 0xfffff) >> 3;
-	*((UINT16*)(DrvMainRAM + offset)) = data;
+	*((UINT16*)(DrvMainRAM + offset)) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if ((address == 0x010aa0e0 || address == 0x010aa0f0) && (TMS34010GetPC() & 0xffff0000) == 0xffce0000) {
 		if ((address == 0x010aa0f0 && TMS34010GetPC() == 0xffce6520) ||
@@ -960,7 +960,7 @@ static void midyunit_term2_hack(UINT32 address, UINT16 data)
 static void midyunit_palette_write(UINT32 address, UINT16 data)
 {
 	INT32 offset = (address & 0x1fff0) >> 3;
-	*((UINT16*)(BurnPalRAM + offset)) = data;
+	*((UINT16*)(BurnPalRAM + offset)) = BURN_ENDIAN_SWAP_INT16(data);
 
 	BurnPalette[(offset / 2) & palette_mask] = BurnHighCol(pal5bit(data >> 10), pal5bit(data >> 5), pal5bit(data), 0);
 

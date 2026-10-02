@@ -871,7 +871,7 @@ static INT32 DrvInit()
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pwrinst2a")) {
 		UINT16 *rom = (UINT16 *)Rom01;
-		rom[0xD46C/2] = 0xD482;	// kurara dash fix  0xd400 -> 0xd482
+		rom[0xD46C/2] = BURN_ENDIAN_SWAP_INT16(0xD482);	// kurara dash fix  0xd400 -> 0xd482
 	}
 	
 	DrvDoReset(); // Reset machine

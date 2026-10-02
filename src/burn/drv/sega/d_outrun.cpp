@@ -2277,7 +2277,7 @@ static INT32 OutrunbInit()
 	sega_315_5195_custom_io_do = OutrunReadIO;
 	sega_315_5195_custom_io_write_do = OutrunWriteIO;
 	
-	UINT8 memory_control[0x10] = { 0x02, 0x00, 0x0d, 0x10, 0x00, 0x12, 0x0c, 0x13, 0x08, 0x14, 0x0f ,0x20, 0x00, 0x00, 0x00, 0x00 };
+	static UINT8 memory_control[0x10] = { 0x02, 0x00, 0x0d, 0x10, 0x00, 0x12, 0x0c, 0x13, 0x08, 0x14, 0x0f ,0x20, 0x00, 0x00, 0x00, 0x00 };
 	System16I8751InitialConfig = memory_control;
 	
 	System16HasGears = true;
@@ -2295,7 +2295,7 @@ static INT32 OutrunbInit()
 		word = (UINT16 *)System16Rom;
 		length = System16RomSize / 2;
 		for (i = 0; i < length; i++)
-			word[i] = BITSWAP16(word[i], 15,14,11,12,13,10,9,8,6,7,5,4,3,2,1,0);
+			word[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(word[i]), 15,14,11,12,13,10,9,8,6,7,5,4,3,2,1,0));
 		
 		memcpy(System16Code, System16Rom, System16RomSize);
 		
@@ -2303,7 +2303,7 @@ static INT32 OutrunbInit()
 		word = (UINT16 *)System16Rom2;
 		length = System16Rom2Size / 2;
 		for (i = 0; i < length; i++)
-			word[i] = BITSWAP16(word[i], 14,15,13,12,11,10,9,8,7,6,5,4,2,3,1,0);
+			word[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(word[i]), 14,15,13,12,11,10,9,8,7,6,5,4,2,3,1,0));
 			
 		/* road gfx */
 		/* rom a-2.bin: swap bits 6,7 */

@@ -706,7 +706,7 @@ static void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 				if (nb1414_blit_data) {
 					if(data & 0x4000 && ((*DrvVidRegs & 0x40) == 0)) { //0 -> 1 transition
 						UINT16 *ram = (UINT16*)DrvTxRAM;
-						nb_1414m4_exec(BURN_ENDIAN_SWAP_INT16((ram[0] << 8) | (ram[1] & 0xff)),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[3]);
+						nb_1414m4_exec((BURN_ENDIAN_SWAP_INT16(ram[0]) << 8) | (BURN_ENDIAN_SWAP_INT16(ram[1]) & 0xff),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[3]);
 					}
 				}
 
@@ -1325,11 +1325,14 @@ static INT32 DrvDraw()
 	}
 
 	if (scroll_type != 1) {
-		UINT16 *ram = (UINT16*)DrvTxRAM;
-		if (scroll_type == 0 || scroll_type == 6) ram = DrvMcuCmd;
-
-		DrvScroll[2] = (BURN_ENDIAN_SWAP_INT16(ram[13]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(ram[14]) & 3) << 8);
-		DrvScroll[3] = (BURN_ENDIAN_SWAP_INT16(ram[11]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(ram[12]) & 1) << 8);
+		if (scroll_type == 0 || scroll_type == 6) {
+			DrvScroll[2] = (DrvMcuCmd[13] & 0xff) | ((DrvMcuCmd[14] & 3) << 8);
+			DrvScroll[3] = (DrvMcuCmd[11] & 0xff) | ((DrvMcuCmd[12] & 1) << 8);
+		} else {
+			UINT16 *ram = (UINT16*)DrvTxRAM;
+			DrvScroll[2] = (BURN_ENDIAN_SWAP_INT16(ram[13]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(ram[14]) & 3) << 8);
+			DrvScroll[3] = (BURN_ENDIAN_SWAP_INT16(ram[11]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(ram[12]) & 1) << 8);
+		}
 	}
 
 	if (scroll_type == 0) { // terraf

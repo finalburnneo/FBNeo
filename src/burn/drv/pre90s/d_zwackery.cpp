@@ -121,7 +121,7 @@ static void sync_csd()
 static void __fastcall zwackery_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff000) == 0xc00000) {
-		*((UINT16*)(DrvSprRAM + (address & 0xffe))) = data | 0xff00;
+		*((UINT16*)(DrvSprRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data | 0xff00);
 		return;
 	}
 
@@ -154,7 +154,7 @@ static void __fastcall zwackery_main_write_word(UINT32 address, UINT16 data)
 static void __fastcall zwackery_main_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfff000) == 0xc00000) {
-		*((UINT16*)(DrvSprRAM + (address & 0xffe))) = data | 0xff00;
+		*((UINT16*)(DrvSprRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data | 0xff00);
 		return;
 	}
 
@@ -305,14 +305,14 @@ static const pia6821_interface pia_2 = {
 
 static tilemap_callback( bg )
 {
-	UINT16 attr = *((UINT16*)(DrvVidRAM + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM + offs * 2)));
 
 	TILE_SET_INFO(0, attr, attr >> 13, TILE_FLIPYX(attr >> 11));
 }
 
 static tilemap_callback( fg )
 {
-	UINT16 attr = *((UINT16*)(DrvVidRAM + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM + offs * 2)));
 	INT32 color = (attr >> 13) & 7;
 
 	TILE_SET_INFO(1, attr, color, TILE_FLIPYX(attr >> 11) | TILE_GROUP(color ? 1 : 0));
@@ -546,7 +546,7 @@ static void DrvPaletteUpdate()
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x2000/2; i++)
 	{
-		UINT16 d = p[i] ^ 0xffff;
+		UINT16 d = BURN_ENDIAN_SWAP_INT16(p[i]) ^ 0xffff;
 
 		UINT8 r = ((d >> 10) & 0x1f);
 		UINT8 g = ((d >>  0) & 0x1f);
@@ -568,10 +568,10 @@ static void draw_sprites(INT32 priority)
 
 	for (INT32 offs = 0x1000 / 2 - 4; offs >= 0; offs -= 4)
 	{
-		INT32 code = spriteram[offs + 2] & 0xff;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]) & 0xff;
 		if (code == 0) continue;
 
-		INT32 flags = spriteram[offs + 1] & 0xff;
+		INT32 flags = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0xff;
 		INT32 color = ((~flags >> 2) & 0x0f) | ((flags & 0x02) << 3);
 
 		if (priority == 0 && color == 7) continue;
@@ -579,8 +579,8 @@ static void draw_sprites(INT32 priority)
 
 		INT32 flipx = ~flags & 0x40;
 		INT32 flipy = flags & 0x80;
-		INT32 sx = (231 - (spriteram[offs + 3] & 0xff)) * 2;
-		INT32 sy = (241 - (spriteram[offs] & 0xff)) * 2;
+		INT32 sx = (231 - (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 3]) & 0xff)) * 2;
+		INT32 sy = (241 - (BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0xff)) * 2;
 
 		if (sx <= -32) sx += 512;
 

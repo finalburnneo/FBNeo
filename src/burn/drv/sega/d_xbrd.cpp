@@ -3305,10 +3305,10 @@ static INT32 RascotInit()
 
 		// patch out bootup link test
 		UINT16 *ROM = (UINT16*)System16Rom2;
-		ROM[0xb78 / 2] = 0x601e;
-		ROM[0x57e / 2] = 0x4e71;
-		ROM[0x5d0 / 2] = 0x6008;
-		ROM[0x606 / 2] = 0x4e71;
+		ROM[0xb78 / 2] = BURN_ENDIAN_SWAP_INT16(0x601e);
+		ROM[0x57e / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		ROM[0x5d0 / 2] = BURN_ENDIAN_SWAP_INT16(0x6008);
+		ROM[0x606 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
 	}
 
 	return nRet;

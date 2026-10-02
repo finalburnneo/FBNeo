@@ -462,11 +462,11 @@ void TC0640FIOScan(INT32 nAction);
 			TC0100SCN_CHECK_FG_LAYER_NEED_UPDATE_BYTE(1)				\
 			TC0100SCN_CHECK_CHAR_LAYER_NEED_UPDATE_BYTE(1)				\
 		}																\
-		TC0100SCNRam[0][Offset] = BURN_ENDIAN_SWAP_INT16(d);			\
-		TC0100SCNRam[1][Offset] = BURN_ENDIAN_SWAP_INT16(d);			\
+		TC0100SCNRam[0][Offset] = d;									\
+		TC0100SCNRam[1][Offset] = d;									\
 		return;															\
 	}
-	
+
 #define TC0100SCNDualScreenWordWrite_Map(start, end)					\
 	if (a >= start && a <= end) {										\
 		UINT16 *Ram0 = (UINT16*)TC0100SCNRam[0];						\
@@ -615,7 +615,7 @@ void TC0640FIOScan(INT32 nAction);
 
 #define TC0180VCUWordWrite_Map(base_address)						\
 	if (a >= (base_address + 0x40000) && a <= (base_address+0x7ffff)) {		\
-		*((UINT16*)(TC0180VCUFbRAM + (a & 0x3fffe))) = d;		\
+		*((UINT16*)(TC0180VCUFbRAM + (a & 0x3fffe))) = BURN_ENDIAN_SWAP_INT16(d);		\
 		TC0180VCUFramebufferWrite(a);						\
 		return;									\
 	}										\

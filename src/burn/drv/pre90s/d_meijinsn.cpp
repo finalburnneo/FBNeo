@@ -388,7 +388,7 @@ static void draw_layer()
 		sx -= 12;
 		sy -= 16;
 
-		INT32 data = vram[i];
+		INT32 data = BURN_ENDIAN_SWAP_INT16(vram[i]);
 
 		for (INT32 x = 0; x < 4; x++, data >>= 1)
 		{

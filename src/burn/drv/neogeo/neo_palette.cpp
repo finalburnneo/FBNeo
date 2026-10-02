@@ -123,7 +123,7 @@ void __fastcall NeoPalWriteByte(UINT32 nAddress, UINT8 byteValue)
 
 	if (((UINT8*)NeoPaletteCopy[nNeoPaletteBank])[nAddress] != byteValue) {
 		((UINT8*)NeoPaletteCopy[nNeoPaletteBank])[nAddress]  = byteValue;
-		NeoPaletteData[nNeoPaletteBank][nAddress >> 1] = CalcCol(*(UINT16*)(NeoPalSrc[nNeoPaletteBank] + (nAddress & ~0x01)));
+		NeoPaletteData[nNeoPaletteBank][nAddress >> 1] = CalcCol(BURN_ENDIAN_SWAP_INT16(*(UINT16*)(NeoPalSrc[nNeoPaletteBank] + (nAddress & ~0x01))));
 	}
 }
 

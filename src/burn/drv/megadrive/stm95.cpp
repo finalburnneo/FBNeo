@@ -214,11 +214,11 @@ static UINT16 __fastcall read_word(UINT32 offset)
 		return res;
 	}
 	if (offset < 0x280000/2)
-		return game_rom[offset];
+		return BURN_ENDIAN_SWAP_INT16(game_rom[offset]);
 	else    // last 0x180000 are bankswitched
 	{
 		UINT8 banksel = (offset - 0x280000/2) >> 18;
-		return game_rom[(offset & 0x7ffff/2) + (bank[banksel] * 0x80000)/2];
+		return BURN_ENDIAN_SWAP_INT16(game_rom[(offset & 0x7ffff/2) + (bank[banksel] * 0x80000)/2]);
 	}
 }
 

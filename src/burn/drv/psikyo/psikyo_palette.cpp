@@ -47,7 +47,7 @@ INT32 PsikyoPalUpdate()
 		UINT16 c;
 
 		for (INT32 i = 0; i < 0x1000; i++) {
-			c = ((UINT16*)PsikyoPalSrc)[i];
+			c = BURN_ENDIAN_SWAP_INT16(((UINT16*)PsikyoPalSrc)[i]);
 			PsikyoPalCopy[i] = c;
 			PsikyoPalette[i] = CalcCol(c);
 		}
@@ -65,9 +65,10 @@ void __fastcall PsikyoPalWriteByte(UINT32 nAddress, UINT8 byteValue)
 	nAddress ^= 1;
 	PsikyoPalSrc[nAddress] = byteValue;							// write byte
 
-	if (*((UINT8*)(PsikyoPalCopy + nAddress)) != byteValue) {
-		*((UINT8*)(PsikyoPalCopy + nAddress)) = byteValue;
-		PsikyoPalette[nAddress >> 1] = CalcCol(*(UINT16*)(PsikyoPalSrc + (nAddress & ~0x01)));
+	UINT16 c = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(PsikyoPalSrc + (nAddress & ~0x01)));
+	if (PsikyoPalCopy[nAddress >> 1] != c) {
+		PsikyoPalCopy[nAddress >> 1] = c;
+		PsikyoPalette[nAddress >> 1] = CalcCol(c);
 	}
 }
 
@@ -76,7 +77,7 @@ void __fastcall PsikyoPalWriteWord(UINT32 nAddress, UINT16 wordValue)
 	nAddress &= 0x1FFF;
 	nAddress >>= 1;
 
-	((UINT16*)PsikyoPalSrc)[nAddress] = wordValue;		// write word
+	((UINT16*)PsikyoPalSrc)[nAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);		// write word
 
 	if (PsikyoPalCopy[nAddress] != wordValue) {
 		PsikyoPalCopy[nAddress] = wordValue;

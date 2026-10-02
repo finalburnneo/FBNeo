@@ -336,8 +336,8 @@ static void __fastcall toypop_slave_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xff8000) == 0x180000) {
 		address = (address & 0x7ffe) * 2;
-		*((UINT16*)(DrvBgVRAM + (address+0))) = ((data & 0x00f0) << 4) | ((data & 0x000f));
-		*((UINT16*)(DrvBgVRAM + (address+2))) = ((data & 0xf000) >> 4) | ((data & 0xf00) >> 8);
+		*((UINT16*)(DrvBgVRAM + (address+0))) = BURN_ENDIAN_SWAP_INT16(((data & 0x00f0) << 4) | ((data & 0x000f)));
+		*((UINT16*)(DrvBgVRAM + (address+2))) = BURN_ENDIAN_SWAP_INT16(((data & 0xf000) >> 4) | ((data & 0xf00) >> 8));
 		return;
 	}
 
@@ -369,10 +369,10 @@ static UINT16 __fastcall toypop_slave_read_word(UINT32 address)
 	if ((address & 0xff8000) == 0x180000) {
 		UINT16 *p = (UINT16*)DrvBgVRAM;
 		UINT16 ret;
-		ret  = (p[(address & 0x7ffe)+0] & 0xf00) >> 4;
-		ret |= (p[(address & 0x7ffe)+0] & 0x00f) >> 0;
-		ret |= (p[(address & 0x7ffe)+1] & 0xf00) << 4;
-		ret |= (p[(address & 0x7ffe)+1] & 0x00f) << 8;
+		ret  = (BURN_ENDIAN_SWAP_INT16(p[(address & 0x7ffe)+0]) & 0xf00) >> 4;
+		ret |= (BURN_ENDIAN_SWAP_INT16(p[(address & 0x7ffe)+0]) & 0x00f) >> 0;
+		ret |= (BURN_ENDIAN_SWAP_INT16(p[(address & 0x7ffe)+1]) & 0xf00) << 4;
+		ret |= (BURN_ENDIAN_SWAP_INT16(p[(address & 0x7ffe)+1]) & 0x00f) << 8;
 
 		return ret;
 	}
@@ -682,7 +682,7 @@ static void draw_bg_layer()
 
 		for (INT32 x = 0; x < nScreenWidth; x += 2)
 		{
-			UINT32 srcpix = *src++;
+			UINT32 srcpix = BURN_ENDIAN_SWAP_INT16(*src++);
 			*dst++ = ((srcpix >> 8) & 0xf) + pal_base;
 			*dst++ = (srcpix & 0xf) + pal_base;
 		}

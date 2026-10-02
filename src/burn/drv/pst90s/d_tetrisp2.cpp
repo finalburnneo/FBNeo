@@ -303,7 +303,7 @@ static inline void palette_update(INT32 offset)
 
 	offset &= 0x1fffc;
 
-	INT32 p = *((UINT16*)(DrvPalRAM + offset)) >> 1;
+	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset))) >> 1;
 
 	UINT8 r,g,b;
 
@@ -389,7 +389,7 @@ static void __fastcall tetrisp2_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xfe0000) == 0x300000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x1fffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x1fffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_update(address & 0x1fffe);
 		return;
 	}
@@ -635,21 +635,21 @@ static tilemap_callback( rtlayer )
 {
 	UINT16 *ram = (UINT16*)DrvRotRAM;
 
-	TILE_SET_INFO(2, ram[offs * 2 + 0], ram[offs * 2 + 1] & 0x000f, 0);
+	TILE_SET_INFO(2, BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]), BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]) & 0x000f, 0);
 }
 
 static tilemap_callback( bglayer )
 {
 	UINT16 *ram = (UINT16*)DrvVBgRAM;
 
-	TILE_SET_INFO(1, ram[offs * 2 + 0], ram[offs * 2 + 1] & 0x000f, 0);
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]), BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]) & 0x000f, 0);
 }
 
 static tilemap_callback( fglayer )
 {
 	UINT16 *ram = (UINT16*)DrvVFgRAM;
 
-	TILE_SET_INFO(3, ram[offs * 2 + 0], ram[offs * 2 + 1] & 0x000f, 0);
+	TILE_SET_INFO(3, BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]), BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]) & 0x000f, 0);
 }
 
 static INT32 Tetrisp2Init()
@@ -1068,15 +1068,15 @@ static void draw_sprites(UINT8 *SpriteRAM, INT32 sprram_size)
 
 	for (; source <= finish; source += 0x10/2 )
 	{
-		attr	=	source[ 0 ];
+		attr	=	BURN_ENDIAN_SWAP_INT16(source[ 0 ]);
 
 		if ((attr & 0x0004) == 0) continue;
 
 		flipx		=	attr & 1;
 		flipy		=	attr & 2;
 
-		code		=	source[ 1 ];
-		color		=	source[ 2 ];
+		code		=	BURN_ENDIAN_SWAP_INT16(source[ 1 ]);
+		color		=	BURN_ENDIAN_SWAP_INT16(source[ 2 ]);
 
 		tx		=	(code >> 0) & 0xff;
 		ty		=	(code >> 8) & 0xff;
@@ -1085,7 +1085,7 @@ static void draw_sprites(UINT8 *SpriteRAM, INT32 sprram_size)
 
 		color		=	(color >> 12) & 0xf;
 
-		size		=	source[ 3 ];
+		size		=	BURN_ENDIAN_SWAP_INT16(source[ 3 ]);
 
 		xsize		=	((size >> 0) & 0xff) + 1;
 		ysize		=	((size >> 8) & 0xff) + 1;
@@ -1093,8 +1093,8 @@ static void draw_sprites(UINT8 *SpriteRAM, INT32 sprram_size)
 		xnum		=	( ((tx + xsize) & ~7) + (((tx + xsize) & 7) ? 8 : 0) - (tx & ~7) ) / 8;
 		ynum		=	( ((ty + ysize) & ~7) + (((ty + ysize) & 7) ? 8 : 0) - (ty & ~7) ) / 8;
 
-		sy		=	source[ 4 ];
-		sx		=	source[ 5 ];
+		sy		=	BURN_ENDIAN_SWAP_INT16(source[ 4 ]);
+		sx		=	BURN_ENDIAN_SWAP_INT16(source[ 5 ]);
 
 		sx		=	(sx & 0x3ff) - (sx & 0x400);
 		sy		=	(sy & 0x1ff) - (sy & 0x200);

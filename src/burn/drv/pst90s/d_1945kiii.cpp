@@ -515,7 +515,7 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x200; i++) {
-			DrvPalette[i] = CalcCol(DrvPalRAM[i]);
+			DrvPalette[i] = CalcCol(BURN_ENDIAN_SWAP_INT16(DrvPalRAM[i]));
 		}
 
 		DrvRecalc = 0;

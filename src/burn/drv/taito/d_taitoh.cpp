@@ -681,8 +681,8 @@ static void __fastcall taitoh_video_write_word(UINT32 address, UINT16 data)
 	if (address >= 0x400000 && address <= 0x420fff) {
 		INT32 offset = (address & 0x3fffe) / 2;
 		UINT16 *ram = (UINT16*)TaitoVideoRam;
-		UINT16 old = ram[offset];
-		ram[offset] = data;
+		UINT16 old = BURN_ENDIAN_SWAP_INT16(ram[offset]);
+		ram[offset] = BURN_ENDIAN_SWAP_INT16(data);
 
 		if ((address & 0xfec000) == 0x40c000) {
 			if (old != data) {
@@ -1087,8 +1087,8 @@ static void copy_layer(INT32 layer, INT32 transp)
 	transp = transp ? 0 : 0xff;
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
 
-	INT32 scrollx = (~base_ram[(0x20802/2) + layer] + screen_x_adjust) & 0x3ff;
-	INT32 scrolly = (base_ram[(0x20806/2) + layer] + screen_y_adjust) & 0x3ff;
+	INT32 scrollx = (~BURN_ENDIAN_SWAP_INT16(base_ram[(0x20802/2) + layer]) + screen_x_adjust) & 0x3ff;
+	INT32 scrolly = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20806/2) + layer]) + screen_y_adjust) & 0x3ff;
 
 	for (INT32 sy = 0; sy < nScreenHeight; sy++)
 	{
@@ -1115,8 +1115,8 @@ static void bg1_tilemap_draw()
 {
 	UINT16 *scroll_ram = (UINT16*)(TaitoVideoRam + 0x20800);
 
-	INT32 zoomx = scroll_ram[7] >> 8;
-	INT32 zoomy = scroll_ram[7] & 0x00ff;
+	INT32 zoomx = BURN_ENDIAN_SWAP_INT16(scroll_ram[7]) >> 8;
+	INT32 zoomy = BURN_ENDIAN_SWAP_INT16(scroll_ram[7]) & 0x00ff;
 
 	if (zoomx == 0x3f && zoomy == 0x7f)
 	{
@@ -1155,13 +1155,13 @@ static void bg1_tilemap_draw()
 
 		if (!flipscreen)
 		{
-			sx = (-scroll_ram[2] - 1) << 16;
-			sy = ( scroll_ram[4] - 1) << 16;
+			sx = (-BURN_ENDIAN_SWAP_INT16(scroll_ram[2]) - 1) << 16;
+			sy = ( BURN_ENDIAN_SWAP_INT16(scroll_ram[4]) - 1) << 16;
 		}
 		else
 		{
-			sx =  (( 0x200 + scroll_ram[2]) << 16) - (max_x + min_x) * (zx - 0x10000);
-			sy =  (( 0x3fe - scroll_ram[4]) << 16) - (max_y + min_y) * (zy - 0x10000);
+			sx =  (( 0x200 + BURN_ENDIAN_SWAP_INT16(scroll_ram[2])) << 16) - (max_x + min_x) * (zx - 0x10000);
+			sy =  (( 0x3fe - BURN_ENDIAN_SWAP_INT16(scroll_ram[4])) << 16) - (max_y + min_y) * (zy - 0x10000);
 		}
 
 		copy_zoom(min_x, max_x, min_y, max_y, sx, sy, zx, zy);
@@ -1174,8 +1174,8 @@ static void bg0_tilemap_draw()
 	UINT16 *scroll_ram = (UINT16*)(TaitoVideoRam + 0x20800);
 	UINT16 *bgscroll_ram = (UINT16*)(TaitoVideoRam + 0x20000);
 
-	INT32 zx = (scroll_ram[6] & 0xff00) >> 8;
-	INT32 zy = scroll_ram[6] & 0x00ff;
+	INT32 zx = (BURN_ENDIAN_SWAP_INT16(scroll_ram[6]) & 0xff00) >> 8;
+	INT32 zy = BURN_ENDIAN_SWAP_INT16(scroll_ram[6]) & 0x00ff;
 
 	if (zx == 0x3f && zy == 0x7f)
 	{
@@ -1215,13 +1215,13 @@ static void bg0_tilemap_draw()
 
 		if (!flipscreen)
 		{
-			sx = (-scroll_ram[1] - 1) << 16;
-			y_index = (( scroll_ram[3] - 1) << 16) + min_y * zoomy;
+			sx = (-BURN_ENDIAN_SWAP_INT16(scroll_ram[1]) - 1) << 16;
+			y_index = (( BURN_ENDIAN_SWAP_INT16(scroll_ram[3]) - 1) << 16) + min_y * zoomy;
 		}
 		else
 		{
-			sx =  (( 0x200 + scroll_ram[1]) << 16) - (max_x + min_x) * (zoomx - 0x10000);
-			y_index = ((-scroll_ram[3] - 2) << 16) + min_y * zoomy - (max_y + min_y) * (zoomy - 0x10000);
+			sx =  (( 0x200 + BURN_ENDIAN_SWAP_INT16(scroll_ram[1])) << 16) - (max_x + min_x) * (zoomx - 0x10000);
+			y_index = ((-BURN_ENDIAN_SWAP_INT16(scroll_ram[3]) - 2) << 16) + min_y * zoomy - (max_y + min_y) * (zoomy - 0x10000);
 		}
 
 		for (int y = min_y; y <= max_y; y++)
@@ -1233,7 +1233,7 @@ static void bg0_tilemap_draw()
 			if (flipscreen)
 				row_index = 0x1ff - row_index;
 
-			INT32 x_index = sx - ((bgscroll_ram[row_index] << 16));
+			INT32 x_index = sx - ((BURN_ENDIAN_SWAP_INT16(bgscroll_ram[row_index]) << 16));
 
 			UINT16 *src16 = TaitoTempBitmap[0] + (src_y_index & 0x3ff) * 1024;
 
@@ -1267,12 +1267,12 @@ static void update_layer(INT32 layer)
 	{
 		if (TaitoDirtyTile[offs + (layer * 0x1000)] == 0) continue;
 
-		INT32 code  = ram[offs] & 0x7fff;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x7fff;
 
 		INT32 sx = (offs & 0x3f) * 16;
 		INT32 sy = (offs / 0x40) * 16;
 
-		INT32 attr  = ram[offs + (0x10000 / 2)];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[offs + (0x10000 / 2)]);
 		INT32 color = attr & 0x1f;
 
 		INT32 flipx = attr & 0x40;
@@ -1308,12 +1308,12 @@ static void draw_tx_layer()
 
 	for (INT32 offs = 0; offs < 64 * 50; offs++)
 	{
-		if (ram[offs/2] == 0) continue;
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs/2]) == 0) continue;
 
 		INT32 sx = (offs & 0x3f) * 8;
 		INT32 sy = (offs / 0x40) * 8;
 
-		INT32 code = (ram[offs/2] >> ((~offs & 1) * 8)) & 0xff;
+		INT32 code = (BURN_ENDIAN_SWAP_INT16(ram[offs/2]) >> ((~offs & 1) * 8)) & 0xff;
 
 		Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, 0, 0, 0, 0x200, TaitoCharsB);
 	}
@@ -1339,11 +1339,11 @@ static void syvalion_draw_sprites()
 
 	for (INT32 offs = 0x03f8 / 2; offs >= 0; offs -= 0x008 / 2)
 	{
-		x0              =  base_ram[(0x20400/2) + offs + 1] & 0x3ff;
-		y0              =  base_ram[(0x20400/2) + offs + 0] & 0x3ff;
-		INT32 zoomx     = (base_ram[(0x20400/2) + offs + 2] & 0x7f00) >> 8;
-		INT32 tile_offs = (base_ram[(0x20400/2) + offs + 3] & 0x1fff) << 2;
-		INT32 ysize     = size[(base_ram[(0x20400/2) + offs] & 0x0c00) >> 10];
+		x0              =  BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 1]) & 0x3ff;
+		y0              =  BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 0]) & 0x3ff;
+		INT32 zoomx     = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 2]) & 0x7f00) >> 8;
+		INT32 tile_offs = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 3]) & 0x1fff) << 2;
+		INT32 ysize     = size[(BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs]) & 0x0c00) >> 10];
 
 		if (tile_offs)
 		{
@@ -1385,10 +1385,10 @@ static void syvalion_draw_sprites()
 				{
 					if (tile_offs >= 0x1000)
 					{
-						INT32 tile  = base_ram[(0x00000/2) + tile_offs] & 0x7fff;
-						INT32 color = base_ram[(0x10000/2) + tile_offs] & 0x001f;
-						INT32 flipx = base_ram[(0x10000/2) + tile_offs] & 0x0040;
-						INT32 flipy = base_ram[(0x10000/2) + tile_offs] & 0x0080;
+						INT32 tile  = BURN_ENDIAN_SWAP_INT16(base_ram[(0x00000/2) + tile_offs]) & 0x7fff;
+						INT32 color = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x001f;
+						INT32 flipx = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x0040;
+						INT32 flipy = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x0080;
 
 						if (flipscreen)
 						{
@@ -1427,12 +1427,12 @@ static void recordbr_draw_sprites(INT32 priority)
 		if (offs <  0x01b0 && priority == 0)    continue;
 		if (offs >= 0x01b0 && priority == 1)    continue;
 
-		x0        =  base_ram[(0x20400/2) + offs + 1] & 0x3ff;
-		y0        =  base_ram[(0x20400/2) + offs + 0] & 0x3ff;
-		zoomx     = (base_ram[(0x20400/2) + offs + 2] & 0x7f00) >> 8;
-		zoomy     = (base_ram[(0x20400/2) + offs + 2] & 0x007f);
-		tile_offs = (base_ram[(0x20400/2) + offs + 3] & 0x1fff) << 2;
-		ysize     = size[(base_ram[(0x20400/2) + offs] & 0x0c00) >> 10];
+		x0        =  BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 1]) & 0x3ff;
+		y0        =  BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 0]) & 0x3ff;
+		zoomx     = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 2]) & 0x7f00) >> 8;
+		zoomy     = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 2]) & 0x007f);
+		tile_offs = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 3]) & 0x1fff) << 2;
+		ysize     = size[(BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs]) & 0x0c00) >> 10];
 
 		if (tile_offs)
 		{
@@ -1488,10 +1488,10 @@ static void recordbr_draw_sprites(INT32 priority)
 				{
 					if (tile_offs >= 0x1000)
 					{
-						INT32 tile  = base_ram[(0x00000/2) + tile_offs] & 0x7fff;
-						INT32 color = base_ram[(0x10000/2) + tile_offs] & 0x001f;
-						INT32 flipx = base_ram[(0x10000/2) + tile_offs] & 0x0040;
-						INT32 flipy = base_ram[(0x10000/2) + tile_offs] & 0x0080;
+						INT32 tile  = BURN_ENDIAN_SWAP_INT16(base_ram[(0x00000/2) + tile_offs]) & 0x7fff;
+						INT32 color = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x001f;
+						INT32 flipx = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x0040;
+						INT32 flipy = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x0080;
 
 						if (flipscreen)
 						{
@@ -1526,12 +1526,12 @@ static void dleague_draw_sprites(INT32 priority)
 
 	for (offs = 0x03f8 / 2; offs >= 0; offs -= 0x008 / 2)
 	{
-		x0        =  base_ram[(0x20400/2) + offs + 1] & 0x3ff;
-		y0        =  base_ram[(0x20400/2) + offs + 0] & 0x3ff;
-		zoomx     = (base_ram[(0x20400/2) + offs + 2] & 0x7f00) >> 8;
-		tile_offs = (base_ram[(0x20400/2) + offs + 3] & 0x1fff) << 2;
-		pribit    = (base_ram[(0x20400/2) + offs + 0] & 0x1000) >> 12;
-		ysize     = size[(base_ram[(0x20400/2) + offs] & 0x0c00) >> 10];
+		x0        =  BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 1]) & 0x3ff;
+		y0        =  BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 0]) & 0x3ff;
+		zoomx     = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 2]) & 0x7f00) >> 8;
+		tile_offs = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 3]) & 0x1fff) << 2;
+		pribit    = (BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs + 0]) & 0x1000) >> 12;
+		ysize     = size[(BURN_ENDIAN_SWAP_INT16(base_ram[(0x20400/2) + offs]) & 0x0c00) >> 10];
 
 		if (tile_offs)
 		{
@@ -1549,7 +1549,7 @@ static void dleague_draw_sprites(INT32 priority)
 				zx = (dx + ex) << 12;
 			}
 
-			if (base_ram[0x20802/2] & 0x8000)
+			if (BURN_ENDIAN_SWAP_INT16(base_ram[0x20802/2]) & 0x8000)
 				pribit = 1;
 
 			if (x0 >= 0x200) x0 -= 0x400;
@@ -1577,10 +1577,10 @@ static void dleague_draw_sprites(INT32 priority)
 					{
 						if (tile_offs >= 0x1000)    /* or pitcher gets blanked */
 						{
-							INT32 tile  = base_ram[(0x00000/2) + tile_offs] & 0x7fff;
-							INT32 color = base_ram[(0x10000/2) + tile_offs] & 0x001f;
-							INT32 flipx = base_ram[(0x10000/2) + tile_offs] & 0x0040;
-							INT32 flipy = base_ram[(0x10000/2) + tile_offs] & 0x0080;
+							INT32 tile  = BURN_ENDIAN_SWAP_INT16(base_ram[(0x00000/2) + tile_offs]) & 0x7fff;
+							INT32 color = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x001f;
+							INT32 flipx = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x0040;
+							INT32 flipy = BURN_ENDIAN_SWAP_INT16(base_ram[(0x10000/2) + tile_offs]) & 0x0080;
 
 							if (flipscreen)
 							{
@@ -1613,7 +1613,7 @@ static INT32 SyvalionDraw()
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
 
-	flipscreen = base_ram[0x20800/2] & 0x0c00;
+	flipscreen = BURN_ENDIAN_SWAP_INT16(base_ram[0x20800/2]) & 0x0c00;
 
 	BurnTransferClear();
 
@@ -1641,7 +1641,7 @@ static INT32 RecordbrDraw()
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
 
-	flipscreen = base_ram[0x20800/2] & 0x0c00;
+	flipscreen = BURN_ENDIAN_SWAP_INT16(base_ram[0x20800/2]) & 0x0c00;
 
 	BurnTransferClear();
 
@@ -1672,7 +1672,7 @@ static INT32 DleagueDraw()
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
 
-	flipscreen = base_ram[0x20800/2] & 0x0c00;
+	flipscreen = BURN_ENDIAN_SWAP_INT16(base_ram[0x20800/2]) & 0x0c00;
 
 	BurnTransferClear();
 
@@ -1703,7 +1703,7 @@ static INT32 DleagueJDraw() /* kludge */
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
 
-	flipscreen = base_ram[0x20800/2] & 0x0c00;
+	flipscreen = BURN_ENDIAN_SWAP_INT16(base_ram[0x20800/2]) & 0x0c00;
 
 	BurnTransferClear();
 

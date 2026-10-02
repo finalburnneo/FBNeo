@@ -767,17 +767,10 @@ static INT32 DrvGfxDecode()
 
 static INT32 LoadNibbles(UINT8 *dst, INT32 idx)
 {
-#ifdef LSB_FIRST
 	if (BurnLoadRomExt(dst + 0, idx + 1, 2, LD_LO_NIBBLE)) return 1;
 	if (BurnLoadRomExt(dst + 1, idx + 3, 2, LD_LO_NIBBLE)) return 1;
 	if (BurnLoadRomExt(dst + 0, idx + 0, 2, LD_HI_NIBBLE)) return 1;
 	if (BurnLoadRomExt(dst + 1, idx + 2, 2, LD_HI_NIBBLE)) return 1;
-#else
-	if (BurnLoadRomExt(dst + 0, idx + 3, 2, LD_LO_NIBBLE)) return 1;
-	if (BurnLoadRomExt(dst + 1, idx + 1, 2, LD_LO_NIBBLE)) return 1;
-	if (BurnLoadRomExt(dst + 0, idx + 2, 2, LD_HI_NIBBLE)) return 1;
-	if (BurnLoadRomExt(dst + 1, idx + 0, 2, LD_HI_NIBBLE)) return 1;
-#endif
 
 	return 0;
 }

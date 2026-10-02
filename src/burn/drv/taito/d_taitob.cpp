@@ -2826,7 +2826,7 @@ static void __fastcall hitice_write_word(UINT32 a, UINT16 d)
 	TC0220IOCHalfWordWrite_Map(0x600000)
 
 	if (a >= 0xb00000 && a <= 0xb7ffff) {
-		*((UINT16*)(DrvPxlRAM + (a & 0x7fffe))) = d;
+		*((UINT16*)(DrvPxlRAM + (a & 0x7fffe))) = BURN_ENDIAN_SWAP_INT16(d);
 		hiticeFramebufferUpdate(a);
 		return;
 	}

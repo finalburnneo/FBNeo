@@ -48,7 +48,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 	// Seed compositing targets with backdrop so stale data from the prior line
 	// cannot bleed through when windows are disabled.
 	{
-		UINT32 bd_col = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE)) | (5u << 17);
+		UINT32 bd_col = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE))) | (5u << 17);
 		for (INT32 x = 0; x < 240; ++x) {
 			gba->first_target_buffer[x]  = bd_col;
 			gba->second_target_buffer[x] = bd_col;
@@ -62,7 +62,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 	if (display_obj) {
 		INT32 sprite_cycles  = SB_BFE(dispcnt, 5, 1) ? 954 : 1210;
 		for (INT32 o = 0; o < 128; ++o) {
-			UINT16 attr0 = *(UINT16*)(gba->mem.oam + o * 8 + 0);
+			UINT16 attr0 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + o * 8 + 0));
 			//Attr0
 			UINT8 y_coord     = SB_BFE(attr0, 0, 8);
 			bool  rot_scale   = SB_BFE(attr0, 8, 1);
@@ -75,7 +75,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 			bool   mosaic             = SB_BFE(attr0, 12, 1);
 			bool   colors_or_palettes = SB_BFE(attr0, 13, 1);
 			INT32  obj_shape          = SB_BFE(attr0, 14, 2);	//(0=Square,1=Horizontal,2=Vertical,3=Prohibited)
-			UINT16 attr1 = *(UINT16*)(gba->mem.oam + o * 8 + 2);
+			UINT16 attr1 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + o * 8 + 2));
 
 			INT32 rotscale_param = SB_BFE(attr1,  9, 5);
 			bool  h_flip         = SB_BFE(attr1, 12, 1) && !rot_scale;
@@ -118,7 +118,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 				if (x_end >= 240)x_end = 240;
 				//Attr2
 				//Skip objects disabled by window
-				UINT16 attr2 = *(UINT16*)(gba->mem.oam + o * 8 + 4);
+				UINT16 attr2 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + o * 8 + 4));
 				INT32  tile_base = SB_BFE(attr2,  0, 10);
 				// Always place sprites as the highest priority
 				INT32  priority  = SB_BFE(attr2, 10,  2);
@@ -140,10 +140,10 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 					}
 					if (rot_scale) {
 						UINT32 param_base = rotscale_param * 0x20;
-						INT32 a = *(INT16*)(gba->mem.oam + param_base + 0x6);
-						INT32 b = *(INT16*)(gba->mem.oam + param_base + 0xe);
-						INT32 c = *(INT16*)(gba->mem.oam + param_base + 0x16);
-						INT32 d = *(INT16*)(gba->mem.oam + param_base + 0x1e);
+						INT32 a = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + param_base + 0x6));
+						INT32 b = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + param_base + 0xe));
+						INT32 c = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + param_base + 0x16));
+						INT32 d = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + param_base + 0x1e));
 
 						INT64 x1 = sx << 8;
 						INT64 y1 = sy << 8;
@@ -193,7 +193,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 						transparent  = palette_id == 0;
 					}
 
-					UINT32 col = *(UINT16*)(gba->mem.palette + GBA_OBJ_PALETTE + palette_id * 2);
+					UINT32 col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_OBJ_PALETTE + palette_id * 2));
 					//Handle window objects(not displayed but control the windowing of other things)
 					if (obj_mode == 2 && !transparent) {
 						gba->window[x] = obj_window_control;
@@ -243,7 +243,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 				gba->window[x] = win_value;
 		}
 		INT32  backdrop_type = 5;
-		UINT32 backdrop_col  = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2)) | (backdrop_type << 17);
+		UINT32 backdrop_col  = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2))) | (backdrop_type << 17);
 		for (INT32 x = 0; x < 240; ++x) {
 			UINT8 window_control = gba->window[x];
 			if (SB_BFE(window_control, 4, 1) == 0)
@@ -344,7 +344,7 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 			if (bg_mode == 3) {
 				INT32 p    = bg_x + bg_y * 240;
 				INT32 addr = p * 2;
-				col = *(UINT16*)(gba->mem.vram + addr);
+				col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.vram + addr));
 			} else if (bg_mode == 4) {
 				INT32 p          = bg_x + bg_y * 240;
 				INT32 frame_sel  = SB_BFE(dispcnt, 4, 1);
@@ -352,12 +352,12 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 				UINT8 palette_id = gba->mem.vram[addr];
 				if (palette_id == 0)
 					continue;
-				col = *(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2);
+				col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2));
 			} else if (bg_mode == 5) {
 				INT32 p         = bg_x + bg_y * 160;
 				INT32 frame_sel = SB_BFE(dispcnt, 4, 1);
 				INT32 addr      = p * 2 + 0xA000 * frame_sel;
-				col = *(UINT16*)(gba->mem.vram + addr);
+				col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.vram + addr));
 			} else {
 				bg_x = bg_x & (screen_size_x - 1);
 				bg_y = bg_y & (screen_size_y - 1);
@@ -381,7 +381,7 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 						tile_off2 += 32 * 32;
 					if (bg_tile_y >= 32)
 						tile_off2 += 32 * 32 * (screen_size == 3 ? 2 : 1);
-					tile_data = *(UINT16*)(gba->mem.vram + screen_base_addr + tile_off2 * 2);
+					tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.vram + screen_base_addr + tile_off2 * 2));
 
 					INT32 h_flip = SB_BFE(tile_data, 10, 1);
 					INT32 v_flip = SB_BFE(tile_data, 11, 1);
@@ -410,7 +410,7 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 						continue;
 				}
 				UINT8 palette_id = tile_d;
-				col = *(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2);
+				col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2));
 			}
 			col |= (bg << 17) | ((5 - priority) << 28) | ((4 - bg) << 25);
 			if (col > gba->first_target_buffer[lcd_x]) {
@@ -425,7 +425,7 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 	// Backdrop (palette[0]) is read live per-dot on real hardware; refresh
 	// any slot still at type==5 so mid-line palette writes take effect.
 	{
-		UINT32 live_bd = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE)) | (5u << 17);
+		UINT32 live_bd = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE))) | (5u << 17);
 		if (SB_BFE(gba->first_target_buffer[lcd_x], 17, 3) == 5)
 			gba->first_target_buffer[lcd_x]  = live_bd;
 		if (SB_BFE(gba->second_target_buffer[lcd_x], 17, 3) == 5)
@@ -500,7 +500,7 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 	}
 
 	INT32  backdrop_type = 5;
-	UINT32 backdrop_col  = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2)) | (backdrop_type << 17);
+	UINT32 backdrop_col  = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2))) | (backdrop_type << 17);
 	gba->first_target_buffer[ lcd_x] = backdrop_col;
 	gba->second_target_buffer[lcd_x] = backdrop_col;
 
@@ -535,7 +535,7 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 	UINT16 bldy_reg     = gba_io_read16(gba, GBA_BLDY);
 	UINT16 bldalpha     = gba_io_read16(gba, GBA_BLDALPHA);
 	UINT16 green_swap   = gba_io_read16(gba, GBA_GREENSWP);
-	UINT32 backdrop_col = (*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2)) | (5 << 17);
+	UINT32 backdrop_col = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2))) | (5 << 17);
 	float  sbf          = 0.3 * gba->ppu.ghosting_strength;
 	float  evy          = SB_BFE(bldy_reg, 0, 5) / 16.;
 	if (evy > 1.0)
@@ -631,18 +631,18 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 				}
 				if (bg_mode == 3) {
 					INT32 p    = bg_x + bg_y * 240;
-					col = *(UINT16*)(gba->mem.vram + p * 2);
+					col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.vram + p * 2));
 				} else if (bg_mode == 4) {
 					INT32 p    = bg_x + bg_y * 240;
 					INT32 addr = p + 0xa000 * frame_sel;
 					UINT8 palette_id = gba->mem.vram[addr];
 					if (palette_id == 0)
 						continue;
-					col = *(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2);
+					col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2));
 				} else if (bg_mode == 5) {
 					INT32 p    = bg_x + bg_y * 160;
 					INT32 addr = p * 2 + 0xa000 * frame_sel;
-					col = *(UINT16*)(gba->mem.vram + addr);
+					col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.vram + addr));
 				} else {
 					bg_x = bg_x & (size_x[bg] - 1);
 					INT32 bg_tile_x = bg_x >> 3;
@@ -658,7 +658,7 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 						if (bg_tile_x != cached_tile_x[bg]) {
 							cached_tile_x[bg] = bg_tile_x;
 							INT32 toff = trow_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32 * 32 : 0);
-							tile_data = *(UINT16*)(gba->mem.vram + scr_addr[bg] + toff * 2);
+							tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.vram + scr_addr[bg] + toff * 2));
 							cached_tile_data[bg] = tile_data;
 							cached_py[bg] = SB_BFE(tile_data, 11, 1) ? 7 - py0[bg] : py0[bg];
 						} else
@@ -688,7 +688,7 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 							continue;
 					}
 					UINT8 palette_id = tile_d;
-					col = *(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2);
+					col = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + palette_id * 2));
 				}
 				col |= (bg << 17) | ((5 - priority[bg]) << 28) | ((4 - bg) << 25);
 				if (col > gba->first_target_buffer[lcd_x]) {

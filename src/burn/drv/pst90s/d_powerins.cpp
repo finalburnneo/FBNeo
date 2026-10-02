@@ -1277,14 +1277,14 @@ static void TileForeground()
  			UINT16 c = ((BURN_ENDIAN_SWAP_INT16(RamFg[offs]) & 0xF000) >> 8) | 0x200;
  			UINT16 *p = pTransDraw + y * 320 + x;
 			for (INT32 k=0;k<8;k++) {
- 				if ((d[0] >>  4) != 15) p[0] = BURN_ENDIAN_SWAP_INT16((d[0] >>  4) | c);
- 				if ((d[0] & 0xF) != 15) p[1] = BURN_ENDIAN_SWAP_INT16((d[0] & 0xF) | c);
- 				if ((d[1] >>  4) != 15) p[2] = BURN_ENDIAN_SWAP_INT16((d[1] >>  4) | c);
- 				if ((d[1] & 0xF) != 15) p[3] = BURN_ENDIAN_SWAP_INT16((d[1] & 0xF) | c);
- 				if ((d[2] >>  4) != 15) p[4] = BURN_ENDIAN_SWAP_INT16((d[2] >>  4) | c);
- 				if ((d[2] & 0xF) != 15) p[5] = BURN_ENDIAN_SWAP_INT16((d[2] & 0xF) | c);
- 				if ((d[3] >>  4) != 15) p[6] = BURN_ENDIAN_SWAP_INT16((d[3] >>  4) | c);
- 				if ((d[3] & 0xF) != 15) p[7] = BURN_ENDIAN_SWAP_INT16((d[3] & 0xF) | c);
+ 				if ((d[0] >>  4) != 15) p[0] = (d[0] >>  4) | c;
+ 				if ((d[0] & 0xF) != 15) p[1] = (d[0] & 0xF) | c;
+ 				if ((d[1] >>  4) != 15) p[2] = (d[1] >>  4) | c;
+ 				if ((d[1] & 0xF) != 15) p[3] = (d[1] & 0xF) | c;
+ 				if ((d[2] >>  4) != 15) p[4] = (d[2] >>  4) | c;
+ 				if ((d[2] & 0xF) != 15) p[5] = (d[2] & 0xF) | c;
+ 				if ((d[3] >>  4) != 15) p[6] = (d[3] >>  4) | c;
+ 				if ((d[3] & 0xF) != 15) p[7] = (d[3] & 0xF) | c;
  				d += 4;
  				p += 320;
  			}

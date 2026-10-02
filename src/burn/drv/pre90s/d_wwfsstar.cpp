@@ -499,8 +499,8 @@ static void draw_fg_layer()
 		INT32 sx = (offs & 0x1f) << 3;
 		INT32 sy = (offs >> 5) << 3;
 
-		INT32 attr  = vram[(offs * 2) + 0];
-		INT32 code  = (vram[(offs * 2) + 1] & 0xff) | ((attr & 0x0f) << 8);
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[(offs * 2) + 0]);
+		INT32 code  = (BURN_ENDIAN_SWAP_INT16(vram[(offs * 2) + 1]) & 0xff) | ((attr & 0x0f) << 8);
 		INT32 color = (attr & 0xf0) >> 4;
 
 		if (*flipscreen) {
@@ -535,8 +535,8 @@ static void draw_bg_layer()
 
 		INT32 ofst = (col & 0x0f) | ((row & 0x0f) << 4) | ((col & 0x10) << 4) | ((row & 0x10) << 5);
 
-		INT32 attr  = vram[(ofst * 2) + 0];
-		INT32 code  = (vram[(ofst * 2) + 1] & 0xff) | ((attr & 0x0f) << 8);
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[(ofst * 2) + 0]);
+		INT32 code  = (BURN_ENDIAN_SWAP_INT16(vram[(ofst * 2) + 1]) & 0xff) | ((attr & 0x0f) << 8);
 		INT32 color = (attr &  0x70) >> 4;
 		INT32 flipx = attr & 0x80;
 
@@ -566,15 +566,15 @@ static void draw_sprites()
 
 	while (source < finish)
 	{
-		if (source[1] & 0x0001)
+		if (BURN_ENDIAN_SWAP_INT16(source[1]) & 0x0001)
 		{
-			INT32 ypos   = (source[0] & 0xff) | ((source[1] & 0x04) << 6);
-			INT32 xpos   = (source[4] & 0xff) | ((source[1] & 0x08) << 5);
-			INT32 flipx  = (source[2] & 0x80 ) >> 7;
-			INT32 flipy  = (source[2] & 0x40 ) >> 6;
-			INT32 chain  = (source[1] & 0x02 ) >> 1;
-			INT32 number = (source[3] & 0xff) | ((source[2] & 0x3f) << 8);
-			INT32 color  = ((source[1] & 0xf0) + 0x80) >> 4;
+			INT32 ypos   = (BURN_ENDIAN_SWAP_INT16(source[0]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x04) << 6);
+			INT32 xpos   = (BURN_ENDIAN_SWAP_INT16(source[4]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0x08) << 5);
+			INT32 flipx  = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x80 ) >> 7;
+			INT32 flipy  = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x40 ) >> 6;
+			INT32 chain  = (BURN_ENDIAN_SWAP_INT16(source[1]) & 0x02 ) >> 1;
+			INT32 number = (BURN_ENDIAN_SWAP_INT16(source[3]) & 0xff) | ((BURN_ENDIAN_SWAP_INT16(source[2]) & 0x3f) << 8);
+			INT32 color  = ((BURN_ENDIAN_SWAP_INT16(source[1]) & 0xf0) + 0x80) >> 4;
 
 			ypos    = (((256 - ypos) & 0x1ff) - 16) ;
 			xpos    = (((256 - xpos) & 0x1ff) - 16);
@@ -620,9 +620,9 @@ static void DrvPaletteRecalculate()
 {
 	UINT16 *p = (UINT16*)DrvPalRAM;
 	for (INT32 i = 0; i < 0x180; i++) {
-		UINT8 r = (p[i] >> 0) & 0x0f;
-		UINT8 b = (p[i] >> 8) & 0x0f;
-		UINT8 g = (p[i] >> 4) & 0x0f;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 0) & 0x0f;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) & 0x0f;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 4) & 0x0f;
 
 		r |= r << 4;
 		g |= g << 4;

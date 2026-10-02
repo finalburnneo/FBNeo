@@ -551,7 +551,7 @@ static void draw_scanline(INT32 line)
 	GenericTilesSetClip(-1, -1, line-1, line);
 
 	for (INT32 i = 0; i < 0x80; i+=2) { // update slip, but not eof
-		atarimo_0_slipram[i] = SekReadWord(0x7f5f00);
+		atarimo_0_slipram[i] = BURN_ENDIAN_SWAP_INT16(SekReadWord(0x7f5f00));
 	}
 
 	if (nSpriteEnable & 4) AtariMoRender(0);
@@ -620,7 +620,7 @@ static INT32 DrvFrame()
 
 		if (i == 0) {
 			for (INT32 j = 0; j < 0x100; j+=2) {
-				atarimo_0_slipram[j/2] = SekReadWord(0x7f5f00);
+				atarimo_0_slipram[j/2] = BURN_ENDIAN_SWAP_INT16(SekReadWord(0x7f5f00));
 			}
 			AtariVADEOFUpdate(DrvEOFData);
 		}

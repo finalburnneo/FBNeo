@@ -3353,6 +3353,25 @@ struct BurnDriver BurnDrvsnes_Assaultsvj = {
 	512, 448, 4, 3
 };
 
+// Assault Suits Valken (USA) (Retro-bit)
+
+static struct BurnRomInfo snes_AssaultsvrbRomDesc[] = {
+	{ "Assault Suits Valken (U)(2024)(Retro-bit).sfc", 2097152, 0xb802fc5e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Assaultsvrb)
+STD_ROM_FN(snes_Assaultsvrb)
+
+struct BurnDriver BurnDrvsnes_Assaultsvrb = {
+	"snes_assaultsvrb", "snes_cybernator", NULL, NULL, "2024",
+	"Assault Suits Valken (USA) (Retro-bit)\0", NULL, "Retro-bit", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RUNGUN | GBF_PLATFORM, 0,
+	SNESGetZipName, snes_AssaultsvrbRomInfo, snes_AssaultsvrbRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Assault Suits Valken (Hack, English)
 // https://aeongenesis.net/projects/asv
 static struct BurnRomInfo snes_AssaultsvteRomDesc[] = {
@@ -16726,11 +16745,30 @@ STD_ROM_PICK(snes_Gsmikami)
 STD_ROM_FN(snes_Gsmikami)
 
 struct BurnDriver BurnDrvsnes_Gsmikami = {
-	"snes_gsmikami", NULL, NULL, NULL, "1993",
+	"snes_gsmikami", "snes_gsmikamite", NULL, NULL, "1993",
 	"Ghost Sweeper Mikami: Joreishi wa Nice Body (Japan)\0", NULL, "Banalex", "SNES / Super Famicom",
 	L"Ghost Sweeper Mikami: Joreishi wa Nice Body (Japan)\0GS\u7f8e\u795e \u9664\u970a\u5e2b\u306f\u30ca\u30a4\u30b9\u30d0\u30c7\u30a3\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_GsmikamiRomInfo, snes_GsmikamiRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Ghost Sweeper Mikami: The Exorcist with a Nice Body (Hack, English)
+// https://www.romhacking.net/translations/7764/
+static struct BurnRomInfo snes_GsmikamiteRomDesc[] = {
+	{ "Ghost Sweeper Mikami - The Exorcist with a Nice Body T-Eng (2026)(Pizzano).sfc", 1048576, 0xa381ca79, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Gsmikamite)
+STD_ROM_FN(snes_Gsmikamite)
+
+struct BurnDriver BurnDrvsnes_Gsmikamite = {
+	"snes_gsmikamite", NULL, NULL, NULL, "2026",
+	"Ghost Sweeper Mikami: The Exorcist with a Nice Body (Hack, English)\0", NULL, "Pizzano", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_GsmikamiteRomInfo, snes_GsmikamiteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -48781,6 +48819,25 @@ struct BurnDriver BurnDrvsnes_Megamanxsa1 = {
 	512, 448, 4, 3
 };
 
+// Mega Man X - SA-1 Plus (Hack, v1.0.1)
+// https://romhackplaza.org/romhacks/mega-man-x-sa-1-plus-super-nintendo-romhack
+static struct BurnRomInfo snes_Megamanxsa1pRomDesc[] = {
+	{ "Mega Man X - SA-1 Plus v1.0.1 (2026)(llethas).sfc", 1572864, 0x8e685ca9, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megamanxsa1p)
+STD_ROM_FN(snes_Megamanxsa1p)
+
+struct BurnDriver BurnDrvsnes_Megamanxsa1p = {
+	"snes_megamanxsa1p", "snes_megamanx", NULL, NULL, "2026",
+	"Mega Man X - SA-1 Plus (Hack, v1.0.1)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megamanxsa1pRomInfo, snes_Megamanxsa1pRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Megastalgia - Megaman Edition (GlobalHack)
 // https://www.romhacking.net/hacks/8423/
 static struct BurnRomInfo snes_MegastalgiaRomDesc[] = {
@@ -48891,6 +48948,25 @@ struct BurnDriver BurnDrvsnes_Mkbcf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_MkbcfRomInfo, snes_MkbcfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mortal Kombat MA-17 (Hack)
+// https://www.romhacking.net/hacks/10012/
+static struct BurnRomInfo snes_Mkma17RomDesc[] = {
+	{ "Mortal Kombat MA-17 (2026)(Yoshihiro).sfc", 4194304, 0xbe05b9c8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mkma17)
+STD_ROM_FN(snes_Mkma17)
+
+struct BurnDriver BurnDrvsnes_Mkma17 = {
+	"snes_mkma17", "snes_mk", NULL, NULL, "2026",
+	"Mortal Kombat MA-17 (Hack)\0", NULL, "Yoshihiro", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Mkma17RomInfo, snes_Mkma17RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

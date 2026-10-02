@@ -672,9 +672,9 @@ static INT32 DrvDoReset()
 
 	// rom hacks
 	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "aliencha", 8)) {
-		*((UINT16*)(Drv68KROM + 0x00a34)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 0) & 1); // text language
-		*((UINT16*)(Drv68KROM + 0x00a38)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 1) & 1); // character name language
-		*((UINT16*)(Drv68KROM + 0x00a3c)) = BURN_ENDIAN_SWAP_INT16(0x7000) | ((DrvDips[3] >> 2) & 1); // title
+		*((UINT16*)(Drv68KROM + 0x00a34)) = BURN_ENDIAN_SWAP_INT16(0x7000 | ((DrvDips[3] >> 0) & 1)); // text language
+		*((UINT16*)(Drv68KROM + 0x00a38)) = BURN_ENDIAN_SWAP_INT16(0x7000 | ((DrvDips[3] >> 1) & 1)); // character name language
+		*((UINT16*)(Drv68KROM + 0x00a3c)) = BURN_ENDIAN_SWAP_INT16(0x7000 | ((DrvDips[3] >> 2) & 1)); // title
 	} else {
 
 		if (EEPROMAvailable() == 0) {
@@ -1045,7 +1045,7 @@ static void draw_layer_linescroll()
 
 		for (INT32 x = 0; x < nScreenWidth + 16; x+=16) {
 
-			INT32 xscroll = (scrollx[1] + sram[y * 2 + 1] + x) & 0x7ff;
+			INT32 xscroll = (scrollx[1] + BURN_ENDIAN_SWAP_INT16(sram[y * 2 + 1]) + x) & 0x7ff;
 
 			INT32 ofst = (((yscroll >> 4) << 7) | (xscroll >> 4)) << 1;
 

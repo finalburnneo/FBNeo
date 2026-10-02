@@ -608,8 +608,8 @@ void install_protection_asic27a_kovgsyx()
 	{
 		UINT16 *rom = (UINT16*)PGM68KROM;
 
-		rom[0x9b32c/2] = 0x0088;
-		rom[0x9b550/2] = 0x0088;
+		rom[0x9b32c/2] = BURN_ENDIAN_SWAP_INT16(0x0088);
+		rom[0x9b550/2] = BURN_ENDIAN_SWAP_INT16(0x0088);
 	}
 
 	SekOpen(0);

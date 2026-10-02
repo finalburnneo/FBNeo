@@ -344,9 +344,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x2000/2; i++)
 	{
-		UINT8 r = (p[i] >> 10) & 0x1f;
-		UINT8 g = (p[i] >>  5) & 0x1f;
-		UINT8 b = (p[i] >>  0) & 0x1f;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -373,19 +373,19 @@ static void draw_sprites(int x_offs,int y_offs)
 
 	for (offs = (0x2000/4-4);offs >= 0;offs -= 4)
 	{
-		data = spriteram32[offs+0];
+		data = BURN_ENDIAN_SWAP_INT32(spriteram32[offs+0]);
 		data = (data << 16) | (data >> 16);
 		flipx =    (data & 0x00800000) >> 23;
 		zoomx =    (data & 0x007f0000) >> 16;
 		tilenum =  (data & 0x00007fff);
 
-		data = spriteram32[offs+2];
+		data = BURN_ENDIAN_SWAP_INT32(spriteram32[offs+2]);
 		data = (data << 16) | (data >> 16);
 		priority = (data & 0x000c0000) >> 18;
 		color =    (data & 0x0003fc00) >> 10;
 		x =        (data & 0x000003ff);
 
-		data = spriteram32[offs+3];
+		data = BURN_ENDIAN_SWAP_INT32(spriteram32[offs+3]);
 		data = (data << 16) | (data >> 16);
 		dblsize =  (data & 0x00040000) >> 18;
 		flipy =    (data & 0x00020000) >> 17;
@@ -423,7 +423,7 @@ static void draw_sprites(int x_offs,int y_offs)
 			if (flipx)  px = dimension-1-k;
 			if (flipy)  py = dimension-1-j;
 
-			code = spritemap[map_offset + px + (py<<(dblsize+1))];
+			code = BURN_ENDIAN_SWAP_INT16(spritemap[map_offset + px + (py<<(dblsize+1))]);
 
 			if (code==0xffff) {
 				continue;

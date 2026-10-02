@@ -907,7 +907,7 @@ static INT32 DrvDraw()
 
 	GenericTilemapSetScrollX(3, BURN_ENDIAN_SWAP_INT16(scroll[0]));
 
-	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(scroll[1]) + (game_select == 3) ? 0 : 1);
+	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(scroll[1]) + ((game_select == 3) ? 0 : 1));
 	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(scroll[2]) + 1);
 	GenericTilemapSetScrollY(2, BURN_ENDIAN_SWAP_INT16(scroll[3]) + 1);
 	GenericTilemapSetScrollY(3, BURN_ENDIAN_SWAP_INT16(scroll[4]) + 1);

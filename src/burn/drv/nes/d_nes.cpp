@@ -26733,6 +26733,25 @@ struct BurnDriver BurnDrvnes_tankh1990bm = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Tanker: Battle City Reimagined (HB)
+// https://slonenok.itch.io/tanker
+static struct BurnRomInfo nes_tankerRomDesc[] = {
+	{ "Tanker - Battle City Reimagined (2026)(Slonenok Studio).nes",          40976, 0x1f7b7d28, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_tanker)
+STD_ROM_FN(nes_tanker)
+
+struct BurnDriver BurnDrvnes_tanker = {
+	"nes_tanker", NULL, NULL, NULL, "2026",
+	"Tanker: Battle City Reimagined (HB)\0", NULL, "Slonenok Studio", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_MAZE | GBF_SHOOT, 0,
+	NESGetZipName, nes_tankerRomInfo, nes_tankerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Tapeworm Disco Puzzle (HB, v05)
 static struct BurnRomInfo nes_tapewormRomDesc[] = {
 	{ "Tapeworm Disco Puzzle v05 (2022)(Lowtek Games).nes",          524304, 0x3cf42935, BRF_ESS | BRF_PRG },
@@ -27129,6 +27148,25 @@ struct BurnDriver BurnDrvnes_tinasadvisliii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_tinasadvisliiiRomInfo, nes_tinasadvisliiiRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Togyzqumalaq (HB, v2.0.9)
+// https://aspirinechou.itch.io/togyzqumalaq-nes
+static struct BurnRomInfo nes_togyzqumalaqRomDesc[] = {
+	{ "Togyzqumalaq v2.0.9 (2026)(Jiucai Baobao).nes",          40976, 0xe09a3dda, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_togyzqumalaq)
+STD_ROM_FN(nes_togyzqumalaq)
+
+struct BurnDriver BurnDrvnes_togyzqumalaq = {
+	"nes_togyzqumalaq", NULL, NULL, NULL, "2026",
+	"Togyzqumalaq (HB, v2.0.9)\0", NULL, "Jiucai Baobao", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BOARD, 0,
+	NESGetZipName, nes_togyzqumalaqRomInfo, nes_togyzqumalaqRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

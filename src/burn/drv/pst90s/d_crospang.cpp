@@ -688,8 +688,8 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_layer(DrvBgRAM, 0x20, *bg_scroll_x, *bg_scroll_y, 0);
-	if (nBurnLayer & 2) draw_layer(DrvFgRAM, 0x10, *fg_scroll_x, *fg_scroll_y, 1);
+	if (nBurnLayer & 1) draw_layer(DrvBgRAM, 0x20, BURN_ENDIAN_SWAP_INT16(*bg_scroll_x), BURN_ENDIAN_SWAP_INT16(*bg_scroll_y), 0);
+	if (nBurnLayer & 2) draw_layer(DrvFgRAM, 0x10, BURN_ENDIAN_SWAP_INT16(*fg_scroll_x), BURN_ENDIAN_SWAP_INT16(*fg_scroll_y), 1);
 
 	if (nSpriteEnable & 1) draw_sprites();
 

@@ -953,37 +953,37 @@ static void __fastcall Zeropnt268KWriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x80010c: {
 			UINT16* ScrollRam = (UINT16*)DrvScrollRam;
-			ScrollRam[0] = d;
+			ScrollRam[0] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x80010e: {
 			UINT16* ScrollRam = (UINT16*)DrvScrollRam;
-			ScrollRam[1] = d;
+			ScrollRam[1] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x800110: {
 			UINT16* ScrollRam = (UINT16*)DrvScrollRam;
-			ScrollRam[2] = d;
+			ScrollRam[2] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x800114: {
 			UINT16* ScrollRam = (UINT16*)DrvScrollRam;
-			ScrollRam[4] = d;
+			ScrollRam[4] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x800116: {
 			UINT16* ScrollRam = (UINT16*)DrvScrollRam;
-			ScrollRam[5] = d;
+			ScrollRam[5] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
 		case 0x800120: {
 			UINT16* ScrollRam = (UINT16*)DrvScrollRam;
-			ScrollRam[10] = d;
+			ScrollRam[10] = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		
@@ -1364,10 +1364,10 @@ static void DrvRenderSprites(INT32 PriorityDraw)
 		INT32 x, xStart, xEnd, xInc;
 		UINT16 *SpriteRam = (UINT16*)DrvSpriteRam;
 		
-		INT32 sx = SpriteRam[Offset + 0];
-		INT32 sy = SpriteRam[Offset + 1];
-		INT32 Code = SpriteRam[Offset + 2];
-		INT32 Attr = SpriteRam[Offset + 3];
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
+		INT32 Code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
+		INT32 Attr = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		
 		INT32 xFlip = Attr & 0x20;
 		INT32 yFlip = Attr & 0x40;
@@ -1405,10 +1405,10 @@ static void Zeropnt2RenderSprites(INT32 PriorityDraw)
 		INT32 x, xStart, xEnd, xInc;
 		UINT32 *SpriteRam = (UINT32*)DrvSpriteRam;
 		
-		INT32 sx = SpriteRam[Offset + 0] & 0xffff;
-		INT32 sy = SpriteRam[Offset + 0] >> 16;
-		INT32 Code = SpriteRam[Offset + 1] & 0xffff;
-		INT32 Attr = SpriteRam[Offset + 1] >> 16;
+		INT32 sx = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 0]) & 0xffff;
+		INT32 sy = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 0]) >> 16;
+		INT32 Code = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 1]) & 0xffff;
+		INT32 Attr = BURN_ENDIAN_SWAP_INT32(SpriteRam[Offset + 1]) >> 16;
 		
 		INT32 xFlip = Attr & 0x20;
 		INT32 yFlip = Attr & 0x40;
@@ -1462,8 +1462,8 @@ static void DrvRenderLayer(INT32 Layer)
 	
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[2 * TileIndex + 1];
-			Code = VideoRam[2 * TileIndex + 0];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[2 * TileIndex + 1]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[2 * TileIndex + 0]);
 			Colour = Attr & 0x1f;
 			Flip = Attr >> 5;
 			xFlip = (Flip >> 0) & 0x01;
@@ -1497,18 +1497,18 @@ static void Zeropnt2RenderLayer(INT32 Layer)
 	UINT32 *VideoRam = (UINT32*)DrvVideo0Ram;
 	UINT32 *ScrollRam = (UINT32*)DrvScrollRam;
 	
-	UINT16 ScrollX = ScrollRam[0] & 0xffff;
-	UINT16 ScrollY = ScrollRam[0] >> 16;
+	UINT16 ScrollX = BURN_ENDIAN_SWAP_INT32(ScrollRam[0]) & 0xffff;
+	UINT16 ScrollY = BURN_ENDIAN_SWAP_INT32(ScrollRam[0]) >> 16;
 	
 	if (Layer == 1) {
-		ScrollX = ScrollRam[2] >> 16;
-		ScrollY = ScrollRam[5] & 0xffff;
+		ScrollX = BURN_ENDIAN_SWAP_INT32(ScrollRam[2]) >> 16;
+		ScrollY = BURN_ENDIAN_SWAP_INT32(ScrollRam[5]) & 0xffff;
 		VideoRam = (UINT32*)DrvVideo1Ram;
 	}
 	
 	if (Layer == 2) {
-		ScrollX = ScrollRam[2] & 0xffff;
-		ScrollY = ScrollRam[1] & 0xffff;
+		ScrollX = BURN_ENDIAN_SWAP_INT32(ScrollRam[2]) & 0xffff;
+		ScrollY = BURN_ENDIAN_SWAP_INT32(ScrollRam[1]) & 0xffff;
 		VideoRam = (UINT32*)DrvVideo2Ram;
 	}
 	
@@ -1517,7 +1517,7 @@ static void Zeropnt2RenderLayer(INT32 Layer)
 	
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Code = VideoRam[TileIndex];
+			Code = BURN_ENDIAN_SWAP_INT32(VideoRam[TileIndex]);
 			Attr = Code >> 16;
 			Code &= 0xffff;
 			Colour = Attr & 0x1f;
@@ -1553,8 +1553,8 @@ static void DrvCalcPalette()
 	UINT16 *PaletteRam = (UINT16*)DrvPaletteRam;
 	
 	for (INT32 i = 0; i < 0x4000; i += 2) {
-		 Data1 = PaletteRam[i & ~1];
-		 Data2 = PaletteRam[i |  1];
+		 Data1 = BURN_ENDIAN_SWAP_INT16(PaletteRam[i & ~1]);
+		 Data2 = BURN_ENDIAN_SWAP_INT16(PaletteRam[i |  1]);
 		 
 		 DrvPalette[i >> 1] = BurnHighCol((Data1 >> 8) & 0xfc, (Data1 >> 0) & 0xfc, (Data2 >> 8) & 0xfc, 0);
 	}
@@ -1566,7 +1566,7 @@ static void Zeropnt2CalcPalette()
 	UINT32 rgb0;
 	
 	for (INT32 i = 0; i < 0x2000; i++) {
-		 rgb0 = PaletteRam[i];
+		 rgb0 = BURN_ENDIAN_SWAP_INT32(PaletteRam[i]);
 		 
 		 DrvPalette[i] = BurnHighCol((rgb0 >> 8) & 0xfc, (rgb0 >> 0) & 0xfc, (rgb0 >> 24) & 0xfc, 0);
 	}

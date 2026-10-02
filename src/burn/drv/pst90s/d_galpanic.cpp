@@ -450,9 +450,9 @@ static void draw_bitmaps()
 
 	for (INT32 i = 0; i < 224 * 256; i++)
 	{
-		INT32 p = fgram[i] & 0xff;
+		INT32 p = BURN_ENDIAN_SWAP_INT16(fgram[i]) & 0xff;
 
-		dst[i] = p ? p : ((bgram[i] >> 1) + 0x400);
+		dst[i] = p ? p : ((BURN_ENDIAN_SWAP_INT16(bgram[i]) >> 1) + 0x400);
 	}
 }
 

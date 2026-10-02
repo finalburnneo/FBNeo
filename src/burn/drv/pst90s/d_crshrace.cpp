@@ -552,7 +552,7 @@ static inline void copy_roz(UINT32 startx, UINT32 starty, INT32 incxx, INT32 inc
 
 		for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, cy+=incxy, dst++)
 		{
-			INT32 p = BURN_ENDIAN_SWAP_INT16(src[(((cy >> 16) & 0x3ff) * 1024) + ((cx >> 16) & 0x3ff)]);
+			INT32 p = src[(((cy >> 16) & 0x3ff) * 1024) + ((cx >> 16) & 0x3ff)];
 
 			if ((p & 0xf) != 0xf) {
 				*dst = p;

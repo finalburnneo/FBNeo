@@ -231,7 +231,7 @@ static void __fastcall targeth_palette_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x7fe;
 
-	*((UINT16*)(BurnPalRAM + address)) = data;
+	*((UINT16*)(BurnPalRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 
 	BurnPaletteWrite_xBBBBBGGGGGRRRRR(address);
 }
@@ -273,16 +273,16 @@ static tilemap_callback( layer0 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + (offs * 4));
 
-	INT32 skip = DrvTransTab[ram[0] & 0x3fff] ? TILE_SKIP : 0;
+	INT32 skip = DrvTransTab[BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x3fff] ? TILE_SKIP : 0;
 
-	TILE_SET_INFO(0, ram[0], ram[1], TILE_FLIPXY(ram[1] >> 5) | skip);
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[0]), BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPXY(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5) | skip);
 }
 
 static tilemap_callback( layer1 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x2000 + (offs * 4));
 
-	TILE_SET_INFO(0, ram[0], ram[1], TILE_FLIPXY(ram[1] >> 5));
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[0]), BURN_ENDIAN_SWAP_INT16(ram[1]), TILE_FLIPXY(BURN_ENDIAN_SWAP_INT16(ram[1]) >> 5));
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -478,11 +478,11 @@ static void draw_sprites()
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 
 	for (int i = 3; i < (0x1000 - 6)/2; i += 4){
-		int sx = m_spriteram[i+2] & 0x03ff;
-		int sy = (240 - (m_spriteram[i] & 0x00ff)) & 0x00ff;
-		int code = m_spriteram[i+3] & 0x3fff;
-		int color = (m_spriteram[i+2] & 0x7c00) >> 10;
-		int attr = (m_spriteram[i] & 0xfe00) >> 9;
+		int sx = BURN_ENDIAN_SWAP_INT16(m_spriteram[i+2]) & 0x03ff;
+		int sy = (240 - (BURN_ENDIAN_SWAP_INT16(m_spriteram[i]) & 0x00ff)) & 0x00ff;
+		int code = BURN_ENDIAN_SWAP_INT16(m_spriteram[i+3]) & 0x3fff;
+		int color = (BURN_ENDIAN_SWAP_INT16(m_spriteram[i+2]) & 0x7c00) >> 10;
+		int attr = (BURN_ENDIAN_SWAP_INT16(m_spriteram[i]) & 0xfe00) >> 9;
 
 		int flipx = attr & 0x20;
 		int flipy = attr & 0x40;

@@ -446,9 +446,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x300; i++)
 	{
-		INT32 r = (p[i] >> 4) & 0xf;
-		INT32 g = (p[i] >> 0) & 0xf;
-		INT32 b = (p[i] >> 8) & 0xf;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 4) & 0xf;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 0) & 0xf;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) & 0xf;
 
 		DrvPalette[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
 	}
@@ -462,9 +462,9 @@ static void draw_sprites(INT32 sprite_x_offset)
 
 	for (INT32 i = 0x200 - 2; i >= 0; i -= 2)
 	{
-		UINT16 attr0 = ram[i + 0];
-		UINT16 attr1 = ram[i + 1];
-		UINT16 attr2 = ram[i + 0x200];
+		UINT16 attr0 = BURN_ENDIAN_SWAP_INT16(ram[i + 0]);
+		UINT16 attr1 = BURN_ENDIAN_SWAP_INT16(ram[i + 1]);
+		UINT16 attr2 = BURN_ENDIAN_SWAP_INT16(ram[i + 0x200]);
 
 		INT32 sy = attr0 & 0x00ff;
 
@@ -494,12 +494,12 @@ static INT32 DrvDraw()
 
 	UINT16 *scr = (UINT16*)DrvScroll;
 
-	GenericTilemapSetScrollX(0, 128 - scr[6]);
-	GenericTilemapSetScrollY(0, -scr[7]);
-	GenericTilemapSetScrollX(1, 128 - scr[0]);
-	GenericTilemapSetScrollY(1, -scr[1]);
-	GenericTilemapSetScrollX(2, 128 - scr[4]);
-	GenericTilemapSetScrollY(2, -scr[5]);
+	GenericTilemapSetScrollX(0, 128 - BURN_ENDIAN_SWAP_INT16(scr[6]));
+	GenericTilemapSetScrollY(0, -BURN_ENDIAN_SWAP_INT16(scr[7]));
+	GenericTilemapSetScrollX(1, 128 - BURN_ENDIAN_SWAP_INT16(scr[0]));
+	GenericTilemapSetScrollY(1, -BURN_ENDIAN_SWAP_INT16(scr[1]));
+	GenericTilemapSetScrollX(2, 128 - BURN_ENDIAN_SWAP_INT16(scr[4]));
+	GenericTilemapSetScrollY(2, -BURN_ENDIAN_SWAP_INT16(scr[5]));
 
 	if (~nBurnLayer & 1) BurnTransferClear();
 
@@ -507,7 +507,7 @@ static INT32 DrvDraw()
 	if ( nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 	if ( nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
 
-	if ( nSpriteEnable & 1) draw_sprites(scr[2] & 0xfff);
+	if ( nSpriteEnable & 1) draw_sprites(BURN_ENDIAN_SWAP_INT16(scr[2]) & 0xfff);
 
 	BurnTransferCopy(DrvPalette);
 

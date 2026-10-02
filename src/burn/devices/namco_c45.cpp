@@ -125,7 +125,7 @@ static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixel
 
 		for (INT32 x = 0; x < 16; x++)
 		{
-			c45RoadBitmap[((sx * 16) + x) & 0x3ff] = BURN_ENDIAN_SWAP_INT16(clut[gfx[x]] + 0xf00);
+			c45RoadBitmap[((sx * 16) + x) & 0x3ff] = clut[gfx[x]] + 0xf00;
 		}
 	}
 }
@@ -203,7 +203,7 @@ void c45RoadDraw()
 
 			if (destpri <= pri ) {
 				if (pixel != c45_transparent_color) {
-					dest[screenx] = BURN_ENDIAN_SWAP_INT16(pixel);
+					dest[screenx] = pixel;
 				}
 				pdest[screenx] = pri;
 			}

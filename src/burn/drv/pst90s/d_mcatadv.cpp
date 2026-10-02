@@ -617,7 +617,7 @@ static void draw_sprites()
 	INT32 xstart, xend, xinc;
 	INT32 ystart, yend, yinc;
 
-	if (BURN_ENDIAN_SWAP_INT16(vidregbuf[2]) == 0x0001)
+	if (vidregbuf[2] == 0x0001)
 	{
 		source += 0x2000;
 		finish += 0x2000;

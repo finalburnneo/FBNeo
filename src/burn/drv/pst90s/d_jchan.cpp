@@ -820,7 +820,7 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 	INT32 sprite_flip;
 	INT16 sprite_x_scroll;
 	INT16 sprite_y_scroll;
-	INT32 disabled = sprite_regs[0x04/4] & 0x08; // RWR1
+	INT32 disabled = BURN_ENDIAN_SWAP_INT32(sprite_regs[0x04/4]) & 0x08; // RWR1
 	INT32 xsize,ysize, size, pri=0, romoffset, colour=0, xflip,yflip, joint;
 	INT32 sx,sy;
 	INT32 endromoffs=0, gfxlen;
@@ -830,25 +830,25 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 
 	if ((!disabled)){
 
-		group_enable    = (sprite_regs[0x00/4] & 0x0040) >> 6; // RWR0
+		group_enable    = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x00/4]) & 0x0040) >> 6; // RWR0
 
 		/* Sengekis uses global flip */
-		sprite_flip = (sprite_regs[0x04/4] & 0x03); // RWR1
+		sprite_flip = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x04/4]) & 0x03); // RWR1
 
-		sprite_y_scroll = INT16((sprite_regs[0x08/4] & 0x7fff) << 1) >> 1; // RWR2
-		sprite_x_scroll = INT16((sprite_regs[0x10/4] & 0x7fff) << 1) >> 1; // RWR4
+		sprite_y_scroll = INT16((BURN_ENDIAN_SWAP_INT32(sprite_regs[0x08/4]) & 0x7fff) << 1) >> 1; // RWR2
+		sprite_x_scroll = INT16((BURN_ENDIAN_SWAP_INT32(sprite_regs[0x10/4]) & 0x7fff) << 1) >> 1; // RWR4
 
-		group_x_offset[0] = (sprite_regs[0x18/4] & 0xffff); // RWR6
-		group_y_offset[0] = (sprite_regs[0x1c/4] & 0xffff); // RWR7
+		group_x_offset[0] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x18/4]) & 0xffff); // RWR6
+		group_y_offset[0] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x1c/4]) & 0xffff); // RWR7
 
-		group_x_offset[1] = (sprite_regs[0x20/4] & 0xffff); // RWR8
-		group_y_offset[1] = (sprite_regs[0x24/4] & 0xffff); // RWR9
+		group_x_offset[1] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x20/4]) & 0xffff); // RWR8
+		group_y_offset[1] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x24/4]) & 0xffff); // RWR9
 
-		group_x_offset[2] = (sprite_regs[0x28/4] & 0xffff); // RWR10
-		group_y_offset[2] = (sprite_regs[0x2c/4] & 0xffff); // RWR11
+		group_x_offset[2] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x28/4]) & 0xffff); // RWR10
+		group_y_offset[2] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x2c/4]) & 0xffff); // RWR11
 
-		group_x_offset[3] = (sprite_regs[0x30/4] & 0xffff); // RWR12
-		group_y_offset[3] = (sprite_regs[0x34/4] & 0xffff); // RWR13
+		group_x_offset[3] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x30/4]) & 0xffff); // RWR12
+		group_y_offset[3] = (BURN_ENDIAN_SWAP_INT32(sprite_regs[0x34/4]) & 0xffff); // RWR13
 
 		/* Seems that sprites are consistently off by a fixed no. of pixels in different games
            (Patterns emerge through Manufacturer/Date/Orientation) */
@@ -858,11 +858,11 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 		gfxlen = gfx_length;
 		while( source<finish )
 		{
-			xflip = (source[0] & 0x00000200) >> 9;
-			yflip = (source[0] & 0x00000100) >> 8;
+			xflip = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x00000200) >> 9;
+			yflip = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x00000100) >> 8;
 
-			ysize = (source[0] & 0x30000000) >> 28;
-			xsize = (source[0] & 0x03000000) >> 24;
+			ysize = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x30000000) >> 28;
+			xsize = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x03000000) >> 24;
 			xsize ++;
 			ysize ++;
 
@@ -871,19 +871,19 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 
 			size = xsize * ysize;
 
-			joint = (source[0] & 0x0000e000) >> 13;
+			joint = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x0000e000) >> 13;
 
 			if (!(joint & 1))
 			{
-				xpos =  (source[2] & 0x0000ffff);
-				ypos =  (source[3] & 0x0000ffff);
+				xpos =  (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x0000ffff);
+				ypos =  (BURN_ENDIAN_SWAP_INT32(source[3]) & 0x0000ffff);
 
 				xpos += sprite_x_scroll; // Global offset
 				ypos += sprite_y_scroll;
 
 				if (group_enable)
 				{
-					group_number = (source[0] & 0x00001800) >> 11;
+					group_number = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x00001800) >> 11;
 
 					/* the group positioning doesn't seem to be working as i'd expect,
 					if I apply the x position the cursor on galpani4 ends up moving
@@ -902,8 +902,8 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 			}
 			else
 			{
-				xpos +=  (source[2] & 0x0000ffff);
-				ypos +=  (source[3] & 0x0000ffff);
+				xpos +=  (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x0000ffff);
+				ypos +=  (BURN_ENDIAN_SWAP_INT32(source[3]) & 0x0000ffff);
 			}
 
 			/* Local sprite offset (for taking flip into account and drawing offset) */
@@ -925,26 +925,26 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 			/* Palette linking */
 			if (!(joint & 2))
 			{
-				colour = (source[0] & 0x0000003f) >> 0;
+				colour = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x0000003f) >> 0;
 			}
 
 			/* Priority and Tile linking */
 			if (!(joint & 4))
 			{
-				romoffset = (source[1] & 0x07ffffff) >> 0;
-				pri = (source[0] & 0x000000c0) >> 6;
+				romoffset = (BURN_ENDIAN_SWAP_INT32(source[1]) & 0x07ffffff) >> 0;
+				pri = (BURN_ENDIAN_SWAP_INT32(source[0]) & 0x000000c0) >> 6;
 			} else {
 				romoffset = endromoffs;
 			}
 
-			grow = (source[0]>>23) & 1;
+			grow = (BURN_ENDIAN_SWAP_INT32(source[0])>>23) & 1;
 
 			if (!grow)
 			{
-				zoomx_m = (source[2] & 0xff000000) >> 16;
-				zoomx_s = (source[2] & 0x00ff0000) >> 8;
-				zoomy_m = (source[3] & 0xff000000) >> 16;
-				zoomy_s = (source[3] & 0x00ff0000) >> 8;
+				zoomx_m = (BURN_ENDIAN_SWAP_INT32(source[2]) & 0xff000000) >> 16;
+				zoomx_s = (BURN_ENDIAN_SWAP_INT32(source[2]) & 0x00ff0000) >> 8;
+				zoomy_m = (BURN_ENDIAN_SWAP_INT32(source[3]) & 0xff000000) >> 16;
+				zoomy_s = (BURN_ENDIAN_SWAP_INT32(source[3]) & 0x00ff0000) >> 8;
 			}
 			else
 			{
@@ -955,9 +955,9 @@ static void jchanskns_draw_sprites(UINT16 *bitmap, UINT32* spriteram_source, INT
 				//  convinced this implementation is correct because we simply end up ignoring
 				//  part of the data)
 				zoomx_m = 0;
-				zoomx_s = (source[2] & 0xffff0000) >> 16;
+				zoomx_s = (BURN_ENDIAN_SWAP_INT32(source[2]) & 0xffff0000) >> 16;
 				zoomy_m = 0;
-				zoomy_s = (source[3] & 0xffff0000) >> 16;
+				zoomy_s = (BURN_ENDIAN_SWAP_INT32(source[3]) & 0xffff0000) >> 16;
 			}
 
 			romoffset &= gfxlen-1;

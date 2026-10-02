@@ -153,7 +153,7 @@ static UINT16 __fastcall zerozone_read_word(UINT32 address)
 static void palette_write(INT32 offset)
 {
 	UINT8 r, b, g;
-	UINT16 data = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	r  = (data >> 11) & 0x1e;
 	r |= (data >>  3) & 0x01;
@@ -176,7 +176,7 @@ static void palette_write(INT32 offset)
 static void __fastcall zerozone_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffe00) == 0x88000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x1fe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0x1fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0x1fe);
 		return;
 	}

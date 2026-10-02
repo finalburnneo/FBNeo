@@ -642,12 +642,12 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 	}
 
 	if ((address & 0xffffc0) == 0x420000) {
-		return *((UINT16*)(DrvC123Ctrl + (address & 0x3e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvC123Ctrl + (address & 0x3e))));
 	}
 
 	if ((address & 0xff0000) == 0x440000) {
 		if ((address & 0x301e) > 0x3016) return 0xff;
-		return *((UINT16*)(DrvPalRAM + (address & 0x301e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (address & 0x301e))));
 	}
 
 	if ((address & 0xff0000) == 0x460000) {
@@ -655,7 +655,7 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 	}
 
 	if ((address & 0xfffff0) == 0xcc0000) {
-		return *((UINT16*)(DrvRozCtrl + (address & 0x0e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvRozCtrl + (address & 0x0e))));
 	}
 
 	if ((address & 0xfffff0) == 0xd00000) {
@@ -690,7 +690,7 @@ static UINT8 __fastcall namcos2_68k_read_byte(UINT32 address)
 
 	if ((address & 0xff0000) == 0x440000) {
 		if ((address & 0x301e) > 0x3016) return 0xff;
-		return *((UINT16*)(DrvPalRAM + (address & 0x301e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (address & 0x301e))));
 	}
 
 	if ((address & 0xff0000) == 0x460000) {
@@ -883,7 +883,7 @@ static void __fastcall luckywld_68k_write_byte(UINT32 address, UINT8 data)
 static UINT16 __fastcall luckywld_68k_read_word(UINT32 address)
 {
 	if ((address & 0xffffe0) == 0xd00000) {
-		return *((UINT16*)(DrvRozCtrl + (address & 0x1e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvRozCtrl + (address & 0x1e))));
 	}
 
 	if ((address & 0xfffff8) == 0xf00000) {
@@ -939,7 +939,7 @@ static void __fastcall metlhawk_68k_write_byte(UINT32 address, UINT8 data)
 static UINT16 __fastcall metlhawk_68k_read_word(UINT32 address)
 {
 	if ((address & 0xffffe0) == 0xd00000) {
-		return *((UINT16*)(DrvRozCtrl + (address & 0x0e)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvRozCtrl + (address & 0x0e))));
 	}
 
 	switch (address)

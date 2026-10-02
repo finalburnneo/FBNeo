@@ -140,13 +140,13 @@ void i5000sndReset()
 static bool read_sample(int ch)
 {
 	channels[ch].shift_pos &= 0xf;
-	channels[ch].sample = rom_base[channels[ch].address];
+	channels[ch].sample = BURN_ENDIAN_SWAP_INT16(rom_base[channels[ch].address]);
 	channels[ch].address = (channels[ch].address + 1) & rom_mask;
 
 	// handle command
 	if (channels[ch].sample == 0x7f7f)
 	{
-		UINT16 cmd = rom_base[channels[ch].address];
+		UINT16 cmd = BURN_ENDIAN_SWAP_INT16(rom_base[channels[ch].address]);
 		channels[ch].address = (channels[ch].address + 1) & rom_mask;
 
 		// volume envelope? or loop sample?
@@ -308,8 +308,8 @@ void i5000sndWrite(INT32 offset, UINT16 data)
 					if (data & (1 << ch) && !channels[ch].is_playing)
 					{
 						UINT32 address = regs[ch << 2 | 1] << 16 | regs[ch << 2];
-						UINT16 start = rom_base[(address + 0) & rom_mask];
-						UINT16 param = rom_base[(address + 1) & rom_mask];
+						UINT16 start = BURN_ENDIAN_SWAP_INT16(rom_base[(address + 0) & rom_mask]);
+						UINT16 param = BURN_ENDIAN_SWAP_INT16(rom_base[(address + 1) & rom_mask]);
 
 						if (start != 0x7f7f)
 						{

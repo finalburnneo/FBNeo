@@ -133,7 +133,7 @@ static UINT32 x2222_read_long(UINT32 address)
 {
 	if (address < 0x400000) {
 		speedhack_callback(address);
-		UINT32 ret = *((UINT32*)(DrvMainRAM + address));
+		UINT32 ret = BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvMainRAM + address)));
 		return (ret << 16) | (ret >> 16);
 	}
 
@@ -144,7 +144,7 @@ static UINT16 x2222_read_word(UINT32 address)
 {
 	if (address < 0x400000) {
 		speedhack_callback(address);
-		return *((UINT16*)(DrvMainRAM + address));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMainRAM + address)));
 	}
 
 	return 0;
@@ -254,8 +254,8 @@ static void rearrange_sprite_data()
 
 	for (INT32 i = 0; i < 0x200000; i++)
 	{
-		NEW[i]  = (ROM[(i * 2) + 0xc00000] << 24) | (ROM[(i * 2) + 0x800000] << 16) | (ROM[(i * 2) + 0x400000] << 8) | (ROM[(i * 2) + 0x000000] << 0);
-		NEW2[i] = (ROM[(i * 2) + 0xc00001] << 24) | (ROM[(i * 2) + 0x800001] << 16) | (ROM[(i * 2) + 0x400001] << 8) | (ROM[(i * 2) + 0x000001] << 0);
+		NEW[i]  = BURN_ENDIAN_SWAP_INT32((ROM[(i * 2) + 0xc00000] << 24) | (ROM[(i * 2) + 0x800000] << 16) | (ROM[(i * 2) + 0x400000] << 8) | (ROM[(i * 2) + 0x000000] << 0));
+		NEW2[i] = BURN_ENDIAN_SWAP_INT32((ROM[(i * 2) + 0xc00001] << 24) | (ROM[(i * 2) + 0x800001] << 16) | (ROM[(i * 2) + 0x400001] << 8) | (ROM[(i * 2) + 0x000001] << 0));
 	}
 
 	BurnFree(ROM);
@@ -272,8 +272,8 @@ static void rearrange_tile_data(INT32 gfx, INT32 dst0, INT32 dst1)
 
 	for (INT32 i = 0; i < 0x80000; i++)
 	{
-		NEW[i]  = (ROM[(i * 8) + 0x000000] << 0) | (ROM[(i * 8) + 0x000001] << 8) | (ROM[(i * 8) + 0x000004] << 16) | (ROM[(i * 8) + 0x000005] << 24);
-		NEW2[i] = (ROM[(i * 8) + 0x000002] << 0) | (ROM[(i * 8) + 0x000003] << 8) | (ROM[(i * 8) + 0x000006] << 16) | (ROM[(i * 8) + 0x000007] << 24);
+		NEW[i]  = BURN_ENDIAN_SWAP_INT32((ROM[(i * 8) + 0x000000] << 0) | (ROM[(i * 8) + 0x000001] << 8) | (ROM[(i * 8) + 0x000004] << 16) | (ROM[(i * 8) + 0x000005] << 24));
+		NEW2[i] = BURN_ENDIAN_SWAP_INT32((ROM[(i * 8) + 0x000002] << 0) | (ROM[(i * 8) + 0x000003] << 8) | (ROM[(i * 8) + 0x000006] << 16) | (ROM[(i * 8) + 0x000007] << 24));
 	}
 
 	BurnFree (ROM);
@@ -389,7 +389,7 @@ static void draw_bg(INT32 map, UINT32 *ram)
 	{
 		for (INT32 x = 0; x < 16; x++, basex++)
 		{
-			INT32 code = ((ram[(basex&0x0f)+((basey&0x0f)*0x10)]) >> 0) & 0x0fff;
+			INT32 code = ((BURN_ENDIAN_SWAP_INT32(ram[(basex&0x0f)+((basey&0x0f)*0x10)])) >> 0) & 0x0fff;
 
 			draw_16bpp_tile(map, map + 5, code, (x*32)-(xscroll&0x1f), (y*32)-(yscroll&0x1f));
 		}
@@ -413,9 +413,9 @@ static INT32 DrvDraw()
 
 	for (INT32 i = 0x0000 / 4; i < 0x4000 / 4; i += 4)
 	{
-		INT32 code = (vram[i + 0] >> 16) & 0xffff;
-		INT32 sx   = (vram[i + 1] >> 16) & 0x01ff;
-		INT32 sy   = (vram[i + 2] >> 16) & 0x00ff;
+		INT32 code = (BURN_ENDIAN_SWAP_INT32(vram[i + 0]) >> 16) & 0xffff;
+		INT32 sx   = (BURN_ENDIAN_SWAP_INT32(vram[i + 1]) >> 16) & 0x01ff;
+		INT32 sy   = (BURN_ENDIAN_SWAP_INT32(vram[i + 2]) >> 16) & 0x00ff;
 
 		draw_16bpp_tile(3, 4, code, sx, sy);
 		draw_16bpp_tile(3, 4, code, sx, sy - 256);

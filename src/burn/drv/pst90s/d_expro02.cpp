@@ -688,8 +688,8 @@ static UINT8 __fastcall comad_msm6295_read_byte(UINT32 /*address*/)
 static tilemap_callback( view2_layer0 )
 {
 	UINT16 *ram = (UINT16*)(DrvView2RAM + 0x1000);
-	INT32 code = ram[offs * 2 + 1];
-	INT32 attr = ram[offs * 2 + 0];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
 
 	code += tilebank[0];
 
@@ -699,8 +699,8 @@ static tilemap_callback( view2_layer0 )
 static tilemap_callback( view2_layer1 )
 {
 	UINT16 *ram = (UINT16*)(DrvView2RAM + 0x0000);
-	INT32 code = ram[offs * 2 + 1];
-	INT32 attr = ram[offs * 2 + 0];
+	INT32 code = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
 
 	code += tilebank[1];
 
@@ -1108,7 +1108,7 @@ static void prepare_layers(bool invert_flip)
 	UINT16 *regs = (UINT16*)DrvView2Regs;
 	UINT16 *ram = (UINT16*)(DrvView2RAM + 0x2000);
 
-	INT32 layer_flip = regs[4];
+	INT32 layer_flip = BURN_ENDIAN_SWAP_INT16(regs[4]);
 	if (invert_flip) layer_flip ^= 0x300;
 
 	INT32 x_offsets[2] = { 0x5b, 0x5b };
@@ -1120,12 +1120,12 @@ static void prepare_layers(bool invert_flip)
 
 		GenericTilemapSetFlip(i, ((layer_flip & 0x100) ? TMAP_FLIPY : 0) | ((layer_flip & 0x200) ? TMAP_FLIPX : 0));
 
-		GenericTilemapSetScrollY(i, (regs[(i ? 0 : 2) + 1] >> 6) + y_offsets[i]);
+		GenericTilemapSetScrollY(i, (BURN_ENDIAN_SWAP_INT16(regs[(i ? 0 : 2) + 1]) >> 6) + y_offsets[i]);
 
 		for (INT32 j = 0; j < 512; j++)
 		{
-			UINT16 scroll = (layer_flip & (0x800 >> (i * 8))) ? ram[(i ? 0 : 0x0800) + j] : 0;
-			GenericTilemapSetScrollRow(i, j, ((regs[i ? 0 : 2] + scroll) >> 6) + x_offsets[i]);
+			UINT16 scroll = (layer_flip & (0x800 >> (i * 8))) ? BURN_ENDIAN_SWAP_INT16(ram[(i ? 0 : 0x0800) + j]) : 0;
+			GenericTilemapSetScrollRow(i, j, ((BURN_ENDIAN_SWAP_INT16(regs[i ? 0 : 2]) + scroll) >> 6) + x_offsets[i]);
 		}
 	}
 }
@@ -1139,9 +1139,9 @@ static void draw_bitmaps()
 
 	for (INT32 i = 0; i < 224 * 256; i++)
 	{
-		INT32 p = fgram[i] & 0x7ff;
+		INT32 p = BURN_ENDIAN_SWAP_INT16(fgram[i]) & 0x7ff;
 
-		dst[i] = (palram[p] & 1) ? ((bgram[i] >> 1) + 0x800) : p;
+		dst[i] = (BURN_ENDIAN_SWAP_INT16(palram[p]) & 1) ? ((BURN_ENDIAN_SWAP_INT16(bgram[i]) >> 1) + 0x800) : p;
 	}
 }
 
@@ -1233,7 +1233,7 @@ static void draw_sprites()
 	UINT16 *regs = (UINT16*)DrvSprRegs;
 	UINT16* spriteram16 = (UINT16*)DrvSprRAM;
 	INT32 spriteram16_bytes = 0x1000;
-	UINT16 new_data = regs[0];
+	UINT16 new_data = BURN_ENDIAN_SWAP_INT16(regs[0]);
 	static INT32 sprite_flipx = new_data & 2;
 	static INT32 sprite_flipy = new_data & 1;
 
@@ -1259,20 +1259,20 @@ static void draw_sprites()
 		if (offs >= (spriteram16_bytes / 2))
 			break;
 
-		const UINT16 attr = spriteram16[offs + 0];
-		s->code		= spriteram16[offs + 1];
-		s->x		= spriteram16[offs + 2];
-		s->y		= spriteram16[offs + 3];
+		const UINT16 attr = BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 0]);
+		s->code		= BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 1]);
+		s->x		= BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 2]);
+		s->y		= BURN_ENDIAN_SWAP_INT16(spriteram16[offs + 3]);
 		s->flipy	= (attr & 0x0001);
 		s->flipx	= (attr & 0x0002);
 		s->color	= (attr & 0x00fc) >> 2;
 		s->priority	= (attr & 0x0300) >> 8;
 
 		const UINT16 xoffs1 = (attr & 0x1800) >> 11;
-		s->yoffs	= regs[0x10 / 2 + xoffs1 * 2 + 1];
-		s->xoffs	= regs[0x10 / 2 + xoffs1 * 2 + 0];
+		s->yoffs	= BURN_ENDIAN_SWAP_INT16(regs[0x10 / 2 + xoffs1 * 2 + 1]);
+		s->xoffs	= BURN_ENDIAN_SWAP_INT16(regs[0x10 / 2 + xoffs1 * 2 + 0]);
 
-		s->yoffs -= regs[0x2/2];
+		s->yoffs -= BURN_ENDIAN_SWAP_INT16(regs[0x2/2]);
 
 		int flags = ((attr & 0x2000) ? USE_LATCHED_XY : 0)  | ((attr & 0x4000) ? USE_LATCHED_COLOR : 0) | ((attr & 0x8000) ? USE_LATCHED_CODE  : 0) ;
 
@@ -1340,7 +1340,7 @@ static void render_sprites()
 
 	BurnBitmapPrimapClear(1);
 
-	if (!(~regs[0] & 0x04))
+	if (!(~BURN_ENDIAN_SWAP_INT16(regs[0]) & 0x04))
 		BurnBitmapFill(1, 0);
 
 	draw_sprites();
@@ -1428,20 +1428,20 @@ static void bootleg_draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x1000 / 2; offs += 4)
 	{
-		INT32 code  =  ram[offs + 1];
-		INT32 color = (ram[offs] & 0x003c) >> 2;
-		INT32 flipx =  ram[offs] & 0x0002;
-		INT32 flipy =  ram[offs] & 0x0001;
+		INT32 code  =  BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x003c) >> 2;
+		INT32 flipx =  BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x0002;
+		INT32 flipy =  BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x0001;
 
-		if ((ram[offs] & 0x6000) == 0x6000)
+		if ((BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x6000) == 0x6000)
 		{
-			sx += ram[offs + 2] >> 6;
-			sy += ram[offs + 3] >> 6;
+			sx += BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) >> 6;
+			sy += BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) >> 6;
 		}
 		else
 		{
-			sx = ram[offs + 2] >> 6;
-			sy = ram[offs + 3] >> 6;
+			sx = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) >> 6;
+			sy = BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) >> 6;
 		}
 
 		sx = (sx & 0x1ff) - (sx & 0x200);

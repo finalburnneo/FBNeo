@@ -153,21 +153,21 @@ static UINT8 __fastcall read_byte(UINT32 address)
 
 static tilemap_callback( bg1 )
 {
-	INT32 attr = *((UINT16*)(DrvBgRAM[1] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM[1] + offs * 2)));
 
 	TILE_SET_INFO(0, attr, attr >> 13, 0);
 }
 
 static tilemap_callback( bg0 )
 {
-	INT32 attr = *((UINT16*)(DrvBgRAM[0] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvBgRAM[0] + offs * 2)));
 
 	TILE_SET_INFO(1, attr, attr >> 13, 0);
 }
 
 static tilemap_callback( fg )
 {
-	INT32 attr = *((UINT16*)(DrvFgRAM + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvFgRAM + offs * 2)));
 
 	TILE_SET_INFO(2, attr, attr >> 13, 0);
 }
@@ -329,12 +329,12 @@ static void draw_sprites(INT32 priority)
 
 	for (INT32 offs = 0; offs < 0x800/2; offs += 4)
 	{
-		if (ram[offs + 0] & 0x0100) break;
+		if (BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x0100) break;
 
-		INT32 sy    =  ram[offs + 0] & 0x00ff;
-		INT32 attr  =  ram[offs + 1];
-		INT32 code  =  ram[offs + 2];
-		INT32 sx    =  ram[offs + 3] & 0x01ff;
+		INT32 sy    =  BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x00ff;
+		INT32 attr  =  BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
+		INT32 code  =  BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
+		INT32 sx    =  BURN_ENDIAN_SWAP_INT16(ram[offs + 3]) & 0x01ff;
 
 		INT32 color =  attr & 0x000f;
 		INT32 prio  = (attr & 0x0010) >> 4;

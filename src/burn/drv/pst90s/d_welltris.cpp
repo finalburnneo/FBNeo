@@ -247,7 +247,7 @@ static inline void sprite_hack(INT32 offset)
 
 static inline void palette_write(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >> 10) & 0x1f;
 	INT32 g = (p >>  5) & 0x1f;
@@ -299,13 +299,13 @@ void __fastcall welltris_main_write_byte(UINT32 address, UINT8 data)
 void __fastcall welltris_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffffc00) == 0xffc000) {
-		*((UINT16*)(DrvSprRAM + (address & 0x3fe))) = data;
+		*((UINT16*)(DrvSprRAM + (address & 0x3fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		sprite_hack(address & 0x3fe);
 		return;
 	}
 
 	if ((address & 0xfffff000) == 0xffe000) {
-		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0xffe);
 		return;
 	}
@@ -595,10 +595,10 @@ static void draw_sprites()
 	static const UINT8 zoomtable[16] = { 0,7,14,20,25,30,34,38,42,46,49,52,54,57,59,61 };
 
 	for (INT32 offs = 0; offs < 0x200 - 4; offs += 4) {
-		INT32 data0 = ram[offs + 0];
-		INT32 data1 = ram[offs + 1];
-		INT32 data2 = ram[offs + 2];
-		INT32 data3 = ram[offs + 3];
+		INT32 data0 = BURN_ENDIAN_SWAP_INT16(ram[offs + 0]);
+		INT32 data1 = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
+		INT32 data2 = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
+		INT32 data3 = BURN_ENDIAN_SWAP_INT16(ram[offs + 3]);
 
 		INT32 code = data3 & 0x1fff;
 		INT32 color = (data2 & 0x0f) + (0x10 * *spritepalbank) + 0x60;
@@ -613,7 +613,7 @@ static void draw_sprites()
 		INT32 xflip = (data2 >> 11) & 1;
 		INT32 xt, yt;
 
-		if (!(ram[offs + 2] & 0x0080)) continue;
+		if (!(BURN_ENDIAN_SWAP_INT16(ram[offs + 2]) & 0x0080)) continue;
 
 		xzoom = 16 - zoomtable[xzoom] / 8;
 		yzoom = 16 - zoomtable[yzoom] / 8;
@@ -698,7 +698,7 @@ static void draw_foreground()
 		sy -= scrolly;
 		if (sy < -7) sy += 256;
 
-		INT32 attr  = vram[offs];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 code  = (attr & 0xfff) | (gfx_bank[(attr >> 12) & 1] << 12);
 		INT32 color = (attr >> 13) | color_bank;
 
@@ -717,7 +717,7 @@ static void draw_background()
 		INT32 sx = ((offs & 0xff) << 1) - 15;
 		INT32 sy = (offs >> 8) - screen_y_offset;
 
-		INT32 pxl = vram[offs];
+		INT32 pxl = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 
 		if (sy < nScreenHeight && sy >= 0) {
 			if (sx >= 0 && sx < nScreenWidth) pTransDraw[sy * nScreenWidth + sx] = color_bank | (pxl >> 8);

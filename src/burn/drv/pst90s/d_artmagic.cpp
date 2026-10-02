@@ -733,7 +733,7 @@ static void execute_blit()
 						if (!((maskx << ((j/2) & 7)) & 0x80))
 						{
 							if (last && sx >= 0 && sx < 512)
-								dest[tsy + sx] = color | (last);
+								dest[tsy + sx] = BURN_ENDIAN_SWAP_INT16(color | (last));
 							sx++;
 						}
 
@@ -743,7 +743,7 @@ static void execute_blit()
 							last = ((val ^ blitter_xor[last]) >>  4) & 0xf;
 						{
 							if (last && sx >= 0 && sx < 512)
-								dest[tsy + sx] = color | (last);
+								dest[tsy + sx] = BURN_ENDIAN_SWAP_INT16(color | (last));
 							sx++;
 						}
 
@@ -754,7 +754,7 @@ static void execute_blit()
 						if (!((maskx << ((j/2) & 7)) & 0x40))
 						{
 							if (last && sx >= 0 && sx < 512)
-								dest[tsy + sx] = color | (last);
+								dest[tsy + sx] = BURN_ENDIAN_SWAP_INT16(color | (last));
 							sx++;
 						}
 
@@ -764,7 +764,7 @@ static void execute_blit()
 							last = ((val ^ blitter_xor[last]) >> 12) & 0xf;
 						{
 							if (last && sx >= 0 && sx < 512)
-								dest[tsy + sx] = color | (last);
+								dest[tsy + sx] = BURN_ENDIAN_SWAP_INT16(color | (last));
 							sx++;
 						}
 					}
@@ -833,7 +833,7 @@ static INT32 scanline_callback(INT32 line, TMS34010Display *params)
 	for (INT32 x = params->heblnk; x < params->hsblnk; x++) {
 		INT32 ex = x - params->heblnk;
 		if (ex >= 0 && ex < nScreenWidth) {
-			dest[ex] = vram[coladdr++ & 0x1ff] & 0xff;
+			dest[ex] = BURN_ENDIAN_SWAP_INT16(vram[coladdr++ & 0x1ff]) & 0xff;
 		}
 	}
 

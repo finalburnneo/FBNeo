@@ -4016,7 +4016,7 @@ static void DrvCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x400; i++, ps++, pd++) {
-		*pd = CalcCol(*ps);
+		*pd = CalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -4027,7 +4027,7 @@ static void HtchctchCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x400; i++, ps++, pd++) {
-		*pd = HtchctchCalcCol(*ps);
+		*pd = HtchctchCalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -4038,7 +4038,7 @@ static void FncywldCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x800; i++, ps++, pd++) {
-		*pd = FncywldCalcCol(*ps);
+		*pd = FncywldCalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -4049,7 +4049,7 @@ static void JumppopCalcPalette()
 	UINT32* pd;
 
 	for (i = 0, ps = (UINT16*)DrvPaletteRam, pd = DrvPalette; i < 0x400; i++, ps++, pd++) {
-		*pd = JumppopCalcCol(*ps);
+		*pd = JumppopCalcCol(BURN_ENDIAN_SWAP_INT16(*ps));
 	}
 }
 
@@ -4062,7 +4062,7 @@ static void DrvRenderPf2Layer(INT32 ScrollX, INT32 ScrollY)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = (Attr & 0xfff) | (DrvTileBank >> 2);
 			Colour = Attr >> 12;
 
@@ -4092,8 +4092,8 @@ static void PangpangRenderPf2Layer()
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
-			Attr = VideoRam[TileIndex * 2 + 0];
-			Code = VideoRam[TileIndex * 2 + 1] & 0xfff;
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 0]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 1]) & 0xfff;
 			Code |= 0x1000;
 			Colour = (Attr >> 12) & 0x0f;
 
@@ -4123,8 +4123,8 @@ static void FncywldRenderPf2Layer()
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
-			Attr = VideoRam[TileIndex * 2 + 1];
-			Code = VideoRam[TileIndex * 2 + 0];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 1]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 0]);
 			Colour = Attr & 0x1f;
 
 			Code &= (DrvNumTiles - 1);
@@ -4152,7 +4152,7 @@ static void JumppopRenderPf2Layer()
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Code = VideoRam[TileIndex];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code &= (DrvNumTiles - 1);
 			Colour = 0;
 
@@ -4181,7 +4181,7 @@ static void JumppopRenderPf2AltLayer()
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 128; mx++) {
-			Code = VideoRam[TileIndex];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Colour = 0;
 
 			x = 8 * mx;
@@ -4210,7 +4210,7 @@ static void DrvRenderPf1Layer(INT32 ScrollX, INT32 ScrollY)
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = (Attr & 0xfff) | (DrvTileBank >> 2);
 			Colour = Attr >> 12;
 
@@ -4240,8 +4240,8 @@ static void PangpangRenderPf1Layer()
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
-			Attr = VideoRam[TileIndex * 2 + 0];
-			Code = VideoRam[TileIndex * 2 + 1];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 0]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 1]);
 			Colour = (Attr >> 12) & 0x0f;
 
 			Code &= (DrvNumTiles - 1);
@@ -4270,8 +4270,8 @@ static void FncywldRenderPf1Layer()
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (mx & 0x1f) + ((my & 0x1f) << 5) + ((mx & 0x60) << 5);
-			Attr = VideoRam[TileIndex * 2 + 1];
-			Code = VideoRam[TileIndex * 2 + 0];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 1]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 0]);
 			Colour = Attr & 0x1f;
 
 			Code &= (DrvNumTiles - 1);
@@ -4299,7 +4299,7 @@ static void JumppopRenderPf1Layer()
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Code = VideoRam[TileIndex] & 0x1fff;
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]) & 0x1fff;
 			Code &= (DrvNumTiles - 1);
 			Colour = 0;
 
@@ -4328,7 +4328,7 @@ static void DrvRenderCharLayer()
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = (Attr & 0xfff) | DrvTileBank;
 			Colour = Attr >> 12;
 			Code &= (DrvNumChars - 1);
@@ -4358,8 +4358,8 @@ static void PangpangRenderCharLayer()
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[TileIndex * 2 + 0];
-			Code = VideoRam[TileIndex * 2 + 1] & 0x1fff;
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 0]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 1]) & 0x1fff;
 			Colour = (Attr >> 12) & 0x1f;
 			Code &= (DrvNumChars - 1);
 
@@ -4388,8 +4388,8 @@ static void FncywldRenderCharLayer()
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[TileIndex * 2 + 1];
-			Code = VideoRam[TileIndex * 2 + 0] & 0x1fff;
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 1]);
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex * 2 + 0]) & 0x1fff;
 			if (Code) {
 				Colour = Attr & 0x1f;
 				Code &= (DrvNumChars - 1);
@@ -4420,7 +4420,7 @@ static void SdfightRenderCharLayer()
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 64; mx++) {
-			Attr = VideoRam[TileIndex];
+			Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Code = (Attr & 0xfff) | DrvTileBank;
 			Colour = Attr >> 12;
 			Code &= (DrvNumChars - 1);
@@ -4450,7 +4450,7 @@ static void JumppopRenderCharLayer()
 
 	for (my = 0; my < 64; my++) {
 		for (mx = 0; mx < 128; mx++) {
-			Code = VideoRam[TileIndex];
+			Code = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 			Colour = 0;
 
 			x = 8 * mx;
@@ -4478,14 +4478,14 @@ static void DrvRenderSprites(INT32 MaskColour, INT32 xFlipped)
 	for (Offset = 0; Offset < DrvSpriteRamSize / 2; Offset += 4) {
 		INT32 x, y, Code, Colour, Flash, Multi, xFlip, yFlip, Inc, Mult;
 
-		Code = SpriteRam[Offset + 1] & DrvSpriteMask;
+		Code = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]) & DrvSpriteMask;
 		if (!Code) continue;
 
-		y = SpriteRam[Offset];
+		y = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]);
 		Flash = y & 0x1000;
 		if (Flash && (GetCurrentFrame() & 1)) continue;
 
-		x = SpriteRam[Offset + 2];
+		x = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Colour = (x >> 9) & DrvSpriteColourMask;
 		xFlip = y & 0x2000;
 		yFlip = y & 0x4000;

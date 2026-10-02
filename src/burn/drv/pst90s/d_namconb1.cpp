@@ -1009,7 +1009,7 @@ static INT32 b1_sprite_bank_callback(INT32 tile)
 {
 	UINT16 *sprbank = (UINT16*)DrvSprBank;
 
-	return (tile & 0x7ff) | (sprbank[(tile >> 11) & 7] << 11);
+	return (tile & 0x7ff) | (BURN_ENDIAN_SWAP_INT16(sprbank[(tile >> 11) & 7]) << 11);
 }
 
 static void b1_tile_bank_callback(INT32 *tile, INT32 *mask)
@@ -1357,7 +1357,7 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 	UINT16 *ram = (UINT16*)(DrvC123RAM + offset[layer]);
 
 	// layer dis-enable
-	if (ctrl[0x10 + layer] & (1<<3)) return;
+	if (BURN_ENDIAN_SWAP_INT16(ctrl[0x10 + layer]) & (1<<3)) return;
 
 	INT32 sizex = (layer < 4) ? 64 : 36;
 	INT32 sizey = (layer < 4) ? 64 : 28;
@@ -1543,8 +1543,8 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 
 	if (linkno*4>=0x4000/2) return;
 
-	INT32 xscroll = (INT16)c355_obj_position[1];
-	INT32 yscroll = (INT16)c355_obj_position[0];
+	INT32 xscroll = (INT16)BURN_ENDIAN_SWAP_INT16(c355_obj_position[1]);
+	INT32 yscroll = (INT16)BURN_ENDIAN_SWAP_INT16(c355_obj_position[0]);
 	xscroll &= 0x1ff; if( xscroll & 0x100 ) xscroll |= ~0x1ff;
 	yscroll &= 0x1ff; if( yscroll & 0x100 ) yscroll |= ~0x1ff;
 	xscroll += 0x26;
@@ -1729,7 +1729,7 @@ static void predraw_c169_roz_bitmap()
 		INT32 code_mask = code;
 		roz_tile_callback(&code, &code_mask, 0); // iq_132
 
-		if (code == BURN_ENDIAN_SWAP_INT16(roz_dirty_tile[ofst])) {
+		if (code == roz_dirty_tile[ofst]) {
 			continue;
 		}
 		roz_dirty_tile[ofst] = code;
@@ -1748,7 +1748,7 @@ static void predraw_c169_roz_bitmap()
 			{
 				if (msk[x/8] & (0x80 >> (x & 7)))
 				{
-					dst[x] = BURN_ENDIAN_SWAP_INT16(gfx[x]) + 0x1800;
+					dst[x] = BURN_ENDIAN_SWAP_INT16(gfx[x] + 0x1800);
 				} else {
 					dst[x] = BURN_ENDIAN_SWAP_INT16(0x8000);
 				}

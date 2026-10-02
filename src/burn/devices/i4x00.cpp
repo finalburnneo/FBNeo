@@ -670,21 +670,21 @@ static UINT16 __fastcall i4x00_read_word(UINT32 address)
 
 	if ((address & 0xffff000) == 0x75000) {
 		UINT16 *dst = (UINT16*)VideoRAM[0];
-		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
+		return BURN_ENDIAN_SWAP_INT16(dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2]);
 	}
 
 	if ((address & 0xffff000) == 0x76000) {
 		UINT16 *dst = (UINT16*)VideoRAM[1];
-		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
+		return BURN_ENDIAN_SWAP_INT16(dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2]);
 	}
 
 	if ((address & 0xffff000) == 0x77000) {
 		UINT16 *dst = (UINT16*)VideoRAM[2];
-		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
+		return BURN_ENDIAN_SWAP_INT16(dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2]);
 	}
 
 	if ((address >= 0x078800 && address <= 0x078813) || (address >= 0x079700 && address <= 0x079713)) {
-		return *((UINT16*)(VideoRegs + (address & 0x1f)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(VideoRegs + (address & 0x1f))));
 	}
 
 	switch (address)

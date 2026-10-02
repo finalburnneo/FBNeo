@@ -584,18 +584,18 @@ static void DrawSprites(INT32 priority)
 
 	for (INT32 i = 6/2; i < (0x1000 - 6)/2; i += 4)
 	{
-		INT32 sx = spriteram[i+3] & 0x01ff;
-		INT32 sy = spriteram[i+0];
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram[i+3]) & 0x01ff;
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spriteram[i+0]);
 		sy   = 0xf0 - ((sy & 0xff)  - (sy & 0x100));
 
-		INT32 number = spriteram[i+1] & 0x3fff;
-		INT32 color = 0x20 + (spriteram[i+2] & 0x000f);
-		INT32 color_effect = (spriteram[i+3] & 0x4000) >> 14;
-		INT32 attr = (spriteram[i+2] & 0xfe00) >> 9;
+		INT32 number = BURN_ENDIAN_SWAP_INT16(spriteram[i+1]) & 0x3fff;
+		INT32 color = 0x20 + (BURN_ENDIAN_SWAP_INT16(spriteram[i+2]) & 0x000f);
+		INT32 color_effect = (BURN_ENDIAN_SWAP_INT16(spriteram[i+3]) & 0x4000) >> 14;
+		INT32 attr = (BURN_ENDIAN_SWAP_INT16(spriteram[i+2]) & 0xfe00) >> 9;
 		INT32 xflip = attr & 0x20;
 		INT32 yflip = attr & 0x40;
 
-		if (spriteram[i+0] & 0x8000) break;
+		if (BURN_ENDIAN_SWAP_INT16(spriteram[i+0]) & 0x8000) break;
 
 		if (((~color >> 3) & 1) != priority) continue;
 

@@ -212,25 +212,25 @@ static void xorworldPatch() // protection hack
 {
 	UINT16 *rom = (UINT16*)Drv68KROM;
 
-	rom[0x1390 / 2] = 0x4239;
-	rom[0x1392 / 2] = 0x00ff;
-	rom[0x1394 / 2] = 0xe196;
-	rom[0x1396 / 2] = 0x4239;
-	rom[0x1398 / 2] = 0x00ff;
-	rom[0x139a / 2] = 0xe197;
-	rom[0x139c / 2] = 0x4239;
-	rom[0x139e / 2] = 0x00ff;
-	rom[0x13a0 / 2] = 0xe0bc;
-	rom[0x13a2 / 2] = 0x41f9;
-	rom[0x13a4 / 2] = 0x00ff;
-	rom[0x13a6 / 2] = 0xcfce;
-	rom[0x13a8 / 2] = 0x3e3c;
-	rom[0x13aa / 2] = 0x000f;
-	rom[0x13ac / 2] = 0x4218;
-	rom[0x13ae / 2] = 0x51cf;
-	rom[0x13b0 / 2] = 0xfffc;
-	rom[0x13b2 / 2] = 0x4e75;
-	rom[0x13b4 / 2] = 0x31ff;
+	rom[0x1390 / 2] = BURN_ENDIAN_SWAP_INT16(0x4239);
+	rom[0x1392 / 2] = BURN_ENDIAN_SWAP_INT16(0x00ff);
+	rom[0x1394 / 2] = BURN_ENDIAN_SWAP_INT16(0xe196);
+	rom[0x1396 / 2] = BURN_ENDIAN_SWAP_INT16(0x4239);
+	rom[0x1398 / 2] = BURN_ENDIAN_SWAP_INT16(0x00ff);
+	rom[0x139a / 2] = BURN_ENDIAN_SWAP_INT16(0xe197);
+	rom[0x139c / 2] = BURN_ENDIAN_SWAP_INT16(0x4239);
+	rom[0x139e / 2] = BURN_ENDIAN_SWAP_INT16(0x00ff);
+	rom[0x13a0 / 2] = BURN_ENDIAN_SWAP_INT16(0xe0bc);
+	rom[0x13a2 / 2] = BURN_ENDIAN_SWAP_INT16(0x41f9);
+	rom[0x13a4 / 2] = BURN_ENDIAN_SWAP_INT16(0x00ff);
+	rom[0x13a6 / 2] = BURN_ENDIAN_SWAP_INT16(0xcfce);
+	rom[0x13a8 / 2] = BURN_ENDIAN_SWAP_INT16(0x3e3c);
+	rom[0x13aa / 2] = BURN_ENDIAN_SWAP_INT16(0x000f);
+	rom[0x13ac / 2] = BURN_ENDIAN_SWAP_INT16(0x4218);
+	rom[0x13ae / 2] = BURN_ENDIAN_SWAP_INT16(0x51cf);
+	rom[0x13b0 / 2] = BURN_ENDIAN_SWAP_INT16(0xfffc);
+	rom[0x13b2 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e75);
+	rom[0x13b4 / 2] = BURN_ENDIAN_SWAP_INT16(0x31ff);
 }
 
 static INT32 DrvInit()
@@ -299,8 +299,8 @@ static void draw_layer()
 		INT32 sx = (offs & 0x1f) << 3;
 		INT32 sy = (offs >> 5) << 3;
 
-		INT32 code  = ram[offs] & 0x0fff;
-		INT32 color = ram[offs] >> 12;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x0fff;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
 
 		Render8x8Tile(pTransDraw, code, sx, sy - 16, color, 4, 0, DrvGfxROM);
 	}
@@ -312,10 +312,10 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x40; i += 2)
 	{
-		INT32 sx    = ram[i] & 0xff;
-		INT32 sy    = (240 - (ram[i] >> 8)) - 16;
-		INT32 code  = ram[i+1] & 0x0ffc;
-		INT32 color = ram[i+1] >> 12;
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[i]) & 0xff;
+		INT32 sy    = (240 - (BURN_ENDIAN_SWAP_INT16(ram[i]) >> 8)) - 16;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(ram[i+1]) & 0x0ffc;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(ram[i+1]) >> 12;
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 4, 0, 0, DrvGfxROM);
 		Render8x8Tile_Mask_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 4, 0, 0, DrvGfxROM);

@@ -537,7 +537,7 @@ static void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
 
 		DrvPalRAM[address ^ 1] = data;
 
-		palette_write(address>>1, *((UINT16*)(DrvPalRAM + (address & ~1))));
+		palette_write(address>>1, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (address & ~1)))));
 
 		return;
 	}
@@ -575,9 +575,9 @@ static void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
 	if ((address & 0xffffe000) == 0x78000) {
 		address &= 0x1ffe;
 
-		*((UINT16*)(DrvPalRAM + address)) = data;
+		*((UINT16*)(DrvPalRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 
-		palette_write(address>>1, *((UINT16*)(DrvPalRAM + address)));
+		palette_write(address>>1, BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + address))));
 
 		return;
 	}
@@ -1165,18 +1165,18 @@ static void gaiden_draw_sprites(INT32 spr_sizey, INT32 spr_offset_y)
 
 	while (count--)
 	{
-		UINT32 attributes = source[0];
+		UINT32 attributes = BURN_ENDIAN_SWAP_INT16(source[0]);
 
 		if (attributes & 0x04)
 		{
 			UINT32 flipx = (attributes & 1);
 			UINT32 flipy = (attributes & 2);
 
-			UINT32 color = source[2];
+			UINT32 color = BURN_ENDIAN_SWAP_INT16(source[2]);
 			UINT32 sizex = 1 << ((color >> 0) & 3);
 			UINT32 sizey = 1 << ((color >> spr_sizey) & 3);
 
-			UINT32 number = (source[1]);
+			UINT32 number = BURN_ENDIAN_SWAP_INT16(source[1]);
 			if (sizex >= 2) number &= ~0x01;
 			if (sizey >= 2) number &= ~0x02;
 			if (sizex >= 4) number &= ~0x04;
@@ -1184,8 +1184,8 @@ static void gaiden_draw_sprites(INT32 spr_sizey, INT32 spr_offset_y)
 			if (sizex >= 8) number &= ~0x10;
 			if (sizey >= 8) number &= ~0x20;
 
-			int ypos = (source[3] + spr_offset_y) & 0x1ff;
-			int xpos = source[4] & 0x1ff;
+			int ypos = (BURN_ENDIAN_SWAP_INT16(source[3]) + spr_offset_y) & 0x1ff;
+			int xpos = BURN_ENDIAN_SWAP_INT16(source[4]) & 0x1ff;
 
 			color = (color >> 4) & 0x0f;
 

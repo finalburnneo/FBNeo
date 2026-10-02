@@ -283,9 +283,9 @@ static void DrvStaticPaletteInit()
 {
 	for (INT32 i = 0; i < 0x8000; i++)
 	{
-		INT32 r = (BURN_ENDIAN_SWAP_INT16(i) >>  5) & 0x1f;
-		INT32 g = (BURN_ENDIAN_SWAP_INT16(i) >> 10) & 0x1f;
-		INT32 b = (BURN_ENDIAN_SWAP_INT16(i) >>  0) & 0x1f;
+		INT32 r = (i >>  5) & 0x1f;
+		INT32 g = (i >> 10) & 0x1f;
+		INT32 b = (i >>  0) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -410,7 +410,7 @@ static void draw_pixel_layer()
 	{
 		for (INT32 x = 0; x < nScreenWidth; x++)
 		{
-			dst[x] = ram[x] >> 1;
+			dst[x] = BURN_ENDIAN_SWAP_INT16(ram[x]) >> 1;
 		}
 
 		dst += nScreenWidth;

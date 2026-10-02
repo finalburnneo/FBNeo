@@ -191,7 +191,7 @@ static void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
 
 	// PAL RAM
 	if (address >= 0x140000 && address <= 0x141fff) {
-		*(UINT16*)(DrvPalRAM + (address & 0x1ffe)) = data;
+		*(UINT16*)(DrvPalRAM + (address & 0x1ffe)) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_write(address & 0xfff);
 		buscontention_effect(address);
 		return;
@@ -255,7 +255,7 @@ static UINT16 __fastcall darkseal_read_word(UINT32 address)
 	// PAL RAM
 	if (address >= 0x140000 && address <= 0x141fff) {
 		buscontention_effect(address);
-		return *(UINT16*)(DrvPalRAM + (address & 0x1ffe));
+		return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(DrvPalRAM + (address & 0x1ffe)));
 	}
 
 	switch (address)

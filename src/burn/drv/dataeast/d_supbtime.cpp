@@ -244,7 +244,7 @@ static void palette_onreset() // rainbow fill palette, fixes disappearing "Super
 		UINT8 g = ((i & 2) ? 0x0f : 0);
 		UINT8 b = ((i & 4) ? 0x0f : 0);
 
-		*((UINT32*)(DrvPalRAM + (i * 2))) =  r | (g << 4) | (b << 8);
+		*((UINT16*)(DrvPalRAM + (i * 2))) = BURN_ENDIAN_SWAP_INT16(r | (g << 4) | (b << 8));
 	}
 }
 

@@ -258,7 +258,7 @@ static tilemap_callback( txt )
 {
 	UINT16 *ram = (UINT16*)DrvTxtRAM;
 
-	UINT16 attr = ram[offs];
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(0, attr, attr >> 12, 0);
 }
@@ -456,9 +456,9 @@ static void DrvPaletteUpdate()
 
 	for (INT32 i = 0; i < 0x800 / 2; i++)
 	{
-		UINT8 r = (p[i] & 0x00f);
-		UINT8 g = (p[i] & 0x0f0);
-		UINT8 b = (p[i] >> 8) & 0xf;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT16(p[i]) & 0x00f);
+		UINT8 g = (BURN_ENDIAN_SWAP_INT16(p[i]) & 0x0f0);
+		UINT8 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 8) & 0xf;
 
 		DrvPalette[i] = BurnHighCol(r+r*16, g+g/16, b+b*16, 0);
 	}
@@ -471,8 +471,8 @@ static void draw_sprites()
 	for (INT32 offs = 0; offs < 0x800/2; offs+=4)
 	{
 		INT32 incy;
-		INT32 sy = spriteram[offs];
-		INT32 sx = spriteram[offs + 2];
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]);
 		INT32 color = sx >> 12;
 		INT32 flash = sx & 0x800;
 		INT32 flipx = sy & 0x2000;
@@ -489,15 +489,15 @@ static void draw_sprites()
 
 		INT32 mult = -16;
 
-		if ((spriteram[offs] & 0x8000) == 0) {
+		if ((BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x8000) == 0) {
 			continue;
 		}
 
 		for (INT32 x = 0; x < w; x++)
 		{
-			INT32 code = (spriteram[offs + 1] & 0x1fff) & ~(h - 1);
+			INT32 code = (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0x1fff) & ~(h - 1);
 
-			if (spriteram[offs] & 0x4000)
+			if (BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x4000)
 				incy = -1;
 			else
 			{

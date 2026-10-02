@@ -696,9 +696,9 @@ static inline void palette_write(UINT32 offs) // for captaven, only game to not 
 
 	UINT32 *p = (UINT32*)DrvPalBuf;
 
-	UINT8 r = (p[offs] >>  0) & 0xff;
-	UINT8 g = (p[offs] >>  8) & 0xff;
-	UINT8 b = (p[offs] >> 16) & 0xff;
+	UINT8 r = (BURN_ENDIAN_SWAP_INT32(p[offs]) >>  0) & 0xff;
+	UINT8 g = (BURN_ENDIAN_SWAP_INT32(p[offs]) >>  8) & 0xff;
+	UINT8 b = (BURN_ENDIAN_SWAP_INT32(p[offs]) >> 16) & 0xff;
 
 	DrvPalette[offs] = BurnHighCol(r,g,b,0);
 }
@@ -719,7 +719,7 @@ static void captaven_write_long(UINT32 address, UINT32 data)
 
 	if (address >= 0x130000 && address <= 0x131fff) {
 		UINT32 *p = (UINT32*)DrvPalBuf;
-		p[(address & 0x1fff) / 4] = data;
+		p[(address & 0x1fff) / 4] = BURN_ENDIAN_SWAP_INT32(data);
 		palette_write(address);
 	}
 
@@ -789,7 +789,7 @@ static UINT32 captaven_read_long(UINT32 address)
 //	bprintf (0, _T("RW: %5.5x\n"), address);
 	if (address >= 0x130000 && address <= 0x131fff) {
 		UINT32 *p = (UINT32*)DrvPalBuf;
-		return p[(address & 0x1fff) / 4];
+		return BURN_ENDIAN_SWAP_INT32(p[(address & 0x1fff) / 4]);
 	}
 
 	if (address >= 0x128000 && address <= 0x12ffff) {
@@ -1230,7 +1230,7 @@ static UINT32 lockload_read_long(UINT32 address)
 static void dragngun_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= 0x1000000 && address <= 0x1001000) {
-		*((UINT32*)(DrvDVIRAM0 + ((address & 0xfff) ^ 3))) = data;
+		*((UINT32*)(DrvDVIRAM0 + ((address & 0xfff) ^ 3))) = BURN_ENDIAN_SWAP_INT32((UINT32)data);
 		return;
 	}
 
@@ -1256,7 +1256,7 @@ static void dragngun_write_long(UINT32 address, UINT32 data)
 	Write16Long(deco16_pf_rowscroll[3],		0x1e4000, 0x1e5fff) // 16-bit
 
 	if (address >= 0x1000000 && address <= 0x1001000) {
-		*((UINT32*)(DrvDVIRAM0 + ((address & 0xfff) / 4))) = data;
+		*((UINT32*)(DrvDVIRAM0 + ((address & 0xfff) / 4))) = BURN_ENDIAN_SWAP_INT32(data);
 		return;
 	}
 
@@ -1377,7 +1377,7 @@ static UINT32 dragngun_read_long(UINT32 address)
 	Read16Long(deco16_pf_rowscroll[3],		0x1e4000, 0x1e5fff) // 16-bit
 
 	if (address >= 0x1000008 && address <= 0x1001000) {
-		return *((UINT32*)(DrvDVIRAM0 + (address & 0xfff)));
+		return BURN_ENDIAN_SWAP_INT32(*((UINT32*)(DrvDVIRAM0 + (address & 0xfff))));
 	}
 
 	switch (address & ~3)
@@ -2303,9 +2303,9 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 
 	{	// disable service mode lockout (what is this??)
 		if (DrvARMROM[0] == 0x5f) { // japan
-			*((UINT32*)(DrvARMROM + 0x1a1b4)) = 0xe1a00000;
+			*((UINT32*)(DrvARMROM + 0x1a1b4)) = BURN_ENDIAN_SWAP_INT32(0xe1a00000);
 		} else {
-			*((UINT32*)(DrvARMROM + 0x1b32c)) = 0xe1a00000;
+			*((UINT32*)(DrvARMROM + 0x1b32c)) = BURN_ENDIAN_SWAP_INT32(0xe1a00000);
 		}
 	}
 
@@ -2375,13 +2375,13 @@ static void DrvPaletteUpdate()
 	UINT32 *p = (UINT32*)DrvPalBuf;
 	UINT32 *s = (UINT32*)DrvAceRAM;
 
-	UINT8 fadeptr = s[0x20] & 0xff;
-	UINT8 fadeptg = s[0x21] & 0xff;
-	UINT8 fadeptb = s[0x22] & 0xff;
-	UINT8 fadepsr = s[0x23] & 0xff;
-	UINT8 fadepsg = s[0x24] & 0xff;
-	UINT8 fadepsb = s[0x25] & 0xff;
-	UINT16 mode = s[0x26] & 0xffff;
+	UINT8 fadeptr = BURN_ENDIAN_SWAP_INT32(s[0x20]) & 0xff;
+	UINT8 fadeptg = BURN_ENDIAN_SWAP_INT32(s[0x21]) & 0xff;
+	UINT8 fadeptb = BURN_ENDIAN_SWAP_INT32(s[0x22]) & 0xff;
+	UINT8 fadepsr = BURN_ENDIAN_SWAP_INT32(s[0x23]) & 0xff;
+	UINT8 fadepsg = BURN_ENDIAN_SWAP_INT32(s[0x24]) & 0xff;
+	UINT8 fadepsb = BURN_ENDIAN_SWAP_INT32(s[0x25]) & 0xff;
+	UINT16 mode = BURN_ENDIAN_SWAP_INT32(s[0x26]) & 0xffff;
 
 	for (INT32 i = 0; i < 0x2000/4; i++)
 	{

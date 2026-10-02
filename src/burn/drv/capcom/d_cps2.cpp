@@ -14761,8 +14761,8 @@ void __fastcall PhoenixSpriteWriteWord(UINT32 a, UINT16 d)
 	UINT16 *Ram = (UINT16*)CpsRam708;
 	INT32 Offset = (a - 0x700000) >> 1;
 	
-	Ram[Offset + 0x0000] = d;
-	Ram[Offset + 0x4000] = d;
+	Ram[Offset + 0x0000] = BURN_ENDIAN_SWAP_INT16(d);
+	Ram[Offset + 0x4000] = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 static INT32 PhoenixInit()

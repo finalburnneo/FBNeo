@@ -427,7 +427,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 
 #endif
 		if (Cps2Turbo) {
-			if (ps[1] & 0x1000) ps[1] |= 0x8000;
+			if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x1000) ps[1] |= BURN_ENDIAN_SWAP_INT16(0x8000);
 			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0xe000) << 3;	// high bits of address
 		} else {
 			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address

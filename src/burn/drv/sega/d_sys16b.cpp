@@ -11660,7 +11660,7 @@ static INT32 IsgsmInit()
 		nRet = BurnLoadRom(System16Rom, 0x80, 1); if (nRet) return 1;
 
 		for (UINT32 i = 0; i < 0x10000; i++) {
-			pTemp[i ^ 0x4127] = BITSWAP16(Rom[i], 6, 14, 4, 2, 12, 10, 8, 0, 1, 9, 11, 13, 3, 5, 7, 15);
+			pTemp[i ^ 0x4127] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(Rom[i]), 6, 14, 4, 2, 12, 10, 8, 0, 1, 9, 11, 13, 3, 5, 7, 15));
 		}
 
 		memcpy(Rom, pTemp, 0x20000);
@@ -11693,7 +11693,7 @@ static INT32 ShinfzInit()
 		UINT16 *Rom = (UINT16*)(System16Rom + 0x100000);
 
 		for (UINT32 i = 0; i < 0x100000; i++) {
-			pTemp[i ^ 0x68956] = BITSWAP16(Rom[i], 8, 4, 12, 3, 6, 7, 1, 0, 15, 11, 5, 14, 10, 2, 9, 13);
+			pTemp[i ^ 0x68956] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(Rom[i]), 8, 4, 12, 3, 6, 7, 1, 0, 15, 11, 5, 14, 10, 2, 9, 13));
 		}
 
 		memcpy(Rom, pTemp, 0x200000);
@@ -11717,7 +11717,7 @@ static INT32 TetrbxInit()
 		UINT16 *Rom = (UINT16*)(System16Rom + 0x100000);
 
 		for (UINT32 i = 0; i < nCartSize >> 1; i++) {
-			pTemp[i ^ 0x2a6e6] = BITSWAP16(Rom[i], 4, 0, 12, 5, 7, 3, 1, 14, 10, 11, 9, 6, 15, 2, 13, 8);
+			pTemp[i ^ 0x2a6e6] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(Rom[i]), 4, 0, 12, 5, 7, 3, 1, 14, 10, 11, 9, 6, 15, 2, 13, 8));
 		}
 
 		memcpy(Rom, pTemp, nCartSize);

@@ -1813,10 +1813,10 @@ static inline void character_update(UINT32 i)
 static void __fastcall character_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x1fffe;
-	INT32 old = *((UINT16*)(DrvCharRAM + address));
+	INT32 old = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvCharRAM + address)));
 
 	if (old != data) {
-		*((UINT16*)(DrvCharRAM + address)) = data;
+		*((UINT16*)(DrvCharRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 		character_update(address);
 	}
 }
@@ -1834,7 +1834,7 @@ static void __fastcall character_write_byte(UINT32 address, UINT8 data)
 
 static inline void palette_update_entry(INT32 i)
 {
-	UINT16 data = *((UINT16*)(DrvPalRAM + i * 2));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + i * 2)));
 
 	UINT8 r = (data & 0x00f) << 4;
 	UINT8 g = (data & 0x0f0);
@@ -1866,11 +1866,11 @@ static inline void palette_update_entry(INT32 i)
 static void __fastcall palette_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x3ffe;
-	INT32 old = *((UINT16*)(DrvPalRAM + address));
+	INT32 old = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + address)));
 
 	if (old != data)
 	{
-		*((UINT16*)(DrvPalRAM + address)) = data;
+		*((UINT16*)(DrvPalRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_update_entry(address/2);
 	}
 }
@@ -1895,7 +1895,7 @@ static void fd1094_map_memory(UINT8 *mem)
 
 static tilemap_callback( _0s )
 {
-	UINT16 attr = *((UINT16*)(DrvTileRAM + 0x0000 + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x0000 + offs * 2)));
 	INT32 color = attr >> 7;
 
 	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
@@ -1903,7 +1903,7 @@ static tilemap_callback( _0s )
 
 static tilemap_callback( _0w )
 {
-	UINT16 attr = *((UINT16*)(DrvTileRAM + 0x2000 + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x2000 + offs * 2)));
 	INT32 color = attr >> 7;
 
 	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
@@ -1911,7 +1911,7 @@ static tilemap_callback( _0w )
 
 static tilemap_callback( _1s )
 {
-	UINT16 attr = *((UINT16*)(DrvTileRAM + 0x4000 + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x4000 + offs * 2)));
 	INT32 color = attr >> 7;
 
 	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
@@ -1919,7 +1919,7 @@ static tilemap_callback( _1s )
 
 static tilemap_callback( _1w )
 {
-	UINT16 attr = *((UINT16*)(DrvTileRAM + 0x6000 + offs * 2));
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x6000 + offs * 2)));
 	INT32 color = attr >> 7;
 
 	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
@@ -2199,7 +2199,7 @@ static INT32 DrvExit()
 
 static inline UINT16 sys24_mixer_get_reg(INT32 reg)
 {
-	return *((UINT16*)(DrvMixerRegs + ((reg & 0xf) * 2)));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMixerRegs + ((reg & 0xf) * 2))));
 }
 
 static INT32 layer_cmp(const void *pl1, const void *pl2)
@@ -2233,10 +2233,10 @@ static void draw_sprites(const INT32 *spri)
 
 		source = sprite_ram + (curspr << 3);
 
-		if (curspr == 0 && source[0] == 0)
+		if (curspr == 0 && BURN_ENDIAN_SWAP_INT16(source[0]) == 0)
 			break;
 
-		curspr = source[0];
+		curspr = BURN_ENDIAN_SWAP_INT16(source[0]);
 		type = curspr & 0xc000;
 		curspr &= 0x1fff;
 
@@ -2278,10 +2278,10 @@ static void draw_sprites(const INT32 *spri)
 		cclip = clip[countspr];
 
 		if (cclip) {
-			min_y = (cclip[2] & 511);
-			min_x = (cclip[3] & 511) - 8;
-			max_y = (cclip[4] & 511);
-			max_x = (cclip[5] & 511) - 8;
+			min_y = (BURN_ENDIAN_SWAP_INT16(cclip[2]) & 511);
+			min_x = (BURN_ENDIAN_SWAP_INT16(cclip[3]) & 511) - 8;
+			max_y = (BURN_ENDIAN_SWAP_INT16(cclip[4]) & 511);
+			max_x = (BURN_ENDIAN_SWAP_INT16(cclip[5]) & 511) - 8;
 		} else {
 			min_x = 0;
 			max_x = 495;
@@ -2298,11 +2298,11 @@ static void draw_sprites(const INT32 *spri)
 		if (max_y >= nScreenHeight)
 			max_y = nScreenHeight-1;
 
-		if (!(source[0] & 0x2000))
-			zoomx = zoomy = source[1] & 0xff;
+		if (!(BURN_ENDIAN_SWAP_INT16(source[0]) & 0x2000))
+			zoomx = zoomy = BURN_ENDIAN_SWAP_INT16(source[1]) & 0xff;
 		else {
-			zoomx = source[1] >> 8;
-			zoomy = source[1] & 0xff;
+			zoomx = BURN_ENDIAN_SWAP_INT16(source[1]) >> 8;
+			zoomy = BURN_ENDIAN_SWAP_INT16(source[1]) & 0xff;
 		}
 		if (!zoomx)
 			zoomx = 0x3f;
@@ -2312,37 +2312,37 @@ static void draw_sprites(const INT32 *spri)
 		zoomx++;
 		zoomy++;
 
-		x = source[5] & 0xfff;
-		flipx = source[5] & 0x8000;
+		x = BURN_ENDIAN_SWAP_INT16(source[5]) & 0xfff;
+		flipx = BURN_ENDIAN_SWAP_INT16(source[5]) & 0x8000;
 		if (x & 0x800)
 			x -= 0x1000;
-		sx = 1 << ((source[5] & 0x7000) >> 12);
+		sx = 1 << ((BURN_ENDIAN_SWAP_INT16(source[5]) & 0x7000) >> 12);
 
 		x -= 8;
 
-		y = source[4] & 0xfff;
+		y = BURN_ENDIAN_SWAP_INT16(source[4]) & 0xfff;
 		if (y & 0x800)
 			y -= 0x1000;
-		flipy = source[4] & 0x8000;
-		sy = 1 << ((source[4] & 0x7000) >> 12);
+		flipy = BURN_ENDIAN_SWAP_INT16(source[4]) & 0x8000;
+		sy = 1 << ((BURN_ENDIAN_SWAP_INT16(source[4]) & 0x7000) >> 12);
 
-		pix = &sprite_ram[(source[3] & 0x3fff)* 0x8];
+		pix = &sprite_ram[(BURN_ENDIAN_SWAP_INT16(source[3]) & 0x3fff)* 0x8];
 		for (px = 0; px < 8; px++) {
 			INT32 c;
-			c              = pix[px] >> 8;
+			c              = BURN_ENDIAN_SWAP_INT16(pix[px]) >> 8;
 			pm[px*2]       = pmt[c>>6];
 			if (c>1)
 				c |= 0x1000;
 			colors[px*2]   = c;
 
-			c              = pix[px] & 0xff;
+			c              = BURN_ENDIAN_SWAP_INT16(pix[px]) & 0xff;
 			pm[px*2+1]     = pmt[c>>6];
 			if (c>1)
 				c |= 0x1000;
 			colors[px*2+1] = c;
 		}
 
-		offset = (source[2] & 0x7fff) * 0x10;
+		offset = (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x7fff) * 0x10;
 
 		xmod = 0x20;
 		ymod = 0x20;
@@ -2371,7 +2371,7 @@ static void draw_sprites(const INT32 *spri)
 									if (xpos2 >= min_x && xpos2 <= max_x) {
 										INT32 zx1 = flipx ? 7-zx : zx;
 										UINT32 neweroffset = (newoffset+(zx1>>2))&0x1ffff; // crackdown sometimes attempts to use data past the end of spriteram
-										INT32 c = (sprite_ram[neweroffset] >> (((~zx1) & 3) << 2)) & 0xf;
+										INT32 c = (BURN_ENDIAN_SWAP_INT16(sprite_ram[neweroffset]) >> (((~zx1) & 3) << 2)) & 0xf;
 										UINT8 *pri = pPrioDraw + (ypos1 * nScreenWidth) + xpos2; //&priority_bitmap.pix8(ypos1, xpos2);
 										if (!(*pri & pm[c])) {
 											c = colors[c];
@@ -2436,7 +2436,7 @@ static void draw_rect(UINT16 *source, const UINT16 *mask, UINT16 tpri, UINT8 lpr
 		INT32 cur_x = xx1;
 
 		while (llx > 0) {
-			UINT16 m = *mask1++;
+			UINT16 m = BURN_ENDIAN_SWAP_INT16(*mask1++); // window mask lives in tile ram (68k memory)
 
 			if (win)
 				m = ~m;
@@ -2526,9 +2526,9 @@ static void draw_rect(UINT16 *source, const UINT16 *mask, UINT16 tpri, UINT8 lpr
 static void draw_common(INT32 layer, INT32 lpri, INT32 )
 {
 	UINT16 *tile_ram = (UINT16*)DrvTileRAM;
-	UINT16 hscr = tile_ram[0x5000+(layer >> 1)];
-	UINT16 vscr = tile_ram[0x5004+(layer >> 1)];
-	UINT16 ctrl = tile_ram[0x5004+((layer >> 1) & 2)];
+	UINT16 hscr = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5000+(layer >> 1)]);
+	UINT16 vscr = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5004+(layer >> 1)]);
+	UINT16 ctrl = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5004+((layer >> 1) & 2)]);
 	UINT16 *mask = tile_ram + (layer & 4 ? 0x6800 : 0x6000);
 	UINT16 tpri = layer & 1;
 
@@ -2573,7 +2573,7 @@ static void draw_common(INT32 layer, INT32 lpri, INT32 )
 							if (y >= v) l1 ^= 1;
 
 							GenericTilesSetScanline(y);
-							GenericTilemapSetScrollX(l1, -(hscrtb[y] & 0x1ff));
+							GenericTilemapSetScrollX(l1, -(BURN_ENDIAN_SWAP_INT16(hscrtb[y]) & 0x1ff));
 							GenericTilemapDraw(l1, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
 						}
 						GenericTilesClearClip();
@@ -2586,7 +2586,7 @@ static void draw_common(INT32 layer, INT32 lpri, INT32 )
 						for (INT32 y = 0; y < nScreenHeight; y++)
 						{
 							INT32 l1 = layer;
-							UINT16 h = hscrtb[y] & 0x1ff;
+							UINT16 h = BURN_ENDIAN_SWAP_INT16(hscrtb[y]) & 0x1ff;
 
 							GenericTilemapSetScrollX(layer|0, -h);
 							GenericTilemapSetScrollX(layer|1, -h);
@@ -2670,7 +2670,7 @@ static void draw_common(INT32 layer, INT32 lpri, INT32 )
 			vscr &= 0x1ff;
 
 			for(INT32 y = 0; y < 384; y++) {
-				hscr = (-hscrtb[y]) & 0x1ff;
+				hscr = (-BURN_ENDIAN_SWAP_INT16(hscrtb[y])) & 0x1ff;
 				if (hscr + 496 <= 512) {		// Horizontal split unnecessary
 					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        y,      496,      y+1);
 				} else {			// Horizontal split necessary
@@ -2739,7 +2739,7 @@ static INT32 DrvDraw()
 		UINT16 *tile_ram = (UINT16*)DrvTileRAM;
 		for (INT32 i = 0; i < 4; i++)
 		{
-			if ((tile_ram[0x5004+(i & 2)] & 0x6000) == 0)
+			if ((BURN_ENDIAN_SWAP_INT16(tile_ram[0x5004+(i & 2)]) & 0x6000) == 0)
 			{
 				gfx_set = 1; // set1 allows for passing group in color variable
 				GenericTilemapSetScrollX(i, 0); // no scroll! added below!

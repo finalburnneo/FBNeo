@@ -1749,7 +1749,7 @@ inline static void System16BDrawPixel(INT32 x, INT32 pix, INT32 colour, UINT16* 
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (colour == (0x3f << 4)) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+			pPixel[x] += (BURN_ENDIAN_SWAP_INT16(PalRAM[pPixel[x]]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour | System16SpritePalOffset) & (System16PaletteEntries - 1);
 		}
@@ -1877,7 +1877,7 @@ inline static void OutrunDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shado
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (shadow && pix == 0xa) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+			pPixel[x] += (BURN_ENDIAN_SWAP_INT16(PalRAM[pPixel[x]]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour | 0x800) & (System16PaletteEntries - 1);
 		}
@@ -2016,7 +2016,7 @@ inline static void HangonDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shado
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (shadow && pix == 0xa) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+			pPixel[x] += (BURN_ENDIAN_SWAP_INT16(PalRAM[pPixel[x]]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour | 0x400) & (System16PaletteEntries - 1);
 		}
@@ -2253,7 +2253,7 @@ inline static void BoardXDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shado
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (shadow && pix == 0xa) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+			pPixel[x] += (BURN_ENDIAN_SWAP_INT16(PalRAM[pPixel[x]]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour) & (System16PaletteEntries - 1);
 		}
@@ -2395,7 +2395,7 @@ inline static void YBoardSystem16BDrawPixel(INT32 x, INT32 pix, INT32 Priority, 
 			if (Priority < (pPriorityMap[x] & 0x1f)) {
 				if (pix == 14) {
 					pPixel[x] &= (System16PaletteEntries - 1);
-					pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+					pPixel[x] += (BURN_ENDIAN_SWAP_INT16(PalRAM[pPixel[x]]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 				} else {
 					pPixel[x] = (pix | colour | 0x800) & (System16PaletteEntries - 1);
 				}
@@ -3652,7 +3652,7 @@ INT32 System18Render()
 				if ((1<<pri) > pPri[x]) {
 
 					if ((pix & 0x3f0) == 0x3f0) {
-						pDest[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+						pDest[x] += (BURN_ENDIAN_SWAP_INT16(PalRAM[pPixel[x]]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 					} else {
 						pDest[x] = ((pix & 0x3ff) | System16SpritePalOffset);
 					}

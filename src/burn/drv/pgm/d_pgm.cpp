@@ -1439,8 +1439,8 @@ static void drgw2_patch()
 
 	// This is a hack! Overlay does not seem to exist on hardware!
 	for (INT32 i = 0; i < 0x80000/2; i++) {
-		if (mem16[i] == 0x4e90 && mem16[i+1] == 0x207c && (mem16[i+2] & 0xfff8) == 0x0010) {
-			mem16[i] = 0x4e93;	// jsr (A0) -> (A3)
+		if (BURN_ENDIAN_SWAP_INT16(mem16[i]) == 0x4e90 && BURN_ENDIAN_SWAP_INT16(mem16[i+1]) == 0x207c && (BURN_ENDIAN_SWAP_INT16(mem16[i+2]) & 0xfff8) == 0x0010) {
+			mem16[i] = BURN_ENDIAN_SWAP_INT16(0x4e93);	// jsr (A0) -> (A3)
 			bprintf (0, _T("%5.5x\n"), i*2);
 		}
 	}
@@ -4787,10 +4787,8 @@ static void pgm_create_theglad_EO_data()
 	};
 
 	for (int i = 0; i < 0x188/2; i++) {
-		thegladEOHackData[i] = BURN_ENDIAN_SWAP_INT16(thegladEOHackData[i]);
+		((UINT16*)PGMARMROM)[i] = BURN_ENDIAN_SWAP_INT16(thegladEOHackData[i]);
 	}
-
-	memcpy(PGMARMROM, thegladEOHackData, 0x188);
 }
 
 static void thegladPatch()
@@ -4966,7 +4964,7 @@ static void theglad100Patch()
 
 	for (int i = 0; i < 131; i++)
 	{
-		extprot[((0x82078 + (i * 4)) / 2)] = (subroutine_addresses[i]);
+		extprot[((0x82078 + (i * 4)) / 2)] = BURN_ENDIAN_SWAP_INT16(subroutine_addresses[i]);
 	}
 }
 
@@ -5757,10 +5755,8 @@ static void pgm_create_svg_EO_data()
 	};
 
 	for (int i = 0; i < 0x188/2; i++) {
-		svgEOHackData[i] = BURN_ENDIAN_SWAP_INT16(svgEOHackData[i]);
+		((UINT16*)PGMARMROM)[i] = BURN_ENDIAN_SWAP_INT16(svgEOHackData[i]);
 	}
-
-	memcpy(PGMARMROM, svgEOHackData, 0x188);
 }
 
 static void svgPatch()
@@ -6427,8 +6423,8 @@ static void ketmatsuri_patch()
 	/* These appear to have been purposefully changed to cause a bug where selecting the orange helicopter
 	   will cause the player to start with the pink helicopter and vice versa. This is likely corrected by
 	   the emulator running on the Playstation 4. */
-	*((UINT16*)(PGM68KROM + 0xad0ec)) = 0x6600; // bne -> beq
-	*((UINT16*)(PGM68KROM + 0xad166)) = 0x6600; // bne -> beq
+	*((UINT16*)(PGM68KROM + 0xad0ec)) = BURN_ENDIAN_SWAP_INT16(0x6600); // bne -> beq
+	*((UINT16*)(PGM68KROM + 0xad166)) = BURN_ENDIAN_SWAP_INT16(0x6600); // bne -> beq
 }
 
 static INT32 ketmatsuriInit()

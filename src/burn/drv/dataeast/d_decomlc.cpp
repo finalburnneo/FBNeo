@@ -648,9 +648,11 @@ static INT32 CommonArmInit(INT32 game)
 				if (BurnLoadRomExt(DrvPrgROM + 0x000000, 0, 4, LD_GROUP(2))) return 1;
 				if (BurnLoadRomExt(DrvPrgROM + 0x000002, 1, 4, LD_GROUP(2))) return 1;
 
+#ifndef LSB_FIRST
 				for (INT32 i = 0; i < 0x100000 / 4; i++) {
 					((UINT32*)DrvPrgROM)[i] = BURN_ENDIAN_SWAP_INT32(((UINT32*)DrvPrgROM)[i]);
 				}
+#endif
 
 				DrvGfxROM0 = (UINT8*)BurnMalloc(((0x1800000/4)*8));
 

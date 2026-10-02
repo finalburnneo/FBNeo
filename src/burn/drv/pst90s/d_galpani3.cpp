@@ -635,6 +635,9 @@ static INT32 DrvDraw()
 		BurnBitmapFill(1, 0);
 	}
 
+#ifdef LSB_FIRST
+	skns_draw_sprites(BurnBitmapGetBitmap(1), (UINT32*)DrvSprRAM, 0x4000, DrvSprROM, 0x200000, (UINT32*)DrvSprRegs, 0);
+#else
 	static UINT32 sprbuf[0x4000/4];
 	UINT32 regs[0x40/4];
 
@@ -642,6 +645,7 @@ static INT32 DrvDraw()
 	for (INT32 i = 0; i < 0x40/4; i++) regs[i] = BURN_ENDIAN_SWAP_INT32(sprite_regs[i]);
 
 	skns_draw_sprites(BurnBitmapGetBitmap(1), sprbuf, 0x4000, DrvSprROM, 0x200000, regs, 0);
+#endif
 
 	for (INT32 drawy = 0; drawy < nScreenHeight; drawy++)
 	{

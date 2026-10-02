@@ -436,7 +436,7 @@ static void draw_sprites_pre(INT32 x_offs, INT32 y_offs)
 
 	for (offs = (0x4000/4-4);offs >= 0;offs -= 4)
 	{
-		data = spriteram[offs+0];
+		data = BURN_ENDIAN_SWAP_INT32(spriteram[offs+0]);
 		data = (data << 16) | (data >> 16);
 		flipx =    (data & 0x00800000) >> 23;
 		zoomx =    (data & 0x007f0000) >> 16;
@@ -444,13 +444,13 @@ static void draw_sprites_pre(INT32 x_offs, INT32 y_offs)
 
 		if (!tilenum) continue;
 
-		data = spriteram[offs+2];
+		data = BURN_ENDIAN_SWAP_INT32(spriteram[offs+2]);
 		data = (data << 16) | (data >> 16);
 		priority = (data & 0x000c0000) >> 18;
 		color =    (data & 0x0003fc00) >> 10;
 		x =        (data & 0x000003ff);
 
-		data = spriteram[offs+3];
+		data = BURN_ENDIAN_SWAP_INT32(spriteram[offs+3]);
 		data = (data << 16) | (data >> 16);
 		dblsize =  (data & 0x00040000) >> 18;
 		flipy =    (data & 0x00020000) >> 17;
@@ -483,7 +483,7 @@ static void draw_sprites_pre(INT32 x_offs, INT32 y_offs)
 			if (flipx)  px = dimension-1-k;
 			if (flipy)  py = dimension-1-j;
 
-			code = spritemap[map_offset + px + (py<<(dblsize+1))];
+			code = BURN_ENDIAN_SWAP_INT16(spritemap[map_offset + px + (py<<(dblsize+1))]);
 
 			if (code==0xffff) {
 				continue;

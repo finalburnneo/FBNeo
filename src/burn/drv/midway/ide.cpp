@@ -414,8 +414,12 @@ void ide_disk::update_transfer()
     unsigned lba = 0;
     switch (m_transfer_operation) {
     case TRF_IDENTIFY:
+#ifdef LSB_FIRST
+        memcpy(m_buffer, m_identify_buffer, sizeof(m_identify_buffer));
+#else
         for (int i = 0; i < 256; i++)
             m_buffer[i] = BURN_ENDIAN_SWAP_INT16(m_identify_buffer[i]);
+#endif
         break;
 
     case TRF_SECTOR_WRITE:

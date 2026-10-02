@@ -397,9 +397,9 @@ static INT32 scanline_cb(INT32 scanline, TMS34010Display *params)
 		if (ex >= 0 && ex < nScreenWidth) {
 
 			if (fgsrc != NULL)
-				fgdata = fgsrc[fgcoladdr++ & 0x7f];
+				fgdata = BURN_ENDIAN_SWAP_INT16(fgsrc[fgcoladdr++ & 0x7f]);
 
-			bgdata = bgsrc[coladdr++ & 0xff];
+			bgdata = BURN_ENDIAN_SWAP_INT16(bgsrc[coladdr++ & 0xff]);
 			if ((bgdata & 0xe000) == 0xe000)
 				dest[ex + 0] = bgdata & 0x7ff;
 			else if ((fgdata & 0x00ff) != 0)
@@ -407,7 +407,7 @@ static INT32 scanline_cb(INT32 scanline, TMS34010Display *params)
 			else
 				dest[ex + 0] = (bgdata & 0x8000) ? (bgdata & 0x7ff) : (bgdata + 0x800);
 
-			bgdata = bgsrc[coladdr++ & 0xff];
+			bgdata = BURN_ENDIAN_SWAP_INT16(bgsrc[coladdr++ & 0xff]);
 			if ((bgdata & 0xe000) == 0xe000)
 				dest[ex + 1] = bgdata & 0x7ff;
 			else if ((fgdata & 0xff00) != 0)
@@ -624,7 +624,7 @@ static void DrvPaletteUpdate() // dynamic ram-based colors
 	UINT16 *ram = (UINT16*)BurnPalRAM;
 
 	for (INT32 i = 0; i < 0x1000/2; i++){
-		BurnPalette[i] = BurnHighCol(pal5bit(ram[i] >> 10), pal5bit(ram[i] >> 5), pal5bit(ram[i] >> 0), 0);
+		BurnPalette[i] = BurnHighCol(pal5bit(BURN_ENDIAN_SWAP_INT16(ram[i]) >> 10), pal5bit(BURN_ENDIAN_SWAP_INT16(ram[i]) >> 5), pal5bit(BURN_ENDIAN_SWAP_INT16(ram[i]) >> 0), 0);
 	}
 }
 

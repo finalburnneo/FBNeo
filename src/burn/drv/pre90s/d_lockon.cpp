@@ -914,7 +914,7 @@ static void scene_draw()
 		{
 			UINT32 tileidx;
 			UINT16 addr = ((y_offs & ~7) << 3) + ((x_offs >> 3) & 0x3f);
-			UINT16 ram_val = sceneram[addr & ram_mask];
+			UINT16 ram_val = BURN_ENDIAN_SWAP_INT16(sceneram[addr & ram_mask]);
 
 			colour = (clut[ram_val & 0x7fff] & 0x3f) << 3;
 			tileidx = ((ram_val & 0x0fff) << 3) + y_gran;
@@ -935,7 +935,7 @@ static void scene_draw()
 			{
 				UINT32 tileidx;
 				UINT16 addr = ((y_offs & ~7) << 3) + ((x_offs >> 3) & 0x3f);
-				UINT16 ram_val = sceneram[addr & ram_mask];
+				UINT16 ram_val = BURN_ENDIAN_SWAP_INT16(sceneram[addr & ram_mask]);
 
 				colour = (clut[ram_val & 0x7fff] & 0x3f) << 3;
 				tileidx = ((ram_val & 0x0fff) << 3) + y_gran;
@@ -1001,20 +1001,20 @@ static void ground_draw(INT32 from_drvdraw)
 		UINT32 x;
 
 		/* Draw this line? */
-		if (!(m_ground_ram[offs] & 0x8000))
+		if (!(BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs]) & 0x8000))
 		{
-			UINT32 gfx_a2_0  =  m_ground_ram[offs] & 0x0007;
-			UINT32 gfx_a6_5  = (m_ground_ram[offs] & 0x0018) << 2;
-			UINT32 clut_a4_3 = (m_ground_ram[offs] & 0x0018) >> 1;
-			UINT8   tz2213_x  = m_ground_ram[offs + 1] & 0xff;
-			UINT8   tz2213_dx = m_ground_ram[offs + 2] & 0xff;
+			UINT32 gfx_a2_0  =  BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs]) & 0x0007;
+			UINT32 gfx_a6_5  = (BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs]) & 0x0018) << 2;
+			UINT32 clut_a4_3 = (BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs]) & 0x0018) >> 1;
+			UINT8   tz2213_x  = BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs + 1]) & 0xff;
+			UINT8   tz2213_dx = BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs + 2]) & 0xff;
 
-			UINT32 lut_address = lut_a15_14 + ((m_ground_ram[offs] & 0x7fe0) >> 1);
-			UINT32 cy = m_ground_ram[offs + 2] & 0x0100;
+			UINT32 lut_address = lut_a15_14 + ((BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs]) & 0x7fe0) >> 1);
+			UINT32 cy = BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs + 2]) & 0x0100;
 			UINT32 color;
 			UINT32 gpbal2_0_prev;
 
-			ls163 = m_ground_ram[offs + 1] >> 8;
+			ls163 = BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs + 1]) >> 8;
 
 			gpbal2_0_prev = ((ls163 & 3) << 1) | BIT(tz2213_x, 7);
 
@@ -1052,7 +1052,7 @@ static void ground_draw(INT32 from_drvdraw)
 		offs += 3;
 
 		/* End of list marker */
-		if (m_ground_ram[offs + 2] & 0x8000 && !from_drvdraw)
+		if (BURN_ENDIAN_SWAP_INT16(m_ground_ram[offs + 2]) & 0x8000 && !from_drvdraw)
 		{
 			bufend_timer.start(y * 431, -1, 1, 0);
 		}
@@ -1085,15 +1085,15 @@ static void objects_draw()
 	for (offs = 0; offs < 0x200; offs += 4)
 	{
 		/* Retrieve the object attributes */
-		UINT32 ypos    = m_object_ram[offs] & 0x03ff;
-		UINT32 xpos    = m_object_ram[offs + 3] & 0x07ff;
-		UINT32 ysize   = (m_object_ram[offs] >> 10) & 0x3;
-		UINT32 xsize   = (m_object_ram[offs] >> 12) & 0x3;
-		UINT32 yflip   = BIT(m_object_ram[offs], 14);
-		UINT32 xflip   = BIT(m_object_ram[offs], 15);
-		UINT32 scale   = m_object_ram[offs + 1] & 0xff;
-		UINT32 pal = (m_object_ram[offs + 1] >> 8) & 0x7f;
-		UINT32 opsta   = m_object_ram[offs + 2];
+		UINT32 ypos    = BURN_ENDIAN_SWAP_INT16(m_object_ram[offs]) & 0x03ff;
+		UINT32 xpos    = BURN_ENDIAN_SWAP_INT16(m_object_ram[offs + 3]) & 0x07ff;
+		UINT32 ysize   = (BURN_ENDIAN_SWAP_INT16(m_object_ram[offs]) >> 10) & 0x3;
+		UINT32 xsize   = (BURN_ENDIAN_SWAP_INT16(m_object_ram[offs]) >> 12) & 0x3;
+		UINT32 yflip   = BIT(BURN_ENDIAN_SWAP_INT16(m_object_ram[offs]), 14);
+		UINT32 xflip   = BIT(BURN_ENDIAN_SWAP_INT16(m_object_ram[offs]), 15);
+		UINT32 scale   = BURN_ENDIAN_SWAP_INT16(m_object_ram[offs + 1]) & 0xff;
+		UINT32 pal = (BURN_ENDIAN_SWAP_INT16(m_object_ram[offs + 1]) >> 8) & 0x7f;
+		UINT32 opsta   = BURN_ENDIAN_SWAP_INT16(m_object_ram[offs + 2]);
 
 		if (m_iden)
 		{
@@ -1157,7 +1157,7 @@ static void objects_draw()
 				UINT32 bank;
 
 				scl = scale & 0x7f;
-				tileaddr = (chklut[opsta15_8 + cnt] & 0x7fff);
+				tileaddr = (BURN_ENDIAN_SWAP_INT16(chklut[opsta15_8 + cnt]) & 0x7fff);
 				bank = ((tileaddr >> 12) & 3) * 0x40000;
 				tileaddr = bank + ((tileaddr & ~0xf000) << 3);
 
@@ -1228,7 +1228,7 @@ static void objects_draw()
 		}
 
 		/* Check for the end of list marker */
-		if (m_object_ram[offs + 1] & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(m_object_ram[offs + 1]) & 0x8000)
 			return;
 	}
 }
@@ -1349,14 +1349,14 @@ static void hud_draw()
 		UINT32 rom_a12_7;
 
 		/* End of sprite list marker */
-		if (m_hud_ram[offs + 1] & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(m_hud_ram[offs + 1]) & 0x8000)
 			break;
 
-		y_pos   = m_hud_ram[offs] & 0x1ff;
-		x_pos   = m_hud_ram[offs + 1] & 0x1ff;
-		x_size = (m_hud_ram[offs + 1] >> 12) & 7;
-		code    = (m_hud_ram[offs] >> 9) & 0x7f;
-		colour = 0x200 + ((m_hud_ram[offs + 1] >> 9) & 7);
+		y_pos   = BURN_ENDIAN_SWAP_INT16(m_hud_ram[offs]) & 0x1ff;
+		x_pos   = BURN_ENDIAN_SWAP_INT16(m_hud_ram[offs + 1]) & 0x1ff;
+		x_size = (BURN_ENDIAN_SWAP_INT16(m_hud_ram[offs + 1]) >> 12) & 7;
+		code    = (BURN_ENDIAN_SWAP_INT16(m_hud_ram[offs]) >> 9) & 0x7f;
+		colour = 0x200 + ((BURN_ENDIAN_SWAP_INT16(m_hud_ram[offs + 1]) >> 9) & 7);
 		layout = (code >> 5) & 3;
 		rom_a12_7 = (code & 0xfe) << 6;
 

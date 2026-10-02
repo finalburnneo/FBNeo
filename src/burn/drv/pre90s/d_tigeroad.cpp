@@ -270,7 +270,7 @@ STDDIPINFO(F1dream)
 
 static void palette_write(INT32 offset)
 {
-	UINT16 data = *((UINT16 *)(DrvPalRAM + offset + 0x200));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(DrvPalRAM + offset + 0x200)));
 
 	UINT8 r = (data >> 8) & 0x0f;
 	UINT8 g = (data >> 4) & 0x0f;
@@ -287,7 +287,7 @@ static void mcu_write_port(INT32 port, UINT8 data)
 {
 	if (port >= 0x7f0 && port <= 0x7ff) {
 		UINT16* ram16 = (UINT16*)Drv68KRAM;
-		ram16[(0x3fe0 / 2) + (port & 0xf)] = (ram16[(0x3fe0 / 2) + (port & 0xf)] & 0xff00) | data;
+		ram16[(0x3fe0 / 2) + (port & 0xf)] = BURN_ENDIAN_SWAP_INT16((BURN_ENDIAN_SWAP_INT16(ram16[(0x3fe0 / 2) + (port & 0xf)]) & 0xff00) | data);
 	}
 
 	switch (port) {
@@ -310,7 +310,7 @@ static UINT8 mcu_read_port(INT32 port)
 {
 	if (port >= 0x7f0 && port <= 0x7ff) {
 		UINT16* ram16 = (UINT16*)Drv68KRAM;
-		return ram16[(0x3fe0 / 2) + (port & 0xf)];
+		return BURN_ENDIAN_SWAP_INT16(ram16[(0x3fe0 / 2) + (port & 0xf)]);
 	}
 
 	return 0xff;
@@ -348,7 +348,7 @@ static void __fastcall tigeroad_write_byte(UINT32 address, UINT8 data)
 static void __fastcall tigeroad_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0xff8200 && address <= 0xff867f) {
-		*((UINT16*)(DrvPalRAM + (address - 0xff8000))) = data;
+		*((UINT16*)(DrvPalRAM + (address - 0xff8000))) = BURN_ENDIAN_SWAP_INT16(data);
 
 		palette_write(address - 0xff8200);
 

@@ -2586,7 +2586,7 @@ static void phantasm_rom_decode()
 	{
 		UINT16 x,y;
 
-		x = prg[i];
+		x = BURN_ENDIAN_SWAP_INT16(prg[i]);
 
 		if      (i < 0x08000/2) { if ((i | (0x248/2)) != i) { y = BITSWAP_0; } else { y = BITSWAP_1; } }
 		else if (i < 0x10000/2) { y = BITSWAP_2; }
@@ -2594,7 +2594,7 @@ static void phantasm_rom_decode()
 		else if (i < 0x20000/2) { y = BITSWAP_1; }
 		else                    { y = BITSWAP_2; }
 
-		prg[i] = y;
+		prg[i] = BURN_ENDIAN_SWAP_INT16(y);
 	}
 
 #undef BITSWAP_0
@@ -2614,7 +2614,7 @@ static void astyanax_rom_decode()
 	{
 		UINT16 x,y;
 
-		x = prg[i];
+		x = BURN_ENDIAN_SWAP_INT16(prg[i]);
 
 		if      (i < 0x08000/2) { if ((i | (0x248/2)) != i) {y = BITSWAP_0;} else {y = BITSWAP_1;} }
 		else if (i < 0x10000/2) { y = BITSWAP_2; }
@@ -2622,7 +2622,7 @@ static void astyanax_rom_decode()
 		else if (i < 0x20000/2) { y = BITSWAP_1; }
 		else                    { y = BITSWAP_2; }
 
-		prg[i] = y;
+		prg[i] = BURN_ENDIAN_SWAP_INT16(y);
 	}
 
 #undef BITSWAP_0

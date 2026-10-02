@@ -674,8 +674,8 @@ static void draw_sprites()
 		INT32 color = (attr & 0x3c) >> 2;
 		INT32 flipx = attr & 0x02;
 		INT32 flipy = 0;
-		INT32 sx = BURN_ENDIAN_SWAP_INT16((INT16)ram[offs+3]);
-		INT32 sy = BURN_ENDIAN_SWAP_INT16((INT16)ram[offs+2]);
+		INT32 sx = (INT16)BURN_ENDIAN_SWAP_INT16(ram[offs+3]);
+		INT32 sy = (INT16)BURN_ENDIAN_SWAP_INT16(ram[offs+2]);
 		if (sy > 496) sy -= 512;
 
 		if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;

@@ -1150,12 +1150,6 @@ INT32 avgdvg_init(INT32 vector_type, INT32 xsizemin, INT32 xsize, INT32 ysizemin
 	if (vector_engine == USE_AVG_SWARS)
 		flipword = 1;
 
-	/* Quantum may be reverse-endian depending on the platform */
-#ifndef LSB_FIRST
-	else if (vector_engine==USE_AVG_QUANTUM)
-		flipword = 1;
-#endif
-
 	/* everyone else is standard */
 	else
 		flipword = 0;

@@ -144,7 +144,7 @@ static inline void graphics_ram_expand_one(INT32 offset)
 
 static inline void palette_update(INT32 offset)
 {
-	INT32 p = *((UINT16*)(DrvPalRAM + offset));
+	INT32 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >> 10) & 0x1f;
 	INT32 g = (p >>  5) & 0x1f;
@@ -161,8 +161,8 @@ static void __fastcall tail2nose_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffe0000) == 0x400000) {
 		UINT16 *p = (UINT16*)DrvZoomRAM;
-		if (p[(address & 0x1ffff)/2] != data) {
-			p[(address & 0x1ffff)/2] = data;
+		if (p[(address & 0x1ffff)/2] != BURN_ENDIAN_SWAP_INT16(data)) {
+			p[(address & 0x1ffff)/2] = BURN_ENDIAN_SWAP_INT16(data);
 			graphics_ram_expand_one(address);
 		}
 		return;
@@ -179,7 +179,7 @@ static void __fastcall tail2nose_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xffff000) == 0xffe000) {
-		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+		*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 		palette_update(address & 0xffe);
 		return;
 	}
@@ -584,8 +584,8 @@ static void draw_layer()
 
 		if (sy >= nScreenHeight) break;
 
-		INT32 code  = (ram[offs] & 0x1fff) + (*char_bank << 13);
-		INT32 color = (ram[offs] >> 13) + (*pal_bank << 4);
+		INT32 code  = (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0x1fff) + (*char_bank << 13);
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 13) + (*pal_bank << 4);
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 8, color, 4, 0x0f, 0, DrvGfxROM0);
 	}
@@ -597,13 +597,13 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x300 / 2; offs += 4)
 	{
-		INT32 sx = ram[offs + 1];
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
 		if (sx >= 0x8000) sx -= 0x10000;
 
-		INT32 sy = 0x10000 - ram[offs + 0];
+		INT32 sy = 0x10000 - BURN_ENDIAN_SWAP_INT16(ram[offs + 0]);
 		if (sy >= 0x8000) sy -= 0x10000;
 
-		INT32 attr  = ram[offs + 2];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
 		INT32 code  = attr & 0x07ff;
 		INT32 color =((attr & 0xe000) >> 13) + 0x28;
 		INT32 flipx = attr & 0x1000;

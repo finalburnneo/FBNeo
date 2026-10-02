@@ -481,8 +481,8 @@ static void draw_sprites()
 
 	for (INT32 offs = 0; offs < 0x400/2;)
 	{
-		INT32 sy = spriteram[offs];
-		INT32 sx = spriteram[offs + 2];
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram[offs + 2]);
 
 		if (((sx & 0x0800) && (nCurrentFrame & 1) == 0) || (sy & 0x8000) == 0) {
 			offs += 4;
@@ -514,7 +514,7 @@ static void draw_sprites()
 
 		for (INT32 x = 0; x < w; x++)
 		{
-			INT32 code = (spriteram[offs + 1] & 0x1fff) & ~(h - 1);
+			INT32 code = (BURN_ENDIAN_SWAP_INT16(spriteram[offs + 1]) & 0x1fff) & ~(h - 1);
 			code += ((flipy) ? 0 : (h - 1));
 
 			for (INT32 y = 0; y < h; y++)

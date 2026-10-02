@@ -264,7 +264,7 @@ static void pgm2DecryptKov3Module(UINT32 addrXor, UINT16 dataXor)
     if (!buffer) return;
 
     for (INT32 i = 0; i < nWords; i++)
-        buffer[i] = rom[i ^ addrXor] ^ dataXor;
+        buffer[i] = rom[i ^ addrXor] ^ BURN_ENDIAN_SWAP_INT16(dataXor);
 
     memcpy(rom, buffer, Pgm2ArmROMLen);
     BurnFree(buffer);
@@ -331,7 +331,7 @@ static UINT16 pgm2ModuleRomR(UINT32 offset)
                         ((Pgm2ModuleSum[offs + 1] ^ Pgm2ModuleKey[offs + 1]) << 8));
     }
     if (!Pgm2ArmROM) return 0;
-    return ((UINT16*)Pgm2ArmROM)[offset];
+    return BURN_ENDIAN_SWAP_INT16(((UINT16*)Pgm2ArmROM)[offset]);
 }
 
 static void pgm2ModuleRomW(UINT32 offset, UINT16 data)
@@ -623,16 +623,16 @@ static void pgm2PatchBootRomForDecrypted()
 	// Scan and patch all BL,BL,B verify patterns in boot ROM
 	INT32 patchedCount = 0;
 	for (INT32 off = 0x20; off < Pgm2IntROMLen - 12; off += 4) {
-		UINT32 w0 = *(UINT32*)(Pgm2IntROM + off + 0);
-		UINT32 w1 = *(UINT32*)(Pgm2IntROM + off + 4);
-		UINT32 w2 = *(UINT32*)(Pgm2IntROM + off + 8);
+		UINT32 w0 = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2IntROM + off + 0));
+		UINT32 w1 = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2IntROM + off + 4));
+		UINT32 w2 = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2IntROM + off + 8));
 		if ((w0 & 0xff000000) == 0xeb000000 &&
 			(w1 & 0xff000000) == 0xeb000000 &&
 			(w2 & 0xff000000) == 0xea000000) {
 			bprintf(0, _T("PGM2: boot ROM verify pattern #%d at 0x%04X: %08X %08X %08X\n"),
 				patchedCount + 1, off, w0, w1, w2);
 			UINT32 original = w0;
-			*(UINT32*)(Pgm2IntROM + off) = 0xe1a00000;		// MOV R0, R0 (NOP)
+			*(UINT32*)(Pgm2IntROM + off) = BURN_ENDIAN_SWAP_INT32(0xe1a00000);		// MOV R0, R0 (NOP)
 			bprintf(0, _T("PGM2: boot ROM patch: patched verify BL at 0x%04X (was %08X) -> NOP\n"),
 				off, original);
 			patchedCount++;
@@ -1743,7 +1743,7 @@ static void pgm2WriteByte(UINT32 addr, UINT8 data)
 
     UINT32 aligned = addr & ~3;
     UINT32 shift   = (addr & 3) * 8;
-    UINT32 old     = BURN_ENDIAN_SWAP_INT32(pgm2ReadLongDirect(aligned));
+    UINT32 old     = pgm2ReadLongDirect(aligned);
     UINT32 mask    = 0xFF << shift;
     pgm2WriteLongDirect(aligned, (old & ~mask) | ((UINT32)data << shift));
 }
@@ -1803,7 +1803,7 @@ static void pgm2WriteWord(UINT32 addr, UINT16 data)
 
     UINT32 aligned = addr & ~3;
     UINT32 shift   = (addr & 2) * 8;
-    UINT32 old     = BURN_ENDIAN_SWAP_INT32(pgm2ReadLongDirect(aligned));
+    UINT32 old     = pgm2ReadLongDirect(aligned);
     UINT32 mask    = 0xFFFF << shift;
     pgm2WriteLongDirect(aligned, (old & ~mask) | ((UINT32)data << shift));
 }
@@ -2019,16 +2019,16 @@ INT32 pgm2Init()
     // others at 0x27F4 (bypassing the first instruction).
     // Patch both the entry NOP and the BNE branch to guarantee immediate exit.
     if (Pgm2IntROM && Pgm2IntROMLen > 0x2800) {
-        UINT32 insn0 = *(UINT32*)(Pgm2IntROM + 0x27F0);
-        UINT32 insn3 = *(UINT32*)(Pgm2IntROM + 0x27FC);
+        UINT32 insn0 = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2IntROM + 0x27F0));
+        UINT32 insn3 = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(Pgm2IntROM + 0x27FC));
         if (insn0 == 0xE1A00000) {  // Verify entry is NOP
             Pgm2IntRomOriginal27F0 = insn0;
-            *(UINT32*)(Pgm2IntROM + 0x27F0) = 0xE3A00000;  // MOV R0, #0
+            *(UINT32*)(Pgm2IntROM + 0x27F0) = BURN_ENDIAN_SWAP_INT32(0xE3A00000);  // MOV R0, #0
             PGM2_LOG(PGM2_LOG_SYS, "patched delay entry at 0x27F0: NOP -> MOV R0, #0");
         }
         if (insn3 == 0x1AFFFFFC) {  // Verify BNE 0x27F4
             Pgm2IntRomOriginal27FC = insn3;
-            *(UINT32*)(Pgm2IntROM + 0x27FC) = 0xE1A00000;  // NOP
+            *(UINT32*)(Pgm2IntROM + 0x27FC) = BURN_ENDIAN_SWAP_INT32(0xE1A00000);  // NOP
             PGM2_LOG(PGM2_LOG_SYS, "patched delay branch at 0x27FC: BNE -> NOP");
         }
     }

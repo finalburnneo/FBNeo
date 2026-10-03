@@ -284,8 +284,8 @@ void snes_sa1_handleState(StateHandler* sh)
 	sh_handleLongLongs(sh, &sa1_cycles, &math_result, NULL);
 	sh_handleBytes(sh, &openbus, &scpu_control, &scpu_irq_enable, &scpu_irq_pending, &sa1_control, &sa1_irq_enable, &sa1_irq_pending, &timer_mode, &supermmc[0], &supermmc[1], &supermmc[2], &supermmc[3], &bwram_sa1_mode, &bwram_sa1_type, &math_mode, &math_overflow, &dma_control, &dma_charconv1_active, &dma_charconv_control, &dma_charconv_bpp, &dma_charconv_line, &vari_bitcount, &vari_width, &vari_clock, NULL);
 	sh_handleBools(sh, &scpu_in_irq, NULL);
-	sh_handleWords(sh, &scpu_irq_vector, &scpu_nmi_vector, &sa1_reset_vector, &sa1_nmi_vector, &sa1_irq_vector, &timer_hpos, &timer_vpos, &hpos_latch, &vpos_latch, &bwram_snes_bank, &bwram_sa1_bank, &math_param_a, &math_param_b, &dma_len, NULL);
-	sh_handleInts(sh, &dma_src, &dma_dst, &vari_src, &vari_temp, NULL);
+	sh_handleWords(sh, &scpu_irq_vector, &scpu_nmi_vector, &sa1_reset_vector, &sa1_nmi_vector, &sa1_irq_vector, &timer_hpos, &timer_vpos, &hpos_latch, &vpos_latch, &math_param_a, &math_param_b, &dma_len, NULL);
+	sh_handleInts(sh, &dma_src, &dma_dst, &bwram_snes_bank, &bwram_sa1_bank, &vari_src, &vari_temp, NULL);
 
 	if (sh->saving == false) {
 		map_update();

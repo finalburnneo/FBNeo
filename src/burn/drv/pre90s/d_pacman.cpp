@@ -9100,6 +9100,45 @@ struct BurnDriver BurnDrvpacminer = {
 };
 
 
+// Busy Pac-Man
+// https://archive.org/details/busy-pac-man
+
+static struct BurnRomInfo bupacmanRomDesc[] = {
+	{ "bupm1_prg1.6e", 0x0800, 0x292c2004, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "bupm1_prg2.6k", 0x0800, 0xbc02ee74, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "bupm1_prg3.6f", 0x0800, 0x5a3d2bc0, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "bupm1_prg4.6m", 0x0800, 0x1e878c6e, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pm1_prg5.6h",   0x0800, 0x6bf4f625, 1 | BRF_ESS | BRF_PRG },	//  4 
+	{ "bupm1_prg6.6n", 0x0800, 0xada07b4d, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "bupm1_prg7.6j", 0x0800, 0x32a1f575, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "bupm1_prg8.6p", 0x0800, 0x31159185, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "bupm1_chg1.5e", 0x0800, 0x3624374b, 2 | BRF_GRA },			//  8 Graphics
+	{ "pm1_chg2.5h",   0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "bupm1_chg3.5f", 0x0800, 0x2a05a00f, 2 | BRF_GRA },			// 10
+	{ "pm1_chg4.5j",   0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+
+	{ "bupm1-1.7f",    0x0020, 0x76631e65, 3 | BRF_GRA },			// 12 Color Proms
+	{ "bupm1-4.4a",    0x0100, 0x4d111f36, 3 | BRF_GRA },			// 13
+
+	{ "pm1-3.1m",      0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "pm1-2.3m",      0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(bupacman)
+STD_ROM_FN(bupacman)
+
+struct BurnDriver BurnDrvbupacman = {
+	"bupacman", "puckman", NULL, NULL, "2026",
+	"Busy Pac-Man (Hack)\0", NULL, "zeroco", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, bupacmanRomInfo, bupacmanRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Alien Armada
 
 static struct BurnRomInfo aaRomDesc[] = {

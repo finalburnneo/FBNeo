@@ -3043,10 +3043,10 @@ struct BurnDriver BurnSpecavenger = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aventura Espacial, La - Parte 1 - Explorando Mundos (Spanish) (48K)
+// Aventura Espacial I, La: Explorando Mundos (Spanish) (48K)
 
 static struct BurnRomInfo SpecAvespacial1RomDesc[] = {
-	{ "Aventura Espacial, La - Explorando Mundos 48K (1990)(Aventuras AD).z80", 45676, 0xc46932a5, BRF_ESS | BRF_PRG },
+	{ "Aventura Espacial I, La - Explorando Mundos ES 48K (1990)(Aventuras AD).z80", 45676, 0xc46932a5, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAvespacial1, SpecAvespacial1, Spectrum)
@@ -3054,7 +3054,7 @@ STD_ROM_FN(SpecAvespacial1)
 
 struct BurnDriver BurnSpecAvespacial1 = {
 	"spec_avespacial1", NULL, "spec_spectrum", NULL, "1990",
-	"Aventura Espacial, La: Explorando Mundos (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Aventura Espacial I, La: Explorando Mundos (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecAvespacial1RomInfo, SpecAvespacial1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -3062,10 +3062,10 @@ struct BurnDriver BurnSpecAvespacial1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aventura Espacial, La - Parte 2 - En los Dominios del Cerebelo (Spanish) (48K)
+// Aventura Espacial II, La: En los Dominios del Cerebelo (Spanish) (48K)
 
 static struct BurnRomInfo SpecAvespacial2RomDesc[] = {
-	{ "Aventura Espacial, La - En los Dominios del Cerebelo 48K (1990)(Aventuras AD).z80", 40915, 0x06d2fd5c, BRF_ESS | BRF_PRG },
+	{ "Aventura Espacial II, La - En los Dominios del Cerebelo ES 48K (1990)(Aventuras AD).z80", 40915, 0x06d2fd5c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAvespacial2, SpecAvespacial2, Spectrum)
@@ -3073,7 +3073,7 @@ STD_ROM_FN(SpecAvespacial2)
 
 struct BurnDriver BurnSpecAvespacial2 = {
 	"spec_avespacial2", "spec_avespacial1", "spec_spectrum", NULL, "1990",
-	"Aventura Espacial, La: En los Dominios del Cerebelo (Spanish) (48K)\0", "PASSWORD: CANES VENATICI", "Aventuras A.D.", "ZX Spectrum",
+	"Aventura Espacial II, La: En los Dominios del Cerebelo (Spanish) (48K)\0", "PASSWORD: CANES VENATICI", "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecAvespacial2RomInfo, SpecAvespacial2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -3081,10 +3081,10 @@ struct BurnDriver BurnSpecAvespacial2 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aventura Original I: La Busqueda (Spanish) (48K)
+//  Aventura Original I, La: La Búsqueda (Spanish) (48K)
 
 static struct BurnRomInfo SpecAvoriginal1RomDesc[] = {
-	{ "Aventura Original - Parte 1 - La Busqueda 48K (1989)(Aventuras AD).z80", 46750, 0xce246950, BRF_ESS | BRF_PRG },
+	{ "Aventura Original I, La - La Busqueda ES 48K (1989)(Aventuras AD).z80", 46750, 0xce246950, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAvoriginal1, SpecAvoriginal1, Spectrum)
@@ -3092,7 +3092,7 @@ STD_ROM_FN(SpecAvoriginal1)
 
 struct BurnDriver BurnSpecAvoriginal1 = {
 	"spec_avoriginal1", NULL, "spec_spectrum", NULL, "1989",
-	"Aventura Original I: La Busqueda (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Aventura Original I, La: La Busqueda (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecAvoriginal1RomInfo, SpecAvoriginal1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -3100,10 +3100,10 @@ struct BurnDriver BurnSpecAvoriginal1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aventura Original II: El Encuentro (Spanish) (48K)
+// Aventura Original II, La: El Encuentro (Spanish) (48K)
 
 static struct BurnRomInfo SpecAvoriginal2RomDesc[] = {
-	{ "Aventura Original - Parte 2 - El Encuentro 48K (1989)(Aventuras AD).z80", 47212, 0x126a3c19, BRF_ESS | BRF_PRG },
+	{ "Aventura Original II, La - El Encuentro ES 48K (1989)(Aventuras AD).z80", 47212, 0x126a3c19, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecAvoriginal2, SpecAvoriginal2, Spectrum)
@@ -3111,7 +3111,7 @@ STD_ROM_FN(SpecAvoriginal2)
 
 struct BurnDriver BurnSpecAvoriginal2 = {
 	"spec_avoriginal2", "spec_avoriginal1", "spec_spectrum", NULL, "1989",
-	"Aventura Original II: El Encuentro (Spanish) (48K)\0", "PASSWORD: TIMACUS", "Aventuras A.D.", "ZX Spectrum",
+	"Aventura Original II, La: El Encuentro (Spanish) (48K)\0", "PASSWORD: TIMACUS", "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecAvoriginal2RomInfo, SpecAvoriginal2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -6558,10 +6558,10 @@ struct BurnDriver BurnSpecchicago30 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Chichen Itza - Part 1 (Spanish) (48K)
+// Chichen Itza - Parte 1 (Spanish) (48K)
 
 static struct BurnRomInfo SpecChichenitza1RomDesc[] = {
-	{ "Chichen Itza - Part 1 ES 48K (1992)(Aventuras AD).tap", 48166, 0x14e54546, BRF_ESS | BRF_PRG },
+	{ "Chichen Itza - Parte 1 ES 48K (1992)(Aventuras AD).tap", 48166, 0x14e54546, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecChichenitza1, SpecChichenitza1, Spectrum)
@@ -6569,7 +6569,7 @@ STD_ROM_FN(SpecChichenitza1)
 
 struct BurnDriver BurnSpecChichenitza1 = {
 	"spec_chichenitza1", NULL, "spec_spectrum", NULL, "1992",
-	"Chichen Itza - Part 1 (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Chichen Itza - Parte 1 (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecChichenitza1RomInfo, SpecChichenitza1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -6577,10 +6577,10 @@ struct BurnDriver BurnSpecChichenitza1 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Chichen Itza - Part 2 (Spanish) (48K)
+// Chichen Itza - Parte 2 (Spanish) (48K)
 
 static struct BurnRomInfo SpecChichenitza2RomDesc[] = {
-	{ "Chichen Itza - Part 2 ES 48K (1992)(Aventuras AD).tap", 48166, 0x0a229edb, BRF_ESS | BRF_PRG },
+	{ "Chichen Itza - Parte 2 ES 48K (1992)(Aventuras AD).tap", 48166, 0x0a229edb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecChichenitza2, SpecChichenitza2, Spectrum)
@@ -6588,7 +6588,7 @@ STD_ROM_FN(SpecChichenitza2)
 
 struct BurnDriver BurnSpecChichenitza2 = {
 	"spec_chichenitza2", "spec_chichenitza1", "spec_spectrum", NULL, "1992",
-	"Chichen Itza - Part 2 (Spanish) (48K)\0", "Password: RICO PAPASITO", "Aventuras A.D.", "ZX Spectrum",
+	"Chichen Itza - Parte 2 (Spanish) (48K)\0", "Password: RICO PAPASITO", "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecChichenitza2RomInfo, SpecChichenitza2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -8944,7 +8944,7 @@ STD_ROM_FN(SpecCozumel1bw)
 
 struct BurnDriver BurnSpecCozumel1bw = {
 	"spec_cozumel1bw", NULL, "spec_spectrum", NULL, "1990",
-	"Diosa de Cozumel, La - Parte 1 (B&W) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Diosa de Cozumel, La - Parte 1 (B&W) (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecCozumel1bwRomInfo, SpecCozumel1bwRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -8963,7 +8963,7 @@ STD_ROM_FN(SpecCozumel1col)
 
 struct BurnDriver BurnSpecCozumel1col = {
 	"spec_cozumel1col", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
-	"Diosa de Cozumel, La - Parte 1 (Color) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Diosa de Cozumel, La - Parte 1 (Color) (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecCozumel1colRomInfo, SpecCozumel1colRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -8982,7 +8982,7 @@ STD_ROM_FN(SpecCozumel2bw)
 
 struct BurnDriver BurnSpecCozumel2bw = {
 	"spec_cozumel2bw", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
-	"Diosa de Cozumel, La - Parte 2 (B&W) (Spanish) (48K)\0", "PASSWORD: parte2", "Aventuras A.D.", "ZX Spectrum",
+	"Diosa de Cozumel, La - Parte 2 (B&W) (Spanish) (48K)\0", "PASSWORD: parte2", "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecCozumel2bwRomInfo, SpecCozumel2bwRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -9001,7 +9001,7 @@ STD_ROM_FN(SpecCozumel2col)
 
 struct BurnDriver BurnSpecCozumel2col = {
 	"spec_cozumel2col", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
-	"Diosa de Cozumel, La - Parte 2 (Color) (Spanish) (48K)\0", "PASSWORD: parte2", "Aventuras A.D.", "ZX Spectrum",
+	"Diosa de Cozumel, La - Parte 2 (Color) (Spanish) (48K)\0", "PASSWORD: parte2", "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecCozumel2colRomInfo, SpecCozumel2colRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -9020,7 +9020,7 @@ STD_ROM_FN(SpecCozumeldemo)
 
 struct BurnDriver BurnSpecCozumeldemo = {
 	"spec_cozumeldemo", "spec_cozumel1bw", "spec_spectrum", NULL, "1990",
-	"Diosa de Cozumel, La (Demo) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Diosa de Cozumel, La (Demo) (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_DEMO , 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecCozumeldemoRomInfo, SpecCozumeldemoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -15870,10 +15870,10 @@ struct BurnDriver BurnSpecironman = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Jabato - Parte 1 - Jabato vs Imperio: libertad (Spanish) (48K)
+// Jabato - Parte 1 - Jabato vs Imperio: Libertad (Spanish) (48K)
 
 static struct BurnRomInfo SpecJabato1RomDesc[] = {
-	{ "Jabato vs Imperio - libertad ES 48K (1989)(Aventuras AD).tzx", 56615, 0x32c85abb, BRF_ESS | BRF_PRG },
+	{ "Jabato vs Imperio - Libertad ES 48K (1989)(Aventuras AD).tzx", 56615, 0x32c85abb, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecJabato1, SpecJabato1, Spectrum)
@@ -15881,7 +15881,7 @@ STD_ROM_FN(SpecJabato1)
 
 struct BurnDriver BurnSpecJabato1 = {
 	"spec_jabato1", NULL, "spec_spectrum", NULL, "1989",
-	"Jabato vs Imperio: libertad (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Jabato vs Imperio: Libertad (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecJabato1RomInfo, SpecJabato1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -15900,7 +15900,7 @@ STD_ROM_FN(SpecJabato2)
 
 struct BurnDriver BurnSpecJabato2 = {
 	"spec_jabato2", "spec_jabato1", "spec_spectrum", NULL, "1989",
-	"Jabato en Africa (Spanish) (48K)\0", "PASSWORD: inexes loxiko", "Aventuras A.D.", "ZX Spectrum",
+	"Jabato en Africa (Spanish) (48K)\0", "PASSWORD: INEXES LOXIKO", "Aventuras AD", "ZX Spectrum",
 	L"Jabato en \u00c1frica (Spanish) (48K)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecJabato2RomInfo, SpecJabato2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -29352,7 +29352,7 @@ STD_ROM_FN(SpecSupervivencia)
 
 struct BurnDriver BurnSpecSupervivencia = {
 	"spec_supervivencia", NULL, "spec_spectrum", NULL, "1988",
-	"Supervivencia (El Firfurcio) (Spanish) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Supervivencia (El Firfurcio) (Spanish) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecSupervivenciaRomInfo, SpecSupervivenciaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -29371,7 +29371,7 @@ STD_ROM_FN(SpecSupervivenciaa)
 
 struct BurnDriver BurnSpecSupervivenciaa = {
 	"spec_supervivenciaa", "spec_supervivencia", "spec_spectrum", NULL, "1988",
-	"Supervivencia (El Firfurcio) (Spanish, Alt) (48K)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Supervivencia (El Firfurcio) (Spanish, Alt) (48K)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecSupervivenciaaRomInfo, SpecSupervivenciaaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -29846,7 +29846,7 @@ STD_ROM_FN(SpecSagradosp1)
 
 struct BurnDriver BurnSpecSagradosp1 = {
 	"spec_sagradosp1", NULL, "spec_spectrum", NULL, "1991",
-	"Templos Sagrados, Los - Parte 1 (Spanish)\0", NULL, "Aventuras A.D.", "ZX Spectrum",
+	"Templos Sagrados, Los - Parte 1 (Spanish)\0", NULL, "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecSagradosp1RomInfo, SpecSagradosp1RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -29865,7 +29865,7 @@ STD_ROM_FN(SpecSagradosp2)
 
 struct BurnDriver BurnSpecSagradosp2 = {
 	"spec_sagradosp2", "spec_sagradosp1", "spec_spectrum", NULL, "1991",
-	"Templos Sagrados, Los - Parte 2 (Spanish) (48K)\0", "PASSWORD: TUR KOS BON", "Aventuras A.D.", "ZX Spectrum",
+	"Templos Sagrados, Los - Parte 2 (Spanish) (48K)\0", "PASSWORD: TUR KOS BON", "Aventuras AD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecSagradosp2RomInfo, SpecSagradosp2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

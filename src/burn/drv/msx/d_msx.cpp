@@ -22406,6 +22406,78 @@ struct BurnDriver BurnDrvMSX_avenger = {
 	272, 228, 4, 3
 };
 
+// Aventura Espacial I, La: Explorando Mundos (Euro, Spanish)
+static struct BurnRomInfo MSX_avespacial1RomDesc[] = {
+	{ "Aventura Espacial I, La - Explorando Mundos (Euro, ES)(1990)(Aventuras AD)(Side A)[RUN'CAS-'].cas",	50543, 0x0de4c65e, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_avespacial1, MSX_avespacial1, msx_msx)
+STD_ROM_FN(MSX_avespacial1)
+
+struct BurnDriver BurnDrvMSX_avespacial1 = {
+	"msx_avespacial1", NULL, "msx_msx", NULL, "1990",
+	"Aventura Espacial I, La: Explorando Mundos (Euro, Spanish)\0", NULL, "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_avespacial1RomInfo, MSX_avespacial1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Aventura Espacial II, La: En los Dominios del Cerebelo (Euro, Spanish)
+static struct BurnRomInfo MSX_avespacial2RomDesc[] = {
+	{ "Aventura Espacial II, La - En los Dominios del Cerebelo (Euro, ES)(1990)(Aventuras AD)(Side B)[RUN'CAS-'].cas",	52071, 0x7718bb02, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_avespacial2, MSX_avespacial2, msx_msx)
+STD_ROM_FN(MSX_avespacial2)
+
+struct BurnDriver BurnDrvMSX_avespacial2 = {
+	"msx_avespacial2", "msx_avespacial1", "msx_msx", NULL, "1990",
+	"Aventura Espacial II, La: En los Dominios del Cerebelo (Euro, Spanish)\0", "Password: CANES VENATICI", "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_avespacial2RomInfo, MSX_avespacial2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Aventura Original I, La: La Búsqueda (Euro, Spanish)
+static struct BurnRomInfo MSX_avoriginal1RomDesc[] = {
+	{ "Aventura Original I, La - La Busqueda (Euro, ES)(1989)(Aventuras AD)(Side A)[RUN'CAS-'].cas",	50440, 0x9d5aeb55, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_avoriginal1, MSX_avoriginal1, msx_msx)
+STD_ROM_FN(MSX_avoriginal1)
+
+struct BurnDriver BurnDrvMSX_avoriginal1 = {
+	"msx_avoriginal1", NULL, "msx_msx", NULL, "1989",
+	"Aventura Original I, La: La Busqueda (Euro, Spanish)\0", NULL, "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_avoriginal1RomInfo, MSX_avoriginal1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Aventura Original II, La: El Encuentro (Euro, Spanish)
+static struct BurnRomInfo MSX_avoriginal2RomDesc[] = {
+	{ "Aventura Original II, La - El Encuentro (Euro, ES)(1989)(Aventuras AD)(Side B)[RUN'CAS-'].cas",	53944, 0xeeac4cca, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_avoriginal2, MSX_avoriginal2, msx_msx)
+STD_ROM_FN(MSX_avoriginal2)
+
+struct BurnDriver BurnDrvMSX_avoriginal2 = {
+	"msx_avoriginal2", "msx_avoriginal1", "msx_msx", NULL, "1989",
+	"Aventura Original II, La: El Encuentro (Euro, Spanish)\0", "Password: TIMACUS", "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_avoriginal2RomInfo, MSX_avoriginal2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Averno (Euro, Spanish)
 static struct BurnRomInfo MSX_AvernoRomDesc[] = {
 	{ "Averno (Euro, ES)(1989)(Proein Soft Line)[RUN'CAS-'].cas", 20446, 0x9d6996a4, BRF_ESS | BRF_PRG },
@@ -22951,6 +23023,42 @@ struct BurnDriver BurnDrvMSX_chicago30s = {
 	272, 228, 4, 3
 };
 
+// Chichén Itzá - Part 1 (Euro, Spanish)
+static struct BurnRomInfo MSX_chichenitza1RomDesc[] = {
+	{ "Chichen Itza - Part 1 (Euro, ES)(1992)(Aventuras AD)(Side A)[RUN'CAS-'].cas",	58151, 0x06b447ba, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_chichenitza1, MSX_chichenitza1, msx_msx)
+STD_ROM_FN(MSX_chichenitza1)
+
+struct BurnDriver BurnDrvMSX_chichenitza1 = {
+	"msx_chichenitza1", NULL, "msx_msx", NULL, "1992",
+	"Chichen Itza - Part 1 (Euro, Spanish)\0", NULL, "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_chichenitza1RomInfo, MSX_chichenitza1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Chichén Itzá - Part 2 (Euro, Spanish)
+static struct BurnRomInfo MSX_chichenitza2RomDesc[] = {
+	{ "Chichen Itza - Part 2 (Euro, ES)(1992)(Aventuras AD)(Side B)[RUN'CAS-'].cas",	51111, 0xd1e12c88, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_chichenitza2, MSX_chichenitza2, msx_msx)
+STD_ROM_FN(MSX_chichenitza2)
+
+struct BurnDriver BurnDrvMSX_chichenitza2 = {
+	"msx_chichenitza2", "msx_chichenitza1", "msx_msx", NULL, "1992",
+	"Chichen Itza - Part 2 (Euro, Spanish)\0", "Password: RICO PAPASITO", "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_chichenitza2RomInfo, MSX_chichenitza2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Chicken Chase (Euro)
 static struct BurnRomInfo MSX_chickenRomDesc[] = {
 	{ "Chicken Chase (Euro, GB)(1986)(Bug-Byte Software)[RUN'CAS-'].cas",	0x09227, 0x027c7e11, BRF_PRG | BRF_ESS },
@@ -23295,6 +23403,43 @@ struct BurnDriver BurnDrvMSX_destroyr = {
 	272, 228, 4, 3
 };
 
+// Diosa de Cozumel, La - Part 1 (Euro, Spanish)
+static struct BurnRomInfo MSX_cozumel1RomDesc[] = {
+	{ "Diosa de Cozumel, La - Part 1 (Euro, ES)(1990)(Aventuras AD)(Side A)[RUN'CAS-'].cas",	61338, 0xa97f3695, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_cozumel1, MSX_cozumel1, msx_msx)
+STD_ROM_FN(MSX_cozumel1)
+
+struct BurnDriver BurnDrvMSX_cozumel1 = {
+	"msx_cozumel1", NULL, "msx_msx", NULL, "1990",
+	"Diosa de Cozumel, La - Part 1 (Euro, Spanish)\0", NULL, "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_cozumel1RomInfo, MSX_cozumel1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Diosa de Cozumel, La - Part 2 (Euro, Spanish)
+static struct BurnRomInfo MSX_cozumel2RomDesc[] = {
+	{ "Diosa de Cozumel, La - Part 2 (Euro, ES)(1990)(Aventuras AD)(Side B)[RUN'CAS-'].cas",	60916, 0x158b94e7, BRF_PRG | BRF_ESS },
+	{ "Diosa de Cozumel, La - Part 2 (Euro, ES)(1990)(Aventuras AD)(PARTE2)[RUN'CAS-'].cas",	554, 0xd5a4b94f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_cozumel2, MSX_cozumel2, msx_msx)
+STD_ROM_FN(MSX_cozumel2)
+
+struct BurnDriver BurnDrvMSX_cozumel2 = {
+	"msx_cozumel2", "msx_cozumel1", "msx_msx", NULL, "1990",
+	"Diosa de Cozumel, La - Part 2 (Euro, Spanish)\0", "To start Part 2 change tape to Side B and enter PARTE2", "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_cozumel2RomInfo, MSX_cozumel2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Discovery (Euro)
 static struct BurnRomInfo MSX_discoveryRomDesc[] = {
 	{ "Discovery (Euro)(1988)(Eurosoft)[RUN'CAS-'].cas",	48328, 0x417e057b, BRF_PRG | BRF_ESS },
@@ -23398,7 +23543,7 @@ struct BurnDriver BurnDrvMSX_donquijote1 = {
 	"Don Quijote - Part I (Euro, Spanish)\0", NULL, "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
-	MSXGetZipName, MSX_donquijote1RomInfo, MSX_donquijote1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	MSXGetZipName, MSX_donquijote1RomInfo, MSX_donquijote1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -23416,7 +23561,7 @@ struct BurnDriver BurnDrvMSX_donquijote2 = {
 	"Don Quijote - Part II (Euro, Spanish)\0", "Password: EL BALSAMO DE FIERABRAS", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
-	MSXGetZipName, MSX_donquijote2RomInfo, MSX_donquijote2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	MSXGetZipName, MSX_donquijote2RomInfo, MSX_donquijote2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -24555,6 +24700,42 @@ struct BurnDriver BurnDrvMSX_ik = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_VSFIGHT, 0,
 	MSXGetZipName, MSX_ikRomInfo, MSX_ikRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Jabato vs Imperio: Libertad (Euro, Spanish)
+static struct BurnRomInfo MSX_jabato1RomDesc[] = {
+	{ "Jabato vs Imperio - Libertad (Euro, ES)(1989)(Aventuras AD)(Side A)[RUN'CAS-'].cas",	56255, 0x74c8abe0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_jabato1, MSX_jabato1, msx_msx)
+STD_ROM_FN(MSX_jabato1)
+
+struct BurnDriver BurnDrvMSX_jabato1 = {
+	"msx_jabato1", NULL, "msx_msx", NULL, "1989",
+	"Jabato vs Imperio: Libertad (Euro, Spanish)\0", NULL, "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_jabato1RomInfo, MSX_jabato1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Jabato en África (Euro, Spanish)
+static struct BurnRomInfo MSX_jabato2RomDesc[] = {
+	{ "Jabato en Africa (Euro, ES)(1989)(Aventuras AD)(Side B)[RUN'CAS-'].cas",	57339, 0x4f12b6be, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_jabato2, MSX_jabato2, msx_msx)
+STD_ROM_FN(MSX_jabato2)
+
+struct BurnDriver BurnDrvMSX_jabato2 = {
+	"msx_jabato2", "msx_jabato1", "msx_msx", NULL, "1989",
+	"Jabato en Africa (Euro, Spanish)\0", "Password: INEXES LOXIKO", "Aventuras AD", "MSX",
+	L"Jabato en \u00c1frica (Euro, Spanish)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_jabato2RomInfo, MSX_jabato2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -26932,6 +27113,42 @@ struct BurnDriver BurnDrvMSX_tmht = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MSXGetZipName, MSX_tmhtRomInfo, MSX_tmhtRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Templos Sagrados, Los - Part 1 (Euro, Spanish)
+static struct BurnRomInfo MSX_sagradosp1RomDesc[] = {
+	{ "Templos Sagrados, Los - Part 1 (Euro, ES)(1991)(Aventuras AD)(Side A)[RUN'CAS-'].cas",	54497, 0xef299ea8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sagradosp1, MSX_sagradosp1, msx_msx)
+STD_ROM_FN(MSX_sagradosp1)
+
+struct BurnDriver BurnDrvMSX_sagradosp1 = {
+	"msx_sagradosp1", NULL, "msx_msx", NULL, "1991",
+	"Templos Sagrados, Los - Part 1 (Euro, Spanish)\0", NULL, "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_sagradosp1RomInfo, MSX_sagradosp1RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Templos Sagrados, Los - Part 2 (Euro, Spanish)
+static struct BurnRomInfo MSX_sagradosp2RomDesc[] = {
+	{ "Templos Sagrados, Los - Part 2 (Euro, ES)(1991)(Aventuras AD)(Side B)[RUN'CAS-'].cas",	50065, 0x04a90ad0, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sagradosp2, MSX_sagradosp2, msx_msx)
+STD_ROM_FN(MSX_sagradosp2)
+
+struct BurnDriver BurnDrvMSX_sagradosp2 = {
+	"msx_sagradosp2", "msx_sagradosp1", "msx_msx", NULL, "1991",
+	"Templos Sagrados, Los - Part 2 (Euro, Spanish)\0", "Password: TUR KOS BON", "Aventuras AD", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MSX, GBF_ADV, 0,
+	MSXGetZipName, MSX_sagradosp2RomInfo, MSX_sagradosp2RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

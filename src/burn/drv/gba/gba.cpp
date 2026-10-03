@@ -3,12 +3,12 @@
 
 // Forward declarations for cross-header calls within this single translation unit
 
-// apu.h
+// gbaapu.h
 static inline void    gba_process_audio_writes(gba_t* gba);
 static inline UINT8   gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
 static inline void    gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
 
-// bus.h
+// gbabus.h
 static inline void    gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
 static inline void    gba_recompute_mmio_mask_table(gba_t* gba);
 static inline UINT32  gba_read32(gba_t* gba, UINT32 baddr);
@@ -19,26 +19,26 @@ static inline void    gba_store16(gba_t* gba, UINT32 baddr, UINT32 data);
 static inline void    gba_store8(gba_t* gba, UINT32 baddr, UINT32 data);
 static inline void    gba_io_store16(gba_t* gba, UINT32 baddr, UINT16 data);
 static inline void    gba_update_interrupt_pending(gba_t* gba);
-static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 baddr, INT32 req_type);
+SB_ALWAYS_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 baddr, INT32 req_type);
 static inline void    gba_process_mmio_read(gba_t* gba, UINT32 address);
 static inline bool    gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes);
 static inline void    arm7_write32(void* user_data, UINT32 address, UINT32 data);
 static inline void    gba_tick_keypad(sb_joy_t* joy, gba_t* gba);
 
-// cart.h
+// gbacart.h
 static inline UINT16  gba_rom_read16(const gba_t* gba, UINT32 address);
 
-// timer.h
-static void    gba_compute_timers(gba_t* gba);
-static void    gba_tick_interrupts(gba_t* gba);
-static void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
-static void    gba_timer_event(gba_t* gba, sb_emu_state_t* /*emu*/, UINT32 /*cycles_late*/);
+// gbatimer.h
+static  void    gba_compute_timers(gba_t* gba);
+static  void    gba_tick_interrupts(gba_t* gba);
+static  void    gba_send_interrupt(gba_t* gba, INT32 pipe_stage, INT32 if_bit);
+static  void    gba_timer_event(gba_t* gba, sb_emu_state_t* /*emu*/, UINT32 /*cycles_late*/);
 
-// ppu.h
+// gbappu.h
 static inline void    gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 static inline void    gba_ppu_refresh_status(gba_t* gba);
 
-// sio.h
+// gbasio.h
 #define GBA_SIO_TRANSFER_TICKS	(8 * 8)
 static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 
@@ -51,9 +51,80 @@ static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycl
 #include "gbasio.h"
 #include "gbaapu.h"
 
+// PPU worker thread component (single-header). Include after gbappu.h / gbadma.h.
+#include "gbappu_worker.h"
+
 void gba_cpu_trigger_breakpoint(void* data);
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);
-void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch);
+void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worker_t* worker);
+
+// Fast variant of gbacpu.h's arm7_exec_instruction: the tail prefetch reads call
+// arm7_read{32,16}_seq directly (static inline here, after gbabus.h) instead of
+// going through cpu->read*_seq.
+static inline void arm7_exec_instruction_fast(arm7_t* cpu)
+{
+	gba_t* gba = (gba_t*)cpu->user_data;
+
+	UINT32 cpsr = cpu->registers[CPSR];
+	bool thumb  = SB_BFE(cpsr, 5, 1);
+	bool run_opcode = true;
+	if (SB_UNLIKELY(cpu->phased_op_id != ARM_PHASED_NONE)) {
+		run_opcode = arm7_run_phased_opcode(cpu);
+	}
+	if (run_opcode) {
+		if (SB_UNLIKELY(cpu->wait_for_interrupt)) {
+			cpu->i_cycles += 1;
+			return;
+		}
+		cpu->next_fetch_sequential = true;
+		UINT32 opcode = cpu->prefetch_opcode[0];
+		cpu->prefetch_opcode[0] = cpu->prefetch_opcode[1];
+		cpu->prefetch_opcode[1] = cpu->prefetch_opcode[2];
+		UINT32 pc;
+		if (thumb == false) {
+			pc = cpu->registers[PC] + 4;
+			cpu->registers[PC] = pc;
+			cpu->prefetch_pc = pc;
+			if (SB_LIKELY(arm7_check_cond_code_cpsr(cpsr, opcode))) {
+				UINT32 key = ((opcode >> 4) & 0xf) | ((opcode >> 16) & 0xff0);
+				arm7_lookup_table[key](cpu, opcode);
+			}
+		} else {
+			pc = cpu->registers[PC] + 2;
+			cpu->registers[PC] = pc;
+			cpu->prefetch_pc = pc;
+			UINT32 key = ((opcode >> 8) & 0xff);
+			arm7t_lookup_table[key](cpu, opcode);
+		}
+		if (SB_UNLIKELY(cpu->step_instructions)) {
+			--cpu->step_instructions;
+			if (cpu->step_instructions == 0) {
+				if (cpu->trigger_breakpoint)
+					cpu->trigger_breakpoint(cpu->user_data);
+			}
+		}
+	}
+	if (SB_UNLIKELY(cpu->phased_op_id))
+		return;
+	bool pc_match = SB_LIKELY(cpu->prefetch_pc == cpu->registers[PC]);
+	if (thumb == false) {
+		if (pc_match) {
+			cpu->prefetch_opcode[2] = arm7_read32_seq(gba, cpu->registers[PC] + 8, cpu->next_fetch_sequential);
+		} else {
+			cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
+		}
+	} else {
+		if (pc_match) {
+			cpu->prefetch_opcode[2] = arm7_read16_seq(gba, cpu->registers[PC] + 4, cpu->next_fetch_sequential);
+		} else {
+			cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
+		}
+	}
+}
+
+// Active worker is per-instance in gba->ppu_worker_ptr (set at top of
+// gba_tick, cleared at frame exit). Render/event inlines live in gbappu_worker.h.
+// ---------------------------------------------------------------------------
 struct GbaCore {
 	gba_t state;
 	gba_scratch_t  scratch;
@@ -69,6 +140,7 @@ struct GbaCore {
 	UINT8  cartridgeBackupType;
 	double sourceRate;
 	INT32  outputFrames;
+	ppu_worker_t worker;
 };
 
 struct GbaCartridgeProfile {
@@ -401,6 +473,8 @@ INT32 GbaCoreInit(GbaCore **core)
 	memset(*core, 0, sizeof(GbaCore));
 	(*core)->host.render_frame  = true;
 	(*core)->host.capture_audio = true;
+	// Init PPU worker (falls back to single-threaded on unsupported platforms)
+	ppu_worker_init(&(*core)->worker);
 	return 0;
 }
 
@@ -408,6 +482,8 @@ void GbaCoreExit(GbaCore **core)
 {
 	if (core == NULL || *core == NULL)
 		return;
+	// Shut down worker first (join thread) before freeing core state.
+	ppu_worker_exit(&(*core)->worker);
 	gba_unload(&(*core)->state, &(*core)->scratch);
 	if ((*core)->ownsRom)
 		BurnFree((*core)->rom);
@@ -456,6 +532,8 @@ INT32 GbaCoreLoadRom(GbaCore *core, const UINT8 *rom, size_t romSize, const GbaR
 	gba_rtc_cold_init(&core->state.rtc, rtcSeed ? &seed : NULL);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
+	// Discard worker snapshots / backbuffers from previous ROM.
+	ppu_worker_reset(&core->worker);
 	GbaCoreClearPresentation(core);
 	return 0;
 }
@@ -476,6 +554,15 @@ INT32 GbaCoreLoadBios(GbaCore *core, const UINT8 *bios, size_t biosSize)
 		return 1;
 	memcpy(core->externalBios, bios, sizeof(core->externalBios));
 	core->externalBiosLoaded = true;
+	return 0;
+}
+
+INT32 GbaCoreRunFrame(GbaCore *core)
+{
+	if (core == NULL || core->rom == NULL)
+		return 1;
+	core->host.render_frame = true;
+	gba_tick(&core->host, &core->state, &core->scratch, &core->worker);
 	return 0;
 }
 
@@ -522,6 +609,7 @@ INT32 GbaCoreReset(GbaCore *core)
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
 	GbaCoreClearAudio(core);
+	ppu_worker_reset(&core->worker);
 	return 0;
 }
 
@@ -529,6 +617,12 @@ void GbaCoreSetInput(GbaCore *core, const GbaInput *input)
 {
 	if (core != NULL)
 		GbaCoreApplyInput(core, input);
+}
+
+void GbaCoreSetOutputBpp(GbaCore *core, INT32 bpp)
+{
+	if (core == NULL) return;
+	ppu_worker_set_output_bpp(&core->worker, bpp);
 }
 
 INT32 GbaCoreConfigureAudio(GbaCore *core, double sourceRate, INT32 outputFrames, INT32 captureAudio)
@@ -549,15 +643,6 @@ INT32 GbaCoreConfigureAudio(GbaCore *core, double sourceRate, INT32 outputFrames
 	return 0;
 }
 
-INT32 GbaCoreRunFrame(GbaCore *core)
-{
-	if (core == NULL || core->rom == NULL)
-		return 1;
-	core->host.render_frame = true;
-	gba_tick(&core->host, &core->state, &core->scratch);
-	return 0;
-}
-
 UINT32 GbaCoreGetCartridgeFeatures(const GbaCore *core)
 {
 	return core == NULL ? 0 : core->cartridgeFeatures;
@@ -570,13 +655,26 @@ UINT8 GbaCoreGetRumbleOutput(const GbaCore *core)
 	return core->state.cart.gpio.rumble;
 }
 
-const UINT32 *GbaCoreGetFramebuffer(const GbaCore *core)
+const UINT8 *GbaCoreGetFramebuffer(const GbaCore *core)
 {
-	return core == NULL ? NULL : (const UINT32 *)core->scratch.framebuffer;
+	// Return whichever buffer is currently presented: in worker mode
+	// core->state.framebuffer points directly at the worker's completed
+	// output buffer (pre-converted to match BurnHighCol→PutPix byte layout
+	// for the configured output bpp); in single-thread mode it points at
+	// scratch->framebuffer (byte R,G,B,X triplets).
+	return core == NULL ? NULL : core->state.framebuffer;
+}
+
+bool GbaCoreFramebufferIsDirectCopyable(const GbaCore *core)
+{
+	return core != NULL && core->state.framebuffer_is_direct_copy;
 }
 
 UINT32 GbaCoreGetFramebufferPitch()
 {
+	// Pitch is always GBA_WIDTH*4 from the core's perspective; DrvDraw
+	// does row-by-row memcpy respecting nBurnPitch, so this value is
+	// only used by non-DrvDraw consumers (e.g. screenshots).
 	return GBA_WIDTH * sizeof(UINT32);
 }
 
@@ -691,6 +789,7 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_mem_t, mem, cart_rom);
 	GBA_CLEAR_STATE_FIELD(gba_mem_t, mem, cart_backup);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   framebuffer);
+	GBA_CLEAR_STATE_FIELD(gba_t,     0,   framebuffer_is_direct_copy);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, user_data);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read8);
 	GBA_CLEAR_STATE_FIELD(arm7_t,    cpu, read16);
@@ -718,7 +817,8 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	return 0;
 }
 
-INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preserveAudio)
+
+INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preservePresentation)
 {
 	if (core == NULL || data == NULL || size < sizeof(gba_t) || core->rom == NULL)
 		return 1;
@@ -730,8 +830,13 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 	gba_timing_rebind(&core->state);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
-	if (!preserveAudio)
+	// Run-ahead rollback (preservePresentation=1): worker backbufs and the audio
+	// ring still hold valid content, so keep them. Full state load (=0): drop both.
+	if (!preservePresentation)
+	{
+		ppu_worker_reset(&core->worker);
 		GbaCoreClearAudio(core);
+	}
 	return 0;
 }
 
@@ -765,6 +870,7 @@ void gba_timing_init(gba_t* gba)
 	gba->ppu_event.next       = NULL;
 	gba->ppu_event.when       = 0;
 	gba->ppu_event.priority   = GBA_EVENT_PRIORITY_PPU;
+	// Default: single-threaded PPU event. gba_tick() rebinds to worker at frame start.
 	gba->ppu_event.callback   = gba_ppu_event;
 	gba->ppu_event.active     = false;
 	gba->sio_event.next       = NULL;
@@ -793,6 +899,7 @@ void gba_timing_rebind(gba_t* gba)
 	gba->timer_event.priority = GBA_EVENT_PRIORITY_TIMER;
 	gba->timer_event.callback = gba_timer_event;
 	gba->ppu_event.priority   = GBA_EVENT_PRIORITY_PPU;
+	// Revert to single-threaded callback after rebind; gba_tick re-enables worker next frame.
 	gba->ppu_event.callback   = gba_ppu_event;
 	gba->sio_event.priority   = GBA_EVENT_PRIORITY_SIO;
 	gba->sio_event.callback   = gba_sio_event;
@@ -899,6 +1006,7 @@ static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data)
 {
 	gba->framebuffer    = scratch->framebuffer;
+	gba->framebuffer_is_direct_copy = false;  // default: single-thread scratch; vblank publish switches to worker output when ready
 	gba->mem.bios       = scratch->bios;
 	gba->mem.cart_rom   = rom_data;
 	gba->cpu.read8      = arm7_read8;
@@ -912,12 +1020,28 @@ void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data)
 	gba->cpu.user_data  = gba;
 }
 
-void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
+void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worker_t* worker)
 {
 	gba_ptrs_init(gba, scratch, emu->rom_data);
 	gba->cpu.user_data          = gba;
 	gba->cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
 
+	// Choose PPU callback per frame based on render mode:
+	//   per-pixel → single-threaded (mid-line writes need tight CPU↔PPU sync)
+	//   scanline  → worker thread (HBlank snapshots match scanline semantics)
+	const bool use_worker_this_frame =
+		(worker != NULL) && worker->enabled && !gba->ppu.render_per_pixel;
+
+	if (use_worker_this_frame) {
+		gba->ppu_worker_ptr = worker;
+		gba->ppu_event.callback = gba_ppu_event_worker;
+	} else {
+		// Single-threaded path: drain any in-flight worker job before switching.
+		if (worker && worker->enabled && worker->worker_busy)
+			ppu_worker_drain_for_mode_switch(worker);
+		gba->ppu_worker_ptr = NULL;
+		gba->ppu_event.callback = gba_ppu_event;
+	}
 
 	gba_tick_keypad(&emu->joy, gba);
 	gba->frame_in_progress = true;
@@ -956,20 +1080,50 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 					gba_advance(gba, emu, 1);
 				continue;
 			} else {
-				arm7_exec_instruction(&gba->cpu);
+				arm7_exec_instruction_fast(&gba->cpu);
 				gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
 			}
 		}
-		gba_advance(gba, emu, ticks);
+		// Inlined gba_advance fast path (event-free span). Everything the full
+		// routine does up to its first event dispatch is done here, so the common
+		// no-event case avoids a call; spans that contain an event fall through to
+		// gba_advance, which re-derives the same event_free and takes the slow path.
+		{
+			INT32 event_free = gba_timing_ff(gba, ticks);
+			if (SB_LIKELY(ticks <= event_free)) {
+				gba->global_timer += ticks;
+				if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
+					for (INT32 i = 0; i < ticks; ++i)
+						gba_tick_interrupts(gba);
+				}
+			} else {
+				gba_advance(gba, emu, ticks);
+			}
+		}
+	}
+	// VBlank: publish worker framebuffer (scanline mode) or use scratch directly.
+	if (use_worker_this_frame) {
+		ppu_worker_vblank_publish(worker, gba, scratch, emu->render_frame);
+	} else {
+		gba->framebuffer = scratch->framebuffer;
+		gba->framebuffer_is_direct_copy = false;
 	}
 	gba_gpio_update_rumble(gba);
 	emu->joy.rumble = gba->cart.gpio.rumble;
-	//LCD turns off in stop mode
-	if (gba->stop_mode)
-		memset(scratch->framebuffer, 0, sizeof(scratch->framebuffer));
+	// LCD turns off in STOP mode — zero whichever buffer is currently presented.
+	if (gba->stop_mode && gba->framebuffer) {
+		// Worker out_buf may be smaller than scratch->framebuffer when out_bpp
+		// is 2 or 3; size the memset to the actual presented buffer.
+		if (use_worker_this_frame && gba->framebuffer_is_direct_copy && worker && worker->out_bpp != 4) {
+			memset(gba->framebuffer, 0, GBA_WIDTH * GBA_HEIGHT * worker->out_bpp);
+		} else {
+			memset(gba->framebuffer, 0, sizeof(scratch->framebuffer));
+		}
+	}
 	if (gba->pause_after_frame) {
 		emu->run_mode          = SB_MODE_PAUSE;
 		gba->pause_after_frame = false;
 	}
+	if (use_worker_this_frame)
+		gba->ppu_worker_ptr = NULL;
 }
-

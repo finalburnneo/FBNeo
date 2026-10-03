@@ -674,7 +674,7 @@ $(cave_tile_func.h):	$(srcdir)dep/scripts/cave_tile_func.pl
 
 cave_sprite.d cave_sprite.o: $(cave_sprite_func.h)
 
-gba.d gba.o: $(srcdir)burn/drv/gba/gba.h $(srcdir)burn/drv/gba/gbacpu.h $(srcdir)burn/drv/gba/gbagpio.h $(srcdir)burn/drv/gba/gbacart.h $(srcdir)burn/drv/gba/gbabus.h $(srcdir)burn/drv/gba/gbatimer.h $(srcdir)burn/drv/gba/gbappu.h $(srcdir)burn/drv/gba/gbadma.h $(srcdir)burn/drv/gba/gbasio.h $(srcdir)burn/drv/gba/gbaapu.h $(srcdir)burn/drv/gba/gbabios.h
+gba.d gba.o: $(srcdir)burn/drv/gba/gba.h $(srcdir)burn/drv/gba/gbacpu.h $(srcdir)burn/drv/gba/gbagpio.h $(srcdir)burn/drv/gba/gbacart.h $(srcdir)burn/drv/gba/gbabus.h $(srcdir)burn/drv/gba/gbatimer.h $(srcdir)burn/drv/gba/gbappu.h $(srcdir)burn/drv/gba/gbappu_worker.h $(srcdir)burn/drv/gba/gbadma.h $(srcdir)burn/drv/gba/gbasio.h $(srcdir)burn/drv/gba/gbaapu.h $(srcdir)burn/drv/gba/gbabios.h
 d_gba.d d_gba.o: $(srcdir)burn/drv/gba/gba.h $(srcdir)burn/drv/gba/gbacpu.h
 
 $(cave_sprite_func.h):	$(srcdir)dep/scripts/cave_sprite_func.pl

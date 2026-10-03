@@ -289,6 +289,11 @@ static INT32 DrvInit()
 	if (GbaCoreInit(&Gba))
 		return 1;
 
+	// Match worker output to the backend pixel depth; nBurnBpp is constant
+	// for the driver session. Out-of-range values are clamped to 32bpp
+	// inside the worker (ppu_worker_set_output_bpp).
+	GbaCoreSetOutputBpp(Gba, (INT32)nBurnBpp);
+
 	GbaCoreSetRenderMode(Gba, (DrvDip[GBA_DIPSWITCH_01] & 1));
 	GbaCoreSetBiosMode(Gba, (DrvDip[GBA_DIPSWITCH_02] & 1));
 	DrvBiosModeActive = (UINT8)(DrvDip[GBA_DIPSWITCH_02] & 1);
@@ -378,16 +383,35 @@ static double DrvAudioRate()
 
 static INT32 DrvDraw()
 {
-	const UINT32 *framebuffer = GbaCoreGetFramebuffer(Gba);
+	const UINT8 *framebuffer = GbaCoreGetFramebuffer(Gba);
 	if (framebuffer == NULL || pBurnDraw == NULL)
 		return 0;
 
-	for (INT32 y = 0; y < GBA_HEIGHT; y++) {
-		UINT8 *dest = pBurnDraw + y * nBurnPitch;
-		const UINT32 *source = framebuffer + y * GBA_WIDTH;
-		for (INT32 x = 0; x < GBA_WIDTH; x++) {
-			UINT32 pixel = BURN_ENDIAN_SWAP_INT32(source[x]);
-			PutPix(dest + x * nBurnBpp, BurnHighCol(pixel & 0xff, (pixel >> 8) & 0xff, (pixel >> 16) & 0xff, 0));
+	if (GbaCoreFramebufferIsDirectCopyable(Gba)) {
+		// Worker path — output already in the target nBurnBpp format.
+		// Copy whole frame when there's no row padding, else row-by-row.
+		const INT32 row_bytes = GBA_WIDTH * nBurnBpp;
+		if (nBurnPitch == row_bytes) {
+			memcpy(pBurnDraw, framebuffer, GBA_WIDTH * GBA_HEIGHT * nBurnBpp);
+		} else {
+			for (INT32 y = 0; y < GBA_HEIGHT; y++) {
+				memcpy(pBurnDraw + y * nBurnPitch,
+				       framebuffer + y * GBA_WIDTH * nBurnBpp,
+				       row_bytes);
+			}
+		}
+	} else {
+		// Single-threaded fallback. gbappu.h writes byte R,G,B,X —
+		// feed each pixel through BurnHighCol → PutPix.
+		for (INT32 y = 0; y < GBA_HEIGHT; y++) {
+			UINT8 *dest = pBurnDraw + y * nBurnPitch;
+			const UINT8 *source = framebuffer + y * GBA_WIDTH * 4;
+			for (INT32 x = 0; x < GBA_WIDTH; x++) {
+				UINT32 r = source[x * 4 + 0];
+				UINT32 g = source[x * 4 + 1];
+				UINT32 b = source[x * 4 + 2];
+				PutPix(dest + x * nBurnBpp, BurnHighCol(r, g, b, 0));
+			}
 		}
 	}
 

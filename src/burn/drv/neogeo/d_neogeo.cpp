@@ -2030,7 +2030,7 @@ UINT16 __fastcall neogeoReadWordSMA9A37(UINT32 sekAddress)
 		return 0x9A37;
 	}
 
-	return *((UINT16*)(Neo68KROMActive + nNeo68KROMBank + sekAddress - 0x200000));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Neo68KROMActive + nNeo68KROMBank + sekAddress - 0x200000)));
 }
 
 UINT8 __fastcall neogeoReadByteSMA9A37(UINT32 sekAddress)
@@ -2068,7 +2068,7 @@ UINT16 __fastcall neogeoReadWordSMARNG(UINT32 sekAddress)
 		return nRandomNumber;
 	}
 
-	return *((UINT16*)(Neo68KROMActive + nNeo68KROMBank + sekAddress - 0x200000));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Neo68KROMActive + nNeo68KROMBank + sekAddress - 0x200000)));
 }
 
 UINT8 __fastcall neogeoReadByteSMARNG(UINT32 sekAddress)
@@ -6376,7 +6376,7 @@ static void kogCallback()
 
 		if (*((UINT16 *)(Neo68KROMActive + i + 0)) == BURN_ENDIAN_SWAP_INT16(0x4eb8)) {
 			*((UINT16 *)(Neo68KROMActive + i + 0))  = BURN_ENDIAN_SWAP_INT16(0x6100);
-			*((UINT16 *)(Neo68KROMActive + i + 2)) += BURN_ENDIAN_SWAP_INT16(0xfffe - (i & 0xfffe));
+			*((UINT16 *)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(Neo68KROMActive + i + 2))) + (0xfffe - (i & 0xfffe)));
 		}
 	}
 
@@ -7032,11 +7032,11 @@ static void kof98Protection()
 	// We need two writes because the BIOS vector block is actually 1024 bytes large
 	switch (nkof98Protection) {
 		case 0x0090:
-			*((UINT32*)Neo68KROMActive + 0x0100) = 0x00C200FD;
+			*((UINT32*)Neo68KROMActive + 0x0100) = BURN_ENDIAN_SWAP_INT32(0x00C200FD);
 			SekWriteLongROM(0x000100, 0x00C200FD);
 			break;
 		case 0x00F0:
-			*((UINT32*)Neo68KROMActive + 0x0100) = 0x4E454F2D;
+			*((UINT32*)Neo68KROMActive + 0x0100) = BURN_ENDIAN_SWAP_INT32(0x4E454F2D);
 			SekWriteLongROM(0x000100, 0x4E454F2D);
 			break;
 	}
@@ -7427,7 +7427,7 @@ static UINT16 __fastcall mslugx_read_protection_word(UINT32 SekAddress)
 		return mslugx_protection_read();
 	}
 
-	return *((UINT16*)(Neo68KROMActive + nNeo68KROMBank + (SekAddress & 0xffffe)));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Neo68KROMActive + nNeo68KROMBank + (SekAddress & 0xffffe))));
 }
 
 static UINT8 __fastcall mslugx_read_protection_byte(UINT32 SekAddress)
@@ -7529,18 +7529,18 @@ STD_ROM_FN(kof99)
 static void kof99SMADecrypt()
 {
 	for (INT32 i = 0; i < 0x800000 / 2; i++) {
-		((UINT16*)(Neo68KROMActive + 0x100000))[i] = BITSWAP16(BURN_ENDIAN_SWAP_INT16(((UINT16*)(Neo68KROMActive + 0x100000))[i]), 13, 7, 3, 0, 9, 4, 5, 6, 1, 12, 8, 14, 10, 11, 2, 15);
+		((UINT16*)(Neo68KROMActive + 0x100000))[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(((UINT16*)(Neo68KROMActive + 0x100000))[i]), 13, 7, 3, 0, 9, 4, 5, 6, 1, 12, 8, 14, 10, 11, 2, 15));
 	}
 
 	for (INT32 i = 0; i < 0x0C0000 / 2; i++) {
-		((UINT16*)Neo68KROMActive)[i] = BURN_ENDIAN_SWAP_INT16(((UINT16*)Neo68KROMActive)[0x700000 / 2 + BITSWAP24(i, 23, 22, 21, 20, 19, 18, 11, 6, 14, 17, 16, 5, 8, 10, 12, 0, 4, 3, 2, 7, 9, 15, 13, 1)]);
+		((UINT16*)Neo68KROMActive)[i] = ((UINT16*)Neo68KROMActive)[0x700000 / 2 + BITSWAP24(i, 23, 22, 21, 20, 19, 18, 11, 6, 14, 17, 16, 5, 8, 10, 12, 0, 4, 3, 2, 7, 9, 15, 13, 1)];
 	}
 
 	for (INT32 i = 0; i < 0x600000 / 2; i += 0x0800 / 2) {
 		UINT16 nBuffer[0x0800 / 2];
 		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x0800);
 		for (INT32 j = 0; j < 0x0800 / 2; j++) {
-			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 6, 2, 4, 9, 8, 3, 1, 7, 0, 5)]);
+			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 6, 2, 4, 9, 8, 3, 1, 7, 0, 5)];
 		}
 	}
 }
@@ -8479,18 +8479,18 @@ STD_ROM_FN(kof2000)
 static void kof2000SMADecrypt()
 {
 	for (INT32 i = 0; i < 0x800000 / 2; i++) {
-		((UINT16*)(Neo68KROMActive + 0x100000))[i] = BITSWAP16(BURN_ENDIAN_SWAP_INT16(((UINT16*)(Neo68KROMActive + 0x100000))[i]), 12, 8, 11, 3, 15, 14, 7, 0, 10, 13, 6, 5, 9, 2, 1, 4);
+		((UINT16*)(Neo68KROMActive + 0x100000))[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(((UINT16*)(Neo68KROMActive + 0x100000))[i]), 12, 8, 11, 3, 15, 14, 7, 0, 10, 13, 6, 5, 9, 2, 1, 4));
 	}
 
 	for (INT32 i = 0; i < 0x0C0000 / 2; i++) {
-		((UINT16*)Neo68KROMActive)[i] = BURN_ENDIAN_SWAP_INT16(((UINT16*)Neo68KROMActive)[0x73A000 / 2 + BITSWAP24(i, 23, 22, 21, 20, 19, 18, 8, 4, 15, 13, 3, 14, 16, 2, 6, 17, 7, 12, 10, 0, 5, 11, 1, 9)]);
+		((UINT16*)Neo68KROMActive)[i] = ((UINT16*)Neo68KROMActive)[0x73A000 / 2 + BITSWAP24(i, 23, 22, 21, 20, 19, 18, 8, 4, 15, 13, 3, 14, 16, 2, 6, 17, 7, 12, 10, 0, 5, 11, 1, 9)];
 	}
 
 	for (INT32 i = 0; i < 0x63A000 / 2; i += 0x0800 / 2) {
 		UINT16 nBuffer[0x0800 / 2];
 		memcpy(nBuffer, &((UINT16*)(Neo68KROMActive + 0x100000))[i], 0x0800);
 		for (INT32 j = 0; j < 0x0800 / 2; j++) {
-			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = BURN_ENDIAN_SWAP_INT16(nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 4, 1, 3, 8, 6, 2, 7, 0, 9, 5)]);
+			((UINT16*)(Neo68KROMActive + 0x100000))[i + j] = nBuffer[BITSWAP24(j, 23, 22, 21, 20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 4, 1, 3, 8, 6, 2, 7, 0, 9, 5)];
 		}
 	}
 }
@@ -8833,8 +8833,8 @@ static void cthd2003_decode()
 
 	// Fix for title page
 	for (i = 0x1f8ef0; i < 0x1fa1f0; i += 4) {
-		*((UINT16*)(Neo68KROMActive + i + 0)) -= BURN_ENDIAN_SWAP_INT16(0x7000);
-		*((UINT16*)(Neo68KROMActive + i + 2)) -= BURN_ENDIAN_SWAP_INT16(0x0010);
+		*((UINT16*)(Neo68KROMActive + i + 0)) = BURN_ENDIAN_SWAP_INT16(BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Neo68KROMActive + i + 0))) - 0x7000);
+		*((UINT16*)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Neo68KROMActive + i + 2))) - 0x0010);
 	}
 
 	// Fix for green dots on title page
@@ -9445,7 +9445,7 @@ static void kof10thBankswitch(UINT32 nBank)
 void __fastcall kof10thWriteWordCustom(UINT32 sekAddress, UINT16 wordValue)
 {
 	if (kof10thExtraRAMB[0x1ffc]) {
-		NeoUpdateTextOne(((sekAddress >> 1) & 0x1ffff), BITSWAP08(BURN_ENDIAN_SWAP_INT16(wordValue), 3, 2, 1, 5, 7, 6, 0, 4));
+		NeoUpdateTextOne(((sekAddress >> 1) & 0x1ffff), BITSWAP08(wordValue, 3, 2, 1, 5, 7, 6, 0, 4));
 	} else {
 		*(UINT16*)(kof10thExtraRAMA + (sekAddress & 0x1fffe)) = BURN_ENDIAN_SWAP_INT16(wordValue);
 	}
@@ -9468,7 +9468,7 @@ void __fastcall kof10thWriteWordBankswitch(UINT32 sekAddress, UINT16 wordValue)
 	else if (sekAddress == 0x2ffff8 && *(UINT16*)(kof10thExtraRAMB + 0x1ff8) != BURN_ENDIAN_SWAP_INT16(wordValue))
 		SekMapMemory(Neo68KROMActive + ((wordValue & 1) ? 0x710000 : 0x010000) , 0x010000, 0x0dffff, MAP_ROM);
 
-	*(UINT16*)(kof10thExtraRAMB + (sekAddress & 0x01ffe)) = wordValue;
+	*(UINT16*)(kof10thExtraRAMB + (sekAddress & 0x01ffe)) = BURN_ENDIAN_SWAP_INT16(wordValue);
 }
 
 static void kof10thCallback()
@@ -9639,7 +9639,7 @@ static void kf10thepCallback()
 
 	for (i = 0xf92bc; i < 0xf9e58; i += 2)
 	{
-		if ((*((UINT16*)(Neo68KROMActive + i + 0)) & 0xffbf) == BURN_ENDIAN_SWAP_INT16(0x4eb9) && *((UINT16*)(Neo68KROMActive + i + 2)) == BURN_ENDIAN_SWAP_INT16(0x0000))
+		if ((*((UINT16*)(Neo68KROMActive + i + 0)) & BURN_ENDIAN_SWAP_INT16(0xffbf)) == BURN_ENDIAN_SWAP_INT16(0x4eb9) && *((UINT16*)(Neo68KROMActive + i + 2)) == BURN_ENDIAN_SWAP_INT16(0x0000))
 		{
 			*((UINT16*)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(0x000f);
 		}
@@ -13705,11 +13705,11 @@ static void lans2004Callback()
 	memmove(Neo68KROMActive + 0x100000, Neo68KROMActive + 0x200000, 0x400000);
 
 	for (i = 0xbbb00; i < 0xbe000; i+=2) {
-		if ((BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(Neo68KROMActive + i + 0))) & 0xf2bf) == BURN_ENDIAN_SWAP_INT16(0x42b9) &&
+		if ((BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(Neo68KROMActive + i + 0))) & 0xf2bf) == 0x42b9 &&
 			*((UINT16 *)(Neo68KROMActive + i + 2)) == 0x0000)
 		{
 			*((UINT16 *)(Neo68KROMActive + i + 2)) = BURN_ENDIAN_SWAP_INT16(0x000b);
-			*((UINT16 *)(Neo68KROMActive + i + 4)) += BURN_ENDIAN_SWAP_INT16(0x6000);
+			*((UINT16 *)(Neo68KROMActive + i + 4)) = BURN_ENDIAN_SWAP_INT16(BURN_ENDIAN_SWAP_INT16(*((UINT16 *)(Neo68KROMActive + i + 4))) + 0x6000);
 		}
 	}
 
@@ -15458,10 +15458,10 @@ static void sbpCallback()
 		Neo68KROMActive[i] = ((Neo68KROMActive[i] >> 4) & 0x0f) | ((Neo68KROMActive[i] << 4) & 0xf0);
 	}
 
-	ROM[0x2a6f8 / 2] = 0x4e71;
-	ROM[0x2a6fa / 2] = 0x4e71;
-	ROM[0x2a6fc / 2] = 0x4e71;
-	ROM[0x3ff2d / 2] = 0x7001;
+	ROM[0x2a6f8 / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	ROM[0x2a6fa / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	ROM[0x2a6fc / 2] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+	ROM[0x3ff2d / 2] = BURN_ENDIAN_SWAP_INT16(0x7001);
 
 	nNeoTextROMSize[nNeoActiveSlot] = 0x20000;
 }
@@ -17930,20 +17930,20 @@ static void doubldspPatchCallback()
 	UINT16* rom = (UINT16*)Neo68KROMActive;
 
 	for (INT32 i = 0; i < 0x100000 >> 1; i++) {
-		if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
-		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7d)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7c)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 	}
 
-	rom[0xbff2] = 0x2b7c; // 4ef9
-	rom[0xbff3] = 0x0001; // 0091
-	rom[0xbff4] = 0x7fee; // 0206
-	rom[0xbff5] = 0xa26a; // 4e7d
+	rom[0xbff2] = BURN_ENDIAN_SWAP_INT16(0x2b7c); // 4ef9
+	rom[0xbff3] = BURN_ENDIAN_SWAP_INT16(0x0001); // 0091
+	rom[0xbff4] = BURN_ENDIAN_SWAP_INT16(0x7fee); // 0206
+	rom[0xbff5] = BURN_ENDIAN_SWAP_INT16(0xa26a); // 4e7d
 
 	rom = (UINT16*)(Neo68KROMActive + 0x200000);
 
 	for (INT32 i = 0; i < 0x20000 >> 1; i++) {
-		if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
-		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7d)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7c)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 	}
 }
 
@@ -24036,7 +24036,7 @@ static void kof97aeCallback()
 	RomDiffPatch(Neo68KROMActive + 0x000000, 16, 0x100000, 1);
 	RomDiffPatch(Neo68KROMActive + 0x100000, 17, 0x400000, 1);
 
-	if (*((UINT16*)(Neo68KROMActive + 0x9b12a)) == 0x48e7) {
+	if (*((UINT16*)(Neo68KROMActive + 0x9b12a)) == BURN_ENDIAN_SWAP_INT16(0x48e7)) {
 		*((UINT16*)(Neo68KROMActive + 0x9b12a)) = BURN_ENDIAN_SWAP_INT16(0x6038);
 	}
 }
@@ -24947,18 +24947,18 @@ static void kof98pfePatchCallback()
 	UINT16* rom = (UINT16*)Neo68KROMActive;
 
 	for (INT32 i = 0; i < 0x100000 >> 1; i++) {
-		if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
-		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7d)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7c)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 	}
 
 	rom = (UINT16*)(Neo68KROMActive + 0x500000);
 
 	for (INT32 i = 0; i < 0x20000 >> 1; i++) {
-		if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
-		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7d)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e71);
+		if (rom[i] == BURN_ENDIAN_SWAP_INT16(0x4e7c)) rom[i] = BURN_ENDIAN_SWAP_INT16(0x4e75);
 	}
 
-	rom[0x1af4 >> 1] = 0x4e71;
+	rom[0x1af4 >> 1] = BURN_ENDIAN_SWAP_INT16(0x4e71);
 
 	(Neo68KROMActive + 0x500000)[0x1b19] = 0x60;
 	(Neo68KROMActive + 0x500000)[0x1ca3] = 0x60;

@@ -1886,8 +1886,8 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 			if (pos>=2 && BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x000+(y)])&bit_select)
 				colscroll=(BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[col_base/2])>> 0)&0x3ff;
 
-			if (m_f3_line_ram[0x500 + y] & bit_select)
-				pal_add = (m_f3_line_ram[pal_add_base / 2] & 0x1ff) * 16;
+			if (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[0x500 + y]) & bit_select)
+				pal_add = (BURN_ENDIAN_SWAP_INT16(m_f3_line_ram[pal_add_base / 2]) & 0x1ff) * 16;
 		}
 
 		if (!pri || (!flipscreen && y<24) || (flipscreen && y>231) ||

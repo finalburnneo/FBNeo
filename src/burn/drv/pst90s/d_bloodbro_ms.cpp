@@ -584,9 +584,9 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x400/2; i+=2)
 	{
-		UINT16 attr0 = ram[i + 0];
-		UINT16 attr1 = ram[i + 1];
-		UINT16 attr2 = ram[i + (0x400/2)];
+		UINT16 attr0 = BURN_ENDIAN_SWAP_INT16(ram[i + 0]);
+		UINT16 attr1 = BURN_ENDIAN_SWAP_INT16(ram[i + 1]);
+		UINT16 attr2 = BURN_ENDIAN_SWAP_INT16(ram[i + (0x400/2)]);
 
 		INT32 code	=((attr0 & 0xff00) >> 8) | ((attr1 & 0x001f) << 8);
 		INT32 sy	= (attr0 & 0x00ff);

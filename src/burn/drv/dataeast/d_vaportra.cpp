@@ -136,7 +136,7 @@ static void __fastcall vaportra_main_write_word(UINT32 address, UINT16 data)
 
 	if ((address & ~0xce0000) >= 0x318000 && (address & ~0xce0000) <= 0x3187ff)
 	{
-		*((UINT16*)(DrvSprRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(DrvSprRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		return;
 	}
 
@@ -191,7 +191,7 @@ static UINT16 __fastcall vaportra_main_read_word(UINT32 address)
 {
 	if ((address & ~0xce0000) >= 0x318000 && (address & ~0xce0000) <= 0x3187ff)
 	{
-		return *((UINT16*)(DrvSprRAM + (address & 0x7fe)));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvSprRAM + (address & 0x7fe))));
 	}
 
 	switch (address)

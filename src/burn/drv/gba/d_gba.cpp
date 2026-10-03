@@ -386,7 +386,7 @@ static INT32 DrvDraw()
 		UINT8 *dest = pBurnDraw + y * nBurnPitch;
 		const UINT32 *source = framebuffer + y * GBA_WIDTH;
 		for (INT32 x = 0; x < GBA_WIDTH; x++) {
-			UINT32 pixel = source[x];
+			UINT32 pixel = BURN_ENDIAN_SWAP_INT32(source[x]);
 			PutPix(dest + x * nBurnBpp, BurnHighCol(pixel & 0xff, (pixel >> 8) & 0xff, (pixel >> 16) & 0xff, 0));
 		}
 	}

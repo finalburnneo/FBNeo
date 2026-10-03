@@ -183,21 +183,21 @@ static void __fastcall musclem_write_word(UINT32 address, UINT16 data)
 
 static tilemap_callback( layer0 )
 {
-	UINT16 data = *((UINT16*)(DrvVidRAM[0] + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[0] + (offs * 2))));
 
 	TILE_SET_INFO(0, data, 0, 0);
 }
 
 static tilemap_callback( layer1 )
 {
-	UINT16 data = *((UINT16*)(DrvVidRAM[1] + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[1] + (offs * 2))));
 
 	TILE_SET_INFO(1, data, 0, 0);
 }
 
 static tilemap_callback( layer2 )
 {
-	UINT16 data = *((UINT16*)(DrvVidRAM[2] + (offs * 2)));
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvVidRAM[2] + (offs * 2))));
 
 	TILE_SET_INFO(2, data, 0, 0);
 }
@@ -347,10 +347,10 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x200; i++)
 	{
-		UINT16 code = ram[0x000 + i];
+		UINT16 code = BURN_ENDIAN_SWAP_INT16(ram[0x000 + i]);
 
-		INT16 sy = (INT16)((ram[0x200 + i] & 0x1ff) << 7) >> 7;
-		INT16 sx = (ram[0x400 + i] & 0x3ff);
+		INT16 sy = (INT16)((BURN_ENDIAN_SWAP_INT16(ram[0x200 + i]) & 0x1ff) << 7) >> 7;
+		INT16 sx = (BURN_ENDIAN_SWAP_INT16(ram[0x400 + i]) & 0x3ff);
 
 		sx -= 1 + 16;
 

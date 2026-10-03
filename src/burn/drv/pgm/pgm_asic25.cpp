@@ -847,7 +847,7 @@ static void IGS022_reset()
 	// Dragon World 3 checks it
 //	tmp = BURN_ENDIAN_SWAP_INT16(PROTROM[0x114/2]);
 //	tmp = ((tmp & 0xff00) >> 8) | ((tmp & 0x00ff) << 8);
-	sharedprotram[0x2a2/2] = BURN_ENDIAN_SWAP_INT16(PROTROM[0x114/2]);
+	sharedprotram[0x2a2/2] = PROTROM[0x114/2];
 }
 
 static void IGS022_handle_command()

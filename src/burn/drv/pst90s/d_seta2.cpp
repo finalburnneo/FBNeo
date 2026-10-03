@@ -1429,9 +1429,9 @@ static void tmp68301_update_irq_state(INT32 i)
 static void Tmp68301Reset()
 {
 	for (INT32 i = 0x80/2; i < 0x94/2; i++) {
-		RamTMP68301[i] = 0x07;
+		RamTMP68301[i] = BURN_ENDIAN_SWAP_INT16(0x07);
 	}
-	RamTMP68301[0x94/2] = 0x07f7;
+	RamTMP68301[0x94/2] = BURN_ENDIAN_SWAP_INT16(0x07f7);
 }
 
 static void tmp68301_regs_w(UINT32 addr, UINT16 /*val*/ )
@@ -1672,7 +1672,7 @@ void __fastcall grdiansPaletteWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	//bprintf(PRINT_NORMAL, _T("Pal to write word value %x to location %x\n"), wordValue, sekAddress);
 	sekAddress &= 0x00FFFF;
 	sekAddress >>= 1;
-	RamPal[sekAddress] = wordValue;
+	RamPal[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	CurPal[sekAddress] = CalcCol( wordValue );
 }
 
@@ -3570,7 +3570,7 @@ static INT32 DrvDrawBegin()
 {
 	if (bRecalcPalette) {
 		for (INT32 i=0;i<0x08000; i++)
-			CurPal[i] = CalcCol( RamPal[i] );
+			CurPal[i] = CalcCol( BURN_ENDIAN_SWAP_INT16(RamPal[i]) );
 		bRecalcPalette = 0;
 	}
 

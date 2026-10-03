@@ -69,9 +69,9 @@ static struct BurnInputInfo gunbirdInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvInp1 + 4,	"service"			},
 //	{"Tilt",			BIT_DIGITAL,	DrvInp1 + 6,	"tilt"				},
 
-	{"Dip 1",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + 1, "dip"	},
-	{"Dip 2",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + 0, "dip"	},
-	{"Dip 3",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 3)) + 0, "dip"	},
+	{"Dip 1",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + BYTE_XOR_LE(1), "dip"	},
+	{"Dip 2",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + BYTE_XOR_LE(0), "dip"	},
+	{"Dip 3",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 3)) + BYTE_XOR_LE(0), "dip"	},
 };
 
 STDINPUTINFO(gunbird)
@@ -110,10 +110,10 @@ static struct BurnInputInfo btlkroadInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvInp1 + 4,	"service"			},
 //	{"Tilt",			BIT_DIGITAL,	DrvInp1 + 6,	"tilt"				},
 
-	{"Dip 1",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + 1, "dip"	},
-	{"Dip 2",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + 0, "dip"	},
-	{"Region",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 3)) + 0, "dip"	},
-	{"Debug Dip",		BIT_DIPSWITCH,	((UINT8*)(DrvInput + 3)) + 1, "dip"	},
+	{"Dip 1",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + BYTE_XOR_LE(1), "dip"	},
+	{"Dip 2",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 2)) + BYTE_XOR_LE(0), "dip"	},
+	{"Region",			BIT_DIPSWITCH,	((UINT8*)(DrvInput + 3)) + BYTE_XOR_LE(0), "dip"	},
+	{"Debug Dip",		BIT_DIPSWITCH,	((UINT8*)(DrvInput + 3)) + BYTE_XOR_LE(1), "dip"	},
 };
 
 STDINPUTINFO(btlkroad)

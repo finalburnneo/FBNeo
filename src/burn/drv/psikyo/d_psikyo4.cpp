@@ -335,7 +335,7 @@ static UINT32 __fastcall ps4_read_long(UINT32 address)
 	}
 
 	if ((address & 0xffffe000) == 0x03006000) {
-		INT32 bank  = (tile_bank[0] & 0x1fff) << 13;
+		INT32 bank  = (*((UINT32 *)(DrvVidRegs + 0x0008)) & 0x1fff) << 13;
 		    bank |= address & 0x1ffc;
 		if (bank >= ((nGfxMask + 1) << 8)) return 0;
 
@@ -380,7 +380,11 @@ static UINT16 __fastcall ps4_read_word(UINT32 address)
 		return *((UINT16 *)(DrvPalRAM + (address & 0x1ffe)));
 	}
 
+#ifdef LSB_FIRST
 	switch (address)
+#else
+	switch (address ^ 2)
+#endif
 	{
 		case 0x03003fe2:
 			return (loderndf ? DrvDips[1] : 0) | ((EEPROMRead() & 1) << 4);
@@ -470,7 +474,11 @@ static void __fastcall ps4_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
+#ifdef LSB_FIRST
 	if (address == 0x3003fe2) {
+#else
+	if (address == 0x3003fe0) {
+#endif
 		EEPROMWrite((data & 0x40), (data & 0x80), (data & 0x20));
 		return;
 	}
@@ -525,7 +533,11 @@ static void __fastcall ps4_write_byte(UINT32 address, UINT8 data)
 		case 0x03003ff5:
 		case 0x03003ff6:
 		case 0x03003ff7:
+#ifdef LSB_FIRST
 			DrvPalRAM[0x2000 + (~address & 3)] = data;
+#else
+			DrvPalRAM[0x2000 + (address & 3)] = data;
+#endif
 		return;
 
 		case 0x03003ffb:
@@ -538,7 +550,11 @@ static void __fastcall ps4_write_byte(UINT32 address, UINT8 data)
 		case 0x03003ffd:
 		case 0x03003ffe:
 		case 0x03003fff:
+#ifdef LSB_FIRST
 			DrvPalRAM[0x2004 + (~address & 3)] = data;
+#else
+			DrvPalRAM[0x2004 + (address & 3)] = data;
+#endif
 		return;
 
 		case 0x05000000:
@@ -819,7 +835,11 @@ static void draw_sprites(UINT16 *dest, UINT32 scr)
 
 	while (listcntr < listlen)
 	{
-		UINT16 listdat = list[listcntr ^ 1]; 
+#ifdef LSB_FIRST
+		UINT16 listdat = list[listcntr ^ 1];
+#else
+		UINT16 listdat = list[listcntr];
+#endif
 		UINT16 sprnum = (listdat & 0x03ff) << 1;
 
 		UINT16 thisscreen = 0;

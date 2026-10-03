@@ -1025,7 +1025,7 @@ static void pgm_decrypt_kovlsqh2_program()
 	{
 		INT32 j = BITSWAP24(i, 23, 22, 21, 20, 19, 16, 15, 14, 13, 12, 11, 10, 9, 8, 0, 1, 2, 3, 4, 5, 6, 18, 17, 7);
 
-		dst[j] = BURN_ENDIAN_SWAP_INT16(src[i]);
+		dst[j] = src[i];
 	}
 
 	memcpy (src, dst, 0x400000);
@@ -1062,9 +1062,9 @@ static void pgm_decrypt_kovassgplus_program()
 	// this region is further encrypted
 	for (INT32 i = 0x300000/2; i < 0x3f0000/2; i++)
 	{
-		INT32 j = (i & ~0xffff) | (BURN_ENDIAN_SWAP_INT16(BITSWAP16(i, 15, 14, 13, 12, 11, 10, 0, 8, 7, 6, 5, 9, 2, 4, 1, 3) ^ 0x00c5));
+		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12, 11, 10, 0, 8, 7, 6, 5, 9, 2, 4, 1, 3) ^ 0x00c5);
 		
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j] ^ 0xffd1), 5, 11, 3, 7, 15, 10, 2, 12, 14, 1, 4, 8, 6, 0, 13, 9));
+		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]) ^ 0xffd1, 5, 11, 3, 7, 15, 10, 2, 12, 14, 1, 4, 8, 6, 0, 13, 9));
 	}
 
 	memcpy (src + (0x300000/2), dst + (0x300000/2), 0xf0000);
@@ -1119,7 +1119,7 @@ static void pgm_decrypt_kovassge_program()
 	{
 		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12, 11, 10, 5, 0, 3, 4, 1, 7,  8, 6, 2, 9) ^ 0x00f9);
 
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j] ^ 0x43df), 4, 7, 11, 2, 5, 15, 10, 12, 0, 13, 3, 6, 1, 14, 8, 9));
+		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]) ^ 0x43df, 4, 7, 11, 2, 5, 15, 10, 12, 0, 13, 3, 6, 1, 14, 8, 9));
 	}
 
 	memcpy (src, dst, 0x400000);
@@ -1129,7 +1129,7 @@ static void pgm_decrypt_kovassge_program()
 	{
 		INT32 j = (i & ~0xffff) | (BITSWAP16(i, 15, 14, 13, 12, 11, 10, 7, 9, 5, 4, 6, 1, 2, 0, 8, 3) ^ 0x00cf);
 		
-		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j] ^ 0x107d), 9, 15, 14, 7, 10, 6, 12, 4, 2, 0, 8, 11, 3, 13, 1, 5));
+		dst[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(src[j]) ^ 0x107d, 9, 15, 14, 7, 10, 6, 12, 4, 2, 0, 8, 11, 3, 13, 1, 5));
 	}
 
 	memcpy (src + (0x300000/2), dst + (0x300000/2), 0xf0000);

@@ -584,7 +584,7 @@ static INT32 DrvDraw()
         UINT16 *dst = (UINT16*) pTransDraw + (y * 320);
 
         for (INT32 x = 0; x < nScreenWidth; x++) {
-            *dst = *src & 0x7FFF;
+            *dst = BURN_ENDIAN_SWAP_INT16(*src) & 0x7FFF;
             dst++;
             src++;
         }

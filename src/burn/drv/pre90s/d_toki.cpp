@@ -851,7 +851,7 @@ static INT32 JujubaInit()
 
 	UINT16 *PrgRom = (UINT16*)Drv68KROM;
 	for (INT32 i = 0; i < 0x30000; i++) {
-		PrgRom[i] = BITSWAP16(PrgRom[i], 15, 12, 13, 14, 11, 10, 9, 8, 7, 6, 5, 3, 4, 2, 1, 0);
+		PrgRom[i] = BURN_ENDIAN_SWAP_INT16(BITSWAP16(BURN_ENDIAN_SWAP_INT16(PrgRom[i]), 15, 12, 13, 14, 11, 10, 9, 8, 7, 6, 5, 3, 4, 2, 1, 0));
 	}
 
 	UINT8 *Decrypt = DrvZ80DecROM;

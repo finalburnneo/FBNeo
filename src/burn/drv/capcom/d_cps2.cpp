@@ -14012,6 +14012,38 @@ static struct BurnRomInfo Sfz2aldRomDesc[] = {
 STD_ROM_PICK(Sfz2ald)
 STD_ROM_FN(Sfz2ald)
 
+// Street Fighter Zero 2 Alpha Dash / Gold (Hack, RC2)
+// https://github.com/Zer0-NexuS/sfz2a-dash-cps2
+
+static struct BurnRomInfo Sfz2aldashRomDesc[] = {
+	{ "sz2dash.03",    0x080000, 0x25779eab, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dash.04",    0x080000, 0x737ce842, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaa.05",       0x080000, 0xf053a55e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "szaa.06",       0x080000, 0xcfc0e7a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dash.07",    0x080000, 0x4e2c92ee, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dash.08",    0x080000, 0xcccc750c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sz2dash.13m",   0x400000, 0xba450a7e, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.15m",   0x400000, 0xdf1728ae, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.17m",   0x400000, 0x21044cb9, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.19m",   0x400000, 0x72234cf0, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.14m",   0x100000, 0x445c63d2, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.16m",   0x100000, 0x87eff508, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.18m",   0x100000, 0xf1d8c9d8, CPS2_GFX | BRF_GRA },
+	{ "sz2dash.20m",   0x100000, 0xf874c20e, CPS2_GFX | BRF_GRA },
+
+	{ "sz2dash.01a",   0x020000, 0x3bc82c35, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz2dash.02a",   0x020000, 0xf6a8628b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sz2dash.11m",   0x200000, 0xce184e92, CPS2_QSND | BRF_SND },
+	{ "sz2dash.12m",   0x200000, 0x08860e2a, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Sfz2aldash)
+STD_ROM_FN(Sfz2aldash)
+
 static struct BurnRomInfo Sfa3udRomDesc[] = {
 	{ "sz3ud.03c",     0x080000, 0x6db8add7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz3ud.04c",     0x080000, 0xd9c65a26, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -14729,8 +14761,8 @@ void __fastcall PhoenixSpriteWriteWord(UINT32 a, UINT16 d)
 	UINT16 *Ram = (UINT16*)CpsRam708;
 	INT32 Offset = (a - 0x700000) >> 1;
 	
-	Ram[Offset + 0x0000] = d;
-	Ram[Offset + 0x4000] = d;
+	Ram[Offset + 0x0000] = BURN_ENDIAN_SWAP_INT16(d);
+	Ram[Offset + 0x4000] = BURN_ENDIAN_SWAP_INT16(d);
 }
 
 static INT32 PhoenixInit()
@@ -15195,8 +15227,18 @@ struct BurnDriver BurnDrvCpsSfz2ald = {
 	"sfz2ald", "sfz2al", NULL, NULL, "1996",
 	"Street Fighter Zero 2 Alpha (Asia 960826 Phoenix Edition) (bootleg)\0", NULL, "bootleg", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED,2,HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Sfz2aldRomInfo, Sfz2aldRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSfz2aldash = {
+	"sfz2aldash", "sfz2al", NULL, NULL, "2026",
+	"Street Fighter Zero 2 Alpha Dash / Gold (Hack, RC2)\0", NULL, "Zer0-NexuS", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz2aldashRomInfo, Sfz2aldashRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

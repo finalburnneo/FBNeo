@@ -15,7 +15,7 @@ static inline UINT32 gba_read32(gba_t* gba, UINT32 baddr)
 		UINT32 rom     = gba_rom_read16( gba, address + 2);
 		return low | (rom << 16);
 	}
-	return *gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_4B);
+	return BURN_ENDIAN_SWAP_INT32(*gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_4B));
 }
 
 static inline UINT16 gba_read16(gba_t* gba, UINT32 baddr)
@@ -24,7 +24,7 @@ static inline UINT16 gba_read16(gba_t* gba, UINT32 baddr)
 		return gba_gpio_read16(gba, baddr);
 	UINT32* val    = gba_dword_lookup(gba, baddr, GBA_REQ_READ | GBA_REQ_2B);
 	INT32   offset = SB_BFE(baddr, 1, 1);
-	return ((UINT16*)val)[offset];
+	return BURN_ENDIAN_SWAP_INT16(((UINT16*)val)[offset]);
 }
 
 static inline UINT8 gba_read8(gba_t* gba, UINT32 baddr)
@@ -55,7 +55,7 @@ static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 		}
 	}
 	UINT32* val = gba_dword_lookup(gba, baddr, GBA_REQ_WRITE | GBA_REQ_4B);
-	*val = data;
+	*val = BURN_ENDIAN_SWAP_INT32(data);
 }
 
 static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
@@ -80,7 +80,7 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 	}
 	UINT32* val    = gba_dword_lookup(gba, baddr, GBA_REQ_WRITE | GBA_REQ_2B);
 	INT32   offset = SB_BFE(baddr, 1, 1);
-	((UINT16*)val)[offset] = data;
+	((UINT16*)val)[offset] = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static inline void gba_store8(gba_t* gba, UINT32 baddr, UINT32 data)
@@ -116,12 +116,12 @@ static inline void gba_io_store8(gba_t* gba, UINT32 baddr, UINT8  data)
 
 static inline void gba_io_store16(gba_t* gba, UINT32 baddr, UINT16 data)
 {
-	*(UINT16*)(gba->mem.io + (baddr & 0xfff)) = data;
+	*(UINT16*)(gba->mem.io + (baddr & 0xfff)) = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static inline void gba_io_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 {
-	*(UINT32*)(gba->mem.io + (baddr & 0xfff)) = data;
+	*(UINT32*)(gba->mem.io + (baddr & 0xfff)) = BURN_ENDIAN_SWAP_INT32(data);
 }
 
 static inline UINT8  gba_io_read8(gba_t* gba, UINT32 baddr)
@@ -131,12 +131,12 @@ static inline UINT8  gba_io_read8(gba_t* gba, UINT32 baddr)
 
 static inline UINT16 gba_io_read16(gba_t* gba, UINT32 baddr)
 {
-	return *(UINT16*)(gba->mem.io + (baddr & 0xfff));
+	return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.io + (baddr & 0xfff)));
 }
 
 static inline UINT32 gba_io_read32(gba_t* gba, UINT32 baddr)
 {
-	return *(UINT32*)(gba->mem.io + (baddr & 0xfff));
+	return BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.io + (baddr & 0xfff)));
 }
 
 // refreshes the cached interrupt poll flag used once per instruction
@@ -372,7 +372,7 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 					INT32 io_reg = (addr >> 2) & 0xff;
 					if (SB_LIKELY(gba->mem.mmio_reg_valid_lookup[io_reg])) {
 						gba_process_mmio_read(gba, addr);
-						gba->mem.mmio_word = (*(UINT32*)(gba->mem.io + (addr & 0x3fc))) & gba->mem.mmio_data_mask_lookup[io_reg];
+						gba->mem.mmio_word = (*(UINT32*)(gba->mem.io + (addr & 0x3fc))) & BURN_ENDIAN_SWAP_INT32(gba->mem.mmio_data_mask_lookup[io_reg]);
 						ret = &gba->mem.mmio_word;
 					}
 				} else
@@ -410,7 +410,7 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 		case 0xc:
 		case 0xd: {
 			if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0xff000000) == 0x0d000000) {
-				gba->mem.openbus_word = 1;	// ready when done writing EEPROM
+				gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(1);	// ready when done writing EEPROM
 				break;
 			}
 			if (gba->cart.matrix.active) {
@@ -418,40 +418,40 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 				if (maddr < 0x2000) {
 					gba->mem.openbus_word = *(UINT32*)(gba->mem.matrix_window + (maddr & ~3));
 					if (req_type & 0x3) {
-						UINT16 res16 = gba->mem.openbus_word >> (addr & 2) * 8;
-						gba->mem.openbus_word = res16 * 0x10001u;
+						UINT16 res16 = BURN_ENDIAN_SWAP_INT32(gba->mem.openbus_word) >> (addr & 2) * 8;
+						gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(res16 * 0x10001u);
 					}
 				} else {
 					UINT32 echo = ((addr & ~3) >> 1) & 0xffff;
 					echo |= (((addr & ~3) + 2) >> 1) << 16;
-					gba->mem.openbus_word = echo;
+					gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(echo);
 				}
 				break;
 			}
 			INT32 maddr = addr & 0x1fffffc;
 			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
 				if (gba->cart.fcmini.type) {
-					gba->mem.openbus_word = gba_fcmini_get_pattern(addr) | (gba_fcmini_get_pattern(addr + 2) << 16);
+					gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(gba_fcmini_get_pattern(addr) | (gba_fcmini_get_pattern(addr + 2) << 16));
 					break;
 				}
 				if (gba_rom_mirrors_1m(gba, maddr)) {
 					maddr &= 0x0ffffc;
 					gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
 					if (req_type & 0x3) {
-						UINT16 res16 = gba->mem.openbus_word >> (addr & 2) * 8;
-						gba->mem.openbus_word = res16 * 0x10001u;
+						UINT16 res16 = BURN_ENDIAN_SWAP_INT32(gba->mem.openbus_word) >> (addr & 2) * 8;
+						gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(res16 * 0x10001u);
 					}
 				} else {
-					gba->mem.openbus_word = ((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16);
+					gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(((maddr / 2) & 0xffff) | (((maddr / 2 + 1) & 0xffff) << 16));
 					// EEPROM ready only at top of ROM space, not every OOB read
 					if (gba->cart.backup_type == GBA_BACKUP_EEPROM && (addr & 0x1ffffff) >= 0x01ffff00)
-						gba->mem.openbus_word = 1;
+						gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(1);
 				}
 			} else {
 				gba->mem.openbus_word = *(UINT32*)(gba->mem.cart_rom + maddr);
 				if (req_type & 0x3) {
-					UINT16 res16 = gba->mem.openbus_word >> (addr & 2) * 8;
-					gba->mem.openbus_word = res16 * 0x10001u;
+					UINT16 res16 = BURN_ENDIAN_SWAP_INT32(gba->mem.openbus_word) >> (addr & 2) * 8;
+					gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(res16 * 0x10001u);
 				}
 			}
 		}
@@ -484,7 +484,7 @@ static inline UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_type)
 					ret = &gba->mem.sram_word;
 				}
 			}
-			gba->mem.openbus_word = (*ret & 0xffff) * 0x10001;
+			gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32((BURN_ENDIAN_SWAP_INT32(*ret) & 0xffff) * 0x10001);
 			break;
 	}
 	return ret;

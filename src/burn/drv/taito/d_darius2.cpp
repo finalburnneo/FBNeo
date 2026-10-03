@@ -1692,18 +1692,18 @@ static void Darius2RenderSprites(INT32 PriorityDraw)
 	UINT16 *SpriteRam = (UINT16*)TaitoSpriteRam;
 
 	for (Offset = 0x2000 - 4; Offset >=0; Offset -= 4) {
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Code = Data & (TaitoNumSpriteA - 1);
 
 		if (!Code) continue;
 
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		x = (Data - 32) & 0x3ff;
 
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		y = (Data - 0) & 0x1ff;
 
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		xFlip = (Data & 0x1);
 		yFlip = (Data & 0x2) >> 1;
 		Priority = (Data & 0x4) >> 2;
@@ -1729,18 +1729,18 @@ static void Darius2dRenderSprites(INT32 PriorityDraw)
 	UINT16 *SpriteRam = (UINT16*)TaitoSpriteRam;
 
 	for (Offset = (0x1400 / 2) - 4; Offset >= 0; Offset -= 4) {
-		Data = SpriteRam[Offset + 1];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Code = Data & (TaitoNumSpriteA - 1);
 
-		Data = SpriteRam[Offset + 0];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
 		y = (-(Data & 0x1ff) - 24) & 0x1ff;
 		yFlip = (Data & 0x200) >> 9;
 
-		Data = SpriteRam[Offset + 2];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 		Priority = (Data & 0x100) >> 8;
 		Colour = Data & 0x7f;
 
-		Data = SpriteRam[Offset + 3];
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
 		x = Data & 0x3ff;
 		xFlip = (Data & 0x400) >> 10;
 

@@ -200,7 +200,7 @@ static void __fastcall thoop2_palette_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x7fe;
 
-	*((UINT16*)(BurnPalRAM + address)) = data;
+	*((UINT16*)(BurnPalRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
 
 	BurnPaletteWrite_xBBBBBGGGGGRRRRR(address);
 }
@@ -248,8 +248,8 @@ static tilemap_callback( screen0 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + (offs & ~3));
 
-	UINT16 data = ram[0];
-	UINT16 attr = ram[1];
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(ram[0]);
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(ram[1]);
 
 	UINT32 code = (((data & 0x03) << 14) | ((data & 0xfffc) >> 2)) << 2;
 	code += (offs & 3) ^ TILE_FLIPXY(attr >> 14); // xy flipped?
@@ -264,8 +264,8 @@ static tilemap_callback( screen1 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x1000 + (offs & ~3));
 
-	UINT16 data = ram[0];
-	UINT16 attr = ram[1];
+	UINT16 data = BURN_ENDIAN_SWAP_INT16(ram[0]);
+	UINT16 attr = BURN_ENDIAN_SWAP_INT16(ram[1]);
 
 	UINT32 code = (((data & 0x03) << 14) | ((data & 0xfffc) >> 2)) << 2;
 	code += (offs & 3) ^ TILE_FLIPXY(attr >> 14); // xy flipped??
@@ -492,8 +492,8 @@ static void sort_sprites()
 	sprite_count[4] = 0;
 
 	for (INT32 i = 3; i < (0x1000 - 6)/2; i += 4){
-		INT32 color = (spriteram[i+2] & 0x7e00) >> 9;
-		INT32 priority = (spriteram[i] & 0x3000) >> 12;
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(spriteram[i+2]) & 0x7e00) >> 9;
+		INT32 priority = (BURN_ENDIAN_SWAP_INT16(spriteram[i]) & 0x3000) >> 12;
 
 		if (color >= 0x38){
 			sprite_table[4][sprite_count[4]] = i;
@@ -515,11 +515,11 @@ static void draw_sprites(int pri)
 	for (INT32 j = 0; j < sprite_count[pri]; j++)
 	{
 		INT32 i = sprite_table[pri][j];
-		INT32 sx = spriteram[i+2] & 0x01ff;
-		INT32 sy = (240 - (spriteram[i] & 0x00ff)) & 0x00ff;
-		INT32 number = spriteram[i+3];
-		INT32 color = (spriteram[i+2] & 0x7e00) >> 9;
-		INT32 attr = (spriteram[i] & 0xfe00) >> 9;
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(spriteram[i+2]) & 0x01ff;
+		INT32 sy = (240 - (BURN_ENDIAN_SWAP_INT16(spriteram[i]) & 0x00ff)) & 0x00ff;
+		INT32 number = BURN_ENDIAN_SWAP_INT16(spriteram[i+3]);
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(spriteram[i+2]) & 0x7e00) >> 9;
+		INT32 attr = (BURN_ENDIAN_SWAP_INT16(spriteram[i]) & 0xfe00) >> 9;
 
 		INT32 xflip = attr & 0x20;
 		INT32 yflip = attr & 0x40;

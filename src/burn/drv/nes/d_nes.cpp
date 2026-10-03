@@ -14972,14 +14972,14 @@ struct BurnDriver BurnDrvnes_mojontwiapuche = {
 
 // Argon Dream (HB)
 static struct BurnRomInfo nes_argondreamRomDesc[] = {
-	{ "Argon Dream (2025)(Johnybot).nes",          24592, 0xd4ab5d9c, BRF_ESS | BRF_PRG },
+	{ "Argon Dream (2025-26)(Johnybot).nes",          40976, 0x192d41c1, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_argondream)
 STD_ROM_FN(nes_argondream)
 
 struct BurnDriver BurnDrvnes_argondream = {
-	"nes_argondream", NULL, NULL, NULL, "2025",
+	"nes_argondream", NULL, NULL, NULL, "2025-26",
 	"Argon Dream (HB)\0", "No Sound", "Johnybot", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_BREAKOUT, 0,
@@ -19896,6 +19896,24 @@ struct BurnDriver BurnDrvnes_hoboalboha = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_hoboalbohaRomInfo, nes_hoboalbohaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Hobo Albo's Halloween Adventure (HB, v1.5, Alt)
+static struct BurnRomInfo nes_hoboalbohaaRomDesc[] = {
+	{ "Hobo Albo's Halloween Adventure v1.5 (Alt)(2025)(RBG Entertainment).nes",          524304, 0xe3f081c6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_hoboalbohaa)
+STD_ROM_FN(nes_hoboalbohaa)
+
+struct BurnDriver BurnDrvnes_hoboalbohaa = {
+	"nes_hoboalbohaa", "nes_hoboalboha", NULL, NULL, "2025",
+	"Hobo Albo's Halloween Adventure (HB, v1.5, Alt)\0", NULL, "RBG Entertainment", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_hoboalbohaaRomInfo, nes_hoboalbohaaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

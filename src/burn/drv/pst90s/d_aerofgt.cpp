@@ -1850,7 +1850,7 @@ static void __fastcall spikes91_main_write_byte(UINT32 address, UINT8 data)
 
 static inline void palette_update(INT32 offset) // 5rgb
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + offset)));
 
 	INT32 r = (p >> 10) & 0x1f;
 	INT32 g = (p >>  5) & 0x1f;
@@ -1865,7 +1865,7 @@ static inline void palette_update(INT32 offset) // 5rgb
 
 static void __fastcall palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvPalRAM + (address & 0xffe))) = data;
+	*((UINT16*)(DrvPalRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 	palette_update(address & 0xffe);
 }
 
@@ -2147,49 +2147,49 @@ static UINT8 __fastcall karatblzbl_sound_read_port(UINT16 port)
 
 static tilemap_callback( spinlbrk_bg )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[0] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[0] + offs * 2)));
 
 	TILE_SET_INFO(0, (attr & 0xfff) | (gfxbank[0] << 12), attr >> 12, 0);
 }
 
 static tilemap_callback( karatblz_bg )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[0] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[0] + offs * 2)));
 
 	TILE_SET_INFO(0, (attr & 0x1fff) | (gfxbank[0] << 13), attr >> 13, 0);
 }
 
 static tilemap_callback( karatblz_fg )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[1] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[1] + offs * 2)));
 
 	TILE_SET_INFO(1, (attr & 0x1fff) | (gfxbank[1] << 13), attr >> 13, 0);
 }
 
 static tilemap_callback( pspikes_bg )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[0] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[0] + offs * 2)));
 
 	TILE_SET_INFO(0, (attr & 0xfff) + (gfxbank[(attr >> 12) & 1] << 12), (attr >> 13) + (charpalettebank << 3), 0);
 }
 
 static tilemap_callback( aerofgt_bg )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[0] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[0] + offs * 2)));
 
 	TILE_SET_INFO(0, (attr & 0x7ff) + (gfxbank[((attr & 0x1800) >> 11) + 0] << 11), attr >> 13, 0);
 }
 
 static tilemap_callback( aerofgt_fg )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[1] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[1] + offs * 2)));
 
 	TILE_SET_INFO(1, (attr & 0x7ff) + (gfxbank[((attr & 0x1800) >> 11) + 4] << 11), attr >> 13, 0);
 }
 
 static tilemap_callback( spikes91_tx )
 {
-	INT32 attr = *((UINT16*)(DrvWRAM[1] + offs * 2));
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvWRAM[1] + offs * 2)));
 
 	TILE_SET_INFO(0, attr & 0x1fff, attr >> 13, 0);
 }
@@ -3665,9 +3665,9 @@ static void DrvPaletteUpdate() // 5rgb
 
 	for (INT32 i = 0; i < BurnDrvGetPaletteEntries(); i++)
 	{
-		INT32 r = (p[i] >> 10) & 0x1f;
-		INT32 g = (p[i] >>  5) & 0x1f;
-		INT32 b = (p[i] >>  0) & 0x1f;
+		INT32 r = (BURN_ENDIAN_SWAP_INT16(p[i]) >> 10) & 0x1f;
+		INT32 g = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  5) & 0x1f;
+		INT32 b = (BURN_ENDIAN_SWAP_INT16(p[i]) >>  0) & 0x1f;
 
 		r = (r << 3) | (r >> 2);
 		g = (g << 3) | (g >> 2);
@@ -3679,24 +3679,24 @@ static void DrvPaletteUpdate() // 5rgb
 
 static UINT32 sprite_ramlut0(UINT32 tile)
 {
-	return *((UINT16*)(DrvSprLutRAM[0] + ((tile * 2) % (sprite_lut_mask[0] + 1))));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvSprLutRAM[0] + ((tile * 2) % (sprite_lut_mask[0] + 1)))));
 }
 
 static UINT32 sprite_ramlut1(UINT32 tile)
 {
-	return *((UINT16*)(DrvSprLutRAM[1] + ((tile * 2) & sprite_lut_mask[1])));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvSprLutRAM[1] + ((tile * 2) & sprite_lut_mask[1]))));
 }
 
 static UINT32 sprite_romlut(UINT32 tile)
 {
-	return *((UINT16*)(DrvGfxROM[4] + ((tile * 2) & 0x1fffe)));
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvGfxROM[4] + ((tile * 2) & 0x1fffe))));
 }
 
 static void draw_sprites(UINT8 *sprite_ram, INT32 palette_bank, INT32 pri_param, INT32 m_gfx, INT32 m_pritype, UINT32 (*cb)(UINT32))
 {
 	UINT16 *spriteram = (UINT16*)sprite_ram;
 
-	INT32 first = (4 * spriteram[0x1fe]) & 0x1ff;
+	INT32 first = (4 * BURN_ENDIAN_SWAP_INT16(spriteram[0x1fe])) & 0x1ff;
 
 	if (first>0x200-4)
 		first = 0x200-4;
@@ -3712,20 +3712,20 @@ static void draw_sprites(UINT8 *sprite_ram, INT32 palette_bank, INT32 pri_param,
 		UINT16 *ram = &spriteram[attr_start];
 
 		// sprite is disabled
-		if (!(ram[2] & 0x0080))
+		if (!(BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x0080))
 			continue;
 
-		INT32 oy    =  (ram[0] & 0x01ff);
-		INT32 zoomy =  (ram[0] & 0xf000) >> 12;
-		INT32 ox =     (ram[1] & 0x01ff);
-		INT32 zoomx =  (ram[1] & 0xf000) >> 12;
-		INT32 xsize =  (ram[2] & 0x0700) >> 8;
-		INT32 flipx =  (ram[2] & 0x0800);
-		INT32 ysize =  (ram[2] & 0x7000) >> 12;
-		INT32 flipy =  (ram[2] & 0x8000);
-		INT32 color =  (ram[2] & 0x000f);
-		INT32 pri =    (ram[2] & 0x0010);
-		INT32 map =    (ram[3]);
+		INT32 oy    =  (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x01ff);
+		INT32 zoomy =  (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0xf000) >> 12;
+		INT32 ox =     (BURN_ENDIAN_SWAP_INT16(ram[1]) & 0x01ff);
+		INT32 zoomx =  (BURN_ENDIAN_SWAP_INT16(ram[1]) & 0xf000) >> 12;
+		INT32 xsize =  (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x0700) >> 8;
+		INT32 flipx =  (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x0800);
+		INT32 ysize =  (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x7000) >> 12;
+		INT32 flipy =  (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x8000);
+		INT32 color =  (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x000f);
+		INT32 pri =    (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x0010);
+		INT32 map =    (BURN_ENDIAN_SWAP_INT16(ram[3]));
 
 		ox += screen_offsets[0];
 		oy += screen_offsets[1];
@@ -3792,25 +3792,25 @@ static void aerofgt_draw_sprites(INT32 prihack_mask, INT32 prihack_val)
 
 	for (INT32 offs = 0; offs < 0x2000 / 2; offs++)
 	{
-		if (spriteram[offs] & 0x4000) break;
+		if (BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x4000) break;
 
-		if ((spriteram[offs] & 0x8000) == 0x0000)
+		if ((BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x8000) == 0x0000)
 		{
-			INT32 attr_start = 4 * (spriteram[offs] & 0x03ff);
+			INT32 attr_start = 4 * (BURN_ENDIAN_SWAP_INT16(spriteram[offs]) & 0x03ff);
 
 			UINT16 *ram = &spriteram[attr_start];
 
-			INT32 oy =    (ram[0] & 0x01ff);
-			INT32 ysize = (ram[0] & 0x0e00) >> 9;
-			INT32 zoomy = (ram[0] & 0xf000) >> 12;
-			INT32 	ox  = (ram[1] & 0x01ff);
-			INT32 xsize = (ram[1] & 0x0e00) >> 9;
-			INT32 zoomx = (ram[1] & 0xf000) >> 12;
-			INT32 flipx = (ram[2] & 0x4000);
-			INT32 flipy = (ram[2] & 0x8000);
-			INT32 color = (ram[2] & 0x3f00) >> 8;
-			INT32 pri   = (ram[2] & 0x3000) >> 12;
-			INT32 map   = (ram[3] & 0xffff) | ((ram[2] & 0x0001) << 16);
+			INT32 oy =    (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x01ff);
+			INT32 ysize = (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0x0e00) >> 9;
+			INT32 zoomy = (BURN_ENDIAN_SWAP_INT16(ram[0]) & 0xf000) >> 12;
+			INT32 	ox  = (BURN_ENDIAN_SWAP_INT16(ram[1]) & 0x01ff);
+			INT32 xsize = (BURN_ENDIAN_SWAP_INT16(ram[1]) & 0x0e00) >> 9;
+			INT32 zoomx = (BURN_ENDIAN_SWAP_INT16(ram[1]) & 0xf000) >> 12;
+			INT32 flipx = (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x4000);
+			INT32 flipy = (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x8000);
+			INT32 color = (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x3f00) >> 8;
+			INT32 pri   = (BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x3000) >> 12;
+			INT32 map   = (BURN_ENDIAN_SWAP_INT16(ram[3]) & 0xffff) | ((BURN_ENDIAN_SWAP_INT16(ram[2]) & 0x0001) << 16);
 
 			if ((pri & prihack_mask) != prihack_val) continue;
 
@@ -3841,7 +3841,7 @@ static void aerofgt_draw_sprites(INT32 prihack_mask, INT32 prihack_val)
 
 				while (xcnt != xend)
 				{
-					int startno = spritelut[(map++) & 0x7fff] % gfx->code_mask;
+					int startno = BURN_ENDIAN_SWAP_INT16(spritelut[(map++) & 0x7fff]) % gfx->code_mask;
 
 					RenderZoomedTile(pTransDraw, gfx->gfxbase, startno, color, 0xf, ox + xcnt * zoomx/2,        oy + ycnt * zoomy/2,        flipx, flipy, gfx->width, gfx->height, zoomx << 11, zoomy << 11);
 					RenderZoomedTile(pTransDraw, gfx->gfxbase, startno, color, 0xf, -0x200+ox + xcnt * zoomx/2, oy + ycnt * zoomy/2,        flipx, flipy, gfx->width, gfx->height, zoomx << 11, zoomy << 11);
@@ -3869,7 +3869,7 @@ static INT32 PspikesDraw()
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, rs[i]);
+			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, BURN_ENDIAN_SWAP_INT16(rs[i]));
 		}
 	}
 
@@ -3895,7 +3895,7 @@ static INT32 SpinlbrkDraw()
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, i, rs[i] - 8);
+			GenericTilemapSetScrollRow(0, i, BURN_ENDIAN_SWAP_INT16(rs[i]) - 8);
 		}
 	}
 
@@ -3958,7 +3958,7 @@ static INT32 TurbofrcDraw()
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, (i + scrolly[0] + 2) & 0x1ff, rs[7]-11);
+			GenericTilemapSetScrollRow(0, (i + scrolly[0] + 2) & 0x1ff, BURN_ENDIAN_SWAP_INT16(rs[7])-11);
 		}
 	}
 
@@ -3985,9 +3985,9 @@ static INT32 AerofgtDraw()
 
 	UINT16 *rs = (UINT16*)DrvRasterRAM;
 
-	GenericTilemapSetScrollX(0, rs[0x000] - 18);
+	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(rs[0x000]) - 18);
 	GenericTilemapSetScrollY(0, scrolly[0]);
-	GenericTilemapSetScrollX(1, rs[0x200] - 20);
+	GenericTilemapSetScrollX(1, BURN_ENDIAN_SWAP_INT16(rs[0x200]) - 20);
 	GenericTilemapSetScrollY(1, scrolly[1]);
 
 	BurnTransferClear();
@@ -4012,14 +4012,14 @@ static void pspikesb_draw_sprites()
 
 	for (INT32 i = 4; i < 0x1000 / 2; i += 4)
 	{
-		if (spriteram[i + 3 - 4] & 0x8000)
+		if (BURN_ENDIAN_SWAP_INT16(spriteram[i + 3 - 4]) & 0x8000)
 			break;
 
-		INT32 xpos = (spriteram[i + 2] & 0x1ff) - 34;
-		INT32 ypos = 256 - (spriteram[i + 3 - 4] & 0x1ff) - 33;
-		INT32 code = spriteram[i + 0] & 0x1fff;
-		INT32 flipx = spriteram[i + 1] & 0x0800;
-		INT32 color = spriteram[i + 1] & 0x000f;
+		INT32 xpos = (BURN_ENDIAN_SWAP_INT16(spriteram[i + 2]) & 0x1ff) - 34;
+		INT32 ypos = 256 - (BURN_ENDIAN_SWAP_INT16(spriteram[i + 3 - 4]) & 0x1ff) - 33;
+		INT32 code = BURN_ENDIAN_SWAP_INT16(spriteram[i + 0]) & 0x1fff;
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(spriteram[i + 1]) & 0x0800;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(spriteram[i + 1]) & 0x000f;
 
 		DrawGfxMaskTile(0, 2, code, xpos, ypos, flipx, 0, color, 0xf);
 		DrawGfxMaskTile(0, 2, code, xpos, ypos + 512, flipx, 0, color, 0xf);
@@ -4038,11 +4038,11 @@ static INT32 PspikesbDraw()
 	{
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
-		gfxbank[0] = rs[0x100] >> 12;
-		gfxbank[1] = (rs[0x100] >> 8) & 0xf;
+		gfxbank[0] = BURN_ENDIAN_SWAP_INT16(rs[0x100]) >> 12;
+		gfxbank[1] = (BURN_ENDIAN_SWAP_INT16(rs[0x100]) >> 8) & 0xf;
 
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, rs[i] + 22);
+			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, BURN_ENDIAN_SWAP_INT16(rs[i]) + 22);
 		}
 	}
 
@@ -4061,19 +4061,19 @@ static void aerfboot_draw_sprites(INT32 top)
 	UINT16 *spriteram = (UINT16*)DrvSprRAM;
 	UINT16 *rasterram = (UINT16*)DrvRasterRAM;
 
-	INT32 last = ((rasterram[(top ? 0x402 : 0x404) / 2] << 5) - 0x8000) / 2;
+	INT32 last = ((BURN_ENDIAN_SWAP_INT16(rasterram[(top ? 0x402 : 0x404) / 2]) << 5) - 0x8000) / 2;
 
 	for (INT32 attr_start = ((top ? (0x4000 / 2) : 0x4000) / 2) - 4; attr_start >= last; attr_start -= 4)
 	{
-		INT32 ox	=  spriteram[attr_start + 1] & 0x01ff;
-		INT32 oy	=  spriteram[attr_start + 0] & 0x01ff;
-		INT32 flipx =  spriteram[attr_start + 2] & 0x0800;
-		INT32 flipy =  spriteram[attr_start + 2] & 0x8000;
-		INT32 color =  spriteram[attr_start + 2] & 0x000f;
-		INT32 zoomx = (spriteram[attr_start + 1] & 0xf000) >> 12;
-		INT32 zoomy = (spriteram[attr_start + 0] & 0xf000) >> 12;
-		INT32 pri	=  spriteram[attr_start + 2] & 0x0010;
-		INT32 code	= (spriteram[attr_start + 3] & 0x1fff) | ((~spriteram[attr_start + 2] & 0x0040) << 7);
+		INT32 ox	=  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 1]) & 0x01ff;
+		INT32 oy	=  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 0]) & 0x01ff;
+		INT32 flipx =  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0800;
+		INT32 flipy =  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x8000;
+		INT32 color =  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x000f;
+		INT32 zoomx = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 1]) & 0xf000) >> 12;
+		INT32 zoomy = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 0]) & 0xf000) >> 12;
+		INT32 pri	=  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0010;
+		INT32 code	= (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 3]) & 0x1fff) | ((~BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0040) << 7);
 
 		zoomx = 32 + zoomx;
 		zoomy = 32 + zoomy;
@@ -4096,7 +4096,7 @@ static INT32 AerfbootDraw()
 
 	UINT16 *rs = (UINT16*)DrvRasterRAM;
 
-	GenericTilemapSetScrollX(0, rs[7] + 174);
+	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(rs[7]) + 174);
 	GenericTilemapSetScrollY(0, scrolly[0] + 2);
 	GenericTilemapSetScrollX(1, scrollx[1] + 172);
 	GenericTilemapSetScrollY(1, scrolly[1] + 2);
@@ -4121,26 +4121,26 @@ static void aerfboo2_draw_sprites(INT32 chip, INT32 chip_disabled_pri, UINT32 (*
 
 	for (INT32 attr_start = (chip * 0x200) + 0x0200 - 4; attr_start >= (chip * 0x200); attr_start -= 4)
 	{
-		if (!(spriteram[attr_start + 2] & 0x0080))
+		if (!(BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0080))
 			continue;
 
-		INT32 pri = spriteram[attr_start + 2] & 0x0010;
+		INT32 pri = BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0010;
 
 		if (chip_disabled_pri && !pri) continue;
 
 		if ((!chip_disabled_pri) && (pri >> 4)) continue;
 
-		INT32 ox     = spriteram[attr_start + 1] & 0x01ff;
-		INT32 xsize = (spriteram[attr_start + 2] & 0x0700) >> 8;
-		INT32 zoomx = (spriteram[attr_start + 1] & 0xf000) >> 12;
-		INT32 oy     = spriteram[attr_start + 0] & 0x01ff;
-		INT32 ysize = (spriteram[attr_start + 2] & 0x7000) >> 12;
-		INT32 zoomy = (spriteram[attr_start + 0] & 0xf000) >> 12;
-		INT32 flipx =  spriteram[attr_start + 2] & 0x0800;
-		INT32 flipy =  spriteram[attr_start + 2] & 0x8000;
-		INT32 color = (spriteram[attr_start + 2] & 0x000f) + (16 * spritepalettebank);
+		INT32 ox     = BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 1]) & 0x01ff;
+		INT32 xsize = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0700) >> 8;
+		INT32 zoomx = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 1]) & 0xf000) >> 12;
+		INT32 oy     = BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 0]) & 0x01ff;
+		INT32 ysize = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x7000) >> 12;
+		INT32 zoomy = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 0]) & 0xf000) >> 12;
+		INT32 flipx =  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x0800;
+		INT32 flipy =  BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x8000;
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 2]) & 0x000f) + (16 * spritepalettebank);
 
-		INT32 map_start = spriteram[attr_start + 3];
+		INT32 map_start = BURN_ENDIAN_SWAP_INT16(spriteram[attr_start + 3]);
 
 		zoomx = 32 - zoomx;
 		zoomy = 32 - zoomy;
@@ -4176,12 +4176,12 @@ static INT32 Aerfboo2Draw()
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
 		for (INT32 i = 0; i < 0x400; i+=0x10) {
-			GenericTilemapSetScrollRow(0, ((i / 0x10) + (scrolly[0] / 8)) & (0x1ff/8), rs[i + (0xe/2)]);
+			GenericTilemapSetScrollRow(0, ((i / 0x10) + (scrolly[0] / 8)) & (0x1ff/8), BURN_ENDIAN_SWAP_INT16(rs[i + (0xe/2)]));
 		}
 	}
 
 	UINT16 *rs = (UINT16*)DrvRasterRAM;
-	GenericTilemapSetScrollX(0, rs[0x00e/2] - 11);
+	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(rs[0x00e/2]) - 11);
 	GenericTilemapSetScrollY(0, scrolly[0] + 2);
 	GenericTilemapSetScrollX(1, scrollx[1] - 7);
 	GenericTilemapSetScrollY(1, scrolly[1] + 2);
@@ -4227,11 +4227,11 @@ static void wbbc97_draw_bitmap()
 
 		for (INT32 x = 0; x < 512; x++, count++)
 		{
-			INT32 sx = (10 + x - scr[y]) & 0x1ff; // not quite right - is there a scrolly variable for this?
+			INT32 sx = (10 + x - BURN_ENDIAN_SWAP_INT16(scr[y])) & 0x1ff; // not quite right - is there a scrolly variable for this?
 
 			if (sx < nScreenWidth)
 			{
-				dst[sx] = (ram[count & 0x1ffff] >> 1) + 0x800;
+				dst[sx] = (BURN_ENDIAN_SWAP_INT16(ram[count & 0x1ffff]) >> 1) + 0x800;
 			}
 		}
 	}
@@ -4249,7 +4249,7 @@ static INT32 Wbbc97Draw()
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, rs[i]);
+			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, BURN_ENDIAN_SWAP_INT16(rs[i]));
 		}
 	}
 
@@ -4276,15 +4276,15 @@ static void spikes91_draw_sprites()
 
 	for (INT32 i = 0x1000 / 2 - 4; i >= 4; i -= 4)
 	{
-		INT32 code =(spriteram[i + 0] & 0x1fff) + (spikes91_lookup * 0x2000);
-		INT32 xpos = (spriteram[i + 2] & 0x01ff) - 16;
-		INT32 ypos = 256 - (spriteram[i + 1] & 0x00ff) - 26;
+		INT32 code =(BURN_ENDIAN_SWAP_INT16(spriteram[i + 0]) & 0x1fff) + (spikes91_lookup * 0x2000);
+		INT32 xpos = (BURN_ENDIAN_SWAP_INT16(spriteram[i + 2]) & 0x01ff) - 16;
+		INT32 ypos = 256 - (BURN_ENDIAN_SWAP_INT16(spriteram[i + 1]) & 0x00ff) - 26;
 		INT32 flipy = 0;
-		INT32 flipx = spriteram[i + 3] & 0x8000;
-		INT32 color = ((spriteram[i + 3] & 0x00f0) >> 4);
+		INT32 flipx = BURN_ENDIAN_SWAP_INT16(spriteram[i + 3]) & 0x8000;
+		INT32 color = ((BURN_ENDIAN_SWAP_INT16(spriteram[i + 3]) & 0x00f0) >> 4);
 
-		DrawGfxMaskTile(0, 2, spritelut[code] & 0x3fff, xpos, ypos, flipx, flipy, color, 0xf);
-		DrawGfxMaskTile(0, 2, spritelut[code] & 0x3fff, xpos, ypos + 512, flipx, flipy, color, 0xf);
+		DrawGfxMaskTile(0, 2, BURN_ENDIAN_SWAP_INT16(spritelut[code]) & 0x3fff, xpos, ypos, flipx, flipy, color, 0xf);
+		DrawGfxMaskTile(0, 2, BURN_ENDIAN_SWAP_INT16(spritelut[code]) & 0x3fff, xpos, ypos + 512, flipx, flipy, color, 0xf);
 	}
 }
 
@@ -4299,7 +4299,7 @@ static INT32 Spikes91Draw()
 		UINT16 *rs = (UINT16*)DrvRasterRAM;
 
 		for (INT32 i = 0; i < 256; i++) {
-			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, rs[0xf8 + i] + 172);
+			GenericTilemapSetScrollRow(0, (i + scrolly[0]) & 0xff, BURN_ENDIAN_SWAP_INT16(rs[0xf8 + i]) + 172);
 		}
 	}
 

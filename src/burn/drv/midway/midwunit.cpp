@@ -231,7 +231,7 @@ void WolfUnitUMK3PaletteHack(UINT32 address, UINT16 value)
 		tms34010_modify_timeslice(-100);
 	}
 	address &= 0xFFF;
-	*(UINT16*)(&DrvRAM[TOBYTE(0x6a000 + address)]) = value;
+	*(UINT16*)(&DrvRAM[TOBYTE(0x6a000 + address)]) = BURN_ENDIAN_SWAP_INT16(value);
 }
 
 UINT16 WolfUnitPalRead(UINT32 address)

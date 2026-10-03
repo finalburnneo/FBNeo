@@ -634,7 +634,7 @@ static void pgm_drawsprites()
 	while (source < finish)
 	{
 		if (!OldCodeMode) {
-			if ((source[4] & 0x7fff) == 0) break;	// verified on hardware
+			if ((BURN_ENDIAN_SWAP_INT16(source[4]) & 0x7fff) == 0) break;	// verified on hardware
 		} else {
 			if (source[4] == 0) break;				// right?
 		}
@@ -653,14 +653,14 @@ static void pgm_drawsprites()
 		INT32 high =  BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;
 
 		if ((0 != nPGMSpriteBufferHack) || (OldCodeMode)) {
-			if (source[2] & 0x8000) boff += 0x800000; // Real hardware does not have this! Useful for some rom hacks.
+			if (BURN_ENDIAN_SWAP_INT16(source[2]) & 0x8000) boff += 0x800000; // Real hardware does not have this! Useful for some rom hacks.
 		}
 
 		if (xgrow) xzom = 0x10-xzom;
 		if (ygrow) yzom = 0x10-yzom;
 
-		UINT32 xzoom = (xzom & 0x10) ? 0 : ((zoomtable[xzom * 2] << 16) | zoomtable[xzom * 2 + 1]);
-		UINT32 yzoom = (yzom & 0x10) ? 0 : ((zoomtable[yzom * 2] << 16) | zoomtable[yzom * 2 + 1]);
+		UINT32 xzoom = (xzom & 0x10) ? 0 : ((BURN_ENDIAN_SWAP_INT16(zoomtable[xzom * 2]) << 16) | BURN_ENDIAN_SWAP_INT16(zoomtable[xzom * 2 + 1]));
+		UINT32 yzoom = (yzom & 0x10) ? 0 : ((BURN_ENDIAN_SWAP_INT16(zoomtable[yzom * 2]) << 16) | BURN_ENDIAN_SWAP_INT16(zoomtable[yzom * 2 + 1]));
 
 		if (xpos > 0x3ff) xpos -=0x800;
 		if (ypos > 0x1ff) ypos -=0x400;

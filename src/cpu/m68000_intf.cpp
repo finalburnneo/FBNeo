@@ -410,7 +410,7 @@ inline static void WriteWordROM(UINT32 a, UINT16 d)
 	#endif
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)d;
+		*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 	pSekExt->WriteWord[(uintptr_t)pr](a, d);
@@ -536,7 +536,7 @@ inline static void WriteLongROM(UINT32 a, UINT32 d)
 	pr = FIND_R(a);
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
 		d = (d >> 16) | (d << 16);
-		*((UINT32*)(pr + (a & SEK_PAGEM))) = d;
+		*((UINT32*)(pr + (a & SEK_PAGEM))) = BURN_ENDIAN_SWAP_INT32(d);
 		return;
 	}
 	pSekExt->WriteLong[(uintptr_t)pr](a, d);

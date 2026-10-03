@@ -467,7 +467,7 @@ static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)(DrvVideoRAM + video_ram_offset);
 
-	INT32 attr = ram[offs];
+	INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
 
 	TILE_SET_INFO(0, (attr & 0x7ff) | (tilebank * 0x800) | ((attr & 0x800) << 4), attr >> 12, 0);
 }
@@ -711,12 +711,12 @@ static void draw_sprites()
 
 	for (INT32 offs = 4; offs < 0x1000 / 2; offs += 4)
 	{
-		INT32 attr	= ram[offs - 1];
+		INT32 attr	= BURN_ENDIAN_SWAP_INT16(ram[offs - 1]);
 		if (attr & 0x8000) break;
 
-		INT32 sx	= ram[offs + 1] & 0x01ff;
-		INT32 code	= ram[offs + 2];
-		INT32 color	= ram[offs + 1] >> 12;
+		INT32 sx	= BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x01ff;
+		INT32 code	= BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
+		INT32 color	= BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) >> 12;
 		INT32 flipx	= attr & 0x4000;
 		INT32 sy	= (232 - attr) & 0xff;
 

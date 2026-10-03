@@ -646,11 +646,11 @@ static void draw_sprites()
 
 	for (INT32 i = 0x3fc; i >= 0; i-=4)
 	{
-		INT32 attr = ram[i+3] & 0xff;
-		INT32 attr2 = ram[i+0x400] >> sprite_attr2_shift;
-		INT32 sx = (ram[i+2] & 0xff) | ((attr2 & 0x80) << 1);
-		INT32 sy = (240 - (ram[i+1] & 0xff)) & 0xff;
-		INT32 code = (ram[i] & 0xff) + ((attr & 0xf) << 8);
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[i+3]) & 0xff;
+		INT32 attr2 = BURN_ENDIAN_SWAP_INT16(ram[i+0x400]) >> sprite_attr2_shift;
+		INT32 sx = (BURN_ENDIAN_SWAP_INT16(ram[i+2]) & 0xff) | ((attr2 & 0x80) << 1);
+		INT32 sy = (240 - (BURN_ENDIAN_SWAP_INT16(ram[i+1]) & 0xff)) & 0xff;
+		INT32 code = (BURN_ENDIAN_SWAP_INT16(ram[i]) & 0xff) + ((attr & 0xf) << 8);
 		INT32 color = attr2 & 0x0f;
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x80;
@@ -686,8 +686,8 @@ static INT32 DrvDraw()
 	if (nBurnLayer & 1) draw_bitmap();
 	else BurnTransferClear();
 
-	GenericTilemapSetScrollY(0, ram[0]);
-	GenericTilemapSetScrollY(1, ram[1]);
+	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(ram[0]));
+	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(ram[1]));
 	if (nBurnLayer & 2) GenericTilemapDraw(1, 0, 0);
 	if (nSpriteEnable & 1) draw_sprites();
 	if (nBurnLayer & 4) GenericTilemapDraw(0, 0, 0);

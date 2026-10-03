@@ -165,7 +165,7 @@ static UINT16 vram_bg1_read(UINT32 offset)
 {
 	offset &= 0x3fffff;
 	UINT16 *vram = (UINT16*)DrvVidRAM[1];
-	return vram[TOWORD(offset) & 0x3fcff];
+	return BURN_ENDIAN_SWAP_INT16(vram[TOWORD(offset) & 0x3fcff]);
 }
 
 static void fg_draw_write(UINT32 offset, UINT16 data)

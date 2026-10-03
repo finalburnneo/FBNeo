@@ -757,7 +757,7 @@ static UINT16 __fastcall heatbrl_main_read_word(UINT32 address)
 
 static void __fastcall denjinmk_palette_write_word(UINT32 address, UINT16 data)
 {
-	*((UINT16*)(DrvAllRAM + 0x3800 + ((address & 0xffe) ^ 2))) = data;
+	*((UINT16*)(DrvAllRAM + 0x3800 + ((address & 0xffe) ^ 2))) = BURN_ENDIAN_SWAP_INT16(data);
 }
 
 static void __fastcall denjinmk_palette_write_byte(UINT32 address, UINT8 data)
@@ -1237,11 +1237,11 @@ static INT32 GodzillaInit()
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, 0);
 	GenericTilemapSetOffsets(3, 4, 4); // text layer offset
 
-	*((UINT16*)(Drv68KROM + 0xbe0e + 0x0a)) = 0xb000; // fix collisions (hack)
-	*((UINT16*)(Drv68KROM + 0xbe0e + 0x1a)) = 0xb800;
-	*((UINT16*)(Drv68KROM + 0xbb0a + 0x0a)) = 0xb000;
-	*((UINT16*)(Drv68KROM + 0xbb0a + 0x1a)) = 0xb800;
-	*((UINT16*)(Drv68KROM + 0x3fffe)) = 0x61ba; // checksum
+	*((UINT16*)(Drv68KROM + 0xbe0e + 0x0a)) = BURN_ENDIAN_SWAP_INT16(0xb000); // fix collisions (hack)
+	*((UINT16*)(Drv68KROM + 0xbe0e + 0x1a)) = BURN_ENDIAN_SWAP_INT16(0xb800);
+	*((UINT16*)(Drv68KROM + 0xbb0a + 0x0a)) = BURN_ENDIAN_SWAP_INT16(0xb000);
+	*((UINT16*)(Drv68KROM + 0xbb0a + 0x1a)) = BURN_ENDIAN_SWAP_INT16(0xb800);
+	*((UINT16*)(Drv68KROM + 0x3fffe)) = BURN_ENDIAN_SWAP_INT16(0x61ba); // checksum
 
 	DrvDoReset();
 

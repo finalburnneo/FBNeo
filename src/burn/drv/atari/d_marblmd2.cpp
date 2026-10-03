@@ -405,7 +405,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvSndROM  + 0x060000, k++, 1)) return 1;
 
 		// fix white start screen
-		*((UINT16*)(Drv68KROM + 0xa6c)) = 0x6000;	// beq a86 -> bra a86
+		*((UINT16*)(Drv68KROM + 0xa6c)) = BURN_ENDIAN_SWAP_INT16(0x6000);	// beq a86 -> bra a86
 
 		DrvGfxDecode();
 	}

@@ -162,8 +162,8 @@ next:
 			if ( voice->loop ) {
 				UINT8 *sfx = paprium_sfx_ptr + cart_rom;
 
-				voice->ptr = (*(UINT16 *)(sfx + voice->num*8) << 16) | (*(UINT16 *)(sfx + voice->num*8 + 2));
-				voice->size = (*(UINT8 *)(sfx + voice->num*8 + 4) << 16) | (*(UINT16 *)(sfx + voice->num*8 + 6));
+				voice->ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(sfx + voice->num*8)) << 16) | (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(sfx + voice->num*8 + 2)));
+				voice->size = (*(UINT8 *)(sfx + voice->num*8 + 4) << 16) | (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(sfx + voice->num*8 + 6)));
 			}
 		}
 	}
@@ -420,8 +420,8 @@ static void paprium_decoder_type(int src, UINT8 *dst)
 
 static void paprium_decoder(UINT8 mode)
 {
-	int offset = *(UINT16 *)(paprium_s.ram + 0x1E10);
-	int ptr = (*(UINT16 *)(paprium_s.ram + 0x1E12) << 16) + *(UINT16 *)(paprium_s.ram + 0x1E14);
+	int offset = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10));
+	int ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E14));
 
 	paprium_decoder_type(ptr, paprium_s.decoder_ram + offset);
 
@@ -432,8 +432,8 @@ static void paprium_decoder(UINT8 mode)
 
 static void paprium_decoder_copy(UINT8 arg)
 {
-	int offset = *(UINT16 *)(paprium_s.ram + 0x1E12);
-	int size = *(UINT16 *)(paprium_s.ram + 0x1E14);
+	int offset = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12));
+	int size = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E14));
 
 	paprium_s.decoder_ptr = offset;
 	paprium_s.decoder_size = size;
@@ -444,17 +444,17 @@ static void paprium_sprite(UINT8 index)
 	int lcv, spr_x, spr_y, count;
 	int spritePtr;
 
-	int dmaPtr = *(UINT16*) (paprium_s.ram + 0x1F16);
+	int dmaPtr = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0x1F16));
 
-	int spriteCount = *(UINT16*) (paprium_s.ram + 0x1F18);
+	int spriteCount = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0x1F18));
 
-	int anim = *(UINT16*) (paprium_s.ram + 0xF80 + index*16);
-	int nextAnim = *(UINT16*) (paprium_s.ram + 0xF82 + index*16);
-	int obj = *(UINT16*) (paprium_s.ram + 0xF84 + index*16) & 0x7FFF;
-	int objAttr = *(UINT16*) (paprium_s.ram + 0xF88 + index*16);
-	int reset = *(UINT16*) (paprium_s.ram + 0xF8A + index*16);
-	int pos_x = *(UINT16*) (paprium_s.ram + 0xF8C + index*16);
-	int pos_y = *(UINT16*) (paprium_s.ram + 0xF8E + index*16);
+	int anim = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF80 + index*16));
+	int nextAnim = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF82 + index*16));
+	int obj = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF84 + index*16)) & 0x7FFF;
+	int objAttr = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF88 + index*16));
+	int reset = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF8A + index*16));
+	int pos_x = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF8C + index*16));
+	int pos_y = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_s.ram + 0xF8E + index*16));
 
 	int src = paprium_s.draw_src;
 	int vram = paprium_s.draw_dst;
@@ -462,7 +462,7 @@ static void paprium_sprite(UINT8 index)
 	int animFlags;
 
 
-	int animPtr = *(UINT32*) (paprium_obj_ram + (obj+1)*4);
+	int animPtr = BURN_ENDIAN_SWAP_INT32(*(UINT32*) (paprium_obj_ram + (obj+1)*4));
 	int framePtr = paprium_s.obj[index];
 
 	if ( index != 0x30 ) {
@@ -471,12 +471,12 @@ static void paprium_sprite(UINT8 index)
 
 reload:
 	if ( reset == 1 ) {
-		framePtr = *(UINT32*) (paprium_obj_ram + (animPtr + anim*4));
+		framePtr = BURN_ENDIAN_SWAP_INT32(*(UINT32*) (paprium_obj_ram + (animPtr + anim*4)));
 
-		*(UINT16*) (paprium_s.ram + 0xF8A + index*16) = 0;
+		*(UINT16*) (paprium_s.ram + 0xF8A + index*16) = BURN_ENDIAN_SWAP_INT16(0);
 	}
 	if ( (framePtr == 0) || (framePtr == -1) ) {
-		*(UINT16*) (paprium_s.ram + 0xF80 + index*16) = 0;
+		*(UINT16*) (paprium_s.ram + 0xF80 + index*16) = BURN_ENDIAN_SWAP_INT16(0);
 		return;
 	}
 
@@ -521,9 +521,9 @@ reload:
 //		int misc = ((paprium_obj_ram[spritePtr + 3] >> 4) & 0x0F);
 		int size_x = ((paprium_obj_ram[spritePtr + 3] >> 2) & 0x03) + 1;
 		int size_y = ((paprium_obj_ram[spritePtr + 3] >> 0) & 0x03) + 1;
-		int tile = *(UINT16*) (paprium_obj_ram + spritePtr + 4);
-		int tileAttr = *(UINT16*) (paprium_obj_ram + spritePtr + 6) & ~0x1FF;
-		int ofs = *(UINT16*) (paprium_obj_ram + spritePtr + 6) & 0x1FF;
+		int tile = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_obj_ram + spritePtr + 4));
+		int tileAttr = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_obj_ram + spritePtr + 6)) & ~0x1FF;
+		int ofs = BURN_ENDIAN_SWAP_INT16(*(UINT16*) (paprium_obj_ram + spritePtr + 6)) & 0x1FF;
 
 		int tilePtr = paprium_tile_ptr + tile*4;
 		int tileSize = size_x * size_y * 0x20;
@@ -551,10 +551,10 @@ reload:
 			if ( (!flip_h && ((spr_x + size_x*8 >= 128) && spr_x < 448)) ||
 				 (flip_h && ((spr_x - size_x*8 < 448) && spr_x >= 128)) ) {
 				if ( spriteCount < 80 ) {
-					*(UINT16*) (paprium_s.ram + 0xB00 + spriteCount*8) = spr_y & 0x3FF;
-					*(UINT16*) (paprium_s.ram + 0xB02 + spriteCount*8) = ((size_x-1) << 10) + ((size_y-1) << 8) + (spriteCount+1);
-					*(UINT16*) (paprium_s.ram + 0xB04 + spriteCount*8) = sprAttr + ((vram / 0x20) & 0x7FF);
-					*(UINT16*) (paprium_s.ram + 0xB06 + spriteCount*8) = (spr_x - ((!flip_h) ? 0 : size_x*8)) & 0x1FF;
+					*(UINT16*) (paprium_s.ram + 0xB00 + spriteCount*8) = BURN_ENDIAN_SWAP_INT16(spr_y & 0x3FF);
+					*(UINT16*) (paprium_s.ram + 0xB02 + spriteCount*8) = BURN_ENDIAN_SWAP_INT16(((size_x-1) << 10) + ((size_y-1) << 8) + (spriteCount+1));
+					*(UINT16*) (paprium_s.ram + 0xB04 + spriteCount*8) = BURN_ENDIAN_SWAP_INT16(sprAttr + ((vram / 0x20) & 0x7FF));
+					*(UINT16*) (paprium_s.ram + 0xB06 + spriteCount*8) = BURN_ENDIAN_SWAP_INT16((spr_x - ((!flip_h) ? 0 : size_x*8)) & 0x1FF);
 				}
 				else {
 					if ( spriteCount == 80 ) {  /* sprite 0 lock */
@@ -566,33 +566,34 @@ reload:
 						spriteCount++;
 					}
 
-					*(UINT16*) (paprium_s.exps_ram + 0 + (spriteCount-80)*8) = spr_y & 0x3FF;
-					*(UINT16*) (paprium_s.exps_ram + 2 + (spriteCount-80)*8) = ((size_x-1) << 10) + ((size_y-1) << 8) + ((spriteCount-80)+1);
-					*(UINT16*) (paprium_s.exps_ram + 4 + (spriteCount-80)*8) = sprAttr + ((vram / 0x20) & 0x7FF);
-					*(UINT16*) (paprium_s.exps_ram + 6 + (spriteCount-80)*8) = (spr_x - ((!flip_h) ? 0 : size_x*8)) & 0x1FF;
+					*(UINT16*) (paprium_s.exps_ram + 0 + (spriteCount-80)*8) = BURN_ENDIAN_SWAP_INT16(spr_y & 0x3FF);
+					*(UINT16*) (paprium_s.exps_ram + 2 + (spriteCount-80)*8) = BURN_ENDIAN_SWAP_INT16(((size_x-1) << 10) + ((size_y-1) << 8) + ((spriteCount-80)+1));
+					*(UINT16*) (paprium_s.exps_ram + 4 + (spriteCount-80)*8) = BURN_ENDIAN_SWAP_INT16(sprAttr + ((vram / 0x20) & 0x7FF));
+					*(UINT16*) (paprium_s.exps_ram + 6 + (spriteCount-80)*8) = BURN_ENDIAN_SWAP_INT16((spr_x - ((!flip_h) ? 0 : size_x*8)) & 0x1FF);
 				}
 
 				spriteCount++;
 			}
 		}
 
-		int ptr = paprium_tile_ptr + (*(UINT16*)(cart_rom + tilePtr) << 16) + *(UINT16*)(cart_rom + tilePtr + 2);
+		int ptr = paprium_tile_ptr + (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + tilePtr)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + tilePtr + 2));
 		static UINT8 tile_ram[0x10000];
 
 		paprium_decoder_type(ptr, tile_ram);
 		memcpy(paprium_s.ram + src, tile_ram + ofs * 0x20, tileSize);
 
-		*(UINT16*) (paprium_s.ram + 0x1400 + dmaPtr*16) = 0x8F02;
-		*(UINT16*) (paprium_s.ram + 0x1402 + dmaPtr*16) = 0x9300 + ((tileSize >> 1) & 0xFF);
-		*(UINT16*) (paprium_s.ram + 0x1404 + dmaPtr*16) = 0x9500 + ((src >> 1) & 0xFF);
-		*(UINT16*) (paprium_s.ram + 0x1406 + dmaPtr*16) = 0x9400 + ((tileSize >> 9) & 0xFF);
-		*(UINT16*) (paprium_s.ram + 0x1408 + dmaPtr*16) = 0x9700;
-		*(UINT16*) (paprium_s.ram + 0x140A + dmaPtr*16) = 0x9600 + ((src >> 9) & 0xFF);
-		*(UINT16*) (paprium_s.ram + 0x140C + dmaPtr*16) = 0x4000 + (vram & 0x3FFF);
-		*(UINT16*) (paprium_s.ram + 0x140E + dmaPtr*16) = 0x0080 + (vram >> 14);
+		*(UINT16*) (paprium_s.ram + 0x1400 + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x8F02);
+		*(UINT16*) (paprium_s.ram + 0x1402 + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x9300 + ((tileSize >> 1) & 0xFF));
+		*(UINT16*) (paprium_s.ram + 0x1404 + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x9500 + ((src >> 1) & 0xFF));
+		*(UINT16*) (paprium_s.ram + 0x1406 + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x9400 + ((tileSize >> 9) & 0xFF));
+		*(UINT16*) (paprium_s.ram + 0x1408 + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x9700);
+		*(UINT16*) (paprium_s.ram + 0x140A + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x9600 + ((src >> 9) & 0xFF));
+		*(UINT16*) (paprium_s.ram + 0x140C + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x4000 + (vram & 0x3FFF));
+		*(UINT16*) (paprium_s.ram + 0x140E + dmaPtr*16) = BURN_ENDIAN_SWAP_INT16(0x0080 + (vram >> 14));
 
-		*(UINT16*) (paprium_s.ram + 0x1F16) = ++dmaPtr;
-		*(UINT16*) (paprium_s.ram + 0x1F18) = spriteCount;
+		dmaPtr++;
+		*(UINT16*) (paprium_s.ram + 0x1F16) = BURN_ENDIAN_SWAP_INT16(dmaPtr);
+		*(UINT16*) (paprium_s.ram + 0x1F18) = BURN_ENDIAN_SWAP_INT16(spriteCount);
 
 
 		src += tileSize;
@@ -610,18 +611,18 @@ static void paprium_sprite_init(UINT8 arg)
 
 static void paprium_sprite_start(UINT8 arg)
 {
-	int count = *(UINT16*)(paprium_s.ram + 0x1F18);
+	int count = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1F18));
 
-	*(UINT16*) (paprium_s.ram + 0x1F16) = 0x0001;  /* dma count */
+	*(UINT16*) (paprium_s.ram + 0x1F16) = BURN_ENDIAN_SWAP_INT16(0x0001);  /* dma count */
 
-	*(UINT16*) (paprium_s.ram + 0x1400) = 0x8f02;
-	*(UINT16*) (paprium_s.ram + 0x1402) = 0x9340;
-	*(UINT16*) (paprium_s.ram + 0x1404) = 0x9580;
-	*(UINT16*) (paprium_s.ram + 0x1406) = 0x9401;
-	*(UINT16*) (paprium_s.ram + 0x1408) = 0x9700;
-	*(UINT16*) (paprium_s.ram + 0x140a) = 0x9605;
-	*(UINT16*) (paprium_s.ram + 0x140c) = 0x7000;
-	*(UINT16*) (paprium_s.ram + 0x140e) = 0x0083;
+	*(UINT16*) (paprium_s.ram + 0x1400) = BURN_ENDIAN_SWAP_INT16(0x8f02);
+	*(UINT16*) (paprium_s.ram + 0x1402) = BURN_ENDIAN_SWAP_INT16(0x9340);
+	*(UINT16*) (paprium_s.ram + 0x1404) = BURN_ENDIAN_SWAP_INT16(0x9580);
+	*(UINT16*) (paprium_s.ram + 0x1406) = BURN_ENDIAN_SWAP_INT16(0x9401);
+	*(UINT16*) (paprium_s.ram + 0x1408) = BURN_ENDIAN_SWAP_INT16(0x9700);
+	*(UINT16*) (paprium_s.ram + 0x140a) = BURN_ENDIAN_SWAP_INT16(0x9605);
+	*(UINT16*) (paprium_s.ram + 0x140c) = BURN_ENDIAN_SWAP_INT16(0x7000);
+	*(UINT16*) (paprium_s.ram + 0x140e) = BURN_ENDIAN_SWAP_INT16(0x0083);
 
 
 	if ( count < 80 )
@@ -635,7 +636,7 @@ static void paprium_sprite_start(UINT8 arg)
 
 static void paprium_sprite_stop(UINT8 arg)
 {
-	int count = *(UINT16*)(paprium_s.ram + 0x1F18);
+	int count = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1F18));
 
 	if (count == 0) {
 		memset(paprium_s.ram + 0xB00, 0, 8);
@@ -653,13 +654,13 @@ static void paprium_sprite_stop(UINT8 arg)
 	}
 
 	if (arg == 2) {
-		*(UINT16*) (paprium_s.ram + 0x1F1C) = 1;  /* exp.s - force draw */
+		*(UINT16*) (paprium_s.ram + 0x1F1C) = BURN_ENDIAN_SWAP_INT16(1);  /* exp.s - force draw */
 	}
 }
 
 static void paprium_sprite_pause(UINT8 arg)
 {
-	int count = *(UINT16*)(paprium_s.ram + 0x1F18);
+	int count = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1F18));
 
 	if (count == 0) {
 		memset(paprium_s.ram + 0xB00, 0, 8);
@@ -670,7 +671,7 @@ static void paprium_scaler_init(UINT8 arg)
 {
 	UINT8 temp[0x800];
 
-	int ptr = (*(UINT16 *)(paprium_s.ram + 0x1E10) << 16) + *(UINT16 *)(paprium_s.ram + 0x1E12);
+	int ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12));
 	paprium_decoder_type(ptr, temp);
 
 	int out = 0;
@@ -689,10 +690,10 @@ static void paprium_scaler_init(UINT8 arg)
 
 static void paprium_scaler(UINT8 arg)
 {
-	int left = *(UINT16 *)(paprium_s.ram + 0x1E10);
-	int right = *(UINT16 *)(paprium_s.ram + 0x1E12);
-	int scale = *(UINT16 *)(paprium_s.ram + 0x1E14);
-	int ptr = *(UINT16 *)(paprium_s.ram + 0x1E16);
+	int left = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10));
+	int right = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12));
+	int scale = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E14));
+	int ptr = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E16));
 	int step = 64 * 0x10000 / scale;
 	int ptr_frac = 0;
 
@@ -726,7 +727,7 @@ static void paprium_scaler(UINT8 arg)
 
 static void paprium_sram_read(int bank)
 {
-	int offset = *(UINT16 *)(paprium_s.ram + 0x1E10);
+	int offset = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10));
 
 	if ((bank >= 0) && (bank <= 3)) {
 		memcpy(paprium_s.ram + offset, sram_sram + (bank * 0x780), 0x780);
@@ -735,7 +736,7 @@ static void paprium_sram_read(int bank)
 
 static void paprium_sram_write(int bank)
 {
-	int offset = *(UINT16 *)(paprium_s.ram + 0x1E12);
+	int offset = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12));
 
 	if ((bank >= 0) && (bank <= 3)) {
 		memcpy(sram_sram + (bank * 0x780), paprium_s.ram + offset, 0x780);
@@ -749,9 +750,9 @@ static void paprium_mapper(UINT8 arg)
 
 static void paprium_boot(UINT8 arg)
 {
-	paprium_sfx_ptr = (*(UINT16*)(paprium_s.ram + 0x1E20) << 16) + *(UINT16*)(paprium_s.ram + 0x1E22);
-	paprium_sprite_ptr = (*(UINT16*)(paprium_s.ram + 0x1E24) << 16) + *(UINT16*)(paprium_s.ram + 0x1E26);
-	paprium_tile_ptr = (*(UINT16*)(paprium_s.ram + 0x1E28) << 16) + *(UINT16*)(paprium_s.ram + 0x1E2A);
+	paprium_sfx_ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1E20)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1E22));
+	paprium_sprite_ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1E24)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1E26));
+	paprium_tile_ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1E28)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(paprium_s.ram + 0x1E2A));
 
 	paprium_decoder_type(paprium_sprite_ptr, paprium_obj_ram);
 
@@ -795,7 +796,7 @@ static void paprium_audio_setting(UINT8 flags)
 
 static void paprium_cmd_ack()
 {
-	*(UINT16*)(paprium_s.ram + 0x1FEA) &= 0x7FFF;
+	*(UINT16*)(paprium_s.ram + 0x1FEA) &= BURN_ENDIAN_SWAP_INT16(0x7FFF);
 }
 
 static void paprium_sfx_volume(UINT8 level)
@@ -811,13 +812,13 @@ static void paprium_sfx_play(UINT8 data)
 	int newch = 0, maxtime = 0;
 	UINT8 *sfx = paprium_sfx_ptr + cart_rom;
 
-	chan = *(UINT16 *)(paprium_s.ram + 0x1E10);
-	vol = *(UINT16 *)(paprium_s.ram + 0x1E12);
-	pan = *(UINT16 *)(paprium_s.ram + 0x1E14);
-	flags = *(UINT16 *)(paprium_s.ram + 0x1E16);
+	chan = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10));
+	vol = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12));
+	pan = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E14));
+	flags = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E16));
 
-	ptr = (*(UINT16 *)(sfx + data*8) << 16) | (*(UINT16 *)(sfx + data*8 + 2));
-	size = (*(UINT8 *)(sfx + data*8 + 4) << 16) | (*(UINT16 *)(sfx + data*8 + 6));
+	ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(sfx + data*8)) << 16) | (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(sfx + data*8 + 2)));
+	size = (*(UINT8 *)(sfx + data*8 + 4) << 16) | (BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(sfx + data*8 + 6)));
 	type = *(UINT8 *)(sfx + data*8 + 5);
 
 	for ( lcv = 0; lcv < 8; lcv++, chan >>= 1 ) {
@@ -858,7 +859,7 @@ static void paprium_sfx_play(UINT8 data)
 
 static void paprium_sfx_stop(UINT8 data)
 {
-	int flags = *(UINT16 *)(paprium_s.ram + 0x1E10);
+	int flags = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10));
 
 	for (int lcv = 0; lcv < 8; lcv++ ) {
 		if ( !(data & (1 << lcv) ) ) continue;
@@ -879,9 +880,9 @@ static void paprium_sfx_loop(UINT8 data)
 	for (int lcv = 0; lcv < 8; lcv++, data >>= 1) {
 		if ((data & 1) == 0) continue;
 
-		paprium_s.sfx[lcv].volume = *(UINT16 *)(paprium_s.ram + 0x1E10);
-		paprium_s.sfx[lcv].panning = *(UINT16 *)(paprium_s.ram + 0x1E12);
-		paprium_s.sfx[lcv].decay = *(UINT16 *)(paprium_s.ram + 0x1E14);
+		paprium_s.sfx[lcv].volume = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E10));
+		paprium_s.sfx[lcv].panning = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E12));
+		paprium_s.sfx[lcv].decay = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + 0x1E14));
 
 		paprium_s.sfx[lcv].loop = 1;
 
@@ -977,7 +978,7 @@ static UINT16 __fastcall paprium_r16(UINT32 address)
 			break;
 
 		default:
-			data = *(UINT16 *)(paprium_s.ram + address);
+			data = BURN_ENDIAN_SWAP_INT16(*(UINT16 *)(paprium_s.ram + address));
 			break;
 	}
 
@@ -991,7 +992,7 @@ static void __fastcall paprium_w8(UINT32 address, UINT8 data)
 
 static void __fastcall paprium_w16(UINT32 address, UINT16 data)
 {
-	*(UINT16 *)(paprium_s.ram + address) = data;
+	*(UINT16 *)(paprium_s.ram + address) = BURN_ENDIAN_SWAP_INT16(data);
 
 	if ( address == 0x1FEA ) {
 		paprium_cmd(data);
@@ -1080,16 +1081,16 @@ static void paprium_reset()
 	paprium_tmss = 1;
 
 #if 1  /* fast loadstate */
-	int ptr = (*(UINT16*)(cart_rom + 0xaf77c) << 16) + *(UINT16*)(cart_rom + 0xaf77e);
+	int ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + 0xaf77c)) << 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + 0xaf77e));
 
-	paprium_sfx_ptr = (*(UINT16*)(cart_rom + ptr + 0x778)<< 16) + *(UINT16*)(cart_rom + ptr + 0x77a);
-	paprium_sprite_ptr = (*(UINT16*)(cart_rom + 0x10014)<< 16) + *(UINT16*)(cart_rom + 0x10016);
-	paprium_tile_ptr = (*(UINT16*)(cart_rom + ptr + 0x780)<< 16) + *(UINT16*)(cart_rom + ptr + 0x782);
+	paprium_sfx_ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + ptr + 0x778))<< 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + ptr + 0x77a));
+	paprium_sprite_ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + 0x10014))<< 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + 0x10016));
+	paprium_tile_ptr = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + ptr + 0x780))<< 16) + BURN_ENDIAN_SWAP_INT16(*(UINT16*)(cart_rom + ptr + 0x782));
 
 	paprium_decoder_type(paprium_sprite_ptr, paprium_obj_ram);
 	paprium_s.decoder_size = 0;
 
-//	*(UINT16*)(paprium_s.ram + 0x192) = 0x3634;  /* 6-button, multitap */
+//	*(UINT16*)(paprium_s.ram + 0x192) = BURN_ENDIAN_SWAP_INT16(0x3634);  /* 6-button, multitap */
 #endif
 
 
@@ -1098,58 +1099,58 @@ static void paprium_reset()
 
 
 #if 1  /* boot hack */
-	*(UINT16*) (paprium_s.ram + 0x1560) = 0x4EF9;
-	*(UINT16*) (paprium_s.ram + 0x1562) = 0x0001;
-	*(UINT16*) (paprium_s.ram + 0x1564) = 0x0100;
+	*(UINT16*) (paprium_s.ram + 0x1560) = BURN_ENDIAN_SWAP_INT16(0x4EF9);
+	*(UINT16*) (paprium_s.ram + 0x1562) = BURN_ENDIAN_SWAP_INT16(0x0001);
+	*(UINT16*) (paprium_s.ram + 0x1564) = BURN_ENDIAN_SWAP_INT16(0x0100);
 #endif
 
 
 #if DEBUG_CHEAT  /* cheat - big hurt */
-	*(UINT16*) (cart_rom + 0x9FE38 + 6) = 0x007F;	/* Tug */
-	*(UINT16*) (cart_rom + 0x9FE58 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9FF18 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9FF38 + 6) = 0x007F;
+	*(UINT16*) (cart_rom + 0x9FE38 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);	/* Tug */
+	*(UINT16*) (cart_rom + 0x9FE58 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9FF18 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9FF38 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
 
-	*(UINT16*) (cart_rom + 0x9FB58 + 6) = 0x007F;	/* Alex */
-	*(UINT16*) (cart_rom + 0x9FB78 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9FBF8 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9FC18 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9FCB8 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9FCD8 + 6) = 0x007F;
+	*(UINT16*) (cart_rom + 0x9FB58 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);	/* Alex */
+	*(UINT16*) (cart_rom + 0x9FB78 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9FBF8 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9FC18 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9FCB8 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9FCD8 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
 
-	*(UINT16*) (cart_rom + 0x9F758 + 6) = 0x007F;	/* Dice */
-	*(UINT16*) (cart_rom + 0x9F778 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9F798 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9F7B8 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9F7D8 + 6) = 0x007F;
-	*(UINT16*) (cart_rom + 0x9F898 + 6) = 0x007F;
+	*(UINT16*) (cart_rom + 0x9F758 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);	/* Dice */
+	*(UINT16*) (cart_rom + 0x9F778 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9F798 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9F7B8 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9F7D8 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
+	*(UINT16*) (cart_rom + 0x9F898 + 6) = BURN_ENDIAN_SWAP_INT16(0x007F);
 #endif
 
 
 #if 1  /* WM text - pre-irq delay */
-	*(UINT16*)(cart_rom + 0xb9094) = 0x2079;
-	*(UINT16*)(cart_rom + 0xb9096) = 0x000a;
-	*(UINT16*)(cart_rom + 0xb9098) = 0xf85c;
+	*(UINT16*)(cart_rom + 0xb9094) = BURN_ENDIAN_SWAP_INT16(0x2079);
+	*(UINT16*)(cart_rom + 0xb9096) = BURN_ENDIAN_SWAP_INT16(0x000a);
+	*(UINT16*)(cart_rom + 0xb9098) = BURN_ENDIAN_SWAP_INT16(0xf85c);
 
-	*(UINT16*)(cart_rom + 0xb909a) = 0x20bc;
-	*(UINT16*)(cart_rom + 0xb909c) = 0x0000;
-	*(UINT16*)(cart_rom + 0xb909e) = 0x0003;
+	*(UINT16*)(cart_rom + 0xb909a) = BURN_ENDIAN_SWAP_INT16(0x20bc);
+	*(UINT16*)(cart_rom + 0xb909c) = BURN_ENDIAN_SWAP_INT16(0x0000);
+	*(UINT16*)(cart_rom + 0xb909e) = BURN_ENDIAN_SWAP_INT16(0x0003);
 
-	*(UINT16*)(cart_rom + 0xb90a0) = 0x20bc;
-	*(UINT16*)(cart_rom + 0xb90a2) = 0x0000;
-	*(UINT16*)(cart_rom + 0xb90a4) = 0x0003;
+	*(UINT16*)(cart_rom + 0xb90a0) = BURN_ENDIAN_SWAP_INT16(0x20bc);
+	*(UINT16*)(cart_rom + 0xb90a2) = BURN_ENDIAN_SWAP_INT16(0x0000);
+	*(UINT16*)(cart_rom + 0xb90a4) = BURN_ENDIAN_SWAP_INT16(0x0003);
 
-	*(UINT16*)(cart_rom + 0xb90a6) = 0x20bc;
-	*(UINT16*)(cart_rom + 0xb90a8) = 0x0000;
-	*(UINT16*)(cart_rom + 0xb90aa) = 0x0003;
+	*(UINT16*)(cart_rom + 0xb90a6) = BURN_ENDIAN_SWAP_INT16(0x20bc);
+	*(UINT16*)(cart_rom + 0xb90a8) = BURN_ENDIAN_SWAP_INT16(0x0000);
+	*(UINT16*)(cart_rom + 0xb90aa) = BURN_ENDIAN_SWAP_INT16(0x0003);
 
-	*(UINT16*)(cart_rom + 0xb90ac) = 0x20bc;
-	*(UINT16*)(cart_rom + 0xb90ae) = 0x0000;
-	*(UINT16*)(cart_rom + 0xb90b0) = 0x0003;
+	*(UINT16*)(cart_rom + 0xb90ac) = BURN_ENDIAN_SWAP_INT16(0x20bc);
+	*(UINT16*)(cart_rom + 0xb90ae) = BURN_ENDIAN_SWAP_INT16(0x0000);
+	*(UINT16*)(cart_rom + 0xb90b0) = BURN_ENDIAN_SWAP_INT16(0x0003);
 
-	*(UINT16*)(cart_rom + 0xb90b2) = 0x20bc;
-	*(UINT16*)(cart_rom + 0xb90b4) = 0x0000;
-	*(UINT16*)(cart_rom + 0xb90b6) = 0x0003;
+	*(UINT16*)(cart_rom + 0xb90b2) = BURN_ENDIAN_SWAP_INT16(0x20bc);
+	*(UINT16*)(cart_rom + 0xb90b4) = BURN_ENDIAN_SWAP_INT16(0x0000);
+	*(UINT16*)(cart_rom + 0xb90b6) = BURN_ENDIAN_SWAP_INT16(0x0003);
 #endif
 
 	paprium_s.echo_pan = BurnRandom();

@@ -1060,7 +1060,7 @@ static UINT16 __fastcall vbowl_main_read_word(UINT32 address)
 	}
 
 	if (address < 0x80000) {
-		return *((UINT16*)(Drv68KROM + address));
+		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KROM + address)));
 	}
 
 	switch (address & ~0x1ff)
@@ -1240,7 +1240,7 @@ static void vbowl_decrypt()
 
 	for (INT32 i = 0; i < 0x80000/2; i++)
 	{
-		UINT16 x = src[i];
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x4100) == 0x0100)
 			x ^= 0x0200;
@@ -1260,7 +1260,7 @@ static void vbowl_decrypt()
 		if ((i & 0x2004) != 0x2004 || (i & 0x0090) == 0x0000)
 			x ^= 0x0020;
 
-		src[i] = x;
+		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -1272,7 +1272,7 @@ static void vbowlhk_decrypt()
 
 	for (INT32 i = 0; i < 0x80000/2; i++)
 	{
-		UINT16 x = src[i];
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0xd700) == 0x0100)
 			x ^= 0x0200;
@@ -1298,7 +1298,7 @@ static void vbowlhk_decrypt()
 		if ((i & 0xd500) == 0xd400)
 			x ^= 0x0200;
 
-		src[i] = x;
+		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -1308,7 +1308,7 @@ static void drgnwrld_type1_decrypt()
 
 	for (INT32 i = 0; i < 0x80000/2; i++)
 	{
-		UINT16 x = src[i];
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x2000) == 0x0000 || (i & 0x0004) == 0x0000 || (i & 0x0090) == 0x0000)
 			x ^= 0x0004;
@@ -1319,7 +1319,7 @@ static void drgnwrld_type1_decrypt()
 		if ((x & 0x0024) == 0x0004 || (x & 0x0024) == 0x0020)
 			x ^= 0x0024;
 
-		src[i] = x;
+		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -1329,7 +1329,7 @@ static void drgnwrld_type2_decrypt()
 
 	for (INT32 i = 0; i < 0x80000/2; i++)
 	{
-		UINT16 x = src[i];
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if (((i & 0x000090) == 0x000000) || ((i & 0x002004) != 0x002004))
 			x ^= 0x0004;
@@ -1349,7 +1349,7 @@ static void drgnwrld_type2_decrypt()
 		if ((x & 0x0024) == 0x0020 || (x & 0x0024) == 0x0004)
 			x ^= 0x0024;
 
-		src[i] = x;
+		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -1359,7 +1359,7 @@ static void drgnwrld_type3_decrypt()
 
 	for (INT32 i = 0; i < 0x80000/2; i++)
 	{
-		UINT16 x = src[i];
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x2000) == 0x0000 || (i & 0x0004) == 0x0000 || (i & 0x0090) == 0x0000)
 			x ^= 0x0004;
@@ -1374,7 +1374,7 @@ static void drgnwrld_type3_decrypt()
 		if ((x & 0x0024) == 0x0004 || (x & 0x0024) == 0x0020)
 			x ^= 0x0024;
 
-		src[i] = x;
+		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -1386,7 +1386,7 @@ static void drgnwrldv40k_decrypt()
 
 	for (INT32 i = 0; i < 0x80000/2; i++)
 	{
-		UINT16 x = src[i];
+		UINT16 x = BURN_ENDIAN_SWAP_INT16(src[i]);
 
 		if ((i & 0x0800) != 0x0800)
 			x ^= 0x0200;
@@ -1403,7 +1403,7 @@ static void drgnwrldv40k_decrypt()
 		if ((i & 0x1ee0) == 0x1c60)
 			x ^= 0x0200;
 
-		src[i] = x;
+		src[i] = BURN_ENDIAN_SWAP_INT16(x);
 	}
 }
 
@@ -1521,7 +1521,7 @@ static INT32 VbowlInit()
 		vbowl_decrypt();
 		BurnNibbleExpand(DrvGfxROM[0], NULL, 0x400000, 1, 0x00);
 
-		*((UINT16*)(Drv68KROM + 0x080e0)) = 0xe549; // patch bad opcode
+		*((UINT16*)(Drv68KROM + 0x080e0)) = BURN_ENDIAN_SWAP_INT16(0xe549); // patch bad opcode
 	}
 
 	SekInit(0, 0x68000);
@@ -1759,7 +1759,7 @@ static void screen_update()
 
 	if (BIT(s_blitter.depth, 4))
 	{
-		UINT16 const pri = pri_ram[0xff] & 7;
+		UINT16 const pri = BURN_ENDIAN_SWAP_INT16(pri_ram[0xff]) & 7;
 		BurnTransferClear((pri << 8) | 0xff);
 		return;
 	}
@@ -1795,7 +1795,7 @@ static void screen_update()
 				++l;
 			}
 
-			UINT16 const pri = pri_ram[pri_addr] & 7;
+			UINT16 const pri = BURN_ENDIAN_SWAP_INT16(pri_ram[pri_addr]) & 7;
 			pTransDraw[y * nScreenWidth + x] = layerpix[pri] | (pri << 8);
 		}
 	}

@@ -159,7 +159,7 @@ static void __fastcall drtomy_write_byte(UINT32 address, UINT8 data)
 static void __fastcall drtomy_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff800) == 0x200000) {
-		*((UINT16*)(BurnPalRAM + (address & 0x7fe))) = data;
+		*((UINT16*)(BurnPalRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
 		if (address < 0x200600) BurnPaletteWrite_xRRRRRGGGGGBBBBB(address & 0x7fe);
 		return;
 	}

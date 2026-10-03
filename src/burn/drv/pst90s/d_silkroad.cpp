@@ -396,12 +396,12 @@ static void draw_sprites()
 
 	for (INT32 i = 0; i < 0x1000/2; i += 4)
 	{
-		INT32 attr  = source[i + 3];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(source[i + 3]);
 		if ((attr & 0xff00) == 0xff00) break;
 
-		INT32 code  = source[i + 2] | ((attr & 0x8000) << 1);
-		INT32 sy    = source[i + 1];
-		INT32 sx    = source[i + 0] & 0x01ff;
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(source[i + 2]) | ((attr & 0x8000) << 1);
+		INT32 sy    = BURN_ENDIAN_SWAP_INT16(source[i + 1]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(source[i + 0]) & 0x01ff;
 		INT32 flipx =  (attr & 0x0080);
 		INT32 width = ((attr & 0x0f00) >> 8) + 1;
 		INT32 color =   attr & 0x003f;
@@ -429,7 +429,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		UINT16 *pal = (UINT16*)DrvPalRAM;
 		for (INT32 i = 0; i < 0x2000; i+=2) {
-			palette_write(i/2, pal[i]);
+			palette_write(i/2, BURN_ENDIAN_SWAP_INT16(pal[i]));
 		}
 
 		DrvPalette[0x1000] = BurnHighCol(0xff, 0x00, 0xff, 0);

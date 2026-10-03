@@ -826,11 +826,11 @@ static void __fastcall eto_write_word(UINT32 a, UINT16 d)
 	if (a >= 0xc04000 && a <= 0xc0ffff) {
 		UINT16 *Ram = (UINT16*)TC0100SCNRam[0];
 		INT32 Offset = (a - 0xc00000) >> 1;
-		if (Ram[Offset] != d) {
+		if (Ram[Offset] != BURN_ENDIAN_SWAP_INT16(d)) {
 			TC0100SCNBgLayerUpdate[0] = 1;
 			TC0100SCNFgLayerUpdate[0] = 1;
 		}
-		Ram[Offset] = d;
+		Ram[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
 

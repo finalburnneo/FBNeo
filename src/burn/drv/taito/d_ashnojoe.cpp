@@ -429,7 +429,7 @@ static inline void DrvRecalcPalette()
 	UINT16 *p = (UINT16*)DrvPalRAM;
 
 	for (INT32 i = 0; i < 0x1000/2; i++) {
-		INT32 d = p[i];
+		INT32 d = BURN_ENDIAN_SWAP_INT16(p[i]);
 
 		r = (d >> 10) & 0x1f;
 		g = (d >>  5) & 0x1f;
@@ -462,8 +462,8 @@ static void draw_16x16_layer(UINT8 *ram, UINT8 *gfx, INT32 color_off, INT32 scro
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code  =   vram[offs * 2 + 0] & mask;
-		INT32 color = ((vram[offs * 2 + 1] >> 8) & 0x1f) + color_off; 
+		INT32 code  =   BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]) & mask;
+		INT32 color = ((BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]) >> 8) & 0x1f) + color_off; 
 
 		if (flipscreen) {
 			if (transparent) {
@@ -500,8 +500,8 @@ static void draw_8x8_layer(UINT8 *ram, UINT8 *gfx, INT32 color_off, INT32 scroll
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code  =  vram[offs] & 0x0fff;
-		INT32 color = (vram[offs] >> 12) + color_off; 
+		INT32 code  =  BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x0fff;
+		INT32 color = (BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12) + color_off; 
 
 		if (flipscreen) {
 			Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 280 - sx, 200 - sy, color, 4, 15, 0, gfx);

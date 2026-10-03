@@ -290,8 +290,6 @@ void snes_sa1_handleState(StateHandler* sh)
 	sh_handleInts(sh, &dma_src, &dma_dst, &vari_src, &vari_temp, NULL);
 
 	if (sh->saving == false) {
-		bwram_snes_bank = (bwram_snes_bank & 0xffff0000) | bwram_snes_bank_lo;
-		bwram_sa1_bank = (bwram_sa1_bank & 0xffff0000) | bwram_sa1_bank_lo;
 		map_update();
 	}
 }

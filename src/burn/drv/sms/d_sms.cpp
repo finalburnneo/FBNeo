@@ -24914,9 +24914,9 @@ struct BurnDriver BurnDrvsms_tetrisse = {
 	256, 192, 4, 3
 };
 
-// Tetris4GG (HB)
+// Tetris4GG (HB, v1.1)
 static struct BurnRomInfo sms_tetris4ggRomDesc[] = {
-	{ "Tetris4GG (2026)(Armix).sms",	131072, 0x549390e6, BRF_PRG | BRF_ESS },
+	{ "Tetris4GG v1.1 (2026)(Armix).sms",	131072, 0x93d2a287, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_tetris4gg)
@@ -24924,7 +24924,7 @@ STD_ROM_FN(sms_tetris4gg)
 
 struct BurnDriver BurnDrvsms_tetris4gg = {
 	"sms_tetris4gg", NULL, NULL, NULL, "2026",
-	"Tetris4GG (HB)\0", NULL, "Armix", "Sega Master System",
+	"Tetris4GG (HB, v1.1)\0", NULL, "Armix", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_tetris4ggRomInfo, sms_tetris4ggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -26236,9 +26236,9 @@ struct BurnDriver BurnDrvgg_swordstone = {
 	256, 192, 4, 3
 };
 
-// Tetris4GG (HB)
+// Tetris4GG (HB, v1.1)
 static struct BurnRomInfo gg_tetris4ggRomDesc[] = {
-	{ "Tetris4GG (2026)(Armix).gg",	131072, 0x8ada9c7c, BRF_PRG | BRF_ESS },
+	{ "Tetris4GG v1.1 (2026)(Armix).gg",	131072, 0x38878aea, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_tetris4gg)
@@ -26246,7 +26246,7 @@ STD_ROM_FN(gg_tetris4gg)
 
 struct BurnDriver BurnDrvgg_tetris4gg = {
 	"gg_tetris4gg", NULL, NULL, NULL, "2026",
-	"Tetris4GG (HB)\0", NULL, "Armix", "Sega Game Gear",
+	"Tetris4GG (HB, v1.1)\0", NULL, "Armix", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
 	GGGetZipName, gg_tetris4ggRomInfo, gg_tetris4ggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

@@ -35713,9 +35713,9 @@ struct BurnDriver BurnDrvMSX_trun = {
 	272, 228, 4, 3
 };
 
-// Turtles (HB)
+// Turtles (HB, v2)
 static struct BurnRomInfo MSX_turtlesRomDesc[] = {
-	{ "Turtles (2026)(adlroc).rom",	32768, 0xd047bf40, BRF_PRG | BRF_ESS },
+	{ "Turtles v2 (2026)(adlroc).rom",	32768, 0x8e6334d2, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_turtles, MSX_turtles, msx_msx)
@@ -35723,7 +35723,7 @@ STD_ROM_FN(MSX_turtles)
 
 struct BurnDriver BurnDrvMSX_turtles = {
 	"msx_turtles", NULL, "msx_msx", NULL, "2026",
-	"Turtles (HB)\0", "Porting of a Odyssey2 game", "adlroc", "MSX",
+	"Turtles (HB, v2)\0", "Porting of a Odyssey2 game", "adlroc", "MSX",
 	NULL, L"Porting of a Odyssey\u00b2 game", NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_ACTION | GBF_MAZE, 0,
 	MSXGetZipName, MSX_turtlesRomInfo, MSX_turtlesRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

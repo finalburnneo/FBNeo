@@ -38294,6 +38294,24 @@ struct BurnDriver BurnDrvmd_astrosasa = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// A-Tetris (HB, Alfa)
+static struct BurnRomInfo md_atetrisRomDesc[] = {
+	{ "A-Tetris Alfa (2026)(Amiguetes Soft).bin", 3919872, 0x4976dd17, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_atetris)
+STD_ROM_FN(md_atetris)
+
+struct BurnDriver BurnDrvmd_atetris = {
+	"md_atetris", NULL, NULL, NULL, "2026",
+	"A-Tetris (HB, Alfa)\0", NULL, "Amiguetes Soft", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_atetrisRomInfo, md_atetrisRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Attack of the Petscii Robots (HB)
 static struct BurnRomInfo md_atkpetsciiRomDesc[] = {
 	{ "Attack of the Petscii Robots (2022)(The 8-bit Guy).bin", 2097152, 0xa7004964, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -40783,10 +40801,10 @@ struct BurnDriver BurnDrvmd_huntergirls = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Hyper Dyne Side Arms (HB, v1.1)
+// Hyper Dyne Side Arms (HB, v1.2)
 // https://rester159.itch.io/side-arms
 static struct BurnRomInfo md_sidearmsRomDesc[] = {
-	{ "Hyper Dyne Side Arms v1.1 (2026)(rester159).bin", 2621440, 0x284b1e06, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Hyper Dyne Side Arms v1.2 (2026)(rester159).bin", 2621440, 0x95e593c8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sidearms)
@@ -40794,7 +40812,7 @@ STD_ROM_FN(md_sidearms)
 
 struct BurnDriver BurnDrvmd_sidearms = {
 	"md_sidearms", NULL, NULL, NULL, "2026",
-	"Hyper Dyne Side Arms (HB, v1.1)\0", NULL, "rester159", "Genesis / Mega Drive",
+	"Hyper Dyne Side Arms (HB, v1.2)\0", NULL, "rester159", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_sidearmsRomInfo, md_sidearmsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43994,24 +44012,6 @@ struct BurnDriver BurnDrvmd_terminate = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
 	MegadriveGetZipName, md_terminateRomInfo, md_terminateRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Tetris (HB, Beta)
-static struct BurnRomInfo md_tetrisarcRomDesc[] = {
-	{ "Tetris Beta (2026)(Amiguetes Soft).bin", 3919872, 0x181fef8d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tetrisarc)
-STD_ROM_FN(md_tetrisarc)
-
-struct BurnDriver BurnDrvmd_tetrisarc = {
-	"md_tetrisarc", NULL, NULL, NULL, "2026",
-	"Tetris (HB, Beta)\0", "Very early beta: bugs expected", "Amiguetes Soft", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_tetrisarcRomInfo, md_tetrisarcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -27597,7 +27597,7 @@ struct BurnDriver BurnDrvMSX_viajecentro = {
 	"msx_viajecentro", NULL, "msx_msx", NULL, "1989",
 	"Viaje al Centro de la Tierra (Euro, Spanish)\0", "Passwords: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED", "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ADV | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MSX, GBF_ACTION | GBF_MINIGAMES, 0,
 	MSXGetZipName, MSX_viajecentroRomInfo, MSX_viajecentroRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -30167,6 +30167,24 @@ struct BurnDriver BurnDrvMSX_dgnraven = {
 	272, 228, 4, 3
 };
 
+// Don Quijote (Spanish) (HB)
+static struct BurnRomInfo MSX_quijoteRomDesc[] = {
+	{ "Don Quijote ES (2026)(FX Software).rom",	327680, 0x8614a193, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_quijote, MSX_quijote, msx_msx)
+STD_ROM_FN(MSX_quijote)
+
+struct BurnDriver BurnDrvMSX_quijote = {
+	"msx_quijote", NULL, "msx_msx", NULL, "2026",
+	"Don Quijote (Spanish) (HB)\0", "Password Part 2: EL INGENIOSO HIDALGO", "FX Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
+	MSXGetZipName, MSX_quijoteRomInfo, MSX_quijoteRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Doomlings (HB)
 static struct BurnRomInfo MSX_doomlingsRomDesc[] = {
 	{ "Doomlings (2025)(Totta).rom",	262144, 0x90e25aa9, BRF_PRG | BRF_ESS },
@@ -31247,6 +31265,24 @@ struct BurnDriver BurnDrvMSX_gssoccer = {
 	272, 228, 4, 3
 };
 
+// Guerra de las Vajillas, La (Spanish) (HB)
+static struct BurnRomInfo MSX_gvajillasRomDesc[] = {
+	{ "Guerra de las Vajillas, La ES (2019)(FX Software).rom",	327680, 0x47dcd091, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gvajillas, MSX_gvajillas, msx_msx)
+STD_ROM_FN(MSX_gvajillas)
+
+struct BurnDriver BurnDrvMSX_gvajillas = {
+	"msx_gvajillas", NULL, "msx_msx", NULL, "2019",
+	"Guerra de las Vajillas, La (Spanish) (HB)\0", "Password Part 2: SPIELBERG", "FX Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
+	MSXGetZipName, MSX_gvajillasRomInfo, MSX_gvajillasRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Guntus (HB)
 static struct BurnRomInfo MSX_guntusRomDesc[] = {
 	{ "Guntus (2022)(Inufuto).cas",	11755, 0x38f7d711, BRF_PRG | BRF_ESS },
@@ -31931,6 +31967,24 @@ struct BurnDriver BurnDrvMSX_lasermazer = {
 	272, 228, 4, 3
 };
 
+// Legend (Spanish) (HB)
+static struct BurnRomInfo MSX_legendRomDesc[] = {
+	{ "Legend ES (2019)(FX Software).rom",	524288, 0x04936f9a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_legend, MSX_legend, msx_msx)
+STD_ROM_FN(MSX_legend)
+
+struct BurnDriver BurnDrvMSX_legend = {
+	"msx_legend", NULL, "msx_msx", NULL, "2019",
+	"Legend (Spanish) (HB)\0", "Passwords: Part IV: AL ARUTNEVA AUNITNOC / Part V: ASI ACABA LA LEYENDA", "FX Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
+	MSXGetZipName, MSX_legendRomInfo, MSX_legendRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Lift (HB)
 static struct BurnRomInfo MSX_liftRomDesc[] = {
 	{ "Lift (2021)(Inufuto).cas",	8404, 0xb05b6f6b, BRF_PRG | BRF_ESS },
@@ -32292,6 +32346,24 @@ struct BurnDriver BurnDrvMSX_manhole = {
 	272, 228, 4, 3
 };
 
+// Mantis 1 & 2 (Spanish) (HB)
+static struct BurnRomInfo MSX_mantisRomDesc[] = {
+	{ "Mantis 1 & 2 ES (2021)(FX Software).rom",	327680, 0xf463a7eb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mantis, MSX_mantis, msx_msx)
+STD_ROM_FN(MSX_mantis)
+
+struct BurnDriver BurnDrvMSX_mantis = {
+	"msx_mantis", NULL, "msx_msx", NULL, "2021",
+	"Mantis 1 & 2 (Spanish) (HB)\0", NULL, "FX Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
+	MSXGetZipName, MSX_mantisRomInfo, MSX_mantisRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Mars Lander (HB)
 static struct BurnRomInfo MSX_marslandRomDesc[] = {
 	{ "Mars Lander (2006)(crappysoft).rom",	16384, 0xec316a71, BRF_PRG | BRF_ESS },
@@ -32414,6 +32486,24 @@ struct BurnDriver BurnDrvMSX_mecha9 = {
 	L"Mecha-9 (HB)\0\u30e1\u30ab\u4e5d\0", NULL, L"\u00d3scar Toledo Guti\u00e9rrez", NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_VERSHOOT, 0,
 	MSXGetZipName, MSX_mecha9RomInfo, MSX_mecha9RomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mega-Corp (Spanish) (HB)
+static struct BurnRomInfo MSX_megacorpRomDesc[] = {
+	{ "Mega-Corp ES (2024)(FX Software).rom",	327680, 0x5a1f057b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_megacorp, MSX_megacorp, msx_msx)
+STD_ROM_FN(MSX_megacorp)
+
+struct BurnDriver BurnDrvMSX_megacorp = {
+	"msx_megacorp", NULL, "msx_msx", NULL, "2024",
+	"Mega-Corp (Spanish) (HB)\0", "Password Part 2: REBECA", "FX Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ADV, 0,
+	MSXGetZipName, MSX_megacorpRomInfo, MSX_megacorpRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -36215,6 +36305,24 @@ struct BurnDriver BurnDrvMSX_vexed = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PUZZLE, 0,
 	MSXGetZipName, MSX_vexedRomInfo, MSX_vexedRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Viaje al Centro de la Tierra - Version Extendida (Spanish) (HB, v1.3)
+static struct BurnRomInfo MSX_viajecentroeRomDesc[] = {
+	{ "Viaje al Centro de la Tierra - Version Extendida v1.3 ES (2017)(Topo Siglo XXI - FX Software)[RUN'CAS-'].cas",	193480, 0x69246d1b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_viajecentroe, MSX_viajecentroe, msx_msx)
+STD_ROM_FN(MSX_viajecentroe)
+
+struct BurnDriver BurnDrvMSX_viajecentroe = {
+	"msx_viajecentroe", "msx_viajecentro", "msx_msx", NULL, "2017",
+	"Viaje al Centro de la Tierra - Version Extendida (Spanish) (HB, v1.3)\0", "Passwords: Fase 2: EVAMARIASEFUE / Fase 3: LOU REED / Fase 4: MEGADETH / Fase 5: KREATOR", "Topo Siglo XXI - FX Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ACTION | GBF_MINIGAMES, 0,
+	MSXGetZipName, MSX_viajecentroeRomInfo, MSX_viajecentroeRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

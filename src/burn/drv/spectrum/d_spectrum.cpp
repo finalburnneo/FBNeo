@@ -17713,6 +17713,25 @@ struct BurnDriver BurnSpecLedstorm = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Legend (Spanish) (48K)
+
+static struct BurnRomInfo SpecLegendRomDesc[] = {
+	{ "Legend ES 48K (1990)(Zafiro).tap", 235225, 0x75f938b4, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecLegend, SpecLegend, Spectrum)
+STD_ROM_FN(SpecLegend)
+
+struct BurnDriver BurnSpecLegend = {
+	"spec_legend", NULL, "spec_spectrum", NULL, "1990",
+	"Legend (Spanish) (48K)\0", "Passwords: Part IV: AL ARUTNEVA AUNITNOC - Part V: ASI ACABA LA LEYENDA", "Zafiro", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	SpectrumGetZipName, SpecLegendRomInfo, SpecLegendRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Legend of Kage, The (48K)
 
 static struct BurnRomInfo SpecLegkageRomDesc[] = {

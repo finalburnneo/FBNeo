@@ -24680,9 +24680,9 @@ struct BurnDriver BurnDrvsms_sumgamesfm = {
 	256, 192, 4, 3
 };
 
-// Super Mario Bros. (HB, v1.00)
+// Super Mario Bros. (HB, v1.10)
 static struct BurnRomInfo sms_smbRomDesc[] = {
-	{ "Super Mario Bros. v1.00 (2026)(Lack of Track).sms",	262144, 0x5a74f2b6, BRF_PRG | BRF_ESS },
+	{ "Super Mario Bros. v1.10 (2026)(Lack of Track).sms",	262144, 0xcf970915, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_smb)
@@ -24690,12 +24690,12 @@ STD_ROM_FN(sms_smb)
 
 struct BurnDriver BurnDrvsms_smb = {
 	"sms_smb", NULL, NULL, NULL, "2026",
-	"Super Mario Bros. (HB, v1.00)\0", "YM2413 FM sound chip supported", "Lack of Track", "Sega Master System",
+	"Super Mario Bros. (HB, v1.10)\0", "YM2413 FM sound chip supported", "Lack of Track", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_smbRomInfo, sms_smbRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
-	256, 192, 4, 3
+	256, 224, 4, 3
 };
 
 // Super Wild War '22 (HB)
@@ -25854,6 +25854,24 @@ struct BurnDriver BurnDrvgg_guntusm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_VERSHOOT, 0,
 	GGGetZipName, gg_guntusmRomInfo, gg_guntusmRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Heroes Against Demons - GG Edition (HB)
+static struct BurnRomInfo gg_hadggRomDesc[] = {
+	{ "Heroes Against Demons - GG Edition (2021)(Ichigo).gg",	262144, 0x73fbf79a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_hadgg)
+STD_ROM_FN(gg_hadgg)
+
+struct BurnDriver BurnDrvgg_hadgg = {
+	"gg_hadgg", NULL, NULL, NULL, "2021",
+	"Heroes Against Demons - GG Edition (HB)\0", NULL, "Ichigo Bankai", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
+	GGGetZipName, gg_hadggRomInfo, gg_hadggRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

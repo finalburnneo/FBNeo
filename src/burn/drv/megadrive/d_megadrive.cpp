@@ -40839,10 +40839,10 @@ struct BurnDriver BurnDrvmd_huntergirls = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Hyper Dyne Side Arms (HB, v1.2)
+// Hyper Dyne Side Arms (HB, v1.3)
 // https://rester159.itch.io/side-arms
 static struct BurnRomInfo md_sidearmsRomDesc[] = {
-	{ "Hyper Dyne Side Arms v1.2 (2026)(rester159).bin", 2621440, 0x95e593c8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Hyper Dyne Side Arms v1.3 (2026)(rester159).bin", 2621440, 0x960da98b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sidearms)
@@ -40850,7 +40850,7 @@ STD_ROM_FN(md_sidearms)
 
 struct BurnDriver BurnDrvmd_sidearms = {
 	"md_sidearms", NULL, NULL, NULL, "2026",
-	"Hyper Dyne Side Arms (HB, v1.2)\0", NULL, "rester159", "Genesis / Mega Drive",
+	"Hyper Dyne Side Arms (HB, v1.3)\0", NULL, "rester159", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
 	MegadriveGetZipName, md_sidearmsRomInfo, md_sidearmsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

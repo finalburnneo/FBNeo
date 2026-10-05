@@ -54523,7 +54523,7 @@ struct BurnDriver BurnDrvnes_superarabian = {
 
 // Super C (USA)
 static struct BurnRomInfo nes_supercRomDesc[] = {
-	{ "Super C (USA)(1990)(Konami).nes",          262160, 0xed53852d, BRF_ESS | BRF_PRG },
+	{ "Super C (USA)(1990)(Konami).nes",          262160, 0x1ac846f0, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_superc)

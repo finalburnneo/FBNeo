@@ -48914,10 +48914,10 @@ struct BurnDriver BurnDrvsnes_Megamanxsa1 = {
 	512, 448, 4, 3
 };
 
-// Mega Man X - SA-1 Plus (Hack, v1.0.1)
+// Mega Man X - SA-1 Plus (Hack, v2.0.0)
 // https://romhackplaza.org/romhacks/mega-man-x-sa-1-plus-super-nintendo-romhack
 static struct BurnRomInfo snes_Megamanxsa1pRomDesc[] = {
-	{ "Mega Man X - SA-1 Plus v1.0.1 (2026)(llethas).sfc", 1572864, 0x8e685ca9, BRF_ESS | BRF_PRG },
+	{ "Mega Man X - SA-1 Plus v2.0.0 (2026)(llethas).sfc", 1572864, 0x11b4cc3b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Megamanxsa1p)
@@ -48925,7 +48925,7 @@ STD_ROM_FN(snes_Megamanxsa1p)
 
 struct BurnDriver BurnDrvsnes_Megamanxsa1p = {
 	"snes_megamanxsa1p", "snes_megamanx", NULL, NULL, "2026",
-	"Mega Man X - SA-1 Plus (Hack, v1.0.1)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
+	"Mega Man X - SA-1 Plus (Hack, v2.0.0)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Megamanxsa1pRomInfo, snes_Megamanxsa1pRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

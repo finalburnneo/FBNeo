@@ -32706,9 +32706,9 @@ struct BurnDriver BurnDrvMSX_mieyen = {
 	272, 228, 4, 3
 };
 
-// Mikero-Odyssey (HB, v1.5.6)
+// Mikero-Odyssey (HB, v1.7.2)
 static struct BurnRomInfo MSX_mikerodysRomDesc[] = {
-	{ "Mikero-Odyssey v1.5.6 (2026)(Kanon-ai).rom",	524288, 0x38562dda, BRF_PRG | BRF_ESS },
+	{ "Mikero-Odyssey v1.7.2 (2026)(Kanon-ai).rom",	524288, 0x0b7d4047, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_mikerodys, MSX_mikerodys, msx_msx)

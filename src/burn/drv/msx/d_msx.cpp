@@ -32716,7 +32716,7 @@ STD_ROM_FN(MSX_mikerodys)
 
 struct BurnDriver BurnDrvMSX_mikerodys = {
 	"msx_mikerodys", NULL, "msx_msx", NULL, "2026",
-	"Mikero-Odyssey (HB, v1.5.6)\0", NULL, "Kanon-ai", "MSX",
+	"Mikero-Odyssey (HB, v1.7.2)\0", NULL, "Kanon-ai", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_ACTION | GBF_ADV, 0,
 	MSXGetZipName, MSX_mikerodysRomInfo, MSX_mikerodysRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,

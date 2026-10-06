@@ -30398,8 +30398,82 @@ struct BurnDriver BurnDrvRobocopng = {
 	"robocopng", NULL, "neogeo", NULL, "2026",
 	"Robocop - Neo Geo Conversion (HB)\0", NULL, "Teo Tormo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
 	NULL, robocopngRomInfo, robocopngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+// Altered Beast - Neo Geo Conversion (HB)
+// https://teo-tormo.itch.io/altered-beast-neogeo
+
+static struct BurnRomInfo altbeastngRomDesc[] = {
+	{ "altbstng-p1.p1",	0x100000, 0x22bc5fd3, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "altbstng-s1.s1",	0x020000, 0x02052cc5, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "altbstng-c1.c1",	0x200000, 0xe13c50cb, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "altbstng-c2.c2",	0x200000, 0x2010fdbc, 3 | BRF_GRA },           	//  4
+
+	{ "altbstng-m1.m1",	0x010000, 0x50f9c62b, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "altbstng-v1.v1",	0x200000, 0xdcb038c7, 5 | BRF_SND },           	//  6 Sound data
+	{ "altbstng-v2.v2",	0x200000, 0x446c7b84, 5 | BRF_SND },           	//  7
+	{ "altbstng-v3.v3",	0x200000, 0xd68958bf, 5 | BRF_SND },           	//  8
+	{ "altbstng-v4.v4",	0x200000, 0x29eb83ad, 5 | BRF_SND },           	//  9
+	{ "altbstng-v5.v5",	0x200000, 0x94976877, 5 | BRF_SND },           	//  10
+	{ "altbstng-v6.v6",	0x200000, 0xa19e8df0, 5 | BRF_SND },           	//  11
+	{ "altbstng-v7.v7",	0x200000, 0x3df333af, 5 | BRF_SND },           	//  12
+	{ "altbstng-v8.v8",	0x200000, 0xbc3555a2, 5 | BRF_SND },           	//  13
+};
+
+STDROMPICKEXT(altbeastng, altbeastng, neogeo)
+STD_ROM_FN(altbeastng)
+
+struct BurnDriver BurnDrvAltbeastng = {
+	"altbeastng", NULL, "neogeo", NULL, "2026",
+	"Altered Beast - Neo Geo Conversion (HB)\0", NULL, "Teo Tormo", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, altbeastngRomInfo, altbeastngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+// Cyber Police ESWAT - Neo Geo Conversion (HB)
+// https://teo-tormo.itch.io/eswat-neogeo
+
+static struct BurnRomInfo eswatngRomDesc[] = {
+	{ "eswatng-p1.p1",	0x200000, 0xc505aaa1, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "eswatng-s1.s1",	0x020000, 0x6d4ede50, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "eswatng-c1.c1",	0x200000, 0x1153ede1, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "eswatng-c2.c2",	0x200000, 0x35c89b94, 3 | BRF_GRA },           	//  4
+
+	{ "eswatng-m1.m1",	0x010000, 0xfce48629, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "eswatng-v1.v1",	0x200000, 0x04fc66d7, 5 | BRF_SND },           	//  6 Sound data
+	{ "eswatng-v2.v2",	0x200000, 0x2cbbf54c, 5 | BRF_SND },           	//  7
+	{ "eswatng-v3.v3",	0x200000, 0xfbe76685, 5 | BRF_SND },           	//  8
+	{ "eswatng-v4.v4",	0x200000, 0xd5332a98, 5 | BRF_SND },           	//  9
+	{ "eswatng-v5.v5",	0x200000, 0x4ebc7587, 5 | BRF_SND },           	//  10
+	{ "eswatng-v6.v6",	0x200000, 0x7f59fffc, 5 | BRF_SND },           	//  11
+	{ "eswatng-v7.v7",	0x200000, 0x7f59fffc, 5 | BRF_SND },           	//  12
+	{ "eswatng-v8.v8",	0x200000, 0x7f59fffc, 5 | BRF_SND },           	//  13
+};
+
+STDROMPICKEXT(eswatng, eswatng, neogeo)
+STD_ROM_FN(eswatng)
+
+struct BurnDriver BurnDrvEswatng = {
+	"eswatng", NULL, "neogeo", NULL, "2026",
+	"Cyber Police ESWAT - Neo Geo Conversion (HB)\0", NULL, "Teo Tormo", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
+	NULL, eswatngRomInfo, eswatngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

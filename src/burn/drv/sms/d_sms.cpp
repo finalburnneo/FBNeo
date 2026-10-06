@@ -22992,7 +22992,7 @@ struct BurnDriver BurnDrvsms_had = {
 	"sms_had", "sms_hadretail", NULL, NULL, "2020",
 	"Heroes Against Demons (HB, v1.03)\0", NULL, "Ichigo Bankai", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_hadRomInfo, sms_hadRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -27469,10 +27469,10 @@ struct BurnDriver BurnDrvgg_rayearthe = {
 	256, 192, 4, 3
 };
 
-// Magic Knight Rayearth 2: Making of Magic Knight (Hack, English v1.5)
+// Magic Knight Rayearth 2: Making of Magic Knight (Hack, English v1.5 Build 126)
 // https://romhackplaza.org/translations/magic-knight-rayearth-2-making-of-magic-knight-english-translation-sega-game-gear
 static struct BurnRomInfo gg_rayeart2eRomDesc[] = {
-	{ "Magic Knight Rayearth 2 - Making of Magic Knight T-Eng v1.5 (2026)(Patch Clan).gg",	524288, 0x1a43ed27, BRF_PRG | BRF_ESS },
+	{ "Magic Knight Rayearth 2 - Making of Magic Knight T-Eng v1.5 Build 126 (2026)(Patch Clan).gg",	524288, 0x6210fbe6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_rayeart2e)
@@ -27480,7 +27480,7 @@ STD_ROM_FN(gg_rayeart2e)
 
 struct BurnDriver BurnDrvgg_rayeart2e = {
 	"gg_rayeart2e", "gg_rayeart2", NULL, NULL, "2026",
-	"Magic Knight Rayearth 2: Making of Magic Knight (Hack, English v1.5)\0", NULL, "Patch Clan", "Sega Game Gear",
+	"Magic Knight Rayearth 2: Making of Magic Knight (Hack, English v1.5 Build 126)\0", NULL, "Patch Clan", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_GAME_GEAR, GBF_RPG, 0,
 	GGGetZipName, gg_rayeart2eRomInfo, gg_rayeart2eRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

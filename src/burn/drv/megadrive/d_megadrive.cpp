@@ -40309,7 +40309,7 @@ struct BurnDriver BurnDrvmd_flikisesc = {
 // Flowers of Azathoth (HB)
 // https://mike-daw.itch.io/flowers-of-azathoth
 static struct BurnRomInfo md_fazathothRomDesc[] = {
-	{ "Flowers of Azathoth (2026)(Mike Daw).bin", 262144, 0xe0621243, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Flowers of Azathoth (2026)(Mike Daw).bin", 262144, 0x18f4795a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_fazathoth)
@@ -43295,10 +43295,10 @@ struct BurnDriver BurnDrvmd_satyrhell = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Scoff (HB, v2.0)
+// Scoff (HB, v2)
 // https://mike-daw.itch.io/scoffmegadrive
 static struct BurnRomInfo md_scoffRomDesc[] = {
-	{ "Scoff v2.0 (2026)(Mike Daw).bin", 262144, 0xb403c4d9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Scoff v2 (2026)(Mike Daw).bin", 262144, 0x5a06186b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_scoff)
@@ -43306,7 +43306,7 @@ STD_ROM_FN(md_scoff)
 
 struct BurnDriver BurnDrvmd_scoff = {
 	"md_scoff", NULL, NULL, NULL, "2026",
-	"Scoff (HB, v2.0)\0", NULL, "Mike Daw", "Genesis / Mega Drive",
+	"Scoff (HB, v2)\0", NULL, "Mike Daw", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_scoffRomInfo, md_scoffRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

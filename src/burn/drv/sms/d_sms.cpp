@@ -22260,6 +22260,24 @@ struct BurnDriver BurnDrvsms_crazypinball = {
 	256, 192, 4, 3
 };
 
+// Croco Pinball (HB, v0.5)
+static struct BurnRomInfo sms_crocopinballRomDesc[] = {
+	{ "Croco Pinball v0.5 (2026)(Oldschool Is Beautiful).sms",	524288, 0xb8e36582, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_crocopinball)
+STD_ROM_FN(sms_crocopinball)
+
+struct BurnDriver BurnDrvsms_crocopinball = {
+	"sms_crocopinball", NULL, NULL, NULL, "2026",
+	"Croco Pinball (HB, v0.5)\0", NULL, "Oldschool Is Beautiful", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PINBALL, 0,
+	SMSGetZipName, sms_crocopinballRomInfo, sms_crocopinballRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Dangerous Demolition (HB)
 static struct BurnRomInfo sms_dangdemRomDesc[] = {
 	{ "Dangerous Demolition (2022)(Dr.Ludos).sms",	49152, 0x3f7c5b40, BRF_PRG | BRF_ESS },

@@ -38642,7 +38642,7 @@ struct BurnDriver BurnDrvmd_bigfd = {
 // Black Tiger (HB, v1.7)
 // https://rester159.itch.io/black-tiger-md
 static struct BurnRomInfo md_blacktigerRomDesc[] = {
-	{ "Black Tiger v1.7 (2026)(rester159).bin", 4194304, 0xdb4db4b9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Black Tiger v1.7 (2026)(rester159).bin", 4194304, 0x3e195ffb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_blacktiger)
@@ -40842,7 +40842,7 @@ struct BurnDriver BurnDrvmd_huntergirls = {
 // Hyper Dyne Side Arms (HB, v1.3)
 // https://rester159.itch.io/side-arms
 static struct BurnRomInfo md_sidearmsRomDesc[] = {
-	{ "Hyper Dyne Side Arms v1.3 (2026)(rester159).bin", 2621440, 0x960da98b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Hyper Dyne Side Arms v1.3 (2026)(rester159).bin", 2621440, 0x4016ab99, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sidearms)

@@ -28977,6 +28977,24 @@ struct BurnDriver BurnDrvMSX_bold = {
 	272, 228, 4, 3
 };
 
+// BOLT: Escape from the Factory (HB)
+static struct BurnRomInfo MSX_boltmsxRomDesc[] = {
+	{ "BOLT - Escape from the Factory (2026)(DD Studios).rom",	32768, 0x8aaa6bbe, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_boltmsx, MSX_boltmsx, msx_msx)
+STD_ROM_FN(MSX_boltmsx)
+
+struct BurnDriver BurnDrvMSX_boltmsx = {
+	"msx_boltmsx", NULL, "msx_msx", NULL, "2026",
+	"BOLT: Escape from the Factory (HB)\0", NULL, "DD Studios", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_MSX, GBF_PLATFORM, 0,
+	MSXGetZipName, MSX_boltmsxRomInfo, MSX_boltmsxRomName, NULL, NULL, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
 // Bomber Battle (HB)
 static struct BurnRomInfo MSX_bombbattleRomDesc[] = {
 	{ "Bomber Battle (2021)(Amaury Carvalho).rom",	49152, 0x65ef2546, BRF_PRG | BRF_ESS },

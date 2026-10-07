@@ -10700,10 +10700,10 @@ struct BurnDriver BurnSpecEscalderon = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Escape from the Planet of the Robot Monsters (128K)
+// Escape from the Planet of the Robot Monsters (48K-128K)
 
 static struct BurnRomInfo SpecEscplanetrobotmonRomDesc[] = {
-	{ "Escape from the Planet of the Robot Monsters 128K (1990)(Domark).tap", 111578, 0x9f95584c, BRF_ESS | BRF_PRG },
+	{ "Escape from the Planet of the Robot Monsters 48K-128K (1990)(Domark).tap", 111578, 0x9f95584c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecEscplanetrobotmon, SpecEscplanetrobotmon, Spec128)
@@ -10711,7 +10711,7 @@ STD_ROM_FN(SpecEscplanetrobotmon)
 
 struct BurnDriver BurnSpecEscplanetrobotmon = {
 	"spec_escplanetrobotmon", NULL, "spec_spec128", NULL, "1990",
-	"Escape from the Planet of the Robot Monsters (128K)\0", NULL, "Domark", "ZX Spectrum",
+	"Escape from the Planet of the Robot Monsters (48K-128K)\0", NULL, "Domark", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SPECTRUM, GBF_RUNGUN, 0,
 	SpectrumGetZipName, SpecEscplanetrobotmonRomInfo, SpecEscplanetrobotmonRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
@@ -10732,7 +10732,7 @@ struct BurnDriver BurnSpecEskicapers = {
 	"spec_eskicapers", NULL, "spec_spectrum", NULL, "1984",
 	"Eskimo Capers (16K)\0", NULL, "PowerSoftware", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_MAZE, 0,
 	SpectrumGetZipName, SpecEskicapersRomInfo, SpecEskicapersRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -12130,7 +12130,7 @@ struct BurnDriver BurnSpecFriday13th = {
 // Frightmare (128K)
 
 static struct BurnRomInfo SpecFrightmareRomDesc[] = {
-	{ "Frightmare 128K (1988)(Cascade Games).tap", 59861, 0xa5ba5804, BRF_ESS | BRF_PRG },
+	{ "Frightmare 128K (1988)(Cascade Games).tzx", 59986, 0xcb957497, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecFrightmare, SpecFrightmare, Spec128)
@@ -13327,7 +13327,7 @@ struct BurnDriver BurnSpecGothik = {
 // Grand Prix Circuit (128K)
 
 static struct BurnRomInfo SpecGpcircuitRomDesc[] = {
-	{ "Grand Prix Circuit 128K (1990)(Accolade).z80", 60323, 0x1203a59d, BRF_ESS | BRF_PRG },
+	{ "Grand Prix Circuit 128K (1990)(Accolade).tzx", 101394, 0x106296ba, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecGpcircuit, SpecGpcircuit, Spec128)
@@ -37063,6 +37063,25 @@ struct BurnDriver BurnSpecBolalela = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// BOLT: Escape from the Factory (128K) (HB)
+
+static struct BurnRomInfo SpecBoltzxRomDesc[] = {
+	{ "BOLT - Escape from the Factory 128K (2026)(DD Studios).tap", 26783, 0x302a4c01, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecBoltzx, SpecBoltzx, Spec128)
+STD_ROM_FN(SpecBoltzx)
+
+struct BurnDriver BurnSpecBoltzx = {
+	"spec_boltzx", NULL, "spec_spec128", NULL, "2026",
+	"BOLT: Escape from the Factory (128K) (HB)\0", NULL, "DD Studios", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecBoltzxRomInfo, SpecBoltzxRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Bomb (48K) (HB)
 
 static struct BurnRomInfo SpecBombRomDesc[] = {
@@ -39952,10 +39971,10 @@ struct BurnDriver BurnSpecCrimesb = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cronopios y Famas (German) (128K) (HB)
+// Cronopios y Famas (German) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecCronopiosdeRomDesc[] = {
-	{ "Cronopios y Famas DE 128K (2021)(Zankle Soft).tap", 42169, 0x91be72a8, BRF_ESS | BRF_PRG },
+	{ "Cronopios y Famas DE 48K-128K (2021)(Zankle Soft).tap", 42169, 0x91be72a8, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCronopiosde, SpecCronopiosde, Spec128)
@@ -39963,7 +39982,7 @@ STD_ROM_FN(SpecCronopiosde)
 
 struct BurnDriver BurnSpecCronopiosde = {
 	"spec_cronopiosde", "spec_cronopiosen", "spec_spec128", NULL, "2021",
-	"Cronopios y Famas (German) (128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
+	"Cronopios y Famas (German) (48K-128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecCronopiosdeRomInfo, SpecCronopiosdeRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -39971,10 +39990,10 @@ struct BurnDriver BurnSpecCronopiosde = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cronopios y Famas (English) (128K) (HB)
+// Cronopios y Famas (English) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecCronopiosenRomDesc[] = {
-	{ "Cronopios y Famas EN 128K (2021)(Zankle Soft).tap", 42169, 0xc64db30e, BRF_ESS | BRF_PRG },
+	{ "Cronopios y Famas EN 48K-128K (2021)(Zankle Soft).tap", 42169, 0xc64db30e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCronopiosen, SpecCronopiosen, Spec128)
@@ -39982,7 +40001,7 @@ STD_ROM_FN(SpecCronopiosen)
 
 struct BurnDriver BurnSpecCronopiosen = {
 	"spec_cronopiosen", NULL, "spec_spec128", NULL, "2021",
-	"Cronopios y Famas (English) (128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
+	"Cronopios y Famas (English) (48K-128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecCronopiosenRomInfo, SpecCronopiosenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -39990,10 +40009,10 @@ struct BurnDriver BurnSpecCronopiosen = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cronopios y Famas (Spanish) (128K) (HB)
+// Cronopios y Famas (Spanish) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecCronopiosesRomDesc[] = {
-	{ "Cronopios y Famas ES 128K (2021)(Zankle Soft).tap", 42169, 0x306e3003, BRF_ESS | BRF_PRG },
+	{ "Cronopios y Famas ES 48K-128K (2021)(Zankle Soft).tap", 42169, 0x306e3003, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCronopioses, SpecCronopioses, Spec128)
@@ -40001,7 +40020,7 @@ STD_ROM_FN(SpecCronopioses)
 
 struct BurnDriver BurnSpecCronopioses = {
 	"spec_cronopioses", "spec_cronopiosen", "spec_spec128", NULL, "2021",
-	"Cronopios y Famas (Spanish) (128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
+	"Cronopios y Famas (Spanish) (48K-128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecCronopiosesRomInfo, SpecCronopiosesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40009,10 +40028,10 @@ struct BurnDriver BurnSpecCronopioses = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cronopios y Famas (French) (128K) (HB)
+// Cronopios y Famas (French) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecCronopiosfrRomDesc[] = {
-	{ "Cronopios y Famas FR 128K (2021)(Zankle Soft).tap", 42169, 0x61fb2ea9, BRF_ESS | BRF_PRG },
+	{ "Cronopios y Famas FR 48K-128K (2021)(Zankle Soft).tap", 42169, 0x61fb2ea9, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCronopiosfr, SpecCronopiosfr, Spec128)
@@ -40020,7 +40039,7 @@ STD_ROM_FN(SpecCronopiosfr)
 
 struct BurnDriver BurnSpecCronopiosfr = {
 	"spec_cronopiosfr", "spec_cronopiosen", "spec_spec128", NULL, "2021",
-	"Cronopios y Famas (French) (128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
+	"Cronopios y Famas (French) (48K-128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecCronopiosfrRomInfo, SpecCronopiosfrRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40028,10 +40047,10 @@ struct BurnDriver BurnSpecCronopiosfr = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cronopios y Famas (Italian) (128K) (HB)
+// Cronopios y Famas (Italian) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecCronopiositRomDesc[] = {
-	{ "Cronopios y Famas IT 128K (2021)(Zankle Soft).tap", 42169, 0xa28f595b, BRF_ESS | BRF_PRG },
+	{ "Cronopios y Famas IT 48K-128K (2021)(Zankle Soft).tap", 42169, 0xa28f595b, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCronopiosit, SpecCronopiosit, Spec128)
@@ -40039,7 +40058,7 @@ STD_ROM_FN(SpecCronopiosit)
 
 struct BurnDriver BurnSpecCronopiosit = {
 	"spec_cronopiosit", "spec_cronopiosen", "spec_spec128", NULL, "2021",
-	"Cronopios y Famas (Italian) (128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
+	"Cronopios y Famas (Italian) (48K-128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecCronopiositRomInfo, SpecCronopiositRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -40047,10 +40066,10 @@ struct BurnDriver BurnSpecCronopiosit = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Cronopios y Famas (Portuguese) (128K) (HB)
+// Cronopios y Famas (Portuguese) (48K-128K) (HB)
 
 static struct BurnRomInfo SpecCronopiosptRomDesc[] = {
-	{ "Cronopios y Famas PT 128K (2021)(Zankle Soft).tap", 42169, 0x11902f8d, BRF_ESS | BRF_PRG },
+	{ "Cronopios y Famas PT 48K-128K (2021)(Zankle Soft).tap", 42169, 0x11902f8d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecCronopiospt, SpecCronopiospt, Spec128)
@@ -40058,7 +40077,7 @@ STD_ROM_FN(SpecCronopiospt)
 
 struct BurnDriver BurnSpecCronopiospt = {
 	"spec_cronopiospt", "spec_cronopiosen", "spec_spec128", NULL, "2021",
-	"Cronopios y Famas (Portuguese) (128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
+	"Cronopios y Famas (Portuguese) (48K-128K) (HB)\0", NULL, "Zankle Soft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecCronopiosptRomInfo, SpecCronopiosptRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

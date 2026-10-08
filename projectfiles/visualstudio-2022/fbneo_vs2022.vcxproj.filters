@@ -40,6 +40,9 @@
     <ClCompile Include="..\..\src\burn\vector.cpp">
       <Filter>burn</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\burn_hdd.cpp">
+      <Filter>burn</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\ay8910.c">
       <Filter>burn\snd</Filter>
     </ClCompile>
@@ -2829,12 +2832,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\i8051\mcs51.cpp">
       <Filter>cpus\i8051</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\cpu\mips3\cop0.cpp">
-      <Filter>cpus\mips</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\cpu\mips3\cop1.cpp">
-      <Filter>cpus\mips</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\cpu\mips3\mips3.cpp">
       <Filter>cpus\mips</Filter>

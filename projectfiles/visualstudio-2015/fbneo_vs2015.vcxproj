@@ -1228,6 +1228,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\tiles_generic.cpp" />
     <ClCompile Include="..\..\src\burn\timer.cpp" />
     <ClCompile Include="..\..\src\burn\vector.cpp" />
+    <ClCompile Include="..\..\src\burn\burn_hdd.cpp" />
     <ClCompile Include="..\..\src\cpu\adsp2100\adsp2100.cpp" />
     <ClCompile Include="..\..\src\cpu\adsp2100_intf.cpp" />
     <ClCompile Include="..\..\src\cpu\arm7\arm7.cpp" />
@@ -1294,8 +1295,6 @@ del %(Filename).exe
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">m68kmake.exe</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">m68kmake.exe</Outputs>
     </CustomBuild>
-    <ClCompile Include="..\..\src\cpu\mips3\cop0.cpp" />
-    <ClCompile Include="..\..\src\cpu\mips3\cop1.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\mips3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>

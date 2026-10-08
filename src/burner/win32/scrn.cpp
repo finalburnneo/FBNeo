@@ -732,75 +732,102 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		
 		// doing a drawItem case to control the shading of the selected item
 		case WM_DRAWITEM:
-		{
+		{	
 			LPDRAWITEMSTRUCT pdis = (LPDRAWITEMSTRUCT)lParam;
+
 			CurrentItemInfo* data = (CurrentItemInfo*) pdis->itemData;
-			if (pdis->CtlType == ODT_MENU) {
-				BOOL bSelected = (pdis->itemState & ODS_SELECTED) != 0;
 
-				COLORREF clr;
+			UINT uCurrentItemType = pdis->CtlType;
 
-				if(bSelected) 
+			switch(uCurrentItemType)
+			{
+				case ODT_BUTTON: 
 				{
-					clr = RGB((uiSelectedMenuItemColor >> 16) & 0xFF,   // R
-                      		  (uiSelectedMenuItemColor >> 8) & 0xFF,    // G
-                      		   uiSelectedMenuItemColor & 0xFF);         // B 
+					COLORREF clr;
+
+					HBRUSH hbr = CreateSolidBrush(uiBackGroundColor);
+
+					FillRect(pdis->hDC, &pdis->rcItem, hbr);
+					DeleteObject(hbr);
+					break;
 				}
-				else
+				case ODT_MENU:
 				{
-					clr = RGB((uiMenuItemColor >> 16) & 0xFF,   // R
-                      		  (uiMenuItemColor >> 8) & 0xFF,    // G
-                      		   uiMenuItemColor & 0xFF);         // B
-				}
+					BOOL bSelected = (pdis->itemState & ODS_SELECTED) != 0;
 
-				HBRUSH hbr = CreateSolidBrush(clr);
-				FillRect(pdis->hDC, &pdis->rcItem, hbr);
-				DeleteObject(hbr);
+					COLORREF clr;
 
-				// if the item has flags associate draw its state, separator lines are ignored because they cant have states
-				if (data->menuItemStateFlag != 0 && ((data->menuItemTypeFlag & MFT_SEPARATOR) == 0) ) 
-				{
-					DrawItemState(pdis, *data);
-				}	
+					if(bSelected) 
+					{
+						clr = RGB((uiSelectedMenuItemColor >> 16) & 0xFF,   // R
+								(uiSelectedMenuItemColor >> 8) & 0xFF,    // G
+								uiSelectedMenuItemColor & 0xFF);         // B 
+					}
+					else
+					{
+						clr = RGB((uiMenuItemColor >> 16) & 0xFF,   // R
+								(uiMenuItemColor >> 8) & 0xFF,    // G
+								uiMenuItemColor & 0xFF);         // B
+					}
 
-				if(data->menuItemTypeFlag != 0)
-				{
-					DrawItemType(pdis, *data);
-				}
+					HBRUSH hbr = CreateSolidBrush(clr);
+					FillRect(pdis->hDC, &pdis->rcItem, hbr);
+					DeleteObject(hbr);
 
-				SetBkMode(pdis->hDC, TRANSPARENT);
-				SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);          
+					// if the item has flags associate draw its state, separator lines are ignored because they cant have states
+					if (data->menuItemStateFlag != 0 && ((data->menuItemTypeFlag & MFT_SEPARATOR) == 0) ) 
+					{
+						DrawItemState(pdis, *data);
+					}	
 
-				TCHAR* pszText;
+					if(data->menuItemTypeFlag != 0)
+					{
+						DrawItemType(pdis, *data);
+					}
 
-				if(data)
-				{
-					pszText = data->sText;
-				}
-				else
-				{
-					pszText = nullptr;
-				}
+					SetBkMode(pdis->hDC, TRANSPARENT);
+					if( (pdis->itemState & (ODS_GRAYED | ODS_DISABLED)) != 0 )
+					{
+						SetTextColor(pdis->hDC,  GetSysColor(COLOR_GRAYTEXT));
+					}
+					else
+					{
+						SetTextColor(pdis->hDC, (COLORREF) uiTextFontColor);    
+					}        
 
-				RECT rcText = pdis->rcItem;
-				rcText.left += 24; // your existing dot/checkmark margin
+					TCHAR* pszText;
 
-				TCHAR* rightAlignChar = _tcschr(pszText, _T('\t'));
-				if (rightAlignChar) {
-					// \t char found align the text to the right
-					DrawText(pdis->hDC, pszText, (int)(rightAlignChar - pszText), &rcText,
-							DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+					if(data)
+					{
+						pszText = data->sText;
+					}
+					else
+					{
+						pszText = nullptr;
+					}
 
-					RECT rcAccel = pdis->rcItem;
-					rcAccel.right -= 8; 
-					DrawText(pdis->hDC, rightAlignChar + 1, -1, &rcAccel,
-							DT_SINGLELINE | DT_VCENTER | DT_RIGHT);
-				} else {
-					// no \t char keep goign as usual
-					DrawText(pdis->hDC, pszText, -1, &rcText,
-							DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+					RECT rcText = pdis->rcItem;
+					rcText.left += 24; // your existing dot/checkmark margin
+
+					TCHAR* rightAlignChar = _tcschr(pszText, _T('\t'));
+					if (rightAlignChar) {
+						// \t char found align the text to the right
+						DrawText(pdis->hDC, pszText, (int)(rightAlignChar - pszText), &rcText,
+								DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+
+						RECT rcAccel = pdis->rcItem;
+						rcAccel.right -= 8; 
+						DrawText(pdis->hDC, rightAlignChar + 1, -1, &rcAccel,
+								DT_SINGLELINE | DT_VCENTER | DT_RIGHT);
+					} else {
+						// no \t char keep goign as usual
+						DrawText(pdis->hDC, pszText, -1, &rcText,
+								DT_SINGLELINE | DT_VCENTER | DT_LEFT);
+					}
+					break;
 				}
 			}
+
 			return TRUE;
 	 	} 
 		// - dink - end

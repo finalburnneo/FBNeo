@@ -1,4 +1,5 @@
 #include "burner.h"
+#include <winuser.h>
 
 UINT uiBackGroundColor = 0xFFFFFF;
 UINT uiMenuItemColor   = 0xf4f4f4;
@@ -64,9 +65,10 @@ void UpdateUiColorMode(UINT uiColorMode)
 
 void ApplyLightMode()
 {
-	uiBackGroundColor = 0xFFFFFF;
-	uiMenuItemColor   = 0xf4f4f4;
-	uiTextFontColor = 0x000000;
+	uiBackGroundColor = GetSysColor(COLOR_MENU);
+	uiMenuItemColor   = GetSysColor(COLOR_MENU);
+	uiTextFontColor = GetSysColor(COLOR_MENUTEXT);
+
 }
 
 void ApplyDarkMode()

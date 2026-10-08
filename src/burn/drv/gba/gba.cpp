@@ -659,7 +659,7 @@ const UINT8 *GbaCoreGetFramebuffer(const GbaCore *core)
 {
 	// Return whichever buffer is currently presented: in worker mode
 	// core->state.framebuffer points directly at the worker's completed
-	// output buffer (pre-converted to match BurnHighCol→PutPix byte layout
+	// output buffer (pre-converted to match the BurnHighCol/PutPix byte layout
 	// for the configured output bpp); in single-thread mode it points at
 	// scratch->framebuffer (byte R,G,B,X triplets).
 	return core == NULL ? NULL : core->state.framebuffer;
@@ -1027,8 +1027,8 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worke
 	gba->cpu.trigger_breakpoint = gba_cpu_trigger_breakpoint;
 
 	// Choose PPU callback per frame based on render mode:
-	//   per-pixel → single-threaded (mid-line writes need tight CPU↔PPU sync)
-	//   scanline  → worker thread (HBlank snapshots match scanline semantics)
+	//   per-pixel: single-threaded (mid-line writes need tight CPU/PPU sync)
+	//   scanline:  worker thread (HBlank snapshots match scanline semantics)
 	const bool use_worker_this_frame =
 		(worker != NULL) && worker->enabled && !gba->ppu.render_per_pixel;
 
@@ -1110,7 +1110,7 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worke
 	}
 	gba_gpio_update_rumble(gba);
 	emu->joy.rumble = gba->cart.gpio.rumble;
-	// LCD turns off in STOP mode — zero whichever buffer is currently presented.
+	// LCD turns off in STOP mode: zero whichever buffer is currently presented.
 	if (gba->stop_mode && gba->framebuffer) {
 		// Worker out_buf may be smaller than scratch->framebuffer when out_bpp
 		// is 2 or 3; size the memset to the actual presented buffer.

@@ -23467,9 +23467,9 @@ struct BurnDriver BurnDrvsms_mbarbarricade = {
 	256, 192, 4, 3
 };
 
-// Master Tennis (HB, v1.1)
+// Master Tennis (HB, v1.2)
 static struct BurnRomInfo sms_mtennisRomDesc[] = {
-	{ "Master Tennis v1.1 (2026)(Oldschool Is Beautiful).sms",	65536, 0xd3bc9717, BRF_PRG | BRF_ESS },
+	{ "Master Tennis v1.2 (2026)(Oldschool Is Beautiful).sms",	65536, 0x88033cd3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_mtennis)
@@ -23477,9 +23477,9 @@ STD_ROM_FN(sms_mtennis)
 
 struct BurnDriver BurnDrvsms_mtennis = {
 	"sms_mtennis", NULL, NULL, NULL, "2026",
-	"Master Tennis (HB, v1.1)\0", NULL, "Oldschool Is Beautiful", "Sega Master System",
+	"Master Tennis (HB, v1.2)\0", NULL, "Oldschool Is Beautiful", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SPORTSMISC, 0,
 	SMSGetZipName, sms_mtennisRomInfo, sms_mtennisRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -23897,6 +23897,24 @@ struct BurnDriver BurnDrvsms_papicom = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_papicomRomInfo, sms_papicomRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Pedrisco (HB, v1.1)
+static struct BurnRomInfo sms_pedriscoRomDesc[] = {
+	{ "Pedrisco v1.1 (2026)(vosges6128).sms",	131072, 0x271296bc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_pedrisco)
+STD_ROM_FN(sms_pedrisco)
+
+struct BurnDriver BurnDrvsms_pedrisco = {
+	"sms_pedrisco", NULL, NULL, NULL, "2026",
+	"Pedrisco (HB, v1.1)\0", NULL, "vosges6128", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_pedriscoRomInfo, sms_pedriscoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24586,6 +24604,24 @@ struct BurnDriver BurnDrvsms_sptonbow = {
 	L"Space Tonbow (HB, v1.1.1)\0\u30b9\u30da\u30fc\u30b9 \u873b\u86e4\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_HORSHOOT, 0,
 	SMSGetZipName, sms_sptonbowRomInfo, sms_sptonbowRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Square Doom (HB, v0.0.3)
+static struct BurnRomInfo sms_sqrdoomRomDesc[] = {
+	{ "Square Doom v0.0.3 (2026)(haroldo-ok).sms",	1048576, 0xdf11b06c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_sqrdoom)
+STD_ROM_FN(sms_sqrdoom)
+
+struct BurnDriver BurnDrvsms_sqrdoom = {
+	"sms_sqrdoom", NULL, NULL, NULL, "2026",
+	"Square Doom (HB, v0.0.3)\0", NULL, "haroldo-ok", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
+	SMSGetZipName, sms_sqrdoomRomInfo, sms_sqrdoomRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -26146,6 +26182,24 @@ struct BurnDriver BurnDrvgg_osotosm = {
 	256, 192, 4, 3
 };
 
+// Pedrisco (HB, v1.1)
+static struct BurnRomInfo gg_pedriscoRomDesc[] = {
+	{ "Pedrisco v1.1 (2026)(vosges6128).gg",	131072, 0xbfe924cd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_pedrisco)
+STD_ROM_FN(gg_pedrisco)
+
+struct BurnDriver BurnDrvgg_pedrisco = {
+	"gg_pedrisco", NULL, NULL, NULL, "2026",
+	"Pedrisco (HB, v1.1)\0", NULL, "vosges6128", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
+	GGGetZipName, gg_pedriscoRomInfo, gg_pedriscoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Pegged (HB, v1.02)
 static struct BurnRomInfo gg_peggedRomDesc[] = {
 	{ "Pegged v1.02 (2023)(Under4Mhz).gg",	32768, 0xa3e06e7a, BRF_PRG | BRF_ESS },
@@ -26816,6 +26870,25 @@ struct BurnDriver BurnDrvsms_castlillc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING |  BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_castlillcRomInfo, sms_castlillcRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Chouon Senshi Borgman (Hack, English)
+// https://www.romhacking.net/translations/7806/
+static struct BurnRomInfo sms_borgmaneRomDesc[] = {
+	{ "Chouon Senshi Borgman T-Eng (2026)(FomaLSSJ).sms",	131072, 0xafd6e0d0, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_borgmane)
+STD_ROM_FN(sms_borgmane)
+
+struct BurnDriver BurnDrvsms_borgmane = {
+	"sms_borgmane", "sms_cyborgh", NULL, NULL, "2026",
+	"Chouon Senshi Borgman (Hack, English)\0", NULL, "FomaLSSJ", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SMSGetZipName, sms_borgmaneRomInfo, sms_borgmaneRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

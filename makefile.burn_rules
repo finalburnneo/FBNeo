@@ -107,7 +107,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_atarisy1.o d_atarisy2.o d_badl
 			d_spectrum.o spectrum.o
 			
 depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o \
-			load.o burn_sha1.o tilemap_generic.o tiles_generic.o timer.o vector.o \
+			load.o burn_sha1.o tilemap_generic.o tiles_generic.o timer.o vector.o burn_hdd.o \
 			\
 			6821pia.o 6840ptm.o 74259.o i8255.o 8255ppi.o 8257dma.o alpha8201.o ad59mc07.o c169.o cxd1095.o atariic.o atarijsa.o atarimo.o atarirle.o atarivad.o avgdvg.o bsmt2000.o decobsmt.o ds2404.o dtimer.o earom.o eeprom.o epic12.o gaelco_crypt.o i2ceeprom.o i4x00.o i8155.o i8255.o intelfsh.o \
 			joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o k051316.o k053936.o k1ge.o kaneko_hit.o kaneko_tmap.o mathbox.o mb87078.o mc8123.o mermaid.o midcsd.o midsat.o midsg.o midcvsd.o midssio.o midtcs.o \
@@ -127,7 +127,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			arm.o arm7.o arm9.o e132xs.o h6280.o hd6309.o hmcs40.o i386.o i8039.o m37710.o mcs48.o mcs51.o i8085.o konami.o m6502.o m6800.o m6805.o m6809.o mb88xx.o nec.o pic16c5x.o s2650.o sh2.o sh4.o t11.o tms32010.o tlcs90.o tlcs900.o \
 			upd7725.o upd7810.o v25.o v60.o xa.o xa_ops.o z80.o z80daisy.o z80ctc.o z80pio.o z180.o \
 			\
-			cop0.o cop1.o mips3.o \
+			mips3.o \
 			\
 			cave.o cave_palette.o cave_sprite.o cave_tile.o \
 			\
@@ -178,8 +178,3 @@ endif
 ifdef	BUILD_X86_ASM
 	autobj += burn_sound_a.o
 endif
-
-#ifdef	BUILD_X64_EXE
-#	alldir += cpu/mips3/x64
-#	depobj += mips3_x64.o
-#endif

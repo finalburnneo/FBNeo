@@ -1068,6 +1068,52 @@ STD_ROM_PICK(Outrunm)
 STD_ROM_FN(Outrunm)
 
 
+// Out Run Gumball Edition
+// https://www.romhacking.net/hacks/10079/
+static struct BurnRomInfo OutrungbRomDesc[] = {
+	{ "gb-epr-10380b.133", 0x10000, 0xdc34c0e7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "gb-epr-10382b.118", 0x10000, 0xd8023805, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "gb-epr-10381b.132", 0x10000, 0xd452b797, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "gb-epr-10383b.117", 0x10000, 0xdecbe6af, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "gb-epr-10327a.76",  0x10000, 0xed700498, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "gb-epr-10329a.58",  0x10000, 0xbeaec603, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328a.75",     0x10000, 0xd5ec5e5d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330a.57",     0x10000, 0xba9ec82a, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "gb-opr-10268.99",   0x08000, 0x85fd8460, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10232.102",     0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
+	{ "gb-opr-10267.100",  0x08000, 0xfe365eb7, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10231.103",     0x08000, 0x8908bcbf, SYS16_ROM_TILES | BRF_GRA },
+	{ "gb-opr-10266.101",  0x08000, 0x84ab6c2f, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10230.104",     0x08000, 0x686f5e50, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-10371.9",       0x20000, 0x7cc86208, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10373.10",      0x20000, 0xb0d26ac9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10375.11",      0x20000, 0x59b60bd7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10377.12",      0x20000, 0x17a1b04a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10372.13",      0x20000, 0xb557078c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10374.14",      0x20000, 0x8051e517, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10376.15",      0x20000, 0xf3b8f318, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10378.16",      0x20000, 0xa1062984, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-10186.47",      0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+	{ "opr-10185.11",      0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "gb-epr-10187.88",   0x08000, 0xe8639f00, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-10193.66",      0x08000, 0xbcd10dde, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10192.67",      0x08000, 0x770f1270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10191.68",      0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10190.69",      0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10189.70",      0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10188.71",      0x08000, 0xbad30ad9, SYS16_ROM_PCMDATA | BRF_SND },
+};
+
+STD_ROM_PICK(Outrungb)
+STD_ROM_FN(Outrungb)
+
+
 static struct BurnRomInfo ShangonRomDesc[] = {
 	{ "epr-10886.133",    0x10000, 0x8be3cd36, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10884.118",    0x10000, 0xcb06150d, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2564,6 +2610,16 @@ struct BurnDriver BurnDrvOutrunm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, OutrunmRomInfo, OutrunmRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
+	OutrunmInit, System16Exit, OutrunFrame, OutrunRender, OutrunmScan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvOutrungb = {
+	"outrungb", "outrun", NULL, NULL, "2026",
+	"Out Run Gumball Edition (Hack)\0", NULL, "niknak", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, OutrungbRomInfo, OutrungbRomName, NULL, NULL, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
 	OutrunmInit, System16Exit, OutrunFrame, OutrunRender, OutrunmScan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

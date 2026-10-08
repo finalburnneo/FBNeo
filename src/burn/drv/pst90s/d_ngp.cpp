@@ -4210,9 +4210,9 @@ struct BurnDriver BurnDrvngpc_neotris = {
 	160, 152, 4, 3
 };
 
-// Over Rev (HB)
+// Over Rev (HB, v1.0)
 static struct BurnRomInfo ngpc_overrevRomDesc[] = {
-	{ "Over Rev (2026)(Tixul).ngp", 2097152, 0xa381d08a, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Over Rev v1.0 (2026)(Tixul).ngp", 2097152, 0x41722bb0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_overrev, ngpc_overrev, ngpc_ngp)
@@ -4220,7 +4220,7 @@ STD_ROM_FN(ngpc_overrev)
 
 struct BurnDriver BurnDrvngpc_overrev = {
 	"ngp_overrev", NULL, "ngp_ngp", NULL, "2026",
-	"Over Rev (HB)\0", NULL, "Tixul", "NeoGeo Pocket Color",
+	"Over Rev (HB, v1.0)\0", NULL, "Tixul", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_RACING, 0,
 	NgpGetZipName, ngpc_overrevRomInfo, ngpc_overrevRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,

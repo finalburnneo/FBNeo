@@ -2744,6 +2744,44 @@ struct BurnDriver BurnDrvsnes_Animaniacs = {
 	512, 448, 4, 3
 };
 
+// Angelique (Japan)
+
+static struct BurnRomInfo snes_AngeliquejRomDesc[] = {
+	{ "Angelique (J)(1994)(Koei).sfc", 2097152, 0xec3edb9e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Angeliquej)
+STD_ROM_FN(snes_Angeliquej)
+
+struct BurnDriver BurnDrvsnes_Angeliquej = {
+	"snes_angeliquej", "snes_angeliquete", NULL, NULL, "1994",
+	"Angelique (Japan)\0", NULL, "Koei", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_AngeliquejRomInfo, snes_AngeliquejRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Angelique (Hack, English, v0.99)
+// https://www.romhacking.net/translations/7783/
+static struct BurnRomInfo snes_AngeliqueteRomDesc[] = {
+	{ "Angelique T-Eng v0.99 (2026)(Neocrypton).sfc", 4194304, 0x89fc8894, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Angeliquete)
+STD_ROM_FN(snes_Angeliquete)
+
+struct BurnDriver BurnDrvsnes_Angeliquete = {
+	"snes_angeliquete", NULL, NULL, NULL, "2026",
+	"Angelique (Hack, English, v0.99)\0", NULL, "Neocrypton", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_AngeliqueteRomInfo, snes_AngeliqueteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Animaniacs (Euro)
 
 static struct BurnRomInfo snes_AnimaniacseRomDesc[] = {
@@ -20081,6 +20119,25 @@ struct BurnDriver BurnDrvsnes_Kamaitachi = {
 	512, 448, 4, 3
 };
 
+// Kamen Rider (Hack, English)
+// https://www.romhacking.net/translations/7805/
+static struct BurnRomInfo snes_KamenriderteRomDesc[] = {
+	{ "Kamen Rider T-Eng (2026)(kamencoder).sfc", 2097152, 0x7602d9b2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Kamenriderte)
+STD_ROM_FN(snes_Kamenriderte)
+
+struct BurnDriver BurnDrvsnes_Kamenriderte = {
+	"snes_kamenriderte", NULL, NULL, NULL, "2026",
+	"Kamen Rider (Hack, English)\0", NULL, "kamencoder", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_KamenriderteRomInfo, snes_KamenriderteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Kamen Rider (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_KamenriderRomDesc[] = {
@@ -20091,10 +20148,10 @@ STD_ROM_PICK(snes_Kamenrider)
 STD_ROM_FN(snes_Kamenrider)
 
 struct BurnDriver BurnDrvsnes_Kamenrider = {
-	"snes_kamenrider", NULL, NULL, NULL, "1993",
+	"snes_kamenrider", "snes_kamenriderte", NULL, NULL, "1993",
 	"Kamen Rider (Japan, Rev. 1)\0", NULL, "Bandai", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
 	SNESGetZipName, snes_KamenriderRomInfo, snes_KamenriderRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -23705,6 +23762,44 @@ struct BurnDriver BurnDrvsnes_Markosmf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_MarkosmfRomInfo, snes_MarkosmfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Marmalade Boy (Japan)
+
+static struct BurnRomInfo snes_MarmaladeboyjRomDesc[] = {
+	{ "Marmalade Boy (J)(1995)(Bandai).sfc", 1048576, 0x5299b3a6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Marmaladeboyj)
+STD_ROM_FN(snes_Marmaladeboyj)
+
+struct BurnDriver BurnDrvsnes_Marmaladeboyj = {
+	"snes_marmaladeboyj", "snes_marmaladeboyte", NULL, NULL, "1995",
+	"Marmalade Boy (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_MarmaladeboyjRomInfo, snes_MarmaladeboyjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Marmalade Boy (Hack, English, v0.96)
+// https://www.romhacking.net/translations/7782/
+static struct BurnRomInfo snes_MarmaladeboyteRomDesc[] = {
+	{ "Marmalade Boy T-Eng v0.96 (2026)(Neocrypton).sfc", 2097152, 0x3885c5cc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Marmaladeboyte)
+STD_ROM_FN(snes_Marmaladeboyte)
+
+struct BurnDriver BurnDrvsnes_Marmaladeboyte = {
+	"snes_marmaladeboyte", NULL, NULL, NULL, "2026",
+	"Marmalade Boy (Hack, English, v0.96)\0", NULL, "Neocrypton", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_MarmaladeboyteRomInfo, snes_MarmaladeboyteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -40536,6 +40631,25 @@ struct BurnDriver BurnDrvsnes_T2arcadej = {
 	512, 448, 4, 3
 };
 
+// Taekwon-Do (Hack, English & Spanish)
+// https://romhackplaza.org/translations/taekwon-do-english-spanish-translation-super-nintendo
+static struct BurnRomInfo snes_TaekwondoteRomDesc[] = {
+	{ "Taekwon-Do T-Eng T-Spa (2026)(Patch Clan).sfc", 2097152, 0x124d0ab1, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Taekwondote)
+STD_ROM_FN(snes_Taekwondote)
+
+struct BurnDriver BurnDrvsnes_Taekwondote = {
+	"snes_taekwondote", NULL, NULL, NULL, "2026",
+	"Taekwon-Do (Hack, English & Spanish)\0", NULL, "Patch Clan", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_TaekwondoteRomInfo, snes_TaekwondoteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Taekwon-Do (Japan)
 
 static struct BurnRomInfo snes_TaekwondojRomDesc[] = {
@@ -40546,10 +40660,10 @@ STD_ROM_PICK(snes_Taekwondoj)
 STD_ROM_FN(snes_Taekwondoj)
 
 struct BurnDriver BurnDrvsnes_Taekwondoj = {
-	"snes_taekwondoj", NULL, NULL, NULL, "1994",
+	"snes_taekwondoj", "snes_taekwondote", NULL, NULL, "1994",
 	"Taekwon-Do (Japan)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_TaekwondojRomInfo, snes_TaekwondojRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
@@ -40565,7 +40679,7 @@ STD_ROM_PICK(snes_Taekwondok)
 STD_ROM_FN(snes_Taekwondok)
 
 struct BurnDriver BurnDrvsnes_Taekwondok = {
-	"snes_taekwondok", "snes_taekwondoj", NULL, NULL, "1994",
+	"snes_taekwondok", "snes_taekwondote", NULL, NULL, "1994",
 	"Taekwon-Do (Korea)\0", NULL, "Human Entertainment", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
@@ -48819,10 +48933,10 @@ struct BurnDriver BurnDrvsnes_Megamanxsa1 = {
 	512, 448, 4, 3
 };
 
-// Mega Man X - SA-1 Plus (Hack, v1.0.1)
+// Mega Man X - SA-1 Plus (Hack, v2.0.0)
 // https://romhackplaza.org/romhacks/mega-man-x-sa-1-plus-super-nintendo-romhack
 static struct BurnRomInfo snes_Megamanxsa1pRomDesc[] = {
-	{ "Mega Man X - SA-1 Plus v1.0.1 (2026)(llethas).sfc", 1572864, 0x8e685ca9, BRF_ESS | BRF_PRG },
+	{ "Mega Man X - SA-1 Plus v2.0.0 (2026)(llethas).sfc", 1572864, 0x11b4cc3b, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Megamanxsa1p)
@@ -48830,7 +48944,7 @@ STD_ROM_FN(snes_Megamanxsa1p)
 
 struct BurnDriver BurnDrvsnes_Megamanxsa1p = {
 	"snes_megamanxsa1p", "snes_megamanx", NULL, NULL, "2026",
-	"Mega Man X - SA-1 Plus (Hack, v1.0.1)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
+	"Mega Man X - SA-1 Plus (Hack, v2.0.0)\0", "SA-1 enhancement CPU", "llethas", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Megamanxsa1pRomInfo, snes_Megamanxsa1pRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -50831,6 +50945,25 @@ struct BurnDriver BurnDrvsnes_Supermetroidxf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_ADV | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_SupermetroidxfRomInfo, snes_SupermetroidxfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Mario Kart - Fullscreen Edition (Hack, v1.5)
+// https://www.romhacking.net/hacks/10083/
+static struct BurnRomInfo snes_SupermkartfseRomDesc[] = {
+	{ "Super Mario Kart - Fullscreen Edition v1.5 (2026)(Psicopompo).sfc", 1048576, 0x6af5145e, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(snes_Supermkartfse, snes_Supermkartfse, snes_dsp1b)
+STD_ROM_FN(snes_Supermkartfse)
+
+struct BurnDriver BurnDrvsnes_Supermkartfse = {
+	"snes_supermkartfse", "snes_supermkart", "snes_dsp1b", NULL, "2026",
+	"Super Mario Kart - Fullscreen Edition (Hack, v1.5)\0", "DSP-1B enhancement chip", "Psicopompo", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_SupermkartfseRomInfo, snes_SupermkartfseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

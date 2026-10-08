@@ -9884,6 +9884,25 @@ struct BurnDriver BurnDrvtg_chasehqnf = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
+// Tetris - Atari Games Arcade Port (HB, v1.01)
+
+static struct BurnRomInfo pce_tetrisarcRomDesc[] = {
+	{ "Tetris - Atari Games Arcade Port v1.01 (2026)(ShinobiZ).pce", 524288, 0x5fccd826, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_tetrisarc)
+STD_ROM_FN(pce_tetrisarc)
+
+struct BurnDriver BurnDrvpce_tetrisarc = {
+	"pce_tetrisarc", NULL, NULL, NULL, "2026",
+	"Tetris - Atari Games Arcade Port (HB, v1.01)\0", NULL, "ShinobiZ", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PCENGINE_PCENGINE, GBF_PUZZLE, 0,
+	PceGetZipName, pce_tetrisarcRomInfo, pce_tetrisarcRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
 // Tongueman's Logic (HB)
 
 static struct BurnRomInfo pce_tonguemanRomDesc[] = {

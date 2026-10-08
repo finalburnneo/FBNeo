@@ -2763,10 +2763,10 @@ struct BurnDriver BurnDrvsnes_Angeliquej = {
 	512, 448, 4, 3
 };
 
-// Angelique (Hack, English, v0.99)
+// Angelique (Hack, English, v0.99a)
 // https://www.romhacking.net/translations/7783/
 static struct BurnRomInfo snes_AngeliqueteRomDesc[] = {
-	{ "Angelique T-Eng v0.99 (2026)(Neocrypton).sfc", 4194304, 0x89fc8894, BRF_ESS | BRF_PRG },
+	{ "Angelique T-Eng v0.99a (2026)(Neocrypton).sfc", 4194304, 0x46be57be, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Angeliquete)
@@ -2774,7 +2774,7 @@ STD_ROM_FN(snes_Angeliquete)
 
 struct BurnDriver BurnDrvsnes_Angeliquete = {
 	"snes_angeliquete", NULL, NULL, NULL, "2026",
-	"Angelique (Hack, English, v0.99)\0", NULL, "Neocrypton", "SNES / Super Famicom",
+	"Angelique (Hack, English, v0.99a)\0", NULL, "Neocrypton", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ADV, 0,
 	SNESGetZipName, snes_AngeliqueteRomInfo, snes_AngeliqueteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

@@ -40547,6 +40547,24 @@ struct BurnDriver BurnDrvmd_ghbaseball = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Ghosts'n Goblins (HB)
+static struct BurnRomInfo md_gnghb26RomDesc[] = {
+	{ "Ghosts'n Goblins (2026)(Frank).bin", 3473408, 0xa5f87545, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_gnghb26)
+STD_ROM_FN(md_gnghb26)
+
+struct BurnDriver BurnDrvmd_gnghb26 = {
+	"md_gnghb26", NULL, NULL, NULL, "2026",
+	"Ghosts'n Goblins (HB)\0", NULL, "Frank", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_gnghb26RomInfo, md_gnghb26RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Ghosts'n Goblins (HB, Ver.2021-11-01) (Unl)
 // https://twitter.com/Fabio_16bits/status/1401829359980326912
 static struct BurnRomInfo md_gnghbRomDesc[] = {
@@ -46827,6 +46845,25 @@ struct BurnDriver BurnDrvmd_sf2ics = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Street Fighter II' - Special Champion Edition - 48 Mbits (Hack, v1.1)
+// https://www.romhacking.net/hacks/10098/
+static struct BurnRomInfo md_sf248mRomDesc[] = {
+	{ "Street Fighter II' - Special Champion Edition - 48 Mbits v1.1 (2026)(marcel_law).bin", 6291456, 0x41d08c5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf248m)
+STD_ROM_FN(md_sf248m)
+
+struct BurnDriver BurnDrvmd_sf248m = {
+	"md_sf248m", "md_sf2", NULL, NULL, "2026",
+	"Street Fighter II' - Special Champion Edition - 48 Mbits (Hack, v1.1)\0", NULL, "marcel_law", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf248mRomInfo, md_sf248mRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Street Fighter II' - The World Warrior Plus (Hack)
 static struct BurnRomInfo md_sf2wwpRomDesc[] = {
 	{ "Street Fighter II' - World Warrior Plus (2021)(Lord Hiryu).bin", 3145728, 0x8fad3a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -46841,6 +46878,24 @@ struct BurnDriver BurnDrvmd_sf2wwp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Voter II Furbo - Elecciones Anticipadas Edition (Hack, Spanish, v37)
+static struct BurnRomInfo md_sv2furbosRomDesc[] = {
+	{ "Street Voter II Furbo - Elecciones Anticipadas Edition v37 T-Spa (2026)(Ponferrada IA).bin", 4194304, 0xeb4b73c7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sv2furbos)
+STD_ROM_FN(md_sv2furbos)
+
+struct BurnDriver BurnDrvmd_sv2furbos = {
+	"md_sv2furbos", "md_sf2", NULL, NULL, "2026",
+	"Street Voter II Furbo - Elecciones Anticipadas Edition (Hack, Spanish, v37)\0", NULL, "Ponferrada IA", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sv2furbosRomInfo, md_sv2furbosRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

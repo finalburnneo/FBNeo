@@ -127,7 +127,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			arm.o arm7.o arm9.o e132xs.o h6280.o hd6309.o hmcs40.o i386.o i8039.o m37710.o mcs48.o mcs51.o i8085.o konami.o m6502.o m6800.o m6805.o m6809.o mb88xx.o nec.o pic16c5x.o s2650.o sh2.o sh4.o t11.o tms32010.o tlcs90.o tlcs900.o \
 			upd7725.o upd7810.o v25.o v60.o xa.o xa_ops.o z80.o z80daisy.o z80ctc.o z80pio.o z180.o \
 			\
-			cop0.o cop1.o mips3.o \
+			mips3.o \
 			\
 			cave.o cave_palette.o cave_sprite.o cave_tile.o \
 			\
@@ -178,8 +178,3 @@ endif
 ifdef	BUILD_X86_ASM
 	autobj += burn_sound_a.o
 endif
-
-#ifdef	BUILD_X64_EXE
-#	alldir += cpu/mips3/x64
-#	depobj += mips3_x64.o
-#endif

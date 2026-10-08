@@ -44454,10 +44454,10 @@ struct BurnDriver BurnDrvmd_wolfstn3d = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Wonder Boy - Arcade Port (HB, v1.1)
+// Wonder Boy - Arcade Port (HB, v1.2)
 // https://shinobiz72.itch.io/tetris-pce
 static struct BurnRomInfo md_wboyarcRomDesc[] = {
-	{ "Wonder Boy - Arcade Port v1.1 (2026)(ShinobiZ).bin", 1638400, 0xe48b69f7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Wonder Boy - Arcade Port v1.2 (2026)(ShinobiZ).bin", 2097152, 0xe8a52997, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_wboyarc)
@@ -44465,7 +44465,7 @@ STD_ROM_FN(md_wboyarc)
 
 struct BurnDriver BurnDrvmd_wboyarc = {
 	"md_wboyarc", NULL, NULL, NULL, "2026",
-	"Wonder Boy - Arcade Port (HB, v1.1)\0", NULL, "ShinobiZ", "Genesis / Mega Drive",
+	"Wonder Boy - Arcade Port (HB, v1.2)\0", NULL, "ShinobiZ", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_wboyarcRomInfo, md_wboyarcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -46096,6 +46096,24 @@ struct BurnDriver BurnDrvmd_lemmingscph = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// M.Rajoy & Knuckles (Hack)
+static struct BurnRomInfo md_mrajoyknuRomDesc[] = {
+	{ "M.Rajoy & Knuckles (2026)(Ponferrada.IA).bin", 8480798, 0xe85b98c3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mrajoyknu)
+STD_ROM_FN(md_mrajoyknu)
+
+struct BurnDriver BurnDrvmd_mrajoyknu = {
+	"md_mrajoyknu", "md_sk", NULL, NULL, "2026",
+	"M.Rajoy & Knuckles (Hack)\0", NULL, "Ponferrada.IA", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_mrajoyknuRomInfo, md_mrajoyknuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // McDonald's Treasure Land Adventure Restoration (Hack)
 // https://romhackplaza.org/romhacks/mcdonalds-treasure-land-adventure-restoration-genesis/
 static struct BurnRomInfo md_mcdonaldreRomDesc[] = {
@@ -46884,7 +46902,7 @@ struct BurnDriver BurnDrvmd_sf2wwp = {
 
 // Street Voter II Furbo - Elecciones Anticipadas Edition (Hack, Spanish, v37)
 static struct BurnRomInfo md_sv2furbosRomDesc[] = {
-	{ "Street Voter II Furbo - Elecciones Anticipadas Edition v37 T-Spa (2026)(Ponferrada IA).bin", 4194304, 0xeb4b73c7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Street Voter II Furbo - Elecciones Anticipadas Edition v37 T-Spa (2026)(Ponferrada.IA).bin", 4194304, 0xeb4b73c7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_sv2furbos)
@@ -46892,7 +46910,7 @@ STD_ROM_FN(md_sv2furbos)
 
 struct BurnDriver BurnDrvmd_sv2furbos = {
 	"md_sv2furbos", "md_sf2", NULL, NULL, "2026",
-	"Street Voter II Furbo - Elecciones Anticipadas Edition (Hack, Spanish, v37)\0", NULL, "Ponferrada IA", "Genesis / Mega Drive",
+	"Street Voter II Furbo - Elecciones Anticipadas Edition (Hack, Spanish, v37)\0", NULL, "Ponferrada.IA", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_sv2furbosRomInfo, md_sv2furbosRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

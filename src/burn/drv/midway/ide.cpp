@@ -1,10 +1,6 @@
 // Killer Instinct hd image:
 // Tag='GDDD'  Index=0  Length=34 bytes
 // CYLS:419,HEADS:13,SECS:47,BPS:512.
-/*#include <string>
-#include <fstream>
-#include <cstdio>
-#include <cstring>*/
 #include "ide.h"
 
 #define DEBUG_ATA   0
@@ -14,9 +10,6 @@
 #else
 # define ata_log(...)
 #endif
-
-char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
-#define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 
 namespace ide
 {
@@ -89,22 +82,30 @@ enum ata_error_flags {
     ERR_UNC = 64
 };
 
+#define SECTOR_SIZE		512
+
 ide_disk::ide_disk()
 {
-    reset();
-    m_buffer_pos = 0;
-    m_buffer = new unsigned short[256];
+    m_disk = NULL;
     m_irq_callback = NULL;
+    m_buffer = new unsigned short[256];
+    memset(m_buffer, 0, 256 * sizeof(unsigned short));
+
+    // Killer Instinct geometry until an image is loaded
+    m_num_cylinders = 419;
+    m_default_heads = 13;
+    m_default_sectors = 47;
+    m_num_bytes_per_sector = SECTOR_SIZE;
+
+    reset();
 }
 
 ide_disk::~ide_disk()
 {
-	delete[] m_buffer;
+	BurnHDDClose(m_disk);
+	m_disk = NULL;
 
-	if (m_disk_image) {
-		fclose(m_disk_image);
-		m_disk_image = NULL;
-	}
+	delete[] m_buffer;
 }
 
 void ide_disk::set_irq_callback(void (*irq)(int))
@@ -114,15 +115,48 @@ void ide_disk::set_irq_callback(void (*irq)(int))
 
 void ide_disk::reset()
 {
-    // Killer Instinct geometry
-    // CYLS:419,HEADS:13,SECS:47,BPS:512.
-    m_num_cylinders = 419;
-    m_num_heads = 13;
-    m_num_sectors = 47;
-    m_num_bytes_per_sector = 512;
+    // INITIALIZE DRIVE PARAMETERS may have changed these
+    m_num_heads = m_default_heads;
+    m_num_sectors = m_default_sectors;
 
     m_status = 0;
+    m_error = 0;
+    m_device_control = 0;
+    m_features = 0;
+    m_command = 0;
+    m_sector_count = 0;
+    m_sector_number = 0;
+    m_cylinder_low = 0;
+    m_cylinder_high = 0;
+    m_drive_head = 0;
+    m_transfer_operation = TRF_NONE;
+    m_transfer_count = 0;
+    m_buffer_pos = 0;
+    m_last_buffer_lba = 0;
     build_identify_buffer();
+}
+
+void ide_disk::scan(INT32 nAction)
+{
+    if (nAction & ACB_DRIVER_DATA) {
+        ScanVar(m_buffer, 256 * sizeof(unsigned short), "IDE Buffer");
+        SCAN_VAR(m_buffer_pos);
+        SCAN_VAR(m_last_buffer_lba);
+        SCAN_VAR(m_transfer_count);
+        SCAN_VAR(m_transfer_operation);
+        SCAN_VAR(m_num_heads);
+        SCAN_VAR(m_num_sectors);
+        SCAN_VAR(m_device_control);
+        SCAN_VAR(m_error);
+        SCAN_VAR(m_sector_count);
+        SCAN_VAR(m_sector_number);
+        SCAN_VAR(m_cylinder_low);
+        SCAN_VAR(m_cylinder_high);
+        SCAN_VAR(m_drive_head);
+        SCAN_VAR(m_status);
+        SCAN_VAR(m_features);
+        SCAN_VAR(m_command);
+    }
 }
 
 void ide_disk::execute()
@@ -149,34 +183,24 @@ void ide_disk::build_identify_buffer()
 {
     memset(m_identify_buffer, 0, sizeof(m_identify_buffer));
 
-    // Killer Instinct 1
-    m_identify_buffer[0] = 0x5354;
-    m_identify_buffer[1] = 0x3931;
-    m_identify_buffer[2] = 0x3530;
-    m_identify_buffer[3] = 0x4147;
-    m_identify_buffer[4] = 0x2020;
+    m_identify_buffer[0] = 0x0040;		// fixed drive
+    m_identify_buffer[1] = m_num_cylinders;
+    m_identify_buffer[3] = m_num_heads;
+    m_identify_buffer[4] = m_num_sectors * SECTOR_SIZE;
+    m_identify_buffer[5] = SECTOR_SIZE;
     m_identify_buffer[6] = m_num_sectors;
 
-    // serial number
-    for (int i = 0; i < 10; i++)
-        m_identify_buffer[10 + i] = '0';
+    // serial number and model, set up as MAME does: KI checks the model at word 27, KI2 at word 11
+    for (int i = 10; i < 20; i++)
+        m_identify_buffer[i] = ('0' << 8) | '0';
+    for (int i = 27; i < 47; i++)
+        m_identify_buffer[i] = (' ' << 8) | ' ';
 
-    strncpy((char *) &m_identify_buffer[27], "Generic IDE HD", 27);
-
-
-    // KI I
-    m_identify_buffer[10] = ('0' << 8) | '0';
-    m_identify_buffer[11] = ('S' << 8) | 'T';
-    m_identify_buffer[12] = ('9' << 8) | '1';
-    m_identify_buffer[13] = ('5' << 8) | '0';
-    m_identify_buffer[14] = ('A' << 8) | 'G';
-
-    // KI II
-    m_identify_buffer[27] = ('S' << 8) | 'T';
-    m_identify_buffer[28] = ('9' << 8) | '1';
-    m_identify_buffer[29] = ('5' << 8) | '0';
-    m_identify_buffer[30] = ('A' << 8) | 'G';
-    m_identify_buffer[31] = (' ' << 8) | ' ';
+    static const char model[9] = "ST9150AG";
+    for (int i = 0; i < 4; i++) {
+        m_identify_buffer[11 + i] = (model[i * 2] << 8) | model[i * 2 + 1];
+        m_identify_buffer[27 + i] = (model[i * 2] << 8) | model[i * 2 + 1];
+    }
 }
 
 unsigned ide_disk::chs_to_lba(int cylinder, int head, int sector)
@@ -186,24 +210,37 @@ unsigned ide_disk::chs_to_lba(int cylinder, int head, int sector)
 
 void ide_disk::chs_next_sector()
 {
-    m_sector_number++;
-    if (m_sector_number >= m_num_sectors) {
-        m_sector_number = 0;
-        m_drive_head++;
-        if (m_drive_head >= m_num_heads) {
-            m_drive_head = 0;
-            m_cylinder_low++;
-            if (m_cylinder_low >= 256) {
+    if (m_drive_head & 0x40) {
+        // LBA addressing: the task file holds a 28-bit sector number
+        unsigned lba = lba_from_regs() + 1;
+        m_sector_number = lba & 0xff;
+        m_cylinder_low = (lba >> 8) & 0xff;
+        m_cylinder_high = (lba >> 16) & 0xff;
+        m_drive_head = (m_drive_head & 0xf0) | ((lba >> 24) & 0x0f);
+        return;
+    }
+
+    // sectors count from 1, heads and cylinders from 0
+    if (++m_sector_number > m_num_sectors) {
+        m_sector_number = 1;
+        int head = (m_drive_head & 0x0f) + 1;
+        if (head >= m_num_heads) {
+            head = 0;
+            if (++m_cylinder_low >= 256) {
                 m_cylinder_low = 0;
-                m_cylinder_high++;
+                m_cylinder_high = (m_cylinder_high + 1) & 0xff;
             }
         }
+        m_drive_head = (m_drive_head & 0xf0) | head;
     }
 }
 
 unsigned ide_disk::lba_from_regs()
 {
-    return chs_to_lba(m_cylinder_low | (m_cylinder_high << 8), m_drive_head, m_sector_number);
+    if (m_drive_head & 0x40)
+        return ((m_drive_head & 0x0f) << 24) | (m_cylinder_high << 16) | (m_cylinder_low << 8) | m_sector_number;
+
+    return chs_to_lba(m_cylinder_low | (m_cylinder_high << 8), m_drive_head & 0x0f, m_sector_number);
 }
 
 inline bool ide_disk::is_drive_ready()
@@ -214,6 +251,7 @@ inline bool ide_disk::is_drive_ready()
     m_error |= ERR_ABRT;
     m_status |= ST_ERR;
     m_status &= ~ST_BSY;
+    return false;
 }
 
 void ide_disk::raise_interrupt()
@@ -232,8 +270,6 @@ void ide_disk::clear_interrupt()
 
 void ide_disk::write(unsigned offset, unsigned value)
 {
-    //ata_log("[%x] write: %x = %x\n", mips::g_mips->m_state.pc, offset, value);
-
     switch (offset) {
     case REG_COMMAND_WO:
 
@@ -246,7 +282,6 @@ void ide_disk::write(unsigned offset, unsigned value)
         if (m_status & ST_DRQ) {
             if (m_transfer_operation == TRF_SECTOR_WRITE) {
                 m_buffer[m_buffer_pos++] = BURN_ENDIAN_SWAP_INT16(value);
-                //ata_log("ata_write_data: %02x\n", value);
                 if (m_buffer_pos >= m_num_bytes_per_sector / 2)
                     update_transfer();
             }
@@ -254,26 +289,27 @@ void ide_disk::write(unsigned offset, unsigned value)
         break;
 
     case REG_FEATURES_WO:
+        m_features = value;
         break;
 
     case REG_SECTOR_COUNT:
-        m_sector_count = value;
+        m_sector_count = value & 0xff;
         break;
 
     case REG_SECTOR_NUMBER:
-        m_sector_number = value;
+        m_sector_number = value & 0xff;
         break;
 
     case REG_CYLINDER_LOW:
-        m_cylinder_low = value;
+        m_cylinder_low = value & 0xff;
         break;
 
     case REG_CYLINDER_HIGH:
-        m_cylinder_high = value;
+        m_cylinder_high = value & 0xff;
         break;
 
     case REG_DRIVE_HEAD:
-        m_drive_head = value;
+        m_drive_head = value & 0xff;
         break;
     }
 }
@@ -286,11 +322,8 @@ void ide_disk::write_alternate(unsigned offset, unsigned value)
 
 unsigned ide_disk::read(unsigned offset)
 {
-    //ata_log("ata_read: %x\n", offset);
-
     switch (offset) {
     case REG_STATUS_RO:
-        //ata_log("ata_read_status: %x\n", offset);
         clear_interrupt();
         return m_status;
 
@@ -304,9 +337,6 @@ unsigned ide_disk::read(unsigned offset)
                 unsigned data = BURN_ENDIAN_SWAP_INT16(m_buffer[m_buffer_pos]);
                 m_buffer_pos++;
 
-                if (m_transfer_operation == TRF_IDENTIFY) {
-                ata_log("ata_read_data: %02x\n", data);
-                }
                 if (m_buffer_pos >= m_num_bytes_per_sector / 2)
                     update_transfer();
                 return data;
@@ -324,14 +354,13 @@ unsigned ide_disk::read(unsigned offset)
     case REG_DRIVE_HEAD:
         return m_drive_head;
     }
-	
+
 	// shouldn't happen
 	return 0;
 }
 
 unsigned ide_disk::read_alternate(unsigned offset)
 {
-    //ata_log("read_alt: %x\n", offset);
     switch (offset) {
     case REG_ALT_DRIVE_ADDRESS_RO:
     case REG_ALT_STATUS_RO:
@@ -340,78 +369,62 @@ unsigned ide_disk::read_alternate(unsigned offset)
     return 0;
 }
 
-bool ide_disk::load_disk_image(const char *filename)
-{
-	char szFilePath[MAX_PATH];
-
-	sprintf(szFilePath, "%s%s", _TtoA(szAppHDDPath), filename);
-
-	m_disk_image = fopen(szFilePath, "r+b");
-	if (!m_disk_image) {
-		ata_log("disk image not found!\n");
-		return false;
-	}
-
-	return true;
-}
+// ---------------------------------------------------------------------------
+// disk image
 
 int ide_disk::load_hdd_image(int idx)
 {
-	// get setname (use parent if applicable)
-	char setname[128];
-	
-	if (BurnDrvGetTextA(DRV_PARENT)) {
-		strcpy(setname, BurnDrvGetTextA(DRV_PARENT));
-	} else {
-		strcpy(setname, BurnDrvGetTextA(DRV_NAME));
-	}
-	
-	// get hdd name
-	char *szHDDNameTmp = NULL;
-	BurnDrvGetHDDName(&szHDDNameTmp, idx, 0);
-	
-	// make the path
-	char path[256];
-	sprintf(path, "%s/%s", setname, szHDDNameTmp);
-	
-	// null terminate
-	path[strlen(path)] = '\0';
-	
-	if (!load_disk_image(path)) {
+	BurnHDDClose(m_disk);
+	m_disk = BurnHDDOpen(idx);
+	if (m_disk == NULL)
+		return 1;
+
+	if (BurnHDDGetSectorSize(m_disk) != SECTOR_SIZE) {
+		bprintf(PRINT_ERROR, _T("IDE: only 512 byte sectors are supported\n"));
+		BurnHDDClose(m_disk);
+		m_disk = NULL;
 		return 1;
 	}
 
+	int cyls, heads, secs;
+	if (BurnHDDGetGeometry(m_disk, &cyls, &heads, &secs) == 0) {
+		m_default_heads = heads;
+		m_default_sectors = secs;
+		m_num_cylinders = cyls;
+	} else {
+		// raw dump: Killer Instinct geometry
+		m_default_heads = 13;
+		m_default_sectors = 47;
+		m_num_cylinders = BurnHDDGetSectorCount(m_disk) / (13 * 47);
+	}
+
+	m_num_heads = m_default_heads;
+	m_num_sectors = m_default_sectors;
+	build_identify_buffer();
+
 	return 0;
 }
+
+// ---------------------------------------------------------------------------
+// PIO transfers
 
 void ide_disk::setup_transfer(int mode)
 {
     m_transfer_operation = mode;
 
-    m_buffer_pos = 0;
     if (m_sector_count == 0)
         m_sector_count = 256;
 
     if (mode == TRF_IDENTIFY)
         m_sector_count = 1;
 
-    m_transfer_write_first = true;
-    update_transfer();
-    m_transfer_write_first = false;
+    m_status &= ~ST_ERR;
+    start_sector(true);
 }
 
-void ide_disk::update_transfer()
+// get the next sector of the transfer ready for the host
+void ide_disk::start_sector(bool first)
 {
-    if (m_transfer_operation == TRF_NONE)
-        return;
-
-    if (m_sector_count < 0) {
-        m_status &= ~ST_DRQ;
-        m_transfer_operation = TRF_NONE;
-        return;
-    }
-
-    unsigned lba = 0;
     switch (m_transfer_operation) {
     case TRF_IDENTIFY:
 #ifdef LSB_FIRST
@@ -422,34 +435,48 @@ void ide_disk::update_transfer()
 #endif
         break;
 
-    case TRF_SECTOR_WRITE:
-        if (!m_transfer_write_first)
-            flush_write_transfer();
-
     case TRF_SECTOR_READ:
-        lba = lba_from_regs() * m_num_bytes_per_sector;
-        m_last_buffer_lba = lba;
+        m_last_buffer_lba = lba_from_regs();
+        BurnHDDRead(m_disk, m_last_buffer_lba, 1, m_buffer);
+        chs_next_sector();
+        break;
 
-        fseek(m_disk_image, lba, SEEK_SET);
-        fread(m_buffer, m_num_bytes_per_sector, 1, m_disk_image);
-        m_buffer_pos = 0;
-
+    case TRF_SECTOR_WRITE:
+        m_last_buffer_lba = lba_from_regs();
         chs_next_sector();
         break;
     }
 
-
-    m_sector_count--;
+    m_buffer_pos = 0;
     m_status |= ST_DRQ;
-    raise_interrupt();
+
+    // no interrupt before the first sector of a write
+    if (!(first && m_transfer_operation == TRF_SECTOR_WRITE))
+        raise_interrupt();
 }
 
-void ide_disk::flush_write_transfer()
+// the host has read or written a whole sector
+void ide_disk::update_transfer()
 {
-    ata_log("flush write buffer\n");
+    if (m_transfer_operation == TRF_NONE)
+        return;
 
-    fseek(m_disk_image, m_last_buffer_lba, SEEK_SET);
-    fwrite(m_buffer, m_num_bytes_per_sector, 1, m_disk_image);
+    if (m_transfer_operation == TRF_SECTOR_WRITE)
+        BurnHDDWrite(m_disk, m_last_buffer_lba, 1, m_buffer);
+
+    if (--m_sector_count > 0) {
+        start_sector(false);
+        return;
+    }
+
+    m_sector_count = 0;
+    m_status &= ~ST_DRQ;
+
+    // a write ends with an interrupt once the last sector is on the disk
+    if (m_transfer_operation == TRF_SECTOR_WRITE)
+        raise_interrupt();
+
+    m_transfer_operation = TRF_NONE;
 }
 
 // ========================================================================== //
@@ -490,20 +517,15 @@ void ide_disk::cmd_read_long_wor()
 
 void ide_disk::cmd_read_sector()
 {
-    ata_log("read_sector(cyl_lo=%d, cyl_hi=%d, head=%d, sector=%d, sec_count=%d) [%0x]\n",
-            m_cylinder_low, m_cylinder_high, m_drive_head,
-            m_sector_number, m_sector_count,
-            chs_to_lba(m_cylinder_low | (m_cylinder_high << 8), m_drive_head, m_sector_number));
+    ata_log("read_sector(lba=%x, sec_count=%d)\n", lba_from_regs(), m_sector_count);
 
     setup_transfer(TRF_SECTOR_READ);
 }
 
 void ide_disk::cmd_read_sector_wor()
 {
-    ata_log("read_sector_wor(cyl_lo=%d, cyl_hi=%d, head=%d, sector=%d, sec_count=%d) [%0x]\n",
-            m_cylinder_low, m_cylinder_high, m_drive_head,
-            m_sector_number, m_sector_count,
-            chs_to_lba(m_cylinder_low | (m_cylinder_high << 8), m_drive_head, m_sector_number));
+    // same as READ SECTOR, the retry flag only matters for a real drive
+    setup_transfer(TRF_SECTOR_READ);
 }
 
 void ide_disk::cmd_write_long()
@@ -522,20 +544,14 @@ void ide_disk::cmd_write_long_wor()
 
 void ide_disk::cmd_write_sector()
 {
-    ata_log("write_sector(cyl_lo=%d, cyl_hi=%d, head=%d, sector=%d, sec_count=%d) [%0x]\n",
-            m_cylinder_low, m_cylinder_high, m_drive_head,
-            m_sector_number, m_sector_count,
-            chs_to_lba(m_cylinder_low | (m_cylinder_high << 8), m_drive_head, m_sector_number));
+    ata_log("write_sector(lba=%x, sec_count=%d)\n", lba_from_regs(), m_sector_count);
 
     setup_transfer(TRF_SECTOR_WRITE);
 }
 
 void ide_disk::cmd_write_sector_wor()
 {
-    ata_log("write_sector_wor(cyl_lo=%d, cyl_hi=%d, head=%d, sector=%d, sec_count=%d) [%0x]\n",
-            m_cylinder_low, m_cylinder_high, m_drive_head,
-            m_sector_number, m_sector_count,
-            chs_to_lba(m_cylinder_low | (m_cylinder_high << 8), m_drive_head, m_sector_number));
+    setup_transfer(TRF_SECTOR_WRITE);
 }
 
 void ide_disk::cmd_indentify_drive()

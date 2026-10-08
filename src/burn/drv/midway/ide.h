@@ -2,6 +2,7 @@
 #define IDE
 
 #include "burnint.h"
+#include "burn_hdd.h"
 
 namespace ide
 {
@@ -16,13 +17,12 @@ public:
     void write_alternate(unsigned offset, unsigned value);
     unsigned read(unsigned offset);
     unsigned read_alternate(unsigned offset);
-    bool load_disk_image(const char *filename);
-	void close_disk_image();
 	int load_hdd_image(int idx);
     ide_disk();
     ~ide_disk();
 
     void set_irq_callback(void (*irq)(int state));
+    void scan(INT32 nAction);
 
 
 private:
@@ -56,14 +56,14 @@ private:
     unsigned m_last_buffer_lba;
 
     void setup_transfer(int mode);
+    void start_sector(bool first);
     void update_transfer();
-    void flush_write_transfer();
+
 
     short m_identify_buffer[256];
 
     int m_transfer_count;
     int m_transfer_operation;
-    bool m_transfer_write_first;
 
     int m_num_cylinders;
     int m_num_heads;
@@ -81,11 +81,12 @@ private:
     int m_features;
     int m_command;
 
-    FILE * m_disk_image;
+    int m_default_heads;
+    int m_default_sectors;
 
+    BurnHDD *m_disk;
 };
 
 }
 
 #endif // IDE
-

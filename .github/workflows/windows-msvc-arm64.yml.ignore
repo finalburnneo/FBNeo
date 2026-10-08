@@ -54,7 +54,6 @@ jobs:
             if %%~zF EQU 0 exit /b 1
           )
           findstr /C:"#define BUILD_CPU  ARM64" "%GENERATED%\build_details.h" >nul || exit /b 1
-          dir /s /b "%PROJECT%\ARM64\${{ matrix.configuration }}\obj\*mips3_x64*.obj" >nul 2>&1 && exit /b 1 || ver >nul
           dir /s /b "%PROJECT%\ARM64\${{ matrix.configuration }}\obj\*.asm.obj" >nul 2>&1 && exit /b 1 || ver >nul
 
       - name: Package

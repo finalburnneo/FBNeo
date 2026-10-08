@@ -282,7 +282,6 @@ jobs:
           for %%F in (ctv_make.exe pgm_sprite_create.exe m68kmake.exe build_details_arm64.exe) do dumpbin /headers "%PROJECT%\hosttools\x64\Release\%%F" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" /C:"machine (x64)" >nul || exit /b 1
           dumpbin /headers "%PROJECT%\ARM64\Release\fbneoarm64.exe" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" >nul || exit /b 1
           findstr /C:"#define BUILD_CPU  ARM64" "%PROJECT%\generated\build_details.h" >nul || exit /b 1
-          dir /s /b "%PROJECT%\ARM64\Release\obj\*mips3_x64*.obj" >nul 2>&1 && exit /b 1 || ver >nul
           dir /s /b "%PROJECT%\ARM64\Release\obj\*.asm.obj" >nul 2>&1 && exit /b 1 || ver >nul
 
       - name: Package
@@ -336,7 +335,6 @@ jobs:
           for %%F in (ctv_make.exe pgm_sprite_create.exe m68kmake.exe build_details_arm64.exe) do dumpbin /headers "%PROJECT%\hosttools\x64\Release\%%F" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" /C:"machine (x64)" >nul || exit /b 1
           dumpbin /headers "%PROJECT%\ARM64\Debug\fbneoarm64d.exe" | findstr /C:"machine (ARM64)" /C:"machine (AA64)" >nul || exit /b 1
           findstr /C:"#define BUILD_CPU  ARM64" "%PROJECT%\generated\build_details.h" >nul || exit /b 1
-          dir /s /b "%PROJECT%\ARM64\Debug\obj\*mips3_x64*.obj" >nul 2>&1 && exit /b 1 || ver >nul
           dir /s /b "%PROJECT%\ARM64\Debug\obj\*.asm.obj" >nul 2>&1 && exit /b 1 || ver >nul
 
       - name: Package

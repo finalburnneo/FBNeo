@@ -713,7 +713,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnHDDInfo kinstHDDDesc[] = {
-	{ "kinst", "81d833236e994528d1482979261401b198d1ca53" }	// raw data size/crc, chd sha1 81d833236e994528d1482979261401b198d1ca53
+	{ "kinst", "81d833236e994528d1482979261401b198d1ca53" }
 };
 
 STD_HDD_PICK(kinst)

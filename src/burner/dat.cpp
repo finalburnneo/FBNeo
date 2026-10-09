@@ -654,6 +654,23 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 					}
 				}
 			}
+
+			// disks
+			for (i=0, nRet=0; nRet==0 && i<0x100; i++)
+			{
+				struct BurnHDDInfo hddi;
+				char *szHDDName = NULL;
+
+				memset(&hddi, 0, sizeof(hddi));
+
+				nBurnDrvActive=nGameSelect;
+				nRet = BurnDrvGetHDDInfo(&hddi, i);
+				nRet += BurnDrvGetHDDName(&szHDDName, i, 0);
+
+				if (szHDDName == NULL) continue;
+
+				fprintf(fDat, "\t\t<disk name=\"%s\" sha1=\"%s\" />\n", szHDDName, hddi.szSha1);
+			}
 		}
 
 		INT32 nGameWidth, nGameHeight, nGameAspectX, nGameAspectY;

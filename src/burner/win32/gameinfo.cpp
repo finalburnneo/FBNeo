@@ -830,19 +830,19 @@ static int GameInfoInit()
 		nRet = BurnDrvGetHDDInfo(&hddi, i);
 		nRet += BurnDrvGetHDDName(&szHDDName, i, 0);
 
-		if (hddi.nLen == 0) continue;
+		if (szHDDName == NULL) continue;
 
 		LvItem.iItem = HDDPos;
 		LvItem.iSubItem = 0;
 		LvItem.pszText = ANSIToTCHAR(szHDDName, NULL, 0);
 		SendMessage(hList, LVM_INSERTITEM, 0, (LPARAM)&LvItem);
 
-		snprintf(nLen, sizeof(nLen), "%d", hddi.nLen);
+		//snprintf(nLen, sizeof(nLen), "%d", hddi.nLen);
 		LvItem.iSubItem = 1;
 		LvItem.pszText = ANSIToTCHAR(nLen, NULL, 0);
 		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);
 
-		snprintf(nCrc, sizeof(nCrc), "%08X", hddi.nCrc);
+		//snprintf(nCrc, sizeof(nCrc), "%08X", hddi.nCrc);
 		LvItem.iSubItem = 2;
 		LvItem.pszText = ANSIToTCHAR(nCrc, NULL, 0);
 		SendMessage(hList, LVM_SETITEM, 0, (LPARAM)&LvItem);

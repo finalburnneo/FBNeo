@@ -185,8 +185,7 @@ struct BurnSampleInfo {
 
 struct BurnHDDInfo {
 	char *szName;
-	UINT32 nLen;
-	UINT32 nCrc;
+	char *szSha1;
 };
 
 // ---------------------------------------------------------------------------

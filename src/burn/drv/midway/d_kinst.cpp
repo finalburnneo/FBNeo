@@ -713,7 +713,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnHDDInfo kinstHDDDesc[] = {
-	{ "kinst.chd",		0x7d01200, 0x2b9b6c0d }	// raw data size/crc, chd sha1 81d833236e994528d1482979261401b198d1ca53
+	{ "kinst", "81d833236e994528d1482979261401b198d1ca53" }	// raw data size/crc, chd sha1 81d833236e994528d1482979261401b198d1ca53
 };
 
 STD_HDD_PICK(kinst)
@@ -857,7 +857,7 @@ struct BurnDriver BurnDrvKinst15ai = {
 };
 
 static struct BurnHDDInfo kinst2HDDDesc[] = {
-	{ "kinst2.chd",		0x1b478a00, 0x63bc7789 }	// raw data size/crc, chd sha1 e7c9291b4648eae0012ea0cc230731ed4987d1d5
+	{ "kinst2", "e7c9291b4648eae0012ea0cc230731ed4987d1d5" }
 };
 
 STD_HDD_PICK(kinst2)

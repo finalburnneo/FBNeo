@@ -769,7 +769,7 @@ INT32 BzipOpen(bool bootApp)
 			}
 
 			char szHDDPath[MAX_PATH];
-			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
+			sprintf(szHDDPath, "%s%s/%s.chd", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
 
 			FILE *test = fopen(szHDDPath, "rb");
 			if (test) {
@@ -799,7 +799,7 @@ INT32 BzipOpen(bool bootApp)
 			}
 
 			char szHDDPath[MAX_PATH];
-			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
+			sprintf(szHDDPath, "%s%s/%s.chd", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
 
 			FILE *test = fopen(szHDDPath, "rb");
 			if (test) {

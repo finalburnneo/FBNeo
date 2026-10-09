@@ -6,8 +6,6 @@
 #include <map>
 #include <vector>
 
-
-
 #ifdef __LIBRETRO__
 #include <streams/file_stream_transforms.h>
 #define hddFseek	fseek
@@ -21,8 +19,6 @@
 #define hddFtell	ftello
 #endif
 #endif
-
-
 
 #ifdef _UNICODE
 #define HDD_NARROW_FMT	_T("%hs")
@@ -63,11 +59,12 @@ static UINT32 Get32(const UINT8* p)
 	return p[0] | (p[1] << 8) | (p[2] << 16) | ((UINT32)p[3] << 24);
 }
 
-static FILE* OpenInDir(const TCHAR* szDir, const char* szName, TCHAR* szPathOut)
+// the driver gives the disk name without extension
+static FILE* OpenInDir(const TCHAR* szDir, const char* szName, const TCHAR* szExt, TCHAR* szPathOut)
 {
 	if (szDir == NULL || szDir[0] == 0) return NULL;
 
-	_stprintf(szPathOut, _T("%s%s/") HDD_NARROW_FMT, szAppHDDPath, szDir, szName);
+	_stprintf(szPathOut, _T("%s%s/") HDD_NARROW_FMT _T("%s"), szAppHDDPath, szDir, szName, szExt);
 	return _tfopen(szPathOut, _T("rb"));
 }
 
@@ -152,11 +149,16 @@ BurnHDD* BurnHDDOpen(INT32 nIndex)
 	char* szName = NULL;
 	if (BurnDrvGetHDDName(&szName, nIndex, 0) || szName == NULL) return NULL;
 
+	static const TCHAR* szExts[] = { _T(".chd"), _T(".img") };
+
 	TCHAR szPath[MAX_PATH];
-	FILE* fp = OpenInDir(BurnDrvGetText(DRV_NAME), szName, szPath);
-	if (fp == NULL) fp = OpenInDir(BurnDrvGetText(DRV_PARENT), szName, szPath);
+	FILE* fp = NULL;
+	for (INT32 i = 0; i < 2 && fp == NULL; i++) {
+		fp = OpenInDir(BurnDrvGetText(DRV_NAME), szName, szExts[i], szPath);
+		if (fp == NULL) fp = OpenInDir(BurnDrvGetText(DRV_PARENT), szName, szExts[i], szPath);
+	}
 	if (fp == NULL) {
-		bprintf(PRINT_ERROR, _T("HDD: ") HDD_NARROW_FMT _T(" not found\n"), szName);
+		bprintf(PRINT_ERROR, _T("HDD: ") HDD_NARROW_FMT _T(".chd not found\n"), szName);
 		return NULL;
 	}
 

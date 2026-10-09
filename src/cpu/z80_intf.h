@@ -39,6 +39,8 @@ INT32 ZetMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 ZetMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem01, UINT8 *Mem02);
 
+void ZetSetCallback(int (*cb)(int)); // insn callback, supports only single z80 (for now)
+
 void ZetReset();
 void ZetReset(INT32 nCPU);
 UINT32 ZetGetPC(INT32 n);

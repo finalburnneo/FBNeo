@@ -150,6 +150,7 @@ static int      m_ula_delay_lut[80000];
 static int 		m_cycles_per_line;
 static int 		m_cycles_per_frame;
 static void		(*m_raster_cb)(int); 			//Let the driver know a good time (in T-States) to update the video raster position.
+static int		(*m_insn_cb)(int); 				//Called every time icount is consumed
 static OPCODE_HISTORY	m_opcode_history;		// A list of reads/writes per opcode.
 static int		m_tstate_counter;		// The current t-state / cpu cycle.
 static int		m_selected_bank; 		// What ram bank 7ffd port has selected.
@@ -3889,6 +3890,11 @@ static void raster_dummy_callback(int)
 {
 }
 
+void Z80SetInsnCB(int (*insncallback)(int))
+{
+	m_insn_cb = insncallback;
+}
+
 void Z80InitContention(int is_on_type, void (*rastercallback)(int))
 {
 	int i;
@@ -4035,6 +4041,8 @@ void Z80Exit()
     if (Z80.daisy) {
         z80daisy_exit();
     }
+
+	m_insn_cb = NULL;
 
 	if (SZHVC_add) free(SZHVC_add);
 	SZHVC_add = NULL;
@@ -5051,6 +5059,8 @@ static void eat_cycles(int type, int cycles)
 
 	Z80.ICount -= cycles;
 	m_tstate_counter += cycles;
+
+	if (m_insn_cb) m_insn_cb(cycles);
 
 	if(m_tstate_counter >= m_cycles_per_frame) {
 		m_raster_cb(m_cycles_per_frame); // end frame

@@ -187,6 +187,12 @@ void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*))
 	z80edfe_callback = pCallback;
 }
 
+void ZetSetCallback(int (*cb)(int))
+{
+	// Can be set before init. it's cleared at exit.
+	Z80SetInsnCB(cb);
+}
+
 void ZetNewFrame()
 {
 #if defined FBNEO_DEBUG

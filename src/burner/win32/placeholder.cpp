@@ -1,8 +1,8 @@
 #include "burner.h"
 #include <winuser.h>
 
-UINT uiBackGroundColor = 0xFFFFFF;
-UINT uiMenuItemColor   = 0xf4f4f4;
+UINT uiBackGroundColor = GetSysColor(COLOR_MENU);
+UINT uiMenuItemColor   = GetSysColor(COLOR_MENU);
 UINT uiSelectedMenuItemColor = 0x9fc5e8;
 UINT uiTextFontColor = 0x000000;
 UINT nUiColorTheme = 0;

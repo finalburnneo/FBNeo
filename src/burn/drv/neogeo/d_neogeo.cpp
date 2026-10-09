@@ -30368,27 +30368,20 @@ struct BurnDriver BurnDrvMaiya = {
 };
 
 
-// Robocop - Neo Geo Conversion (HB)
+// Robocop - Neo Geo Conversion (HB, Beta 9)
 // https://teo-tormo.itch.io/robocop-neogeo
 
 static struct BurnRomInfo robocopngRomDesc[] = {
-	{ "robocopng-p1.p1",	0x100000, 0xfb7146ff, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "robocopng-p1.p1",	0x100000,  0xeb0ffaed, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
 
-	{ "robocopng-s1.s1",	0x020000, 0x2ad60481, 2 | BRF_GRA },           	//  2 Text layer tiles
+	{ "robocopng-s1.s1",	0x020000,  0x2ad60481, 2 | BRF_GRA },           	//  2 Text layer tiles
 
-	{ "robocopng-c1.c1",	0x080000, 0xbfece2db, 3 | BRF_GRA },           	//  3 Sprite data
-	{ "robocopng-c2.c2",	0x080000, 0x73d6bbdc, 3 | BRF_GRA },           	//  4
+	{ "robocopng-c1.c1",	0x080000,  0x44593b72, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "robocopng-c2.c2",	0x080000,  0x03182a3a, 3 | BRF_GRA },           	//  4
 
-	{ "robocopng-m1.m1",	0x010000, 0x4686b60d, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+	{ "robocopng-m1.m1",	0x010000,  0x19dab516, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
 
-	{ "robocopng-v1.v1",	0x200000, 0xe04149c3, 5 | BRF_SND },           	//  6 Sound data
-	{ "robocopng-v2.v2",	0x200000, 0x4d49946c, 5 | BRF_SND },           	//  7
-	{ "robocopng-v3.v3",	0x200000, 0xee55d37d, 5 | BRF_SND },           	//  8
-	{ "robocopng-v4.v4",	0x200000, 0x9ea51796, 5 | BRF_SND },           	//  9
-	{ "robocopng-v5.v5",	0x200000, 0x6ac6ddb5, 5 | BRF_SND },           	//  10
-	{ "robocopng-v6.v6",	0x200000, 0x008bdfc1, 5 | BRF_SND },           	//  11
-	{ "robocopng-v7.v7",	0x200000, 0x5ae7034d, 5 | BRF_SND },           	//  12
-	{ "robocopng-v8.v8",	0x200000, 0x7f59fffc, 5 | BRF_SND },           	//  13
+	{ "robocopng-v1.v1",	0x1000000, 0x2cbffd4b, 5 | BRF_SND },           	//  6 Sound data
 };
 
 STDROMPICKEXT(robocopng, robocopng, neogeo)
@@ -30396,7 +30389,7 @@ STD_ROM_FN(robocopng)
 
 struct BurnDriver BurnDrvRobocopng = {
 	"robocopng", NULL, "neogeo", NULL, "2026",
-	"Robocop - Neo Geo Conversion (HB)\0", NULL, "Teo Tormo", "Neo Geo MVS",
+	"Robocop - Neo Geo Conversion (HB, Beta 9)\0", NULL, "Teo Tormo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RUNGUN, 0,
 	NULL, robocopngRomInfo, robocopngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

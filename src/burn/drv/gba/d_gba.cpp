@@ -58617,6 +58617,25 @@ struct BurnDriver BurnDrvgba_stacktower = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Starfall Advance (HB)
+
+static struct BurnRomInfo gba_starfallRomDesc[] = {
+	{ "Starfall Advance (2026)(Dreamnoid).gba",	9253592,	0x2c8d9b59,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_starfall, gba_starfall, gba_gba)
+STD_ROM_FN(gba_starfall)
+
+struct BurnDriver BurnDrvgba_starfall = {
+	"gba_starfall", NULL, "gba_gba", NULL, "2026",
+	"Starfall Advance (HB)\0", NULL, "Dreamnoid", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_ADV, 0,
+	GbaGetZipName, gba_starfallRomInfo, gba_starfallRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Sputter Dash! - Chopper (HB)
 
 static struct BurnRomInfo gba_sputterdashRomDesc[] = {

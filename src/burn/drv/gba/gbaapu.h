@@ -502,7 +502,7 @@ static inline void sb_process_audio(sb_gb_t *gb, sb_emu_state_t*emu, double delt
 		freq_hz[i] = 131072. / (2048 - seq->frequency[i]);
 	}
 	freq_hz[2] = (65536.) / (2048 - seq->frequency[2]);
-	freq_hz[3] = 524288.0 / r4 / pow(2.0, s4 + 1);
+	freq_hz[3] = 524288.0 / r4 / (double)(1u << (s4 + 1));	// pow(2.0, s4+1) with s4 in [0,15] is exactly 2^(s4+1)
 	while (audio->current_sample_generated_time < audio->current_sim_time) {
 		audio->current_sample_generated_time += sample_delta_t;
 

@@ -16315,6 +16315,52 @@ struct BurnDriver BurnDrvCpsSfa3sp2 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Super Street Fighter II Turbo Tag (Hack, V3)
+
+static struct BurnRomInfo Ssf2ttagRomDesc[] = {
+	{ "sfxtag.03c",		0x080000, 0x4afb091d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxtag.04a",		0x080000, 0x6d6bd06a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.05",		0x080000, 0x65222964, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.06a",		0x080000, 0x8fe9f531, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxtag.07",		0x080000, 0x33f87a59, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxe.08",		0x080000, 0x74c24062, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfx.09",			0x080000, 0x642fae3f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sfx.13m",		0x200000, 0xcf94d275, CPS2_GFX | BRF_GRA },
+	{ "sfx.15m",		0x200000, 0x5eb703af, CPS2_GFX | BRF_GRA },
+	{ "sfx.17m",		0x200000, 0xffa60e0f, CPS2_GFX | BRF_GRA },
+	{ "sfx.19m",		0x200000, 0x34e825c5, CPS2_GFX | BRF_GRA },
+	{ "sfx.14m",		0x100000, 0xb7cc32e7, CPS2_GFX | BRF_GRA },
+	{ "sfx.16m",		0x100000, 0x8376ad18, CPS2_GFX | BRF_GRA },
+	{ "sfx.18m",		0x100000, 0xf5b1b336, CPS2_GFX | BRF_GRA },
+	{ "sfx.20m",		0x100000, 0x459d5c6b, CPS2_GFX | BRF_GRA },
+	{ "sfx.21m",		0x100000, 0xe32854af, CPS2_GFX | BRF_GRA },
+	{ "sfx.23m",		0x100000, 0x760f2927, CPS2_GFX | BRF_GRA },
+	{ "sfx.25m",		0x100000, 0x1ee90208, CPS2_GFX | BRF_GRA },
+	{ "sfx.27m",		0x100000, 0xf814400f, CPS2_GFX | BRF_GRA },
+
+	{ "sfx.01",			0x020000, 0xb47b8835, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sfx.02",			0x020000, 0x0022633f, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sfx.11m",		0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
+	{ "sfx.12m",		0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2t.key",		0x000014, 0x524d608e, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Ssf2ttag)
+STD_ROM_FN(Ssf2ttag)
+
+struct BurnDriver BurnDrvCpsSsf2ttag = {
+	"ssf2ttag", "ssf2t", NULL, NULL, "2026",
+	"Super Street Fighter II Turbo Tag (Hack, V3)\0", NULL, "hack", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ssf2ttagRomInfo, Ssf2ttagRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Vampire: The Night Warriors (Enable hidden characters ver. 2006-05-31, Hack)
 // Modified by Yumeji
 

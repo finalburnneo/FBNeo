@@ -1,4 +1,12 @@
 #include "burner.h"
+#include <winuser.h>
+
+UINT uiBackGroundColor = GetSysColor(COLOR_WINDOW);
+UINT uiMenuItemColor   = GetSysColor(COLOR_WINDOW);
+UINT uiSelectedMenuItemColor = 0x9fc5e8;
+UINT uiTextFontColor = 0x000000;
+UINT nUiColorTheme = 0;
+
 
 static void MakeOfn()
 {
@@ -40,4 +48,32 @@ int SelectPlaceHolder()
 void ResetPlaceHolder()
 {
 	szPlaceHolder[0] = _T('\0');
+}
+
+
+void UpdateUiColorMode(UINT uiColorMode)
+{
+	if(uiColorMode == 0)
+	{
+		ApplyLightMode();
+	}
+	else
+	{
+		ApplyDarkMode();
+	}
+}
+
+void ApplyLightMode()
+{
+	uiBackGroundColor = GetSysColor(COLOR_WINDOW);
+	uiMenuItemColor   = GetSysColor(COLOR_WINDOW);
+	uiTextFontColor = 0x000000;
+
+}
+
+void ApplyDarkMode()
+{
+	uiBackGroundColor = 0x262626;
+	uiMenuItemColor   = 0x1a1a1a;
+	uiTextFontColor   = 0xFFFFFF;
 }

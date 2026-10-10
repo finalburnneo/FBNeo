@@ -487,6 +487,7 @@ int ConfigAppLoad()
 		VAR(nIpsSelectedLanguage);
 
 		VAR(bEnableIcons);
+		VAR(nUiColorTheme);
 		VAR(bIconsOnlyParents);
 		VAR(nIconsSize);
 		VAR(bIconsByHardwares);
@@ -982,6 +983,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// The language index to use for the IPS Patch Manager dialog.\n"));
 	VAR(nIpsSelectedLanguage);
+
+	_ftprintf(h, _T("\n// The reference to determine which ui color mode is to be used 0 - Light Mode and 1 - Dark Mode\n"));
+	VAR(nUiColorTheme);
 
 	_ftprintf(h, _T("\n// If non-zero, display drivers icons.\n"));
 	VAR(bEnableIcons);

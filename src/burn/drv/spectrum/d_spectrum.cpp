@@ -54423,7 +54423,7 @@ STD_ROM_FN(SpecOpgreenup2en)
 
 struct BurnDriver BurnSpecOpgreenup2en = {
 	"spec_opgreenup2en", "spec_opgreenup1en", "spec_spec128", NULL, "2026",
-	"Operation Greenup - Part 2 (English) (128K) (HB)\0", NULL, "Molisoft", "ZX Spectrum",
+	"Operation Greenup - Part 2 (English) (128K) (HB)\0", "Password: innsbruck", "Molisoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecOpgreenup2enRomInfo, SpecOpgreenup2enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54442,7 +54442,7 @@ STD_ROM_FN(SpecOpgreenup3en)
 
 struct BurnDriver BurnSpecOpgreenup3en = {
 	"spec_opgreenup3en", "spec_opgreenup1en", "spec_spec128", NULL, "2026",
-	"Operation Greenup - Part 3 (English) (128K) (HB)\0", NULL, "Molisoft", "ZX Spectrum",
+	"Operation Greenup - Part 3 (English) (128K) (HB)\0", "Password: vogel", "Molisoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecOpgreenup3enRomInfo, SpecOpgreenup3enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54480,7 +54480,7 @@ STD_ROM_FN(SpecOpgreenup2es)
 
 struct BurnDriver BurnSpecOpgreenup2es = {
 	"spec_opgreenup2es", "spec_opgreenup1es", "spec_spec128", NULL, "2026",
-	"Operacion Greenup - Parte 2 (Spanish) (128K) (HB)\0", NULL, "Molisoft", "ZX Spectrum",
+	"Operacion Greenup - Parte 2 (Spanish) (128K) (HB)\0", "Password: innsbruck", "Molisoft", "ZX Spectrum",
 	L"Operaci\u00f3n Greenup - Parte 2 (Spanish) (128K) (HB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecOpgreenup2esRomInfo, SpecOpgreenup2esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54499,7 +54499,7 @@ STD_ROM_FN(SpecOpgreenup3es)
 
 struct BurnDriver BurnSpecOpgreenup3es = {
 	"spec_opgreenup3es", "spec_opgreenup1es", "spec_spec128", NULL, "2026",
-	"Operacion Greenup - Parte 3 (Spanish) (128K) (HB)\0", NULL, "Molisoft", "ZX Spectrum",
+	"Operacion Greenup - Parte 3 (Spanish) (128K) (HB)\0", "Password: vogel", "Molisoft", "ZX Spectrum",
 	L"Operaci\u00f3n Greenup - Parte 3 (Spanish) (128K) (HB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecOpgreenup3esRomInfo, SpecOpgreenup3esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

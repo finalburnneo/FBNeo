@@ -46189,10 +46189,10 @@ struct BurnDriver BurnDrvmd_mkae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat Arcade Edition Enhanced (Hack, v2.8)
+// Mortal Kombat Arcade Edition Enhanced (Hack, v2.9)
 // https://romhackplaza.org/romhacks/mortal-kombat-arcade-edition-enhanced-sega-genesis-romhack
 static struct BurnRomInfo md_mkaeeRomDesc[] = {
-	{ "Mortal Kombat Arcade Edition Enhanced v2.8 (2026)(Rael G.C.).bin", 4194304, 0xebc90098, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mortal Kombat Arcade Edition Enhanced v2.9 (2026)(Rael G.C.).bin", 4194304, 0xbc3378bf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mkaee)
@@ -46200,7 +46200,7 @@ STD_ROM_FN(md_mkaee)
 
 struct BurnDriver BurnDrvmd_mkaee = {
 	"md_mkaee", "md_mk", NULL, NULL, "2026",
-	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.8)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
+	"Mortal Kombat Arcade Edition Enhanced (Hack, v2.9)\0", NULL, "Rael G.C.", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkaeeRomInfo, md_mkaeeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -744,6 +744,30 @@ struct BurnDriver BurnDrvSitv = {
 };
 
 
+// Tiny Vaders (Hack)
+// https://archive.org/details/tinyinva
+
+static struct BurnRomInfo tinyvadersRomDesc[] = {
+	{ "tv9316b-0869_m739h.h1",	0x0800, 0xbf3121f7, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 code
+	{ "tv9316b-0856_m739g.g1",	0x0800, 0xac58c700, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "tv9316b-0855_m739f.f1",	0x0800, 0x4d5cbcf8, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "tv9316b-0854_m739e.e1",	0x0800, 0x387e15f9, 1 | BRF_ESS | BRF_PRG }, //  3
+};
+
+STD_ROM_PICK(tinyvaders)
+STD_ROM_FN(tinyvaders)
+
+struct BurnDriver BurnDrvTinyvaders = {
+	"tinyvaders", "invaders", NULL, "invaders", "2026",
+	"Tiny Vaders (Hack)\0", NULL, "zeroco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, tinyvadersRomInfo, tinyvadersRomName, NULL, NULL, InvadersSampleInfo, InvadersSampleName, InvadersInputInfo, InvadersDIPInfo,
+	InvadersInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
+	224, 260, 3, 4
+};
+
+
 // Ozma Wars (set 1)
 
 static struct BurnRomInfo ozmawarsRomDesc[] = {

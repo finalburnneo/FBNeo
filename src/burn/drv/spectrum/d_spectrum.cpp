@@ -34934,21 +34934,40 @@ struct BurnDriver BurnSpecApulija13 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Aquanoids (48K) (HB, v1.2)
+// Aquanoids (English) (48K) (HB, v1.2)
 
-static struct BurnRomInfo SpecAquanoidsRomDesc[] = {
-	{ "Aquanoids v1.2 48K (2015)(Neil Parsons).tzx", 38632, 0x5df90a63, BRF_ESS | BRF_PRG },
+static struct BurnRomInfo SpecAquanoidsenRomDesc[] = {
+	{ "Aquanoids v1.2 EN 48K (2015)(Neil Parsons).tzx", 38632, 0x5df90a63, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(SpecAquanoids, SpecAquanoids, Spectrum)
-STD_ROM_FN(SpecAquanoids)
+STDROMPICKEXT(SpecAquanoidsen, SpecAquanoidsen, Spectrum)
+STD_ROM_FN(SpecAquanoidsen)
 
-struct BurnDriver BurnSpecAquanoids = {
-	"spec_aquanoids", NULL, "spec_spectrum", NULL, "2015",
-	"Aquanoids (48K) (HB, v1.2)\0", NULL, "Neil Parsons", "ZX Spectrum",
+struct BurnDriver BurnSpecAquanoidsen = {
+	"spec_aquanoidsen", NULL, "spec_spectrum", NULL, "2015",
+	"Aquanoids (English) (48K) (HB, v1.2)\0", NULL, "Neil Parsons", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
-	SpectrumGetZipName, SpecAquanoidsRomInfo, SpecAquanoidsRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpectrumGetZipName, SpecAquanoidsenRomInfo, SpecAquanoidsenRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Aquanoids (Spanish) (48K) (HB, v1.2)
+
+static struct BurnRomInfo SpecAquanoidsesRomDesc[] = {
+	{ "Aquanoids v1.2 ES 48K (2015)(Neil Parsons).tzx", 38618, 0xef8964e7, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecAquanoidses, SpecAquanoidses, Spectrum)
+STD_ROM_FN(SpecAquanoidses)
+
+struct BurnDriver BurnSpecAquanoidses = {
+	"spec_aquanoidses", "spec_aquanoidsen", "spec_spectrum", NULL, "2015",
+	"Aquanoids (Spanish) (48K) (HB, v1.2)\0", NULL, "Neil Parsons", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,
+	SpectrumGetZipName, SpecAquanoidsesRomInfo, SpecAquanoidsesRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
@@ -49975,7 +49994,7 @@ STDROMPICKEXT(SpecLoukoumas, SpecLoukoumas, Spectrum)
 STD_ROM_FN(SpecLoukoumas)
 
 struct BurnDriver BurnSpecLoukoumas = {
-	"spec_Loukoumas", NULL, "spec_spectrum", NULL, "2026",
+	"spec_loukoumas", NULL, "spec_spectrum", NULL, "2026",
 	"Loukoumas (48K) (HB)\0", NULL, "Revive8Bit", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PLATFORM, 0,

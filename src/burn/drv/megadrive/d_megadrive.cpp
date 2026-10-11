@@ -39979,6 +39979,24 @@ struct BurnDriver BurnDrvmd_earthionwd = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Earthion - Retro Game Summit 2026 (HB)
+static struct BurnRomInfo md_earthionrgs26RomDesc[] = {
+	{ "Earthion - Retro Game Summit 2026 (2026)(Ancient).bin", 7340032, 0xd911e0b5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_earthionrgs26)
+STD_ROM_FN(md_earthionrgs26)
+
+struct BurnDriver BurnDrvmd_earthionrgs26 = {
+	"md_earthionrgs26", "md_earthione", NULL, NULL, "2026",
+	"Earthion - Retro Game Summit 2026 (HB)\0", NULL, "Ancient", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2 | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_earthionrgs26RomInfo, md_earthionrgs26RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Elansar (M4) (HB)
 // https://orionsoft.itch.io/elansar/devlog/1623128/elansar-port-for-the-sega-genesis-megadrive
 static struct BurnRomInfo md_elansarRomDesc[] = {

@@ -30503,6 +30503,36 @@ struct BurnDriver BurnDrvShinobing = {
 };
 
 
+// Sword of Sodan (HB, Beta v0.4)
+// https://bendk97.itch.io/sword-of-sodan-neogeo
+
+static struct BurnRomInfo swsodanRomDesc[] = {
+	{ "swsodan-p1.p1",	0x100000, 0xd515bf3d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "swsodan-s1.s1",	0x020000, 0x8c2cfe44, 2 | BRF_GRA },           	//  2 Text layer tiles
+
+	{ "swsodan-c1.c1",	0x200000, 0x1255788c, 3 | BRF_GRA },           	//  3 Sprite data
+	{ "swsodan-c2.c2",	0x200000, 0x497b17e1, 3 | BRF_GRA },           	//  4
+
+	{ "swsodan-m1.m1",	0x020000, 0xbf95a6a1, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+
+	{ "swsodan-v1.v1",	0x400000, 0xf1962c04, 5 | BRF_SND },           	//  6 Sound data
+};
+
+STDROMPICKEXT(swsodan, swsodan, neogeo)
+STD_ROM_FN(swsodan)
+
+struct BurnDriver BurnDrvSwsodan = {
+	"swsodan", NULL, "neogeo", NULL, "2026",
+	"Sword of Sodan (HB, Beta v0.4)\0", NULL, "BenDk97", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
+	NULL, swsodanRomInfo, swsodanRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+
 // World Racer 32Kb (HB, 251226)
 // https://www.patreon.com/posts/worldracer32kb-146718741
 // 3 & 4 players not working (needs Multitap)

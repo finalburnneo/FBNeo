@@ -4552,9 +4552,9 @@ struct BurnDriver BurnDrvngpc_uchotosm = {
 	160, 152, 4, 3
 };
 
-// Xenon 2: Megablast (HB)
+// Xenon 2: Megablast (HB, v0.7.1)
 static struct BurnRomInfo ngpc_xenon2RomDesc[] = {
-	{ "Xenon 2 - Megablast (2026)(Napomex).ngp", 1699089, 0x134628f3, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Xenon 2 - Megablast v0.7.1 (2026)(Napomex).ngp", 3099740, 0x8467cea5, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_xenon2, ngpc_xenon2, ngpc_ngp)
@@ -4562,7 +4562,7 @@ STD_ROM_FN(ngpc_xenon2)
 
 struct BurnDriver BurnDrvngpc_xenon2 = {
 	"ngp_xenon2", NULL, "ngp_ngp", NULL, "2026",
-	"Xenon 2: Megablast (HB)\0", NULL, "Napomex", "NeoGeo Pocket Color",
+	"Xenon 2: Megablast (HB, v0.7.1)\0", NULL, "Napomex", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_VERSHOOT, 0,
 	NgpGetZipName, ngpc_xenon2RomInfo, ngpc_xenon2RomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,

@@ -537,7 +537,7 @@ INT32 CpsXmvSixScan(INT32 nAction, INT32* /*pnMin*/)
 		}
 	}
 
-	return 0;
+	return CpsXmvVisualScan(nAction);
 }
 
 // Wide screen: while the ROM keeps 'XS1X' at 0x813ff8, scroll1 columns 64-127 come from 0x814000

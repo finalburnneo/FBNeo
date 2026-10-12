@@ -123,10 +123,14 @@ INT32 CpsObjInit()
 		return 1;
 	}
 
+	// xmvsf3v3: every buffer its states hold starts the same way
+	if (CpsXmvSixEnabled) memset(ObjMem, 0, (nMax << 3) * nFrameCount);
+
 	// Set up the frame buffers
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		of[i].Obj = ObjMem + (nMax << 3) * i;
 		of[i].nCount = 0;
+		if (CpsXmvSixEnabled) of[i].nShiftX = of[i].nShiftY = 0;
 	}
 
 	nGetNext=0;
@@ -900,5 +904,37 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		CpstOneObjDoX[0]();
 	}
 	
+	return 0;
+}
+
+// xmvsf3v3: the sprite lag buffers (the Obj pointers are rebuilt by CpsObjInit, never saved)
+INT32 CpsObjVisualScan(INT32 nAction)
+{
+	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
+
+	struct BurnArea ba;
+	memset(&ba, 0, sizeof(ba));
+	ba.Data = ObjMem;
+	ba.nLen = (nMax << 3) * nFrameCount;
+	ba.szName = "XMvsSF 3v3 sprite lag buffers";
+	BurnAcb(&ba);
+
+	SCAN_VAR(nGetNext);
+	SCAN_VAR(nMaxZValue);
+	SCAN_VAR(nMaxZMask);
+	SCAN_VAR(nZOffset);
+	for (INT32 i = 0; i < nFrameCount; i++) {
+		SCAN_VAR(of[i].nShiftX);
+		SCAN_VAR(of[i].nShiftY);
+		SCAN_VAR(of[i].nCount);
+	}
+
+	if (nAction & ACB_WRITE) {
+		if (nGetNext < 0 || nGetNext >= nFrameCount) return 1;
+		for (INT32 i = 0; i < nFrameCount; i++) {
+			if (of[i].nCount < 0 || of[i].nCount > nMax) return 1;
+		}
+	}
+
 	return 0;
 }

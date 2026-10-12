@@ -570,3 +570,21 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	
 	return 0;
 }
+
+// xmvsf3v3: the display state other games rebuild after a load (latched palette, registers and
+// 'four' registers, sprite Z buffer, sprite lag buffers), so its states restore exactly
+INT32 CpsXmvVisualScan(INT32 nAction)
+{
+	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
+
+	struct BurnArea ba;
+	memset(&ba, 0, sizeof(ba));
+	ba.Data = CpsSavePal;		ba.nLen = 0x2000;								ba.szName = "XMvsSF 3v3 latched palette";	BurnAcb(&ba);
+	ba.Data = CpsSaveRegData;	ba.nLen = 0x100 * (MAX_RASTER + 1);				ba.szName = "XMvsSF 3v3 latched registers";	BurnAcb(&ba);
+	ba.Data = CpsSaveFrgData;	ba.nLen = 0x20;									ba.szName = "XMvsSF 3v3 latched frg";		BurnAcb(&ba);
+	ba.Data = ZBuf;				ba.nLen = nCpsScreenWidth * nCpsScreenHeight * 2;	ba.szName = "XMvsSF 3v3 sprite Z buffer";	BurnAcb(&ba);
+
+	if (CpsObjVisualScan(nAction)) return 1;
+
+	return CpsPalVisualScan(nAction);
+}

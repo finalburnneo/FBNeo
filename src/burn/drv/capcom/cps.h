@@ -571,5 +571,10 @@ void CpsXmvSixExit();
 INT32 CpsXmvSixReset();
 INT32 CpsXmvSixScan(INT32 nAction, INT32* pnMin);
 const UINT8* CpsXmvScroll1Extension();
+// ... and its exact save states (run-ahead, netplay): the display state other games rebuild after a load
+INT32 CpsXmvVisualScan(INT32 nAction);		// cps_mem.cpp
+INT32 CpsObjVisualScan(INT32 nAction);		// cps_obj.cpp
+INT32 CpsPalVisualScan(INT32 nAction);		// cps_pal.cpp
+INT32 CpsPalConsumeRestoredCache();
 
 #endif

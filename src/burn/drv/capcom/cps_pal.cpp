@@ -3,6 +3,7 @@
 
 // CPS (palette)
 
+static bool CpsXmvPaletteRestored = false;	// xmvsf3v3: CpsPalVisualScan() restored CpsPal
 static UINT8* CpsPalSrc = NULL;			// Copy of current input palette
 UINT32* CpsPal = NULL;					// Hicolor version of palette
 INT32 nCpsPalCtrlReg;
@@ -24,6 +25,8 @@ INT32 CpsPalInit()
 	if (CpsPal == NULL) {
 		return 1;
 	}
+	if (CpsXmvSixEnabled) memset(CpsPal, 0, nLen);
+	CpsXmvPaletteRestored = false;
 
 	return 0;
 }
@@ -70,4 +73,29 @@ INT32 CpsPalUpdate(UINT8* pNewPal)
 	}
 
 	return 0;
+}
+
+// xmvsf3v3: the effective colours keep pages the game disabled between palette DMAs, which
+// rereading palette RAM after a load can't rebuild; the pixel format must not change in between
+INT32 CpsPalVisualScan(INT32 nAction)
+{
+	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
+
+	struct BurnArea ba;
+	memset(&ba, 0, sizeof(ba));
+	ba.Data = CpsPalSrc;	ba.nLen = 0xc00 * sizeof(UINT16);	ba.szName = "XMvsSF 3v3 palette DMA input";	BurnAcb(&ba);
+	ba.Data = CpsPal;		ba.nLen = 0xc00 * sizeof(UINT32);	ba.szName = "XMvsSF 3v3 effective palette";	BurnAcb(&ba);
+
+	if (nAction & ACB_WRITE) CpsXmvPaletteRestored = true;
+
+	return 0;
+}
+
+INT32 CpsPalConsumeRestoredCache()
+{
+	if (!CpsXmvSixEnabled || !CpsXmvPaletteRestored) return 0;
+
+	CpsXmvPaletteRestored = false;
+
+	return 1;
 }

@@ -56918,6 +56918,25 @@ struct BurnDriver BurnDrvgba_drwleviathan = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Dungeon Durban (HB, v1.0.0)
+
+static struct BurnRomInfo gba_dundurbanRomDesc[] = {
+	{ "Dungeon Durban v1.0.0 (2026)(Durban Games).gba",	3377160,	0xca21f79b,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_dundurban, gba_dundurban, gba_gba)
+STD_ROM_FN(gba_dundurban)
+
+struct BurnDriver BurnDrvgba_dundurban = {
+	"gba_dundurban", NULL, "gba_gba", NULL, "2026",
+	"Dungeon Durban (HB, v1.0.0)\0", NULL, "Durban Games", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION | GBF_MAZE, 0,
+	GbaGetZipName, gba_dundurbanRomInfo, gba_dundurbanRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Dungeon Tactics Advance (HB)
 
 static struct BurnRomInfo gba_dtaRomDesc[] = {
@@ -59254,7 +59273,7 @@ struct BurnDriver BurnDrvgba_chasehqgbc = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
-	
+
 // Glory Hunters - GB2GBA (HB, v2.0.1)
 
 static struct BurnRomInfo gba_gloryhuntgbRomDesc[] = {

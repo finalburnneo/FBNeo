@@ -30600,7 +30600,6 @@ struct BurnDriver BurnDrvSwsodan = {
 
 // World Racer 32Kb (HB, 251226)
 // https://www.patreon.com/posts/worldracer32kb-146718741
-// 3 & 4 players not working (needs Multitap)
 
 static struct BurnRomInfo wrldrc32RomDesc[] = {
 	{ "wrldrc32-p1.p1",   0x100000, 0x3350fa1b, 1 | BRF_ESS | BRF_PRG },	//  0 68K Code
@@ -30622,8 +30621,8 @@ struct BurnDriver BurnDrvWrldrc32 = {
 	"wrldrc32", NULL, "neogeo", NULL, "2025",
 	"World Racer 32Kb (HB, 251226)\0", NULL, "Blastar", "Neo Geo",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
-	NULL, wrldrc32RomInfo, wrldrc32RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SNK_NEOGEO | HARDWARE_SNK_NEOTAP, GBF_RACING, 0,
+	NULL, wrldrc32RomInfo, wrldrc32RomName, NULL, NULL, NULL, NULL, neodualInputInfo, neotapDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
+	0x1000,	320, 224, 4, 3
 };

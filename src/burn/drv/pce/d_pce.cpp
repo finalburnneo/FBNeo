@@ -9428,6 +9428,25 @@ struct BurnDriver BurnDrvpce_barbarianzxs = {
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
 };
 
+// Batman (HB)
+
+static struct BurnRomInfo pce_batmanhbRomDesc[] = {
+	{ "Batman (2026)(Magic Games).pce", 1048576, 0x0577fe88, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_batmanhb)
+STD_ROM_FN(pce_batmanhb)
+
+struct BurnDriver BurnDrvpce_batmanhb = {
+	"pce_batmanhb", NULL, NULL, NULL, "2026",
+	"Batman (HB)\0", NULL, "Magic Games", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PCENGINE_PCENGINE, GBF_ADV | GBF_PLATFORM, 0,
+	PceGetZipName, pce_batmanhbRomInfo, pce_batmanhbRomName, NULL, NULL, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3
+};
+
 // Death Sword - Apple II (HB)
 
 static struct BurnRomInfo pce_barbarianap2RomDesc[] = {

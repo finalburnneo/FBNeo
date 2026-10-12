@@ -3,7 +3,7 @@
 
 UINT uiBackGroundColor = GetSysColor(COLOR_WINDOW);
 UINT uiMenuItemColor   = GetSysColor(COLOR_WINDOW);
-UINT uiSelectedMenuItemColor = 0x9fc5e8;
+UINT uiSelectedMenuItemColor = 0xe8c59f; 
 UINT uiTextFontColor = 0x000000;
 UINT nUiColorTheme = 0;
 

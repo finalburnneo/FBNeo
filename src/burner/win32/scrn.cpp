@@ -139,7 +139,7 @@ void DrawItemType(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
     {
 		case MFT_SEPARATOR:
 		{
-			COLORREF bg = RGB((uiMenuItemColor >> 16) & 0xFF, (uiMenuItemColor >> 8) & 0xFF, uiMenuItemColor & 0xFF);
+			COLORREF bg = uiMenuItemColor;
 			HBRUSH hbr = CreateSolidBrush(bg);
 			FillRect(pdis->hDC, &pdis->rcItem, hbr);
 			DeleteObject(hbr);
@@ -158,13 +158,19 @@ void DrawItemType(LPDRAWITEMSTRUCT pdis, CurrentItemInfo ItemInfo)
 		{
 			int cy = (pdis->rcItem.top + pdis->rcItem.bottom) / 2;
 			int cx = pdis->rcItem.left + 12;
+
 			HBRUSH dotBrush = CreateSolidBrush((COLORREF)uiTextFontColor);
 			HBRUSH oldBrush = (HBRUSH)SelectObject(pdis->hDC, dotBrush);
-			HPEN oldPen = (HPEN)SelectObject(pdis->hDC, GetStockObject(NULL_PEN));
-			Ellipse(pdis->hDC, cx - 3, cy - 3, cx + 3, cy + 3);
-			SelectObject(pdis->hDC, oldBrush);
+
+			HPEN pen = CreatePen(PS_SOLID, 1, (COLORREF)uiTextFontColor);
+			HPEN oldPen = (HPEN)SelectObject(pdis->hDC, pen);
+
+			Ellipse(pdis->hDC, cx - 4.75, cy - 4.75, cx + 4.75, cy + 4.75);
+
 			SelectObject(pdis->hDC, oldPen);
-			DeleteObject(dotBrush);
+			SelectObject(pdis->hDC, oldBrush);
+			DeleteObject(pen);
+			
 			break;
 		}
 	}
@@ -741,16 +747,7 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
 			switch(uCurrentItemType)
 			{
-				case ODT_BUTTON: 
-				{
-					COLORREF clr;
 
-					HBRUSH hbr = CreateSolidBrush(uiBackGroundColor);
-
-					FillRect(pdis->hDC, &pdis->rcItem, hbr);
-					DeleteObject(hbr);
-					break;
-				}
 				case ODT_MENU:
 				{
 					BOOL bSelected = (pdis->itemState & ODS_SELECTED) != 0;
@@ -759,15 +756,12 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 
 					if(bSelected) 
 					{
-						clr = RGB((uiSelectedMenuItemColor >> 16) & 0xFF,   // R
-								(uiSelectedMenuItemColor >> 8) & 0xFF,    // G
-								uiSelectedMenuItemColor & 0xFF);         // B 
+						clr = uiSelectedMenuItemColor;
 					}
 					else
 					{
-						clr = RGB((uiMenuItemColor >> 16) & 0xFF,   // R
-								(uiMenuItemColor >> 8) & 0xFF,    // G
-								uiMenuItemColor & 0xFF);         // B
+						clr = uiMenuItemColor;
+					
 					}
 
 					HBRUSH hbr = CreateSolidBrush(clr);
@@ -824,6 +818,16 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 						DrawText(pdis->hDC, pszText, -1, &rcText,
 								DT_SINGLELINE | DT_VCENTER | DT_LEFT);
 					}
+					break;
+				}
+				default:
+				{
+					COLORREF clr;
+
+					HBRUSH hbr = CreateSolidBrush(uiTextFontColor);
+
+					FillRect(pdis->hDC, &pdis->rcItem, hbr);
+					DeleteObject(hbr);
 					break;
 				}
 			}

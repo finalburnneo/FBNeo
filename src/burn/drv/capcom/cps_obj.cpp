@@ -1,4 +1,5 @@
 #include "cps.h"
+#include "xmvsf3v3.h"
 // CPS Objs (sprites)
 
 INT32 nCpsObjectBank;
@@ -436,6 +437,22 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 		// Find the palette for the tiles on this sprite
 		CpstPal = CpsPal + ((a & 0x1F) << 4);
 
+		// xmvsf3v3: the HUD's mini portraits in each fighter's colour, decoded from the program ROM
+		UINT32* pStockPal = CpstPal;
+		UINT32 nPortraitPal[16];
+		UINT32 nPortraitColor = 0;
+		if (CpsXmvSixEnabled && XmvPortraitObject(n, BURN_ENDIAN_SWAP_INT16(ps[0]), BURN_ENDIAN_SWAP_INT16(ps[1]), a, CpsXmvWide != 0, &nPortraitColor)) {
+			UINT16 nColors[16];
+			if (!XmvPortraitColors(CpsRom, nCpsRomLen, n, nPortraitColor, nColors)) {
+				continue;	// the marker isn't a palette, so don't draw it with one
+			}
+			for (INT32 pen = 0; pen < 16; pen++) {
+				UINT32 c = nColors[pen];
+				nPortraitPal[pen] = BurnHighCol(((c >> 8) & 15) * 17, ((c >> 4) & 15) * 17, (c & 15) * 17, 0);
+			}
+			CpstPal = nPortraitPal;
+		}
+
 		nFlip = (a >> 5) & 3;
 		// Find out sprite size
 		bx = ((a >> 8) & 15) + 1;
@@ -489,6 +506,8 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 				nCpsBlend = 0;
 			}
 		}
+
+		CpstPal = pStockPal;	// never leave it pointing at nPortraitPal
 	}
 
 	return 0;

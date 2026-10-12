@@ -682,6 +682,8 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SNK_4_JOYSTICKS						(0x3000)	// Uses 4 joysticks
 #define HARDWARE_SNK_MAHJONG							(0x4000)	// Uses a special mahjong controller
 #define HARDWARE_SNK_GAMBLING							(0x5000)	// Uses gambling controls
+#define HARDWARE_SNK_NEOTAP								(0x6000)	// Uses the NeoTap 4P multitap
+#define HARDWARE_SNK_NEOFTC1B							(0x8000)	// Uses the NEO-FTC1B 4P JAMMA splitter
 
 #define HARDWARE_SNK_MVS								(HARDWARE_PREFIX_SNK | 0x00020000)
 #define HARDWARE_SNK_NEOCD								(HARDWARE_PREFIX_SNK | 0x00030000)

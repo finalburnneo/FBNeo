@@ -1910,10 +1910,58 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	// cphd: ugh.
 }
 
+// NeoTap multitap: on each port, output bit 1 alone (0x380001) selects P3/P4, any
+// other value selects P1/P2 (games read the ports without writing first in 2P mode).
+// Bit 2 is looped back on the port's Select line, the AES BIOS uses it to detect
+// a mahjong panel, which is how the NeoTap is reported to games (BIOS_P1STATUS = 3).
+static UINT8 NeoTrisReadJoy(INT32 nPort)
+{
+	INT32 nSel = (nInputSelect >> (nPort * 3)) & 0x07;
+
+	return ~NeoInput[nPort + (((nSel & 3) == 2) ? 8 : 0)];
+}
+
+static UINT8 NeoTrisReadStatusB()
+{
+	UINT8 nData = NeoInput[2] & 0xf0;
+
+	for (INT32 nPort = 0; nPort < 2; nPort++) {
+		INT32 nSel = (nInputSelect >> (nPort * 3)) & 0x07;
+		INT32 nShift = nPort * 2;
+
+		nData |= NeoInput[((nSel & 3) == 2) ? 10 : 2] & (3 << nShift);
+		if (nSel & 4) nData |= 2 << nShift;
+	}
+
+	return ~nData;
+}
+
+// NEO-FTC1B (kizuna4p): output bit 0 (0x380001) selects P1/P2 or P3/P4 on both
+// ports, bit 2 is looped back on button A (P1/P2) or button B (P3/P4).
+static UINT8 NeoKizuna4PReadJoy(INT32 nPort)
+{
+	UINT8 nData = NeoInput[nPort + ((nInputSelect & 1) ? 8 : 0)];
+
+	if (nInputSelect & 4) nData |= 0x10 << (nInputSelect & 1);
+
+	return ~nData;
+}
+
+static UINT8 NeoKizuna4PReadStatusB()
+{
+	return ~((NeoInput[2] & 0xf0) | (NeoInput[(nInputSelect & 1) ? 10 : 2] & 0x05));
+}
+
 static UINT8 ReadInput1(INT32 nOffset)
 {
 	switch (nOffset) {
 		case 0x00:
+			if (nNeoControlConfig == HARDWARE_SNK_NEOTAP) {
+				return NeoTrisReadJoy(0);
+			}
+			if (nNeoControlConfig == HARDWARE_SNK_NEOFTC1B) {
+				return NeoKizuna4PReadJoy(0);
+			}
 //			bprintf(PRINT_NORMAL, _T(" -- bank %d inputP0[0x%02X] read (%i).\n"), 0, nInputSelect, SekTotalCycles());
 			return ~NeoInputBank[nJoyport0[nInputSelect & 0x07]];
 
@@ -1938,6 +1986,12 @@ static UINT8 ReadInput1(INT32 nOffset)
 static UINT8 ReadInput2(INT32 nOffset)
 {
 	if ((nOffset & 1) == 0) {
+		if (nNeoControlConfig == HARDWARE_SNK_NEOTAP) {
+			return NeoTrisReadJoy(1);
+		}
+		if (nNeoControlConfig == HARDWARE_SNK_NEOFTC1B) {
+			return NeoKizuna4PReadJoy(1);
+		}
 //		bprintf(PRINT_NORMAL, _T(" -- bank %d inputP1[0x%02X] read.\n"), 0, nInputSelect);
 		return ~NeoInputBank[nJoyport1[(nInputSelect >> 3) & 0x07]];
 	}
@@ -1948,6 +2002,12 @@ static UINT8 ReadInput2(INT32 nOffset)
 static UINT8 ReadInput3(INT32 nOffset)
 {
 	if ((nOffset & 1) == 0) {
+		if (nNeoControlConfig == HARDWARE_SNK_NEOTAP) {
+			return NeoTrisReadStatusB();
+		}
+		if (nNeoControlConfig == HARDWARE_SNK_NEOFTC1B) {
+			return NeoKizuna4PReadStatusB();
+		}
 //		bprintf(PRINT_NORMAL, " -- input 2 read.\n");
 		return ~NeoInputBank[2];
 	}
@@ -4676,7 +4736,9 @@ INT32 NeoFrame()
 			break;
 		}
 
-		case HARDWARE_SNK_4_JOYSTICKS: {							// Four joystick controllers
+		case HARDWARE_SNK_4_JOYSTICKS:								// Four joystick controllers
+		case HARDWARE_SNK_NEOTAP:									// Four joysticks through NeoTap
+		case HARDWARE_SNK_NEOFTC1B: {								// Four joysticks through NEO-FTC1B
 
 			NeoStandardInputs(0);
 			NeoStandardInputs(1);

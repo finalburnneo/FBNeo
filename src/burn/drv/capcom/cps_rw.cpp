@@ -1,4 +1,5 @@
 #include "cps.h"
+#include "xmvsf3v3.h"
 // CPS - Read/Write
 
 // Input bits
@@ -465,8 +466,130 @@ void CpsWritePort(const UINT32 ia, UINT8 d)
 //	bprintf(PRINT_NORMAL, _T("Write Port %x, %x\n"), ia, d);
 }
 
+// X-Men Vs. Street Fighter 3v3 + DHC board additions (see xmvsf3v3.h), enabled by its drivers only
+UINT8 CpsXmvSixButtons[XMV6_PLAYERS][13];
+INT32 CpsXmvSixEnabled = 0;
+INT32 CpsXmvWide = 0;
+static UINT16 CpsXmvSixCapabilities = 0;
+static XmvSixInputState CpsXmvSixState;
+static UINT8 *CpsXmvSixWorkRam = NULL;
+
+INT32 CpsXmvSixInit(INT32 bWide)
+{
+	CpsXmvSixWorkRam = (UINT8*)BurnMalloc(XMV6_WORK_RAM_BYTES);
+	if (CpsXmvSixWorkRam == NULL) {
+		return 1;
+	}
+
+	CpsXmvWide = bWide ? 1 : 0;
+	CpsXmvSixCapabilities = XMV6_CAP_WORK_RAM | XMV6_CAP_PORTRAITS | XMV6_CAP_PORTRAITS_6 | XMV6_CAP_PORTRAITS_12 | XMV6_CAP_PORTRAITS_18;
+	if (bWide) {
+		CpsXmvSixCapabilities |= XMV6_CAP_WIDE | XMV6_CAP_WIDE_SCROLL1;
+	}
+	CpsXmvSixEnabled = 1;
+
+	memset(CpsXmvSixButtons, 0, sizeof(CpsXmvSixButtons));
+	CpsXmvSixReset();
+
+	return 0;
+}
+
+void CpsXmvSixExit()
+{
+	CpsXmvSixEnabled = 0;
+	CpsXmvWide = 0;
+	BurnFree(CpsXmvSixWorkRam);
+}
+
+INT32 CpsXmvSixReset()
+{
+	if (!CpsXmvSixEnabled) return 0;
+
+	XmvSixReset(&CpsXmvSixState);
+	memset(CpsXmvSixWorkRam, 0, XMV6_WORK_RAM_BYTES);
+
+	return 0;
+}
+
+INT32 CpsXmvSixScan(INT32 nAction, INT32* /*pnMin*/)
+{
+	if (!CpsXmvSixEnabled) return 0;
+
+	if (nAction & ACB_MEMORY_RAM) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= CpsXmvSixWorkRam;
+		ba.nLen		= XMV6_WORK_RAM_BYTES;
+		ba.nAddress	= XMV6_WORK_RAM_BASE;
+		ba.szName	= "XMvsSF 3v3 work RAM";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(CpsXmvSixState);
+
+		if (nAction & ACB_WRITE) {
+			if (CpsXmvSixState.abi != XMV6_VERSION || CpsXmvSixState.count > XMV6_DEPTH) {
+				// not a state of this board
+				CpsXmvSixReset();
+				return 1;
+			}
+		}
+	}
+
+	return CpsXmvVisualScan(nAction);
+}
+
+// Wide screen: while the ROM keeps 'XS1X' at 0x813ff8, scroll1 columns 64-127 come from 0x814000
+const UINT8* CpsXmvScroll1Extension()
+{
+	if (!CpsXmvSixEnabled || !CpsXmvWide) return NULL;
+
+	const UINT8* tag = CpsXmvSixWorkRam + 0x3ff8;
+	if (tag[0] != 'X' || tag[1] != 'S' || tag[2] != '1' || tag[3] != 'X') return NULL;
+
+	return CpsXmvSixWorkRam + 0x4000;
+}
+
+// Once a frame, before the input ports are compiled
+static void CpsXmvSixSample()
+{
+	UINT16 raw[XMV6_PLAYERS];
+	for (INT32 p = 0; p < XMV6_PLAYERS; p++) {
+		raw[p] = 0;
+		for (INT32 bit = 0; bit < 13; bit++) {
+			raw[p] |= (CpsXmvSixButtons[p][bit] & 1) << bit;
+		}
+	}
+	XmvSixSample(&CpsXmvSixState, raw);
+
+	// P1 and P2 also reach the stock input ports, for the game's own menus
+	for (INT32 bit = 0; bit < 7; bit++) {
+		CpsInp001[bit] = (CpsXmvSixState.held[0] >> bit) & 1;
+		CpsInp000[bit] = (CpsXmvSixState.held[1] >> bit) & 1;
+	}
+	for (INT32 p = 0; p < 2; p++) {
+		UINT16 value = CpsXmvSixState.held[p];
+		CpsInp011[p * 4 + 0] = (value >>  8) & 1;	// weak kick
+		CpsInp011[p * 4 + 1] = (value >>  9) & 1;	// medium kick
+		CpsInp020[p + 0]     = (value >> 11) & 1;	// start
+		CpsInp020[p + 4]     = (value >> 12) & 1;	// coin
+	}
+	CpsInp011[2] = (CpsXmvSixState.held[0] >> 10) & 1;	// P1 strong kick
+	CpsInp020[6] = (CpsXmvSixState.held[1] >> 10) & 1;	// P2 strong kick
+}
+
 UINT8 __fastcall CpsReadByte(UINT32 a)
 {
+	if (CpsXmvSixEnabled) {
+		if (a >= XMV6_BASE && a < XMV6_BASE + XMV6_WINDOW_BYTES) {
+			return XmvSixReadByte(&CpsXmvSixState, CpsXmvSixCapabilities, a - XMV6_BASE);
+		}
+		if (a >= XMV6_WORK_RAM_BASE && a < XMV6_WORK_RAM_BASE + XMV6_WORK_RAM_BYTES) {
+			return CpsXmvSixWorkRam[a - XMV6_WORK_RAM_BASE];
+		}
+	}
+
 	// Input ports mirrored between 0x800000 and 0x807fff
 	if ((a & 0xFF8000) == 0x800000) {
 		return CpsReadPort(a & 0x1FF);
@@ -495,6 +618,11 @@ UINT8 __fastcall CpsReadByte(UINT32 a)
 
 void __fastcall CpsWriteByte(UINT32 a,UINT8 d)
 {
+	if (CpsXmvSixEnabled && a >= XMV6_WORK_RAM_BASE && a < XMV6_WORK_RAM_BASE + XMV6_WORK_RAM_BYTES) {
+		CpsXmvSixWorkRam[a - XMV6_WORK_RAM_BASE] = d;
+		return;
+	}
+
 	// Output ports mirrored between 0x800000 and 0x807fff
 	if ((a & 0xFF8000) == 0x800000) {
 		CpsWritePort(a & 0x1FF, d);
@@ -543,6 +671,15 @@ void __fastcall CpsWriteByte(UINT32 a,UINT8 d)
 
 UINT16 __fastcall CpsReadWord(UINT32 a)
 {
+	if (CpsXmvSixEnabled) {
+		if (a >= XMV6_BASE && a < XMV6_BASE + XMV6_WINDOW_BYTES) {
+			return XmvSixReadWord(&CpsXmvSixState, CpsXmvSixCapabilities, a - XMV6_BASE);
+		}
+		if (a >= XMV6_WORK_RAM_BASE && a < XMV6_WORK_RAM_BASE + XMV6_WORK_RAM_BYTES) {
+			return XmvSixRamReadWord(CpsXmvSixWorkRam, a - XMV6_WORK_RAM_BASE);
+		}
+	}
+
 	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[3]) {
 		return (UINT16)((nCalc[0] * nCalc[1]) >> 16);
 	}
@@ -558,6 +695,11 @@ UINT16 __fastcall CpsReadWord(UINT32 a)
 
 void __fastcall CpsWriteWord(UINT32 a, UINT16 d)
 {
+	if (CpsXmvSixEnabled && a >= XMV6_WORK_RAM_BASE && a < XMV6_WORK_RAM_BASE + XMV6_WORK_RAM_BYTES) {
+		XmvSixRamWriteWord(CpsXmvSixWorkRam, a - XMV6_WORK_RAM_BASE, d);
+		return;
+	}
+
 	// ports mirrored between 0x800000 and 0x807fff
 	if ((a & 0xFF8FFF) == 0x800100 + CpsMProt[0])
 		nCalc[0] = d;
@@ -607,6 +749,10 @@ INT32 CpsRwExit()
 
 INT32 CpsRwGetInp()
 {
+	if (CpsXmvSixEnabled) {
+		CpsXmvSixSample();
+	}
+
 	// Compile separate buttons into Inpxxx
 #define INP(nnn) \
   { INT32 i = 0; Inp##nnn = 0; \
@@ -716,7 +862,9 @@ INT32 CpsRwGetInp()
 		}
 	}
 
-	if (nMaxPlayers > 2) {
+	// xmvsf3v3: players 3-6 never reach the stock ports (Inp011 is P1/P2's kicks there), and
+	// CpsXmvSixSample() has already cleaned every player's opposite directions
+	if (nMaxPlayers > 2 && !CpsXmvSixEnabled) {
 		if (Cps == 2) {
 			clear_opposite.check(2, Inp011, 0x08, 0x04, 0x02, 0x01, nSocd[2]);
 			if (nMaxPlayers == 4) {

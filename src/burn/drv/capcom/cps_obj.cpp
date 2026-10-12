@@ -1,4 +1,5 @@
 #include "cps.h"
+#include "xmvsf3v3.h"
 // CPS Objs (sprites)
 
 INT32 nCpsObjectBank;
@@ -122,10 +123,14 @@ INT32 CpsObjInit()
 		return 1;
 	}
 
+	// xmvsf3v3: every buffer its states hold starts the same way
+	if (CpsXmvSixEnabled) memset(ObjMem, 0, (nMax << 3) * nFrameCount);
+
 	// Set up the frame buffers
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		of[i].Obj = ObjMem + (nMax << 3) * i;
 		of[i].nCount = 0;
+		if (CpsXmvSixEnabled) of[i].nShiftX = of[i].nShiftY = 0;
 	}
 
 	nGetNext=0;
@@ -436,6 +441,22 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 		// Find the palette for the tiles on this sprite
 		CpstPal = CpsPal + ((a & 0x1F) << 4);
 
+		// xmvsf3v3: the HUD's mini portraits in each fighter's colour, decoded from the program ROM
+		UINT32* pStockPal = CpstPal;
+		UINT32 nPortraitPal[16];
+		UINT32 nPortraitColor = 0;
+		if (CpsXmvSixEnabled && XmvPortraitObject(n, BURN_ENDIAN_SWAP_INT16(ps[0]), BURN_ENDIAN_SWAP_INT16(ps[1]), a, CpsXmvWide != 0, &nPortraitColor)) {
+			UINT16 nColors[16];
+			if (!XmvPortraitColors(CpsRom, nCpsRomLen, n, nPortraitColor, nColors)) {
+				continue;	// the marker isn't a palette, so don't draw it with one
+			}
+			for (INT32 pen = 0; pen < 16; pen++) {
+				UINT32 c = nColors[pen];
+				nPortraitPal[pen] = BurnHighCol(((c >> 8) & 15) * 17, ((c >> 4) & 15) * 17, (c & 15) * 17, 0);
+			}
+			CpstPal = nPortraitPal;
+		}
+
 		nFlip = (a >> 5) & 3;
 		// Find out sprite size
 		bx = ((a >> 8) & 15) + 1;
@@ -489,6 +510,8 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 				nCpsBlend = 0;
 			}
 		}
+
+		CpstPal = pStockPal;	// never leave it pointing at nPortraitPal
 	}
 
 	return 0;
@@ -881,5 +904,37 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 		CpstOneObjDoX[0]();
 	}
 	
+	return 0;
+}
+
+// xmvsf3v3: the sprite lag buffers (the Obj pointers are rebuilt by CpsObjInit, never saved)
+INT32 CpsObjVisualScan(INT32 nAction)
+{
+	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
+
+	struct BurnArea ba;
+	memset(&ba, 0, sizeof(ba));
+	ba.Data = ObjMem;
+	ba.nLen = (nMax << 3) * nFrameCount;
+	ba.szName = "XMvsSF 3v3 sprite lag buffers";
+	BurnAcb(&ba);
+
+	SCAN_VAR(nGetNext);
+	SCAN_VAR(nMaxZValue);
+	SCAN_VAR(nMaxZMask);
+	SCAN_VAR(nZOffset);
+	for (INT32 i = 0; i < nFrameCount; i++) {
+		SCAN_VAR(of[i].nShiftX);
+		SCAN_VAR(of[i].nShiftY);
+		SCAN_VAR(of[i].nCount);
+	}
+
+	if (nAction & ACB_WRITE) {
+		if (nGetNext < 0 || nGetNext >= nFrameCount) return 1;
+		for (INT32 i = 0; i < nFrameCount; i++) {
+			if (of[i].nCount < 0 || of[i].nCount > nMax) return 1;
+		}
+	}
+
 	return 0;
 }

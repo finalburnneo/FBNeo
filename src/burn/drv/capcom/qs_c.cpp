@@ -778,6 +778,13 @@ INT32 QscScan(INT32 nAction)
 	ba.szName	= szName;
 	BurnAcb(&ba);
 
+	if (CpsXmvSixEnabled) {
+		// xmvsf3v3: the resampler too, so its states replay exactly (other games' states keep their size)
+		SCAN_VAR(nDelta);
+		SCAN_VAR(nPos);
+		SCAN_VAR(interpolate_buffer);
+	}
+
 	return 0;
 }
 

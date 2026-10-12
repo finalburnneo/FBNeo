@@ -562,4 +562,19 @@ extern UINT8 Cps2VolUp;
 extern UINT8 Cps2VolDwn;
 extern UINT8 AspectDIP;
 
+// cps_rw.cpp: X-Men Vs. Street Fighter 3v3 + DHC board additions (xmvsf3v3.h)
+extern UINT8 CpsXmvSixButtons[6][13];
+extern INT32 CpsXmvSixEnabled;
+extern INT32 CpsXmvWide;
+INT32 CpsXmvSixInit(INT32 bWide);
+void CpsXmvSixExit();
+INT32 CpsXmvSixReset();
+INT32 CpsXmvSixScan(INT32 nAction, INT32* pnMin);
+const UINT8* CpsXmvScroll1Extension();
+// ... and its exact save states (run-ahead, netplay): the display state other games rebuild after a load
+INT32 CpsXmvVisualScan(INT32 nAction);		// cps_mem.cpp
+INT32 CpsObjVisualScan(INT32 nAction);		// cps_obj.cpp
+INT32 CpsPalVisualScan(INT32 nAction);		// cps_pal.cpp
+INT32 CpsPalConsumeRestoredCache();
+
 #endif

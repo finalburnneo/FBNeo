@@ -20,6 +20,12 @@ static inline INT32 gba_ppu_compute_max_fast_forward(gba_t* gba, bool render)
 	bool not_visible = !render || gba->ppu.scan_clock > GBA_LCD_VBLANK_START;
 	if (not_visible && (scanline_clock >= 1 && scanline_clock <= GBA_LCD_HBLANK_START * 4))
 		return GBA_LCD_HBLANK_START * 4 - scanline_clock - 1;
+	// Past HBLANK_END (lcd_x > 295) the line is finished: drawing occurs at
+	// lcd_x <= HBLANK_START in every render mode (scanline and per-pixel alike),
+	// and the last DISPSTAT/VCOUNT update is at HBLANK_END.  Jump to the next
+	// line's first cycle (the old fall-through cost ~12 extra callbacks per line).
+	if (scanline_clock > GBA_LCD_HBLANK_END * 4)
+		return 1232 - scanline_clock - 1;
 	return 3 - ((gba->ppu.scan_clock) % 4);
 }
 
@@ -507,16 +513,16 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 	INT32  p = (lcd_x + lcd_y * 240) * 4;
 	float  screen_blend_factor = 0.3 * gba->ppu.ghosting_strength;
 	UINT16 green_swap = gba_io_read16(gba, GBA_GREENSWP);
-	gba->framebuffer[p + 0] = ((r << 3) | (r >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 0] * screen_blend_factor;
-	gba->framebuffer[p + 2] = ((b << 3) | (b >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 2] * screen_blend_factor;
-
-	if (green_swap & 1) {
-		if (p & 4)
-			gba->framebuffer[p + 1 - 4] = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1 - 4] * screen_blend_factor;
-		else
-			gba->framebuffer[p + 1 + 4] = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1 + 4] * screen_blend_factor;
+	INT32  gp = (green_swap & 1) ? ((p & 4) ? (p + 1 - 4) : (p + 1 + 4)) : (p + 1);
+	if (screen_blend_factor == 0.0f) {
+		// ghosting off -> the blend reduces to a plain copy
+		gba->framebuffer[p + 0] = ((r << 3) | (r >> 2));
+		gba->framebuffer[p + 2] = ((b << 3) | (b >> 2));
+		gba->framebuffer[gp]    = ((g << 3) | (g >> 2));
 	} else {
-		gba->framebuffer[p + 1] = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 1] * screen_blend_factor;
+		gba->framebuffer[p + 0] = ((r << 3) | (r >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 0] * screen_blend_factor;
+		gba->framebuffer[p + 2] = ((b << 3) | (b >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[p + 2] * screen_blend_factor;
+		gba->framebuffer[gp]    = ((g << 3) | (g >> 2)) * (1.0 - screen_blend_factor) + gba->framebuffer[gp] * screen_blend_factor;
 	}
 }
 
@@ -767,16 +773,16 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 		gba->second_target_buffer[lcd_x] = backdrop_col;
 
 		INT32 p = (lcd_x + lcd_y * 240) * 4;
-		gba->framebuffer[p + 0] = ((r << 3) | (r >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 0] * sbf;
-		gba->framebuffer[p + 2] = ((b << 3) | (b >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 2] * sbf;
-
-		if (green_swap & 1) {
-			if (p & 4)
-				gba->framebuffer[p + 1 - 4] = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 1 - 4] * sbf;
-			else
-				gba->framebuffer[p + 1 + 4] = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 1 + 4] * sbf;
+		INT32 gp = (green_swap & 1) ? ((p & 4) ? (p + 1 - 4) : (p + 1 + 4)) : (p + 1);
+		if (sbf == 0.0f) {
+			// ghosting off -> the blend reduces to a plain copy
+			gba->framebuffer[p + 0] = ((r << 3) | (r >> 2));
+			gba->framebuffer[p + 2] = ((b << 3) | (b >> 2));
+			gba->framebuffer[gp]    = ((g << 3) | (g >> 2));
 		} else {
-			gba->framebuffer[p + 1] = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 1] * sbf;
+			gba->framebuffer[p + 0] = ((r << 3) | (r >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 0] * sbf;
+			gba->framebuffer[p + 2] = ((b << 3) | (b >> 2)) * (1.0 - sbf) + gba->framebuffer[p + 2] * sbf;
+			gba->framebuffer[gp]    = ((g << 3) | (g >> 2)) * (1.0 - sbf) + gba->framebuffer[gp] * sbf;
 		}
 	}
 }

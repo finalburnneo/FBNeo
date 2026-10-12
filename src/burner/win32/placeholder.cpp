@@ -1,6 +1,11 @@
 #include "burner.h"
 #include <winuser.h>
 
+UINT uiLightModeCode = 0;
+UINT uiDarkModeCode  = 1;
+
+bool uiOwnerDrawActive = FALSE;
+
 UINT uiBackGroundColor = GetSysColor(COLOR_WINDOW);
 UINT uiMenuItemColor   = GetSysColor(COLOR_WINDOW);
 UINT uiSelectedMenuItemColor = 0xe8c59f; 

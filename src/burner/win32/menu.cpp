@@ -287,12 +287,16 @@ void DisplayPopupMenu(int nMenu)
 		RECT clientRect;
 		RECT buttonRect;
 
-		COLORREF color = RGB((uiMenuItemColor >> 16) & 0xFF,     // R
-                      		 (uiMenuItemColor >> 8) & 0xFF,      // G
-                      		  uiMenuItemColor & 0xFF);           // B
-		HBRUSH hbrColor = CreateSolidBrush(color);
+		//USER TOGGLED ON EXPERIMENTAL LIGHT AND DARK MODE
+		//FOR MORE INFO CHECK EVENTS MENU_UI_LIGHT_MODE && MENU_UI_DARK_MODE
+		if(uiOwnerDrawActive)
+		{
+			COLORREF color = uiMenuItemColor;
+			HBRUSH hbrColor = CreateSolidBrush(color);
 
-		ApplyMenuBackground(hPopupMenu, hbrColor);
+			ApplyMenuBackground(hPopupMenu, hbrColor);
+		}
+
 
 		nLastMenu         = nMenu;
 		nRecursions       = 0;

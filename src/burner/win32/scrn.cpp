@@ -3031,16 +3031,26 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_DISABLEPLACEHOLDER:
 			ResetPlaceHolder();
 			POST_INITIALISE_MESSAGE;
+			uiOwnerDrawActive = TRUE;
 			break;
 		
-		case MENU_DEFAULT_LIGHT_MODE:
- 			nUiColorTheme = 0;
+		case MENU_UI_LIGHT_MODE:
+ 			nUiColorTheme = uiLightModeCode;
 			UpdateUiColorMode(nUiColorTheme);
 			POST_INITIALISE_MESSAGE;
+			uiOwnerDrawActive = TRUE;
 			break;
 
-		case MENU_DEFAULT_DARK_MODE:
-			nUiColorTheme = 1;
+		case MENU_UI_DARK_MODE:
+			nUiColorTheme = uiDarkModeCode;
+			UpdateUiColorMode(nUiColorTheme);
+			POST_INITIALISE_MESSAGE;
+			uiOwnerDrawActive = TRUE;
+			break;	
+
+		case MENU_UI_DEFAULT_MODE:
+			uiOwnerDrawActive = FALSE;
+			nUiColorTheme = uiLightModeCode;
 			UpdateUiColorMode(nUiColorTheme);
 			POST_INITIALISE_MESSAGE;
 			break;	

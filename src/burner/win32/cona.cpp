@@ -487,6 +487,7 @@ int ConfigAppLoad()
 		VAR(nIpsSelectedLanguage);
 
 		VAR(bEnableIcons);
+		VAR(uiOwnerDrawActive);
 		VAR(nUiColorTheme);
 		VAR(bIconsOnlyParents);
 		VAR(nIconsSize);
@@ -983,6 +984,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// The language index to use for the IPS Patch Manager dialog.\n"));
 	VAR(nIpsSelectedLanguage);
+
+	_ftprintf(h, _T("\n// The reference to determine which ui Mode is being used True (1) activates the Owner Draw menus False (0) lets Windows handle them\n"));
+	VAR(uiOwnerDrawActive);
 
 	_ftprintf(h, _T("\n// The reference to determine which ui color mode is to be used 0 - Light Mode and 1 - Dark Mode\n"));
 	VAR(nUiColorTheme);

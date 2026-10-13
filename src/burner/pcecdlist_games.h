@@ -14,7 +14,6 @@ Adventure Quiz Capcom - stuck playing track 7(?)
 Baby Jo the Super Hero - stuck playing track 5
 Alnam no Kiba - unknown writes to 1ee9xx/8xx
 Aoki Ookami - unknown write to 1efffx
-Bakuden Unbalanced Zone - black screen after start game
 Beyond Shadowgate - stuck reading track 36, but if you ffwd through it, it'll get to the title screen, but hang @ black screen when game starts
 Bishojyo Jyanshi Idol Pai - load error (GECD card required)
 SydMead - when changing screen mode, crap left on bottom of screen

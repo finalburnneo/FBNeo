@@ -1073,7 +1073,9 @@ static void cd_cdda_check_end_mark()
 			break;
 		}
 		case 2:
-			 // IRQ when finished
+			// IRQ when finished, the drive stops too (bakuzone polls subq until it reports stopped)
+			cd_cdda_status = PCE_CD_CDDA_OFF;
+			CDEmuStop();
 			cd_set_irq_line(PCE_CD_IRQ_TRANSFER_DONE, 1);
 			cd_end_mark = 0;
 			break;

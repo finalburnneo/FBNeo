@@ -11033,6 +11033,44 @@ struct BurnDriver BurnDrvsnes_Doremifantasyts = {
 	512, 448, 4, 3
 };
 
+// Down the World - Mervil's Ambition (Japan)
+
+static struct BurnRomInfo snes_DownworldRomDesc[] = {
+	{ "Down the World - Mervil's Ambition (J)(1994)(ASCII).sfc", 2097152, 0xf1110fad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Downworld)
+STD_ROM_FN(snes_Downworld)
+
+struct BurnDriver BurnDrvsnes_Downworld = {
+	"snes_downworld", "snes_downworldte", NULL, NULL, "1994",
+	"Down the World - Mervil's Ambition (Japan)\0", NULL, "ASCII Corp.", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_DownworldRomInfo, snes_DownworldRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Down the World - Mervil's Ambition (Hack, English v1.1.0-beta)
+// https://www.romhacking.net/translations/7816/
+static struct BurnRomInfo snes_DownworldteRomDesc[] = {
+	{ "Down the World - Mervil's Ambition T-Eng v1.1.0-beta (2026)(pzapzap).sfc", 4194304, 0x4c87ed04, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Downworldte)
+STD_ROM_FN(snes_Downworldte)
+
+struct BurnDriver BurnDrvsnes_Downworldte = {
+	"snes_downworldte", NULL, NULL, NULL, "2026",
+	"Down the World - Mervil's Ambition (Hack, English v1.1.0-beta)\0", NULL, "pzapzap", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_RPG, 0,
+	SNESGetZipName, snes_DownworldteRomInfo, snes_DownworldteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Dr. Mario (Japan)
 
 static struct BurnRomInfo snes_DrmarioRomDesc[] = {
@@ -22490,6 +22528,44 @@ struct BurnDriver BurnDrvsnes_Ltbballtp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SPORTSMISC, 0,
 	SNESGetZipName, snes_LtbballtpRomInfo, snes_LtbballtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Love Quest (Japan)
+
+static struct BurnRomInfo snes_LovequestRomDesc[] = {
+	{ "Love Quest (J)(1995)(Tokuma Shoten).sfc", 1572864, 0x92fad6fc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lovequest)
+STD_ROM_FN(snes_Lovequest)
+
+struct BurnDriver BurnDrvsnes_Lovequest = {
+	"snes_lovequest", "snes_lovequestte", NULL, NULL, "1995",
+	"Love Quest (Japan)\0", NULL, "Tokuma Shoten", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_LovequestRomInfo, snes_LovequestRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Love Quest (Hack, English v1.1.0-beta)
+// https://www.romhacking.net/translations/7825/
+static struct BurnRomInfo snes_LovequestteRomDesc[] = {
+	{ "Love Quest T-Eng v1.1.0-beta (2026)(pzapzap).sfc", 3145728, 0x47b42865, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Lovequestte)
+STD_ROM_FN(snes_Lovequestte)
+
+struct BurnDriver BurnDrvsnes_Lovequestte = {
+	"snes_lovequestte", NULL, NULL, NULL, "2026",
+	"Love Quest (Hack, English v1.1.0-beta)\0", NULL, "pzapzap", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_SNES, GBF_ADV, 0,
+	SNESGetZipName, snes_LovequestteRomInfo, snes_LovequestteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -47374,6 +47450,25 @@ struct BurnDriver BurnDrvsnes_Ccshockman0 = {
 	512, 448, 4, 3
 };
 
+// Dangerous Dave (HB, v0.1)
+// https://ludufre.com/ports/
+static struct BurnRomInfo snes_DangdaveRomDesc[] = {
+	{ "Dangerous Dave v0.1 (2026)(ludufre).sfc", 1048576, 0x11333e54, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dangdave)
+STD_ROM_FN(snes_Dangdave)
+
+struct BurnDriver BurnDrvsnes_Dangdave = {
+	"snes_dangdave", NULL, NULL, NULL, "2026",
+	"Dangerous Dave (HB, v0.1)\0", NULL, "ludufre", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_DangdaveRomInfo, snes_DangdaveRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Deflektor (HB, v1.1)
 
 static struct BurnRomInfo snes_DeflektorRomDesc[] = {
@@ -50660,6 +50755,25 @@ struct BurnDriver BurnDrvsnes_Sfalpha2lff = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Sfalpha2lffRomInfo, snes_Sfalpha2lffRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Supaplex (HB, v0.2)
+// https://ludufre.com/ports/
+static struct BurnRomInfo snes_SupaplexRomDesc[] = {
+	{ "Supaplex v0.2 (2026)(ludufre).sfc", 4194304, 0x146e59dc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supaplex)
+STD_ROM_FN(snes_Supaplex)
+
+struct BurnDriver BurnDrvsnes_Supaplex = {
+	"snes_supaplex", NULL, NULL, NULL, "2026",
+	"Supaplex (HB, v0.2)\0", "SA-1 enhancement CPU", "ludufre", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION | GBF_MAZE, 0,
+	SNESGetZipName, snes_SupaplexRomInfo, snes_SupaplexRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

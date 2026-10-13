@@ -4643,6 +4643,24 @@ struct BurnDriver BurnDrvsg1k_mieyen = {
 	272, 228, 4, 3
 };
 
+// Mike Mech (HB)
+static struct BurnRomInfo sg1k_mikemechRomDesc[] = {
+	{ "Mike Mech (2026)(SiRioKD).sg",	49152, 0x1977d78b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_mikemech)
+STD_ROM_FN(sg1k_mikemech)
+
+struct BurnDriver BurnDrvsg1k_mikemech = {
+	"sg1k_mikemech", NULL, NULL, NULL, "2026",
+	"Mike Mech (HB)\0", NULL, "SiRioKD", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_SG1000 | HARDWARE_SEGA_SG1000_RAMEXP_B, GBF_PLATFORM, 0,
+	SG1KGetZipName, sg1k_mikemechRomInfo, sg1k_mikemechRomName, NULL, NULL, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	272, 228, 4, 3
+};
+
 // Neuras (HB)
 static struct BurnRomInfo sg1k_neurasRomDesc[] = {
 	{ "Neuras (2021)(Inufuto).sg",	8373, 0xbeb45e42, BRF_PRG | BRF_ESS },

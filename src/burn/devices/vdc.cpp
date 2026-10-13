@@ -32,7 +32,7 @@ static INT32	vdc_vblank_triggered[2];
 static INT32	vdc_current_segment[2];
 static INT32	vdc_current_segment_line[2];
 static INT32	vdc_raster_count[2];
-static INT32	vdc_satb_countdown[2];
+static INT32	vdc_satb_countdown[2];	// cpu cycles until VRAM > SATB DMA completes
 
 UINT16 *vdc_tmp_draw;			// allocate externally!
 static UINT16 *vdc_linebuf; // allocated here, a single line
@@ -312,6 +312,7 @@ void vce_reset()
 #define STATE_VCR		3
 
 #define VDC_WPF			684		/* width of a line in frame including blanking areas */
+#define VDC_CYCLES_PER_LINE	(1365 / 3)	/* cpu cycles per scanline */
 #define VDC_LPF		 262	 /* number of lines in a single frame */
 
 #define VDC_BSY		 0x40	/* Set when the VDC accesses VRAM */
@@ -678,6 +679,22 @@ void vdc_check_hblank_raster_irq(INT32 which)
 
 }
 
+// called at the end of a line, with vdc_satb_countdown relative to that point
+static void vdc_satb_check(INT32 which)
+{
+	if ( vdc_satb_countdown[which] > VDC_CYCLES_PER_LINE ) return;
+
+	// completes during the coming line
+	if ( vdc_satb_countdown[which] > 0 ) h6280Run(vdc_satb_countdown[which]);
+	vdc_satb_countdown[which] = 0;
+
+	if ( vdc_data[which][DCR] & DCR_DSC )
+	{
+		vdc_status[which] |= VDC_DS;	/* set satb done flag */
+		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+	}
+}
+
 static void do_vblank(INT32 which)
 {
 	if (vdc_vblank_triggered[which] == 1) return; // once per frame
@@ -706,11 +723,15 @@ static void do_vblank(INT32 which)
 			vdc_sprite_ram[which][i] = ( vdc_vidram[which][ ( vdc_data[which][DVSSR] << 1 ) + i * 2 + 1 ] << 8 ) | vdc_vidram[which][ ( vdc_data[which][DVSSR] << 1 ) + i * 2 ];
 		}
 
-		/* generate interrupt if needed */
-		if ( vdc_data[which][DCR] & DCR_DSC )
-		{
-			vdc_satb_countdown[which] = 4;
-		}
+		// The transfer takes 1024 dot clocks, starting at the beginning of the line
+		// while the vblank irq happens at the start of the display period (HSW + HDS).
+		// Some games re-enable interrupts right after vblank and rely on the DS irq
+		// being already pending by then (Space Invaders - The Original Game).
+		INT32 hsync_dots = (((vdc_data[which][HSR] & 0x1f) + 1) + (((vdc_data[which][HSR] >> 8) & 0x7f) + 1)) * 8;
+		INT32 dma_dots = 1024 - hsync_dots;
+		if (dma_dots < 1) dma_dots = 1;
+		vdc_satb_countdown[which] = (dma_dots * vce_clock) / 3;
+		vdc_satb_check(which);
 	}
 }
 
@@ -724,17 +745,10 @@ static void vdc_advance_line(INT32 which)
 	vdc_current_segment_line[which] += 1;
 	vdc_raster_count[which] += 1;
 
-	if ( vdc_satb_countdown[which] )
+	if ( vdc_satb_countdown[which] > 0 )
 	{
-		vdc_satb_countdown[which] -= 1;
-		if ( vdc_satb_countdown[which] == 0 )
-		{
-			if ( vdc_data[which][DCR] & DCR_DSC )
-			{
-				vdc_status[which] |= VDC_DS;	/* set satb done flag */
-				h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			}
-		}
+		vdc_satb_countdown[which] -= VDC_CYCLES_PER_LINE;
+		vdc_satb_check(which);
 	}
 
 	if ( vce_current_line == 0 )

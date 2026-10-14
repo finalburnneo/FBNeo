@@ -10,8 +10,6 @@ struct pce_cd_dink {
 
 #if 0
 /*
-Alnam no Kiba - unknown writes to 1ee9xx/8xx
-Aoki Ookami - unknown write to 1efffx
 Bishojyo Jyanshi Idol Pai - load error (GECD card required)
 SydMead - when changing screen mode, crap left on bottom of screen
 */

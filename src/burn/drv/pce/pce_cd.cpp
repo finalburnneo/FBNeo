@@ -1265,8 +1265,9 @@ void CDSubsystemRegsWrite(UINT32 address, UINT8 data)
 int CDSubsystemMiscWrite(UINT32 address, UINT8 data)
 {
 	if (HAS_CD) {
-		if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
-			if (!bram_locked)
+		// bram is only 2kb, the rest of the bank is unmapped
+		if ((address >= 0x1ee000) && (address <= 0x1effff)) {
+			if (!bram_locked && address <= 0x1ee7ff)
 			{
 				PCECDBRAM[address & 0x7FF] = data;
 			}
@@ -1330,8 +1331,8 @@ UINT8 CDSubsystemRegsRead(UINT32 address)
 UINT8 CDSubsystemMiscRead(UINT32 address)
 {
 	if (HAS_CD) {
-		if ((address >= 0x1ee000) && (address <= 0x1ee7ff)) {
-			if (bram_locked) return 0xff;
+		if ((address >= 0x1ee000) && (address <= 0x1effff)) {
+			if (bram_locked || address > 0x1ee7ff) return 0xff;
 			return PCECDBRAM[address & 0x7ff];
 		}
 

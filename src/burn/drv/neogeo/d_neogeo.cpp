@@ -12562,6 +12562,43 @@ struct BurnDriver BurnDrvPulstar = {
 };
 
 
+// Pulstar Aegis (Hack)
+// https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/pulstar
+static struct BurnRomInfo pulstaraeRomDesc[] = {
+	{ "089-p1ae.p1",  0x100000, 0xdcb02236, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
+	{ "089-p2.sp2",   0x200000, 0x028b774c, 1 | BRF_ESS | BRF_PRG }, //  1 					/ mask rom TC5316200
+
+	{ "089-s1ae.s1",  0x020000, 0x2a659ff9, 2 | BRF_GRA },           //  2 Text layer tiles / mask rom TC531000
+
+	{ "089-c1.c1",    0x400000, 0xf4e97332, 3 | BRF_GRA },           //  3 Sprite data		/ mask rom TC5332205
+	{ "089-c2.c2",    0x400000, 0x836d14da, 3 | BRF_GRA },           //  4 					/ mask rom TC5332205
+	{ "089-c3.c3",    0x400000, 0x913611c4, 3 | BRF_GRA },           //  5 					/ mask rom TC5332205
+	{ "089-c4.c4",    0x400000, 0x44cef0e3, 3 | BRF_GRA },           //  6 					/ mask rom TC5332205
+	{ "089-c5.c5",    0x400000, 0x89baa1d7, 3 | BRF_GRA },           //  7 					/ mask rom TC5332205
+	{ "089-c6.c6",    0x400000, 0xb2594d56, 3 | BRF_GRA },           //  8 					/ mask rom TC5332205
+	{ "089-c7ae.c7",  0x200000, 0x3a74b3a2, 3 | BRF_GRA },           //  9 					/ mask rom TC5316200
+	{ "089-c8ae.c8",  0x200000, 0x8a0bb5d5, 3 | BRF_GRA },           // 10 					/ mask rom TC5316200
+
+	{ "089-m1.m1",    0x020000, 0xff3df7c7, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/ mask rom TC531001
+
+	{ "089-v1.v1",    0x400000, 0x6f726ecb, 5 | BRF_SND },           // 12 Sound data		/ mask rom TC5332204
+	{ "089-v2.v2",    0x400000, 0x9d2db551, 5 | BRF_SND },           // 13 					/ mask rom TC5332204
+};
+
+STDROMPICKEXT(pulstarae, pulstarae, neogeo)
+STD_ROM_FN(pulstarae)
+
+struct BurnDriver BurnDrvPulstarae = {
+	"pulstarae", "pulstar", "neogeo", NULL, "2026",
+	"Pulstar Aegis (Hack)\0", NULL, "Boomchil", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
+	NULL, pulstaraeRomInfo, pulstaraeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
 // Blazing Star
 
 static struct BurnRomInfo blazstarRomDesc[] = {
@@ -12708,18 +12745,18 @@ struct BurnDriver BurnDrvWjammers = {
 };
 
 
-// Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.1.0)
+// Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.2.0)
 // https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/wjammers
 
 static struct BurnRomInfo wjammebRomDesc[] = {
-	{ "065-p1eb.p1",  0x100000, 0x042fbcdf, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
+	{ "065-p1eb.p1",  0x100000, 0xe82fae8b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ mask rom TC538200
 
-	{ "065-s1eb.s1",  0x020000, 0x9827f989, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+	{ "065-s1eb.s1",  0x020000, 0x0b9ac678, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
 
-	{ "065-c1.c1",    0x100000, 0xc7650204, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC538200
-	{ "065-c2.c2",    0x100000, 0xd9f3e71d, 3 | BRF_GRA },           //  3 					/ mask rom TC538200
-	{ "065-c3eb.c3",  0x100000, 0x153363b0, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
-	{ "065-c4eb.c4",  0x100000, 0xc7b5b02d, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
+	{ "065-c1eb.c1",  0x100000, 0xe267ae0e, 3 | BRF_GRA },           //  2 Sprite data		/ mask rom TC538200
+	{ "065-c2eb.c2",  0x100000, 0xb26f6d16, 3 | BRF_GRA },           //  3 					/ mask rom TC538200
+	{ "065-c3eb.c3",  0x100000, 0x2fb1c407, 3 | BRF_GRA },           //  4 					/ mask rom TC538200
+	{ "065-c4eb.c4",  0x100000, 0x1fb46167, 3 | BRF_GRA },           //  5 					/ mask rom TC538200
 
 	{ "065-m1.m1",    0x020000, 0x52c23cfc, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			/ mask rom TC531001
 
@@ -12734,7 +12771,7 @@ STD_ROM_FN(wjammeb)
 
 struct BurnDriver BurnDrvWjammeb = {
 	"wjammeb", "wjammers", "neogeo", NULL, "2025-26",
-	"Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.1.0)\0", NULL, "Boomchil", "Neo Geo MVS",
+	"Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.2.0)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, wjammebRomInfo, wjammebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -30404,15 +30441,15 @@ struct BurnDriver BurnDrvKarnovng = {
 };
 
 
-// Maiya: Super Nature Girl (HB, v3)
+// Maiya: Super Nature Girl (HB, v4)
 
 static struct BurnRomInfo maiyaRomDesc[] = {
-	{ "maiya_p1.p1",    0x080000, 0x2902ae7f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "maiya_p1.p1",    0x080000, 0x5fe28a51, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "maiya_s1.s1",    0x020000, 0x5c7951e1, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "maiya_c1.c1",    0x400000, 0x7dc0232b, 3 | BRF_GRA },           //  2 Sprite data
-	{ "maiya_c2.c2",    0x400000, 0xa42cfe1a, 3 | BRF_GRA },           //  3
+	{ "maiya_c1.c1",    0x400000, 0x48638505, 3 | BRF_GRA },           //  2 Sprite data
+	{ "maiya_c2.c2",    0x400000, 0x66a5c0e2, 3 | BRF_GRA },           //  3
 
 	{ "maiya_m1.m1",    0x020000, 0xce7717bd, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
@@ -30424,7 +30461,7 @@ STD_ROM_FN(maiya)
 
 struct BurnDriver BurnDrvMaiya = {
 	"maiya", NULL, "neogeo", NULL, "2026",
-	"Maiya: Super Nature Girl (HB, v3)\0", NULL, "Eagle Software", "Neo Geo MVS",
+	"Maiya: Super Nature Girl (HB, v4)\0", NULL, "Eagle Software", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NULL, maiyaRomInfo, maiyaRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -30538,7 +30575,7 @@ struct BurnDriver BurnDrvEswatng = {
 
 
 // Hang-On - Neo Geo Conversion (HB, v2.0)
-// https://teo-tormo.itch.io/altered-beast-neogeo
+// https://shinobiz72.itch.io/hangon
 
 static struct BurnRomInfo hangonngRomDesc[] = {
 	{ "hangonng-p1.p1",	0x100000, 0x317040d4, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code

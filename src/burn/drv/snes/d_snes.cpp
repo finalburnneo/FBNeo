@@ -50721,6 +50721,26 @@ struct BurnDriver BurnDrvsnes_starfox2fx3j = {
 	512, 448, 4, 3
 };
 
+// Star Fox Collection FX3 (Hack, v1.0.1)
+// https://romhackplaza.org/romhacks/starfox-collection-sf12exweekend-super-nintendo-romhack
+// GSU‑3
+static struct BurnRomInfo snes_starfoxcfx3RomDesc[] = {
+	{ "Star Fox Collection FX3 v1.0.1 (2026)(kandowontu).sfc", 4194304, 0x97b253ab, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_starfoxcfx3)
+STD_ROM_FN(snes_starfoxcfx3)
+
+struct BurnDriver BurnDrvsnes_starfoxcfx3 = {
+	"snes_starfoxcfx3", NULL, NULL, NULL, "2026",
+	"Star Fox Collection FX3 (Hack, v1.0.1)\0", "Super FX GSU-3 enhancement chip", "kandowontu", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_SHOOT, 0,
+	SNESGetZipName, snes_starfoxcfx3RomInfo, snes_starfoxcfx3RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Steel Talons - FastROM (Hack)
 // https://www.patreon.com/posts/steel-talons-fix-79800713
 static struct BurnRomInfo snes_SteeltalonsfrRomDesc[] = {

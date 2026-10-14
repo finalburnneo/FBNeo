@@ -4177,7 +4177,7 @@ struct BurnDriver BurnDrvngpc_neurasm = {
 
 // Neo Bowling (HB, v0.9)
 static struct BurnRomInfo ngpc_neobowlingRomDesc[] = {
-	{ "Neo Bowling v0.9 (2026)(Hardhat Warrior).ngp", 2097152, 0x8c1f321e, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Neo Bowling v0.9 (2026)(Hardhat Warrior).ngp", 2097152, 0x90e9e1cb, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_neobowling, ngpc_neobowling, ngpc_ngp)

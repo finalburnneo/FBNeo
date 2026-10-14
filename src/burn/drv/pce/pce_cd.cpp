@@ -187,6 +187,17 @@ static INT32 cd_read_sector()
 	return 0;	// Return 0 = read ok
 }
 
+// track numbers past the last track address the lead-out
+static UINT32 cd_track_start_frame(UINT8 track)
+{
+	UINT8 last_track = bcd_2_dec(CDEmuReadTOC(CDEmuTOC_FIRSTLAST)[1]);
+	UINT8 *toc = (bcd_2_dec(track) > last_track) ? CDEmuReadTOC(CDEmuTOC_LASTMSF) : CDEmuReadTOC(track);
+	UINT8 m = bcd_2_dec(toc[0]);
+	UINT8 s = bcd_2_dec(toc[1]);
+	UINT8 f = bcd_2_dec(toc[2]);
+	return f + 75 * (s + m * 60);
+}
+
 /* 0x08 - READ (6) */
 static void cd_read_6()
 {
@@ -222,15 +233,9 @@ static void cd_nec_set_audio_start_position()
 			frame = f + 75 * (s + m * 60);
 			break;
 		}
-		case 0x80: {
-			UINT8 track = cd_command_buffer[2];
-			UINT8 *toc = CDEmuReadTOC(track);
-			UINT8 m = bcd_2_dec(toc[0]);
-			UINT8 s = bcd_2_dec(toc[1]);
-			UINT8 f = bcd_2_dec(toc[2]);
-			frame = f + 75 * (s + m * 60);
+		case 0x80:
+			frame = cd_track_start_frame(cd_command_buffer[2]);
 			break;
-		}
 		default:
 			break;
 	}
@@ -296,17 +301,12 @@ static void cd_nec_set_audio_stop_position()
 			frame = f + 75 * (s + m * 60);
 			break;
 		}
-		case 0x80: {
+		case 0x80:
 			// NB: crazyhos uses this command with track = 1 on pre-title screen intro.
 			// It's not supposed to playback anything according to real HW refs.
-			UINT8 track = cd_command_buffer[2];
-			UINT8 *toc = CDEmuReadTOC(track);
-			UINT8 m = bcd_2_dec(toc[0]);
-			UINT8 s = bcd_2_dec(toc[1]);
-			UINT8 f = bcd_2_dec(toc[2]);
-			frame = f + 75 * (s + m * 60);
+			// adventurequiz uses last track + 1 as end position.
+			frame = cd_track_start_frame(cd_command_buffer[2]);
 			break;
-		}
 		default:
 			break;
 	}

@@ -723,14 +723,11 @@ static void do_vblank(INT32 which)
 			vdc_sprite_ram[which][i] = ( vdc_vidram[which][ ( vdc_data[which][DVSSR] << 1 ) + i * 2 + 1 ] << 8 ) | vdc_vidram[which][ ( vdc_data[which][DVSSR] << 1 ) + i * 2 ];
 		}
 
-		// The transfer takes 1024 dot clocks, starting at the beginning of the line
-		// while the vblank irq happens at the start of the display period (HSW + HDS).
-		// Some games re-enable interrupts right after vblank and rely on the DS irq
-		// being already pending by then (Space Invaders - The Original Game).
-		INT32 hsync_dots = (((vdc_data[which][HSR] & 0x1f) + 1) + (((vdc_data[which][HSR] >> 8) & 0x7f) + 1)) * 8;
-		INT32 dma_dots = 1024 - hsync_dots;
-		if (dma_dots < 1) dma_dots = 1;
-		vdc_satb_countdown[which] = (dma_dots * vce_clock) / 3;
+		// One word per master clock, so the DS irq is pending shortly after vblank.
+		// Space Invaders - The Original Game re-enables interrupts at the end of its
+		// vblank handler and crashes if DS arrives later.
+		// Exact transfer duration is not documented
+		vdc_satb_countdown[which] = 256 / 3;
 		vdc_satb_check(which);
 	}
 }

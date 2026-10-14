@@ -49351,6 +49351,25 @@ struct BurnDriver BurnDrvsnes_Nekotaco = {
 	512, 448, 4, 3
 };
 
+// Nemeshit (HB)
+// https://keefbaker.itch.io/nemeshit
+static struct BurnRomInfo snes_NemeshitRomDesc[] = {
+	{ "Nemeshit (2026)(Clankerbast Software).sfc", 4194304, 0x388fea7c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Nemeshit)
+STD_ROM_FN(snes_Nemeshit)
+
+struct BurnDriver BurnDrvsnes_Nemeshit = {
+	"snes_nemeshit", NULL, NULL, NULL, "2026",
+	"Nemeshit (HB)\0", NULL, "Clankerbast Software", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_HORSHOOT, 0,
+	SNESGetZipName, snes_NemeshitRomInfo, snes_NemeshitRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // New Super Mario Land (HB, v1.5)
 
 static struct BurnRomInfo snes_NewsupermariolandRomDesc[] = {

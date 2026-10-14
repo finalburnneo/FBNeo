@@ -22871,6 +22871,25 @@ struct BurnDriver BurnDrvnes_nebsanddebs = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Nemeshit (HB)
+// https://keefbaker.itch.io/nemeshit
+static struct BurnRomInfo nes_nemeshitRomDesc[] = {
+	{ "Nemeshit (2026)(Clankerbast Software).nes",          786448, 0x9fb4b6a3, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_nemeshit)
+STD_ROM_FN(nes_nemeshit)
+
+struct BurnDriver BurnDrvnes_nemeshit = {
+	"nes_nemeshit", NULL, NULL, NULL, "2026",
+	"Nemeshit (HB)\0", NULL, "Clankerbast Software", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_HORSHOOT, 0,
+	NESGetZipName, nes_nemeshitRomInfo, nes_nemeshitRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // neMULEsis (HB, v2.25.23)
 static struct BurnRomInfo nes_nemulesisRomDesc[] = {
 	{ "neMULEsis v2.25.23 (2023)(John Vanderhoef).nes",          524304, 0x9982f1b7, BRF_ESS | BRF_PRG },

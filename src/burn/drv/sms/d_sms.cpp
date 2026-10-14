@@ -23937,9 +23937,9 @@ struct BurnDriver BurnDrvsms_papicom = {
 	256, 192, 4, 3
 };
 
-// Pedrisco (HB, v1.1)
+// Pedrisco (HB, v1.2)
 static struct BurnRomInfo sms_pedriscoRomDesc[] = {
-	{ "Pedrisco v1.1 (2026)(vosges6128).sms",	131072, 0x271296bc, BRF_PRG | BRF_ESS },
+	{ "Pedrisco v1.2 (2026)(vosges6128).sms",	131072, 0x159f11a2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_pedrisco)
@@ -23947,7 +23947,7 @@ STD_ROM_FN(sms_pedrisco)
 
 struct BurnDriver BurnDrvsms_pedrisco = {
 	"sms_pedrisco", NULL, NULL, NULL, "2026",
-	"Pedrisco (HB, v1.1)\0", NULL, "vosges6128", "Sega Master System",
+	"Pedrisco (HB, v1.2)\0", NULL, "vosges6128", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_pedriscoRomInfo, sms_pedriscoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
@@ -26236,9 +26236,9 @@ struct BurnDriver BurnDrvgg_osotosm = {
 	256, 192, 4, 3
 };
 
-// Pedrisco (HB, v1.1)
+// Pedrisco (HB, v1.2)
 static struct BurnRomInfo gg_pedriscoRomDesc[] = {
-	{ "Pedrisco v1.1 (2026)(vosges6128).gg",	131072, 0xbfe924cd, BRF_PRG | BRF_ESS },
+	{ "Pedrisco v1.2 (2026)(vosges6128).gg",	131072, 0x9534946e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(gg_pedrisco)
@@ -26246,7 +26246,7 @@ STD_ROM_FN(gg_pedrisco)
 
 struct BurnDriver BurnDrvgg_pedrisco = {
 	"gg_pedrisco", NULL, NULL, NULL, "2026",
-	"Pedrisco (HB, v1.1)\0", NULL, "vosges6128", "Sega Game Gear",
+	"Pedrisco (HB, v1.2)\0", NULL, "vosges6128", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
 	GGGetZipName, gg_pedriscoRomInfo, gg_pedriscoRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,

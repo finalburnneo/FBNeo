@@ -42213,6 +42213,25 @@ struct BurnDriver BurnDrvmd_navabarone = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Nemeshit (HB)
+// https://keefbaker.itch.io/nemeshit
+static struct BurnRomInfo md_nemeshitRomDesc[] = {
+	{ "Nemeshit (2026)(Clankerbast Software).bin", 4194304, 0x8f93aed2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nemeshit)
+STD_ROM_FN(md_nemeshit)
+
+struct BurnDriver BurnDrvmd_nemeshit = {
+	"md_nemeshit", NULL, NULL, NULL, "2026",
+	"Nemeshit (HB)\0", NULL, "Clankerbast Software", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_nemeshitRomInfo, md_nemeshitRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // NightVein (HB, Demo 1.0.7)
 // https://retrohammer.itch.io/nightvein
 static struct BurnRomInfo md_nightveinRomDesc[] = {

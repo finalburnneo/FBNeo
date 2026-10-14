@@ -53500,6 +53500,25 @@ struct BurnDriver BurnSpecNeloquqoes = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
+// Nemeshit (128K) (HB)
+
+static struct BurnRomInfo SpecNemeshitRomDesc[] = {
+	{ "Nemeshit 128K (2026)(Clankerbast Software).tap", 89060, 0xc1fb22bc, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecNemeshit, SpecNemeshit, Spec128)
+STD_ROM_FN(SpecNemeshit)
+
+struct BurnDriver BurnSpecNemeshit = {
+	"spec_nemeshit", NULL, "spec_spec128", NULL, "2026",
+	"Nemeshit (128K) (HB)\0", NULL, "Clankerbast Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_HORSHOOT, 0,
+	SpectrumGetZipName, SpecNemeshitRomInfo, SpecNemeshitRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecQAOPSpaceDIPInfo,
+	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
 // Neuras (48K) (HB)
 
 static struct BurnRomInfo SpecNeurasRomDesc[] = {
@@ -55324,10 +55343,10 @@ struct BurnDriver BurnSpecPatrickpaddle = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Pedrisco (48K-128K) (HB)
+// Pedrisco (48K-128K) (HB, v1.2)
 
 static struct BurnRomInfo SpecPedriscoRomDesc[] = {
-	{ "Pedrisco 48K-128K (2026)(vosges6128).tap", 27819, 0x45bbba00, BRF_ESS | BRF_PRG },
+	{ "Pedrisco v1.2 48K-128K (2026)(vosges6128).tap", 30555, 0x43158c9f, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecPedrisco, SpecPedrisco, Spec128)
@@ -55335,7 +55354,7 @@ STD_ROM_FN(SpecPedrisco)
 
 struct BurnDriver BurnSpecPedrisco = {
 	"spec_pedrisco", NULL, "spec_spec128", NULL, "2026",
-	"Pedrisco (48K-128K) (HB)\0", NULL, "vosges6128", "ZX Spectrum",
+	"Pedrisco (48K-128K) (HB, v1.2)\0", NULL, "vosges6128", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecPedriscoRomInfo, SpecPedriscoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecCursorKeysDIPInfo,

@@ -30696,6 +30696,36 @@ struct BurnDriver BurnDrvSwsodan = {
 };
 
 
+// Warrior Man (HB)
+// https://nicoklem.itch.io/warrior-man
+
+static struct BurnRomInfo warriormanRomDesc[] = {
+	{ "warman-p1.p1",	0x080000,  0x7a91cc78, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "warman-s1.s1",	0x020000,  0x4c175fa4, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "warman-c1.c1",	0x400000,  0x7864d85f, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "warman-c2.c2",	0x400000,  0xb7f686ec, 3 | BRF_GRA },           	//  3
+
+	{ "warman-m1.m1",	0x020000,  0xa3e65a9c, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "warman-v1.v1",	0x1000000, 0x3dccb4ad, 5 | BRF_SND },           	//  5 Sound data
+};
+
+STDROMPICKEXT(warriorman, warriorman, neogeo)
+STD_ROM_FN(warriorman)
+
+struct BurnDriver BurnDrvWarriorman = {
+	"warriorman", NULL, "neogeo", NULL, "2026",
+	"Warrior Man (HB)\0", NULL, "NK Home Entertainment", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_ACTION | GBF_MISC, 0,
+	NULL, warriormanRomInfo, warriormanRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
 // World Racer 32Kb (HB, 251226)
 // https://www.patreon.com/posts/worldracer32kb-146718741
 

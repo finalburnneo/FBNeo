@@ -38,8 +38,11 @@ UINT16 *vdc_tmp_draw;			// allocate externally!
 static UINT16 *vdc_linebuf; // allocated here, a single line
 static UINT8 vce_clock_list[263];
 static UINT16 vce_width_list[263];
-static INT32 vdc_lines_drawn;
+static UINT8 vdc_line_drawn[263];
+static INT32 vdc_vdw_offset;	// output line of the first display line, relative to the standard vertical position
 static INT32 vdc_is_sgx;
+
+#define VDC_VDW_START_LINE	20	// first display line with the usual VPR setting (0x0f02)
 
 static UINT16 vpc_priority;
 static UINT16 vpc_window1;
@@ -754,12 +757,13 @@ static void vdc_advance_line(INT32 which)
 	{
 		if (which == 0) {
 			// lines past the display window keep old content after a mode change, blank them
-			for (INT32 i = vdc_lines_drawn; i < 263; i++) {
+			for (INT32 i = 0; i < 263; i++) {
+				if (vdc_line_drawn[i]) continue;
 				if (vdc_is_sgx) clear_line_sgx(i); else clear_line(i);
 				vce_clock_list[i] = vce_clock;
 				vce_width_list[i] = vdc_width[0];
 			}
-			vdc_lines_drawn = 0;
+			memset(vdc_line_drawn, 0, sizeof(vdc_line_drawn));
 		}
 
 		vdc_current_segment[which] = STATE_VSW;
@@ -782,12 +786,21 @@ static void vdc_advance_line(INT32 which)
 		vdc_current_segment[which] = STATE_VDW;
 		vdc_current_segment_line[which] = 0;
 		vdc_raster_count[which] = 0x40;
+
+		if (which == 0) {
+			// follow the vertical position set by VPR (sydmead intro starts lower to center a short display)
+			vdc_vdw_offset = vce_current_line - VDC_VDW_START_LINE;
+			if (vdc_vdw_offset < 0) vdc_vdw_offset = 0;
+		}
 		//bprintf(0, _T("VDW_start(vdw:%x,bmp:%x)"), vdc_data[which][VDW] & 0x01FF,vce_current_line);
 	}
 
 	if ( STATE_VDW == vdc_current_segment[which]) {
-		vce_clock_list[vdc_current_segment_line[which]] = vce_clock;
-		vce_width_list[vdc_current_segment_line[which]] = vdc_width[which];
+		INT32 row = vdc_current_segment_line[which] + vdc_vdw_offset;
+		if (row < 263) {
+			vce_clock_list[row] = vce_clock;
+			vce_width_list[row] = vdc_width[which];
+		}
 	}
 
 	if ( STATE_VDW == vdc_current_segment[which] && vdc_current_segment_line[which] == (vdc_data[which][VDW] & 0x01ff) + 1 )
@@ -936,12 +949,14 @@ void pce_hblank()
 
 	INT32 which = 0; // only 1 on pce
 
-	if (vdc_current_segment[which] == STATE_VDW && vdc_current_segment_line[0] < 262 )
+	INT32 row = vdc_current_segment_line[which] + vdc_vdw_offset;
+
+	if (vdc_current_segment[which] == STATE_VDW && row < 263 )
 	{
 		UINT8 drawn[684];
-		UINT16 *line_buffer = vdc_tmp_draw + (vdc_current_segment_line[which] * 684) + 86;
-		clear_line(vdc_current_segment_line[which]);
-		vdc_lines_drawn = vdc_current_segment_line[which] + 1;
+		UINT16 *line_buffer = vdc_tmp_draw + (row * 684) + 86;
+		clear_line(row);
+		vdc_line_drawn[row] = 1;
 
 		memset (drawn, 0, 684);
 
@@ -965,15 +980,17 @@ void sgx_hblank()
 	vdc_check_hblank_raster_irq(0);
 	vdc_check_hblank_raster_irq(1);
 
-	if ( vdc_current_segment[0] == STATE_VDW && vdc_current_segment_line[0] < 262 )
+	INT32 row = vdc_current_segment_line[0] + vdc_vdw_offset;
+
+	if ( vdc_current_segment[0] == STATE_VDW && row < 263 )
 	{
 		UINT8 drawn[2][512*2];
 		UINT16 *line_buffer;
 		UINT16 temp_buffer[2][512*2];
 		INT32 i;
 
-		clear_line_sgx(vdc_current_segment_line[0]); // clear line
-		vdc_lines_drawn = vdc_current_segment_line[0] + 1;
+		clear_line_sgx(row); // clear line
+		vdc_line_drawn[row] = 1;
 
 		memset( drawn, 0, sizeof(drawn) );
 		memset( temp_buffer, 0, sizeof(temp_buffer) );
@@ -999,7 +1016,7 @@ void sgx_hblank()
 				pce_refresh_sprites(1, vdc_current_segment_line[1], drawn[1], temp_buffer[1]);
 		}
 
-		line_buffer = vdc_tmp_draw + (vdc_current_segment_line[0] * 684) + 86;
+		line_buffer = vdc_tmp_draw + (row * 684) + 86;
 
 		for( i = 0; i < 512; i++ )
 		{
@@ -1409,7 +1426,8 @@ void vdc_reset()
 
 	main_width = nScreenWidth;
 
-	vdc_lines_drawn = 0;
+	memset(vdc_line_drawn, 0, sizeof(vdc_line_drawn));
+	vdc_vdw_offset = 0;
 }
 
 void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)

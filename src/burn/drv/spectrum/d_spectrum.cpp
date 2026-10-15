@@ -41206,7 +41206,7 @@ struct BurnDriver BurnSpecDarkveils = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Das Boot (Castilian) (128K) (HB)
+// Das Boot (Catalan) (128K) (HB)
 
 static struct BurnRomInfo SpecDasbootcaRomDesc[] = {
 	{ "Das Boot CA 128K (2026)(Menyiques).tap", 122554, 0x994c3043, BRF_ESS | BRF_PRG },
@@ -41217,7 +41217,7 @@ STD_ROM_FN(SpecDasbootca)
 
 struct BurnDriver BurnSpecDasbootca = {
 	"spec_dasbootca", "spec_dasbooten", "spec_spec128", NULL, "2026",
-	"Das Boot (Castilian) (128K) (HB)\0", NULL, "Menyiques", "ZX Spectrum",
+	"Das Boot (Catalan) (128K) (HB)\0", NULL, "Menyiques", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecDasbootcaRomInfo, SpecDasbootcaRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

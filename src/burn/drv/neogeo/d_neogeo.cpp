@@ -30537,6 +30537,36 @@ struct BurnDriver BurnDrvAltbeastng = {
 };
 
 
+// Bubble Open (HB, Demo 1)
+// https://neslou.itch.io/bubble-open
+
+static struct BurnRomInfo bubbleopenRomDesc[] = {
+	{ "bubopen-p1.p1",	0x100000, 0xe931552d, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "bubopen-s1.s1",	0x020000, 0x64f8b8f3, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "bubopen-c1.c1",	0x200000, 0xc300583b, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "bubopen-c2.c2",	0x200000, 0x4e9d9d52, 3 | BRF_GRA },           	//  3
+
+	{ "bubopen-m1.m1",	0x020000, 0x323eff7a, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "bubopen-v1.v1",	0x800000, 0x929cacaa, 5 | BRF_SND },           	//  5 Sound data
+};
+
+STDROMPICKEXT(bubbleopen, bubbleopen, neogeo)
+STD_ROM_FN(bubbleopen)
+
+struct BurnDriver BurnDrvBubbleopen = {
+	"bubbleopen", NULL, "neogeo", NULL, "2026",
+	"Bubble Open (HB, Demo 1)\0", NULL, "neslou", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
+	NULL, bubbleopenRomInfo, bubbleopenRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+
 // Cyber Police ESWAT - Neo Geo Conversion (HB)
 // https://teo-tormo.itch.io/eswat-neogeo
 

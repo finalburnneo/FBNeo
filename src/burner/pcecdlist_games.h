@@ -8,12 +8,6 @@ struct pce_cd_dink {
 	TCHAR *company;
 };
 
-#if 0
-/*
-SydMead - when changing screen mode, crap left on bottom of screen
-*/
-#endif
-
 static pce_cd_dink pcengine_cd_games[] = {
 	{ _T("fe893dc89a64c3066a4bcc6862dae9deb187adba"), _T("1552 Tenka Tairan"), _T("1552tenk"), _T("1993"), _T("ASK Kodansha") },
 	{ _T("09a51d8e84e493f674add3744263bf1861c78ad4"), _T("3x3 Eyes Sanjiyan Hensei"), _T("3x3eyes"), _T("1994"), _T("NEC Home Electronics") },

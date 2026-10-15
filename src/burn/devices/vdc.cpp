@@ -38,6 +38,8 @@ UINT16 *vdc_tmp_draw;			// allocate externally!
 static UINT16 *vdc_linebuf; // allocated here, a single line
 static UINT8 vce_clock_list[263];
 static UINT16 vce_width_list[263];
+static INT32 vdc_lines_drawn;
+static INT32 vdc_is_sgx;
 
 static UINT16 vpc_priority;
 static UINT16 vpc_window1;
@@ -750,6 +752,16 @@ static void vdc_advance_line(INT32 which)
 
 	if ( vce_current_line == 0 )
 	{
+		if (which == 0) {
+			// lines past the display window keep old content after a mode change, blank them
+			for (INT32 i = vdc_lines_drawn; i < 263; i++) {
+				if (vdc_is_sgx) clear_line_sgx(i); else clear_line(i);
+				vce_clock_list[i] = vce_clock;
+				vce_width_list[i] = vdc_width[0];
+			}
+			vdc_lines_drawn = 0;
+		}
+
 		vdc_current_segment[which] = STATE_VSW;
 		vdc_current_segment_line[which] = 0;
 		vdc_vblank_triggered[which] = 0;
@@ -929,6 +941,7 @@ void pce_hblank()
 		UINT8 drawn[684];
 		UINT16 *line_buffer = vdc_tmp_draw + (vdc_current_segment_line[which] * 684) + 86;
 		clear_line(vdc_current_segment_line[which]);
+		vdc_lines_drawn = vdc_current_segment_line[which] + 1;
 
 		memset (drawn, 0, 684);
 
@@ -947,6 +960,8 @@ void pce_hblank()
 
 void sgx_hblank()
 {
+	vdc_is_sgx = 1;
+
 	vdc_check_hblank_raster_irq(0);
 	vdc_check_hblank_raster_irq(1);
 
@@ -958,6 +973,7 @@ void sgx_hblank()
 		INT32 i;
 
 		clear_line_sgx(vdc_current_segment_line[0]); // clear line
+		vdc_lines_drawn = vdc_current_segment_line[0] + 1;
 
 		memset( drawn, 0, sizeof(drawn) );
 		memset( temp_buffer, 0, sizeof(temp_buffer) );
@@ -1392,6 +1408,8 @@ void vdc_reset()
 	}
 
 	main_width = nScreenWidth;
+
+	vdc_lines_drawn = 0;
 }
 
 void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)
@@ -1407,6 +1425,8 @@ void vdc_get_dimensions(INT32 which, INT32 *x, INT32 *y)
 void vdc_init()
 {
 	DebugDev_VDCInitted = 1;
+
+	vdc_is_sgx = 0;
 
 	vdc_linebuf = (UINT16*)BurnMalloc(2048 * sizeof(UINT16));
 }

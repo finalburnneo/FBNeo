@@ -10,7 +10,6 @@ struct pce_cd_dink {
 
 #if 0
 /*
-Bishojyo Jyanshi Idol Pai - load error (GECD card required)
 SydMead - when changing screen mode, crap left on bottom of screen
 */
 #endif

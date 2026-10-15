@@ -57,6 +57,32 @@ static UINT8  acard_rotate_reg;
 static UINT8 dec_2_bcd(UINT8 v) { return ((v / 10) << 4) | (v % 10); }
 static UINT8 bcd_2_dec(UINT8 v) { return ((v >> 4) * 10) + (v & 0x0f); }
 
+INT32 pce_cd_games_express = 0;
+
+// Games Express discs have an ISO9660 volume descriptor instead of the NEC header (same detection as ares)
+INT32 CDSubsystemIsGamesExpress()
+{
+	UINT8 *fl = CDEmuReadTOC(CDEmuTOC_FIRSTLAST);
+	INT32 first_track = bcd_2_dec(fl[0]);
+	INT32 last_track = bcd_2_dec(fl[1]);
+
+	for (INT32 track = first_track; track <= last_track; track++) {
+		UINT8 *toc = CDEmuReadTOC(dec_2_bcd(track));
+		if (~toc[3] & 0x04) continue; // audio track
+
+		INT32 lba = bcd_2_dec(toc[2]) + 75 * (bcd_2_dec(toc[1]) + 60 * bcd_2_dec(toc[0])) - 150;
+		UINT8 sector[2048];
+
+		if (CDEmuReadDataSector(lba, sector)) return 0;
+		if (memcmp(sector + 0x264, "NEC Home Electoronics", 21) == 0) return 0;
+
+		if (CDEmuReadDataSector(lba + 16, sector)) return 0;
+		return (memcmp(sector + 1, "CD001", 5) == 0) ? 1 : 0;
+	}
+
+	return 0;
+}
+
 // IRQ2 cause bits (register 0x02 mask / composed into irq_status)
 #define PCE_CD_IRQ_TRANSFER_READY   0x40
 #define PCE_CD_IRQ_TRANSFER_DONE    0x20
@@ -83,6 +109,10 @@ static UINT8 cd_data_buffer[PCE_CD_DATA_BUFFER_SIZE];
 static INT32 cd_data_buffer_size;
 static INT32 cd_data_buffer_index;
 static UINT8 cd_data_transferred;
+
+// the drive delivers data sectors at 75Hz, REQ stays low in between
+#define CD_SECTOR_LINES		((7159090 / 75) / 455)
+static INT32 cd_sector_delay;
 
 static INT32 cd_current_frame, cd_end_frame, cd_last_frame;
 static UINT8 cd_cdda_status, cd_cdda_play_mode;
@@ -213,6 +243,7 @@ static void cd_read_6()
 	cd_current_frame = frame;
 	cd_end_frame = frame + frame_count;
 	cd_motor_on = 1;
+	cd_sector_delay = 0;
 	cd_read_sector();
 }
 
@@ -520,8 +551,8 @@ static void cd_handle_data_input()
 					cd_data_transferred = 0;
 					cd_reply_status_byte(0x00);
 					cd_set_irq_line(PCE_CD_IRQ_TRANSFER_DONE, 1);
-				} else {
-					cd_read_sector();
+				} else if (cd_sector_delay == 0) {
+					cd_sector_delay = CD_SECTOR_LINES;
 				}
 			} else {
 				cd_cdc_data = cd_data_buffer[cd_data_buffer_index];
@@ -563,6 +594,7 @@ static void cd_update()
 			scsi_MSG = scsi_REQ = scsi_ATN = 0;
 			cd_motor_on = 0;
 			cd_selected = 0;
+			cd_sector_delay = 0;
 			cd_cdda_status = PCE_CD_CDDA_OFF;
 			CDEmuStop();
 			adpcm_dma_active = 0; // stop ADPCM DMA here
@@ -691,6 +723,7 @@ static UINT8 cd_reg_cdc_status_r()
 static void cd_reg_cdc_status_w(UINT8 data)
 {
 	/* select device (which bits??) */
+	cd_sector_delay = 0;
 	scsi_SEL = 1;
 	cd_update();
 	scsi_SEL = 0;
@@ -1093,6 +1126,13 @@ static void cd_cdda_check_end_mark()
 
 void CDSubsystemTick()
 {
+	if (cd_sector_delay > 0 && --cd_sector_delay == 0) {
+		if (scsi_BSY && scsi_IO && !scsi_CD && !scsi_MSG) { // still in data in phase
+			cd_read_sector();
+			cd_update();
+		}
+	}
+
 	// MAME uses a callback in its cd interface to do this (i think)
 	cd_cdda_check_end_mark();
 
@@ -1369,6 +1409,7 @@ void CDSubsystemReset()
 
 		scsi_RST = 0;
 		scsi_last_RST = 0;
+		cd_sector_delay = 0;
 		scsi_SEL = 0;
 		scsi_BSY = 0;
 		cd_selected = 0;
@@ -1459,6 +1500,8 @@ void CDSubsystemExit()
 		MSM5205Exit();
 		timerExit();
 	}
+
+	pce_cd_games_express = 0;
 }
 
 void CDSubsystemSoundUpdate(INT16 *output, INT32 samples_len)
@@ -1500,6 +1543,7 @@ void CDSubsystemScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(cd_data_buffer_size);
 			SCAN_VAR(cd_data_buffer_index);
 			SCAN_VAR(cd_data_transferred);
+			SCAN_VAR(cd_sector_delay);
 
 			SCAN_VAR(cd_current_frame);
 			SCAN_VAR(cd_end_frame);

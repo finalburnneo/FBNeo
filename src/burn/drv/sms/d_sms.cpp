@@ -23516,11 +23516,11 @@ struct BurnDriver BurnDrvsms_madmixgr = {
 	"Mad Mix Game R (HB)\0", NULL, "Magic Games", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_ACTION | GBF_MAZE, 0,
-	SMSGetZipName, sms_madmixgrRomInfo, sms_madmixgrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
+	SMSGetZipName, sms_madmixgrRomInfo, sms_madmixgrRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
-
+	
 // Mahjong Solitaire (HB, v1.16)
 static struct BurnRomInfo sms_msolitaireRomDesc[] = {
 	{ "Mahjong Solitaire v1.16 (2023)(Under4Mhz).sms",	32768, 0xd4dc268e, BRF_PRG | BRF_ESS },

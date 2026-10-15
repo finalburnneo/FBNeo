@@ -1,4 +1,4 @@
-// FB Alpha SunA 8-bit driver module
+// FB Neo SunA 8-bit driver module
 // Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
@@ -8,10 +8,7 @@
 #include "burn_ym3812.h"
 #include "dac.h"
 #include "ay8910.h"
-
-/*
-	Missing Brick Zone
-*/
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -28,6 +25,8 @@ static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvPalRAM;
+static UINT8 *DrvPalRAM2;
+static UINT16 *DrvPalDecoded;
 
 static UINT8 *soundlatch;
 static UINT8 *soundlatch2;
@@ -58,12 +57,24 @@ static UINT8 disable_mainram_write = 0;
 static UINT8 protection_val = 0;
 static UINT8 hardhead_ip = 0;
 static UINT8 Sparkman = 0, Hardhead2 = 0, Srangerb = 0, Hardheadb = 0;
+static UINT8 Brickzn = 0; // 1 = encrypted sets, 2 = v1.1
+static UINT8 BrickznSpinner = 0;
+
+static UINT8 brickzn_prot2 = 0xff;
+static UINT8 brickzn_prot2_prev = 0xff;
+static UINT8 brickzn_opcode_toggle = 0;
+static UINT8 brickzn_remap_sound = 0;
+static UINT8 brickzn_palram_enab = 1;
+static UINT8 brickzn_altbank = 0;
+static UINT8 brickzn_cheat_toggle = 0;
 
 static UINT8  DrvJoy1[8];
 static UINT8  DrvJoy2[8];
 static UINT8  DrvJoy3[8];
 static UINT8  DrvDips[3];
-static UINT8  DrvInputs[3];
+static UINT8  DrvInputs[5];
+static INT16  DrvAnalogPort0 = 0;
+static INT16  DrvAnalogPort1 = 0;
 static UINT8  DrvReset;
 
 static INT32 nCyclesExtra[3];
@@ -123,6 +134,58 @@ static struct BurnInputInfo SparkmanInputList[] = {
 };
 
 STDINPUTINFO(Sparkman)
+
+static struct BurnInputInfo BrickznInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+
+	{"Finish Stage (Cheat)",	BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 3"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Brickzn)
+
+static struct BurnInputInfo BrickznSpinInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Spinner",		BIT_ANALOG_REL, (UINT8*)&DrvAnalogPort0,	"p1 x-axis"	},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+	{"P2 Spinner",		BIT_ANALOG_REL, (UINT8*)&DrvAnalogPort1,	"p2 x-axis"	},
+
+	{"Finish Stage (Cheat)",	BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 3"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(BrickznSpin)
 
 static struct BurnDIPInfo HardheadDIPList[]=
 {
@@ -452,6 +515,261 @@ static struct BurnDIPInfo StarfighDIPList[]=
 };
 
 STDDIPINFO(Starfigh)
+
+static struct BurnDIPInfo Brickznv5DIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0x7f, NULL		},
+	{0x0f, 0xff, 0xff, 0xff, NULL		},
+	{0x10, 0xff, 0xff, 0x3c, NULL		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x0e, 0x01, 0x07, 0x00, "5 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"		},
+	{0x0e, 0x01, 0x38, 0x38, "Easiest"		},
+	{0x0e, 0x01, 0x38, 0x30, "Very Easy"		},
+	{0x0e, 0x01, 0x38, 0x28, "Easy"		},
+	{0x0e, 0x01, 0x38, 0x20, "Moderate"		},
+	{0x0e, 0x01, 0x38, 0x18, "Normal"		},
+	{0x0e, 0x01, 0x38, 0x10, "Harder"		},
+	{0x0e, 0x01, 0x38, 0x08, "Very Hard"		},
+	{0x0e, 0x01, 0x38, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Service / Invulnerability"		},
+	{0x0e, 0x01, 0x40, 0x40, "Off"		},
+	{0x0e, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0e, 0x01, 0x80, 0x80, "Off"		},
+	{0x0e, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x0f, 0x01, 0x01, 0x01, "Off"		},
+	{0x0f, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x02, 0x02, "Upright"		},
+	{0x0f, 0x01, 0x02, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Play Together"		},
+	{0x0f, 0x01, 0x04, 0x00, "No"		},
+	{0x0f, 0x01, 0x04, 0x04, "Yes"		},
+
+	{0   , 0xfe, 0   ,    8, "Bonus Life"		},
+	{0x0f, 0x01, 0x38, 0x30, "10K"		},
+	{0x0f, 0x01, 0x38, 0x28, "30K"		},
+	{0x0f, 0x01, 0x38, 0x18, "50K, Every 50K"		},
+	{0x0f, 0x01, 0x38, 0x20, "50K"		},
+	{0x0f, 0x01, 0x38, 0x10, "100K, Every 50K"		},
+	{0x0f, 0x01, 0x38, 0x08, "100K, Every 100K"		},
+	{0x0f, 0x01, 0x38, 0x00, "200K, Every 100K"		},
+	{0x0f, 0x01, 0x38, 0x38, "None"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0f, 0x01, 0xc0, 0x80, "2"		},
+	{0x0f, 0x01, 0xc0, 0xc0, "3"		},
+	{0x0f, 0x01, 0xc0, 0x40, "4"		},
+	{0x0f, 0x01, 0xc0, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Cheat 1&2 Setting"		},
+	{0x10, 0x01, 0x01, 0x01, "Off"		},
+	{0x10, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Select First Stage"		},
+	{0x10, 0x01, 0x04, 0x04, "Off"		},
+	{0x10, 0x01, 0x04, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cheat 1"		},
+	{0x10, 0x01, 0x08, 0x08, "Off"		},
+	{0x10, 0x01, 0x08, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Select Next Stage"		},
+	{0x10, 0x01, 0x10, 0x10, "Off"		},
+	{0x10, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cheat 2"		},
+	{0x10, 0x01, 0x20, 0x20, "Off"		},
+	{0x10, 0x01, 0x20, 0x00, "On"		},
+};
+
+STDDIPINFO(Brickznv5)
+
+static struct BurnDIPInfo BrickznSpinDIPList[]=
+{
+	{0x10, 0xff, 0xff, 0x7f, NULL		},
+	{0x11, 0xff, 0xff, 0xff, NULL		},
+	{0x12, 0xff, 0xff, 0x3c, NULL		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x10, 0x01, 0x07, 0x00, "5 Coins 1 Credits"		},
+	{0x10, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x10, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x10, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x10, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x10, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x10, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x10, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"		},
+	{0x10, 0x01, 0x38, 0x38, "Easiest"		},
+	{0x10, 0x01, 0x38, 0x30, "Very Easy"		},
+	{0x10, 0x01, 0x38, 0x28, "Easy"		},
+	{0x10, 0x01, 0x38, 0x20, "Moderate"		},
+	{0x10, 0x01, 0x38, 0x18, "Normal"		},
+	{0x10, 0x01, 0x38, 0x10, "Harder"		},
+	{0x10, 0x01, 0x38, 0x08, "Very Hard"		},
+	{0x10, 0x01, 0x38, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Service / Invulnerability"		},
+	{0x10, 0x01, 0x40, 0x40, "Off"		},
+	{0x10, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x10, 0x01, 0x80, 0x80, "Off"		},
+	{0x10, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x11, 0x01, 0x01, 0x01, "Off"		},
+	{0x11, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x11, 0x01, 0x02, 0x02, "Upright"		},
+	{0x11, 0x01, 0x02, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Play Together"		},
+	{0x11, 0x01, 0x04, 0x00, "No"		},
+	{0x11, 0x01, 0x04, 0x04, "Yes"		},
+
+	{0   , 0xfe, 0   ,    8, "Bonus Life"		},
+	{0x11, 0x01, 0x38, 0x30, "10K"		},
+	{0x11, 0x01, 0x38, 0x28, "30K"		},
+	{0x11, 0x01, 0x38, 0x18, "50K, Every 50K"		},
+	{0x11, 0x01, 0x38, 0x20, "50K"		},
+	{0x11, 0x01, 0x38, 0x10, "100K, Every 50K"		},
+	{0x11, 0x01, 0x38, 0x08, "100K, Every 100K"		},
+	{0x11, 0x01, 0x38, 0x00, "200K, Every 100K"		},
+	{0x11, 0x01, 0x38, 0x38, "None"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x11, 0x01, 0xc0, 0x80, "2"		},
+	{0x11, 0x01, 0xc0, 0xc0, "3"		},
+	{0x11, 0x01, 0xc0, 0x40, "4"		},
+	{0x11, 0x01, 0xc0, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Cheat 1&2 Setting"		},
+	{0x12, 0x01, 0x01, 0x01, "Off"		},
+	{0x12, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Select First Stage"		},
+	{0x12, 0x01, 0x04, 0x04, "Off"		},
+	{0x12, 0x01, 0x04, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cheat 1"		},
+	{0x12, 0x01, 0x08, 0x08, "Off"		},
+	{0x12, 0x01, 0x08, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Select Next Stage"		},
+	{0x12, 0x01, 0x10, 0x10, "Off"		},
+	{0x12, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cheat 2"		},
+	{0x12, 0x01, 0x20, 0x20, "Off"		},
+	{0x12, 0x01, 0x20, 0x00, "On"		},
+};
+
+STDDIPINFO(BrickznSpin)
+
+static struct BurnDIPInfo Brickznv6DIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0x7f, NULL		},
+	{0x0f, 0xff, 0xff, 0xff, NULL		},
+	{0x10, 0xff, 0xff, 0x3c, NULL		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x0e, 0x01, 0x07, 0x00, "5 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Difficulty"		},
+	{0x0e, 0x01, 0x38, 0x38, "Easiest"		},
+	{0x0e, 0x01, 0x38, 0x30, "Very Easy"		},
+	{0x0e, 0x01, 0x38, 0x28, "Easy"		},
+	{0x0e, 0x01, 0x38, 0x20, "Moderate"		},
+	{0x0e, 0x01, 0x38, 0x18, "Normal"		},
+	{0x0e, 0x01, 0x38, 0x10, "Harder"		},
+	{0x0e, 0x01, 0x38, 0x08, "Very Hard"		},
+	{0x0e, 0x01, 0x38, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Service / Invulnerability"		},
+	{0x0e, 0x01, 0x40, 0x40, "Off"		},
+	{0x0e, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0e, 0x01, 0x80, 0x80, "Off"		},
+	{0x0e, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x0f, 0x01, 0x01, 0x01, "Off"		},
+	{0x0f, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x02, 0x02, "Upright"		},
+	{0x0f, 0x01, 0x02, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Play Together"		},
+	{0x0f, 0x01, 0x04, 0x00, "No"		},
+	{0x0f, 0x01, 0x04, 0x04, "Yes"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x0f, 0x01, 0x18, 0x18, "None"		},
+	{0x0f, 0x01, 0x18, 0x10, "10K"		},
+	{0x0f, 0x01, 0x18, 0x08, "30K"		},
+	{0x0f, 0x01, 0x18, 0x00, "50K"		},
+
+	{0   , 0xfe, 0   ,    2, "Display"		},
+	{0x0f, 0x01, 0x20, 0x00, "No"		},
+	{0x0f, 0x01, 0x20, 0x20, "Yes"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0f, 0x01, 0xc0, 0x80, "2"		},
+	{0x0f, 0x01, 0xc0, 0xc0, "3"		},
+	{0x0f, 0x01, 0xc0, 0x40, "4"		},
+	{0x0f, 0x01, 0xc0, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Cheat 1&2 Setting"		},
+	{0x10, 0x01, 0x01, 0x01, "Off"		},
+	{0x10, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Select First Stage"		},
+	{0x10, 0x01, 0x04, 0x04, "Off"		},
+	{0x10, 0x01, 0x04, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cheat 1"		},
+	{0x10, 0x01, 0x08, 0x08, "Off"		},
+	{0x10, 0x01, 0x08, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Select Next Stage"		},
+	{0x10, 0x01, 0x10, 0x10, "Off"		},
+	{0x10, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cheat 2"		},
+	{0x10, 0x01, 0x20, 0x20, "Off"		},
+	{0x10, 0x01, 0x20, 0x00, "On"		},
+};
+
+STDDIPINFO(Brickznv6)
 
 static void play_sample(INT32 sample)
 {
@@ -851,6 +1169,217 @@ static void __fastcall starfigh_write(UINT16 address, UINT8 data)
 
 
 
+static void brickzn_map_banks()
+{
+	INT32 entry = (m_rombank_latch & 0x0f) + (brickzn_altbank ? 0x10 : 0);
+
+	if (Brickzn == 1) {
+		ZetMapMemory(DrvZ80ROM0, 0x0000, 0x7fff, MAP_READ | MAP_FETCHARG);
+		ZetMapMemory(brickzn_opcode_toggle ? DrvZ80ROM0 : DrvZ80Decrypted, 0x0000, 0x7fff, MAP_FETCHOP);
+		ZetMapMemory(DrvZ80ROM0 + 0x10000 + entry * 0x4000, 0x8000, 0xbfff, MAP_READ | MAP_FETCHARG);
+		ZetMapMemory(DrvZ80Decrypted + 0x10000 + (entry & 0x0f) * 0x4000, 0x8000, 0xbfff, MAP_FETCHOP);
+	} else {
+		ZetMapMemory(DrvZ80ROM0, 0x0000, 0x7fff, MAP_ROM);
+		ZetMapMemory(DrvZ80ROM0 + 0x10000 + entry * 0x4000, 0x8000, 0xbfff, MAP_ROM);
+	}
+
+	ZetMapMemory(m_palettebank ? DrvPalRAM2 : DrvPalRAM, 0xc600, 0xc7ff, MAP_READ);
+
+	if (disable_mainram_write) {
+		ZetMapMemory(DrvZ80RAM0, 0xc800, 0xdfff, MAP_READ | MAP_FETCH);
+		ZetUnmapMemory(0xc800, 0xdfff, MAP_WRITE);
+	} else {
+		ZetMapMemory(DrvZ80RAM0, 0xc800, 0xdfff, MAP_RAM);
+	}
+
+	ZetMapMemory(DrvSprRAM + m_spritebank * 0x2000, 0xe000, 0xffff, MAP_RAM);
+}
+
+static void brickzn_palette_write(UINT16 offset, UINT8 data)
+{
+	if (!brickzn_palram_enab) return;
+
+	UINT8 *ram = m_palettebank ? DrvPalRAM2 : DrvPalRAM;
+	ram[offset] = data;
+
+	UINT16 rgb = (ram[offset & ~1] << 8) | ram[offset | 1];
+	INT32 r, g, b;
+
+	if (brickzn_prot2_prev == 0x3c && brickzn_prot2 == 0x80)
+	{
+		rgb ^= 0x4444;
+		r = (rgb >> 12) & 0x0f;
+		g = (rgb >>  8) & 0x0f;
+		b = (rgb >>  4) & 0x0f;
+	}
+	else if (brickzn_prot2_prev == 0xa8 && brickzn_prot2 == 0x00)
+	{
+		r = BIT(rgb, 0xc) | (BIT(rgb, 0xb) << 1) | (BIT(rgb, 0xe) << 2) | (BIT(rgb, 0xf) << 3);
+		g = BIT(rgb, 0x8) | (BIT(rgb, 0x9) << 1) | (BIT(rgb, 0xa) << 2) | (BIT(rgb, 0xd) << 3);
+		b = BIT(rgb, 0x4) | (BIT(rgb, 0x3) << 1) | (BIT(rgb, 0x6) << 2) | (BIT(rgb, 0x7) << 3);
+	}
+	else
+	{
+		r = (rgb >> 12) & 0x0f;
+		g = (rgb >>  8) & 0x0f;
+		b = (rgb >>  4) & 0x0f;
+	}
+
+	INT32 entry = (m_palettebank * 0x100) + (offset / 2);
+	DrvPalDecoded[entry] = (r << 8) | (g << 4) | b;
+	DrvPalette[entry] = BurnHighCol(r * 0x11, g * 0x11, b * 0x11, 0);
+}
+
+static void brickzn_sprbank_w(UINT8 data)
+{
+	protection_val = data;
+	*flipscreen = data & 0x01;
+	m_spritebank = (data >> 1) & 1;
+	ZetMapMemory(DrvSprRAM + m_spritebank * 0x2000, 0xe000, 0xffff, MAP_RAM);
+}
+
+static void brickzn_rombank_w(UINT8 data)
+{
+	m_rombank_latch = data & 0x0f;
+	brickzn_map_banks();
+}
+
+static void brickzn_palbank_w(UINT8 data)
+{
+	m_palettebank = data & 0x01;
+	ZetMapMemory(m_palettebank ? DrvPalRAM2 : DrvPalRAM, 0xc600, 0xc7ff, MAP_READ);
+}
+
+static void brickzn_multi_w(UINT8 data)
+{
+	INT32 protselect = protection_val & 0xfc;
+
+	if ((protselect == 0x88) || (protselect == 0x8c))
+	{
+		brickzn_palbank_w(data);
+	}
+	else if (protselect == 0x90)
+	{
+		*soundlatch = brickzn_remap_sound ? BITSWAP08(data, 7,6,3,4,5,2,1,0) : data;
+	}
+
+	if ((protection_val & 0x1f) == 0x1c)
+	{
+		brickzn_opcode_toggle ^= 1;
+		brickzn_map_banks();
+	}
+}
+
+static void brickzn_prot2_w(UINT8 data)
+{
+	disable_mainram_write = ((brickzn_prot2 ^ data) == 0x24) ? 1 : 0;
+	brickzn_remap_sound = ((brickzn_prot2 ^ data) == 0xf8) ? 1 : 0;
+	brickzn_altbank = (brickzn_prot2 == (data | 0xdc)) ? 1 : 0;
+
+	brickzn_prot2_prev = brickzn_prot2;
+	brickzn_prot2 = data;
+
+	brickzn_map_banks();
+}
+
+static void __fastcall brickzn_write(UINT16 address, UINT8 data)
+{
+	if ((address & 0xfe00) == 0xc600) {
+		brickzn_palette_write(address & 0x1ff, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0xc040:
+			brickzn_rombank_w(data);
+		return;
+
+		case 0xc060:
+			brickzn_sprbank_w(data);
+		return;
+
+		case 0xc0a0:
+			brickzn_multi_w(data);
+		return;
+
+		case 0xc0c0:
+			brickzn_prot2_w(data);
+		return;
+	}
+}
+
+static void __fastcall brickzn11_write(UINT16 address, UINT8 data)
+{
+	if ((address & 0xfe00) == 0xc600) {
+		brickzn_palette_write(address & 0x1ff, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0xc000:
+			*soundlatch = data;
+		return;
+
+		case 0xc040:
+			brickzn_sprbank_w(data);
+		return;
+
+		case 0xc060:
+			brickzn_rombank_w(data);
+		return;
+
+		case 0xc080: // leds, coin counter
+		return;
+
+		case 0xc0a0:
+			brickzn_palbank_w(data);
+		return;
+	}
+}
+
+static UINT8 __fastcall brickzn_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0xc100:
+		case 0xc101:
+			return DrvInputs[address & 1];
+
+		case 0xc102:
+		case 0xc103:
+			return DrvDips[address & 1];
+
+		case 0xc108:
+			return DrvInputs[3];
+
+		case 0xc10c:
+			return DrvInputs[4];
+
+		case 0xc140:
+			brickzn_cheat_toggle ^= 1; // must flip on every read
+			return (DrvDips[2] & 0x01) | 0x7a | (brickzn_cheat_toggle << 2) | (DrvInputs[2] & 0x80);
+	}
+
+	return 0;
+}
+
+static void __fastcall brickzn_write_port(UINT16 port, UINT8 /*data*/)
+{
+	switch (port)
+	{
+		case 0x0000:
+			brickzn_palram_enab = 0;
+		return;
+
+		case 0x00a1:
+			brickzn_palram_enab = 1;
+		return;
+	}
+}
+
+
 static void __fastcall hardhead_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -1031,7 +1560,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM0		= Next; Next += 0x050000;
+	DrvZ80ROM0		= Next; Next += 0x090000;
 	DrvZ80Decrypted		= Next; Next += 0x050000;
 	DrvZ80ROM1		= Next; Next += 0x010000;
 	DrvZ80ROM2		= Next; Next += 0x010000;
@@ -1050,6 +1579,8 @@ static INT32 MemIndex()
 	DrvZ80RAM0		= Next; Next += 0x004800;
 	DrvZ80RAM1		= Next; Next += 0x000800;
 	DrvPalRAM		= Next; Next += 0x000200;
+	DrvPalRAM2		= Next; Next += 0x000200;
+	DrvPalDecoded	= (UINT16*)Next; Next += 0x0200 * sizeof(UINT16);
 
 	soundlatch		= Next; Next += 0x000001;
 	soundlatch2		= Next; Next += 0x000001;
@@ -1812,6 +2343,196 @@ static INT32 Hardhea2Exit()
 	return 0;
 }
 
+static void brickzn_decrypt()
+{
+	UINT8 *rom = DrvZ80ROM0;
+	UINT8 *decrypt = DrvZ80Decrypted;
+
+	for (INT32 i = 0; i < 0x50000; i++)
+	{
+		static const UINT8 opcode_swaptable[8] =
+		{
+			1,1,1,0,0,1,1,0
+		};
+		static const UINT8 data_swaptable[16] =
+		{
+			1,1,1,0,0,1,1,1,1,0,1,1,1,1,1,1
+		};
+		INT32 opcode_swap = opcode_swaptable[((i & 0x00c) >> 2) | ((i & 0x040) >> 4)];
+		INT32 data_swap = (i >= 0x8000) ? 0 : data_swaptable[(i & 0x003) | ((i & 0x008) >> 1) | ((i & 0x400) >> 7)];
+		UINT8 x = rom[i];
+
+		if (data_swap)
+		{
+			x = BITSWAP08(x, 7,6,5,4,3,2,0,1);
+			rom[i] = BITSWAP08(x, 7,2,3,4,5,6,1,0) ^ 0x10;
+		}
+
+		if (opcode_swap)
+			x ^= 0x80;
+
+		if (opcode_swap || data_swap)
+			x = BITSWAP08(x, 7,2,3,4,5,6,1,0) ^ 0x10;
+
+		decrypt[i] = x;
+
+		if (i >= 0x10000)
+			rom[i + 0x40000] = rom[i] ^ 0x44;
+	}
+}
+
+static INT32 BrickznDoReset()
+{
+	CommonDoReset(1);
+
+	protection_val = 0xff;
+	brickzn_prot2 = 0xff;
+	brickzn_prot2_prev = 0xff;
+	brickzn_palram_enab = 1;
+	brickzn_remap_sound = 0;
+	brickzn_opcode_toggle = 0;
+	brickzn_altbank = 0;
+	brickzn_cheat_toggle = 0;
+
+	ZetOpen(0);
+	brickzn_map_banks();
+	ZetClose();
+
+	ZetOpen(2);
+	ZetReset();
+	ZetClose();
+
+	AY8910Reset(0);
+	BurnYM3812Reset();
+	DACReset();
+
+	return 0;
+}
+
+static INT32 BrickznCommonInit(INT32 type, INT32 spinner, const UINT16 *patches)
+{
+	BurnAllocMemIndex();
+
+	{
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM0 + 0x30000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM2 + 0x00000,  4, 1)) return 1;
+
+		for (INT32 i = 0; i < 6; i++) {
+			if (BurnLoadRom(DrvGfxROM0 + i * 0x20000, 5 + i, 1)) return 1;
+		}
+
+		for (INT32 i = 0; i < 0xc0000; i++) {	// invert
+			DrvGfxROM0[i] ^= 0xff;
+		}
+
+		DrvGfxDecode(DrvGfxROM0, 0xc0000);
+
+		if (type == 1) {
+			brickzn_decrypt();
+
+			static const UINT8 patch_data[7] = { 0x00, 0x00, 0x00, 0xc9, 0xc9, 0x00, 0x00 };
+			for (INT32 i = 0; i < 7; i++) {
+				DrvZ80Decrypted[patches[i]] = patch_data[i];
+			}
+		}
+	}
+
+	Brickzn = type;
+
+	ZetInit(0);
+	ZetOpen(0);
+	brickzn_map_banks();
+	ZetSetWriteHandler((type == 1) ? brickzn_write : brickzn11_write);
+	ZetSetReadHandler(brickzn_read);
+	if (type == 1) ZetSetOutHandler(brickzn_write_port);
+	ZetClose();
+
+	ZetInit(1);
+	ZetOpen(1);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0xe000, 0xe7ff, MAP_RAM);
+	ZetSetWriteHandler(hardhea2_sound_write);
+	ZetSetReadHandler(hardhea2_sound_read);
+	ZetClose();
+
+	ZetInit(2);
+	ZetOpen(2);
+	ZetMapMemory(DrvZ80ROM2,		0x0000, 0xffff, MAP_ROM);
+	ZetSetOutHandler(hardhea2_pcm_write_port);
+	ZetSetInHandler(hardhea2_pcm_read_port);
+	ZetClose();
+
+	BurnYM3812Init(1, 3000000, sound_type1_fm_irq_handler, 0);
+	BurnTimerAttach(&ZetConfig, 6000000);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
+
+	AY8910Init(0, 1500000, 1);
+	AY8910SetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
+
+	DACInit(0, 0, 1, ZetTotalCycles, 6000000);
+	DACSetRoute(0, 0.24, BURN_SND_ROUTE_LEFT);
+	DACInit(1, 0, 1, ZetTotalCycles, 6000000);
+	DACSetRoute(1, 0.24, BURN_SND_ROUTE_RIGHT);
+	DACInit(2, 0, 1, ZetTotalCycles, 6000000);
+	DACSetRoute(2, 0.24, BURN_SND_ROUTE_LEFT);
+	DACInit(3, 0, 1, ZetTotalCycles, 6000000);
+	DACSetRoute(3, 0.24, BURN_SND_ROUTE_RIGHT);
+
+	BrickznSpinner = spinner;
+	if (spinner) BurnTrackballInit(1);
+
+	GenericTilesInit();
+
+	BrickznDoReset();
+
+	return 0;
+}
+
+static INT32 BrickznInit()
+{
+	static const UINT16 patches[7] = { 0x11cc, 0x11cd, 0x11ce, 0x335b, 0x1442, 0x24c6, 0x25a4 };
+	return BrickznCommonInit(1, 0, patches);
+}
+
+static INT32 Brickznv5Init()
+{
+	static const UINT16 patches[7] = { 0x11bb, 0x11bc, 0x11bd, 0x3349, 0x1431, 0x24b5, 0x2593 };
+	return BrickznCommonInit(1, 0, patches);
+}
+
+static INT32 Brickznv4Init()
+{
+	static const UINT16 patches[7] = { 0x1190, 0x1191, 0x1192, 0x3337, 0x1406, 0x2487, 0x256c };
+	return BrickznCommonInit(1, 1, patches);
+}
+
+static INT32 Brickzn11Init()
+{
+	return BrickznCommonInit(2, 1, NULL);
+}
+
+static INT32 BrickznExit()
+{
+	GenericTilesExit();
+	ZetExit();
+	BurnYM3812Exit();
+	AY8910Exit(0);
+	DACExit();
+	if (BrickznSpinner) BurnTrackballExit();
+
+	BurnFreeMemIndex();
+
+	Brickzn = 0;
+	BrickznSpinner = 0;
+
+	return 0;
+}
+
 static void draw_single_sprite(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy)
 {
 	if (sy == 0 || sy >= 240) return;
@@ -2050,8 +2771,15 @@ static void draw_text_sprites(INT32 text_dim)
 static INT32 DrvDraw(INT32 sprite2x, INT32 sprite_new, INT32 sprite_type, INT32 text_mode)
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x200; i+=2) {
-			palette_update(i);
+		if (Brickzn) {
+			for (INT32 i = 0; i < 0x200; i++) {
+				UINT16 p = DrvPalDecoded[i];
+				DrvPalette[i] = BurnHighCol(((p >> 8) & 0xf) * 0x11, ((p >> 4) & 0xf) * 0x11, (p & 0xf) * 0x11, 0);
+			}
+		} else {
+			for (INT32 i = 0; i < 0x200; i+=2) {
+				palette_update(i);
+			}
 		}
 		DrvRecalc = 0;
 	}
@@ -2092,6 +2820,11 @@ static INT32 SparkmanDraw()
 static INT32 StarfighDraw()
 {
 	return DrvDraw(0,1,2,0);
+}
+
+static INT32 BrickznDraw()
+{
+	return DrvDraw(0,1,1,0);
 }
 
 static INT32 HardheadFrame()
@@ -2318,6 +3051,79 @@ static INT32 SparkmanFrame() // & starfigh
 	return 0;
 }
 
+static INT32 BrickznFrame()
+{
+	if (DrvReset) {
+		BrickznDoReset();
+	}
+
+	ZetNewFrame();
+
+	{
+		memset (DrvInputs, 0xff, 3);
+
+		for (INT32 i = 0 ; i < 8; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		}
+
+		DrvInputs[0] = (DrvInputs[0] & ~0x0c) | (DrvDips[2] & 0x0c);
+		DrvInputs[1] = (DrvInputs[1] & ~0x0c) | ((DrvDips[2] >> 2) & 0x0c);
+
+		DrvInputs[3] = DrvInputs[4] = 0;
+
+		if (BrickznSpinner) {
+			BurnTrackballConfig(0, AXIS_REVERSED, AXIS_REVERSED);
+			BurnTrackballFrame(0, DrvAnalogPort0, DrvAnalogPort1, 0x01, 0x0f);
+			BurnTrackballUDLR(0, DrvJoy2[1], DrvJoy2[0], DrvJoy1[0], DrvJoy1[1]);
+			BurnTrackballUpdate(0);
+
+			DrvInputs[3] = BurnTrackballRead(0, 0);
+			DrvInputs[4] = BurnTrackballRead(0, 1);
+		}
+	}
+
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 6000000 / 60, 6000000 / 60, 6000000 / 60 };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], 0, 0 };
+
+	vblank = 0;
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		ZetOpen(0);
+		CPU_RUN(0, Zet);
+		if (i == 240) { vblank = 1; ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); }
+		ZetClose();
+
+		ZetOpen(1);
+		CPU_RUN_TIMER(1);
+		if ((i % (nInterleave/4)) == ((nInterleave / 4) - 1)) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
+		ZetClose();
+
+		ZetOpen(2);
+		CPU_RUN(2, Zet);
+		ZetClose();
+	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	if (pBurnDraw) {
+		BrickznDraw();
+	}
+
+	return 0;
+}
+
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
@@ -2337,7 +3143,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
 
-		if (Hardhead2) {
+		if (Hardhead2 || Brickzn) {
 			DACScan(nAction, pnMin);
 		}
 
@@ -2362,9 +3168,29 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(hardhead_ip);
 
 		SCAN_VAR(nCyclesExtra);
+
+		if (Brickzn) {
+			if (BrickznSpinner) BurnTrackballScan();
+
+			SCAN_VAR(brickzn_prot2);
+			SCAN_VAR(brickzn_prot2_prev);
+			SCAN_VAR(brickzn_opcode_toggle);
+			SCAN_VAR(brickzn_remap_sound);
+			SCAN_VAR(brickzn_palram_enab);
+			SCAN_VAR(brickzn_altbank);
+			SCAN_VAR(brickzn_cheat_toggle);
+		}
 	}
+
 	
-	if (nAction & ACB_WRITE) {
+	if (nAction & ACB_WRITE && Brickzn) {
+		ZetOpen(0);
+		brickzn_map_banks();
+		ZetClose();
+
+		DrvRecalc = 1;
+	}
+	else if (nAction & ACB_WRITE) {
 		ZetOpen(0);
 		bankswitch(*mainbank);
 		ZetMapMemory(DrvSprRAM + (m_spritebank * 0x2000), 0xe000, 0xffff, MAP_RAM);
@@ -2995,5 +3821,137 @@ struct BurnDriver BurnDrvStarfigh = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, starfighRomInfo, starfighRomName, NULL, NULL, NULL, NULL, DrvInputInfo, StarfighDIPInfo,
 	StarfighInit, HardheadExit, SparkmanFrame, StarfighDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Brick Zone (v6.0, Joystick)
+
+static struct BurnRomInfo brickznRomDesc[] = {
+	{ "p9.m7",		0x08000, 0xbd7a3c01, 1 }, //  0 maincpu
+	{ "p8.k7",		0x20000, 0xec3e266d, 1 }, //  1
+	{ "p7.i7",		0x20000, 0x4dd88631, 1 }, //  2
+
+	{ "10.o8",		0x10000, 0x4eba8178, 2 }, //  3 audiocpu
+
+	{ "11.n10",		0x10000, 0x6c54161a, 3 }, //  4 pcm
+
+	{ "p5.m5",		0x20000, 0xca59e2f7, 4 }, //  5 gfx1
+	{ "p4.l5",		0x20000, 0xcc8fb330, 4 }, //  6
+	{ "p3.k5",		0x20000, 0x2e4f194b, 4 }, //  7
+	{ "p2.i5",		0x20000, 0x592d45ce, 4 }, //  8
+	{ "p1.h5",		0x20000, 0x7a6bb583, 4 }, //  9
+	{ "p6.h7",		0x20000, 0xbbf31081, 4 }, // 10
+};
+
+STD_ROM_PICK(brickzn)
+STD_ROM_FN(brickzn)
+
+struct BurnDriver BurnDrvBrickzn = {
+	"brickzn", NULL, NULL, NULL, "1992",
+	"Brick Zone (v6.0, Joystick)\0", NULL, "SunA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, brickznRomInfo, brickznRomName, NULL, NULL, NULL, NULL, BrickznInputInfo, Brickznv6DIPInfo,
+	BrickznInit, BrickznExit, BrickznFrame, BrickznDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Brick Zone (v5.0, Joystick)
+
+static struct BurnRomInfo brickznv5RomDesc[] = {
+	{ "brickzon.009",	0x08000, 0x1ea68dea, 1 }, //  0 maincpu
+	{ "brickzon.008",	0x20000, 0xc61540ba, 1 }, //  1
+	{ "brickzon.007",	0x20000, 0xceed12f1, 1 }, //  2
+
+	{ "brickzon.010",	0x10000, 0x4eba8178, 2 }, //  3 audiocpu
+
+	{ "brickzon.011",	0x10000, 0x6c54161a, 3 }, //  4 pcm
+
+	{ "brickzon.005",	0x20000, 0x118f8392, 4 }, //  5 gfx1
+	{ "brickzon.004",	0x20000, 0x2be5f335, 4 }, //  6
+	{ "brickzon.003",	0x20000, 0x2e4f194b, 4 }, //  7
+	{ "brickzon.002",	0x20000, 0x241f0659, 4 }, //  8
+	{ "brickzon.001",	0x20000, 0x6970ada9, 4 }, //  9
+	{ "brickzon.006",	0x20000, 0xbbf31081, 4 }, // 10
+};
+
+STD_ROM_PICK(brickznv5)
+STD_ROM_FN(brickznv5)
+
+struct BurnDriver BurnDrvBrickznv5 = {
+	"brickznv5", "brickzn", NULL, NULL, "1992",
+	"Brick Zone (v5.0, Joystick)\0", NULL, "SunA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, brickznv5RomInfo, brickznv5RomName, NULL, NULL, NULL, NULL, BrickznInputInfo, Brickznv5DIPInfo,
+	Brickznv5Init, BrickznExit, BrickznFrame, BrickznDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Brick Zone (v4.0, Spinner)
+
+static struct BurnRomInfo brickznv4RomDesc[] = {
+	{ "39",				0x08000, 0x043380bd, 1 }, //  0 maincpu
+	{ "38",				0x20000, 0xe16216e8, 1 }, //  1
+	{ "brickzon.007",	0x20000, 0xceed12f1, 1 }, //  2
+
+	{ "brickzon.010",	0x10000, 0x4eba8178, 2 }, //  3 audiocpu
+
+	{ "brickzon.011",	0x10000, 0x6c54161a, 3 }, //  4 pcm
+
+	{ "35",				0x20000, 0xb463dfcf, 4 }, //  5 gfx1
+	{ "brickzon.004",	0x20000, 0x2be5f335, 4 }, //  6
+	{ "brickzon.003",	0x20000, 0x2e4f194b, 4 }, //  7
+	{ "32",				0x20000, 0x32dbf2dd, 4 }, //  8
+	{ "brickzon.001",	0x20000, 0x6970ada9, 4 }, //  9
+	{ "brickzon.006",	0x20000, 0xbbf31081, 4 }, // 10
+};
+
+STD_ROM_PICK(brickznv4)
+STD_ROM_FN(brickznv4)
+
+struct BurnDriver BurnDrvBrickznv4 = {
+	"brickznv4", "brickzn", NULL, NULL, "1992",
+	"Brick Zone (v4.0, Spinner)\0", NULL, "SunA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, brickznv4RomInfo, brickznv4RomName, NULL, NULL, NULL, NULL, BrickznSpinInputInfo, BrickznSpinDIPInfo,
+	Brickznv4Init, BrickznExit, BrickznFrame, BrickznDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Brick Zone (v1.1, Spinner)
+
+static struct BurnRomInfo brickzn11RomDesc[] = {
+	{ "9.bin",		0x08000, 0x24f88cfd, 1 }, //  0 maincpu
+	{ "8.bin",		0x20000, 0xe2c7f7ac, 1 }, //  1
+	{ "7.bin",		0x20000, 0x7af5b25c, 1 }, //  2
+
+	{ "10.bin",		0x10000, 0x494adf0f, 2 }, //  3 audiocpu
+
+	{ "11.bin",		0x10000, 0x6c54161a, 3 }, //  4 pcm
+
+	{ "5.bin",		0x20000, 0xe9f73ba1, 4 }, //  5 gfx1
+	{ "4.bin",		0x20000, 0x2be5f335, 4 }, //  6
+	{ "3.bin",		0x20000, 0x2e4f194b, 4 }, //  7
+	{ "2.bin",		0x20000, 0x0e994fbf, 4 }, //  8
+	{ "1.bin",		0x20000, 0x6970ada9, 4 }, //  9
+	{ "6.bin",		0x20000, 0xbbf31081, 4 }, // 10
+};
+
+STD_ROM_PICK(brickzn11)
+STD_ROM_FN(brickzn11)
+
+struct BurnDriver BurnDrvBrickzn11 = {
+	"brickzn11", "brickzn", NULL, NULL, "1992",
+	"Brick Zone (v1.1, Spinner)\0", NULL, "SunA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, brickzn11RomInfo, brickzn11RomName, NULL, NULL, NULL, NULL, BrickznSpinInputInfo, BrickznSpinDIPInfo,
+	Brickzn11Init, BrickznExit, BrickznFrame, BrickznDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

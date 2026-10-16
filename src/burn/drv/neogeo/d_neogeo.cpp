@@ -30354,16 +30354,16 @@ struct BurnDriver BurnDrvCaptainBarrel = {
 // Food Fight - Neo Geo Conversion (HB)
 
 static struct BurnRomInfo foodfightRomDesc[] = {
-	{ "foodfight_p1.p1",    0x080000, 0x455a609f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "foodfight-p1.p1",    0x080000, 0x455a609f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "foodfight_s1.s1",    0x020000, 0x6956d778, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "foodfight-s1.s1",    0x020000, 0x6956d778, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "foodfight_c1.c1",    0x080000, 0x7b4ca9e3, 3 | BRF_GRA },           //  2 Sprite data
-	{ "foodfight_c2.c2",    0x080000, 0xd9f831bb, 3 | BRF_GRA },           //  3
+	{ "foodfight-c1.c1",    0x080000, 0x7b4ca9e3, 3 | BRF_GRA },           //  2 Sprite data
+	{ "foodfight-c2.c2",    0x080000, 0xd9f831bb, 3 | BRF_GRA },           //  3
 
-	{ "foodfight_m1.m1",    0x040000, 0x35cb565b, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "foodfight-m1.m1",    0x040000, 0x35cb565b, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "foodfight_v1.v1",    0x080000, 0x16d20386, 5 | BRF_SND },           //  5 Sound data
+	{ "foodfight-v1.v1",    0x080000, 0x16d20386, 5 | BRF_SND },           //  5 Sound data
 };
 
 STDROMPICKEXT(foodfight, foodfight, neogeo)
@@ -30444,16 +30444,16 @@ struct BurnDriver BurnDrvKarnovng = {
 // Maiya: Super Nature Girl (HB, v4)
 
 static struct BurnRomInfo maiyaRomDesc[] = {
-	{ "maiya_p1.p1",    0x080000, 0x5fe28a51, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "maiya-p1.p1",    0x080000, 0x5fe28a51, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "maiya_s1.s1",    0x020000, 0x5c7951e1, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "maiya-s1.s1",    0x020000, 0x5c7951e1, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "maiya_c1.c1",    0x400000, 0x48638505, 3 | BRF_GRA },           //  2 Sprite data
-	{ "maiya_c2.c2",    0x400000, 0x66a5c0e2, 3 | BRF_GRA },           //  3
+	{ "maiya-c1.c1",    0x400000, 0x48638505, 3 | BRF_GRA },           //  2 Sprite data
+	{ "maiya-c2.c2",    0x400000, 0x66a5c0e2, 3 | BRF_GRA },           //  3
 
-	{ "maiya_m1.m1",    0x020000, 0xce7717bd, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "maiya-m1.m1",    0x020000, 0xce7717bd, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
-	{ "maiya_v1.v1",    0x79ab00, 0x127b89b4, 5 | BRF_SND },           //  5 Sound data
+	{ "maiya-v1.v1",    0x79ab00, 0x127b89b4, 5 | BRF_SND },           //  5 Sound data
 };
 
 STDROMPICKEXT(maiya, maiya, neogeo)
@@ -30663,6 +30663,35 @@ struct BurnDriver BurnDrvShinobing = {
 	NULL, shinobingRomInfo, shinobingRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
+};
+
+
+// Sky Lance (HB, RC1)
+
+static struct BurnRomInfo skylanceRomDesc[] = {
+	{ "skylance-p1.p1",    0x080000, 0x29e1968d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "skylance-s1.s1",    0x020000, 0xbd69c9ff, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "skylance-c1.c1",    0x400000, 0xe80e7df9, 3 | BRF_GRA },           //  2 Sprite data
+	{ "skylance-c2.c2",    0x400000, 0x0668da32, 3 | BRF_GRA },           //  3
+
+	{ "skylance-m1.m1",    0x020000, 0xcb88d068, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "skylance-v1.v1",    0x455f00, 0x897c1fbc, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(skylance, skylance, neogeo)
+STD_ROM_FN(skylance)
+
+struct BurnDriver BurnDrvSkylance = {
+	"skylance", NULL, "neogeo", NULL, "2026",
+	"Sky Lance (HB, RC1)\0", NULL, "Eagle Software", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
+	NULL, skylanceRomInfo, skylanceRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
 };
 
 

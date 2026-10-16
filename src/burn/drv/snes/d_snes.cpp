@@ -49921,6 +49921,25 @@ struct BurnDriver BurnDrvsnes_Returndoubledragonev = {
 	512, 448, 4, 3
 };
 
+// Return of Double Dragon PLUS (Hack, v0.9)
+// https://romhackplaza.org/romhacks/super-double-dragon-return-of-the-double-dragon-plus-super-nintendo-romhack
+static struct BurnRomInfo snes_ReturndoubledragonpRomDesc[] = {
+	{ "Return of Double Dragon PLUS v0.9 (2026)(Jackic).sfc", 2097152, 0x62d3188c, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Returndoubledragonp)
+STD_ROM_FN(snes_Returndoubledragonp)
+
+struct BurnDriver BurnDrvsnes_Returndoubledragonp = {
+	"snes_returndoubledragonp", "snes_returndoubledragonev", NULL, NULL, "2026",
+	"Return of Double Dragon PLUS (Hack, v0.9)\0", NULL, "Jackic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_ReturndoubledragonpRomInfo, snes_ReturndoubledragonpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Return of Double Dragon - FastROM (Hack, v2.0)
 // https://www.patreon.com/posts/return-of-double-79355175
 static struct BurnRomInfo snes_ReturndoubledragonfrRomDesc[] = {
@@ -50430,6 +50449,25 @@ struct BurnDriver BurnDrvsnes_Skippfrds = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION | GBF_PUZZLE, 0,
 	SNESGetZipName, snes_SkippfrdsRomInfo, snes_SkippfrdsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Super Double Dragon PLUS (Hack, v0.9)
+// https://romhackplaza.org/romhacks/super-double-dragon-return-of-the-double-dragon-plus-super-nintendo-romhack
+static struct BurnRomInfo snes_SuperdoubledragonpRomDesc[] = {
+	{ "Super Double Dragon PLUS v0.9 (2026)(Jackic).sfc", 2097152, 0x60e7aa93, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Superdoubledragonp)
+STD_ROM_FN(snes_Superdoubledragonp)
+
+struct BurnDriver BurnDrvsnes_Superdoubledragonp = {
+	"snes_superdoubledragonp", "snes_returndoubledragonev", NULL, NULL, "2026",
+	"Super Double Dragon PLUS (Hack, v0.9)\0", NULL, "Jackic", "SNES / Super Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_SuperdoubledragonpRomInfo, snes_SuperdoubledragonpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

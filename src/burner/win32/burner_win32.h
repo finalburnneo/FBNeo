@@ -381,6 +381,14 @@ extern bool bIconsOnlyParents;
 extern int nIconsSize, nIconsSizeXY, nIconsYDiff;
 extern bool bGameInfoOpen;
 extern bool bIconsByHardwares;
+extern UINT uiBackGroundColor;
+extern UINT uiMenuItemColor;
+extern UINT uiSelectedMenuItemColor;
+extern UINT uiTextFontColor;
+extern UINT nUiColorTheme;
+extern bool uiOwnerDrawActive;
+extern UINT uiLightModeCode;
+extern UINT uiDarkModeCode;
 
 extern HICON* pIconsCache;
 
@@ -649,6 +657,10 @@ int ChooseMonitorCreate();
 // placeholder.cpp
 int SelectPlaceHolder();
 void ResetPlaceHolder();
+
+void UpdateUiColorMode(UINT uiColorMode);
+void ApplyDarkMode();
+void ApplyLightMode();
 
 // Misc
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)

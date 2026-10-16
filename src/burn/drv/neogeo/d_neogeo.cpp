@@ -25158,7 +25158,7 @@ struct BurnDriver BurnDrvKof98rat = {
 // The King of Fighters '98 - The Slugfest / King of Fighters '98 - Dream Match Never Ends (BC Style 2002, Hack) (Unknown Author)
 
 static struct BurnRomInfo kof98bc2k2RomDesc[] = {
-	{ "98s02-p1.p1",	0x100000, 0x2fd34fd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "98s02-p1.p1",	0x100000, 0xfafb0449, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "98s02-p2.p2",	0x400000, 0xccc71b9c, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "98s02-s1.s1",	0x020000, 0xf6871e73, 2 | BRF_GRA },           //  2 Text layer tiles

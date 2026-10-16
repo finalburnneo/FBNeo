@@ -473,6 +473,36 @@ static INT32 LoadSoundBanks()
     return 0;
 }
 
+// EPROM accesses get RdRdy wait states: the boot sequence (blue screen) takes about 6 seconds,
+// booting faster makes the attract mode music go missing (as MAME)
+#define ROM_WAIT_CYCLES		128
+
+static UINT8 RomReadByte(UINT32 address)
+{
+	Mips3BurnCycles(ROM_WAIT_CYCLES);
+	return DrvBootROM[address & 0x7ffff];
+}
+
+static UINT16 RomReadHalf(UINT32 address)
+{
+	Mips3BurnCycles(ROM_WAIT_CYCLES);
+	return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(DrvBootROM + (address & 0x7fffe)));
+}
+
+static UINT32 RomReadWord(UINT32 address)
+{
+	Mips3BurnCycles(ROM_WAIT_CYCLES);
+	return BURN_ENDIAN_SWAP_INT32(*(UINT32*)(DrvBootROM + (address & 0x7fffc)));
+}
+
+static UINT64 RomReadDouble(UINT32 address)
+{
+	Mips3BurnCycles(ROM_WAIT_CYCLES);
+	UINT64 v;
+	memcpy(&v, DrvBootROM + (address & 0x7fff8), 8);
+	return BURN_ENDIAN_SWAP_INT64(v);
+}
+
 static INT32 kinstSetup()
 {
     Mips3SetReadByteHandler(1, kinstReadByte);
@@ -537,7 +567,13 @@ static INT32 DrvInit(INT32 version)
     
     DrvVRAMBase = 0x30000;
 
-    Mips3MapMemory(DrvBootROM,  0x1FC00000, 0x1FC7FFFF, MAP_READ);
+    // code is fetched (and cached) from the EPROM directly, data reads go through the wait state handler
+    Mips3MapMemory(DrvBootROM,  0x1FC00000, 0x1FC7FFFF, MAP_ROM);
+    Mips3SetReadByteHandler(2, RomReadByte);
+    Mips3SetReadHalfHandler(2, RomReadHalf);
+    Mips3SetReadWordHandler(2, RomReadWord);
+    Mips3SetReadDoubleHandler(2, RomReadDouble);
+    Mips3MapHandler(2, 0x1FC00000, 0x1FC7FFFF, MAP_READ);
     Mips3MapMemory(DrvRAM0,     0x00000000, 0x0007FFFF, MAP_RAM);
     Mips3MapMemory(DrvRAM1,     0x08000000, 0x087FFFFF, MAP_RAM);
 

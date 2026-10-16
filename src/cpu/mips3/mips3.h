@@ -22,6 +22,7 @@ struct Mips3BlockPage;
 struct Mips3PhysPage {
 	UINT8 *read;			// host pointer, or handler index
 	UINT8 *write;
+	UINT8 *fetch;			// host pointer for instruction fetches, NULL: same as read
 	Mips3BlockPage *code;	// code cache for fetches from this page (NULL: not cacheable)
 	Mips3BlockPage *wcode;	// code cache that writes to this page can modify
 };
@@ -56,5 +57,7 @@ void mips3_page_mapped(UINT32 page);
 void mips3_invalidate(UINT32 nStart, UINT32 nEnd);
 
 UINT8 mips3_read_phys8(UINT32 pa);
+
+void mips3_burn_cycles(INT32 cycles);
 
 #endif

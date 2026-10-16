@@ -254,6 +254,12 @@ static void DbgUnmapped(const char *what, UINT32 pa, UINT64 v)
 #define DBG_UNMAPPED_W(p, what, pa, v)
 #endif
 
+static inline UINT8* CodeHost(Mips3PhysPage *p)
+{
+	if (p->fetch) return p->fetch;
+	return IS_PTR(p->read) ? p->read : NULL;
+}
+
 static inline UINT8 RdPhys8(UINT32 pa)
 {
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
@@ -2161,7 +2167,8 @@ static void StepOne()
 			TlbFault(&I, pc, 0, e);
 		} else {
 			pa = (e & ~0xfff) | (pc & 0xfff);
-			I.op = RdPhys32(pa);
+			UINT8 *host = CodeHost(&Mips3Phys[pa >> 12]);
+			I.op = host ? BURN_ENDIAN_SWAP_INT32(*(UINT32*)(host + (pa & 0xfff))) : RdPhys32(pa);
 			I.fn = Mips3Decode(I.op, &fl);
 			I.fn(&I);
 		}
@@ -2318,7 +2325,7 @@ INT32 mips3_run(INT32 cycles)
 			if (p->code) {
 				Mips3BlockPage *bp = p->code;
 				Mips3Block *b = bp->blk ? bp->blk[(pa & 0xfff) >> 2] : NULL;
-				if (b == NULL) b = BuildBlock(bp, p->read, pa & 0xfff);
+				if (b == NULL) b = BuildBlock(bp, CodeHost(p), pa & 0xfff);
 				fe->pc = pc;
 				fe->gen = nFastGen;
 				fe->b = b;
@@ -2374,7 +2381,8 @@ void mips3_page_mapped(UINT32 page)
 {
 	nFastGen++;
 	Mips3PhysPage *p = &Mips3Phys[page];
-	p->code = IS_PTR(p->read) ? GetBlockPage(p->read) : NULL;
+	UINT8 *host = CodeHost(p);
+	p->code = host ? GetBlockPage(host) : NULL;
 	p->wcode = IS_PTR(p->write) ? GetBlockPage(p->write) : p->code;
 }
 
@@ -2402,6 +2410,12 @@ void mips3_set_irq_line(INT32 line, INT32 state)
 UINT32 mips3_get_pc()
 {
 	return M.pc;
+}
+
+void mips3_burn_cycles(INT32 cycles)
+{
+	M.total_cycles += cycles;
+	nMips3ICount -= cycles;
 }
 
 UINT8 mips3_read_phys8(UINT32 pa)

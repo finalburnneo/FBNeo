@@ -39,6 +39,7 @@ int Mips3MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEn
 	for (UINT32 page = first, i = 0; page <= last; page++, i++) {
 		if (nType & MAP_READ)  Mips3Phys[page].read = pMemory + 0x1000 * i;
 		if (nType & MAP_WRITE) Mips3Phys[page].write = pMemory + 0x1000 * i;
+		if (nType & MAP_FETCH) Mips3Phys[page].fetch = pMemory + 0x1000 * i;
 		mips3_page_mapped(page);
 	}
 	return 0;
@@ -52,6 +53,7 @@ int Mips3MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, 
 	for (UINT32 page = first; page <= last; page++) {
 		if (nType & MAP_READ)  Mips3Phys[page].read = (UINT8*)nHandler;
 		if (nType & MAP_WRITE) Mips3Phys[page].write = (UINT8*)nHandler;
+		if (nType & MAP_FETCH) Mips3Phys[page].fetch = NULL;	// fetch through the read handler
 		mips3_page_mapped(page);
 	}
 	return 0;
@@ -100,6 +102,11 @@ INT64 Mips3TotalCycles()
 void Mips3NewFrame()
 {
 	// Count/Compare are derived from the total cycle count, it must keep running across frames
+}
+
+void Mips3BurnCycles(int cycles)
+{
+	mips3_burn_cycles(cycles);
 }
 
 void Mips3SetIRQLine(const int line, const int state)

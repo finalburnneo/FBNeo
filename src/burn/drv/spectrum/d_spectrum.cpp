@@ -53750,7 +53750,7 @@ struct BurnDriver BurnSpecNeloquqoes = {
 // Nemeshit (128K) (HB)
 
 static struct BurnRomInfo SpecNemeshitRomDesc[] = {
-	{ "Nemeshit 128K (2026)(Clankerbast Software).tap", 89060, 0xc1fb22bc, BRF_ESS | BRF_PRG },
+	{ "Nemeshit 128K (2026)(Clankerbast Software).tap", 89195, 0x7596bf14, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecNemeshit, SpecNemeshit, Spec128)

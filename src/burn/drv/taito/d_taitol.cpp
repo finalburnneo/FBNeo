@@ -3294,12 +3294,6 @@ static INT32 Z80x2Frame()
 		BurnSoundDCFilter();
 	}
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	memcpy (DrvSprBuf, DrvSprRAM, 0x400);
-
 	return 0;
 }
 
@@ -3337,12 +3331,6 @@ static INT32 Z80x1Frame()
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	memcpy (DrvSprBuf, DrvSprRAM, 0x400);
 
 	return 0;
 }
@@ -4468,4 +4456,30 @@ struct BurnDriver BurnDrvSquij = {
 	NULL, sqijRomInfo, sqijRomName, NULL, NULL, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
 	PlottingInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
+};
+
+
+// Jetpac (HB)
+// https://tardis.dk/wordpress/?page_id=1930
+
+static struct BurnRomInfo jetpacRomDesc[] = {
+    { "jp-ic10",                  0x0f000, 0xf06281c4, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+    { "jp-b96-07.ic9",            0x10000, 0x83e284a4, 4 | BRF_GRA },           //  1 graphics data
+    { "jp-b96-08.ic8",            0x10000, 0xd714c279, 4 | BRF_GRA },           //  2
+
+    { "jp-gal16v8-b86-04.bin",    0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
+};
+
+STD_ROM_PICK(jetpac)
+STD_ROM_FN(jetpac)
+
+struct BurnDriver BurnDrvJetpac = {
+    "jetpac", NULL, NULL, NULL, "2026",
+    "Jetpac (HB)\0", NULL, "Tardis Remakes", "Taito L System",
+    NULL, NULL, NULL, NULL,
+    BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+    NULL, jetpacRomInfo, jetpacRomName, NULL, NULL, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
+    PlottingInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+    320, 224, 4, 3
 };

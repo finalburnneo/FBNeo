@@ -51292,10 +51292,10 @@ struct BurnDriver BurnDrvsnes_Supermetroidxf = {
 	512, 448, 4, 3
 };
 
-// Super Mario Kart - Fullscreen Edition (Hack, v1.5)
+// Super Mario Kart - Fullscreen Edition (Hack, v2.0)
 // https://www.romhacking.net/hacks/10083/
 static struct BurnRomInfo snes_SupermkartfseRomDesc[] = {
-	{ "Super Mario Kart - Fullscreen Edition v1.5 (2026)(Psicopompo).sfc", 1048576, 0x6af5145e, BRF_ESS | BRF_PRG },
+	{ "Super Mario Kart - Fullscreen Edition v2.0 (2026)(Psicopompo).sfc", 1048576, 0xe9b8c210, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(snes_Supermkartfse, snes_Supermkartfse, snes_dsp1b)
@@ -51303,7 +51303,7 @@ STD_ROM_FN(snes_Supermkartfse)
 
 struct BurnDriver BurnDrvsnes_Supermkartfse = {
 	"snes_supermkartfse", "snes_supermkart", "snes_dsp1b", NULL, "2026",
-	"Super Mario Kart - Fullscreen Edition (Hack, v1.5)\0", "DSP-1B enhancement chip", "Psicopompo", "SNES / Super Famicom",
+	"Super Mario Kart - Fullscreen Edition (Hack, v2.0)\0", "DSP-1B enhancement chip", "Psicopompo", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
 	SNESGetZipName, snes_SupermkartfseRomInfo, snes_SupermkartfseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

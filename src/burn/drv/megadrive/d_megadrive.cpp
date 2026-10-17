@@ -39929,10 +39929,10 @@ struct BurnDriver BurnDrvmd_driftinrage = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Dungeon Durban (HB, v0.9.0)
+// Dungeon Durban (HB, v0.9.1)
 // https://tony123f.itch.io/dungeon-durban
 static struct BurnRomInfo md_dundurbanRomDesc[] = {
-	{ "Dungeon Durban v0.9.0 (2026)(Durban Games).bin", 1966080, 0x991e2234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Dungeon Durban v0.9.1 (2026)(Durban Games).bin", 1966080, 0xd2a02888, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dundurban)
@@ -39940,7 +39940,7 @@ STD_ROM_FN(md_dundurban)
 
 struct BurnDriver BurnDrvmd_dundurban = {
 	"md_dundurban", NULL, NULL, NULL, "2026",
-	"Dungeon Durban (HB, v0.9.0)\0", NULL, "Durban Games", "Genesis / Mega Drive",
+	"Dungeon Durban (HB, v0.9.1)\0", NULL, "Durban Games", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_MAZE, 0,
 	MegadriveGetZipName, md_dundurbanRomInfo, md_dundurbanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43823,10 +43823,10 @@ struct BurnDriver BurnDrvmd_shaolincarcara2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shinobi (HB, Beta 1)
+// Shinobi (HB, Beta 2)
 // https://mlouvet.itch.io/shinobi-megadrive
 static struct BurnRomInfo md_shinobiRomDesc[] = {
-	{ "Shinobi Beta 1 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x1c33bd69, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shinobi Beta 2 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x76bb9519, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinobi)
@@ -43834,7 +43834,7 @@ STD_ROM_FN(md_shinobi)
 
 struct BurnDriver BurnDrvmd_shinobi = {
 	"md_shinobi", NULL, NULL, NULL, "2026",
-	"Shinobi (HB, Beta 1)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Shinobi (HB, Beta 2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_shinobiRomInfo, md_shinobiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

@@ -36588,10 +36588,10 @@ struct BurnDriver BurnSpecBinland16 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Bingueros, Los (Spanish) (48K) (HB)
+// Bingueros, Los (Spanish) (48K) (HB, v1.1)
 
 static struct BurnRomInfo SpecBinguerosRomDesc[] = {
-	{ "Bingueros, Los ES 48K (2026)(Jordi).tap", 29826, 0xe70731d3, BRF_ESS | BRF_PRG },
+	{ "Bingueros, Los v1.1 ES 48K (2026)(Jordi).tap", 29826, 0xe70731d3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBingueros, SpecBingueros, Spectrum)
@@ -36599,7 +36599,7 @@ STD_ROM_FN(SpecBingueros)
 
 struct BurnDriver BurnSpecBingueros = {
 	"spec_bingueros", NULL, "spec_spectrum", NULL, "2026",
-	"Bingueros, Los (Spanish) (48K) (HB)\0", NULL, "Jordi", "ZX Spectrum",
+	"Bingueros, Los (Spanish) (48K) (HB, v1.1)\0", NULL, "Jordi", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_CASINO, 0,
 	SpectrumGetZipName, SpecBinguerosRomInfo, SpecBinguerosRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

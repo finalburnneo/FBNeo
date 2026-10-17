@@ -30604,11 +30604,11 @@ struct BurnDriver BurnDrvEswatng = {
 };
 
 
-// Hang-On - Neo Geo Conversion (HB, v2.0)
+// Hang-On - Neo Geo Conversion (HB, v2.1)
 // https://shinobiz72.itch.io/hangon
 
 static struct BurnRomInfo hangonngRomDesc[] = {
-	{ "hangonng-p1.p1",	0x100000, 0x317040d4, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "hangonng-p1.p1",	0x100000, 0x8cdee388, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
 	{ "hangonng-p2.p2",	0x500000, 0x500b59ea, 1 | BRF_ESS | BRF_PRG }, 	//  1
 
 	{ "hangonng-s1.s1",	0x020000, 0x72b4653d, 2 | BRF_GRA },           	//  2 Text layer tiles
@@ -30616,7 +30616,7 @@ static struct BurnRomInfo hangonngRomDesc[] = {
 	{ "hangonng-c1.c1",	0x800000, 0x4440a35d, 3 | BRF_GRA },           	//  3 Sprite data
 	{ "hangonng-c2.c2",	0x800000, 0x83018efe, 3 | BRF_GRA },           	//  4
 
-	{ "hangonng-m1.m1",	0x040000, 0x9c53a21d, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
+	{ "hangonng-m1.m1",	0x040000, 0xca5311b0, 4 | BRF_ESS | BRF_PRG }, 	//  5 Z80 code
 
 	{ "hangonng-v1.v1",	0x200000, 0x3aed32bd, 5 | BRF_SND },           	//  6 Sound data
 };
@@ -30626,7 +30626,7 @@ STD_ROM_FN(hangonng)
 
 struct BurnDriver BurnDrvHangonng = {
 	"hangonng", NULL, "neogeo", NULL, "2026",
-	"Hang-On - Neo Geo Conversion (HB, v2.0)\0", NULL, "ShinobiZ", "Neo Geo MVS",
+	"Hang-On - Neo Geo Conversion (HB, v2.1)\0", NULL, "ShinobiZ", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
 	NULL, hangonngRomInfo, hangonngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

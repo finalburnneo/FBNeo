@@ -4275,6 +4275,8 @@ struct BurnDriver BurnDrvfds_zeldanoden = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Dreamful FDS Diskmag, First Issue - 40th Anniversary of FDS (2026)
+// https://github.com/TakuikaNinja/FDS-diskmag
 static struct BurnRomInfo fds_dreamful001RomDesc[] = {
 	{ "Dreamful - FDS Diskmag, 40th Anniversary of FDS (2026)(TakuikaNinja).fds",          65500, 0x55314060, BRF_ESS | BRF_PRG },
 };

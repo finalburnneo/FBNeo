@@ -30755,6 +30755,41 @@ struct BurnDriver BurnDrvWarriorman = {
 };
 
 
+// Wolfenstein 3-D (HB, v1.2.0)
+// https://www.wolfmvs.com/
+
+static struct BurnRomInfo wolfn3dRomDesc[] = {
+	{ "wolfn3d-p1.bin", 0x080000, 0x00b38f35, 1 | BRF_ESS | BRF_PRG }, // 0 code 68000
+
+	{ "wolfn3d-s1.bin", 0x020000, 0x67bfa3a2, 2 | BRF_GRA }, // 1 tuiles de la couche fix
+
+	{ "wolfn3d-c1.bin", 0x1000000, 0xcba29aef, 3 | BRF_GRA }, // 2 sprites
+	{ "wolfn3d-c2.bin", 0x1000000, 0xe88b4a64, 3 | BRF_GRA }, // 3
+	{ "wolfn3d-c3.bin", 0x1000000, 0x958b670f, 3 | BRF_GRA }, // 4
+	{ "wolfn3d-c4.bin", 0x1000000, 0x8b4d1874, 3 | BRF_GRA }, // 5
+	{ "wolfn3d-c5.bin", 0x1000000, 0x14b469a4, 3 | BRF_GRA }, // 6
+	{ "wolfn3d-c6.bin", 0x1000000, 0xdf9048ab, 3 | BRF_GRA }, // 7
+
+	{ "wolfn3d-m1.bin", 0x020000, 0x60e0acb9, 4 | BRF_ESS | BRF_PRG }, // 8 code Z80
+
+	{ "wolfn3d-v1.bin", 0x200000, 0xcc0f0f7d, 5 | BRF_SND }, // 9 son ADPCM-A
+	{ "wolfn3d-v2.bin", 0x200000, 0xcc0f0f7d, 6 | BRF_SND }, // 10 son ADPCM-B (région 6)
+};
+
+STDROMPICKEXT(wolfn3d, wolfn3d, neogeo)
+STD_ROM_FN(wolfn3d)
+
+struct BurnDriver BurnDrvWolfn3d = {
+	"wolfn3d", NULL, "neogeo", NULL, "2026",
+	"Wolfenstein 3-D (HB, v1.2.0)\0", NULL, "Thibaut Lion", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SHOOT, 0,
+	NULL, wolfn3dRomInfo, wolfn3dRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+
 // World Racer 32Kb (HB, 251226)
 // https://www.patreon.com/posts/worldracer32kb-146718741
 

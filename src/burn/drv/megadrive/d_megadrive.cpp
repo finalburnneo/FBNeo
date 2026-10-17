@@ -41665,9 +41665,10 @@ struct BurnDriver BurnDrvmd_cperils = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Commando (HB, v0.8b)
+// Mega Commando (HB, v0.81b)
+// https://mxretrodev.itch.io/mega-commando
 static struct BurnRomInfo md_mcommandoRomDesc[] = {
-	{ "Mega Commando v0.8b (2026)(MXRetroDev).bin", 2752512, 0xda4a0edd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Commando v0.81b (2026)(MXRetroDev).bin", 2752512, 0x96a6d27f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mcommando)
@@ -41675,7 +41676,7 @@ STD_ROM_FN(md_mcommando)
 
 struct BurnDriver BurnDrvmd_mcommando = {
 	"md_mcommando", NULL, NULL, NULL, "2026",
-	"Mega Commando (HB, v0.8b)\0", NULL, "MXRetroDev", "Genesis / Mega Drive",
+	"Mega Commando (HB, v0.81b)\0", NULL, "MXRetroDev", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mcommandoRomInfo, md_mcommandoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42913,10 +42914,10 @@ struct BurnDriver BurnDrvmd_papriumunlck = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Parasol Stars (HB, Beta 1)
+// Parasol Stars (HB, Beta 2)
 // https://mlouvet.itch.io/parasol-stars-megadrive-genesis
 static struct BurnRomInfo md_parasolRomDesc[] = {
-	{ "Parasol Stars Beta 1 (2026)(Oldschool Is Beautiful).bin", 8388608, 0x3d3c10fd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Parasol Stars Beta 2 (2026)(Oldschool Is Beautiful).bin", 4194304, 0xd800e880, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_parasol)
@@ -42924,9 +42925,9 @@ STD_ROM_FN(md_parasol)
 
 struct BurnDriver BurnDrvmd_parasol = {
 	"md_parasol", NULL, NULL, NULL, "2026",
-	"Parasol Stars (HB, Beta 1)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Parasol Stars (HB, Beta 2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_parasolRomInfo, md_parasolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44369,10 +44370,10 @@ struct BurnDriver BurnDrvmd_tanzer = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.6b)
+// Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.7)
 // https://valenzuelagustavo.itch.io/tmnt-arcade-game-megadrive-port
 static struct BurnRomInfo md_tmntarcadeRomDesc[] = {
-	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.3.6b (2026)(Gustavo Valenzuela).bin", 4063232, 0x4de8ffb4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Teenage Mutant Ninja Turtles - The Arcade Game v0.3.7 (2026)(Gustavo Valenzuela).bin", 4194304, 0x962efc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tmntarcade)
@@ -44380,7 +44381,7 @@ STD_ROM_FN(md_tmntarcade)
 
 struct BurnDriver BurnDrvmd_tmntarcade = {
 	"md_tmntarcade", NULL, NULL, NULL, "2026",
-	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.6b)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
+	"Teenage Mutant Ninja Turtles: The Arcade Game (HB, v0.3.7)\0", NULL, "Gustavo Valenzuela", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_tmntarcadeRomInfo, md_tmntarcadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44580,10 +44581,10 @@ struct BurnDriver BurnDrvmd_threestooges = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tiger Road (hombreimaginario) (HB, Beta 17)
+// Tiger Road (hombreimaginario) (HB, 2026-10-17)
 // https://hombreimaginario.itch.io/tiger-road-md
 static struct BurnRomInfo md_tigeroadRomDesc[] = {
-	{ "Tiger Road Beta 17 (2026)(hombreimaginario).bin", 2490368, 0x407b4191, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tiger Road 2026-10-17 (2026)(hombreimaginario).bin", 2490368, 0x92480e61, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tigeroad)
@@ -44591,7 +44592,7 @@ STD_ROM_FN(md_tigeroad)
 
 struct BurnDriver BurnDrvmd_tigeroad = {
 	"md_tigeroad", NULL, NULL, NULL, "2026",
-	"Tiger Road (hombreimaginario) (HB, Beta 17)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
+	"Tiger Road (hombreimaginario) (HB, 2026-10-17)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_tigeroadRomInfo, md_tigeroadRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

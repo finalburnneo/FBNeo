@@ -4478,7 +4478,7 @@ struct BurnDriver BurnDrvJetpac = {
     "jetpac", NULL, NULL, NULL, "2026",
     "Jetpac (HB)\0", NULL, "Tardis Remakes", "Taito L System",
     NULL, NULL, NULL, NULL,
-    BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+    BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_ACTION, 0,
     NULL, jetpacRomInfo, jetpacRomName, NULL, NULL, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
     PlottingInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
     320, 224, 4, 3

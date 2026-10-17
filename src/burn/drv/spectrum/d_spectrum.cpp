@@ -36591,7 +36591,7 @@ struct BurnDriver BurnSpecBinland16 = {
 // Bingueros, Los (Spanish) (48K) (HB)
 
 static struct BurnRomInfo SpecBinguerosRomDesc[] = {
-	{ "Bingueros, Los ES 48K (2026)(Jordi).tap", 29434, 0xd48d5e78, BRF_ESS | BRF_PRG },
+	{ "Bingueros, Los ES 48K (2026)(Jordi).tap", 29826, 0xe70731d3, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecBingueros, SpecBingueros, Spectrum)

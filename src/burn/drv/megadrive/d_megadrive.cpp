@@ -38917,10 +38917,10 @@ struct BurnDriver BurnDrvmd_bulletpanic = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Cabal (HB, Beta 2a)
+// Cabal (HB, Beta 3)
 // https://mlouvet.itch.io/cabal-megadrive
 static struct BurnRomInfo md_cabalRomDesc[] = {
-	{ "Cabal Beta 2a (2026)(Oldschool Is Beautiful).bin", 2097152, 0xd4dd88df, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Cabal Beta 3 (2026)(Oldschool Is Beautiful).bin", 2097152, 0x86a39e28, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_cabal)
@@ -38928,7 +38928,7 @@ STD_ROM_FN(md_cabal)
 
 struct BurnDriver BurnDrvmd_cabal = {
 	"md_cabal", NULL, NULL, NULL, "2026",
-	"Cabal (HB, Beta 2a)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Cabal (HB, Beta 3)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
 	MegadriveGetZipName, md_cabalRomInfo, md_cabalRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

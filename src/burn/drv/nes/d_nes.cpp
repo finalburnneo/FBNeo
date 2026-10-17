@@ -4275,6 +4275,22 @@ struct BurnDriver BurnDrvfds_zeldanoden = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+static struct BurnRomInfo fds_dreamful001RomDesc[] = {
+	{ "Dreamful - FDS Diskmag, 40th Anniversary of FDS (2026)(TakuikaNinja).fds",          65500, 0x55314060, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(fds_dreamful001, fds_dreamful001, fds_fdsbios)
+STD_ROM_FN(fds_dreamful001)
+
+struct BurnDriver BurnDrvfds_dreamful001 = {
+	"fds_dreamful001", NULL, "fds_fdsbios", NULL, "2026",
+	"Dreamful - FDS Diskmag, 40th Anniversary of FDS (HB)\0", NULL, "TakuikaNinja", "Famicom Disk System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_FDS, GBF_MISC, 0,
+	NESGetZipName, fds_dreamful001RomInfo, fds_dreamful001RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
 
 // FDS END ---------------------------------------------------------------
 

@@ -779,11 +779,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void HandleDCSIRQ(INT32 line)
-{
-	if (line == 0 || line == 96 || line == 192) DcsCheckIRQ();
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -833,8 +828,6 @@ static INT32 DrvFrame()
 			BurnDrvRedraw();
 			bDrawn = 1;
 		}
-
-		HandleDCSIRQ(i);
 
 		sound_sync(); // sync to main cpu
 		if (i == nInterleave - 1)

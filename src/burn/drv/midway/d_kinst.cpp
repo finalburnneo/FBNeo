@@ -668,17 +668,8 @@ static INT32 DrvFrame()
     Mips3SetIRQLine(VBLANK_IRQ, 0);
 
     bool isVblank = false;
-	bool dcsIrq = false;
 
     while ((nMipsTotalCyc < nMipsCycPerFrame) || (nDcsTotalCyc < nDcsCycPerFrame)) {
-		// @ 60hz, dcs needs 2 IRQs/frame
-		if (nDcsTotalCyc == 0) DcsCheckIRQ();
-		
-		if (nDcsTotalCyc >= (nDcsCycPerFrame / 2) && !dcsIrq) {
-			DcsCheckIRQ();
-			dcsIrq = true;
-		}
-
         if ((nNextMipsSegment + nMipsTotalCyc) > nMipsCycPerFrame) {
 			nNextMipsSegment -= (nNextMipsSegment + nMipsTotalCyc) - nMipsCycPerFrame;
 		}
@@ -694,7 +685,6 @@ static INT32 DrvFrame()
             if (nMipsTotalCyc == nMipsVblankCyc) {
                 isVblank = true;
                 Mips3SetIRQLine(VBLANK_IRQ, 1);
-				DcsCheckIRQ();
                 if (pBurnDraw) {
                     DrvDraw();
                 }

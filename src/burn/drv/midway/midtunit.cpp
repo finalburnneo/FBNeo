@@ -1239,11 +1239,6 @@ INT32 TUnitDraw()
 	return 0;
 }
 
-static void HandleDCSIRQ(INT32 line)
-{
-	if (line == 0 || line == 96 || line == 192) DcsCheckIRQ(); // 3x
-}
-
 INT32 TUnitFrame()
 {
 	if (nTUnitReset) TUnitDoReset();
@@ -1274,8 +1269,6 @@ INT32 TUnitFrame()
 		TMS34010GenerateScanline(our_line);
 
 		if (nSoundType == SOUND_DCS) {
-			HandleDCSIRQ(i);
-
 			dcs_sound_sync(); // sync to main cpu
 			if (i == nInterleave - 1) dcs_sound_sync_end();
 		}

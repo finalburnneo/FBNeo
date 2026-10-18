@@ -1,3 +1,8 @@
+// the v25 core shares these opcodes but has no i8086 mode
+#ifndef NEC_OPTABLE
+#define NEC_OPTABLE nec_instruction
+#endif
+
 #define OP(num,func_name) static void func_name(nec_state_t *nec_state)
 
 OP( 0x00, i_add_br8  ) { DEF_br8;	ADDB;	PutbackRMByte(ModRM,dst);	CLKM(2,2,2,16,16,7);		}
@@ -76,7 +81,7 @@ OP( 0x22, i_and_r8b  ) { DEF_r8b;	ANDB;	RegByte(ModRM)=dst;			CLKM(2,2,2,11,11,6
 OP( 0x23, i_and_r16w ) { DEF_r16w;	ANDW;	RegWord(ModRM)=dst;			CLKR(15,15,8,15,11,6,2,EA);	}
 OP( 0x24, i_and_ald8 ) { DEF_ald8;	ANDB;	Breg(AL)=dst;			CLKS(4,4,2);				}
 OP( 0x25, i_and_axd16) { DEF_axd16;	ANDW;	Wreg(AW)=dst;			CLKS(4,4,2);	}
-OP( 0x26, i_es       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS1)<<4;	CLK(2);		nec_instruction[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
+OP( 0x26, i_es       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS1)<<4;	CLK(2);		NEC_OPTABLE[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
 OP( 0x27, i_daa      ) { ADJ4(6,0x60);									CLKS(3,3,2);	}
 
 OP( 0x28, i_sub_br8  ) { DEF_br8;	SUBB;	PutbackRMByte(ModRM,dst);	CLKM(2,2,2,16,16,7);		}
@@ -85,7 +90,7 @@ OP( 0x2a, i_sub_r8b  ) { DEF_r8b;	SUBB;	RegByte(ModRM)=dst;			CLKM(2,2,2,11,11,6
 OP( 0x2b, i_sub_r16w ) { DEF_r16w;	SUBW;	RegWord(ModRM)=dst;			CLKR(15,15,8,15,11,6,2,EA);	}
 OP( 0x2c, i_sub_ald8 ) { DEF_ald8;	SUBB;	Breg(AL)=dst;			CLKS(4,4,2);				}
 OP( 0x2d, i_sub_axd16) { DEF_axd16;	SUBW;	Wreg(AW)=dst;			CLKS(4,4,2);	}
-OP( 0x2e, i_cs       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(PS)<<4;	CLK(2);		nec_instruction[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
+OP( 0x2e, i_cs       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(PS)<<4;	CLK(2);		NEC_OPTABLE[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
 OP( 0x2f, i_das      ) { ADJ4(-6,-0x60);								CLKS(3,3,2);	}
 
 OP( 0x30, i_xor_br8  ) { DEF_br8;	XORB;	PutbackRMByte(ModRM,dst);	CLKM(2,2,2,16,16,7);		}
@@ -94,7 +99,7 @@ OP( 0x32, i_xor_r8b  ) { DEF_r8b;	XORB;	RegByte(ModRM)=dst;			CLKM(2,2,2,11,11,6
 OP( 0x33, i_xor_r16w ) { DEF_r16w;	XORW;	RegWord(ModRM)=dst;			CLKR(15,15,8,15,11,6,2,EA);	}
 OP( 0x34, i_xor_ald8 ) { DEF_ald8;	XORB;	Breg(AL)=dst;			CLKS(4,4,2);				}
 OP( 0x35, i_xor_axd16) { DEF_axd16;	XORW;	Wreg(AW)=dst;			CLKS(4,4,2);	}
-OP( 0x36, i_ss       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;	CLK(2);		nec_instruction[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
+OP( 0x36, i_ss       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(SS_)<<4;	CLK(2);		NEC_OPTABLE[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
 OP( 0x37, i_aaa      ) { ADJB(6, (Breg(AL) > 0xf9) ? 2 : 1);		CLKS(7,7,4);	}
 
 OP( 0x38, i_cmp_br8  ) { DEF_br8;	SUBB;					CLKM(2,2,2,11,11,6); }
@@ -103,7 +108,7 @@ OP( 0x3a, i_cmp_r8b  ) { DEF_r8b;	SUBB;					CLKM(2,2,2,11,11,6); }
 OP( 0x3b, i_cmp_r16w ) { DEF_r16w;	SUBW;					CLKR(15,15,8,15,11,6,2,EA);	}
 OP( 0x3c, i_cmp_ald8 ) { DEF_ald8;	SUBB;					CLKS(4,4,2); }
 OP( 0x3d, i_cmp_axd16) { DEF_axd16;	SUBW;					CLKS(4,4,2);	}
-OP( 0x3e, i_ds       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS0)<<4;	CLK(2);		nec_instruction[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
+OP( 0x3e, i_ds       ) { nec_state->seg_prefix=TRUE;	nec_state->prefix_base=Sreg(DS0)<<4;	CLK(2);		NEC_OPTABLE[fetchop(nec_state)](nec_state);	nec_state->seg_prefix=FALSE; }
 OP( 0x3f, i_aas      ) { ADJB(-6, (Breg(AL) < 6) ? -2 : -1);		CLKS(7,7,4);	}
 
 OP( 0x40, i_inc_ax  ) { IncWordReg(AW);						CLK(2);	}
@@ -201,7 +206,7 @@ OP( 0x64, i_repnc  ) {	UINT32 next = fetchop(nec_state);	UINT16 c = Wreg(CW);
 		case 0xad:  CLK(2); if (c) do { i_lodsw(nec_state); c--; } while (c>0 && !CF); Wreg(CW)=c; break;
 		case 0xae:	CLK(2); if (c) do { i_scasb(nec_state); c--; } while (c>0 && !CF); Wreg(CW)=c; break;
 		case 0xaf:	CLK(2); if (c) do { i_scasw(nec_state); c--; } while (c>0 && !CF); Wreg(CW)=c; break;
-		default:	nec_instruction[next](nec_state);
+		default:	NEC_OPTABLE[next](nec_state);
 	}
 	nec_state->seg_prefix=FALSE;
 }
@@ -229,7 +234,7 @@ OP( 0x65, i_repc  ) {	UINT32 next = fetchop(nec_state);	UINT16 c = Wreg(CW);
 		case 0xad:  CLK(2); if (c) do { i_lodsw(nec_state); c--; } while (c>0 && CF);	Wreg(CW)=c;	break;
 		case 0xae:	CLK(2); if (c) do { i_scasb(nec_state); c--; } while (c>0 && CF);	Wreg(CW)=c; break;
 		case 0xaf:	CLK(2); if (c) do { i_scasw(nec_state); c--; } while (c>0 && CF);	Wreg(CW)=c; break;
-		default:	nec_instruction[next](nec_state);
+		default:	NEC_OPTABLE[next](nec_state);
 	}
 	nec_state->seg_prefix=FALSE;
 }
@@ -579,7 +584,7 @@ OP( 0xf2, i_repne    ) { UINT32 next = fetchop(nec_state); UINT16 c = Wreg(CW);
 		case 0xad:  CLK(2); if (c) do { i_lodsw(nec_state); c--; } while (c>0);	Wreg(CW)=c;	break;
 		case 0xae:	CLK(2); if (c) do { i_scasb(nec_state); c--; } while (c>0 && ZF==0);	Wreg(CW)=c; break;
 		case 0xaf:	CLK(2); if (c) do { i_scasw(nec_state); c--; } while (c>0 && ZF==0);	Wreg(CW)=c; break;
-		default:	nec_instruction[next](nec_state);
+		default:	NEC_OPTABLE[next](nec_state);
 	}
 	nec_state->seg_prefix=FALSE;
 }
@@ -606,7 +611,7 @@ OP( 0xf3, i_repe     ) { UINT32 next = fetchop(nec_state); UINT16 c = Wreg(CW);
 		case 0xad:  CLK(2); if (c) do { i_lodsw(nec_state); c--; } while (c>0);	Wreg(CW)=c;	break;
 		case 0xae:	CLK(2); if (c) do { i_scasb(nec_state); c--; } while (c>0 && ZF==1);	Wreg(CW)=c; break;
 		case 0xaf:	CLK(2); if (c) do { i_scasw(nec_state); c--; } while (c>0 && ZF==1);	Wreg(CW)=c; break;
-		default:	nec_instruction[next](nec_state);
+		default:	NEC_OPTABLE[next](nec_state);
 	}
 	nec_state->seg_prefix=FALSE;
 }
@@ -619,7 +624,7 @@ OP( 0xf6, i_f6pre ) { UINT32 tmp; UINT32 uresult,uresult2,dst,src; INT32 result,
 //		case 0x08: logerror("%06x: Undefined opcode 0xf6 0x08\n",PC(nec_state)); break;
 		case 0x10: PutbackRMByte(ModRM,~tmp); nec_state->icount-=(ModRM >=0xc0 )?2:16; break; /* NOT */
 		case 0x18:
-			if (nec_state->i86_neg == 0)
+			if (nec_state->i86_mode == 0)
 			{
 				nec_state->CarryVal=(tmp!=0);
 				tmp=(~tmp)+1;
@@ -647,7 +652,7 @@ OP( 0xf7, i_f7pre   ) { UINT32 tmp,tmp2; UINT32 uresult,uresult2,dst,src; INT32 
 //		case 0x08: logerror("%06x: Undefined opcode 0xf7 0x08\n",PC(nec_state)); break;
 		case 0x10: PutbackRMWord(ModRM,~tmp); nec_state->icount-=(ModRM >=0xc0 )?2:16; break; /* NOT */
 		case 0x18:
-			if (nec_state->i86_neg == 0)
+			if (nec_state->i86_mode == 0)
 			{
 				nec_state->CarryVal=(tmp!=0);
 				tmp=(~tmp)+1;
@@ -700,3 +705,32 @@ static void i_invalid(nec_state_t *nec_state)
 	nec_state->icount-=10;
 //	logerror("%06x: Invalid Opcode\n",PC(nec_state));
 }
+
+#if defined NEC_CPU_CPP
+OP( 0x0f, i86_pop_cs  ) { POP(Sreg(PS)); CHANGE_PC; CLKS(12,8,5); }
+OP( 0xd4, i86_aam     ) { UINT32 base = FETCH();
+	if (base == 0) { nec_interrupt(nec_state, NEC_DIVIDE_VECTOR, BRK); return; }
+	Breg(AH) = Breg(AL) / base; Breg(AL) %= base; SetSZPF_Word(Wreg(AW)); CLKS(15,15,12);
+}
+OP( 0xd5, i86_aad     ) { UINT32 base = FETCH(); Breg(AL) = Breg(AH) * base + Breg(AL); Breg(AH) = 0; SetSZPF_Byte(Breg(AL)); CLKS(7,7,8); }
+
+static void nec_init_i86_table()
+{
+	for (INT32 i = 0; i < 0x100; i++)
+		i86_instruction[i] = nec_instruction[i];
+
+	i86_instruction[0x0f] = i86_pop_cs;
+
+	// no 80186/V-series extensions: 0x60-0x6f mirror the conditional jumps at 0x70-0x7f
+	for (INT32 i = 0x60; i < 0x70; i++)
+		i86_instruction[i] = nec_instruction[i + 0x10];
+
+	i86_instruction[0xc0] = nec_instruction[0xc2];
+	i86_instruction[0xc1] = nec_instruction[0xc3];
+	i86_instruction[0xc8] = nec_instruction[0xca];
+	i86_instruction[0xc9] = nec_instruction[0xcb];
+	i86_instruction[0xd4] = i86_aam;
+	i86_instruction[0xd5] = i86_aad;
+	i86_instruction[0xf1] = nec_instruction[0xf0];
+}
+#endif

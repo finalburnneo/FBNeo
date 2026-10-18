@@ -2,7 +2,8 @@
 #define V33_TYPE 0
 #define V30_TYPE 8
 #define V20_TYPE 16
-#define i86_TYPE 32
+#define i8088_TYPE 32
+#define i8086_TYPE 64
 
 #ifndef FALSE
 #define FALSE 0
@@ -67,7 +68,7 @@ struct _nec_state_t
 	INT8	prefetch_count;
 	UINT8	prefetch_reset;
 	UINT32	chip_type;
-	UINT32  i86_neg;		// use x86-style NEG opcode (f6 18 & f7 18)
+	UINT32  i86_mode;		// intel 8086/8088 behaviour (NEG, AAM/AAD, opcode aliases)
 
 	UINT32	prefix_base;	/* base address of the latest prefix segment */
 	UINT8	seg_prefix;		/* prefix segment indicator */
@@ -132,7 +133,7 @@ static struct {
 /************************************************************************/
 
 #define read_mem_byte(a)			cpu_readmem20(a)
-#define read_mem_word(a)			(cpu_readmem20(a)+(cpu_readmem20((a)+1)<<8)) //nec_state->program->read_word_unaligned(a)
+#define read_mem_word(a)			cpu_readmem20_word(a)
 #define write_mem_byte(a,d)			cpu_writemem20((a),(d))
 //#define write_mem_word(a,d)			{cpu_writemem20((a),(unsigned char)(d)); cpu_writemem20((a)+1,(d)>>8); } //nec_state->program->write_word_unaligned((a),(d))
 

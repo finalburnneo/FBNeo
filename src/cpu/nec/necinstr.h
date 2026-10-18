@@ -246,6 +246,10 @@ static void i_ffpre(nec_state_t *nec_state);
 
 static void i_wait(nec_state_t *nec_state);
 
+static void i86_pop_cs(nec_state_t *nec_state);
+static void i86_aam(nec_state_t *nec_state);
+static void i86_aad(nec_state_t *nec_state);
+
 static void (*const nec_instruction[256])(nec_state_t *nec_state) =
 {
 	i_add_br8,		/* 0x00 */
@@ -505,3 +509,8 @@ static void (*const nec_instruction[256])(nec_state_t *nec_state) =
 	i_fepre,		/* 0xfe */
 	i_ffpre			/* 0xff */
 };
+
+// intel 8086/8088 opcode table, built from nec_instruction by nec_init_i86_table()
+static void (*i86_instruction[256])(nec_state_t *nec_state);
+
+#define NEC_OPTABLE (nec_state->i86_mode ? i86_instruction : nec_instruction)

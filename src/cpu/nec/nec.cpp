@@ -124,8 +124,7 @@ void cpu_writeport(unsigned int,unsigned int);
 
 static NEC_INLINE void write_mem_word(unsigned int a, unsigned short d)
 {
-	cpu_writemem20((a),(unsigned char)(d));
-	cpu_writemem20((a)+1,(d)>>8);
+	cpu_writemem20_word(a, d);
 }
 
 static NEC_INLINE void write_port_word(unsigned int a, unsigned short d)
@@ -279,7 +278,7 @@ static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES s
 
 static void nec_trap(nec_state_t *nec_state)
 {
-	nec_instruction[fetchop(nec_state)](nec_state);
+	NEC_OPTABLE[fetchop(nec_state)](nec_state);
 	nec_interrupt(nec_state, NEC_TRAP_VECTOR, BRK);
 }
 
@@ -458,7 +457,7 @@ int nec_execute(int cycles)
 
 		//debugger_instruction_hook(device, (Sreg(PS)<<4) + nec_state->ip);
 		prev_ICount = nec_state->icount;
-		nec_instruction[fetchop(nec_state)](nec_state);
+		NEC_OPTABLE[fetchop(nec_state)](nec_state);
 		do_prefetch(nec_state, prev_ICount);
 #if 0
 		extern int counter;
@@ -485,12 +484,12 @@ void necInit(int cpu, int type)
 
 	switch (type)
 	{
-		case i86_TYPE:
+		case i8088_TYPE:
 		{
-			bprintf(0, _T("*** NEC v20 w/i86 NEG opcodes (f6 18, f7 18)\n"));
-			nec_state->i86_neg = 1;
-			// fallthrough to V20_TYPE
+			nec_init_i86_table();
+			nec_state->i86_mode = 1;
 		}
+		// fall through, 8-bit bus like the V20
 		case V20_TYPE:
 		{
 			nec_state->fetch_xor = 0;
@@ -500,6 +499,12 @@ void necInit(int cpu, int type)
 		}
 		break;
 
+		case i8086_TYPE:
+		{
+			nec_init_i86_table();
+			nec_state->i86_mode = 1;
+		}
+		// fall through, 16-bit bus like the V30
 		case V30_TYPE:
 		{
 			nec_state->fetch_xor = 0;

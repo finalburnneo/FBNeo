@@ -1,4 +1,4 @@
-// Nec V20/V30/V33 interface
+// Nec V20/V30/V33 (+ i8086/i8088) interface
 
 #ifndef FASTCALL
  #undef __fastcall
@@ -8,12 +8,15 @@
 #define V33_TYPE 0
 #define V30_TYPE 8
 #define V20_TYPE 16
-#define i86_TYPE 32
+#define i8088_TYPE 32
+#define i8086_TYPE 64
 #define V25_TYPE (V20_TYPE|(1<<16))
 #define V35_TYPE (V30_TYPE|(1<<16))
 
 UINT8 cpu_readmem20(UINT32 a);
 void cpu_writemem20(UINT32 a, UINT8 d);
+UINT16 cpu_readmem20_word(UINT32 a);
+void cpu_writemem20_word(UINT32 a, UINT16 d);
 
 extern INT32 nVezCount;
 
@@ -45,8 +48,8 @@ void VezSetHALT(INT32 nCPU, INT32 nStatus);
 INT32 VezGetHALT();
 INT32 VezGetHALT(INT32 nCPU);
 
-INT32 VezInit(INT32 nCPU, INT32 type, INT32 clock); // v20/v25/v30/v33/v35
-INT32 VezInit(INT32 cpu, INT32 type); // v20/v30/v33 only
+INT32 VezInit(INT32 nCPU, INT32 type, INT32 clock); // v20/v25/v30/v33/v35/i8086/i8088
+INT32 VezInit(INT32 cpu, INT32 type); // v20/v30/v33/i8086/i8088 only
 void VezSetDecode(UINT8 *decode); // set opcode decode
 void VezExit();
 void VezOpen(INT32 nCPU);
@@ -63,6 +66,9 @@ INT32 VezMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nMode);
 
 void VezSetReadHandler(UINT8 (__fastcall*)(UINT32));
 void VezSetWriteHandler(void (__fastcall*)(UINT32, UINT8));
+// word handlers: called for even-address word accesses (cpus w/16-bit databus)
+void VezSetReadWordHandler(UINT16 (*)(UINT32));
+void VezSetWriteWordHandler(void (*)(UINT32, UINT16));
 
 void VezWriteByte(UINT32 a, UINT8 d);
 void VezWriteWord(UINT32 a, UINT16 d);

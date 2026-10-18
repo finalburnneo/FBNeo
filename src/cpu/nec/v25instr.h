@@ -508,3 +508,5 @@ static void (*const nec_instruction[256])(nec_state_t *nec_state) =
 	i_fepre,		/* 0xfe */
 	i_ffpre			/* 0xff */
 };
+
+#define NEC_OPTABLE nec_instruction

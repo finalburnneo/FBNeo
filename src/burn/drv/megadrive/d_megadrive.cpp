@@ -39063,6 +39063,25 @@ struct BurnDriver BurnDrvmd_cvaniacotm = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Catacomb Abyss 3D, The (HB, v0.0.1)
+// https://haroldo-ok.itch.io/catacomb-abbyss-md
+static struct BurnRomInfo md_catabyss3dRomDesc[] = {
+	{ "Catacomb Abyss 3D, The v0.0.1 (2026)(haroldo-ok).bin", 2883584, 0xb7375b10, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_catabyss3d)
+STD_ROM_FN(md_catabyss3d)
+
+struct BurnDriver BurnDrvmd_catabyss3d = {
+	"md_catabyss3d", NULL, NULL, NULL, "2026",
+	"Catacomb Abyss 3D, The (HB, v0.0.1)\0", NULL, "haroldo-ok", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
+	MegadriveGetZipName, md_catabyss3dRomInfo, md_catabyss3dRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Cavaleiro (HB, Prototype)
 // https://mangangateam.com/cavaleiro
 static struct BurnRomInfo md_cavaleiropRomDesc[] = {
@@ -42329,6 +42348,25 @@ struct BurnDriver BurnDrvmd_nemeshit = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Neo Glide (HB, v1.01)
+// https://nicomegadrive.itch.io/neo-glide
+static struct BurnRomInfo md_neoglideRomDesc[] = {
+	{ "Neo Glide v1.01 (2026)(nicomegadrive).bin", 1572864, 0xb46467b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_neoglide)
+STD_ROM_FN(md_neoglide)
+
+struct BurnDriver BurnDrvmd_neoglide = {
+	"md_neoglide", NULL, NULL, NULL, "2026",
+	"Neo Glide (HB, v1.01)\0", NULL, "nicomegadrive", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_neoglideRomInfo, md_neoglideRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // NightVein (HB, Demo 1.0.7)
 // https://retrohammer.itch.io/nightvein
 static struct BurnRomInfo md_nightveinRomDesc[] = {
@@ -42587,10 +42625,10 @@ struct BurnDriver BurnDrvmd_pandajump = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pang (DavidGames) (HB, Beta v0.81)
+// Pang (DavidGames) (HB, Beta v0.98)
 // https://davidsgame.itch.io/pang-md
 static struct BurnRomInfo md_pangRomDesc[] = {
-	{ "Pang Beta v0.81 (2026)(DavidGames).bin", 1441792, 0xeb641d44, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Pang Beta v0.98 (2026)(DavidGames).bin", 1441792, 0xbfe14ffc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pang)
@@ -42598,7 +42636,7 @@ STD_ROM_FN(md_pang)
 
 struct BurnDriver BurnDrvmd_pang = {
 	"md_pang", NULL, NULL, NULL, "2026",
-	"Pang (DavidGames) (HB, Beta v0.81)\0", NULL, "DavidGames", "Genesis / Mega Drive",
+	"Pang (DavidGames) (HB, Beta v0.98)\0", NULL, "DavidGames", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_pangRomInfo, md_pangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42914,10 +42952,10 @@ struct BurnDriver BurnDrvmd_papriumunlck = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Parasol Stars (HB, Beta 2)
+// Parasol Stars (HB, v1.0 RC3)
 // https://mlouvet.itch.io/parasol-stars-megadrive-genesis
 static struct BurnRomInfo md_parasolRomDesc[] = {
-	{ "Parasol Stars Beta 2 (2026)(Oldschool Is Beautiful).bin", 4194304, 0xd800e880, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Parasol Stars v1.0 RC3 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x181b816a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_parasol)
@@ -42925,7 +42963,7 @@ STD_ROM_FN(md_parasol)
 
 struct BurnDriver BurnDrvmd_parasol = {
 	"md_parasol", NULL, NULL, NULL, "2026",
-	"Parasol Stars (HB, Beta 2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Parasol Stars (HB, v1.0 RC3)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_parasolRomInfo, md_parasolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43823,10 +43861,10 @@ struct BurnDriver BurnDrvmd_shaolincarcara2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shinobi (HB, Beta 2)
+// Shinobi (HB, Beta 3)
 // https://mlouvet.itch.io/shinobi-megadrive
 static struct BurnRomInfo md_shinobiRomDesc[] = {
-	{ "Shinobi Beta 2 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x76bb9519, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shinobi Beta 3 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x53a81527, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinobi)
@@ -43834,7 +43872,7 @@ STD_ROM_FN(md_shinobi)
 
 struct BurnDriver BurnDrvmd_shinobi = {
 	"md_shinobi", NULL, NULL, NULL, "2026",
-	"Shinobi (HB, Beta 2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Shinobi (HB, Beta 3)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_shinobiRomInfo, md_shinobiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

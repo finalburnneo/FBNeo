@@ -23116,7 +23116,7 @@ STD_ROM_FN(sms_hexapawn)
 
 struct BurnDriver BurnDrvsms_hexapawn = {
 	"sms_hexapawn", NULL, NULL, NULL, "2026",
-	"Hexapawn (HB, v1.1.0)\0", NULL, "Blue Gorilla", "Sega Master System",
+	"Hexapawn (HB, v1.1.1)\0", NULL, "Blue Gorilla", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_hexapawnRomInfo, sms_hexapawnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

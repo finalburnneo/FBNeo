@@ -1741,7 +1741,7 @@ static INT32 DrvInit()
 
 	if (game_type == 10) // reactor
 	{
-		VezInit(0, i86_TYPE); // really i8088, but v20 is compatible
+		VezInit(0, i8088_TYPE);
 		VezOpen(0);
 		VezMapMemory(DrvDummyROM,		0x0000, 0x1fff, MAP_RAM); // RAM (reactor)
 		VezMapMemory(DrvVideoRAM,		0x3000, 0x33ff, MAP_RAM);
@@ -1756,7 +1756,7 @@ static INT32 DrvInit()
 	}
 	else // standard
 	{
-		VezInit(0, i86_TYPE); // really i8088, but v20 is compatible
+		VezInit(0, i8088_TYPE);
 		VezOpen(0);
 		VezMapMemory(DrvNVRAM,			0x0000, 0x0fff, MAP_RAM);
 		VezMapMemory(DrvDummyROM + 0x0000,		0x1000, 0x1fff, DummyRegion[0]); // ROM for argus, krull, vidvince & 3stooges, RAM for all others

@@ -23106,9 +23106,9 @@ struct BurnDriver BurnDrvsms_had = {
 	256, 192, 4, 3
 };
 
-// Hexapawn (HB, v1.1.0)
+// Hexapawn (HB, v1.1.1)
 static struct BurnRomInfo sms_hexapawnRomDesc[] = {
-	{ "Hexapawn v1.1.0 (2026)(chirinea).sms",	49152, 0x5fbf2dd8, BRF_PRG | BRF_ESS },
+	{ "Hexapawn v1.1.1 (2026)(Blue Gorilla).sms",	49152, 0xb19295fe, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_hexapawn)
@@ -23116,7 +23116,7 @@ STD_ROM_FN(sms_hexapawn)
 
 struct BurnDriver BurnDrvsms_hexapawn = {
 	"sms_hexapawn", NULL, NULL, NULL, "2026",
-	"Hexapawn (HB, v1.1.0)\0", NULL, "chirinea", "Sega Master System",
+	"Hexapawn (HB, v1.1.0)\0", NULL, "Blue Gorilla", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_hexapawnRomInfo, sms_hexapawnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,

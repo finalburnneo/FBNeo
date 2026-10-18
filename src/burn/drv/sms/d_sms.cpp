@@ -22926,19 +22926,37 @@ struct BurnDriver BurnDrvsms_gotris = {
 	256, 192, 4, 3
 };
 
-// Grail of the Gods (HB, v0.99)
+// Grail Legacy (Raycast), The (HB, v0.50)
+static struct BurnRomInfo sms_grailegacyRomDesc[] = {
+	{ "Grail Legacy (Raycast), The v0.50 (2026)(GuyDeNaville).sms",	262144, 0x8c3e2d0e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_grailegacy)
+STD_ROM_FN(sms_grailegacy)
+
+struct BurnDriver BurnDrvsms_grailegacy = {
+	"sms_grailegacy", NULL, NULL, NULL, "2026",
+	"Grail Legacy (Raycast), The (HB, v0.50)\0", NULL, "GuyDeNaville", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_RPG, 0,
+	SMSGetZipName, sms_grailegacyRomInfo, sms_grailegacyRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Grail of the Gods (HB, v1.0)
 static struct BurnRomInfo sms_grailgodsRomDesc[] = {
-	{ "Grail of the Gods v0.99 (2023-25)(GuyDeNaville).sms",	131072, 0xfb3a8ab3, BRF_PRG | BRF_ESS },
+	{ "Grail of the Gods v1.0 (2023-26)(GuyDeNaville).sms",	131072, 0xf144fb31, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_grailgods)
 STD_ROM_FN(sms_grailgods)
 
 struct BurnDriver BurnDrvsms_grailgods = {
-	"sms_grailgods", NULL, NULL, NULL, "2023-25",
-	"Grail of the Gods (HB, v0.99)\0", NULL, "GuyDeNaville", "Sega Master System",
+	"sms_grailgods", NULL, NULL, NULL, "2023-26",
+	"Grail of the Gods (HB, v1.0)\0", NULL, "GuyDeNaville", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MAZE | GBF_RPG, 0,
 	SMSGetZipName, sms_grailgodsRomInfo, sms_grailgodsRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
@@ -23084,6 +23102,24 @@ struct BurnDriver BurnDrvsms_had = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
 	SMSGetZipName, sms_hadRomInfo, sms_hadRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Hexapawn (HB, v1.1.0)
+static struct BurnRomInfo sms_hexapawnRomDesc[] = {
+	{ "Hexapawn v1.1.0 (2026)(chirinea).sms",	49152, 0x5fbf2dd8, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_hexapawn)
+STD_ROM_FN(sms_hexapawn)
+
+struct BurnDriver BurnDrvsms_hexapawn = {
+	"sms_hexapawn", NULL, NULL, NULL, "2026",
+	"Hexapawn (HB, v1.1.0)\0", NULL, "chirinea", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_hexapawnRomInfo, sms_hexapawnRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -24402,6 +24438,24 @@ struct BurnDriver BurnDrvsms_scope = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
 	SMSGetZipName, sms_scopeRomInfo, sms_scopeRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Sega Swirl (HB, v0.632)
+static struct BurnRomInfo sms_segaswirlRomDesc[] = {
+	{ "Sega Swirl v0.632 (2026)(Popixel Games).sms",	262144, 0xa5b4909c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_segaswirl)
+STD_ROM_FN(sms_segaswirl)
+
+struct BurnDriver BurnDrvsms_segaswirl = {
+	"sms_segaswirl", NULL, NULL, NULL, "2026",
+	"Sega Swirl (HB, v0.632)\0", NULL, "Popixel Games", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PUZZLE, 0,
+	SMSGetZipName, sms_segaswirlRomInfo, sms_segaswirlRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

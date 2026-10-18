@@ -2531,6 +2531,92 @@ static void ppu_worker_exit(ppu_worker_t* w)
 
 #endif // back-end selection
 
+// --- Save-state serialization ------------------------------------------------
+// Carries the worker's triple-buffer state, which lives outside gba_t; without
+// it a rewind presents a cleared buffer. Thread handles are not serialized.
+#define PPW_BLOB_MAGIC   0x31575021u	// "!PW1"
+#define PPW_BLOB_VERSION 1u
+#define PPW_BLOB_HEADER  (12 * (int)sizeof(INT32))
+#define PPW_BLOB_MAX     (PPW_BLOB_HEADER + GBA_LCD_W * GBA_LCD_H * 4)
+
+static inline size_t ppu_worker_state_size(const ppu_worker_t* w)
+{
+	(void)w;
+	return PPW_BLOB_MAX;
+}
+
+static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)
+{
+	const INT32  front = w->front_idx;
+	const INT32  idx   = (front >= 0 && front < GBAPPU_WORKER_N_BUFFERS) ? front : -1;
+	const size_t slot  = (w->out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
+	                                       : (size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp;
+	INT32 hdr[12];
+	hdr[0]  = (INT32)PPW_BLOB_MAGIC;
+	hdr[1]  = (INT32)PPW_BLOB_VERSION;
+	hdr[2]  = w->out_bpp;
+	hdr[3]  = idx;
+	hdr[4]  = w->w_idx;
+	hdr[5]  = w->r_idx;
+	hdr[6]  = w->ready_back_idx;
+	hdr[7]  = w->have_first_frame ? 1 : 0;
+	hdr[8]  = 0;
+	hdr[9]  = 0;
+	hdr[10] = (INT32)slot;
+	hdr[11] = 0;
+	memcpy(dst, hdr, sizeof(hdr));
+	if (idx >= 0) {
+		const UINT8* src = (w->out_bpp == 4) ? (const UINT8*)w->backbuf[idx]
+		                                     : (const UINT8*)w->out_buf[idx];
+		if (src != NULL) memcpy(dst + PPW_BLOB_HEADER, src, slot);
+		else             memset(dst + PPW_BLOB_HEADER, 0, slot);
+	}
+	return PPW_BLOB_HEADER + (idx >= 0 ? slot : 0);
+}
+
+static inline bool ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size_t len,
+                                         UINT8** out_fb, bool* out_direct)
+{
+	INT32  hdr[12];
+	size_t slot;
+	INT32  idx;
+	if (len < (size_t)PPW_BLOB_HEADER) return false;
+	memcpy(hdr, src, sizeof(hdr));
+	if ((UINT32)hdr[0] != PPW_BLOB_MAGIC || (UINT32)hdr[1] != PPW_BLOB_VERSION) return false;
+	if (hdr[2] != w->out_bpp) return false;		// depth fixed per session
+	if (hdr[3] < 0 || hdr[3] >= GBAPPU_WORKER_N_BUFFERS) return false;
+	idx  = hdr[3];
+	slot = (w->out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
+	                         : (size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp;
+	if ((size_t)hdr[10] != slot || len < (size_t)PPW_BLOB_HEADER + slot) return false;
+
+	ppu_worker_drain_for_mode_switch(w);
+	while (ppu_worker_plat_trywait_done(w)) {}
+
+	if (w->out_bpp == 4) {
+		memcpy(w->backbuf[idx], src + PPW_BLOB_HEADER, slot);
+	} else {
+		if (w->out_buf[idx] == NULL) {
+			w->out_buf[idx] = (UINT8*)malloc(slot);
+			if (w->out_buf[idx] == NULL) return false;
+		}
+		memcpy(w->out_buf[idx], src + PPW_BLOB_HEADER, slot);
+	}
+
+	w->front_idx        = idx;
+	w->ready_back_idx   = idx;
+	w->r_idx            = idx;
+	w->w_idx            = (idx + 1) % GBAPPU_WORKER_N_BUFFERS;
+	w->have_first_frame = (hdr[7] != 0);
+	w->inflight         = 0;
+	w->worker_busy      = false;
+
+	*out_fb     = (w->out_bpp == 4) ? (UINT8*)w->backbuf[idx] : w->out_buf[idx];
+	*out_direct = (w->out_bpp == 4);
+	return true;
+}
+
+
 #else // !GBAPPU_WORKER_ENABLED
 
 typedef struct ppu_worker_snapshot_t { } ppu_worker_snapshot_t;
@@ -2573,6 +2659,17 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 {
 	gba_ppu_event(gba, emu, cycles_late);
 }
+
+// Single-thread builds keep no worker state, so the blob stays empty.
+#define PPW_BLOB_MAGIC   0x31575021u
+#define PPW_BLOB_VERSION 1u
+#define PPW_BLOB_HEADER  (12 * (int)sizeof(INT32))
+#define PPW_BLOB_MAX     0
+
+static inline size_t ppu_worker_state_size(const ppu_worker_t* w)                         { (void)w; return 0; }
+static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)             { (void)w; (void)dst; return 0; }
+static inline bool   ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size_t len,
+                                           UINT8** fb, bool* direct)                      { (void)w; (void)src; (void)len; (void)fb; (void)direct; return false; }
 
 #endif // GBAPPU_WORKER_ENABLED
 

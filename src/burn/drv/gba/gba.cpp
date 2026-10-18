@@ -772,7 +772,9 @@ void GbaCoreClearBatteryDirty(GbaCore *core)
 
 size_t GbaCoreStateSize()
 {
-	return sizeof(gba_t);
+	// gba_t plus the PPU worker blob (worker state lives outside gba_t).
+	// Zero in single-thread builds, so that layout is unchanged.
+	return sizeof(gba_t) + ppu_worker_state_size(NULL);
 }
 
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
@@ -814,6 +816,13 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   dma_event.callback);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timing.head);
 #undef GBA_CLEAR_STATE_FIELD
+	// Append the worker blob (no-op in single-thread builds); drain first.
+	{
+		ppu_worker_t* wk = (ppu_worker_t*)&core->worker;
+		size_t wsz = ppu_worker_state_size(wk);
+		if (wsz > 0 && sizeof(gba_t) + wsz <= size)
+			ppu_worker_save_state(wk, (UINT8*)data + sizeof(gba_t));
+	}
 	return 0;
 }
 
@@ -830,12 +839,23 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 	gba_timing_rebind(&core->state);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
-	// Run-ahead rollback (preservePresentation=1): worker backbufs and the audio
-	// ring still hold valid content, so keep them. Full state load (=0): drop both.
-	if (!preservePresentation)
+	// Restore the worker buffer state; reset if the blob is absent.
 	{
-		ppu_worker_reset(&core->worker);
-		GbaCoreClearAudio(core);
+		ppu_worker_t* wk = (ppu_worker_t*)&core->worker;
+		UINT8* wfb = NULL;
+		bool   wdirect = false;
+		if (size > sizeof(gba_t) &&
+			ppu_worker_load_state(wk, (const UINT8*)data + sizeof(gba_t),
+			                      size - sizeof(gba_t), &wfb, &wdirect))
+		{
+			core->state.framebuffer = wfb;
+			core->state.framebuffer_is_direct_copy = wdirect;
+		}
+		else if (!preservePresentation)
+		{
+			ppu_worker_reset(wk);
+			GbaCoreClearAudio(core);
+		}
 	}
 	return 0;
 }

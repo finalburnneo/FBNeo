@@ -4437,7 +4437,7 @@ struct BurnDriver BurnDrvSpeccies = {
 // SQIJ!
 
 static struct BurnRomInfo sqijRomDesc[] = {
-	{ "sqij.ic10",			0x0f000, 0x214ba802, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "sqij.ic10",			0x0f000, 0x793c8b97, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
 	{ "sqij.ic9",			0x10000, 0xc4de729b, 4 | BRF_GRA },           //  1 graphics data
 	{ "sqij.ic8",			0x10000, 0x978df42d, 4 | BRF_GRA },           //  2

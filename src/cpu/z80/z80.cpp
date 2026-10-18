@@ -3708,7 +3708,11 @@ static void take_interrupt(void)
 //		LOG(("Z80 #%d IM2 [$%04x] = $%04x\n",cpu_getactivecpu() , irq_vector, PCD));
 		/* CALL opcode timing */
 		//bprintf(0, _T("imm2: opcd: %d  exff: %d\n"),cc[Z80_TABLE_op][0xcd], cc[Z80_TABLE_ex][0xff]);
-		eat_cycles(CYCLES_ISR, cc[Z80_TABLE_op][0xcd] + cc[Z80_TABLE_ex][0xff]);
+
+		// note: msx table op[0xcd] is 17+1, but, IMM2 doesn't get a M1 delay.
+		// "Instead of triggering a normal memory fetch (M1 + MREQ), the Z80 asserts M1 alongside IORQ to request a vector from the data bus."
+		// "This bypasses the M1-delay circuitry alltogether..." (testcase:  msx Voidrunner menu hang bug)
+		eat_cycles(CYCLES_ISR, cc_op[0xcd] + cc_ex[0xff]); // Note: don't use cc[tablename] here!
 	}
 	else
 	/* Interrupt mode 1. RST 38h */

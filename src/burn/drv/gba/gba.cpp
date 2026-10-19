@@ -772,9 +772,8 @@ void GbaCoreClearBatteryDirty(GbaCore *core)
 
 size_t GbaCoreStateSize()
 {
-	// gba_t plus the PPU worker blob (worker state lives outside gba_t).
-	// Zero in single-thread builds, so that layout is unchanged.
-	return sizeof(gba_t) + ppu_worker_state_size(NULL);
+	// gba_t plus the worker blob (zero-filled payload in single-thread builds).
+	return sizeof(gba_t) + ppu_worker_state_size();
 }
 
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
@@ -783,7 +782,7 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 		return 1;
 	memcpy(data, &core->state, sizeof(gba_t));
 	UINT8 *state = (UINT8 *)data;
-// pointer fields: nulls the pointer, not the pointee
+	// pointer fields: nulls the pointer, not the pointee
 #define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, sizeof(((type *)0)->field))
 	const size_t mem = offsetof(gba_t, mem);
 	const size_t cpu = offsetof(gba_t, cpu);
@@ -816,11 +815,11 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   dma_event.callback);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timing.head);
 #undef GBA_CLEAR_STATE_FIELD
-	// Append the worker blob (no-op in single-thread builds); drain first.
+	// Append the worker blob (zero-filled in single-thread builds; see worker.h).
 	{
 		ppu_worker_t* wk = (ppu_worker_t*)&core->worker;
-		size_t wsz = ppu_worker_state_size(wk);
-		if (wsz > 0 && sizeof(gba_t) + wsz <= size)
+		size_t wsz = ppu_worker_state_size();
+		if (wsz > 0)
 			ppu_worker_save_state(wk, (UINT8*)data + sizeof(gba_t));
 	}
 	return 0;
@@ -839,7 +838,8 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 	gba_timing_rebind(&core->state);
 	GbaCoreApplyCartridgeFeatures(core);
 	GbaCoreRebind(core);
-	// Restore the worker buffer state; reset if the blob is absent.
+	// Restore the worker buffer state; on failure (bad/absent blob or no
+	// presented frame) reset, unless the current presentation is preserved.
 	{
 		ppu_worker_t* wk = (ppu_worker_t*)&core->worker;
 		UINT8* wfb = NULL;

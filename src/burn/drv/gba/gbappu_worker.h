@@ -50,6 +50,18 @@
 extern "C" {
 #endif
 
+typedef struct ppw_blob_hdr_t {
+	UINT32 magic;      // PPW_BLOB_MAGIC
+	UINT32 version;    // PPW_BLOB_VERSION
+	INT32  out_bpp;    // depth of the saved payload (2/3/4)
+	INT32  front_idx;  // presented slot (0..N-1), -1 = no frame presented yet
+} ppw_blob_hdr_t;
+#define PPW_BLOB_MAGIC    0x00575021u	// "!PW" (fixed)
+#define PPW_BLOB_VERSION  1u
+#define PPW_BLOB_HEADER   ((int)sizeof(ppw_blob_hdr_t))
+#define PPW_BPP_MAX       4                          // 32bpp XRGB8888 = 4 B/px (max of 2/3/4)
+#define PPW_BLOB_MAX      (PPW_BLOB_HEADER + GBA_LCD_W * GBA_LCD_H * PPW_BPP_MAX)
+
 #if GBAPPU_WORKER_ENABLED
 
 // --- Constants -------------------------------------------------------------
@@ -168,10 +180,10 @@ typedef struct ppu_worker_t {
 	// out_bpp!=4 (bpp=2: 75 KB/slot, bpp=3: 112 KB/slot; NULL at 32bpp).
 	UINT8* out_buf[GBAPPU_WORKER_N_BUFFERS];
 
-	volatile int w_idx;          // main: write slot
-	volatile int r_idx;          // worker: render slot
-	volatile int ready_back_idx; // last completed slot (out_buf or backbuf ready)
-	volatile int front_idx;      // currently presented out_buf slot
+	volatile int w_idx;          // main: slot the next frame is captured into
+	volatile int r_idx;          // worker: slot the in-flight job renders into
+	volatile int ready_back_idx; // slot of the last completed job
+	volatile int front_idx;      // presented slot (backbuf at 32bpp, else out_buf)
 
 	volatile bool worker_busy;
 	volatile bool have_first_frame;
@@ -2532,90 +2544,169 @@ static void ppu_worker_exit(ppu_worker_t* w)
 #endif // back-end selection
 
 // --- Save-state serialization ------------------------------------------------
-// Carries the worker's triple-buffer state, which lives outside gba_t; without
-// it a rewind presents a cleared buffer. Thread handles are not serialized.
-#define PPW_BLOB_MAGIC   0x31575021u	// "!PW1"
-#define PPW_BLOB_VERSION 1u
-#define PPW_BLOB_HEADER  (12 * (int)sizeof(INT32))
-#define PPW_BLOB_MAX     (PPW_BLOB_HEADER + GBA_LCD_W * GBA_LCD_H * 4)
+// Carries the presented frame and slot indices (worker-owned, outside gba_t);
+// thread handles and scratch slots are not serialized.
 
-static inline size_t ppu_worker_state_size(const ppu_worker_t* w)
+static inline size_t ppu_worker_state_size(void)
 {
-	(void)w;
 	return PPW_BLOB_MAX;
+}
+
+// Inverse of ppu_worker_write_scanline_out: decode one scanline from the
+// worker's native output layout (4: XRGB8888, 3: BGR triplets, 2: RGB565)
+// back to XRGB8888. Width is fixed at one GBA scanline.
+static inline void ppu_worker_decode_scanline_to_xrgb8888(UINT32* dst, const UINT8* src, INT32 src_bpp)
+{
+	if (src_bpp == 4) {
+		memcpy(dst, src, (size_t)GBA_LCD_W * 4);
+	} else if (src_bpp == 3) {
+		INT32 i = 0;
+		for (; i < GBA_LCD_W - 3; i += 4) {
+			UINT8 b0=src[0],g0=src[1],r0=src[2];
+			UINT8 b1=src[3],g1=src[4],r1=src[5];
+			UINT8 b2=src[6],g2=src[7],r2=src[8];
+			UINT8 b3=src[9],g3=src[10],r3=src[11];
+			dst[0]=((UINT32)r0<<16)|((UINT32)g0<<8)|b0;
+			dst[1]=((UINT32)r1<<16)|((UINT32)g1<<8)|b1;
+			dst[2]=((UINT32)r2<<16)|((UINT32)g2<<8)|b2;
+			dst[3]=((UINT32)r3<<16)|((UINT32)g3<<8)|b3;
+			src+=12; dst+=4;
+		}
+		for (; i < GBA_LCD_W; ++i) {
+			UINT8 b=*src++,g=*src++,r=*src++;
+			*dst++ = ((UINT32)r<<16)|((UINT32)g<<8)|b;
+		}
+	} else { // src_bpp == 2, RGB565 little-endian
+		const UINT16* s16 = (const UINT16*)src;
+		for (INT32 i = 0; i < GBA_LCD_W; ) {
+			// 4-pixel unroll keeps values in registers. 5-bit components expand
+			// (v<<3)|(v>>2) and 6-bit (v<<2)|(v>>4), matching the render path.
+			if (GBA_LCD_W - i >= 4) {
+				UINT16 p0=s16[0], p1=s16[1], p2=s16[2], p3=s16[3];
+				#define EXP565(p) do { UINT32 rr=(UINT32)(((p)>>11)&0x1F); UINT32 gg=(UINT32)(((p)>>5)&0x3F); UINT32 bb=(UINT32)((p)&0x1F); 				                            *dst++ = ((rr<<3)|(rr>>2))<<16 | ((gg<<2)|(gg>>4))<<8 | ((bb<<3)|(bb>>2)); } while(0)
+				EXP565(p0); EXP565(p1); EXP565(p2); EXP565(p3);
+				#undef EXP565
+				s16 += 4; i += 4;
+			} else {
+				UINT16 px = *s16++;
+				UINT32 rr=(UINT32)((px>>11)&0x1F), gg=(UINT32)((px>>5)&0x3F), bb=(UINT32)(px&0x1F);
+				*dst++ = ((rr<<3)|(rr>>2))<<16 | ((gg<<2)|(gg>>4))<<8 | ((bb<<3)|(bb>>2));
+				++i;
+			}
+		}
+	}
 }
 
 static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)
 {
+	// front_idx normalised: out-of-range or "nothing presented yet" becomes -1,
+	// which writes a header-only blob.
 	const INT32  front = w->front_idx;
 	const INT32  idx   = (front >= 0 && front < GBAPPU_WORKER_N_BUFFERS) ? front : -1;
 	const size_t slot  = (w->out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
 	                                       : (size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp;
-	INT32 hdr[12];
-	hdr[0]  = (INT32)PPW_BLOB_MAGIC;
-	hdr[1]  = (INT32)PPW_BLOB_VERSION;
-	hdr[2]  = w->out_bpp;
-	hdr[3]  = idx;
-	hdr[4]  = w->w_idx;
-	hdr[5]  = w->r_idx;
-	hdr[6]  = w->ready_back_idx;
-	hdr[7]  = w->have_first_frame ? 1 : 0;
-	hdr[8]  = 0;
-	hdr[9]  = 0;
-	hdr[10] = (INT32)slot;
-	hdr[11] = 0;
-	memcpy(dst, hdr, sizeof(hdr));
+	ppw_blob_hdr_t hdr = {
+		.magic   = PPW_BLOB_MAGIC,
+		.version = PPW_BLOB_VERSION,
+		.out_bpp = w->out_bpp,
+		.front_idx = idx,
+	};
+	memcpy(dst, &hdr, sizeof(hdr));
 	if (idx >= 0) {
 		const UINT8* src = (w->out_bpp == 4) ? (const UINT8*)w->backbuf[idx]
 		                                     : (const UINT8*)w->out_buf[idx];
 		if (src != NULL) memcpy(dst + PPW_BLOB_HEADER, src, slot);
 		else             memset(dst + PPW_BLOB_HEADER, 0, slot);
 	}
-	return PPW_BLOB_HEADER + (idx >= 0 ? slot : 0);
+	// Zero the unused tail: state_size reports the bpp=4 bound, so at bpp<4 the
+	// remainder would otherwise leak stale bytes.
+	const size_t written = (size_t)PPW_BLOB_HEADER + (idx >= 0 ? slot : 0);
+	if (written < (size_t)PPW_BLOB_MAX)
+		memset(dst + written, 0, (size_t)PPW_BLOB_MAX - written);
+	return written;
 }
 
 static inline bool ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size_t len,
                                          UINT8** out_fb, bool* out_direct)
 {
-	INT32  hdr[12];
-	size_t slot;
-	INT32  idx;
+	ppw_blob_hdr_t hdr;
 	if (len < (size_t)PPW_BLOB_HEADER) return false;
-	memcpy(hdr, src, sizeof(hdr));
-	if ((UINT32)hdr[0] != PPW_BLOB_MAGIC || (UINT32)hdr[1] != PPW_BLOB_VERSION) return false;
-	if (hdr[2] != w->out_bpp) return false;		// depth fixed per session
-	if (hdr[3] < 0 || hdr[3] >= GBAPPU_WORKER_N_BUFFERS) return false;
-	idx  = hdr[3];
-	slot = (w->out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
-	                         : (size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp;
-	if ((size_t)hdr[10] != slot || len < (size_t)PPW_BLOB_HEADER + slot) return false;
+	memcpy(&hdr, src, sizeof(hdr));
+	if (hdr.magic != PPW_BLOB_MAGIC || hdr.version != PPW_BLOB_VERSION) return false;
+	if (hdr.out_bpp != 2 && hdr.out_bpp != 3 && hdr.out_bpp != 4) return false;
+	if (hdr.front_idx < -1 || hdr.front_idx >= GBAPPU_WORKER_N_BUFFERS) return false;
 
+	const INT32 idx = hdr.front_idx;
+	// Payload length comes from the SAVED depth, so any depth can be loaded.
+	const size_t src_slot = (hdr.out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
+	                                           : (size_t)GBA_LCD_W * GBA_LCD_H * hdr.out_bpp;
+	if (len < (size_t)PPW_BLOB_HEADER + (idx >= 0 ? src_slot : 0)) return false;
+
+	// Quiesce the worker and drain stale done signals before touching buffers.
 	ppu_worker_drain_for_mode_switch(w);
 	while (ppu_worker_plat_trywait_done(w)) {}
 
-	if (w->out_bpp == 4) {
-		memcpy(w->backbuf[idx], src + PPW_BLOB_HEADER, slot);
-	} else {
-		if (w->out_buf[idx] == NULL) {
-			w->out_buf[idx] = (UINT8*)malloc(slot);
-			if (w->out_buf[idx] == NULL) return false;
-		}
-		memcpy(w->out_buf[idx], src + PPW_BLOB_HEADER, slot);
+	// front_idx == -1: no frame was presented when the state was saved.
+	// Normalise the indices (runahead callers skip ppu_worker_reset) and report
+	// failure; the return also keeps out_fb from indexing backbuf[-1].
+	if (idx < 0) {
+		w->front_idx        = -1;
+		w->r_idx            = 0;
+		w->w_idx            = 0;
+		w->ready_back_idx   = -1;
+		w->have_first_frame = false;
+		return false;
 	}
 
+	{
+		// Lazily ensure out_buf[idx] exists: backbuf is inline, out_buf is
+		// malloc'd by set_output_bpp; a load before any vblank can see NULL.
+		if (w->out_bpp != 4 && w->out_buf[idx] == NULL) {
+			w->out_buf[idx] = (UINT8*)malloc((size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp);
+			if (w->out_buf[idx] == NULL) return false;
+		}
+		const UINT8* sp = src + PPW_BLOB_HEADER;
+		if (hdr.out_bpp == w->out_bpp) {
+			// Same depth: native layout, single bulk copy.
+			if (w->out_bpp == 4) memcpy(w->backbuf[idx], sp, src_slot);
+			else                 memcpy(w->out_buf[idx], sp, src_slot);
+		} else {
+			// Cross-depth: decode to XRGB8888, then re-encode to native depth.
+			UINT32 tmp[GBA_LCD_W];
+			if (w->out_bpp == 4) {
+				for (INT32 y = 0; y < GBA_LCD_H; ++y) {
+					ppu_worker_decode_scanline_to_xrgb8888(tmp, sp, hdr.out_bpp);
+					memcpy(w->backbuf[idx] + y*(size_t)GBA_LCD_W, tmp, sizeof(tmp));
+					sp += GBA_LCD_W * hdr.out_bpp;
+				}
+			} else {
+				UINT8* dp = w->out_buf[idx];
+				for (INT32 y = 0; y < GBA_LCD_H; ++y) {
+					ppu_worker_decode_scanline_to_xrgb8888(tmp, sp, hdr.out_bpp);
+					ppu_worker_write_scanline_out(dp, tmp, w->out_bpp);
+					sp += GBA_LCD_W * hdr.out_bpp;
+					dp += GBA_LCD_W * w->out_bpp;
+				}
+			}
+		}
+	}
+
+	// Present the restored frame and advance the write slot so the next publish
+	// cannot overwrite the slot being shown.
 	w->front_idx        = idx;
-	w->ready_back_idx   = idx;
-	w->r_idx            = idx;
+	w->r_idx            = 0;
 	w->w_idx            = (idx + 1) % GBAPPU_WORKER_N_BUFFERS;
-	w->have_first_frame = (hdr[7] != 0);
+	w->ready_back_idx   = -1;
+	w->have_first_frame = true;
 	w->inflight         = 0;
 	w->worker_busy      = false;
 
-	*out_fb     = (w->out_bpp == 4) ? (UINT8*)w->backbuf[idx] : w->out_buf[idx];
+	// Hand the restored slot back to the caller; 32bpp is zero-copy.
+	if (w->out_bpp == 4) *out_fb = (UINT8*)w->backbuf[idx];
+	else                 *out_fb = w->out_buf[idx];
 	*out_direct = (w->out_bpp == 4);
 	return true;
 }
-
 
 #else // !GBAPPU_WORKER_ENABLED
 
@@ -2660,16 +2751,13 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 	gba_ppu_event(gba, emu, cycles_late);
 }
 
-// Single-thread builds keep no worker state, so the blob stays empty.
-#define PPW_BLOB_MAGIC   0x31575021u
-#define PPW_BLOB_VERSION 1u
-#define PPW_BLOB_HEADER  (12 * (int)sizeof(INT32))
-#define PPW_BLOB_MAX     0
-
-static inline size_t ppu_worker_state_size(const ppu_worker_t* w)                         { (void)w; return 0; }
-static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)             { (void)w; (void)dst; return 0; }
+// Single-thread builds present no worker buffer, so the payload is zeroed.
+// Size must still match the worker build: FBNeo's ScanVar matches by length +
+// name hash, so a mismatch would silently skip gba_machine across builds.
+static inline size_t ppu_worker_state_size()                                                           { return PPW_BLOB_MAX; }
+static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)                          { (void)w; memset(dst, 0, PPW_BLOB_MAX); return PPW_BLOB_MAX; }
 static inline bool   ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size_t len,
-                                           UINT8** fb, bool* direct)                      { (void)w; (void)src; (void)len; (void)fb; (void)direct; return false; }
+                                           UINT8** fb, bool* direct)                                   { (void)w; (void)src; (void)len; (void)fb; (void)direct; return false; }
 
 #endif // GBAPPU_WORKER_ENABLED
 

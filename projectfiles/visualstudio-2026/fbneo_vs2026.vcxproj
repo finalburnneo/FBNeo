@@ -666,6 +666,7 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_crospang.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_crshrace.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_cultures.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_cyclwarr.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_dcon.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_ddragon3.cpp" />
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_deniam.cpp" />

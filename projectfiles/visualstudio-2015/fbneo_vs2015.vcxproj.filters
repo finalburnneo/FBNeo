@@ -2107,6 +2107,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_cultures.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\pst90s\d_cyclwarr.cpp">
+      <Filter>burn\drv\pst90s</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_dooyong.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>

@@ -692,7 +692,10 @@ INT32 PCEFrame()
 	if (HAS_CD) timerIdle(nExtraCycles);
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += h6280Run(1128/3); // 1128 m-cycles brings us to hblank. "/ 3" m-cycles -> cpu cycles
+		// 1128 m-cycles from the scheduled line start brings us to hblank. "/ 3" m-cycles -> cpu cycles
+		// (relative to the line start, not to the cpu: block transfers overrunning a line must not shorten the next ones - advancedvg floor and sfx)
+		INT32 nHblankCycles = (i * nCyclesTotal[0] / nInterleave) + (1128/3) - h6280TotalCycles();
+		if (nHblankCycles > 0) nCyclesDone[0] += h6280Run(nHblankCycles);
 		hblank();
 
 		if (HAS_CD) {

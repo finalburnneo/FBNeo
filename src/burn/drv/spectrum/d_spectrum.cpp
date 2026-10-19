@@ -45785,10 +45785,10 @@ struct BurnDriver BurnSpecGnoni = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Go 9x9 (128K) (HB, v2.0.1)
+// Go 9x9 (128K) (HB, v3.0)
 
 static struct BurnRomInfo SpecGo9x9RomDesc[] = {
-	{ "Go 9x9 v2.0.1 128K (2026)(LAWLORD).tap", 96306, 0xc9785e8e, BRF_ESS | BRF_PRG },
+	{ "Go 9x9 v3.0 128K (2026)(LAWLORD).tap", 108011, 0xbdb4b53d, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecGo9x9, SpecGo9x9, Spec128)
@@ -45796,7 +45796,7 @@ STD_ROM_FN(SpecGo9x9)
 
 struct BurnDriver BurnSpecGo9x9 = {
 	"spec_go9x9", NULL, "spec_spec128", NULL, "2026",
-	"Go 9x9 (128K) (HB, v2.0.1)\0", NULL, "LAWLORD", "ZX Spectrum",
+	"Go 9x9 (128K) (HB, v3.0)\0", NULL, "LAWLORD", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_BOARD | GBF_STRATEGY, 0,
 	SpectrumGetZipName, SpecGo9x9RomInfo, SpecGo9x9RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54811,10 +54811,10 @@ struct BurnDriver BurnSpecOoze = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Operation Greenup - Part 1 (English) (128K) (HB)
+// Operation Greenup - Part 1 (English) (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecOpgreenup1enRomDesc[] = {
-	{ "Operation Greenup - Part 1 EN 128K (2026)(Molisoft).tap", 120944, 0x2120674b, BRF_ESS | BRF_PRG },
+	{ "Operation Greenup - Part 1 v1.1 EN 128K (2026)(Molisoft).tap", 120948, 0xeb9a6e7c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecOpgreenup1en, SpecOpgreenup1en, Spec128)
@@ -54822,7 +54822,7 @@ STD_ROM_FN(SpecOpgreenup1en)
 
 struct BurnDriver BurnSpecOpgreenup1en = {
 	"spec_opgreenup1en", NULL, "spec_spec128", NULL, "2026",
-	"Operation Greenup - Part 1 (English) (128K) (HB)\0", NULL, "Molisoft", "ZX Spectrum",
+	"Operation Greenup - Part 1 (English) (128K) (HB, v1.1)\0", NULL, "Molisoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecOpgreenup1enRomInfo, SpecOpgreenup1enRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -54868,10 +54868,10 @@ struct BurnDriver BurnSpecOpgreenup3en = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Operación Greenup - Parte 1 (Spanish) (128K) (HB)
+// Operación Greenup - Parte 1 (Spanish) (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecOpgreenup1esRomDesc[] = {
-	{ "Operacion Greenup - Parte 1 ES 128K (2026)(Molisoft).tap", 121201, 0x2e79b60d, BRF_ESS | BRF_PRG },
+	{ "Operacion Greenup - Parte 1 v1.1 ES 128K (2026)(Molisoft).tap", 121206, 0x5ae34463, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecOpgreenup1es, SpecOpgreenup1es, Spec128)
@@ -54879,8 +54879,8 @@ STD_ROM_FN(SpecOpgreenup1es)
 
 struct BurnDriver BurnSpecOpgreenup1es = {
 	"spec_opgreenup1es", NULL, "spec_spec128", NULL, "2026",
-	"Operacion Greenup - Parte 1 (Spanish) (128K) (HB)\0", NULL, "Molisoft", "ZX Spectrum",
-	L"Operaci\u00f3n Greenup - Parte 1 (Spanish) (128K) (HB)\0", NULL, NULL, NULL,
+	"Operacion Greenup - Parte 1 (Spanish) (128K) (HB, v1.1)\0", NULL, "Molisoft", "ZX Spectrum",
+	L"Operaci\u00f3n Greenup - Parte 1 (Spanish) (128K) (HB, v1.1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecOpgreenup1esRomInfo, SpecOpgreenup1esRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Spec128KInit, SpecExit, SpecFrame, SpecDraw, SpecScan,

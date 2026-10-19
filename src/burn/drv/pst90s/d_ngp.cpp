@@ -3583,7 +3583,7 @@ struct BurnDriver BurnDrvngpc_breakout = {
 
 // Bubble Bobble (HB, Demo)
 static struct BurnRomInfo ngpc_bublboblRomDesc[] = {
-	{ "Bubble Bobble Demo (2026)(Chris Ahchay).ngp", 2226982, 0x16d265b2, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Bubble Bobble Demo (2026)(Chris Ahchay).ngp", 2230574, 0xc8bd0f41, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_bublbobl, ngpc_bublbobl, ngpc_ngp)
@@ -3817,7 +3817,7 @@ struct BurnDriver BurnDrvngpc_furry = {
 
 // Gardenia (HB, v1.4)
 static struct BurnRomInfo ngpc_gardeniaRomDesc[] = {
-	{ "Gardenia v1.4 (2026)(Chris Ahchay).ngp", 2097152, 0xef30cb24, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Gardenia v1.4 (2026)(Chris Ahchay).ngp", 2097152, 0x6bf8b0aa, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_gardenia, ngpc_gardenia, ngpc_ngp)
@@ -4247,9 +4247,9 @@ struct BurnDriver BurnDrvngpc_neotris = {
 	160, 152, 4, 3
 };
 
-// Over Rev (HB, v1.0)
+// Over Rev (HB, v2.0)
 static struct BurnRomInfo ngpc_overrevRomDesc[] = {
-	{ "Over Rev v1.0 (2026)(Tixul).ngp", 2097152, 0x41722bb0, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+	{ "Over Rev v2.0 (2026)(Tixul).ngp", 2097152, 0xbd6dcde5, 1 | BRF_PRG | BRF_ESS }, // Cartridge
 };
 
 STDROMPICKEXT(ngpc_overrev, ngpc_overrev, ngpc_ngp)
@@ -4257,7 +4257,7 @@ STD_ROM_FN(ngpc_overrev)
 
 struct BurnDriver BurnDrvngpc_overrev = {
 	"ngp_overrev", NULL, "ngp_ngp", NULL, "2026",
-	"Over Rev (HB, v1.0)\0", NULL, "Tixul", "NeoGeo Pocket Color",
+	"Over Rev (HB, v2.0)\0", NULL, "Tixul", "NeoGeo Pocket Color",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NGPC, GBF_RACING, 0,
 	NgpGetZipName, ngpc_overrevRomInfo, ngpc_overrevRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
@@ -4297,6 +4297,24 @@ struct BurnDriver BurnDrvngpc_pacmanpd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ACTION | GBF_MAZE, 0,
 	NgpGetZipName, ngpc_pacmanpdRomInfo, ngpc_pacmanpdRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
+	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
+	160, 152, 4, 3
+};
+
+// Prince of Persia (HB)
+static struct BurnRomInfo ngpc_princeperRomDesc[] = {
+	{ "Prince of Persia (2026)(JAJABINX35).ngp", 2097152, 0xc381be55, 1 | BRF_PRG | BRF_ESS }, // Cartridge
+};
+
+STDROMPICKEXT(ngpc_princeper, ngpc_princeper, ngpc_ngp)
+STD_ROM_FN(ngpc_princeper)
+
+struct BurnDriver BurnDrvngpc_princeper = {
+	"ngp_princeper", NULL, "ngp_ngp", NULL, "2026",
+	"Prince of Persia (HB)\0", NULL, "JAJABINX35", "NeoGeo Pocket Color",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNK_NGPC, GBF_ADV | GBF_PLATFORM, 0,
+	NgpGetZipName, ngpc_princeperRomInfo, ngpc_princeperRomName, NULL, NULL, NULL, NULL, NgpInputInfo, NgpDIPInfo,
 	DrvInit, DrvExit, DrvFrame, k1geDraw, DrvScan, &BurnRecalc, 0x1000,
 	160, 152, 4, 3
 };

@@ -55893,6 +55893,25 @@ struct BurnDriver BurnDrvgba_ashenrelics = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Astra Aquarium (HB)
+
+static struct BurnRomInfo gba_astraquariumRomDesc[] = {
+	{ "Astra Aquarium (2026)(Enarkz).gba",	74228,	0xf6ac6b01,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_astraquarium, gba_astraquarium, gba_gba)
+STD_ROM_FN(gba_astraquarium)
+
+struct BurnDriver BurnDrvgba_astraquarium = {
+	"gba_astraquarium", NULL, "gba_gba", NULL, "2026",
+	"Astra Aquarium (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SPORTSMISC, 0,
+	GbaGetZipName, gba_astraquariumRomInfo, gba_astraquariumRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Astro Smash GBA (HB)
 
 static struct BurnRomInfo gba_asmashRomDesc[] = {
@@ -57847,6 +57866,25 @@ struct BurnDriver BurnDrvgba_letitrecoil = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Lethal Code Injection (HB)
+
+static struct BurnRomInfo gba_lcinjectionRomDesc[] = {
+	{ "Lethal Code Injection (2026)(Enarkz).gba",	42448,	0x33777521,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_lcinjection, gba_lcinjection, gba_gba)
+STD_ROM_FN(gba_lcinjection)
+
+struct BurnDriver BurnDrvgba_lcinjection = {
+	"gba_lcinjection", NULL, "gba_gba", NULL, "2026",
+	"Lethal Code Injection (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_HORSHOOT, 0,
+	GbaGetZipName, gba_lcinjectionRomInfo, gba_lcinjectionRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Light Cycle GBA (HB)
 
 static struct BurnRomInfo gba_lightcycleRomDesc[] = {
@@ -58056,6 +58094,25 @@ struct BurnDriver BurnDrvgba_minimines = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Mini Pets GBA (HB)
+
+static struct BurnRomInfo gba_minipetsRomDesc[] = {
+	{ "Mini Pets GBA (2026)(Enarkz).gba",	142208,	0xd92d6ca7,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_minipets, gba_minipets, gba_gba)
+STD_ROM_FN(gba_minipets)
+
+struct BurnDriver BurnDrvgba_minipets = {
+	"gba_minipets", NULL, "gba_gba", NULL, "2026",
+	"Mini Pets GBA (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SIM, 0,
+	GbaGetZipName, gba_minipetsRomInfo, gba_minipetsRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Minicraft 3D (HB, v0.6.4)
 
 static struct BurnRomInfo gba_minicraft3dRomDesc[] = {
@@ -58208,6 +58265,25 @@ struct BurnDriver BurnDrvgba_necropolis = {
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
 
+// Nemeshit (HB)
+
+static struct BurnRomInfo gba_nemeshitRomDesc[] = {
+	{ "Nemeshit (2026)(Clankerbast Software).gba",	2041856,	0x90dac67d,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_nemeshit, gba_nemeshit, gba_gba)
+STD_ROM_FN(gba_nemeshit)
+
+struct BurnDriver BurnDrvgba_nemeshit = {
+	"gba_nemeshit", NULL, "gba_gba", NULL, "2026",
+	"Nemeshit (HB)\0", NULL, "Clankerbast Software", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_HORSHOOT, 0,
+	GbaGetZipName, gba_nemeshitRomInfo, gba_nemeshitRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
 // Nonacorn (HB, v1.11)
 
 static struct BurnRomInfo gba_nonacornRomDesc[] = {
@@ -58318,6 +58394,63 @@ struct BurnDriver BurnDrvgba_paragonbrk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BREAKOUT, 0,
 	GbaGetZipName, gba_paragonbrkRomInfo, gba_paragonbrkRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Paragon Builder (HB)
+
+static struct BurnRomInfo gba_paragonbldRomDesc[] = {
+	{ "Paragon Builder (2026)(Enarkz).gba",	64052,	0x621de1f6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_paragonbld, gba_paragonbld, gba_gba)
+STD_ROM_FN(gba_paragonbld)
+
+struct BurnDriver BurnDrvgba_paragonbld = {
+	"gba_paragonbld", NULL, "gba_gba", NULL, "2026",
+	"Paragon Builder (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SIM, 0,
+	GbaGetZipName, gba_paragonbldRomInfo, gba_paragonbldRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Pazaak (HB)
+
+static struct BurnRomInfo gba_pazaakRomDesc[] = {
+	{ "Pazaak (2026)(Enarkz).gba",	69056,	0xfa500735,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_pazaak, gba_pazaak, gba_gba)
+STD_ROM_FN(gba_pazaak)
+
+struct BurnDriver BurnDrvgba_pazaak = {
+	"gba_pazaak", NULL, "gba_gba", NULL, "2026",
+	"Pazaak (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_CARD, 0,
+	GbaGetZipName, gba_pazaakRomInfo, gba_pazaakRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Peegle GBA (HB)
+
+static struct BurnRomInfo gba_peegleRomDesc[] = {
+	{ "Peegle GBA (2026)(Enarkz).gba",	134784,	0xd15b75e6,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_peegle, gba_peegle, gba_gba)
+STD_ROM_FN(gba_peegle)
+
+struct BurnDriver BurnDrvgba_peegle = {
+	"gba_peegle", NULL, "gba_gba", NULL, "2026",
+	"Peegle GBA (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_BREAKOUT, 0,
+	GbaGetZipName, gba_peegleRomInfo, gba_peegleRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -58603,6 +58736,44 @@ struct BurnDriver BurnDrvgba_rnrracinc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_RACING, 0,
 	GbaGetZipName, gba_rnrracincRomInfo, gba_rnrracincRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Saint Martial's Casino (HB)
+
+static struct BurnRomInfo gba_stmartialsRomDesc[] = {
+	{ "Saint Martial's Casino (2026)(Enarkz).gba",	36764,	0xebd2d50a,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_stmartials, gba_stmartials, gba_gba)
+STD_ROM_FN(gba_stmartials)
+
+struct BurnDriver BurnDrvgba_stmartials = {
+	"gba_stmartials", NULL, "gba_gba", NULL, "2026",
+	"Saint Martial's Casino (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_CASINO, 0,
+	GbaGetZipName, gba_stmartialsRomInfo, gba_stmartialsRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Scorched Earth (HB)
+
+static struct BurnRomInfo gba_scorchedRomDesc[] = {
+	{ "Scorched Earth (2026)(Enarkz).gba",	66124,	0xdd179ba0,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_scorched, gba_scorched, gba_gba)
+STD_ROM_FN(gba_scorched)
+
+struct BurnDriver BurnDrvgba_scorched = {
+	"gba_scorched", NULL, "gba_gba", NULL, "2026",
+	"Scorched Earth (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_SHOOT, 0,
+	GbaGetZipName, gba_scorchedRomInfo, gba_scorchedRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };
@@ -59131,6 +59302,25 @@ struct BurnDriver BurnDrvgba_trogdor = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_ACTION, 0,
 	GbaGetZipName, gba_trogdorRomInfo, gba_trogdorRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	GBA_WIDTH, GBA_HEIGHT, 3, 2
+};
+
+// Trials, The (HB)
+
+static struct BurnRomInfo gba_thetrialsRomDesc[] = {
+	{ "Trials, The (2026)(Enarkz).gba",	178364,	0x60674eae,	BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(gba_thetrials, gba_thetrials, gba_gba)
+STD_ROM_FN(gba_thetrials)
+
+struct BurnDriver BurnDrvgba_thetrials = {
+	"gba_thetrials", NULL, "gba_gba", NULL, "2026",
+	"Trials, The (HB)\0", NULL, "Enarkz", "Game Boy Advance",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_GBA, GBF_MAZE | GBF_RUNGUN, 0,
+	GbaGetZipName, gba_thetrialsRomInfo, gba_thetrialsRomName, NULL, NULL, NULL, NULL, GbaInputInfo, GbaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	GBA_WIDTH, GBA_HEIGHT, 3, 2
 };

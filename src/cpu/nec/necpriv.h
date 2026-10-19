@@ -4,6 +4,7 @@
 #define V20_TYPE 16
 #define i8088_TYPE 32
 #define i8086_TYPE 64
+#define i80186_TYPE 128
 
 #ifndef FALSE
 #define FALSE 0
@@ -37,6 +38,62 @@ typedef union
     UINT16 w[8];    /* viewed as 16 bits registers */
     UINT8  b[16];   /* or as 8 bit registers */
 } necbasicregs;
+
+/* intel 80186 on-chip peripherals */
+struct i186_timer_state
+{
+	UINT16	control;
+	UINT16	maxA;
+	UINT16	maxB;
+	UINT16	count;
+	INT32	remain;		// cpu cycles until the timer elapses
+	UINT32	active;
+};
+
+struct i186_dma_state
+{
+	UINT32	drq_state;
+	UINT32	source;
+	UINT32	dest;
+	UINT16	count;
+	UINT16	control;
+};
+
+struct i186_intr_state
+{
+	UINT8	vector;
+	UINT8	pending;
+	UINT16	ack_mask;
+	UINT16	priority_mask;
+	UINT16	in_service;
+	UINT16	request;
+	UINT16	status;
+	UINT16	poll_status;
+	UINT16	timer;
+	UINT16	dma[2];
+	UINT16	ext[4];
+	UINT8	ext_state;
+};
+
+struct i186_mem_state
+{
+	UINT16	lower;
+	UINT16	upper;
+	UINT16	middle;
+	UINT16	middle_size;
+	UINT16	peripheral;
+};
+
+struct i186_state
+{
+	i186_timer_state timer[3];
+	i186_dma_state dma[2];
+	i186_intr_state intr;
+	i186_mem_state mem;
+	UINT16	reloc;
+	UINT32	last_dma;
+	INT32	dma_latency;
+};
 
 typedef struct _nec_state_t nec_state_t;
 struct _nec_state_t
@@ -74,9 +131,18 @@ struct _nec_state_t
 	UINT8	seg_prefix;		/* prefix segment indicator */
 	UINT32  cycles_total;
 	INT32  cycles_remaining;
+
+	UINT32	i186_mode;
+	i186_state i186;
+	UINT32	i186_mem_base;	// peripheral block address when mapped in memory, else ~0
+
 	INT8	stop_run;
 
 	UINT8 (*getvector_cb)();
+
+	void (*const *optable)(nec_state_t *nec_state);
+	void (*i186_chip_select_cb)(INT32 which, UINT16 data);
+	void (*i186_timer_out_cb)(INT32 which, INT32 state);
 };
 
 typedef enum { DS1, PS, SS_, DS0 } SREGS;
@@ -132,15 +198,17 @@ static struct {
 
 /************************************************************************/
 
-#define read_mem_byte(a)			cpu_readmem20(a)
-#define read_mem_word(a)			cpu_readmem20_word(a)
-#define write_mem_byte(a,d)			cpu_writemem20((a),(d))
+// memory and port accesses go through the 80186 peripheral block when it is mapped there
+#define read_mem_byte(a)			nec_read_mem_byte(nec_state, (a))
+#define read_mem_word(a)			nec_read_mem_word(nec_state, (a))
+#define write_mem_byte(a,d)			nec_write_mem_byte(nec_state, (a), (d))
+#define write_mem_word(a,d)			nec_write_mem_word(nec_state, (a), (d))
 //#define write_mem_word(a,d)			{cpu_writemem20((a),(unsigned char)(d)); cpu_writemem20((a)+1,(d)>>8); } //nec_state->program->write_word_unaligned((a),(d))
 
-#define read_port_byte(a)		cpu_readport(a)
-#define read_port_word(a)		(cpu_readport(a)+cpu_readport((a)+1)*256)
-#define write_port_byte(a,d)		cpu_writeport((a),(d))
-//#define write_port_word(a,d)		{ cpu_writeport((a),(unsigned char)(d)); (cpu_writeport((a)+1,(d)>>8); } // nec_state->io->write_word_unaligned((a),(d))
+#define read_port_byte(a)		nec_read_port_byte(nec_state, (a))
+#define read_port_word(a)		nec_read_port_word(nec_state, (a))
+#define write_port_byte(a,d)	nec_write_port_byte(nec_state, (a), (d))
+#define write_port_word(a,d)	nec_write_port_word(nec_state, (a), (d))
 
 /************************************************************************/
 

@@ -122,16 +122,6 @@ unsigned char cpu_readmem20_arg(unsigned int);
 unsigned char cpu_readport(unsigned int);
 void cpu_writeport(unsigned int,unsigned int);
 
-static NEC_INLINE void write_mem_word(unsigned int a, unsigned short d)
-{
-	cpu_writemem20_word(a, d);
-}
-
-static NEC_INLINE void write_port_word(unsigned int a, unsigned short d)
-{
-	cpu_writeport((a),(unsigned char)(d));
-	cpu_writeport((a)+1,(d)>>8);
-}
 
 typedef UINT8 BOOLEAN;
 typedef UINT8 BYTE;
@@ -143,6 +133,110 @@ typedef UINT32 DWORD;
 
 static nec_state_t sChips[4]; // 4 cpus should be plenty!
 static nec_state_t *sChipsPtr;
+
+static UINT16 i186_internal_r(nec_state_t *nec_state, UINT32 offset, INT32 low_byte);
+static void i186_internal_w(nec_state_t *nec_state, UINT32 offset, UINT16 data);
+static UINT32 i186_inta(nec_state_t *nec_state);
+static void i186_reset(nec_state_t *nec_state);
+
+static inline INT32 i186_port_match(nec_state_t *nec_state, UINT32 port)
+{
+	return nec_state->i186_mode && !(nec_state->i186.reloc & 0x1000) && ((port >> 8) & 0xff) == (nec_state->i186.reloc & 0xff);
+}
+
+static UINT8 nec_read_port_byte(nec_state_t *nec_state, UINT32 port)
+{
+	port &= 0xffff;
+
+	if (i186_port_match(nec_state, port)) {
+		UINT16 data = i186_internal_r(nec_state, (port >> 1) & 0x7f, ~port & 1);
+		return (port & 1) ? (data >> 8) : (data & 0xff);
+	}
+
+	return cpu_readport(port);
+}
+
+static UINT16 nec_read_port_word(nec_state_t *nec_state, UINT32 port)
+{
+	port &= 0xffff;
+
+	if (i186_port_match(nec_state, port)) {
+		// unaligned reads from the internal bus are swapped rather than split
+		UINT16 data = i186_internal_r(nec_state, (port >> 1) & 0x7f, 1);
+		return (port & 1) ? (UINT16)((data << 8) | (data >> 8)) : data;
+	}
+
+	return cpu_readport_word(port);
+}
+
+static void nec_write_port_byte(nec_state_t *nec_state, UINT32 port, UINT8 data)
+{
+	port &= 0xffff;
+
+	if (i186_port_match(nec_state, port)) {
+		i186_internal_w(nec_state, (port >> 1) & 0x7f, (port & 1) ? (data << 8) : data);
+		return;
+	}
+
+	cpu_writeport(port, data);
+}
+
+static void nec_write_port_word(nec_state_t *nec_state, UINT32 port, UINT16 data)
+{
+	port &= 0xffff;
+
+	if (i186_port_match(nec_state, port)) {
+		i186_internal_w(nec_state, (port >> 1) & 0x7f, (port & 1) ? (UINT16)((data << 8) | (data >> 8)) : data);
+		return;
+	}
+
+	cpu_writeport_word(port, data);
+}
+
+static NEC_INLINE INT32 i186_mem_match(nec_state_t *nec_state, UINT32 a)
+{
+	return (a & 0xfff00) == nec_state->i186_mem_base;
+}
+
+static UINT8 nec_read_mem_byte(nec_state_t *nec_state, UINT32 a)
+{
+	if (i186_mem_match(nec_state, a)) {
+		UINT16 data = i186_internal_r(nec_state, (a >> 1) & 0x7f, ~a & 1);
+		return (a & 1) ? (data >> 8) : (data & 0xff);
+	}
+
+	return cpu_readmem20(a);
+}
+
+static UINT16 nec_read_mem_word(nec_state_t *nec_state, UINT32 a)
+{
+	if (i186_mem_match(nec_state, a)) {
+		UINT16 data = i186_internal_r(nec_state, (a >> 1) & 0x7f, 1);
+		return (a & 1) ? (UINT16)((data << 8) | (data >> 8)) : data;
+	}
+
+	return cpu_readmem20_word(a);
+}
+
+static void nec_write_mem_byte(nec_state_t *nec_state, UINT32 a, UINT8 data)
+{
+	if (i186_mem_match(nec_state, a)) {
+		i186_internal_w(nec_state, (a >> 1) & 0x7f, (a & 1) ? (data << 8) : data);
+		return;
+	}
+
+	cpu_writemem20(a, data);
+}
+
+static void nec_write_mem_word(nec_state_t *nec_state, UINT32 a, UINT16 data)
+{
+	if (i186_mem_match(nec_state, a)) {
+		i186_internal_w(nec_state, (a >> 1) & 0x7f, (a & 1) ? (UINT16)((data << 8) | (data >> 8)) : data);
+		return;
+	}
+
+	cpu_writemem20_word(a, data);
+}
 
 NEC_INLINE void prefetch(nec_state_t *nec_state)
 {
@@ -244,6 +338,10 @@ int nec_reset()
 	nec_state->cycles_total = 0;
 	nec_state->cycles_remaining = 0;
 	nec_state->vector = 0xff; //default vector
+	nec_state->i186_mem_base = ~0;
+
+	if (nec_state->i186_mode)
+		i186_reset(nec_state);
 
 	Sreg(PS) = 0xffff;
 	Sreg(SS_) = 0;
@@ -263,7 +361,10 @@ static void nec_interrupt(nec_state_t *nec_state, unsigned int_num, INTSOURCES s
 	nec_state->TF = nec_state->IF = 0;
 
 	if (source == INT_IRQ) {	/* get vector */
-		int_num = (nec_state->getvector_cb) ? nec_state->getvector_cb() : nec_state->vector;
+		if (nec_state->i186_mode)
+			int_num = i186_inta(nec_state);
+		else
+			int_num = (nec_state->getvector_cb) ? nec_state->getvector_cb() : nec_state->vector;
 	}
 
 	dest_off = read_mem_word(int_num*4);
@@ -304,6 +405,7 @@ static void external_int(nec_state_t *nec_state)
 /****************************************************************************/
 
 #include "necinstr.c"
+#include "i186.c"
 
 /*****************************************************************************/
 
@@ -352,6 +454,23 @@ void nec_set_irq_line_and_vector(int irqline, int vector, int state)
 			nec_state->vector = vector;
 			nec_state->poll_state = state;
 			break;
+
+		case I80186_INPUT_LINE_INT0:
+		case I80186_INPUT_LINE_INT1:
+		case I80186_INPUT_LINE_INT2:
+		case I80186_INPUT_LINE_INT3:
+			if (nec_state->i186_mode) i186_external_int(nec_state, irqline - I80186_INPUT_LINE_INT0, state ? 1 : 0);
+			break;
+
+		case I80186_INPUT_LINE_DRQ0:
+		case I80186_INPUT_LINE_DRQ1:
+			nec_state->i186.dma[irqline - I80186_INPUT_LINE_DRQ0].drq_state = state ? 1 : 0;
+			break;
+
+		case I80186_INPUT_LINE_TMRIN0:
+		case I80186_INPUT_LINE_TMRIN1:
+			if (nec_state->i186_mode) i186_external_tmrin(nec_state, irqline - I80186_INPUT_LINE_TMRIN0, state ? 1 : 0);
+			break;
 	}
 }
 
@@ -384,6 +503,7 @@ void nec_init(int cpu)
 	}
 
 	memset(nec_state, 0, sizeof(*nec_state));
+	nec_state->i186_mem_base = ~0;
 }
 
 void necCpuOpen(int cpu)
@@ -429,6 +549,9 @@ int nec_execute(int cycles)
 {
 	nec_state_t *nec_state = sChipsPtr;
 	int prev_ICount;
+
+	if (nec_state->i186_mode)
+		return i186_execute(nec_state, cycles);
 
 	nec_state->icount = cycles;
 	nec_state->cycles_remaining = cycles;
@@ -482,11 +605,14 @@ void necInit(int cpu, int type)
 
 	nec_init(cpu);
 
+	nec_state->optable = nec_instruction;
+
 	switch (type)
 	{
 		case i8088_TYPE:
 		{
 			nec_init_i86_table();
+			nec_state->optable = i86_instruction;
 			nec_state->i86_mode = 1;
 		}
 		// fall through, 8-bit bus like the V20
@@ -499,9 +625,23 @@ void necInit(int cpu, int type)
 		}
 		break;
 
+		case i80186_TYPE:
+		{
+			nec_init_i186_table();
+			nec_state->optable = i186_instruction;
+			nec_state->i86_mode = 1;
+			nec_state->i186_mode = 1;
+			nec_state->fetch_xor = 0;
+			nec_state->chip_type = V30_TYPE;
+			nec_state->prefetch_size = 6;
+			nec_state->prefetch_cycles = 2;
+		}
+		break;
+
 		case i8086_TYPE:
 		{
 			nec_init_i86_table();
+			nec_state->optable = i86_instruction;
 			nec_state->i86_mode = 1;
 		}
 		// fall through, 16-bit bus like the V30

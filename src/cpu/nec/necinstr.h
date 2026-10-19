@@ -513,4 +513,4 @@ static void (*const nec_instruction[256])(nec_state_t *nec_state) =
 // intel 8086/8088 opcode table, built from nec_instruction by nec_init_i86_table()
 static void (*i86_instruction[256])(nec_state_t *nec_state);
 
-#define NEC_OPTABLE (nec_state->i86_mode ? i86_instruction : nec_instruction)
+#define NEC_OPTABLE (nec_state->optable)

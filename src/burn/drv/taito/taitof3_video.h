@@ -2,6 +2,7 @@ extern void TaitoF3DrawCommon(INT32 scanline_start);
 extern void TaitoF3VideoInit();
 extern void TaitoF3VideoExit();
 extern void TaitoF3VideoReset();
+extern void TaitoF3VideoScan(INT32 nAction);
 
 extern INT32 f3_game;
 extern UINT32 extended_layers;
@@ -13,11 +14,8 @@ extern UINT8 *TaitoF3LineRAM;
 
 extern UINT16 *bitmap_layer[10];
 extern UINT8 *bitmap_flags[10];
-extern INT32 bitmap_width[8];
 extern UINT32 *output_bitmap;
 
-extern UINT8 *tile_opaque_sp;
-extern UINT8 *tile_opaque_pf[8];
 extern UINT8 *dirty_tiles;
 extern UINT8 dirty_tile_count[10];
 

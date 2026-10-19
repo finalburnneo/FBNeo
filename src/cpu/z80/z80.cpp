@@ -4371,6 +4371,11 @@ int ActiveZ80GetPrevPC()
 	return Z80.prvpc.w.l;
 }
 
+int ActiveZ80GetHALT()
+{
+	return Z80.halt;
+}
+
 void ActiveZ80SetIRQHold()
 {
 	Z80.hold_irq = 1;

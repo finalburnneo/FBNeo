@@ -662,6 +662,19 @@ INT32 ZetGetPrevPC(INT32 n)
 	}
 }
 
+INT32 ZetIsHalted(INT32 nCPU)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetIsHalted called without init\n"));
+#endif
+
+	if (nCPU == nOpenedCPU) {
+		return ActiveZ80GetHALT();
+	} else {
+		return ZetCPUContext[nCPU]->reg.halt;
+	}
+}
+
 INT32 ZetBc(INT32 n)
 {
 #if defined FBNEO_DEBUG

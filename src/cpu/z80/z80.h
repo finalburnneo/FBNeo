@@ -121,6 +121,7 @@ int ActiveZ80GetIX();
 int ActiveZ80GetIM();
 int ActiveZ80GetSP();
 int ActiveZ80GetPrevPC();
+int ActiveZ80GetHALT();
 void ActiveZ80SetCarry(int carry);
 int ActiveZ80GetCarry();
 int ActiveZ80GetCarry2();

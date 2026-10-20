@@ -15949,6 +15949,49 @@ struct BurnDriver BurnDrvCpsHsf230b = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Marvel Super Heroes (Hack, Tag v1.2)
+
+static struct BurnRomInfo MshtagRomDesc[] = {
+	{ "mshtag.03e",		0x080000, 0xd8fb6f4d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshtag.04e",		0x080000, 0x8f3ffa14, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.05",			0x080000, 0x6a091b9e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshtag.06b",		0x080000, 0x030e5eaf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.07a",		0x080000, 0xc45f8e27, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.08a",		0x080000, 0x9ca6f12c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.09a",		0x080000, 0x82ec27af, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshtag.10b",		0x080000, 0xbfb42012, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mshtag.13m",		0x400000, 0x26c49fc8, CPS2_GFX | BRF_GRA },
+	{ "mshtag.15m",		0x400000, 0xa2d26059, CPS2_GFX | BRF_GRA },
+	{ "mshtag.17m",		0x400000, 0x5102b5d3, CPS2_GFX | BRF_GRA },
+	{ "mshtag.19m",		0x400000, 0x0a54dd29, CPS2_GFX | BRF_GRA },
+	{ "msh.14m",		0x400000, 0x4197973e, CPS2_GFX | BRF_GRA },
+	{ "msh.16m",		0x400000, 0x438da4a0, CPS2_GFX | BRF_GRA },
+	{ "msh.18m",		0x400000, 0x4db92d94, CPS2_GFX | BRF_GRA },
+	{ "msh.20m",		0x400000, 0xa2b0c6c0, CPS2_GFX | BRF_GRA },
+
+	{ "msh.01",			0x020000, 0xc976e6f9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "msh.02",			0x020000, 0xce67d0d9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "msh.11m",		0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
+	{ "msh.12m",		0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "msh.key",		0x000014, 0xb494368e, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mshtag)
+STD_ROM_FN(Mshtag)
+
+struct BurnDriver BurnDrvCpsMshtag = {
+	"mshtag", "msh", NULL, NULL, "2026",
+	"Marvel Super Heroes (Hack, Tag v1.2)\0", NULL, "Morphus56K", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, MshtagRomInfo, MshtagRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Marvel Super Heroes Vs. Street Fighter (Easy Moves, Hack)
 // Modified by Blackheart
 // 20090423
@@ -16035,6 +16078,49 @@ struct BurnDriver BurnDrvCpsMvscem = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, MvscemRomInfo, MvscemRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Marvel Vs. Capcom: Clash of Super Heroes (Hack, Delayed Hyper Combo v11)
+
+static struct BurnRomInfo MvscdhcRomDesc[] = {
+	{ "mvcdhc.03a",		0x080000, 0xa3fdb671, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcdhc.04a",		0x080000, 0xfb443dee, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.05a",		0x080000, 0x2d8c8e86, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcdhc.06a",		0x080000, 0x235ddeed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcdhc.07",		0x080000, 0x1f7405c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcdhc.08",		0x080000, 0x4f104120, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.09",			0x080000, 0xc67b26df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvcdhc.10",		0x080000, 0x1be958c3, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mvcdhc.13m",		0x400000, 0xa0a107b2, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.15m",		0x400000, 0x15c57146, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.17m",		0x400000, 0x16d380c7, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.19m",		0x400000, 0x73c64cea, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.14m",		0x400000, 0x2ce8d7ea, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.16m",		0x400000, 0x77dff5d0, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.18m",		0x400000, 0xc50cf2d2, CPS2_GFX | BRF_GRA },
+	{ "mvcdhc.20m",		0x400000, 0x252a65f7, CPS2_GFX | BRF_GRA },
+
+	{ "mvc.01",			0x020000, 0x41629e95, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvc.02",			0x020000, 0x963abf6b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mvc.11m",		0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
+	{ "mvc.12m",		0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvsc.key",		0x000014, 0x7e101e09, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mvscdhc)
+STD_ROM_FN(Mvscdhc)
+
+struct BurnDriver BurnDrvCpsMvscdhc = {
+	"mvscdhc", "mvsc", NULL, NULL, "2026",
+	"Marvel Vs. Capcom: Clash of Super Heroes (Hack, Delayed Hyper Combo v11)\0", NULL, "Morphus56K", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MvscdhcRomInfo, MvscdhcRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -16354,7 +16440,7 @@ STD_ROM_FN(Ssf2ttag)
 
 struct BurnDriver BurnDrvCpsSsf2ttag = {
 	"ssf2ttag", "ssf2t", NULL, NULL, "2026",
-	"Super Street Fighter II Turbo Tag (Hack, V3)\0", NULL, "hack", "CPS2",
+	"Super Street Fighter II Turbo Tag (Hack, V3)\0", NULL, "Morphus56K", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2ttagRomInfo, Ssf2ttagRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -16403,6 +16489,49 @@ struct BurnDriver BurnDrvCpsVampjbh = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
 	NULL, vampjbhRomInfo, vampjbhRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// X-Men: Children of the Atom (Hack, Tag v5.6)
+
+static struct BurnRomInfo XmcotatagRomDesc[] = {
+	{ "xmntag.03f",		0x080000, 0x76565783, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmntag.04f",		0x080000, 0xcc2f25d6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmntag.05b",		0x080000, 0x33e28359, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmntag.06a",		0x080000, 0x8ff26a18, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.07a",		0x080000, 0x2c142a44, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.08a",		0x080000, 0xf712d44f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmntag.09a",		0x080000, 0x08b127b1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmntag.10b",		0x080000, 0x2d32fa8e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "xmntag.13m",		0x400000, 0xbc06bb34, CPS2_GFX | BRF_GRA },
+	{ "xmntag.15m",		0x400000, 0x5ceeeaed, CPS2_GFX | BRF_GRA },
+	{ "xmntag.17m",		0x400000, 0xb49d26b7, CPS2_GFX | BRF_GRA },
+	{ "xmntag.19m",		0x400000, 0x54895bd1, CPS2_GFX | BRF_GRA },
+	{ "xmntag.14m",		0x400000, 0xe89a87ec, CPS2_GFX | BRF_GRA },
+	{ "xmntag.16m",		0x400000, 0x694e52c8, CPS2_GFX | BRF_GRA },
+	{ "xmntag.18m",		0x400000, 0xa4440a89, CPS2_GFX | BRF_GRA },
+	{ "xmntag.20m",		0x400000, 0x46a85641, CPS2_GFX | BRF_GRA },
+
+	{ "xmntag.01a",		0x020000, 0xb7d4c880, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xmntag.02a",		0x020000, 0xcb5026bd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xmntag.11m",		0x200000, 0x2c0537ce, CPS2_QSND | BRF_SND },
+	{ "xmntag.12m",		0x200000, 0xb8333510, CPS2_QSND | BRF_SND },
+	
+	{ "xmcota.key",		0x000014, 0x6665bbfb, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Xmcotatag)
+STD_ROM_FN(Xmcotatag)
+
+struct BurnDriver BurnDrvCpsXmcotatag = {
+	"xmcotatag", "xmcota", NULL, NULL, "2026",
+	"X-Men: Children of the Atom (Hack, Tag v5.6)\0", NULL, "Morphus56K", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, XmcotatagRomInfo, XmcotatagRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

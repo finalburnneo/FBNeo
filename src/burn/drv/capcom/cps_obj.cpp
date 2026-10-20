@@ -907,7 +907,10 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 	return 0;
 }
 
-// xmvsf3v3: the sprite lag buffers (the Obj pointers are rebuilt by CpsObjInit, never saved)
+// xmvsf3v3: the sprite lag buffers (the Obj pointers are rebuilt by CpsObjInit, never saved).
+// The Z buffer and its counters aren't saved: only drawing changes them, so they'd make a state
+// depend on which frames were drawn (netplay replays and run-ahead's hidden frames aren't), and
+// each frame's Z values start above what's already in the buffer
 INT32 CpsObjVisualScan(INT32 nAction)
 {
 	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
@@ -920,9 +923,6 @@ INT32 CpsObjVisualScan(INT32 nAction)
 	BurnAcb(&ba);
 
 	SCAN_VAR(nGetNext);
-	SCAN_VAR(nMaxZValue);
-	SCAN_VAR(nMaxZMask);
-	SCAN_VAR(nZOffset);
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		SCAN_VAR(of[i].nShiftX);
 		SCAN_VAR(of[i].nShiftY);

@@ -75,15 +75,16 @@ INT32 CpsPalUpdate(UINT8* pNewPal)
 	return 0;
 }
 
-// xmvsf3v3: the effective colours keep pages the game disabled between palette DMAs, which
-// rereading palette RAM after a load can't rebuild; the pixel format must not change in between
+// xmvsf3v3: the effective colours: a palette DMA converts only the pages enabled at the time, and
+// palette RAM may already hold the next DMA's colours, so rereading it after a load can't rebuild
+// them; the pixel format must not change in between. CpsPalSrc isn't saved: CpsPalUpdate()
+// overwrites it before reading it
 INT32 CpsPalVisualScan(INT32 nAction)
 {
 	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));
-	ba.Data = CpsPalSrc;	ba.nLen = 0xc00 * sizeof(UINT16);	ba.szName = "XMvsSF 3v3 palette DMA input";	BurnAcb(&ba);
 	ba.Data = CpsPal;		ba.nLen = 0xc00 * sizeof(UINT32);	ba.szName = "XMvsSF 3v3 effective palette";	BurnAcb(&ba);
 
 	if (nAction & ACB_WRITE) CpsXmvPaletteRestored = true;

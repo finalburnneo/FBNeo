@@ -153,6 +153,17 @@ STDDIPINFO(Revx)
 
 #include "midtunit_dma.h"
 
+// data from the DCS raises EX2, except in UART loopback mode (as MAME)
+static void dcs_output_full(INT32 state)
+{
+	if (uart[1] == 0x66) return;
+
+	if (state)
+		TMS34010GenerateIRQ(TMS34010_INT_EX2);
+	else
+		TMS34010ClearIRQ(TMS34010_INT_EX2);
+}
+
 static void sound_sync()
 {
 	INT32 cyc = TMS34010TotalCycles() - Dcs2kTotalCycles();
@@ -316,6 +327,11 @@ static void midxunit_write(UINT32 address, UINT16 data)
 
 	if ((address & 0xff8fff00) == 0xc0800000) {
 		TUnitDmaWrite(address, data);
+
+		// the DMA latches the whole 32-bit bus: a 16-bit write to an even register also sets the odd one
+		// (revx 2.0 relies on it for the DMA_CONFIG register bank in its U76 test)
+		INT32 high = TMS34020GetWordWriteHigh();
+		if (high >= 0 && (~address & 0x10)) TUnitDmaWrite(address | 0x10, high);
 		return;
 	}
 }
@@ -437,34 +453,6 @@ static void from_shiftreg(UINT32 address, UINT16 *shiftreg)
 {
 	UINT16 *vram = (UINT16*)DrvVidRAM;
 	memcpy(&vram[address >> 3], shiftreg, 2 * 512 * sizeof(UINT16));
-}
-
-static UINT16 midxunit_romredirect(UINT32 address)
-{
-	if ((address & 0xfffff000) == 0x20d31000) {
-		UINT32 offset = TOWORD(address & 0xffffff);
-		UINT16 *ram = (UINT16*)DrvTMSRAM;
-		if (address == 0x20d31550 && TMS34010GetPC() == 0x20d31560 && BURN_ENDIAN_SWAP_INT16(ram[offset]) == 0x58e) {
-			return 0x078e;
-		}
-		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
-	}
-
-	return 0;
-}
-
-static UINT16 midxunit_romredirectp5(UINT32 address)
-{
-	if ((address & 0xfffff000) == 0x20d22000) {
-		UINT32 offset = TOWORD(address & 0xffffff);
-		UINT16 *ram = (UINT16*)DrvTMSRAM;
-		if (address == 0x20d22870 && TMS34010GetPC() == 0x20d22880 && BURN_ENDIAN_SWAP_INT16(ram[offset]) == 0x58e) {
-			return 0x078e;
-		}
-		return BURN_ENDIAN_SWAP_INT16(ram[offset]);
-	}
-
-	return 0;
 }
 
 static UINT8 revx_nvram_chunk[] = {
@@ -698,17 +686,6 @@ static INT32 DrvInit()
 	TMS34010MapMemory(DrvTMSROM,		0xff000000, 0xffffffff, MAP_ROM);
 	TMS34010SetHandlers(0,				midxunit_read, midxunit_write);
 
-	// hot-fix for u76 failure @ boot -dink
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "revxp5")) {
-		TMS34010UnmapMemory(0x20d22000, 0x20d22fff, MAP_ROM); // unmap page w/bad opcode
-		TMS34010SetReadHandler(1, midxunit_romredirectp5);      // replace with a handler to dish out proper opcode when needed
-		TMS34010MapHandler(1, 0x20d22000, 0x20d22fff, MAP_ROM);
-	} else if (strstr(BurnDrvGetTextA(DRV_NAME), "revx1")) {
-		TMS34010UnmapMemory(0x20d31000, 0x20d31fff, MAP_ROM); // unmap page w/bad opcode
-		TMS34010SetReadHandler(1, midxunit_romredirect);      // replace with a handler to dish out proper opcode when needed
-		TMS34010MapHandler(1, 0x20d31000, 0x20d31fff, MAP_ROM);
-	}
-
 	TMS34010SetToShift(to_shiftreg);
 	TMS34010SetFromShift(from_shiftreg);
 	TMS34010SetHaltOnReset(0);
@@ -722,6 +699,7 @@ static INT32 DrvInit()
     MidwaySerialPicReset();
 
 	Dcs2kInit(DCS_2KU, MHz(10));
+	Dcs2kSetOutputFullCallback(dcs_output_full);
 	Dcs2kMapSoundROM(DrvSndROM, 0x1000000);
 	Dcs2kSetVolume(5.50);
 
@@ -950,10 +928,10 @@ STD_ROM_PICK(revx)
 STD_ROM_FN(revx)
 
 struct BurnDriver BurnDrvRevx = {
-	"revx", "revx1", NULL, NULL, "1994",
+	"revx", NULL, NULL, NULL, "1994",
 	"Revolution X (revision 2.0 9/8/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revxRomInfo, revxRomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3
@@ -1016,10 +994,10 @@ STD_ROM_PICK(revx1)
 STD_ROM_FN(revx1)
 
 struct BurnDriver BurnDrvRevx1 = {
-	"revx1", NULL, NULL, NULL, "1994",
+	"revx1", "revx", NULL, NULL, "1994",
 	"Revolution X (revision 1.0 6/16/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,
 	NULL, revx1RomInfo, revx1RomName, NULL, NULL, NULL, NULL, RevxInputInfo, RevxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	XUNIT_SCREEN_WIDTH, XUNIT_SCREEN_HEIGHT, 4, 3
@@ -1083,7 +1061,7 @@ STD_ROM_PICK(revxp5)
 STD_ROM_FN(revxp5)
 
 struct BurnDriver BurnDrvRevxp5 = {
-	"revxp5", "revx1", NULL, NULL, "1994",
+	"revxp5", "revx", NULL, NULL, "1994",
 	"Revolution X (prototype, revision 5.0 5/23/94)\0", NULL, "Midway", "X Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 3, HARDWARE_MIDWAY_XUNIT, GBF_SHOOT, 0,

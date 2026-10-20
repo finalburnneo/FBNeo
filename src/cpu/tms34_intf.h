@@ -41,6 +41,8 @@ void TMS34010SetHaltOnReset(INT32 onoff);
 INT32 TMS34010GenerateScanline(INT32 line);
 UINT32 TMS34010GetPC();
 UINT32 TMS34010GetPPC();
+// TMS34020: during a 16-bit field write, the upper half of the register driven on the data bus (-1 otherwise)
+INT32 TMS34020GetWordWriteHigh();
 
 UINT8 TMS34010ReadByte(UINT32 address);
 UINT16 TMS34010ReadWord(UINT32 address);

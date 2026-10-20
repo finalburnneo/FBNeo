@@ -55,6 +55,12 @@ UINT32 adsp21xx_read_dword_32le(UINT32 address);
 void adsp21xx_data_write_word_16le(UINT32 address, UINT16 data);
 void adsp21xx_write_dword_32le(UINT32 address, UINT32 data);
 
+// program read map (256 pages of 0x100 words): a value below ADSP2100_MAXHANDLER is a handler index
+#define ADSP2100_MAXHANDLER	10
+extern UINT8 **adsp21xx_prg_map;
+// data map: 256 read pages of 0x100 words, then 256 write pages
+extern UINT8 **adsp21xx_data_map;
+
 /***************************************************************************
     PUBLIC FUNCTIONS
 ***************************************************************************/

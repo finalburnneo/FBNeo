@@ -264,6 +264,11 @@ UINT32 TMS34010GetPC()
 	return tms34010_get_pc();
 }
 
+INT32 TMS34020GetWordWriteHigh()
+{
+	return tms34020_get_word_write_high();
+}
+
 UINT32 TMS34010GetPPC()
 {
 	bprintf(0, _T("TMS34010GetPPC() not supported.\n"));

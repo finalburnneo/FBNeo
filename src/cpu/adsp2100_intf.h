@@ -22,6 +22,7 @@ int Adsp2100LoadBootROM(void *src, void *dst);
 int Adsp2100TotalCycles();
 void Adsp2100NewFrame();
 void Adsp2100RunEnd();
+int Adsp2100Idle(int cycles);
 void Adsp2100Scan(INT32 nAction);
 
 void Adsp2100SetRxCallback(pAdsp2100RxCallback cb);

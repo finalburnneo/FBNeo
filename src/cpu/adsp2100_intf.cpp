@@ -12,7 +12,7 @@
 #define PAGE_MASK       0xFF
 #define PAGE_COUNT      (1 << (ADDR_BITS - PAGE_SHIFT))
 #define PAGE_WADD       (PAGE_COUNT)
-#define ADSP_MAXHANDLER 10
+#define ADSP_MAXHANDLER ADSP2100_MAXHANDLER
 #define PFN(x)          ((x >> PAGE_SHIFT) & 0xFF)
 
 struct Adsp2100MemoryMap
@@ -27,6 +27,8 @@ struct Adsp2100MemoryMap
 };
 
 static Adsp2100MemoryMap *pMemMap;
+UINT8 **adsp21xx_prg_map = NULL;
+UINT8 **adsp21xx_data_map = NULL;
 static adsp2100_state *pADSP;
 
 static pAdsp2100RxCallback pRxCallback;
@@ -85,6 +87,8 @@ static void TimerCallback(adsp2100_state *adsp, int enable)
 int Adsp2100Init()
 {
     pMemMap = new Adsp2100MemoryMap;
+    adsp21xx_prg_map = pMemMap->PrgMap;
+    adsp21xx_data_map = pMemMap->DataMap;
     ResetMemoryMap();
     pADSP = (adsp2100_state*) BurnMalloc(sizeof(adsp2100_state));
     adsp2105_init(pADSP, NULL);
@@ -108,6 +112,8 @@ int Adsp2100Exit()
     BurnFree(pADSP);
     delete pMemMap;
     pMemMap = NULL;
+    adsp21xx_prg_map = NULL;
+    adsp21xx_data_map = NULL;
 #if ENABLE_TRACE
     fclose(pTrace);
 #endif
@@ -137,6 +143,13 @@ void Adsp2100NewFrame()
 void Adsp2100RunEnd()
 {
 	adsp21xx_stop_execute(pADSP);
+}
+
+// advances the cycle counter without executing anything
+int Adsp2100Idle(int cycles)
+{
+	pADSP->total_cycles += cycles;
+	return cycles;
 }
 
 void Adsp2100Scan(INT32 nAction)
@@ -194,10 +207,10 @@ int Adsp2100MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int 
     for (int i = 0; i < maxPages; i++, page++) {
 
         if (nType & MAP_READ)
-            pMemMap->PrgMap[page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->PrgMap[page] = pMemory + (PAGE_SIZE * 4 * i);
 
         if (nType & MAP_WRITE)
-            pMemMap->PrgMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->PrgMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * 4 * i);
     }
     return 0;
 }
@@ -229,10 +242,10 @@ int Adsp2100MapData(unsigned char* pMemory, unsigned int nStart, unsigned int nE
     for (int i = 0; i < maxPages; i++, page++) {
 
         if (nType & MAP_READ)
-            pMemMap->DataMap[page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->DataMap[page] = pMemory + (PAGE_SIZE * 2 * i);
 
         if (nType & MAP_WRITE)
-            pMemMap->DataMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * i);
+            pMemMap->DataMap[PAGE_WADD + page] = pMemory + (PAGE_SIZE * 2 * i);
     }
     return 0;
 }
@@ -297,14 +310,15 @@ int Adsp2100SetWriteDataWordHandler(int i, pAdsp2100WriteWordHandler pHandler)
 //                       MEMORY ACCESSORS
 // ============================================================================
 
+// adr is a word address: program pages hold 0x100 32-bit words, data pages 0x100 16-bit words
 template<typename T>
 inline T fast_read(uint8_t *ptr, unsigned adr) {
-    return *((T*)  ((uint8_t*) ptr + (adr & PAGE_MASK)));
+    return *((T*)  ((uint8_t*) ptr + (adr & PAGE_MASK) * sizeof(T)));
 }
 
 template<typename T>
 inline void fast_write(uint8_t *xptr, unsigned adr, T value) {
-    T *ptr = ((T*)  ((uint8_t*) xptr + (adr & PAGE_MASK)));
+    T *ptr = ((T*)  ((uint8_t*) xptr + (adr & PAGE_MASK) * sizeof(T)));
     *ptr = value;
 }
 
@@ -347,7 +361,7 @@ UINT32 adsp21xx_read_dword_32le(UINT32 address)
 
     UINT8 *pr = pMemMap->PrgMap[PFN(address)];
     if ((uintptr_t)pr >= ADSP_MAXHANDLER) {
-        value = BURN_ENDIAN_SWAP_INT32(fast_read<uint32_t>(pr, address));
+        value = fast_read<uint32_t>(pr, address);	// program memory holds native 32-bit words
     } else
         value = pMemMap->prgReadLong[(uintptr_t)pr](address);
 #if ENABLE_TRACE
@@ -369,7 +383,7 @@ void adsp21xx_write_dword_32le(UINT32 address, UINT32 data)
 
     UINT8 *pr = pMemMap->PrgMap[PAGE_WADD + PFN(address)];
     if ((uintptr_t)pr >= ADSP_MAXHANDLER) {
-        fast_write<uint32_t>(pr, address, BURN_ENDIAN_SWAP_INT32(data));
+        fast_write<uint32_t>(pr, address, data);
         return;
     }
     pMemMap->prgWriteLong[(uintptr_t)pr](address, data);

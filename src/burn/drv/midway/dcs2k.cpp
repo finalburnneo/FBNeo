@@ -75,6 +75,9 @@ static UINT8 bGenerateIRQ;
 static INT32 nIRQPeriod;		// ADSP cycles between two half buffers
 static INT32 nIRQCountdown;		// ADSP cycles until the next half buffer
 
+static void (*pOutputFullCallback)(INT32 state) = NULL;
+static INT32 nOutputFull;	// state last given to pOutputFullCallback
+
 static INT32 sample_rate;  // sample rate of dcs
 static INT16 *mixer_buffer;
 static INT32 mixer_pos;
@@ -112,6 +115,8 @@ void Dcs2kInit(INT32 dtype, INT32 dmhz)
 
 	dcs_type = dtype;
 	dcs_mhz = dmhz;
+	pOutputFullCallback = NULL;
+	nOutputFull = 0;
 	dcs_volume = 1.00;
 
     Adsp2100Init();
@@ -173,6 +178,19 @@ void Dcs2kExit()
 	BurnFree(pDataRAM0);
 
 	BurnFree(mixer_buffer);
+}
+
+void Dcs2kSetOutputFullCallback(void (*cb)(INT32 state))
+{
+	pOutputFullCallback = cb;
+}
+
+static void SetOutputFull(INT32 state)
+{
+	if (nOutputFull != state) {
+		nOutputFull = state;
+		if (pOutputFullCallback) pOutputFullCallback(state);
+	}
 }
 
 void Dcs2kSetVolume(double vol)
@@ -238,6 +256,30 @@ UINT32 Dcs2kTotalCycles()
 
 static void DcsIRQ__INT();
 
+// The DCS program waits for the autobuffer to move on with a 3 instruction loop:
+//   AR = Ix (autobuffer index) / AF = AR - y / IF cond JUMP back
+// Ix only changes at the next half buffer IRQ, so the rest of the slice can be skipped.
+static INT32 DcsSpinLoop(adsp2100_state *adsp)
+{
+	UINT32 pc = adsp->pc & 0x3fff;
+	UINT32 mv = 0x0d00a0 | ((1 + (nTxIR >> 2)) << 8) | (nTxIR & 3);	// AR = Ix
+
+	for (UINT32 k = 0; k < 3; k++) {
+		if (pc < k || pc - k + 2 > 0x3fff) continue;
+		UINT32 a = pc - k;
+		if ((adsp21xx_read_dword_32le(a << 2) & 0xffffff) != mv) continue;
+		UINT32 op1 = adsp21xx_read_dword_32le((a + 1) << 2) & 0xffffff;
+		UINT32 op2 = adsp21xx_read_dword_32le((a + 2) << 2) & 0xffffff;
+		if (((op1 >> 16) & 0xfe) != 0x26 || (op1 & 0x0f) != 0x0f) continue;	// AF = AR op y, unconditional
+		if (((op1 >> 11) & 3) == 2) continue;									// y = AF would accumulate
+		if ((op2 >> 16) != 0x18 || ((op2 >> 4) & 0x3fff) != a) continue;		// IF cond JUMP a
+		if (adsp->loop >= a && adsp->loop <= a + 2) continue;
+		return 1;
+	}
+
+	return 0;
+}
+
 void Dcs2kRun(INT32 cycles)
 {
 	while (cycles > 0) {
@@ -247,8 +289,21 @@ void Dcs2kRun(INT32 cycles)
 		}
 
 		INT32 seg = (cycles < nIRQCountdown) ? cycles : nIRQCountdown;
-		INT32 ran = (seg > 0) ? Adsp2100Run(seg) : 0;
-		if (seg > 0 && ran <= 0) ran = seg;		// end of slice requested, don't spin
+		INT32 ran = 0;
+
+		if (seg > 0) {
+			adsp2100_state *adsp = Adsp2100GetState();
+			if (seg > 16 && DcsSpinLoop(adsp)) {
+				// run a few iterations first: takes pending interrupts, checks it really spins
+				UINT32 idx = adsp->i[nTxIR];
+				ran = Adsp2100Run(8);
+				if (ran <= 0) ran = 8;
+				if (adsp->i[nTxIR] == idx && DcsSpinLoop(adsp)) ran += Adsp2100Idle(seg - ran);
+			} else {
+				ran = Adsp2100Run(seg);
+				if (ran <= 0) ran = seg;		// end of slice requested, don't spin
+			}
+		}
 
 		cycles -= ran;
 		nIRQCountdown -= ran;
@@ -300,20 +355,14 @@ static void SetupMemory()
 
 	Adsp2100SetReadLongHandler  (2, ReadProgramEXT);
     Adsp2100SetWriteLongHandler (2, WriteProgramEXT);
-    Adsp2100MapHandler(1, 0x0000, 0x03FF, MAP_RAM);
+    Adsp2100MapHandler(1, 0x0000, 0x03FF, MAP_WRITE);
+    Adsp2100MapHandler(2, 0x0800, 0x1FFF, MAP_WRITE);
 
-	switch (dcs_type) {
-		case DCS_2K:
-		case DCS_2KU:
-			Adsp2100MapHandler(2, 0x0800, 0x0FFF, MAP_RAM);
-			Adsp2100MapHandler(2, 0x1000, 0x17FF, MAP_RAM);
-			Adsp2100MapHandler(2, 0x1800, 0x1FFF, MAP_RAM);
-		break;
-
-		case DCS_8K:
-			Adsp2100MapHandler(2, 0x0800, 0x1FFF, MAP_RAM);
-		break;
-	}
+    // reads (and opcode fetches) go straight to memory, writes keep the 24-bit masking
+    Adsp2100MapMemory(pIntRAM, 0x0000, 0x03FF, MAP_READ);
+    Adsp2100MapMemory(pExtRAM, 0x0800, 0x0FFF, MAP_READ);
+    Adsp2100MapMemory(pExtRAM, 0x1000, 0x17FF, MAP_READ);
+    Adsp2100MapMemory(pExtRAM, 0x1800, 0x1FFF, MAP_READ);
 
     // data address space
     Adsp2100SetReadDataWordHandler  (1, ReadData);
@@ -346,7 +395,7 @@ static void SetupMemory()
 
 		case DCS_8K:
 			Adsp2100MapDataHandler(1, 0x0800, 0x1FFF, MAP_RAM);
-			Adsp2100MapDataHandler(7, 0x0000, 0x07FF, MAP_RAM);
+			Adsp2100MapData(pDataRAM0, 0x0000, 0x07FF, MAP_READ | MAP_WRITE);
 		break;
 	}
 
@@ -356,7 +405,7 @@ static void SetupMemory()
 
     Adsp2100MapDataHandler(4, 0x3400, 0x34FF, MAP_READ | MAP_WRITE);
 
-    Adsp2100MapDataHandler(5, 0x3800, 0x39FF, MAP_READ | MAP_WRITE);
+    Adsp2100MapData(pDataRAM, 0x3800, 0x39FF, MAP_READ | MAP_WRITE);
 
     Adsp2100MapDataHandler(6, 0x3FE0, 0x3FFF, MAP_READ | MAP_WRITE);
 }
@@ -410,6 +459,7 @@ void Dcs2kReset()
 
     SET_INPUT_EMPTY();
     SET_OUTPUT_EMPTY();
+    SetOutputFull(0);
 
     Dcs2kBoot();
 
@@ -515,6 +565,7 @@ static void OutputLatch(UINT32 address, UINT16 value)
 		dcs_log(_T("output_latch %x, %x\n"), address, value);
 		SET_OUTPUT_FULL();
 		nOutputData = value;
+		SetOutputFull(1);
 	}
 }
 
@@ -581,6 +632,7 @@ INT32 Dcs2kControlRead()
 INT32 Dcs2kDataRead()
 {
 	SET_OUTPUT_EMPTY();
+	SetOutputFull(0);
     return nOutputData;
 }
 
@@ -709,6 +761,7 @@ INT32 Dcs2kScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nOutputData);
 		SCAN_VAR(nInputData);
 		SCAN_VAR(nLatchControl);
+		SCAN_VAR(nOutputFull);
 		SCAN_VAR(nCtrlReg);
 		SCAN_VAR(nTxIR);
 		SCAN_VAR(nTxIRBase);

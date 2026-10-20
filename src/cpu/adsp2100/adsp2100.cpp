@@ -278,12 +278,18 @@ INLINE adsp2100_state *get_safe_token(const device_config *device)
 INLINE UINT16 RWORD_DATA(adsp2100_state *adsp, UINT32 addr)
 {
     //return memory_read_word_16le(adsp->data, addr << 1);
+    addr &= 0x3fff;
+    UINT8 *p = adsp21xx_data_map[addr >> 8];
+    if ((uintptr_t)p >= ADSP2100_MAXHANDLER) return BURN_ENDIAN_SWAP_INT16(((UINT16*)p)[addr & 0xff]);
     return adsp21xx_data_read_word_16le(addr << 1);
 }
 
 INLINE void WWORD_DATA(adsp2100_state *adsp, UINT32 addr, UINT16 data)
 {
     //memory_write_word_16le(adsp->data, addr << 1, data);
+    addr &= 0x3fff;
+    UINT8 *p = adsp21xx_data_map[0x100 + (addr >> 8)];
+    if ((uintptr_t)p >= ADSP2100_MAXHANDLER) { ((UINT16*)p)[addr & 0xff] = BURN_ENDIAN_SWAP_INT16(data); return; }
     adsp21xx_data_write_word_16le(addr << 1, data);
 }
 
@@ -312,7 +318,13 @@ INLINE void WWORD_PGM(adsp2100_state *adsp, UINT32 addr, UINT32 data)
 }
 
 //#define ROPCODE(a) memory_decrypted_read_dword((a)->program, (a)->pc << 2)
-#define ROPCODE(a)  adsp21xx_read_dword_32le((a)->pc << 2)
+INLINE UINT32 ROPCODE(adsp2100_state *adsp)
+{
+	UINT32 pc = adsp->pc & 0x3fff;
+	UINT8 *p = adsp21xx_prg_map[pc >> 8];
+	if ((uintptr_t)p >= ADSP2100_MAXHANDLER) return ((UINT32*)p)[pc & 0xff];
+	return adsp21xx_read_dword_32le(pc << 2);
+}
 
 
 /***************************************************************************

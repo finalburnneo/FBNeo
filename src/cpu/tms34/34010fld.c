@@ -99,7 +99,10 @@ static void wfield_16(offs_t offset,UINT32 data)
 	}
 	else
 	{
+		// the 34020 drives the whole register on its 32-bit bus, some devices latch both halves
+		if (state.is_34020) nWordWriteHigh = data >> 16;
 		TMS34010_WRMEM_WORD(TOBYTE(offset),data);
+		nWordWriteHigh = -1;
 	}
 }
 

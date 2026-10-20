@@ -534,6 +534,9 @@ static UINT32 raster_op_21(UINT32 newpix, UINT32 oldpix) { return (oldpix > newp
     OPCODE TABLE & IMPLEMENTATIONS
 ***************************************************************************/
 
+// TMS34020: upper half of the 32-bit data bus during a 16-bit field write, -1 otherwise
+static INT32 nWordWriteHigh = -1;
+
 /* includes the static function prototypes and the master opcode table */
 #include "34010tbl.c"
 #include "34010fld.c"
@@ -893,6 +896,11 @@ INT64 tms34010_total_cycles()
 void tms34010_new_frame()
 {
 	state.total_cycles = 0;
+}
+
+INT32 tms34020_get_word_write_high()
+{
+	return nWordWriteHigh;
 }
 
 UINT32 tms34010_get_pc()

@@ -112,6 +112,7 @@ int tms34010_idle(int cycles);
 INT64 tms34010_total_cycles();
 void tms34010_new_frame();
 UINT32 tms34010_get_pc();
+INT32 tms34020_get_word_write_high();
 void tms34010_modify_timeslice(int cycles);
 
 int tms34010_context_size();

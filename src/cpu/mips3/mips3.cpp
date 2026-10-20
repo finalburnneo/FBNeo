@@ -86,7 +86,16 @@ struct Mips3Insn {
 	UINT32 op;
 	UINT16 pc;		// offset in the 4KB page
 	UINT16 flags;
+	UINT8 rs, rt, rd, sa;	// pre-decoded register fields
 };
+
+static inline void InsnFields(Mips3Insn *I)
+{
+	I->rs = (I->op >> 21) & 31;
+	I->rt = (I->op >> 16) & 31;
+	I->rd = (I->op >> 11) & 31;
+	I->sa = (I->op >> 6) & 31;
+}
 
 struct Mips3Block {
 	UINT16 start;	// page offset of the first instruction
@@ -95,6 +104,8 @@ struct Mips3Block {
 	UINT8 split;	// ends on a branch whose delay slot runs uncached (next page, or a branch itself)
 	UINT8 idle;		// loops on itself with no stores: IDLE_STABLE or IDLE_TIMED (see IdleAnalyse)
 	UINT32 wmask;	// registers written by the block, induction counters excluded
+	UINT8 idlewait;	// iterations to run plainly before trying to skip again
+	UINT8 idleback;	// backoff after a failed skip attempt (loops that do work without stores)
 	UINT8 nind;		// induction counters: "addiu/daddiu r, r, imm" whose register nothing else reads
 	UINT8 indreg[4];
 	UINT8 ind64[4];
@@ -106,10 +117,9 @@ struct Mips3Block {
 	Mips3Insn insn[1];
 };
 
-// direct-mapped virtual pc -> block lookup, invalidated as a whole by bumping nFastGen
+// direct-mapped virtual pc -> block lookup, flushed by the run loop after nFastGen was bumped
 struct Mips3FastEntry {
 	UINT32 pc;
-	UINT32 gen;
 	Mips3Block *b;
 };
 
@@ -154,11 +164,18 @@ static struct {
 	UINT32 anext;		// branch-in-delay-slot: decision of the first branch
 	UINT32 dpend;		// the block ends with a delay slot still to execute (at next_pc, then dtarget)
 	UINT32 dtarget;
+	const Mips3Insn *lim;	// end of the running block, NULL once brk is set
 } Mx;
+
+#define BREAK_BLOCK()	do { Mx.brk = 1; Mx.lim = NULL; } while (0)
 
 // total_cycles at which the run loop must look at interrupts, the timer or a pending delay slot;
 // set to 0 whenever something that may need attention changes
 static UINT64 nNextEvent = 0;
+// the run loop only compares total_cycles with nRunLimit = min(nRunTarget, nNextEvent)
+static UINT64 nRunTarget = 0;
+static UINT64 nRunLimit = 0;
+#define FORCE_EVENT()	do { nNextEvent = 0; nRunLimit = 0; } while (0)
 
 #if MIPS3_DEBUG_LOG
 static INT32 nDbgExc = 0, nDbgIrq = 0, nDbgUnmapped = 0, nDbgStatus = 0, nDbgEret = 0, nDbgTlb = 0;
@@ -185,6 +202,22 @@ static UINT8 *Arena = NULL;
 static Mips3FastEntry FastCache[MIPS3_FAST_ENTRIES];
 #endif
 static UINT32 nFastGen = 1;
+static UINT32 nFastGenSeen = 0;
+
+// blocks may have been dropped or remapped: the run loop flushes FastCache before the next lookup
+#define FAST_INVALIDATE()	do { nFastGen++; FORCE_EVENT(); } while (0)
+
+static void FastCacheFlush()
+{
+#if MIPS3_CACHED_INTERPRETER
+	// an empty slot holds an aligned pc that indexes another slot, so it never matches
+	for (UINT32 i = 0; i < MIPS3_FAST_ENTRIES; i++) {
+		FastCache[i].pc = (i ^ 1) << 2;
+		FastCache[i].b = NULL;
+	}
+#endif
+	nFastGenSeen = nFastGen;
+}
 
 #if MIPS3_PROFILE
 static UINT64 nProfIdle = 0, nProfStep = 0, nProfStart = 0, nProfNext = 0;
@@ -206,7 +239,15 @@ static void Mips3FlushCache();
 #define MIPS3_INLINE	inline
 #endif
 
-#define EAT_CYCLES(n)	do { M.total_cycles += (n); nMips3ICount -= (n); } while (0)
+#if defined(_MSC_VER)
+#define MIPS3_NOINLINE	__declspec(noinline)
+#elif defined(__GNUC__)
+#define MIPS3_NOINLINE	__attribute__((noinline))
+#else
+#define MIPS3_NOINLINE
+#endif
+
+#define EAT_CYCLES(n)	do { M.total_cycles += (n); } while (0)
 
 // ---------------------------------------------------------------------------
 // physical memory access
@@ -228,7 +269,7 @@ static void CodeWrite(Mips3BlockPage *bp, UINT32 off)
 		if (b == NULL) continue;
 		UINT32 c0 = b->start >> 8;
 		UINT32 c1 = (b->start + b->count * 4 - 1) >> 8;
-		if (c >= c0 && c <= c1) { bp->blk[o >> 2] = NULL; nFastGen++; }
+		if (c >= c0 && c <= c1) { bp->blk[o >> 2] = NULL; FAST_INVALIDATE(); }
 	}
 
 	bp->codemask &= ~(1 << c);
@@ -379,7 +420,7 @@ static void Mips3Exception(const Mips3Insn *I, INT32 code, INT32 refill, INT32 c
 	}
 
 	Mx.next_pc = ((sr & SR_BEV) ? 0xbfc00200 : 0x80000000) + offset;
-	Mx.brk = 1;
+	BREAK_BLOCK();
 }
 
 static void AddressError(const Mips3Insn *I, UINT32 va, INT32 store)
@@ -405,6 +446,58 @@ static void TlbFault(const Mips3Insn *I, UINT32 va, INT32 store, UINT32 entry)
 // ---------------------------------------------------------------------------
 // virtual memory access
 
+// direct-mapped cache of virtual page -> host memory, for pages that are plain memory
+// (writes: only pages without cached code). Flushed whenever the translation or the map changes.
+#define MIPS3_HOST_ENTRIES	512
+
+struct Mips3HostEntry {
+	UINT32 vpn;
+	UINT8 *host;
+};
+
+static Mips3HostEntry HostRead[MIPS3_HOST_ENTRIES];
+static Mips3HostEntry HostWrite[MIPS3_HOST_ENTRIES];
+
+// value read by the out of line slow paths (keeps the handlers' locals in registers)
+static UINT64 LoadTmp;
+
+static void HostCacheFlush()
+{
+	for (INT32 i = 0; i < MIPS3_HOST_ENTRIES; i++) {
+		HostRead[i].vpn = HostWrite[i].vpn = ~0U;
+	}
+}
+
+#if MIPS3_CACHED_INTERPRETER && !MIPS3_DEBUG_TRACE
+static void HostWriteFlush()
+{
+	for (INT32 i = 0; i < MIPS3_HOST_ENTRIES; i++) HostWrite[i].vpn = ~0U;
+}
+#endif
+
+#define HOST_R(va)	(&HostRead[((va) >> 12) & (MIPS3_HOST_ENTRIES - 1)])
+#define HOST_W(va)	(&HostWrite[((va) >> 12) & (MIPS3_HOST_ENTRIES - 1)])
+
+static inline void HostFillRead(UINT32 va, UINT32 pa)
+{
+	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
+	if (IS_PTR(p->read)) {
+		Mips3HostEntry *h = HOST_R(va);
+		h->vpn = va >> 12;
+		h->host = p->read;
+	}
+}
+
+static inline void HostFillWrite(UINT32 va, UINT32 pa)
+{
+	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
+	if (IS_PTR(p->write) && (p->wcode == NULL || p->wcode->codemask == 0)) {
+		Mips3HostEntry *h = HOST_W(va);
+		h->vpn = va >> 12;
+		h->host = p->write;
+	}
+}
+
 static inline INT32 Xlat(const Mips3Insn *I, UINT32 va, UINT32 need, UINT32 *pa)
 {
 	UINT32 e = Vtlb[va >> 12];
@@ -416,74 +509,155 @@ static inline INT32 Xlat(const Mips3Insn *I, UINT32 va, UINT32 need, UINT32 *pa)
 	return 0;
 }
 
-static inline INT32 Load8(const Mips3Insn *I, UINT32 va, UINT32 *v)
+static MIPS3_NOINLINE INT32 Load8Slow(const Mips3Insn *I, UINT32 va)
 {
 	UINT32 pa;
 	if (!Xlat(I, va, VT_READ, &pa)) return 0;
-	*v = RdPhys8(pa);
+	HostFillRead(va, pa);
+	LoadTmp = RdPhys8(pa);
+	return 1;
+}
+
+static inline INT32 Load8(const Mips3Insn *I, UINT32 va, UINT32 *v)
+{
+	Mips3HostEntry *h = HOST_R(va);
+	if (h->vpn == (va >> 12)) { *v = h->host[va & 0xfff]; return 1; }
+	if (!Load8Slow(I, va)) return 0;
+	*v = (UINT32)LoadTmp;
+	return 1;
+}
+
+static MIPS3_NOINLINE INT32 Load16Slow(const Mips3Insn *I, UINT32 va)
+{
+	UINT32 pa;
+	if (va & 1) { AddressError(I, va, 0); return 0; }
+	if (!Xlat(I, va, VT_READ, &pa)) return 0;
+	HostFillRead(va, pa);
+	LoadTmp = RdPhys16(pa);
 	return 1;
 }
 
 static inline INT32 Load16(const Mips3Insn *I, UINT32 va, UINT32 *v)
 {
+	Mips3HostEntry *h = HOST_R(va);
+	if (h->vpn == (va >> 12) && !(va & 1)) { *v = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(h->host + (va & 0xfff))); return 1; }
+	if (!Load16Slow(I, va)) return 0;
+	*v = (UINT32)LoadTmp;
+	return 1;
+}
+
+static MIPS3_NOINLINE INT32 Load32Slow(const Mips3Insn *I, UINT32 va)
+{
 	UINT32 pa;
-	if (va & 1) { AddressError(I, va, 0); return 0; }
+	if (va & 3) { AddressError(I, va, 0); return 0; }
 	if (!Xlat(I, va, VT_READ, &pa)) return 0;
-	*v = RdPhys16(pa);
+	HostFillRead(va, pa);
+	LoadTmp = RdPhys32(pa);
 	return 1;
 }
 
 static inline INT32 Load32(const Mips3Insn *I, UINT32 va, UINT32 *v)
 {
+	Mips3HostEntry *h = HOST_R(va);
+	if (h->vpn == (va >> 12) && !(va & 3)) { *v = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(h->host + (va & 0xfff))); return 1; }
+	if (!Load32Slow(I, va)) return 0;
+	*v = (UINT32)LoadTmp;
+	return 1;
+}
+
+static MIPS3_NOINLINE INT32 Load64Slow(const Mips3Insn *I, UINT32 va)
+{
 	UINT32 pa;
-	if (va & 3) { AddressError(I, va, 0); return 0; }
+	if (va & 7) { AddressError(I, va, 0); return 0; }
 	if (!Xlat(I, va, VT_READ, &pa)) return 0;
-	*v = RdPhys32(pa);
+	HostFillRead(va, pa);
+	LoadTmp = RdPhys64(pa);
 	return 1;
 }
 
 static inline INT32 Load64(const Mips3Insn *I, UINT32 va, UINT64 *v)
 {
+	Mips3HostEntry *h = HOST_R(va);
+	if (h->vpn == (va >> 12) && !(va & 7)) {
+		UINT64 t;
+		memcpy(&t, h->host + (va & 0xfff), 8);
+		*v = BURN_ENDIAN_SWAP_INT64(t);
+		return 1;
+	}
+	if (!Load64Slow(I, va)) return 0;
+	*v = (UINT64)LoadTmp;
+	return 1;
+}
+
+static MIPS3_NOINLINE INT32 Store8Slow(const Mips3Insn *I, UINT32 va, UINT8 v)
+{
 	UINT32 pa;
-	if (va & 7) { AddressError(I, va, 0); return 0; }
-	if (!Xlat(I, va, VT_READ, &pa)) return 0;
-	*v = RdPhys64(pa);
+	if (!Xlat(I, va, VT_WRITE, &pa)) return 0;
+	WrPhys8(pa, v);
+	HostFillWrite(va, pa);
 	return 1;
 }
 
 static inline INT32 Store8(const Mips3Insn *I, UINT32 va, UINT8 v)
 {
-	UINT32 pa;
-	if (!Xlat(I, va, VT_WRITE, &pa)) return 0;
-	WrPhys8(pa, v);
-	return 1;
+	Mips3HostEntry *h = HOST_W(va);
+	if (h->vpn == (va >> 12)) { h->host[va & 0xfff] = v; return 1; }
+	return Store8Slow(I, va, v);
 }
 
-static inline INT32 Store16(const Mips3Insn *I, UINT32 va, UINT16 v)
+static MIPS3_NOINLINE INT32 Store16Slow(const Mips3Insn *I, UINT32 va, UINT16 v)
 {
 	UINT32 pa;
 	if (va & 1) { AddressError(I, va, 1); return 0; }
 	if (!Xlat(I, va, VT_WRITE, &pa)) return 0;
 	WrPhys16(pa, v);
+	HostFillWrite(va, pa);
 	return 1;
 }
 
-static inline INT32 Store32(const Mips3Insn *I, UINT32 va, UINT32 v)
+static inline INT32 Store16(const Mips3Insn *I, UINT32 va, UINT16 v)
+{
+	Mips3HostEntry *h = HOST_W(va);
+	if (h->vpn == (va >> 12) && !(va & 1)) { *(UINT16*)(h->host + (va & 0xfff)) = BURN_ENDIAN_SWAP_INT16(v); return 1; }
+	return Store16Slow(I, va, v);
+}
+
+static MIPS3_NOINLINE INT32 Store32Slow(const Mips3Insn *I, UINT32 va, UINT32 v)
 {
 	UINT32 pa;
 	if (va & 3) { AddressError(I, va, 1); return 0; }
 	if (!Xlat(I, va, VT_WRITE, &pa)) return 0;
 	WrPhys32(pa, v);
+	HostFillWrite(va, pa);
 	return 1;
 }
 
-static inline INT32 Store64(const Mips3Insn *I, UINT32 va, UINT64 v)
+static inline INT32 Store32(const Mips3Insn *I, UINT32 va, UINT32 v)
+{
+	Mips3HostEntry *h = HOST_W(va);
+	if (h->vpn == (va >> 12) && !(va & 3)) { *(UINT32*)(h->host + (va & 0xfff)) = BURN_ENDIAN_SWAP_INT32(v); return 1; }
+	return Store32Slow(I, va, v);
+}
+
+static MIPS3_NOINLINE INT32 Store64Slow(const Mips3Insn *I, UINT32 va, UINT64 v)
 {
 	UINT32 pa;
 	if (va & 7) { AddressError(I, va, 1); return 0; }
 	if (!Xlat(I, va, VT_WRITE, &pa)) return 0;
 	WrPhys64(pa, v);
+	HostFillWrite(va, pa);
 	return 1;
+}
+
+static inline INT32 Store64(const Mips3Insn *I, UINT32 va, UINT64 v)
+{
+	Mips3HostEntry *h = HOST_W(va);
+	if (h->vpn == (va >> 12) && !(va & 7)) {
+		UINT64 t = BURN_ENDIAN_SWAP_INT64(v);
+		memcpy(h->host + (va & 0xfff), &t, 8);
+		return 1;
+	}
+	return Store64Slow(I, va, v);
 }
 
 // partial stores (SWL/SWR/SDL/SDR): only the bytes selected by mask are written
@@ -513,7 +687,8 @@ static void VtlbClear(UINT32 vpn, UINT32 count)
 
 static void TlbUnmap(INT32 i)
 {
-	nFastGen++;
+	FAST_INVALIDATE();
+	HostCacheFlush();
 	for (INT32 w = 0; w < 2; w++) {
 		if (TlbMappedCount[i][w]) {
 			VtlbClear(TlbMappedVpn[i][w], TlbMappedCount[i][w]);
@@ -561,7 +736,8 @@ static void TlbMap(INT32 i)
 
 static void VtlbRebuild()
 {
-	nFastGen++;
+	FAST_INVALIDATE();
+	HostCacheFlush();
 	memset(Vtlb, 0, VIRT_PAGES * sizeof(UINT32));
 	memset(TlbMappedCount, 0, sizeof(TlbMappedCount));
 
@@ -614,17 +790,17 @@ static void CompareRearm(UINT64 now)
 	UINT64 delta = (UINT32)((UINT32)CP0(CP0_Compare) - count);
 	if (delta == 0) delta = 0x100000000ULL;
 	M.compare_fire = now + delta * 2;
-	nNextEvent = 0;
+	FORCE_EVENT();
 }
 
 // ---------------------------------------------------------------------------
 // instruction helpers
 
 #define OP			(I->op)
-#define RSn			((OP >> 21) & 31)
-#define RTn			((OP >> 16) & 31)
-#define RDn			((OP >> 11) & 31)
-#define SA			((OP >> 6) & 31)
+#define RSn			(I->rs)
+#define RTn			(I->rt)
+#define RDn			(I->rd)
+#define SA			(I->sa)
 #define RS			M.r[RSn]
 #define RT			M.r[RTn]
 #define RD			M.r[RDn]
@@ -658,7 +834,7 @@ static inline void EndBlockAfter(const Mips3Insn *I)
 {
 	if (!(I->flags & F_DELAY)) {
 		Mx.next_pc = CURPC + 4;
-		Mx.brk = 1;
+		BREAK_BLOCK();
 	}
 }
 
@@ -848,8 +1024,8 @@ static void op_RI(const Mips3Insn *I) { Mips3Exception(I, EXC_RI, 0); }
 
 static void op_BLTZ(const Mips3Insn *I)   { if ((INT64)RS < 0) Mx.next_pc = BRTARGET; }
 static void op_BGEZ(const Mips3Insn *I)   { if ((INT64)RS >= 0) Mx.next_pc = BRTARGET; }
-static void op_BLTZL(const Mips3Insn *I)  { if ((INT64)RS < 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
-static void op_BGEZL(const Mips3Insn *I)  { if ((INT64)RS >= 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
+static void op_BLTZL(const Mips3Insn *I)  { if ((INT64)RS < 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+static void op_BGEZL(const Mips3Insn *I)  { if ((INT64)RS >= 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
 
 static void op_BLTZAL(const Mips3Insn *I)
 {
@@ -869,14 +1045,14 @@ static void op_BLTZALL(const Mips3Insn *I)
 {
 	INT32 taken = (INT64)RS < 0;
 	M.r[31] = SX32(CURPC + 8);
-	if (taken) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; }
+	if (taken) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); }
 }
 
 static void op_BGEZALL(const Mips3Insn *I)
 {
 	INT32 taken = (INT64)RS >= 0;
 	M.r[31] = SX32(CURPC + 8);
-	if (taken) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; }
+	if (taken) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); }
 }
 
 static void op_TGEI(const Mips3Insn *I)  { if ((INT64)RS >= (INT64)SIMM) Mips3Exception(I, EXC_TR, 0); }
@@ -897,10 +1073,10 @@ static void op_BGTZ(const Mips3Insn *I) { if ((INT64)RS > 0) Mx.next_pc = BRTARG
 // "B" is BEQ r0,r0: the most common branch, no compare needed
 static void op_B(const Mips3Insn *I)    { Mx.next_pc = BRTARGET; }
 
-static void op_BEQL(const Mips3Insn *I)  { if (RS == RT) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
-static void op_BNEL(const Mips3Insn *I)  { if (RS != RT) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
-static void op_BLEZL(const Mips3Insn *I) { if ((INT64)RS <= 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
-static void op_BGTZL(const Mips3Insn *I) { if ((INT64)RS > 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
+static void op_BEQL(const Mips3Insn *I)  { if (RS == RT) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+static void op_BNEL(const Mips3Insn *I)  { if (RS != RT) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+static void op_BLEZL(const Mips3Insn *I) { if ((INT64)RS <= 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+static void op_BGTZL(const Mips3Insn *I) { if ((INT64)RS > 0) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
 
 // ---------------------------------------------------------------------------
 // immediate ALU
@@ -1071,7 +1247,7 @@ static UINT64 Cop0Read(const Mips3Insn *I, INT32 idx)
 
 static void Cop0Write(const Mips3Insn *I, INT32 idx, UINT64 v)
 {
-	nNextEvent = 0;
+	FORCE_EVENT();
 	switch (idx) {
 		case CP0_Cause:
 			// only the two software interrupt bits are writable
@@ -1209,8 +1385,8 @@ static void op_ERET(const Mips3Insn *I)
 		SR &= ~SR_EXL;
 	}
 	M.llbit = 0;
-	Mx.brk = 1;
-	nNextEvent = 0;
+	BREAK_BLOCK();
+	FORCE_EVENT();
 #if MIPS3_DEBUG_LOG
 	if (nDbgEret < 20) {
 		nDbgEret++;
@@ -1238,9 +1414,9 @@ static void op_COP3(const Mips3Insn *I)
 // ---------------------------------------------------------------------------
 // COP1 (FPU)
 
-#define FS_N	((OP >> 11) & 31)
-#define FT_N	((OP >> 16) & 31)
-#define FD_N	((OP >> 6) & 31)
+#define FS_N	(I->rd)
+#define FT_N	(I->rt)
+#define FD_N	(I->sa)
 
 #define FCR31_C		0x00800000
 
@@ -1329,8 +1505,8 @@ static void op_CTC1(const Mips3Insn *I)
 
 static void op_BC1F(const Mips3Insn *I)  { COP1_CHECK; if (!(M.fcr31 & FCR31_C)) Mx.next_pc = BRTARGET; }
 static void op_BC1T(const Mips3Insn *I)  { COP1_CHECK; if (M.fcr31 & FCR31_C) Mx.next_pc = BRTARGET; }
-static void op_BC1FL(const Mips3Insn *I) { COP1_CHECK; if (!(M.fcr31 & FCR31_C)) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
-static void op_BC1TL(const Mips3Insn *I) { COP1_CHECK; if (M.fcr31 & FCR31_C) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; Mx.brk = 1; } }
+static void op_BC1FL(const Mips3Insn *I) { COP1_CHECK; if (!(M.fcr31 & FCR31_C)) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+static void op_BC1TL(const Mips3Insn *I) { COP1_CHECK; if (M.fcr31 & FCR31_C) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
 
 static void op_LWC1(const Mips3Insn *I) { COP1_CHECK; UINT32 v; if (Load32(I, EA, &v)) SetFpr32(FT_N, v); }
 static void op_LDC1(const Mips3Insn *I) { COP1_CHECK; UINT64 v; if (Load64(I, EA, &v)) SetFpr64(FT_N, v); }
@@ -1487,13 +1663,13 @@ static void op_DelayBranchPost(const Mips3Insn *I)
 		Mx.next_pc = (bnext == 1) ? seq : bnext;
 	} else if (bnext == 1) {
 		Mx.next_pc = a;
-		Mx.brk = 1;
+		BREAK_BLOCK();
 	} else {
 		// both taken: A's target runs as B's delay slot
 		Mx.dpend = 1;
 		Mx.dtarget = bnext;
 		Mx.next_pc = a;
-		Mx.brk = 1;
+		BREAK_BLOCK();
 	}
 }
 #endif
@@ -1795,12 +1971,40 @@ static void Mips3FlushCache()
 	}
 
 	ArenaUsed = 0;
-	nFastGen++;
+	FAST_INVALIDATE();
 }
 
 #if MIPS3_CACHED_INTERPRETER && !MIPS3_DEBUG_TRACE
 #define IDLE_STABLE		1	// spins with an unchanged state: skip the rest of the slice
 #define IDLE_TIMED		2	// depends on Count only: binary search the first exiting iteration
+#define IDLE_COUNT		3	// delay loop counting a register down: skip the iterations known to loop
+
+// "loop: addiu r, r, -d / bne r, zero, loop / nop" and "loop: bne r, zero, loop / addiu r, r, -d"
+// (also bgtz, addi, daddiu): indreg[0] = r, indimm[0] = -d, ind64[0] bit 0 = 64-bit add,
+// bit 1 = bgtz, bit 2 = the test sees the value before the decrement
+static INT32 CountdownAnalyse(Mips3Block *b, const Mips3Insn *tmp, INT32 n)
+{
+	UINT32 add, br;
+	INT32 before;
+
+	if (n == 3 && tmp[2].op == 0) { add = tmp[0].op; br = tmp[1].op; before = 0; }
+	else if (n == 2) { br = tmp[0].op; add = tmp[1].op; before = 1; }
+	else return 0;
+
+	UINT32 aopc = add >> 26, r = (add >> 16) & 31;
+	if ((aopc != 0x08 && aopc != 0x09 && aopc != 0x19) || r == 0 || ((add >> 21) & 31) != r) return 0;
+	if ((INT16)add >= 0) return 0;
+
+	UINT32 bopc = br >> 26;
+	if (((br >> 21) & 31) != r || ((br >> 16) & 31) != 0) return 0;
+	if (bopc != 0x05 && bopc != 0x07) return 0;		// bne r, zero / bgtz r
+
+	b->idle = IDLE_COUNT;
+	b->indreg[0] = r;
+	b->indimm[0] = (INT16)add;
+	b->ind64[0] = (aopc == 0x19 ? 1 : 0) | (bopc == 0x07 ? 2 : 0) | (before ? 4 : 0);
+	return 1;
+}
 
 // instructions allowed in an idle loop (no stores, no hi/lo or coprocessor side effects),
 // with the registers they read and write
@@ -1977,6 +2181,8 @@ static Mips3Block *BuildBlock(Mips3BlockPage *bp, UINT8 *host, UINT32 off)
 	b->idle = 0;
 	b->wmask = 0;
 	b->nind = 0;
+	b->idlewait = 0;
+	b->idleback = 0;
 #if MIPS3_PROFILE
 	b->vpc = 0;
 	b->prof = 0;
@@ -1988,16 +2194,18 @@ static Mips3Block *BuildBlock(Mips3BlockPage *bp, UINT8 *host, UINT32 off)
 		UINT32 bop = tmp[n - 2].op, opc = bop >> 26;
 		INT32 relative = (opc == 0x01 || (opc >= 0x04 && opc <= 0x07) || (opc >= 0x14 && opc <= 0x17));
 		if (relative && (INT32)(tmp[n - 2].pc + 4) + ((INT32)(INT16)bop << 2) == (INT32)off) {
-			IdleAnalyse(b, tmp, n);
+			if (!CountdownAnalyse(b, tmp, n)) IdleAnalyse(b, tmp, n);
 		}
 	}
 #endif
+	for (INT32 i = 0; i < n; i++) InsnFields(&tmp[i]);
 	memcpy(b->insn, tmp, n * sizeof(Mips3Insn));
 
 	if (bp->blk == NULL) bp->blk = (Mips3Block**)calloc(1024, sizeof(Mips3Block*));
 	bp->blk[off >> 2] = b;
 
 	UINT32 c0 = off >> 8, c1 = (off + n * 4 - 1) >> 8;
+	if (bp->codemask == 0) HostWriteFlush();	// the page now holds code: writes must be checked again
 	for (UINT32 c = c0; c <= c1; c++) bp->codemask |= 1 << c;
 
 	return b;
@@ -2017,7 +2225,6 @@ static inline void ExecBlockPlain(Mips3Block *b)
 static INT32 IdleProbe(Mips3Block *b, UINT64 t, UINT64 cause)
 {
 	UINT64 saved_total = M.total_cycles;
-	INT32 saved_icount = nMips3ICount;
 	UINT64 ind[4];
 	for (INT32 i = 0; i < b->nind; i++) ind[i] = M.r[b->indreg[i]];
 
@@ -2026,14 +2233,50 @@ static INT32 IdleProbe(Mips3Block *b, UINT64 t, UINT64 cause)
 	INT32 loops = !Mx.brk && M.pc == Mx.vpage + b->start && CAUSE == cause;
 
 	M.total_cycles = saved_total;
-	nMips3ICount = saved_icount;
 	M.pc = Mx.vpage + b->start;
 	for (INT32 i = 0; i < b->nind; i++) M.r[b->indreg[i]] = ind[i];
 	return loops;
 }
 
+static void ExecCountdown(Mips3Block *b)
+{
+	ExecBlockPlain(b);
+	if (Mx.brk || M.pc != Mx.vpage + b->start) return;
+	if (M.compare_fire <= M.total_cycles || M.total_cycles >= nRunTarget) return;
+
+	UINT32 r = b->indreg[0], mode = b->ind64[0];
+	INT64 d = -(INT64)b->indimm[0];
+	INT64 v = (mode & 1) ? (INT64)M.r[r] : (INT64)(INT32)M.r[r];
+	if (v <= 0) return;
+
+	// iterations that surely loop again: the tested value stays > 0 (bgtz) or reaches 0 exactly (bne)
+	INT64 k;
+	if (mode & 2) {
+		k = (v - 1) / d;
+	} else {
+		if (v % d) return;	// would only stop after wrapping around
+		k = v / d - 1;
+	}
+	if (k <= 0) return;
+
+	INT64 len = b->count;
+	INT64 budget = (INT64)(nRunTarget - M.total_cycles);
+	if ((UINT64)budget > M.compare_fire - M.total_cycles) budget = (INT64)(M.compare_fire - M.total_cycles);
+	if (k > budget / len) k = budget / len;
+	if (k <= 0) return;
+
+	M.total_cycles += k * len;
+	if (mode & 1) M.r[r] = (UINT64)(v - k * d);
+	else M.r[r] = SX32((UINT32)(v - k * d));
+#if MIPS3_PROFILE
+	nProfIdle += k * len;
+#endif
+}
+
 static void ExecIdleCandidate(Mips3Block *b)
 {
+	if (b->idle == IDLE_COUNT) { ExecCountdown(b); return; }
+
 	UINT64 saved[32];
 	UINT32 mask = b->wmask;
 	UINT64 cause = CAUSE;
@@ -2042,15 +2285,21 @@ static void ExecIdleCandidate(Mips3Block *b)
 
 	ExecBlockPlain(b);
 
-	if (Mx.brk || M.pc != Mx.vpage + b->start || CAUSE != cause || nMips3ICount <= 0) return;
+	if (Mx.brk || M.pc != Mx.vpage + b->start || CAUSE != cause || M.total_cycles >= nRunTarget) return;
 
 	if (b->idle == IDLE_STABLE) {
-		for (INT32 i = 1; i < 32; i++) if ((mask & (1U << i)) && saved[i] != M.r[i]) return;
+		for (INT32 i = 1; i < 32; i++) {
+			if ((mask & (1U << i)) && saved[i] != M.r[i]) {
+				b->idlewait = b->idleback;
+				b->idleback = (b->idleback < 127) ? b->idleback * 2 + 1 : 255;
+				return;
+			}
+		}
 	}
 
 	// whole iterations that fit in the slice, without passing the Count/Compare match
 	if (M.compare_fire <= M.total_cycles) return;	// the timer interrupt is due now
-	INT64 budget = nMips3ICount;
+	INT64 budget = (INT64)(nRunTarget - M.total_cycles);
 	if ((UINT64)budget > M.compare_fire - M.total_cycles) budget = (INT64)(M.compare_fire - M.total_cycles);
 	INT64 len = b->count;
 	INT64 k = budget / len;
@@ -2070,8 +2319,8 @@ static void ExecIdleCandidate(Mips3Block *b)
 		if (Mx.brk) return;
 	}
 
+	b->idleback = 0;
 	M.total_cycles += k * len;
-	nMips3ICount -= (INT32)(k * len);
 	for (INT32 i = 0; i < b->nind; i++) {
 		UINT32 r = b->indreg[i];
 		if (b->ind64[i]) M.r[r] = M.r[r] + (UINT64)(k * b->indimm[i]);
@@ -2086,23 +2335,24 @@ static void ExecIdleCandidate(Mips3Block *b)
 static MIPS3_INLINE void ExecBlock(Mips3Block *b)
 {
 #if MIPS3_IDLE_SKIP
-	if (b->idle) { ExecIdleCandidate(b); return; }
+	if (b->idle) {
+		if (b->idlewait == 0) { ExecIdleCandidate(b); return; }
+		b->idlewait--;
+	}
 #endif
 	Mx.blk_start = b->start;
 	Mx.next_pc = Mx.vpage + b->fall;
 	Mx.brk = 0;
 
 	const Mips3Insn *I = b->insn;
-	const Mips3Insn *end = I + b->count;
+	Mx.lim = I + b->count;
 
 	do {
 		I->fn(I);
-		I++;
-	} while (!Mx.brk && I < end);
+	} while (++I < Mx.lim);
 
 	INT32 n = (INT32)(I - b->insn);
 	M.total_cycles += n;
-	nMips3ICount -= n;
 #if MIPS3_PROFILE
 	b->vpc = Mx.vpage + b->start;
 	b->prof += n;
@@ -2114,13 +2364,13 @@ static MIPS3_INLINE void ExecBlock(Mips3Block *b)
 			Mx.dpend = 0;
 			M.delay_pending = 1;
 			M.delay_target = Mx.dtarget;
-			nNextEvent = 0;
+			FORCE_EVENT();
 		}
 	} else if (b->split) {
 		M.delay_pending = 1;
 		M.delay_target = Mx.next_pc;
 		M.pc = Mx.vpage + b->fall - 4;
-		nNextEvent = 0;
+		FORCE_EVENT();
 	} else {
 		M.pc = Mx.next_pc;
 	}
@@ -2154,7 +2404,6 @@ static void StepOne()
 	Mx.brk = 0;
 
 	M.total_cycles++;
-	nMips3ICount--;
 #if MIPS3_PROFILE
 	nProfStep++;
 #endif
@@ -2170,6 +2419,7 @@ static void StepOne()
 			UINT8 *host = CodeHost(&Mips3Phys[pa >> 12]);
 			I.op = host ? BURN_ENDIAN_SWAP_INT32(*(UINT32*)(host + (pa & 0xfff))) : RdPhys32(pa);
 			I.fn = Mips3Decode(I.op, &fl);
+			InsnFields(&I);
 			I.fn(&I);
 		}
 	}
@@ -2219,7 +2469,7 @@ static void StepOne()
 		}
 	} else if (fl & F_BRANCH) {
 		M.delay_pending = 1;
-		nNextEvent = 0;
+		FORCE_EVENT();
 		M.delay_target = (Mx.next_pc != 1) ? Mx.next_pc : pc + 8;
 		M.pc = pc + 4;
 	} else {
@@ -2296,10 +2546,44 @@ static void ProfileReport()
 INT32 mips3_run(INT32 cycles)
 {
 	nMips3ICount += cycles;	// a negative leftover from the previous slice is paid back here
-	nNextEvent = 0;
-	INT32 start = nMips3ICount;
+	UINT64 start = M.total_cycles;
+	nRunTarget = M.total_cycles + (INT64)nMips3ICount;
+	FORCE_EVENT();
 
-	while (nMips3ICount > 0) {
+	for (;;) {
+		while (M.total_cycles < nRunLimit) {
+#if MIPS3_CACHED_INTERPRETER && !MIPS3_DEBUG_TRACE
+			UINT32 pc = M.pc;
+			Mips3FastEntry *fe = &FastCache[(pc >> 2) & (MIPS3_FAST_ENTRIES - 1)];
+			if (fe->pc == pc) {
+				Mx.vpage = pc & ~0xfff;
+				ExecBlock(fe->b);
+				continue;
+			}
+
+			UINT32 e = Vtlb[pc >> 12];
+			if ((e & VT_READ) && !(pc & 3)) {
+				UINT32 pa = (e & ~0xfff) | (pc & 0xfff);
+				Mips3PhysPage *p = &Mips3Phys[pa >> 12];
+				if (p->code) {
+					Mips3BlockPage *bp = p->code;
+					Mips3Block *b = bp->blk ? bp->blk[(pa & 0xfff) >> 2] : NULL;
+					if (b == NULL) b = BuildBlock(bp, CodeHost(p), pa & 0xfff);
+					fe->pc = pc;
+					fe->b = b;
+					Mx.vpage = pc & ~0xfff;
+					ExecBlock(b);
+					continue;
+				}
+			}
+#endif
+			StepOne();
+		}
+
+		if (M.total_cycles >= nRunTarget) break;
+
+		if (nFastGen != nFastGenSeen) FastCacheFlush();
+
 		if (M.total_cycles >= nNextEvent) {
 			if (M.delay_pending) {
 				StepOne();
@@ -2308,34 +2592,7 @@ INT32 mips3_run(INT32 cycles)
 			CheckInterrupts();
 			nNextEvent = M.compare_fire;
 		}
-
-#if MIPS3_CACHED_INTERPRETER && !MIPS3_DEBUG_TRACE
-		UINT32 pc = M.pc;
-		Mips3FastEntry *fe = &FastCache[(pc >> 2) & (MIPS3_FAST_ENTRIES - 1)];
-		if (fe->pc == pc && fe->gen == nFastGen) {
-			Mx.vpage = pc & ~0xfff;
-			ExecBlock(fe->b);
-			continue;
-		}
-
-		UINT32 e = Vtlb[pc >> 12];
-		if ((e & VT_READ) && !(pc & 3)) {
-			UINT32 pa = (e & ~0xfff) | (pc & 0xfff);
-			Mips3PhysPage *p = &Mips3Phys[pa >> 12];
-			if (p->code) {
-				Mips3BlockPage *bp = p->code;
-				Mips3Block *b = bp->blk ? bp->blk[(pa & 0xfff) >> 2] : NULL;
-				if (b == NULL) b = BuildBlock(bp, CodeHost(p), pa & 0xfff);
-				fe->pc = pc;
-				fe->gen = nFastGen;
-				fe->b = b;
-				Mx.vpage = pc & ~0xfff;
-				ExecBlock(b);
-				continue;
-			}
-		}
-#endif
-		StepOne();
+		nRunLimit = (nNextEvent < nRunTarget) ? nNextEvent : nRunTarget;
 	}
 
 #if MIPS3_DEBUG_LOG
@@ -2354,13 +2611,15 @@ INT32 mips3_run(INT32 cycles)
 	}
 #endif
 
-	INT32 ran = start - nMips3ICount;
-	return ran;
+	nMips3ICount = (INT32)(INT64)(nRunTarget - M.total_cycles);
+	return (INT32)(M.total_cycles - start);
 }
 
 void mips3_run_end()
 {
 	nMips3ICount = 0;
+	nRunTarget = M.total_cycles;
+	nRunLimit = 0;
 }
 
 INT32 mips3_idle(INT32 cycles)
@@ -2379,7 +2638,8 @@ UINT64 mips3_total_cycles()
 
 void mips3_page_mapped(UINT32 page)
 {
-	nFastGen++;
+	FAST_INVALIDATE();
+	HostCacheFlush();
 	Mips3PhysPage *p = &Mips3Phys[page];
 	UINT8 *host = CodeHost(p);
 	p->code = host ? GetBlockPage(host) : NULL;
@@ -2402,7 +2662,7 @@ void mips3_invalidate(UINT32 nStart, UINT32 nEnd)
 void mips3_set_irq_line(INT32 line, INT32 state)
 {
 	if (line < 0 || line > 5) return;
-	nNextEvent = 0;
+	FORCE_EVENT();
 	if (state) CAUSE |= 0x400 << line;
 	else       CAUSE &= ~(0x400 << line);
 }
@@ -2501,7 +2761,7 @@ void mips3_reset()
 	VtlbRebuild();
 	Mips3FlushCache();
 	nMips3ICount = 0;
-	nNextEvent = 0;
+	FORCE_EVENT();
 	Mx.dpend = 0;
 }
 
@@ -2517,6 +2777,6 @@ void mips3_scan(INT32 nAction)
 	if (nAction & ACB_WRITE) {
 		VtlbRebuild();
 		Mips3FlushCache();
-		nNextEvent = 0;
+		FORCE_EVENT();
 	}
 }

@@ -24,3 +24,5 @@ void Dcs2kRender(INT16 *pSoundBuf, INT32 nSegmentLength);
 void Dcs2kReset();
 void Dcs2kNewFrame();
 UINT32 Dcs2kTotalCycles();
+// called when the DCS output latch becomes full (data for the host) or is read
+void Dcs2kSetOutputFullCallback(void (*cb)(INT32 state));

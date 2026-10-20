@@ -2299,7 +2299,7 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 	if ((lcd_x == 0) || (lcd_x == GBA_LCD_HBLANK_START) || (lcd_x == GBA_LCD_HBLANK_END)) {
 		UINT16 disp_stat_raw = (UINT16)gba_io_read16(gba, GBA_DISPSTAT);
 		UINT32 vcount_cmp  = disp_stat_raw >> 8;
-		UINT16 disp_stat   = (UINT16)(disp_stat_raw & ~0b111);
+		UINT16 disp_stat   = (UINT16)(disp_stat_raw & ~0x7);
 		if (vblank)                      disp_stat |= 1;
 		if (hblank)                      disp_stat |= 2;
 		if (vcount == (INT32)vcount_cmp) disp_stat |= 4;
@@ -2605,12 +2605,12 @@ static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)
 	const INT32  idx   = (front >= 0 && front < GBAPPU_WORKER_N_BUFFERS) ? front : -1;
 	const size_t slot  = (w->out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
 	                                       : (size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp;
-	ppw_blob_hdr_t hdr = {
-		.magic   = PPW_BLOB_MAGIC,
-		.version = PPW_BLOB_VERSION,
-		.out_bpp = w->out_bpp,
-		.front_idx = idx,
-	};
+	ppw_blob_hdr_t hdr;
+	memset(&hdr, 0, sizeof(hdr));
+	hdr.magic     = PPW_BLOB_MAGIC;
+	hdr.version   = PPW_BLOB_VERSION;
+	hdr.out_bpp   = w->out_bpp;
+	hdr.front_idx = idx;
 	memcpy(dst, &hdr, sizeof(hdr));
 	if (idx >= 0) {
 		const UINT8* src = (w->out_bpp == 4) ? (const UINT8*)w->backbuf[idx]

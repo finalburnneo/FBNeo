@@ -202,7 +202,22 @@ INT32 VidInit()
 				}
 			}
 		} else {
-			hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+			if(uiOwnerDrawActive)
+			{
+				if(nUiColorTheme == uiLightModeCode)
+				{
+					hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+				}
+				else
+				{
+					hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_DARK_MODE_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+				}
+			}
+			else
+			{
+				hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+			}
+
 		}
 
 		if (!hbitmap) hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);

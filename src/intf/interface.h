@@ -47,6 +47,7 @@ struct InputInOut {
 
 INT32 InputInit();
 INT32 InputExit();
+INT32 InputSelect(UINT32 nPlugIn);
 INT32 InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround);
 INT32 InputMake(bool bCopy);
 INT32 InputFind(const INT32 nFlags);

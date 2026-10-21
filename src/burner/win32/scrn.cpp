@@ -2071,6 +2071,16 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_INP_PLUGIN_1:
+			InputSelect(0);
+			POST_INITIALISE_MESSAGE;
+			break;
+
+		case MENU_INP_PLUGIN_2:
+			InputSelect(1);
+			POST_INITIALISE_MESSAGE;
+			break;
+
 		case MENU_DIPSW:
 			AudBlankSound();
 			if (UseDialogs()) {

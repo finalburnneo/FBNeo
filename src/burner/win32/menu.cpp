@@ -1249,6 +1249,9 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_AUTOFRAMESKIP, !bAlwaysDrawFrames ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_RUNAHEAD, bRunAhead ? MF_CHECKED : MF_UNCHECKED);
 
+	var = nInputSelect + MENU_INP_PLUGIN_1;
+	CheckMenuRadioItem(hMenu, MENU_INP_PLUGIN_1, MENU_INP_PLUGIN_8, var, MF_BYCOMMAND);
+
 	var = nAudSelect + MENU_AUD_PLUGIN_1;
 	CheckMenuRadioItem(hMenu, MENU_AUD_PLUGIN_1, MENU_AUD_PLUGIN_8, var, MF_BYCOMMAND);
 
@@ -1656,6 +1659,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
 
+		EnableMenuItem(hMenu, MENU_INP_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_INP_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
+
 		BurnDIPInfo bdi;
 		if (BurnDrvGetDIPInfo(&bdi, 0) == 0) {
 			EnableMenuItem(hMenu, MENU_DIPSW,			MF_ENABLED | MF_BYCOMMAND);
@@ -1969,5 +1975,8 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, 		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
+
+		EnableMenuItem(hMenu, MENU_INP_PLUGIN_1,		MF_ENABLED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_INP_PLUGIN_2,		MF_ENABLED  | MF_BYCOMMAND);
 	}
 }

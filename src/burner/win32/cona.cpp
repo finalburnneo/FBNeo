@@ -353,6 +353,9 @@ int ConfigAppLoad()
 			}
 		}
 
+		// Input
+		VAR(nInputSelect);
+
 		// Sound
 		VAR(nAudSelect);
 		VAR(nAudVolume);
@@ -750,6 +753,10 @@ int ConfigAppSave()
 	}
 
 	_ftprintf(h, _T("\n\n\n"));
+	_ftprintf(h, _T("// --- Input ------------------------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// The selected input plugin (0 = DirectInput, 1 = XInput + DirectInput)\n"));
+	VAR(nInputSelect);
+	_ftprintf(h, _T("\n"));
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// The selected audio plugin\n"));
 	VAR(nAudSelect);

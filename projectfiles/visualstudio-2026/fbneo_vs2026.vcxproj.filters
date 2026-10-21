@@ -3403,6 +3403,9 @@
     <ClCompile Include="..\..\src\intf\input\win32\inp_dinput.cpp">
       <Filter>interfaces\input\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\intf\input\win32\inp_xinput.cpp">
+      <Filter>interfaces\input\win32</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\intf\perfcount\prf_interface.cpp">
       <Filter>interfaces\perf</Filter>
     </ClCompile>

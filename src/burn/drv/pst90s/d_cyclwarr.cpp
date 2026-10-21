@@ -23,7 +23,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprCtrlRAM;
 static UINT8 *DrvZ80RAM;
 
-
 static UINT8 soundlatch;
 static UINT8 control_data;
 static UINT8 last_control;
@@ -44,7 +43,7 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
-static struct BurnInputInfo CyclwarrInputList[] = {
+static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"		},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"		},
 	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 up"			},
@@ -85,70 +84,17 @@ static struct BurnInputInfo CyclwarrInputList[] = {
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy5 + 2,	"p4 fire 2"		},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy5 + 1,	"p4 fire 3"		},
 
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service2"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service3"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service4"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"		},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service2"		},
+	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service3"		},
+	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service4"		},
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"			},
 	{"Dips A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
 	{"Dips B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"			},
 	{"Dips C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"			},
 };
 
-STDINPUTINFO(Cyclwarr)
-
-static struct BurnInputInfo BigfightInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"		},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 start"		},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 up"			},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 down"		},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 left"		},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 right"		},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 fire 1"		},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 2"		},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 3"		},
-
-	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"		},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 start"		},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 up"			},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 6,	"p2 down"		},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 5,	"p2 left"		},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 right"		},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 1"		},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 2"		},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 3"		},
-
-	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"		},
-	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 0,	"p3 start"		},
-	{"P3 Up",			BIT_DIGITAL,	DrvJoy4 + 7,	"p3 up"			},
-	{"P3 Down",			BIT_DIGITAL,	DrvJoy4 + 6,	"p3 down"		},
-	{"P3 Left",			BIT_DIGITAL,	DrvJoy4 + 5,	"p3 left"		},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 right"		},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 3,	"p3 fire 1"		},
-	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 fire 2"		},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 fire 3"		},
-
-	{"P4 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"		},
-	{"P4 Start",		BIT_DIGITAL,	DrvJoy5 + 0,	"p4 start"		},
-	{"P4 Up",			BIT_DIGITAL,	DrvJoy5 + 7,	"p4 up"			},
-	{"P4 Down",			BIT_DIGITAL,	DrvJoy5 + 6,	"p4 down"		},
-	{"P4 Left",			BIT_DIGITAL,	DrvJoy5 + 5,	"p4 left"		},
-	{"P4 Right",		BIT_DIGITAL,	DrvJoy5 + 4,	"p4 right"		},
-	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy5 + 3,	"p4 fire 1"		},
-	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy5 + 2,	"p4 fire 2"		},
-	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy5 + 1,	"p4 fire 3"		},
-
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service2"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 6,	"service3"		},
-	{"Service",			BIT_DIGITAL,	DrvJoy1 + 7,	"service4"		},
-	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"			},
-	{"Dips A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"			},
-	{"Dips B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"			},
-	{"Dips C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"			},
-};
-
-STDINPUTINFO(Bigfight)
+STDINPUTINFO(Drv)
 
 static struct BurnDIPInfo CyclwarrDIPList[]=
 {
@@ -438,7 +384,7 @@ static void __fastcall cyclwarr_main_write_word(UINT32 address, UINT16 data)
 		case 0xa2007:
 			video_config[(address / 2) & 3] = data;
 		return;
-	
+
 		case 0xa4000:
 		case 0xa4001:
 			tile_banks[0] = ((data & 0x000f) >>  0) << 10;
@@ -454,19 +400,19 @@ static void __fastcall cyclwarr_main_write_word(UINT32 address, UINT16 data)
 
 		case 0xbc000:
 		case 0xbc001:
-			// output_w
+			// coin counters
 		return;
 	}
 }
 
 static void __fastcall cyclwarr_main_write_byte(UINT32 address, UINT8 data)
 {
-	if ((address & 0xffff0) == 0xb9000) {
+	if ((address & 0xffff1) == 0xb9001) {
 		cxd1095_write(0, (address / 2) & 7, data);
 		return;
 	}
 
-	if ((address & 0xffff0) == 0xba000) {
+	if ((address & 0xffff1) == 0xba001) {
 		cxd1095_write(1, (address / 2) & 7, data);
 		return;
 	}
@@ -481,7 +427,7 @@ static void __fastcall cyclwarr_main_write_byte(UINT32 address, UINT8 data)
 		case 0xac001:
 		case 0xac002:
 		case 0xac003:
-			// hd6445_crt_w
+			// hd6445 crt
 		return;
 
 		case 0xb8000:
@@ -506,11 +452,11 @@ static UINT16 __fastcall cyclwarr_main_read_word(UINT32 address)
 
 static UINT8 __fastcall cyclwarr_main_read_byte(UINT32 address)
 {
-	if ((address & 0xffff0) == 0xb9000) {
+	if ((address & 0xffff1) == 0xb9001) {
 		return cxd1095_read(0, (address / 2) & 7);
 	}
 
-	if ((address & 0xffff0) == 0xba000) {
+	if ((address & 0xffff1) == 0xba001) {
 		return cxd1095_read(1, (address / 2) & 7);
 	}
 
@@ -537,7 +483,7 @@ static void __fastcall cyclwarr_sound_write(UINT16 address, UINT8 data)
 }
 
 // The ym2151 core in FBNeo does not support the YM2151 status bit
-// Implement hack to bypass this (Dink)
+// Implement hack to bypass this (dink)
 static bool check_ym2151_pc()
 {
 	const UINT16 pcs[] = { 0x1c65/*bigfight*/, 0x1b96/*bigfight*/, 0x2aca/*cyclwarr*/, 0 };
@@ -605,8 +551,8 @@ static UINT8 cxd1095_0_read(UINT8 offset)
 		case 3: // d - p2
 			return DrvInputs[2];
 
-		case 4: // e - dsw3
-			return DrvDips[2];
+		case 4: // e - dsw3 (player select / service / test)
+			return DrvDips[0];
 	}
 
 	return 0xff;
@@ -616,11 +562,11 @@ static UINT8 cxd1095_1_read(UINT8 offset)
 {
 	switch (offset)
 	{
-		case 0: // a dsw1
-			return DrvDips[0];
-
-		case 1: // b dsw2
+		case 0: // a dsw1 (coin a / coin b)
 			return DrvDips[1];
+
+		case 1: // b dsw2 (lives, tickets, machine type, difficulty, demo sounds)
+			return DrvDips[2];
 
 		case 2: // c - p3
 			return DrvInputs[3];
@@ -710,6 +656,8 @@ static INT32 DrvDoReset()
 	mixing_control = 0;
 	soundlatch = 0;
 	road_color_bank = 0;
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -864,8 +812,8 @@ static INT32 DrvInit(INT32 whichgame, INT32 (*pRomCallback)())
 	cxd1095Init(0, NULL, cxd1095_0_read);
 	cxd1095Init(1, cxd1095_1_write, cxd1095_1_read);
 
-	MSM6295Init(0, 1000000 / 132, 1);
-	MSM6295SetRoute(0, 0.47, BURN_SND_ROUTE_BOTH);
+	MSM6295Init(0, 2000000 / ((whichgame == 1) ? 2 : 1) / MSM6295_PIN7_HIGH, 1);
+	MSM6295SetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
@@ -1453,18 +1401,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-	
 	if (pnMin != NULL) {
 		*pnMin = 0x029698;
 	}
 
 	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd-AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd-AllRam, "All Ram");
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
@@ -1488,7 +1430,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Cycle Warriors (rev C)
+// Cycle Warriors (Rev. C)
 
 static struct BurnRomInfo cyclwarrRomDesc[] = {
 	{ "cw16c.ic77",		0x020000, 0x4d88892b,  1 | BRF_PRG | BRF_ESS },	//  0 68K #0 Code
@@ -1536,16 +1478,16 @@ STD_ROM_FN(cyclwarr)
 
 struct BurnDriver BurnDrvCyclwarr = {
 	"cyclwarr", NULL, NULL, NULL, "1991",
-	"Cycle Warriors (rev C)\0", NULL, "Tatsumi", "Miscellaneous",
+	"Cycle Warriors (Rev. C)\0", NULL, "Tatsumi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, cyclwarrRomInfo, cyclwarrRomName, NULL, NULL, NULL, NULL, CyclwarrInputInfo, CyclwarrDIPInfo,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_RACING | GBF_SCRFIGHT, 0,
+	NULL, cyclwarrRomInfo, cyclwarrRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CyclwarrDIPInfo,
 	CyclwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	320, 240, 4, 3
 };
 
 
-// Cycle Warriors (rev B)
+// Cycle Warriors (Rev. B)
 
 static struct BurnRomInfo cyclwarraRomDesc[] = {
 	{ "cw16b.ic77",		0x020000, 0xcb1a737a,  1 | BRF_PRG | BRF_ESS },	//  0 68K #0 Code
@@ -1593,10 +1535,10 @@ STD_ROM_FN(cyclwarra)
 
 struct BurnDriver BurnDrvCyclwarra = {
 	"cyclwarra", "cyclwarr", NULL, NULL, "1991",
-	"Cycle Warriors (rev B)\0", NULL, "Tatsumi", "Miscellaneous",
+	"Cycle Warriors (Rev. B)\0", NULL, "Tatsumi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, cyclwarraRomInfo, cyclwarraRomName, NULL, NULL, NULL, NULL, CyclwarrInputInfo, CyclwarbDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_RACING | GBF_SCRFIGHT, 0,
+	NULL, cyclwarraRomInfo, cyclwarraRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CyclwarbDIPInfo,
 	CyclwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	320, 240, 4, 3
 };
@@ -1652,14 +1594,14 @@ struct BurnDriver BurnDrvCyclwarrb = {
 	"cyclwarrb", "cyclwarr", NULL, NULL, "1991",
 	"Cycle Warriors\0", NULL, "Tatsumi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
-	NULL, cyclwarrbRomInfo, cyclwarrbRomName, NULL, NULL, NULL, NULL, CyclwarrInputInfo, CyclwarbDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_POST90S, GBF_RACING | GBF_SCRFIGHT, 0,
+	NULL, cyclwarrbRomInfo, cyclwarrbRomName, NULL, NULL, NULL, NULL, DrvInputInfo, CyclwarbDIPInfo,
 	CyclwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	320, 240, 4, 3
 };
 
 
-// Big Fight - Big Trouble In The Atlantic Ocean
+// Big Fight: Big Trouble In The Atlantic Ocean
 
 static struct BurnRomInfo bigfightRomDesc[] = {
 	{ "rom16.ic77",		0x040000, 0xe7304ec8,  1 | BRF_PRG | BRF_ESS },	//  0 68K #0 Code
@@ -1694,16 +1636,16 @@ STD_ROM_FN(bigfight)
 
 struct BurnDriver BurnDrvBigfight = {
 	"bigfight", NULL, NULL, NULL, "1992",
-	"Big Fight - Big Trouble In The Atlantic Ocean\0", NULL, "Tatsumi", "Miscellaneous",
+	"Big Fight: Big Trouble In The Atlantic Ocean\0", NULL, "Tatsumi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, bigfightRomInfo, bigfightRomName, NULL, NULL, NULL, NULL, BigfightInputInfo, BigfightDIPInfo,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, bigfightRomInfo, bigfightRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BigfightDIPInfo,
 	BigfightInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	320, 240, 4, 3
 };
 
 
-// Big Fight - Big Trouble In The Atlantic Ocean (Japan, rev F)
+// Big Fight: Big Trouble In The Atlantic Ocean (Japan, Rev. F)
 
 static struct BurnRomInfo bigfightjRomDesc[] = {
 	{ "bfj16f.ic77",	0x020000, 0x9141a488,  1 | BRF_PRG | BRF_ESS },	//  0 68K #0 Code
@@ -1751,10 +1693,10 @@ STD_ROM_FN(bigfightj)
 
 struct BurnDriver BurnDrvBigfightj = {
 	"bigfightj", "bigfight", NULL, NULL, "1992",
-	"Big Fight - Big Trouble In The Atlantic Ocean (Japan, rev F)\0", NULL, "Tatsumi", "Miscellaneous",
+	"Big Fight: Big Trouble In The Atlantic Ocean (Japan, Rev. F)\0", NULL, "Tatsumi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, bigfightjRomInfo, bigfightjRomName, NULL, NULL, NULL, NULL, BigfightInputInfo, BigfightDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, bigfightjRomInfo, bigfightjRomName, NULL, NULL, NULL, NULL, DrvInputInfo, BigfightDIPInfo,
 	BigfightjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x8000,
 	320, 240, 4, 3
 };

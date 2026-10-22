@@ -13,6 +13,7 @@ static bool bCinpOkay;
 
 #if defined (BUILD_WIN32)
 	extern struct InputInOut InputInOutDInput;
+	extern struct InputInOut InputInOutXInput;
 #elif defined (BUILD_MACOS)
 	extern struct InputInOut InputInOutMacOS;
 #elif defined (BUILD_SDL)
@@ -29,6 +30,7 @@ static struct InputInOut *pInputInOut[]=
 {
 #if defined (BUILD_WIN32)
 	&InputInOutDInput,
+	&InputInOutXInput,
 #elif defined (BUILD_MACOS)
 	&InputInOutMacOS,
 #elif defined (BUILD_SDL2)
@@ -160,7 +162,7 @@ INT32 InputInit()
 	bInputOkay = false;
 
 	if (nInputSelect >= INPUT_LEN) {
-		return 1;
+		nInputSelect = 0;		// e.g. invalid value from the config file
 	}
 
 	if ((nRet = pInputInOut[nInputSelect]->Init()) == 0) {
@@ -181,6 +183,32 @@ INT32 InputExit()
 	bInputOkay = false;
 
 	return pInputInOut[nInputSelect]->Exit();
+}
+
+// Select an input plugin, re-initialising input if it was active
+INT32 InputSelect(UINT32 nPlugIn)
+{
+	if (nPlugIn >= INPUT_LEN) {
+		return 1;
+	}
+
+	if (nPlugIn == nInputSelect) {
+		return 0;
+	}
+
+	bool bWasOkay = bInputOkay;
+
+	if (bWasOkay) {
+		InputExit();
+	}
+
+	nInputSelect = nPlugIn;
+
+	if (bWasOkay) {
+		return InputInit();
+	}
+
+	return 0;
 }
 
 // This will request exclusive access for mouse and/or request input processing if the application is in the foreground only

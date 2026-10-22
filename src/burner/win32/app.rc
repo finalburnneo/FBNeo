@@ -586,15 +586,15 @@ BEGIN
     EDITTEXT        IDC_SUPPORTDIR_EDIT8,92,138,185,14,ES_AUTOHSCROLL
     PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR8,283,138,50,14
 
-    LTEXT           "Neo Geo CDZ Games:",IDC_SUPPORTDIR_TEXT9,15,156,91,12
+    LTEXT           "CD Game Media:",IDC_SUPPORTDIR_TEXT9,15,156,91,12
     EDITTEXT        IDC_SUPPORTDIR_EDIT9,92,154,185,14,ES_AUTOHSCROLL
     PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR9,283,154,50,14
 
-    LTEXT           "Neo Geo CDZ Covers:",IDC_SUPPORTDIR_TEXT10,15,172,91,12
+    LTEXT           "CD Game Covers:",IDC_SUPPORTDIR_TEXT10,15,172,91,12
     EDITTEXT        IDC_SUPPORTDIR_EDIT10,92,170,185,14,ES_AUTOHSCROLL
     PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR10,283,170,50,14
 
-    LTEXT           "Neo Geo CDZ Previews:",IDC_SUPPORTDIR_TEXT11,15,188,91,12
+    LTEXT           "CD Game Previews:",IDC_SUPPORTDIR_TEXT11,15,188,91,12
     EDITTEXT        IDC_SUPPORTDIR_EDIT11,92,186,185,14,ES_AUTOHSCROLL
     PUSHBUTTON      "Browse...",IDC_SUPPORTDIR_BR11,283,186,50,14
 
@@ -1192,6 +1192,7 @@ BEGIN
             MENUITEM "Enhanced\t(Direct3D 7)",				MENU_BLITTER_2
             MENUITEM "Experimental\t(DirectX Graphics 9)",	MENU_BLITTER_4
 			MENUITEM "DirectX9 Alt\t(DirectX Graphics 9)",	MENU_BLITTER_5
+			MENUITEM "DirectX 11\t(Direct3D 11)",		MENU_BLITTER_6
         END
         MENUITEM "&Blitter options",					MENU_BLITTEROPTIONS, GRAYED
         POPUP "&Stretch"
@@ -1296,7 +1297,7 @@ BEGIN
         MENUITEM "&Rotate vertically aligned games",			MENU_ROTATEVERTICAL
         MENUITEM "Force 60Hz refresh rate",						MENU_FORCE60HZ
         MENUITEM "Enable &Triple Buffering (Fullscreen)",			MENU_TRIPLE
-        MENUITEM "Enable Windowed Fullscreen (DX9 Blitters)",	MENU_WINFS
+        MENUITEM "Enable Windowed Fullscreen (DX9/DX11 Blitters)",	MENU_WINFS
 		MENUITEM "Enable VSync (Windowed)",						MENU_VIDEOVSYNC
 		MENUITEM "Enable DWM Sync (Windowed)",				MENU_DWMFIX
 		MENUITEM "Auto Frameskip",								MENU_AUTOFRAMESKIP
@@ -1344,7 +1345,8 @@ BEGIN
     BEGIN
     	POPUP "Select &plugin"
     	BEGIN
-    	    MENUITEM "DirectInput",					MENU_INP_PLUGIN_1, GRAYED
+    	    MENUITEM "DirectInput",					MENU_INP_PLUGIN_1
+    	    MENUITEM "XInput",	MENU_INP_PLUGIN_2
     	END
 		MENUITEM "Re-Detect Controllers",			MENU_INPUT_REDETECT
 		MENUITEM SEPARATOR
@@ -1514,6 +1516,9 @@ BEGIN
         	BEGIN
         		MENUITEM "Select skin...",						MENU_SELECTPLACEHOLDER
         		MENUITEM "Set skin to default",					MENU_DISABLEPLACEHOLDER
+                MENUITEM "Select Light Mode UI (Experimental)", MENU_UI_LIGHT_MODE
+                MENUITEM "Select Dark  Mode UI (Experimental)", MENU_UI_DARK_MODE
+                MENUITEM "Select Standard Mode UI",             MENU_UI_DEFAULT_MODE
         	END
        	POPUP    "UI language"
        	BEGIN
@@ -1878,6 +1883,72 @@ BEGIN
 	END
 END
 
+IDR_MENU_BLITTER_6 MENU
+BEGIN
+	POPUP "DirectX 11\t(Direct3D 11)"
+	BEGIN
+		MENUITEM "Point filtering",                             MENU_DX9_ALT_POINT
+		MENUITEM "Linear filtering",                            MENU_DX9_ALT_LINEAR
+		MENUITEM SEPARATOR
+        POPUP "Shader"
+        BEGIN
+            MENUITEM "&Load shader...",                         MENU_D3D11_SHADER_LOAD
+            MENUITEM "Shader &parameters...",                   MENU_D3D11_SHADER_PARAMS
+            MENUITEM "&No shader",                              MENU_D3D11_SHADER_NONE
+            MENUITEM SEPARATOR
+            POPUP "&Recent shaders"
+            BEGIN
+                MENUITEM "(empty)",                             MENU_D3D11_SHADER_MRU, GRAYED
+            END
+        END
+		POPUP "SoftFX algorithm"
+		BEGIN
+			MENUITEM "Double pixels (3D hardware)",				MENU_DX9_ALT_SOFT_STRETCH
+			MENUITEM "AdvanceMAME Scale2x",						MENU_DX9_ALT_SOFT_SCALE2X
+			MENUITEM "AdvanceMAME Scale3x",						MENU_DX9_ALT_SOFT_SCALE3X
+			MENUITEM "2xPM LQ",									MENU_DX9_ALT_SOFT_2XPM_LQ
+			MENUITEM "2xPM HQ",									MENU_DX9_ALT_SOFT_2XPM_HQ
+			MENUITEM "Eagle Graphics",							MENU_DX9_ALT_SOFT_EAGLE
+			MENUITEM "Super Eagle",								MENU_DX9_ALT_SOFT_SUPEREAGLE
+			MENUITEM "2xSaI",									MENU_DX9_ALT_SOFT_2XSAI
+			MENUITEM "Super 2xSaI",								MENU_DX9_ALT_SOFT_SUPER2XSAI
+			MENUITEM "Super Eagle (VBA)",						MENU_DX9_ALT_SOFT_SUPEREAGLE_VBA
+			MENUITEM "2xSaI (VBA)",								MENU_DX9_ALT_SOFT_2XSAI_VBA
+			MENUITEM "Super 2xSaI (VBA)",						MENU_DX9_ALT_SOFT_SUPER2XSAI_VBA
+			MENUITEM "SuperScale",								MENU_DX9_ALT_SOFT_SUPERSCALE
+			MENUITEM "SuperScale (75% Scanlines)",				MENU_DX9_ALT_SOFT_SUPERSCALE75
+			MENUITEM "hq2x Filter",								MENU_DX9_ALT_SOFT_HQ2X
+			MENUITEM "hq3x Filter",								MENU_DX9_ALT_SOFT_HQ3X
+			MENUITEM "hq4x Filter",								MENU_DX9_ALT_SOFT_HQ4X
+			MENUITEM "hq2xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ2XS_VBA
+			MENUITEM "hq3xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ3XS_VBA, GRAYED
+			MENUITEM "hq2xS (SNES9X) Filter",					MENU_DX9_ALT_SOFT_HQ2XS_SNES9X
+			MENUITEM "hq3xS (SNEX9X) Filter",					MENU_DX9_ALT_SOFT_HQ3XS_SNES9X
+			MENUITEM "hq2xBold Filter",							MENU_DX9_ALT_SOFT_HQ2XBOLD
+			MENUITEM "hq3xBold Filter",							MENU_DX9_ALT_SOFT_HQ3XBOLD
+			MENUITEM "EPXB Filter",								MENU_DX9_ALT_SOFT_EPXB
+			MENUITEM "EPXC Filter",								MENU_DX9_ALT_SOFT_EPXC
+			MENUITEM "2xBR Squared",							MENU_DX9_ALT_SOFT_2XBR_A
+			MENUITEM "2xBR Semi-Rounded",						MENU_DX9_ALT_SOFT_2XBR_B
+			MENUITEM "2xBR Rounded",							MENU_DX9_ALT_SOFT_2XBR_C
+			MENUITEM "3xBR Squared",							MENU_DX9_ALT_SOFT_3XBR_A
+			MENUITEM "3xBR Semi-Rounded",						MENU_DX9_ALT_SOFT_3XBR_B
+			MENUITEM "3xBR Rounded",							MENU_DX9_ALT_SOFT_3XBR_C
+			MENUITEM "4xBR Squared",							MENU_DX9_ALT_SOFT_4XBR_A
+			MENUITEM "4xBR Semi-Rounded",						MENU_DX9_ALT_SOFT_4XBR_B
+			MENUITEM "4xBR Rounded",							MENU_DX9_ALT_SOFT_4XBR_C
+			MENUITEM "DDT3x",	        					    MENU_DX9_ALT_SOFT_DDT3X
+			MENUITEM "CRT 2x2 (Fast 480p)",                   	MENU_DX9_ALT_SOFT_CRTx22
+			MENUITEM "CRT 3x3 (720p)",                        	MENU_DX9_ALT_SOFT_CRTx33
+			MENUITEM "CRT 4x4 (1080p)",                       	MENU_DX9_ALT_SOFT_CRTx44
+			MENUITEM SEPARATOR
+			MENUITEM "Force image to SoftFX size",          	MENU_DX9_ALT_SOFT_AUTOSIZE
+        END
+		MENUITEM SEPARATOR
+		MENUITEM "Motion blur",                             MENU_DX9_ALT_MOTIONBLUR
+	END
+END
+
 IDR_MENU_AUD_PLUGIN_1 MENU
 BEGIN
 	POPUP "DirectSound plugin"
@@ -1934,6 +2005,7 @@ END
 //
 
 BMP_SPLASH				BITMAP  DISCARDABLE     "resource/splash.bmp"
+BMP_DARK_MODE_SPLASH    BITMAP  DISCARDABLE     "resource/default-splash-dark-mode.bmp"
 BMP_ABOUT               BITMAP  DISCARDABLE     "resource/about.bmp"
 BMP_MISC                BITMAP  DISCARDABLE     "resource/misc.bmp"
 

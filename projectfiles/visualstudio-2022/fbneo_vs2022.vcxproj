@@ -1462,6 +1462,7 @@ del %(Filename).exe
     <ClCompile Include="..\..\src\intf\input\inp_interface.cpp" />
     <ClCompile Include="..\..\src\intf\input\win32\dinput_core.cpp" />
     <ClCompile Include="..\..\src\intf\input\win32\inp_dinput.cpp" />
+    <ClCompile Include="..\..\src\intf\input\win32\inp_xinput.cpp" />
     <ClCompile Include="..\..\src\intf\interface.cpp" />
     <ClCompile Include="..\..\src\intf\perfcount\prf_interface.cpp" />
     <ClCompile Include="..\..\src\intf\perfcount\win32\prf_performance_counter.cpp" />

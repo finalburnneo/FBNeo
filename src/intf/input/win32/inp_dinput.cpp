@@ -16,6 +16,10 @@
 
 #include "dinput_core.h"
 
+// Gamepad filter, used by the XInput plugin to skip XInput devices.
+// (dinput is still active when XInput is selected, as it still handles Keyboard, Mouse, etc)
+bool (*pDInputGamepadFilter)(const GUID* pGuidProduct) = NULL;
+
 #define MAX_KEYBOARD	(1)
 #define MAX_GAMEPAD		(32)
 #define MAX_JOYAXIS		(8)
@@ -150,6 +154,10 @@ static BOOL CALLBACK mouseEnumCallback(LPCDIDEVICEINSTANCE, LPVOID);
 
 		if (guidCount >= MAX_GAMEPAD) {
 			return DIENUM_STOP;
+		}
+
+		if (pDInputGamepadFilter && pDInputGamepadFilter(&instance->guidProduct)) {
+			return DIENUM_CONTINUE;
 		}
 
 		devGuids[guidCount].guid = instance->guidInstance;

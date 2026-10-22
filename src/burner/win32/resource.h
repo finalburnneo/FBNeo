@@ -64,6 +64,7 @@
 #define IDR_MENU_BLITTER_3					112
 #define IDR_MENU_BLITTER_4					113
 #define IDR_MENU_BLITTER_5					114
+#define IDR_MENU_BLITTER_6					115
 #define IDR_MENU_AUD_PLUGIN_1				130
 #define IDR_MENU_AUD_PLUGIN_2				131
 #define	IDR_MENU_GAMESEL					140
@@ -1093,6 +1094,12 @@
 #define MENU_DX9_ALT_HARDWAREVERTEX			11703
 #define MENU_DX9_ALT_MOTIONBLUR				11704
 
+#define MENU_D3D11_SHADER_LOAD				11720
+#define MENU_D3D11_SHADER_NONE				11721
+#define MENU_D3D11_SHADER_PARAMS			11722
+#define MENU_D3D11_SHADER_MRU_CLEAR			11723
+#define MENU_D3D11_SHADER_MRU				11730	// 11730 - 11739: recently used shaders
+
 #define ID_LUA_OPEN							11812
 #define ID_LUA_CLOSE_ALL					11813
 
@@ -1111,6 +1118,10 @@
 #define GAMESEL_MENU_VIEWEMMA				11902
 #define GAMESEL_MENU_FAVORITE				11903
 #define GAMESEL_MENU_ROMDATA				11904
+#define MENU_UI_LIGHT_MODE                  11905
+#define MENU_UI_DARK_MODE                   11906
+#define BMP_DARK_MODE_SPLASH                11907 
+#define MENU_UI_DEFAULT_MODE                11908
 
 // Next default values for new objects
 //

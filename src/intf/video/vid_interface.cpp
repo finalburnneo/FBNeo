@@ -12,6 +12,7 @@
 	extern struct VidOut VidOutDDrawFX;
 	extern struct VidOut VidOutDX9;
 	extern struct VidOut VidOutDX9Alt;
+	extern struct VidOut VidOutD3D11;
 #elif defined (BUILD_MACOS)
 	extern struct VidOut VidOutMacOS;
 #elif defined (BUILD_PI)
@@ -35,6 +36,7 @@ static struct VidOut *pVidOut[] = {
 	&VidOutDDrawFX,
 	&VidOutDX9,
 	&VidOutDX9Alt,
+	&VidOutD3D11,
 #elif defined (BUILD_MACOS)
 	&VidOutMacOS,
 #elif defined (BUILD_PI)
@@ -202,7 +204,22 @@ INT32 VidInit()
 				}
 			}
 		} else {
-			hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+			if(uiOwnerDrawActive)
+			{
+				if(nUiColorTheme == uiLightModeCode)
+				{
+					hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+				}
+				else
+				{
+					hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_DARK_MODE_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+				}
+			}
+			else
+			{
+				hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+			}
+
 		}
 
 		if (!hbitmap) hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);

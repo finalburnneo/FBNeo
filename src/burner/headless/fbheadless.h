@@ -66,8 +66,9 @@ void FBHeadlessCheevosInit(void);
 unsigned int FBHeadlessReadAchievementMemory(unsigned int address, unsigned char *out, unsigned int length);
 
 // Cheats: write into the achievement memory map (same flat RAM the search reads), and
-// enumerate the mapped regions so the host can present cheat search. bigEndian reflects
-// the main CPU's multibyte order (68K = big-endian).
+// enumerate the mapped regions so the host can present cheat search. bigEndian follows
+// the libretro/RetroAchievements convention the host matches (0 / little-endian for the
+// 68K arcade boards), NOT the CPU's native byte order. See GetMainMemoryBigEndian.
 int FBHeadlessWriteAchievementMemory(unsigned int address, unsigned int value, int size, int littleEndian);
 int FBHeadlessGetMemoryRegionCount(void);
 int FBHeadlessGetMemoryRegion(int index, unsigned int *start, unsigned int *length, int *bigEndian);

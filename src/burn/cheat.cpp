@@ -855,7 +855,10 @@ unsigned int GetMainMemorySize()
 {
 	if (!bDrvOkay)
 		return 0;
-	return (unsigned int)cpus[0].cpuconfig->nMemorySize;
+	// cpu 0 still holds dummy_config (nMemorySize = ~0UL) when no CPU registered with
+	// the cheat engine; report 0 so the host never tries to allocate a 4GB buffer.
+	unsigned int size = (unsigned int)cpus[0].cpuconfig->nMemorySize;
+	return (size == ~0U) ? 0 : size;
 }
 
 // Bulk-read a contiguous range from the main CPU (cpu 0) address space, opening
@@ -885,6 +888,14 @@ unsigned int ReadMemoryRange(HWAddressType address, unsigned char *buffer, unsig
 	return i;
 }
 
+// Multi-byte order hint for the host's cheat search. This deliberately does NOT
+// return the CPU's native endianness. RetroAchievements sets and libretro .cht
+// cheats (the formats the host matches) are authored little-endian for the 68K
+// arcade boards -- every FBNeo libretro .cht is big_endian="false" -- so those
+// report 0 here, which is what the host needs. MB_CHEAT_ENDI_SWAP is set only by
+// V60/TMS34010, which report 1; no multi-byte cheats target those boards today
+// and RA reads raw bytes, so that case is a known, currently-harmless mismatch
+// rather than a reason to switch to (nAddressFlags & 3).
 int GetMainMemoryBigEndian()
 {
 	if (!bDrvOkay)

@@ -1,0 +1,127 @@
+// Headless frontend for FinalBurn Neo.
+// Author: Leonardo Kasperavičius
+//
+// Built originally to support OpenEmu-Silicon
+// (https://github.com/OpenEmu-Silicon/OpenEmu-Silicon).
+//
+// Provides the burner-side globals the FBNeo library expects from a frontend and
+// a small C API the host drives. Video/audio/input are routed through the
+// intf/{video,audio,input}/headless plugins; driver init/exit lives in drv.cpp.
+//
+// Subject to the FB Neo license (see src/license.txt).
+
+#include "burner.h"
+#include "fbheadless.h"
+
+// --- Burner globals expected by the FBNeo library / shared burner code ---
+int    nAppVirtualFps = 6000;      // app fps * 100
+bool   bRunPause = 0;
+bool   bAppDoFast = 0;
+char   fpsstring[20] = "";
+bool   bAppShowFPS = 0;
+bool   bAlwaysProcessKeyboardInput = 0;
+bool   bAppFullscreen = 0;
+bool   bIntegerScale = false;
+int    nWindowScale = 2;
+bool   bAlwaysMenu = false;
+int    nGameSelect = 0;
+int    nFilterSelect = 0;
+bool   bShowAvailableOnly = true;
+bool   bShowClones = true;
+int    gameSelectedFromFilter = -1;
+UINT32 messageFrames = 0;
+char   lastMessage[MESSAGE_MAX_LENGTH] = "";
+int    bDrvSaveAll = 0;
+TCHAR  szAppBurnVer[16] = _T("");
+
+// --- Frontend audio state ---
+static short *audBuffer = NULL;
+static int    audFrames = 0;          // stereo sample frames produced last frame
+static int    audSampleRate = 48000;
+
+static int allocAudio()
+{
+	free(audBuffer);
+	audBuffer = NULL;
+	if (nBurnSoundLen <= 0)
+		return 1;
+	audBuffer = (short *)malloc((nBurnSoundLen * 2 + 16) * sizeof(short));
+	if (audBuffer == NULL)
+		return 1;
+	memset(audBuffer, 0, (nBurnSoundLen * 2 + 16) * sizeof(short));
+	return 0;
+}
+
+// --- C API ---
+
+int FBHeadlessInit(void)
+{
+	BurnLibInit();
+	return 0;
+}
+
+void FBHeadlessExit(void)
+{
+	DrvExit();
+	VidExit();
+	AudSoundExit();
+	InputExit();
+	free(audBuffer);
+	audBuffer = NULL;
+	BurnLibExit();
+}
+
+void FBHeadlessSetRomPath(const char *path)
+{
+	snprintf(szAppRomPaths[0], MAX_PATH, "%s", path);
+}
+
+int FBHeadlessLoadDriver(const char *shortName)
+{
+	UINT32 i;
+	for (i = 0; i < nBurnDrvCount; i++) {
+		nBurnDrvActive = i;
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), shortName) == 0)
+			break;
+	}
+	if (i >= nBurnDrvCount)
+		return 1;
+
+	nAudSampleRate[0] = audSampleRate;
+	nBurnSoundRate = audSampleRate;
+
+	InputInit();
+	AudSoundInit();
+
+	if (DrvInit(i, false))
+		return 1;
+
+	VidInit(); // after DrvInit: the game's visible size is known
+
+	nAppVirtualFps = nBurnFPS;
+	if (nAppVirtualFps <= 0)
+		nAppVirtualFps = 6000;
+	nBurnSoundLen = (audSampleRate * 100 + (nAppVirtualFps >> 1)) / nAppVirtualFps;
+	allocAudio();
+	return 0;
+}
+
+void FBHeadlessRunFrame(int draw)
+{
+	if (!bDrvOkay)
+		return;
+
+	InputMake(true);
+
+	pBurnDraw = draw ? pVidImage : NULL;
+	pBurnSoundOut = audBuffer;
+
+	BurnDrvFrame();
+
+	audFrames = nBurnSoundLen;
+}
+
+// Audio accessors
+int FBHeadlessGetAudioSampleRate(void)   { return audSampleRate; }
+const short *FBHeadlessGetAudioBuffer(void) { return audBuffer; }
+int FBHeadlessGetAudioFrames(void)       { return audFrames; }

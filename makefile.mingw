@@ -26,12 +26,6 @@ WINDRES=windres
 NAME = fbneo
 COMPILENAME = 3
 
-ifdef BUILD_ARM64_EXE
-ifdef BUILD_X64_EXE
-undefine BUILD_X64_EXE
-endif
-endif
-
 ifneq ($(BUILD_X64_EXE)$(BUILD_ARM64_EXE),)
 ifdef BUILD_A68K
 undefine BUILD_A68K

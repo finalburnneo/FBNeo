@@ -18200,3 +18200,79 @@ struct BurnDriver BurnDrvCpsVsav2te = {
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+// Ultra Street Fighter II: The Final Challengers (USA, Backport RC3)
+// 2026-10-21
+static struct BurnRomInfo Usf2tRomDesc[] = {
+	{ "usfx.03d",		0x080000, 0x2d5aeb86, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.04a",		0x080000, 0x4eb17287, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxj.05",		0x080000, 0xf4ff18f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxj.06b",		0x080000, 0x413477c2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.07a",		0x080000, 0x53586db4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.08",		0x080000, 0x450cca63, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.09",		0x080000, 0xe3b1fab0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.10",		0x080000, 0xad2354b6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "usfx.13m",		0x800000, 0xaa4be198, CPS2_GFX | BRF_GRA },
+	{ "usfx.15m",		0x800000, 0xe4608aff, CPS2_GFX | BRF_GRA },
+	{ "usfx.17m",		0x800000, 0x1a622e68, CPS2_GFX | BRF_GRA },
+	{ "usfx.19m",		0x800000, 0x7fe71121, CPS2_GFX | BRF_GRA },
+
+	{ "usfx.01",		0x020000, 0x0e3009b8, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "usfx.02",		0x020000, 0xd5724f04, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "usfx.11m",		0x800000, 0x4f70ae61, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2xj.key",		0x000014, 0x160d1424, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Usf2t)
+STD_ROM_FN(Usf2t)
+
+struct BurnDriver BurnDrvCpsUsf2t = {
+	"usf2t", "ssf2t", NULL, NULL, "2026",
+	"Ultra Street Fighter II: The Final Challengers (USA, Backport RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Usf2tRomInfo, Usf2tRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Ultra Street Fighter II: The Final Challengers (Japan, Backport RC3)
+// 2026-10-21
+static struct BurnRomInfo Usf2xjRomDesc[] = {
+	{ "usfxj.03d",		0x080000, 0xdcd8b86b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfxj.04a",		0x080000, 0x13468832, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxj.05",		0x080000, 0xf4ff18f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxj.06b",		0x080000, 0x413477c2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.07a",		0x080000, 0x53586db4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.08",		0x080000, 0x450cca63, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfx.09",		0x080000, 0xe3b1fab0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "usfxj.10",		0x080000, 0xb55a3d3a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "usfxj.13m",		0x800000, 0xc4494fd1, CPS2_GFX | BRF_GRA },
+	{ "usfxj.15m",		0x800000, 0x041ce181, CPS2_GFX | BRF_GRA },
+	{ "usfxj.17m",		0x800000, 0xc3cac228, CPS2_GFX | BRF_GRA },
+	{ "usfxj.19m",		0x800000, 0x3ae943d9, CPS2_GFX | BRF_GRA },
+
+	{ "usfxj.01",		0x020000, 0x39faf589, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "usfxj.02",		0x020000, 0xf3d0aa03, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "usfxj.11m",		0x800000, 0xe42f6249, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2xj.key",		0x000014, 0x160d1424, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Usf2xj)
+STD_ROM_FN(Usf2xj)
+
+struct BurnDriver BurnDrvCpsUsf2xj = {
+	"usf2xj", "ssf2t", NULL, NULL, "2026",
+	"Ultra Street Fighter II: The Final Challengers (Japan, Backport RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Usf2xjRomInfo, Usf2xjRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};

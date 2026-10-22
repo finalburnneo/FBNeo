@@ -76,7 +76,7 @@ depobj	+= 	cdlist.o \
 			\
 			inp_headless.o aud_headless.o vid_headless.o support_paths.o ips_manager.o scrn.o localise_gamelist.o romdata.o \
 			cd_img.o stringset.o bzip.o media.o \
-			inpdipsw.o inputbuf.o replay.o stated.o headless_main.o headless_drv.o headless_misc.o headless_input.o
+			inpdipsw.o inputbuf.o replay.o stated.o headless_main.o headless_drv.o headless_misc.o headless_input.o headless_memory.o
 
 ifdef FORCE_PULSE_AUDIO
 alldir	+= 	intf/audio/linux

@@ -845,3 +845,50 @@ bool WriteValueAtHardwareAddress(HWAddressType address, unsigned int value, unsi
 
 	return value;
 }
+
+#ifdef BUILD_HEADLESS
+// Added for OpenEmu-Silicon headless: fast helpers for cheat search / achievements.
+// Author: Leonardo Kasperavičius
+
+// Size (in bytes) of the main CPU (cpu 0) address space, 0 if no driver is loaded.
+unsigned int GetMainMemorySize()
+{
+	if (!bDrvOkay)
+		return 0;
+	return (unsigned int)cpus[0].cpuconfig->nMemorySize;
+}
+
+// Bulk-read a contiguous range from the main CPU (cpu 0) address space, opening
+// the cpu once. Returns the number of bytes actually read (clamped to memory size).
+unsigned int ReadMemoryRange(HWAddressType address, unsigned char *buffer, unsigned int length)
+{
+	if (!bDrvOkay || buffer == NULL)
+		return 0;
+
+	cheat_ptr = &cpus[0];
+	cpu_core_config *cfg = cheat_ptr->cpuconfig;
+	unsigned int memSize = (unsigned int)cfg->nMemorySize;
+
+	INT32 nActiveCPU = cfg->active();
+	if (nActiveCPU >= 0) cfg->close();
+	cfg->open(cheat_ptr->nCPU);
+
+	unsigned int i;
+	for (i = 0; i < length; i++) {
+		if (address + i >= memSize) break;
+		buffer[i] = cfg->read(address + i);
+	}
+
+	cfg->close();
+	if (nActiveCPU >= 0) cfg->open(nActiveCPU);
+
+	return i;
+}
+
+int GetMainMemoryBigEndian()
+{
+	if (!bDrvOkay)
+		return 0;
+	return (cpus[0].cpuconfig->nAddressFlags & MB_CHEAT_ENDI_SWAP) ? 1 : 0;
+}
+#endif

@@ -48,6 +48,30 @@ void FBHeadlessReset(void);
 int FBHeadlessSaveState(const char *path);
 int FBHeadlessLoadState(const char *path);
 
+// Memory access for cheats, cheat search, and achievements. Addresses are in the
+// main CPU (cpu 0) hardware address space. size is 1..4 bytes; littleEndian
+// controls byte order for multi-byte values. A value found via a memory-range
+// snapshot can be written back at the same address with FBHeadlessWriteMemory.
+unsigned int FBHeadlessGetMainMemorySize(void);                                              // 0 until a driver is loaded
+unsigned int FBHeadlessReadMemoryRange(unsigned int address, unsigned char *out, unsigned int length); // returns bytes read
+unsigned int FBHeadlessReadMemory(unsigned int address, int size, int littleEndian);
+int FBHeadlessWriteMemory(unsigned int address, unsigned int value, int size, int littleEndian); // 1 on success
+int FBHeadlessIsAddressValid(unsigned int address);
+
+// Achievements memory. RetroAchievements sets are authored against FBNeo's flat
+// main-RAM exposure (per driver hardware type), not the CPU address space.
+// FBHeadlessCheevosInit rebuilds the map (call after load/reset); the read is
+// gated to the mapped regions. Returns bytes read (stops at the first unmapped byte).
+void FBHeadlessCheevosInit(void);
+unsigned int FBHeadlessReadAchievementMemory(unsigned int address, unsigned char *out, unsigned int length);
+
+// Cheats: write into the achievement memory map (same flat RAM the search reads), and
+// enumerate the mapped regions so the host can present cheat search. bigEndian reflects
+// the main CPU's multibyte order (68K = big-endian).
+int FBHeadlessWriteAchievementMemory(unsigned int address, unsigned int value, int size, int littleEndian);
+int FBHeadlessGetMemoryRegionCount(void);
+int FBHeadlessGetMemoryRegion(int index, unsigned int *start, unsigned int *length, int *bigEndian);
+
 // High-level input. player is 0-based; button is an FBHeadlessButton value. The
 // fork maps it to the active driver's inputs (parsed from its input names).
 typedef enum {

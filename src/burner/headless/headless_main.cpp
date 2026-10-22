@@ -116,6 +116,8 @@ int FBHeadlessLoadDriver(const char *shortName)
 		nAppVirtualFps = 6000;
 	nBurnSoundLen = (audSampleRate * 100 + (nAppVirtualFps >> 1)) / nAppVirtualFps;
 	allocAudio();
+
+	FBHeadlessCheevosInit(); // build the achievement memory map
 	return 0;
 }
 
@@ -166,7 +168,9 @@ void FBHeadlessReset(void)
 	if (!bDrvOkay)
 		return;
 	DrvInit(nBurnDrvActive, false); // full re-init (DrvInit calls DrvExit first)
+	VidInit();                      // DrvInit defers blitter init + frees buffers; recreate them
 	headless_map_inputs();
+	FBHeadlessCheevosInit();         // RAM buffers were reallocated; refresh the map
 }
 
 int FBHeadlessSaveState(const char *path)

@@ -310,6 +310,16 @@ int ConfigAppLoad()
 		VAR(nVidBlitterOpt[2]);
 		VAR(nVidBlitterOpt[3]);
 		VAR(nVidBlitterOpt[4]);
+		VAR(nVidBlitterOpt[5]);
+		STR(szVidD3D11Shader);
+		STR(szVidD3D11ShaderMRU[0]);
+		STR(szVidD3D11ShaderMRU[1]);
+		STR(szVidD3D11ShaderMRU[2]);
+		STR(szVidD3D11ShaderMRU[3]);
+		STR(szVidD3D11ShaderMRU[4]);
+		STR(szVidD3D11ShaderMRU[5]);
+		STR(szVidD3D11ShaderMRU[6]);
+		STR(szVidD3D11ShaderMRU[7]);
 
 		// DirectDraw blitter
 		VAR(bVidScanHalf);
@@ -688,6 +698,17 @@ int ConfigAppSave()
 	VAR(nVidBlitterOpt[2]);
 	VAR(nVidBlitterOpt[3]);
 	VAR(nVidBlitterOpt[4]);
+	VAR(nVidBlitterOpt[5]);
+	_ftprintf(h, _T("\n// Direct3D 11 blitter: shader / preset, and recently used shaders\n"));
+	STR(szVidD3D11Shader);
+	STR(szVidD3D11ShaderMRU[0]);
+	STR(szVidD3D11ShaderMRU[1]);
+	STR(szVidD3D11ShaderMRU[2]);
+	STR(szVidD3D11ShaderMRU[3]);
+	STR(szVidD3D11ShaderMRU[4]);
+	STR(szVidD3D11ShaderMRU[5]);
+	STR(szVidD3D11ShaderMRU[6]);
+	STR(szVidD3D11ShaderMRU[7]);
 	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor resolution and aspect ratio\n"));
 	VAR(bMonitorAutoCheck);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));

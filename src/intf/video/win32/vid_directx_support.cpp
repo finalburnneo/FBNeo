@@ -886,14 +886,144 @@ static int nCursorState = 0;
 static int nEditSize;
 static int nEditShadowOffset;
 
-static IDirectDrawSurface7* pShortMsgSurf = NULL;
-static IDirectDrawSurface7* pStatusSurf = NULL;
-static IDirectDrawSurface7* pChatSurf = NULL;
-static IDirectDrawSurface7* pEditSurf = NULL;
-static IDirectDrawSurface7* pTinyMsgSurf = NULL;
-static IDirectDrawSurface7* pJoystickMsgSurf = NULL;
-
 static unsigned int nKeyColour = 0x000001;
+
+// ---------------------------------------------------------------------------
+// OSD surfaces: either a DirectDraw surface, or a surface owned by an external
+// backend (see VidSSetOSDBackend()), so blitters that don't use DirectDraw can
+// share the OSD code. The method names mirror IDirectDrawSurface7 so the
+// drawing code below works unchanged with either kind.
+
+static VidSOSDBackend* pOSDBackend = NULL;
+
+void VidSSetOSDBackend(VidSOSDBackend* pBackend)
+{
+	pOSDBackend = pBackend;
+}
+
+class OSDSurface {
+public:
+	IDirectDrawSurface7* pDDS;
+	void* pExt;
+	VidSOSDBackend* pBackend;
+
+	OSDSurface() : pDDS(NULL), pExt(NULL), pBackend(NULL) { }
+
+	void Release()
+	{
+		if (pDDS) {
+			pDDS->Release();
+		}
+		if (pExt && pBackend) {
+			pBackend->pReleaseSurface(pExt);
+		}
+		delete this;
+	}
+
+	HRESULT GetDC(HDC* phDC)
+	{
+		if (pDDS) {
+			return pDDS->GetDC(phDC);
+		}
+		*phDC = pBackend->pGetDC(pExt);
+		return (*phDC) ? DD_OK : E_FAIL;
+	}
+
+	HRESULT ReleaseDC(HDC hDC)
+	{
+		if (pDDS) {
+			return pDDS->ReleaseDC(hDC);
+		}
+		pBackend->pReleaseDC(pExt, hDC);
+		return DD_OK;
+	}
+
+	HRESULT IsLost()  { return pDDS ? pDDS->IsLost()  : DD_OK; }
+	HRESULT Restore() { return pDDS ? pDDS->Restore() : DD_OK; }
+};
+
+static OSDSurface* OSDCreateSurface(int nWidth, int nHeight)
+{
+	OSDSurface* pSurf = NULL;
+
+	if (pOSDBackend) {
+		void* pExt = pOSDBackend->pCreateSurface(nWidth, nHeight);
+		if (pExt == NULL) {
+			return NULL;
+		}
+		pSurf = new OSDSurface;
+		pSurf->pExt = pExt;
+		pSurf->pBackend = pOSDBackend;
+
+		return pSurf;
+	}
+
+	if (pDD == NULL) {
+		return NULL;
+	}
+
+	DDSURFACEDESC2 ddsd;
+	IDirectDrawSurface7* pDDS = NULL;
+
+	memset(&ddsd, 0, sizeof(ddsd));
+	ddsd.dwSize = sizeof(ddsd);
+	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
+
+	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
+
+	ddsd.dwWidth = nWidth;
+	ddsd.dwHeight = nHeight;
+
+	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
+	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
+
+	if (FAILED(pDD->CreateSurface(&ddsd, &pDDS, NULL))) {
+		return NULL;
+	}
+
+	pSurf = new OSDSurface;
+	pSurf->pDDS = pDDS;
+
+	return pSurf;
+}
+
+static int VidSClearSurface(OSDSurface* pSurf, unsigned int nColour, RECT* pRect)
+{
+	if (pSurf == NULL) {
+		return 1;
+	}
+
+	if (pSurf->pDDS) {
+		return VidSClearSurface(pSurf->pDDS, nColour, pRect);
+	}
+
+	pSurf->pBackend->pFill(pSurf->pExt, nColour, pRect);
+
+	return 0;
+}
+
+// Blit an OSD surface onto pDest (or the backend's render target), using the colour key
+static void OSDBlt(IDirectDrawSurface7* pDest, RECT* pDestRect, OSDSurface* pSurf, RECT* pSrcRect)
+{
+	if (pSurf == NULL) {
+		return;
+	}
+
+	if (pSurf->pDDS) {
+		if (pDest) {
+			pDest->Blt(pDestRect, pSurf->pDDS, pSrcRect, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+		}
+	} else {
+		pSurf->pBackend->pBlit(pDestRect, pSurf->pExt, pSrcRect);
+	}
+}
+
+static OSDSurface* pShortMsgSurf = NULL;
+static OSDSurface* pStatusSurf = NULL;
+static OSDSurface* pChatSurf = NULL;
+static OSDSurface* pEditSurf = NULL;
+static OSDSurface* pTinyMsgSurf = NULL;
+static OSDSurface* pJoystickMsgSurf = NULL;
 
 static int nStatus = 0;
 static int nPrevStatus = -1;
@@ -1065,27 +1195,14 @@ void VidSExitOSD()
 
 static int VidSInitTinyMsg(int /*nFlags*/)
 {
-	DDSURFACEDESC2 ddsd;
-
 	VidSExitTinyMsg();
 
 	TinyMsgFont = CreateFont(12, 0, 0, 0, FW_SEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("MS Sans Serif"));
 	VidSTinyMsg.nTimer = 0;
 
 	// create surface to display the text
-	memset(&ddsd, 0, sizeof(ddsd));
-	ddsd.dwSize = sizeof(ddsd);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
-
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-
-	ddsd.dwWidth = 300;
-	ddsd.dwHeight = 20;
-
-	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
-	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
-
-	if (FAILED(pDD->CreateSurface(&ddsd, &pTinyMsgSurf, NULL))) {
+	pTinyMsgSurf = OSDCreateSurface(300, 20);
+	if (pTinyMsgSurf == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		printf("  * Error: Couldn't create OSD texture.\n");
 #endif
@@ -1099,8 +1216,6 @@ static int VidSInitTinyMsg(int /*nFlags*/)
 
 static int VidSInitJoystickMsg(int /*nFlags*/)
 {
-	DDSURFACEDESC2 ddsd;
-
 	VidSExitJoystickMsg();
 
 	//JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
@@ -1108,19 +1223,8 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 	VidSJoystickMsg.nTimer = 0;
 
 	// create surface to display the text
-	memset(&ddsd, 0, sizeof(ddsd));
-	ddsd.dwSize = sizeof(ddsd);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
-
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-
-	ddsd.dwWidth = 300;
-	ddsd.dwHeight = 60;
-
-	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
-	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
-
-	if (FAILED(pDD->CreateSurface(&ddsd, &pJoystickMsgSurf, NULL))) {
+	pJoystickMsgSurf = OSDCreateSurface(300, 60);
+	if (pJoystickMsgSurf == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		printf("  * Error: Couldn't create OSD texture.\n");
 #endif
@@ -1134,8 +1238,6 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 
 static int VidSInitShortMsg(int nFlags)
 {
-	DDSURFACEDESC2 ddsd;
-
 	VidSExitShortMsg();
 
 	nShortMsgFlags = nFlags;
@@ -1144,19 +1246,8 @@ static int VidSInitShortMsg(int nFlags)
 	VidSShortMsg.nTimer = 0;
 
 	// create surface to display the text
-	memset(&ddsd, 0, sizeof(ddsd));
-	ddsd.dwSize = sizeof(ddsd);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
-
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-
-	ddsd.dwWidth = 256;
-	ddsd.dwHeight = 32;
-
-	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
-	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
-
-	if (FAILED(pDD->CreateSurface(&ddsd, &pShortMsgSurf, NULL))) {
+	pShortMsgSurf = OSDCreateSurface(256, 32);
+	if (pShortMsgSurf == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create OSD texture.\n"));
 #endif
@@ -1170,8 +1261,6 @@ static int VidSInitShortMsg(int nFlags)
 
 static int VidSInitStatus(int nFlags)
 {
-	DDSURFACEDESC2 ddsd;
-
 	VidSExitStatus();
 
 	nStatusFlags = nFlags;
@@ -1181,19 +1270,8 @@ static int VidSInitStatus(int nFlags)
 	nPrevStatus = -1;
 
 	// create surface to display the text
-	memset(&ddsd, 0, sizeof(ddsd));
-	ddsd.dwSize = sizeof(ddsd);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
-
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-
-	ddsd.dwWidth = 192;
-	ddsd.dwHeight = 50;
-
-	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
-	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
-
-	if (FAILED(pDD->CreateSurface(&ddsd, &pStatusSurf, NULL))) {
+	pStatusSurf = OSDCreateSurface(192, 50);
+	if (pStatusSurf == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create OSD texture.\n"));
 #endif
@@ -1207,8 +1285,6 @@ static int VidSInitStatus(int nFlags)
 
 static int VidSInitChat(int /*nFlags*/)
 {
-	DDSURFACEDESC2 ddsd;
-
 	if (bChatInitialised) {
 		VidSExitChat();
 	} else {
@@ -1235,26 +1311,18 @@ static int VidSInitChat(int /*nFlags*/)
 	bDrawChat = false;
 
 	// create surface to display the text
-	memset(&ddsd, 0, sizeof(ddsd));
-	ddsd.dwSize = sizeof(ddsd);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
-
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-
+	int nSurfWidth;
 	if (nVidFullscreen) {
 		RECT rect;
 		GetClientScreenRect(hScrnWnd, &rect);
-		ddsd.dwWidth = rect.right - rect.left;
+		nSurfWidth = rect.right - rect.left;
 	} else {
 		extern RECT SystemWorkArea;
-		ddsd.dwWidth = SystemWorkArea.right - SystemWorkArea.left;
+		nSurfWidth = SystemWorkArea.right - SystemWorkArea.left;
 	}
-	ddsd.dwHeight = nChatFontSize * (CHAT_SIZE + (CHAT_SIZE >> 1));
 
-	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
-	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
-
-	if (FAILED(pDD->CreateSurface(&ddsd, &pChatSurf, NULL))) {
+	pChatSurf = OSDCreateSurface(nSurfWidth, nChatFontSize * (CHAT_SIZE + (CHAT_SIZE >> 1)));
+	if (pChatSurf == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create Chat texture.\n"));
 #endif
@@ -1270,8 +1338,6 @@ static int VidSInitChat(int /*nFlags*/)
 
 static int VidSInitEdit(int nFlags)
 {
-	DDSURFACEDESC2 ddsd;
-
 	VidSExitEdit();
 
 	nEditSize = nMaxChatFontSize + 8 - ((nMaxChatFontSize - nMinChatFontSize) * nFlags) / 4;
@@ -1282,26 +1348,18 @@ static int VidSInitEdit(int nFlags)
 	nEditShadowOffset = ((nEditSize - 8) / 16) + 1;
 
 	// create surface to display the text
-	memset(&ddsd, 0, sizeof(ddsd));
-	ddsd.dwSize = sizeof(ddsd);
-	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
-
-	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
-
+	int nSurfWidth;
 	if (nVidFullscreen) {
 		RECT rect;
 		GetClientScreenRect(hScrnWnd, &rect);
-		ddsd.dwWidth = rect.right - rect.left;
+		nSurfWidth = rect.right - rect.left;
 	} else {
 		extern RECT SystemWorkArea;
-		ddsd.dwWidth = SystemWorkArea.right - SystemWorkArea.left;
+		nSurfWidth = SystemWorkArea.right - SystemWorkArea.left;
 	}
-	ddsd.dwHeight = nEditSize;
 
-	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
-	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
-
-	if (FAILED(pDD->CreateSurface(&ddsd, &pEditSurf, NULL))) {
+	pEditSurf = OSDCreateSurface(nSurfWidth, nEditSize);
+	if (pEditSurf == NULL) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T("  * Error: Couldn't create OSD texture.\n"));
 #endif
@@ -1319,7 +1377,7 @@ int VidSInitOSD(int nFlags)
 //	dprintf(_T(" ** OSD initialised.\n"));
 #endif
 
-	if (pDD == NULL) {
+	if (pDD == NULL && pOSDBackend == NULL) {
 		return 1;
 	}
 
@@ -1454,7 +1512,7 @@ static void VidSDisplayTinyMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		// Blit the message to the surface using a colourkey
-		pSurf->Blt(&dest, pTinyMsgSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+		OSDBlt(pSurf, &dest, pTinyMsgSurf, &src);
 	}
 }
 
@@ -1482,7 +1540,7 @@ static void VidSDisplayJoystickMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		// Blit the message to the surface using a colourkey
-		pSurf->Blt(&dest, pJoystickMsgSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+		OSDBlt(pSurf, &dest, pJoystickMsgSurf, &src);
 	}
 }
 
@@ -1522,7 +1580,7 @@ static void VidSDisplayShortMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		// Blit the message to the surface using a colourkey
-		pSurf->Blt(&dest, pShortMsgSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+		OSDBlt(pSurf, &dest, pShortMsgSurf, &src);
 	}
 }
 
@@ -1632,7 +1690,7 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		// Blit the message to the surface using a colourkey
-		pSurf->Blt(&dest, pStatusSurf, &src, DDBLT_ASYNC  | DDBLT_KEYSRC, NULL);
+		OSDBlt(pSurf, &dest, pStatusSurf, &src);
 	}
 }
 
@@ -1760,7 +1818,7 @@ static void VidSDisplayChat(IDirectDrawSurface7* pSurf, RECT* pRect)
 				dest.right <<= 1;
 			}
 
-			pSurf->Blt(&dest, pChatSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+			OSDBlt(pSurf, &dest, pChatSurf, &src);
 		}
 
 		// Scroll message if needed
@@ -1897,7 +1955,7 @@ static void VidSDisplayEdit(IDirectDrawSurface7* pSurf, RECT* pRect)
 		}
 
 		// Blit the message to the surface using a colourkey
-		pSurf->Blt(&dest, pEditSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+		OSDBlt(pSurf, &dest, pEditSurf, &src);
 	}
 }
 

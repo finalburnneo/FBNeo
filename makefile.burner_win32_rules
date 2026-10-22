@@ -2,7 +2,7 @@ alldir	+= 	burner burner/win32 dep/kaillera/client dep/libs/libspng dep/libs/lib
 			intf/video/scalers 	intf/video/win32 intf/audio intf/audio/win32 intf/input intf/input/win32 intf/cd \
 			intf/perfcount intf/perfcount/win32 dep/generated dep/libs/lua dep/libs/zip
 
-depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o fba_kaillera.o gameinfo.o image_win32.o \
+depobj	+= 	about.o bzip.o choose_monitor.o cona.o d3d11shaderparams.o debugger.o drv.o d3dkmt_sync.o fba_kaillera.o gameinfo.o image_win32.o \
 			inpc.o inpcheat.o inpd.o inpdipsw.o inps.o ips_manager.o localise.o localise_download.o localise_gamelist.o main.o \
 			media.o memcard.o menu.o misc_win32.o cdlist.o cdlistcache.o neocdsel.o numdial.o paletteviewer.o placeholder.o popup_win32.o \
 			progress.o replay.o res.o roms.o run.o scrn.o sel.o sfactd.o splash.o stated.o support_paths.o systeminfo.o wave.o \
@@ -28,7 +28,7 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o debugger.o drv.o d3dkmt_sync.o
 			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o hq3xs.o hq_shared32.o xbr.o xbr32.o \
 			\
 			aud_dsound3.o aud_xaudio2.o cd_img.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
-			inp_dinput.o inp_xinput.o prf_performance_counter.o vid_d3d.o vid_ddraw.o vid_ddrawfx.o vid_effect.o vid_directx9.o vid_directx_support.o
+			inp_dinput.o inp_xinput.o prf_performance_counter.o vid_d3d.o vid_d3d11.o vid_d3d11_shader.o vid_ddraw.o vid_ddrawfx.o vid_effect.o vid_directx9.o vid_directx_support.o
 			
 ifdef INCLUDE_7Z_SUPPORT
 depobj	+=	un7z.o \

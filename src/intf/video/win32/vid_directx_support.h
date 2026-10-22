@@ -39,6 +39,19 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 bool VidSGetArcaderes(int* pWidth, int* pHeight);
 
 // Text display
+// OSD backend: lets blitters that don't use DirectDraw (e.g. Direct3D 11) host the OSD.
+// Surfaces are drawn with GDI (pGetDC/pReleaseDC) and blitted using a colour key (0x000001).
+struct VidSOSDBackend {
+	void* (*pCreateSurface)(int nWidth, int nHeight);
+	void  (*pReleaseSurface)(void* pSurf);
+	HDC   (*pGetDC)(void* pSurf);
+	void  (*pReleaseDC)(void* pSurf, HDC hDC);
+	void  (*pFill)(void* pSurf, unsigned int nColour, RECT* pRect);
+	void  (*pBlit)(RECT* pDest, void* pSurf, RECT* pSrc);			// colour-keyed blit onto the blitter's render target
+};
+void VidSSetOSDBackend(VidSOSDBackend* pBackend);					// NULL = use DirectDraw surfaces (VidSInit)
+
+// pSurf may be NULL when an OSD backend is set
 void VidSExitOSD();
 int VidSInitOSD(int nFlags);
 int VidSRestoreOSD();

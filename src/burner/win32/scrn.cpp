@@ -2310,11 +2310,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			VidSelect(4);
 			POST_INITIALISE_MESSAGE;
 			break;
-#if 0
-			case MENU_BLITTER_6:
+		case MENU_BLITTER_6:
 			VidSelect(5);
 			POST_INITIALISE_MESSAGE;
 			break;
+#if 0
 		case MENU_BLITTER_7:
 			VidSelect(6);
 			POST_INITIALISE_MESSAGE;
@@ -2604,6 +2604,85 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				AudBlankSound();
 				HardFXShaderSettingsDialog();
 				GameInpCheckMouse(); //? dink?
+			}
+			break;
+		}
+
+		// Direct3D 11 blitter shaders
+		case MENU_D3D11_SHADER_LOAD: {
+			if (UseDialogs()) {
+				TCHAR szFile[MAX_PATH] = _T("");
+				TCHAR szDir[MAX_PATH] = _T("");
+
+				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+				AudBlankSound();
+
+				// start in the folder of the current shader, or support/shaders
+				if (szVidD3D11Shader[0]) {
+					_tcsncpy(szDir, szVidD3D11Shader, MAX_PATH - 1);
+					TCHAR* p = _tcsrchr(szDir, _T('\\'));
+					TCHAR* q = _tcsrchr(szDir, _T('/'));
+					if (q > p) p = q;
+					if (p) *p = 0; else szDir[0] = 0;
+				}
+				if (szDir[0] == 0) {
+					GetCurrentDirectory(MAX_PATH, szDir);
+					_tcsncat(szDir, _T("\\support\\shaders"), MAX_PATH - 1 - _tcslen(szDir));
+				}
+
+				OPENFILENAME ofn;
+				memset(&ofn, 0, sizeof(ofn));
+				ofn.lStructSize = sizeof(ofn);
+				ofn.hwndOwner = hScrnWnd;
+				ofn.lpstrFilter = _T("Shaders and presets (*.cgp, *.cg, *.hlsl, *.fx)\0*.cgp;*.cg;*.hlsl;*.fx\0Cg presets (*.cgp)\0*.cgp\0All files (*.*)\0*.*\0\0");
+				ofn.lpstrFile = szFile;
+				ofn.nMaxFile = MAX_PATH;
+				ofn.lpstrInitialDir = szDir;
+				ofn.lpstrTitle = _T("Load shader");
+				ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY | OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
+
+				if (GetOpenFileName(&ofn)) {
+					VidD3D11SetShader(szFile);
+				}
+
+				GameInpCheckMouse();
+			}
+			break;
+		}
+
+		case MENU_D3D11_SHADER_NONE:
+			VidD3D11SetShader(_T(""));
+			break;
+
+		case MENU_D3D11_SHADER_PARAMS: {
+			if (UseDialogs()) {
+				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+				AudBlankSound();
+				D3D11ShaderParamsDialog(hScrnWnd);
+				GameInpCheckMouse();
+			}
+			break;
+		}
+
+		case MENU_D3D11_SHADER_MRU_CLEAR:
+			for (int i = 0; i < D3D11_SHADER_MRU_SIZE; i++) {
+				szVidD3D11ShaderMRU[i][0] = 0;
+			}
+			break;
+
+		case MENU_D3D11_SHADER_MRU + 0:
+		case MENU_D3D11_SHADER_MRU + 1:
+		case MENU_D3D11_SHADER_MRU + 2:
+		case MENU_D3D11_SHADER_MRU + 3:
+		case MENU_D3D11_SHADER_MRU + 4:
+		case MENU_D3D11_SHADER_MRU + 5:
+		case MENU_D3D11_SHADER_MRU + 6:
+		case MENU_D3D11_SHADER_MRU + 7: {
+			int n = id - MENU_D3D11_SHADER_MRU;
+			if (n < D3D11_SHADER_MRU_SIZE && szVidD3D11ShaderMRU[n][0]) {
+				TCHAR szPath[MAX_PATH];
+				_tcscpy(szPath, szVidD3D11ShaderMRU[n]);
+				VidD3D11SetShader(szPath);
 			}
 			break;
 		}
@@ -4092,8 +4171,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 		case 4:
+		case 5:
 			switch (id) {
-				// Options for the DirectX Graphics 9 Alternate blitter
+				// Options for the DirectX Graphics 9 Alternate blitter and the Direct3D 11 blitter (shared menu IDs)
 				case MENU_DX9_ALT_POINT:
 					bVidDX9Bilinear = 0;
 					POST_INITIALISE_MESSAGE;

@@ -502,6 +502,20 @@ int StatedSave(int nSlot);
 int NumDialCreate(int bDial);
 void GammaDialog();
 void HardFXShaderSettingsDialog();
+
+// d3d11shaderparams.cpp
+int D3D11ShaderParamsDialog(HWND hParent);
+
+// vid_d3d11.cpp (shaders for the Direct3D 11 blitter)
+#define D3D11_SHADER_MRU_SIZE 8
+extern TCHAR szVidD3D11Shader[MAX_PATH];					// current shader / preset ("" = none)
+extern TCHAR szVidD3D11ShaderMRU[D3D11_SHADER_MRU_SIZE][MAX_PATH];	// recently used shaders
+int VidD3D11SetShader(const TCHAR* szPath);					// select (and load, if the blitter is running) a shader
+int VidD3D11ShaderParamCount();							// -1 = no shader loaded
+int VidD3D11ShaderGetParam(int n, TCHAR* szDesc, int nDescSize, float* pValue, float* pMin, float* pMax, float* pStep, float* pDefault);
+void VidD3D11ShaderSetParam(int n, float fValue);			// takes effect immediately
+int VidD3D11ShaderSaveParams();								// to config/shaders/<name>.ini
+int VidD3D11ShaderName(TCHAR* szName, int nSize);
 void ScanlineDialog();
 void PhosphorDialog();
 void ScreenAngleDialog();

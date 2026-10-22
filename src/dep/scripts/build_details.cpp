@@ -19,7 +19,9 @@ int main(int /*argc*/, char** /*argv*/)
 	printf("#define BUILD_CPU  X86\n");
 #endif
 
-#if defined __GNUC__
+#if defined __clang__
+	printf("#define BUILD_COMP Clang %i.%i.%i\n", __clang_major__, __clang_minor__, __clang_patchlevel__);
+#elif defined __GNUC__
 	printf("#define BUILD_COMP GCC %i.%i.%i\n", __GNUC__, __GNUC_MINOR__, __GNUC_PATCHLEVEL__);
 #elif defined _MSC_VER
  #if _MSC_VER >= 1300 && _MSC_VER < 1310

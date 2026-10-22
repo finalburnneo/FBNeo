@@ -13,6 +13,12 @@
 #include "burner.h"
 #include "fbheadless.h"
 
+// Implemented in headless_input.cpp.
+void headless_map_inputs(void);
+
+// Implemented in vid_headless.cpp (rotates the native frame to the display buffer).
+void headless_video_present(void);
+
 // --- Burner globals expected by the FBNeo library / shared burner code ---
 int    nAppVirtualFps = 6000;      // app fps * 100
 bool   bRunPause = 0;
@@ -73,7 +79,13 @@ void FBHeadlessExit(void)
 
 void FBHeadlessSetRomPath(const char *path)
 {
-	snprintf(szAppRomPaths[0], MAX_PATH, "%s", path);
+	// BzipOpen builds zip paths as szAppRomPaths[d] + "<name>.zip" with no
+	// separator, so the path must end with a slash.
+	size_t n = strlen(path);
+	if (n > 0 && path[n - 1] == '/')
+		snprintf(szAppRomPaths[0], MAX_PATH, "%s", path);
+	else
+		snprintf(szAppRomPaths[0], MAX_PATH, "%s/", path);
 }
 
 int FBHeadlessLoadDriver(const char *shortName)
@@ -97,6 +109,7 @@ int FBHeadlessLoadDriver(const char *shortName)
 		return 1;
 
 	VidInit(); // after DrvInit: the game's visible size is known
+	headless_map_inputs();
 
 	nAppVirtualFps = nBurnFPS;
 	if (nAppVirtualFps <= 0)
@@ -118,6 +131,9 @@ void FBHeadlessRunFrame(int draw)
 
 	BurnDrvFrame();
 
+	if (draw)
+		headless_video_present();
+
 	audFrames = nBurnSoundLen;
 }
 
@@ -125,3 +141,30 @@ void FBHeadlessRunFrame(int draw)
 int FBHeadlessGetAudioSampleRate(void)   { return audSampleRate; }
 const short *FBHeadlessGetAudioBuffer(void) { return audBuffer; }
 int FBHeadlessGetAudioFrames(void)       { return audFrames; }
+
+// Frame timing / geometry
+int FBHeadlessGetFrameRate(void) { return nBurnFPS; }
+
+int FBHeadlessGetAspectX(void)
+{
+	INT32 x = 0, y = 0;
+	if (bDrvOkay)
+		BurnDrvGetAspect(&x, &y);
+	return x;
+}
+
+int FBHeadlessGetAspectY(void)
+{
+	INT32 x = 0, y = 0;
+	if (bDrvOkay)
+		BurnDrvGetAspect(&x, &y);
+	return y;
+}
+
+void FBHeadlessReset(void)
+{
+	if (!bDrvOkay)
+		return;
+	DrvInit(nBurnDrvActive, false); // full re-init (DrvInit calls DrvExit first)
+	headless_map_inputs();
+}

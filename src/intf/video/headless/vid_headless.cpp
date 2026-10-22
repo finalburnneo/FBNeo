@@ -7,66 +7,109 @@
 // Built originally to support OpenEmu-Silicon
 // (https://github.com/OpenEmu-Silicon/OpenEmu-Silicon).
 //
-// Instead of drawing to a view, it keeps the emulated frame in a plain buffer
-// the host reads each frame. Subject to the FB Neo license (see src/license.txt).
+// FBNeo renders every game in its native orientation (vertical games come out
+// sideways), so this keeps a native render buffer for the emulator and presents
+// an upright, correctly-pitched buffer to the host, rotating when needed.
+// Subject to the FB Neo license (see src/license.txt).
 
 #include "burner.h"
 #include "fbheadless.h"
 
-static unsigned char *screenBuffer = NULL;
-static int bufferWidth = 0;
-static int bufferHeight = 0;
-static int bufferBPP = 0;
-static int bufferPitch = 0;
+static unsigned char *nativeBuffer = NULL;  // FBNeo renders here (pBurnDraw)
+static unsigned char *displayBuffer = NULL; // exposed to the host (upright)
+static int nativeW = 0, nativeH = 0;
+static int dispW = 0, dispH = 0;
+static int bpp = 0;
+static int rotate = 0; // 0 none, 1 CW90, 2 180, 3 CCW90
+
+static void freeBuffers()
+{
+	if (displayBuffer && displayBuffer != nativeBuffer)
+		free(displayBuffer);
+	free(nativeBuffer);
+	nativeBuffer = NULL;
+	displayBuffer = NULL;
+}
 
 static int HeadlessVideoInit()
 {
-	int gameWidth = 0, gameHeight = 0;
-	int rotationMode = 0;
+	int vw = 0, vh = 0;
 	int flags = BurnDrvGetFlags();
-
-	BurnDrvGetVisibleSize(&gameWidth, &gameHeight);
-
-	if (flags & BDF_ORIENTATION_VERTICAL) rotationMode |= 1;
-	if (flags & BDF_ORIENTATION_FLIPPED)  rotationMode ^= 2;
+	BurnDrvGetVisibleSize(&vw, &vh);
 
 	// 32bpp XRGB8888 output so the host renderer can consume it directly.
 	nVidImageDepth = 32;
-	nVidImageBPP   = nVidImageDepth / 8;
-	nVidImageWidth = gameWidth;
-	nVidImageHeight = gameHeight;
-	if (!rotationMode)
-		nVidImagePitch = nVidImageWidth * nVidImageBPP;
-	else
-		nVidImagePitch = nVidImageHeight * nVidImageBPP;
-
+	nVidImageBPP = 4;
+	bpp = 4;
 	SetBurnHighCol(nVidImageDepth);
 
-	bufferBPP = nVidImageBPP;
-	bufferWidth = gameWidth;
-	bufferHeight = gameHeight;
-	bufferPitch = nVidImagePitch;
+	if (flags & BDF_ORIENTATION_VERTICAL) {
+		// Visible size is the upright (display) size; FBNeo renders it sideways.
+		nativeW = vh; nativeH = vw;
+		dispW = vw;   dispH = vh;
+		rotate = (flags & BDF_ORIENTATION_FLIPPED) ? 1 : 3; // CW : CCW
+	} else {
+		nativeW = vw; nativeH = vh;
+		dispW = vw;   dispH = vh;
+		rotate = (flags & BDF_ORIENTATION_FLIPPED) ? 2 : 0; // 180 : none
+	}
 
-	int bufSize = bufferWidth * bufferHeight * nVidImageBPP;
-	free(screenBuffer);
-	screenBuffer = (unsigned char *)malloc(bufSize);
-	if (screenBuffer == NULL)
+	freeBuffers();
+	nativeBuffer = (unsigned char *)malloc(nativeW * nativeH * bpp);
+	if (nativeBuffer == NULL)
 		return 1;
-	memset(screenBuffer, 0, bufSize);
+	memset(nativeBuffer, 0, nativeW * nativeH * bpp);
 
-	nBurnBpp = nVidImageBPP;
-	nBurnPitch = nVidImagePitch;
-	pVidImage = screenBuffer;
+	if (rotate == 0) {
+		displayBuffer = nativeBuffer;
+	} else {
+		displayBuffer = (unsigned char *)malloc(dispW * dispH * bpp);
+		if (displayBuffer == NULL)
+			return 1;
+		memset(displayBuffer, 0, dispW * dispH * bpp);
+	}
+
+	// FBNeo draws into the native buffer, pitch = native width.
+	nVidImageWidth = nativeW;
+	nVidImageHeight = nativeH;
+	nVidImagePitch = nativeW * bpp;
+	nBurnBpp = bpp;
+	nBurnPitch = nativeW * bpp;
+	pVidImage = nativeBuffer;
 
 	return 0;
 }
 
 static int HeadlessVideoExit()
 {
-	free(screenBuffer);
-	screenBuffer = NULL;
-	bufferWidth = bufferHeight = bufferBPP = bufferPitch = 0;
+	freeBuffers();
+	nativeW = nativeH = dispW = dispH = bpp = rotate = 0;
 	return 0;
+}
+
+// Rotate the freshly rendered native frame into the upright display buffer.
+// Called by the frontend after BurnDrvFrame.
+void headless_video_present(void)
+{
+	if (rotate == 0 || displayBuffer == nativeBuffer)
+		return;
+
+	const uint32_t *src = (const uint32_t *)nativeBuffer;
+	uint32_t *dst = (uint32_t *)displayBuffer;
+
+	if (rotate == 2) { // 180
+		for (int dy = 0; dy < dispH; dy++)
+			for (int dx = 0; dx < dispW; dx++)
+				dst[dy * dispW + dx] = src[(dispH - 1 - dy) * nativeW + (dispW - 1 - dx)];
+	} else if (rotate == 1) { // CW 90 (dispW == nativeH, dispH == nativeW)
+		for (int dy = 0; dy < dispH; dy++)
+			for (int dx = 0; dx < dispW; dx++)
+				dst[dy * dispW + dx] = src[(nativeH - 1 - dx) * nativeW + dy];
+	} else { // CCW 90
+		for (int dy = 0; dy < dispH; dy++)
+			for (int dx = 0; dx < dispW; dx++)
+				dst[dy * dispW + dx] = src[dx * nativeW + (nativeW - 1 - dy)];
+	}
 }
 
 static int HeadlessVideoFrame(bool redraw)
@@ -104,8 +147,8 @@ struct VidOut VidOutHeadless = {
 
 // --- C accessors for the host wrapper ---
 
-extern "C" const unsigned char *FBHeadlessGetVideoBuffer(void) { return screenBuffer; }
-extern "C" int FBHeadlessGetVideoWidth(void)  { return bufferWidth; }
-extern "C" int FBHeadlessGetVideoHeight(void) { return bufferHeight; }
-extern "C" int FBHeadlessGetVideoPitch(void)  { return bufferPitch; }
-extern "C" int FBHeadlessGetVideoBPP(void)    { return bufferBPP; }
+extern "C" const unsigned char *FBHeadlessGetVideoBuffer(void) { return displayBuffer; }
+extern "C" int FBHeadlessGetVideoWidth(void)  { return dispW; }
+extern "C" int FBHeadlessGetVideoHeight(void) { return dispH; }
+extern "C" int FBHeadlessGetVideoPitch(void)  { return dispW * bpp; }
+extern "C" int FBHeadlessGetVideoBPP(void)    { return bpp; }

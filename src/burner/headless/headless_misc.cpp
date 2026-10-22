@@ -38,7 +38,10 @@ TCHAR* AdaptiveEncodingReads(const TCHAR* /* pszFileName */)
 
 bool AppProcessKeyboardInput()
 {
-	return false;
+	// Input is always live for the headless core (the host gates pause/focus),
+	// and CinpState() zeroes keyboard-range codes (< 0x4000, which ours are)
+	// unless this returns true.
+	return true;
 }
 
 void UpdateMessage(char* /* message */)

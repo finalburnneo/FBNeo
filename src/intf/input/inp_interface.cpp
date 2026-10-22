@@ -16,6 +16,8 @@ static bool bCinpOkay;
 	extern struct InputInOut InputInOutXInput;
 #elif defined (BUILD_MACOS)
 	extern struct InputInOut InputInOutMacOS;
+#elif defined (BUILD_HEADLESS)
+	extern struct InputInOut InputInOutHeadless;
 #elif defined (BUILD_SDL)
 	extern struct InputInOut InputInOutSDL;
 #elif defined (BUILD_SDL2)
@@ -33,6 +35,8 @@ static struct InputInOut *pInputInOut[]=
 	&InputInOutXInput,
 #elif defined (BUILD_MACOS)
 	&InputInOutMacOS,
+#elif defined (BUILD_HEADLESS)
+	&InputInOutHeadless,
 #elif defined (BUILD_SDL2)
 		&InputInOutSDL2,
 #elif defined (BUILD_SDL)

@@ -15,6 +15,8 @@
 	extern struct VidOut VidOutD3D11;
 #elif defined (BUILD_MACOS)
 	extern struct VidOut VidOutMacOS;
+#elif defined (BUILD_HEADLESS)
+	extern struct VidOut VidOutHeadless;
 #elif defined (BUILD_PI)
 	extern struct VidOut VidOutPi;
 #elif defined (BUILD_SDL2)
@@ -39,6 +41,8 @@ static struct VidOut *pVidOut[] = {
 	&VidOutD3D11,
 #elif defined (BUILD_MACOS)
 	&VidOutMacOS,
+#elif defined (BUILD_HEADLESS)
+	&VidOutHeadless,
 #elif defined (BUILD_PI)
 	&VidOutPi,
 #elif defined (BUILD_SDL2)

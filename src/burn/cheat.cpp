@@ -845,3 +845,61 @@ bool WriteValueAtHardwareAddress(HWAddressType address, unsigned int value, unsi
 
 	return value;
 }
+
+#ifdef BUILD_HEADLESS
+// Added for OpenEmu-Silicon headless: fast helpers for cheat search / achievements.
+// Author: Leonardo Kasperavičius
+
+// Size (in bytes) of the main CPU (cpu 0) address space, 0 if no driver is loaded.
+unsigned int GetMainMemorySize()
+{
+	if (!bDrvOkay)
+		return 0;
+	// cpu 0 still holds dummy_config (nMemorySize = ~0UL) when no CPU registered with
+	// the cheat engine; report 0 so the host never tries to allocate a 4GB buffer.
+	unsigned int size = (unsigned int)cpus[0].cpuconfig->nMemorySize;
+	return (size == ~0U) ? 0 : size;
+}
+
+// Bulk-read a contiguous range from the main CPU (cpu 0) address space, opening
+// the cpu once. Returns the number of bytes actually read (clamped to memory size).
+unsigned int ReadMemoryRange(HWAddressType address, unsigned char *buffer, unsigned int length)
+{
+	if (!bDrvOkay || buffer == NULL)
+		return 0;
+
+	cheat_ptr = &cpus[0];
+	cpu_core_config *cfg = cheat_ptr->cpuconfig;
+	unsigned int memSize = (unsigned int)cfg->nMemorySize;
+
+	INT32 nActiveCPU = cfg->active();
+	if (nActiveCPU >= 0) cfg->close();
+	cfg->open(cheat_ptr->nCPU);
+
+	unsigned int i;
+	for (i = 0; i < length; i++) {
+		if (address + i >= memSize) break;
+		buffer[i] = cfg->read(address + i);
+	}
+
+	cfg->close();
+	if (nActiveCPU >= 0) cfg->open(nActiveCPU);
+
+	return i;
+}
+
+// Multi-byte order hint for the host's cheat search. This deliberately does NOT
+// return the CPU's native endianness. RetroAchievements sets and libretro .cht
+// cheats (the formats the host matches) are authored little-endian for the 68K
+// arcade boards -- every FBNeo libretro .cht is big_endian="false" -- so those
+// report 0 here, which is what the host needs. MB_CHEAT_ENDI_SWAP is set only by
+// V60/TMS34010, which report 1; no multi-byte cheats target those boards today
+// and RA reads raw bytes, so that case is a known, currently-harmless mismatch
+// rather than a reason to switch to (nAddressFlags & 3).
+int GetMainMemoryBigEndian()
+{
+	if (!bDrvOkay)
+		return 0;
+	return (cpus[0].cpuconfig->nAddressFlags & MB_CHEAT_ENDI_SWAP) ? 1 : 0;
+}
+#endif

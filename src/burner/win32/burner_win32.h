@@ -390,6 +390,14 @@ extern bool uiOwnerDrawActive;
 extern UINT uiLightModeCode;
 extern UINT uiDarkModeCode;
 
+struct CurrentItemInfo
+{
+	TCHAR sText[256];
+	UINT menuItemTypeFlag;
+	UINT menuItemStateFlag;
+	bool itemHasCheckMark;
+};
+
 extern HICON* pIconsCache;
 
 void CreateDrvIconsCache();

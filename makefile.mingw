@@ -382,10 +382,6 @@ ifdef BUILD_X64_EXE
 	DEF := $(DEF) -DBUILD_X64_EXE
 endif
 
-ifdef BUILD_ARM64_EXE
-	DEF := $(DEF) -DFBNEO_TARGET_ARM64
-endif
-
 ifdef	SYMBOL
 
 	CFLAGS   += -ggdb3
@@ -624,7 +620,7 @@ endif
 about.o about.d: $(build_details.h)
 
 $(build_details.h):	$(srcdir)dep/scripts/build_details.cpp
-	@$(HOST_CXX) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $(if $(BUILD_ARM64_EXE),-DFBNEO_TARGET_ARM64) $< -o $(objdir)dep/generated/build_details.exe
+	@$(HOST_CXX) $(HOST_CXXFLAGS) $(HOST_LDFLAGS) $< -o $(objdir)dep/generated/build_details.exe
 	@$(objdir)dep/generated/build_details.exe >$@
 
 #

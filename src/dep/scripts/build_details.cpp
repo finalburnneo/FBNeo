@@ -11,7 +11,7 @@ int main(int /*argc*/, char** /*argv*/)
 	printf("#define BUILD_CHAR ANSI\n");
 #endif
 
-#if defined FBNEO_TARGET_ARM64
+#if defined BUILD_ARM64_EXE
 	printf("#define BUILD_CPU  ARM64\n");
 #elif defined BUILD_X64_EXE
 	printf("#define BUILD_CPU  X64\n");

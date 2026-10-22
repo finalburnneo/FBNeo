@@ -30,7 +30,7 @@
 			<WarningLevel>Level3</WarningLevel>
 			<Optimization>MaxSpeed</Optimization>
 			<RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-			<PreprocessorDefinitions>FBNEO_TARGET_ARM64;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+			<PreprocessorDefinitions>BUILD_ARM64_EXE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
 		</ClCompile>
 		<Link>
 			<SubSystem>Console</SubSystem>

@@ -79,6 +79,9 @@ while ( my $line = <INFILE> ) {
 		# add NOT WS_POPUP to all windows with WS_CHILD specified
 		$line =~ s/(?<!NOT\s)(WS_CHILD)/$1 \| NOT WS_POPUP/;
 
+		# llvm-rc doesn't support multiplication, precompute constant products (outside of strings)
+		$line = join '', map { /^"/ ? $_ : do { my $s = $_; 1 while $s =~ s/(\d+)\s*\*\s*(\d+)/$1 * $2/e; $s } } split /("(?:[^"]|"")*")/, $line;
+
 		# Fix FONT statements (remove rubbish after font name)
 		if ( $line =~ /(^FONT\s+\w+,\s*".*")/ ) {
 			$line = $1;

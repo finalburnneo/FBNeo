@@ -44,6 +44,10 @@ int FBHeadlessGetAspectY(void);
 // Reset the loaded driver.
 void FBHeadlessReset(void);
 
+// Save/load a full machine state to/from a file. Returns 0 on success.
+int FBHeadlessSaveState(const char *path);
+int FBHeadlessLoadState(const char *path);
+
 // High-level input. player is 0-based; button is an FBHeadlessButton value. The
 // fork maps it to the active driver's inputs (parsed from its input names).
 typedef enum {

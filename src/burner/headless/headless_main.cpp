@@ -168,3 +168,21 @@ void FBHeadlessReset(void)
 	DrvInit(nBurnDrvActive, false); // full re-init (DrvInit calls DrvExit first)
 	headless_map_inputs();
 }
+
+int FBHeadlessSaveState(const char *path)
+{
+	if (!bDrvOkay || path == NULL)
+		return 1;
+	TCHAR szName[1024];
+	ANSIToTCHAR(path, szName, 1024);
+	return BurnStateSave(szName, 1); // bAll=1: full state
+}
+
+int FBHeadlessLoadState(const char *path)
+{
+	if (!bDrvOkay || path == NULL)
+		return 1;
+	TCHAR szName[1024];
+	ANSIToTCHAR(path, szName, 1024);
+	return BurnStateLoad(szName, 1, NULL); // game already loaded, so no reload callback
+}

@@ -1051,6 +1051,7 @@
     <ClCompile Include="..\..\src\burner\win32\bzip.cpp" />
     <ClCompile Include="..\..\src\burner\win32\choose_monitor.cpp" />
     <ClCompile Include="..\..\src\burner\win32\cona.cpp" />
+    <ClCompile Include="..\..\src\burner\win32\d3d11shaderparams.cpp" />
     <ClCompile Include="..\..\src\burner\win32\d3dkmt_sync.cpp" />
     <ClCompile Include="..\..\src\burner\win32\debugger.cpp" />
     <ClCompile Include="..\..\src\burner\win32\drv.cpp" />
@@ -1332,6 +1333,8 @@
     <ClCompile Include="..\..\src\intf\video\win32\ddraw_core.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\directx9_core.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_d3d.cpp" />
+    <ClCompile Include="..\..\src\intf\video\win32\vid_d3d11.cpp" />
+    <ClCompile Include="..\..\src\intf\video\win32\vid_d3d11_shader.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_ddraw.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_ddrawfx.cpp" />
     <ClCompile Include="..\..\src\intf\video\win32\vid_directx9.cpp" />

@@ -103,6 +103,7 @@ mingwcc64: FORCE
 	@$(MAKE) -s -f makefile.mingw BUILD_X64_EXE=1 GCC510=1 BORKYCRT=1 HOST_CC=gcc HOST_CXX=g++ CC=x86_64-w64-mingw32-gcc CXX=x86_64-w64-mingw32-g++ WINDRES=x86_64-w64-mingw32-windres
 
 # Native Windows ARM64 build with MSYS2 (CLANGARM64 environment)
+# note: MSYS2 can't produce binaries for ARMv8.0
 mingwarm64: FORCE
 	@$(MAKE) -s -f makefile.mingw BUILD_ARM64_EXE=1 GCC510=1 BORKYCRT=1
 

@@ -24,6 +24,8 @@ env:
     WINDOWS_X86_32_DEBUG_ARTIFACT: windows-x86_32-debug
     WINDOWS_X86_32_DEBUG_ARTIFACT_PATH: windows-x86_32-debug.txt
     WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT: windows-x86_32-debug-archive
+    # Forced version (future versions might drop ARMv8.0 support ?)
+    LLVM_MINGW_VERSION: "20261020"
     WINDOWS_ARM64_ARTIFACT: windows-arm64
     WINDOWS_ARM64_ARTIFACT_PATH: windows-arm64.txt
     WINDOWS_ARM64_ARCHIVE_ARTIFACT: windows-arm64-archive
@@ -264,24 +266,24 @@ jobs:
 
   build_windows_arm64:
     name: Build (Windows ARM64)
-    runs-on: windows-11-arm
+    runs-on: ubuntu-latest
     continue-on-error: true
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash {0}
     steps:
       - name: Install dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel mingw-w64-clang-aarch64-toolchain zip wget perl
-          msystem: CLANGARM64
+        run: |
+          name=llvm-mingw-${LLVM_MINGW_VERSION}-ucrt-ubuntu-22.04-x86_64
+          curl -fsSL https://github.com/mstorsjo/llvm-mingw/releases/download/${LLVM_MINGW_VERSION}/${name}.tar.xz | tar -xJ -C $HOME
+          echo "$HOME/${name}/bin" >> $GITHUB_PATH
       - name: Clone
         uses: actions/checkout@v4
       - name: Build
         id: create_windows_arm64_archive
         run: |
-          make -j$(nproc) mingwarm64 SKIPDEPEND=1 RELEASEBUILD=1
+          set -e
+          make -j$(nproc) mingwccarm64 SKIPDEPEND=1 RELEASEBUILD=1
           archive_file="${{ env.WINDOWS_ARM64_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneoarm64.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
@@ -303,24 +305,24 @@ jobs:
 
   build_windows_arm64_debug:
     name: Build (Windows ARM64 Debug)
-    runs-on: windows-11-arm
+    runs-on: ubuntu-latest
     continue-on-error: true
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash {0}
     steps:
       - name: Install dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel mingw-w64-clang-aarch64-toolchain zip wget perl
-          msystem: CLANGARM64
+        run: |
+          name=llvm-mingw-${LLVM_MINGW_VERSION}-ucrt-ubuntu-22.04-x86_64
+          curl -fsSL https://github.com/mstorsjo/llvm-mingw/releases/download/${LLVM_MINGW_VERSION}/${name}.tar.xz | tar -xJ -C $HOME
+          echo "$HOME/${name}/bin" >> $GITHUB_PATH
       - name: Clone
         uses: actions/checkout@v4
       - name: Build
         id: create_windows_arm64_debug_archive
         run: |
-          make -j$(nproc) mingwarm64 SKIPDEPEND=1
+          set -e
+          make -j$(nproc) mingwccarm64 SKIPDEPEND=1
           archive_file="${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneoarm64d.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html

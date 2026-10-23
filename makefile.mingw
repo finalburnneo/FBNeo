@@ -276,21 +276,20 @@ endif
 
 ifdef GCC510
 ifdef BUILD_ARM64_EXE
-GCCOPTFLAGS =
+# keep ARMv8.0 compatibility (MSYS2 supports only ARMv8.1 and will ignore this)
+GCCOPTFLAGS = -march=armv8-a
 else
-GCCOPTFLAGS = -ffloat-store -fforce-addr -finline-limit=1200 -fthread-jumps -fexpensive-optimizations
+GCCOPTFLAGS = -ffloat-store -fforce-addr -finline-limit=1200 -fthread-jumps -fexpensive-optimizations -mwindows
 endif
 
 CFLAGS = -pipe \
 	   -std=gnu99 -O3 $(GCCOPTFLAGS) \
-	   -mwindows \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   -Wno-sequence-point -Wno-pedantic \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
 	   -std=gnu++11 -O3 $(GCCOPTFLAGS) \
-	   -mwindows \
 	   -fcheck-new \
 	   -Wall -W -pedantic -Wshadow -Wno-long-long -Wno-write-strings \
 	   -Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \

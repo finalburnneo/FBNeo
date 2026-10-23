@@ -1517,7 +1517,7 @@ BEGIN
         		MENUITEM "Select skin...",						MENU_SELECTPLACEHOLDER
         		MENUITEM "Set skin to default",					MENU_DISABLEPLACEHOLDER
                 MENUITEM "Select Light Mode UI (Experimental)", MENU_UI_LIGHT_MODE
-                MENUITEM "Select Dark  Mode UI (Experimental)", MENU_UI_DARK_MODE
+                MENUITEM "Select Dark Mode UI (Experimental)", MENU_UI_DARK_MODE
                 MENUITEM "Select Standard Mode UI",             MENU_UI_DEFAULT_MODE
         	END
        	POPUP    "UI language"

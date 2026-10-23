@@ -35,6 +35,7 @@ void M6809SetIRQLine(INT32 nCPU, const INT32 line, const INT32 status);
 INT32 M6809Run(INT32 cycles);
 INT32 M6809Run(INT32 nCPU, INT32 nCycles);
 void M6809RunEnd();
+void M6809EatCycles(INT32 cycles); // while running
 INT32 M6809TotalCycles();
 INT32 M6809TotalCycles(INT32 nCPU);
 INT32 M6809Idle(INT32 cycles);

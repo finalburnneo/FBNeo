@@ -100,6 +100,7 @@ static INT32 DrvReset()
 		// CPS-2 uses Object Banks
 		SekOpen(0);
 		CpsMapObjectBanks(0);
+		if (Cps2Plus) CpsObjReset();
 		SekClose();
 	}
 
@@ -428,6 +429,9 @@ INT32 Cps2Frame()
 {
 	INT32 nDisplayEnd, nNext;									// variables to keep track of executed 68K cyles
 	INT32 i;
+
+	// The restored effective palette is current; later DMA writes update it.
+	if (Cps2Plus && CpsPalConsumeRestoredCache()) CpsRecalcPal = 0;
 
 	if (CpsReset) {
 		DrvReset();

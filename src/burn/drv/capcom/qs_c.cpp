@@ -310,7 +310,7 @@ inline INT16 get_sample(UINT16 bank, UINT16 address)
 	UINT8 sample_data;
 
 	if(nCpsQSamLen)
-		rom_mask = nCpsQSamLen - 1;
+		rom_mask = nCpsQSamMask ? nCpsQSamMask : nCpsQSamLen - 1;
 
 	if (! rom_mask)
 		return 0;	// no ROM loaded
@@ -778,8 +778,8 @@ INT32 QscScan(INT32 nAction)
 	ba.szName	= szName;
 	BurnAcb(&ba);
 
-	if (CpsXmvSixEnabled) {
-		// xmvsf3v3: the resampler too, so its states replay exactly (other games' states keep their size)
+	if (CpsXmvSixEnabled || Cps2Plus) {
+		// Preserve resampler history when replaying a saved frame.
 		SCAN_VAR(nDelta);
 		SCAN_VAR(nPos);
 		SCAN_VAR(interpolate_buffer);

@@ -15,6 +15,7 @@ Cps1ObjDrawCallback Cps1ObjDrawCallbackFunction = NULL;
 
 // Our copy of the sprite table
 static UINT8 *ObjMem = NULL;
+static INT32 nObjMemLen;
 
 static INT32 nMax = 0;
 static INT32 nGetNext = 0;
@@ -28,6 +29,7 @@ static INT32 nZOffset;
 struct ObjFrame {
 	INT32 nShiftX, nShiftY;
 	UINT8* Obj;
+	UINT8* GfxBank;
 	INT32 nCount;
 };
 
@@ -66,8 +68,13 @@ static void CpsBlendInit()
 
 	bprintf (PRINT_IMPORTANT, _T("Using sprite blending (.bld) table!\n"));
 
-	blendtable = (UINT8*)BurnMalloc(0x40000); // maximum number of sprites
-	memset (blendtable, 0, 0x40000); // no blend
+	INT32 nBlendCount = Cps2Plus ? 0x80000 : 0x40000;
+	blendtable = (UINT8*)BurnMalloc(nBlendCount);
+	if (blendtable == NULL) {
+		fclose(fa);
+		return;
+	}
+	memset(blendtable, 0, nBlendCount);
 
 	char szLine[64];
 
@@ -97,7 +104,7 @@ static void CpsBlendInit()
 		}
 
 		for (k = min; k <= max; k++) {
-			if (k < 0x40000)
+			if (k < (UINT32)nBlendCount)
 				blendtable[k] = table[type&3];
 		}
 	}
@@ -118,19 +125,21 @@ INT32 CpsObjInit()
 	nFrameCount = 2;			// CPS2 sprites lagged by 1 frame and double buffered
 								// CPS1 sprites lagged by 1 frame
 
-	ObjMem = (UINT8*)BurnMalloc((nMax << 3) * nFrameCount);
+	nObjMemLen = ((nMax << 3) + (Cps2Plus ? nMax : 0)) * nFrameCount;
+	ObjMem = (UINT8*)BurnMalloc(nObjMemLen);
 	if (ObjMem == NULL) {
 		return 1;
 	}
 
-	// xmvsf3v3: every buffer its states hold starts the same way
-	if (CpsXmvSixEnabled) memset(ObjMem, 0, (nMax << 3) * nFrameCount);
+	// Initialize the buffers included in exact frame replay states.
+	if (CpsXmvSixEnabled || Cps2Plus) memset(ObjMem, 0, nObjMemLen);
 
 	// Set up the frame buffers
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		of[i].Obj = ObjMem + (nMax << 3) * i;
+		of[i].GfxBank = Cps2Plus ? ObjMem + (nMax << 3) * nFrameCount + nMax * i : NULL;
 		of[i].nCount = 0;
-		if (CpsXmvSixEnabled) of[i].nShiftX = of[i].nShiftY = 0;
+		if (CpsXmvSixEnabled || Cps2Plus) of[i].nShiftX = of[i].nShiftY = 0;
 	}
 
 	nGetNext=0;
@@ -151,6 +160,7 @@ INT32 CpsObjExit()
 
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		of[i].Obj = NULL;
+		of[i].GfxBank = NULL;
 		of[i].nCount = 0;
 	}
 
@@ -165,6 +175,15 @@ INT32 CpsObjExit()
 	Cps1ObjDrawCallbackFunction = NULL;
 
 	return 0;
+}
+
+void CpsObjReset()
+{
+	if (Cps2PlusObjExt) memset(Cps2PlusObjExt, 0, 0x800);
+	if (ObjMem == NULL) return;
+	memset(ObjMem, 0, nObjMemLen);
+	for (INT32 i = 0; i < nFrameCount; i++) of[i].nCount = 0;
+	nGetNext = 0;
 }
 
 // Get CPS sprites into Obj
@@ -236,6 +255,10 @@ INT32 CpsObjGet()
 
 		// Okay - this sprite is active:
 		memcpy(po, pg, 8); // copy it over
+		if (pof->GfxBank) {
+			// Blanked entries are skipped, so latch metadata alongside the compacted list.
+			pof->GfxBank[pof->nCount] = Cps2PlusObjExt[((nCpsObjectBank ^ 1) << 10) + i];
+		}
 
 		pof->nCount++;
 		po += 8;
@@ -438,6 +461,11 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address
 		}
 		
+		if (pof->GfxBank) {
+			INT32 nEntry = ((UINT8*)ps - pof->Obj) >> 3;
+			n |= pof->GfxBank[nEntry] << 18;
+		}
+
 		// Find the palette for the tiles on this sprite
 		CpstPal = CpsPal + ((a & 0x1F) << 4);
 
@@ -494,7 +522,9 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 				nCpstY = y + (ey << 4);
 
 //				nCpstTile = n + (dy << 4) + dx;								// normal version
-				nCpstTile = (n & ~0x0F) + (dy << 4) + ((n + dx) & 0x0F);	// pgear fix
+				nCpstTile = (n & ~0x0F) + (dy << 4) + ((n + dx) & 0x0F); // pgear fix
+				// CPS2+ row arithmetic wraps within the selected 16-bit tile bank.
+				if (pof->GfxBank) nCpstTile = (nCpstTile & 0xffff) | (n & 0x70000);
 				
 				if (Sfa2ObjHack) {
 					// hack to not render blue squares on high score screen after name entry - they should be hidden by priority from what I can see
@@ -907,19 +937,19 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 	return 0;
 }
 
-// xmvsf3v3: the sprite lag buffers (the Obj pointers are rebuilt by CpsObjInit, never saved).
-// The Z buffer and its counters aren't saved: only drawing changes them, so they'd make a state
-// depend on which frames were drawn (netplay replays and run-ahead's hidden frames aren't), and
-// each frame's Z values start above what's already in the buffer
+// Save the sprite lag buffers, but rebuild their pointers on initialization.
+// The Z buffer and counters are drawing scratch: saving them would make states
+// depend on which frames were drawn. Each frame starts above the old Z values.
 INT32 CpsObjVisualScan(INT32 nAction)
 {
-	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
+	if (!(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));
 	ba.Data = ObjMem;
-	ba.nLen = (nMax << 3) * nFrameCount;
-	ba.szName = "XMvsSF 3v3 sprite lag buffers";
+	ba.nLen = nObjMemLen;
+	ba.szName = "Sprite lag buffers";
+	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 sprite lag buffers";
 	BurnAcb(&ba);
 
 	SCAN_VAR(nGetNext);

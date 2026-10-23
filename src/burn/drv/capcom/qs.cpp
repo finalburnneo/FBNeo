@@ -53,6 +53,10 @@ void QsndSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 void QsndReset()
 {
 	ZetOpen(0);
+	if (Cps2Plus) {
+		QsndZReset();
+		QscReset();
+	}
 	BurnTimerReset();
 	BurnTimerSetRetrig(0, 1.0 / 252.0);
 	ZetClose();

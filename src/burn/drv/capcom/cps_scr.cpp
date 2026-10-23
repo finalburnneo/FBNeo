@@ -115,10 +115,11 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			t = pe ? ((pe[0] << 8) | pe[1]) : BURN_ENDIAN_SWAP_INT16(pst[0]);
 			t <<= 6;										// Get real tile address
 
-			t += nCpsGfxScroll[1];							// add on offset to scroll tiles
+			a = pe ? ((pe[2] << 8) | pe[3]) : BURN_ENDIAN_SWAP_INT16(pst[1]);
+			t += nCpsGfxScroll[1];
+			t = Cps2ScrollAddress(t, a);
 
 			if (t != nKnowBlank) {							// Draw tile
-				a = pe ? ((pe[2] << 8) | pe[3]) : BURN_ENDIAN_SWAP_INT16(pst[1]);
 
 				CpstSetPal(0x20 | (a & 0x1F));
 
@@ -243,10 +244,11 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	        else if(Ssf2t && t<0x5600)   t+=0x4000;
 			t <<= 9;										// Get real tile address
 			if (Cps2Turbo) t &= ~nCpsGfxScroll[3];			// buggy hack
- 			t += nCpsGfxScroll[3];							// add on offset to scroll tiles
+			a = BURN_ENDIAN_SWAP_INT16(pst[1]);
+			t += nCpsGfxScroll[3];
+			t = Cps2ScrollAddress(t, a);
 
 			if (t != nKnowBlank) {							// Draw tile
-				a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
 				CpstSetPal(0x60 | (a & 0x1F));
 

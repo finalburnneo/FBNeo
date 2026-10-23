@@ -44,3 +44,4 @@ option('driver_list',
         'toaplan',
     ],
     description: 'Drivers to build: group (capcom), driver (capcom/d_cps1.cpp), or exclusion (-capcom, -capcom/d_cps1.cpp)')
+option('cps2plus_tests', type: 'boolean', value: false, description: 'Build CPS2+ platform tests (requires a dedicated CPS2-only driver_list)')

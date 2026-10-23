@@ -50,9 +50,10 @@ struct D3D11ShaderLUT {
 	std::string szName;
 	std::string szPath;
 	bool bLinear;
+	bool bMipmap;
 	int nWrap;
 
-	D3D11ShaderLUT() : bLinear(true), nWrap(D3D11_WRAP_BORDER) { }
+	D3D11ShaderLUT() : bLinear(true), bMipmap(false), nWrap(D3D11_WRAP_BORDER) { }
 };
 
 struct D3D11ShaderPreset {
@@ -80,6 +81,10 @@ bool D3D11ShaderLoadPreset(const std::string& szPath, D3D11ShaderReadFileFn pRea
 
 // Inline #include "..." directives (recursively, relative to the including file)
 bool D3D11ShaderInlineIncludes(const std::string& szPath, D3D11ShaderReadFileFn pRead, std::string& Source, std::string* pError);
+
+// Work around a bug in D3DPreprocess(): a function-like macro whose name is also used as a plain
+// identifier (e.g. "#define X(i) ..." and a variable X) is renamed, together with its calls
+void D3D11ShaderFixMacroNames(std::string& Source);
 
 // Add the "#pragma parameter" declarations found in Source to Params (duplicates are ignored)
 void D3D11ShaderExtractParams(const std::string& Source, std::vector<D3D11ShaderParam>& Params);

@@ -99,7 +99,51 @@ std::string D3D11ShaderJoinPath(const std::string& szDir, const std::string& szR
 	if (szDir.empty()) {
 		return szRelative;
 	}
-	return szDir + "/" + szRelative;
+
+	// join, and collapse "." / ".." (presets and includes are full of "../../"), so paths stay
+	// short and readable in error messages
+#ifdef _WIN32
+	const char cSep = '\\';
+#else
+	const char cSep = '/';
+#endif
+	std::string szFull = szDir + "/" + szRelative;
+
+	std::string szPrefix;
+	size_t nStart = 0;
+	if (szFull.size() > 1 && szFull[1] == ':') {
+		nStart = 2;										// drive letter
+	} else if (szFull.size() > 1 && (szFull[0] == '\\' || szFull[0] == '/') && (szFull[1] == '\\' || szFull[1] == '/')) {
+		nStart = 2;										// UNC (\\server\share)
+	}
+	szPrefix = szFull.substr(0, nStart);
+	bool bAbsolute = nStart < szFull.size() && (szFull[nStart] == '/' || szFull[nStart] == '\\');
+
+	std::vector<std::string> Parts;
+	size_t i = nStart;
+	while (i <= szFull.size()) {
+		size_t e = szFull.find_first_of("/\\", i);
+		if (e == std::string::npos) e = szFull.size();
+		std::string s = szFull.substr(i, e - i);
+		if (s.empty() || s == ".") {
+			// skip
+		} else if (s == ".." && !Parts.empty() && Parts.back() != "..") {
+			Parts.pop_back();
+		} else if (s == ".." && bAbsolute) {
+			// can't go above the root
+		} else {
+			Parts.push_back(s);
+		}
+		i = e + 1;
+	}
+
+	std::string szOut = szPrefix;
+	if (bAbsolute) szOut += cSep;
+	for (size_t p = 0; p < Parts.size(); p++) {
+		if (p) szOut += cSep;
+		szOut += Parts[p];
+	}
+	return szOut;
 }
 
 std::string D3D11ShaderExtension(const std::string& szPath)
@@ -290,6 +334,7 @@ bool D3D11ShaderLoadPreset(const std::string& szPath, D3D11ShaderReadFileFn pRea
 			LUT.szPath = D3D11ShaderJoinPath(szDir, *v);
 			if ((v = FindValue(*pPreset, szName + "_linear")) != NULL) LUT.bLinear = ParseBool(*v);
 			if ((v = FindValue(*pPreset, szName + "_wrap_mode")) != NULL) LUT.nWrap = ParseWrap(*v);
+			if ((v = FindValue(*pPreset, szName + "_mipmap")) != NULL) LUT.bMipmap = ParseBool(*v);
 			pPreset->LUTs.push_back(LUT);
 		}
 	}
@@ -352,6 +397,163 @@ bool D3D11ShaderInlineIncludes(const std::string& szPath, D3D11ShaderReadFileFn 
 {
 	Source.clear();
 	return InlineIncludes(szPath, pRead, Source, pError, 0);
+}
+
+// ----------------------------------------------------------------------------
+// D3DPreprocess() workaround (see the header)
+
+namespace {
+
+struct PPIdent {
+	size_t nPos, nLen;
+	size_t nLineStart;			// start of the line (for directives)
+	bool bCall;					// followed by '('
+};
+
+static bool PPIdentStart(char c) { return isalpha((unsigned char)c) || c == '_'; }
+static bool PPIdentChar(char c) { return isalnum((unsigned char)c) || c == '_'; }
+
+}
+
+void D3D11ShaderFixMacroNames(std::string& Src)
+{
+	// Collect the identifiers (outside comments, strings and numbers)
+	std::vector<PPIdent> Idents;
+	size_t i = 0, n = Src.size(), nLineStart = 0;
+
+	while (i < n) {
+		char c = Src[i];
+		if (c == '\n') { nLineStart = i + 1; i++; continue; }
+		if (c == '/' && i + 1 < n && Src[i + 1] == '/') { while (i < n && Src[i] != '\n') i++; continue; }
+		if (c == '/' && i + 1 < n && Src[i + 1] == '*') {
+			size_t e = Src.find("*/", i + 2);
+			e = (e == std::string::npos) ? n : e + 2;
+			for (size_t k = i; k < e; k++) if (Src[k] == '\n') nLineStart = k + 1;
+			i = e;
+			continue;
+		}
+		if (c == '"') { i++; while (i < n && Src[i] != '"' && Src[i] != '\n') { if (Src[i] == '\\') i++; i++; } i++; continue; }
+		if (isdigit((unsigned char)c)) { while (i < n && (PPIdentChar(Src[i]) || Src[i] == '.')) i++; continue; }
+		if (PPIdentStart(c)) {
+			PPIdent id;
+			id.nPos = i;
+			while (i < n && PPIdentChar(Src[i])) i++;
+			id.nLen = i - id.nPos;
+			id.nLineStart = nLineStart;
+			size_t k = i;
+			while (k < n && (Src[k] == ' ' || Src[k] == '\t' || Src[k] == '\r' || Src[k] == '\n')) k++;
+			id.bCall = (k < n && Src[k] == '(');
+			Idents.push_back(id);
+			continue;
+		}
+		i++;
+	}
+
+	// Function-like macros: "#define NAME(" with no space before the '('
+	struct Define { size_t nNameIdent; std::set<std::string> Params; size_t nLineEnd; };
+	std::map<std::string, int> FnMacros;					// name -> 1
+	std::vector<Define> Defines;							// every #define, for parameter scoping
+	for (size_t k = 0; k + 1 < Idents.size(); k++) {
+		const PPIdent& d = Idents[k];
+		if (Src.compare(d.nPos, d.nLen, "define") != 0) continue;
+		// must be "#  define" at the start of a line
+		size_t h = d.nLineStart;
+		while (h < d.nPos && (Src[h] == ' ' || Src[h] == '\t')) h++;
+		if (h >= d.nPos || Src[h] != '#') continue;
+		size_t h2 = h + 1;
+		while (h2 < d.nPos && (Src[h2] == ' ' || Src[h2] == '\t')) h2++;
+		if (h2 != d.nPos) continue;
+
+		const PPIdent& nm = Idents[k + 1];
+		Define def;
+		def.nNameIdent = k + 1;
+		// end of the directive (with line continuations)
+		size_t e = nm.nPos;
+		while (e < n && Src[e] != '\n') { if (Src[e] == '\\' && e + 1 < n && Src[e + 1] == '\n') e++; e++; }
+		def.nLineEnd = e;
+		std::string szName = Src.substr(nm.nPos, nm.nLen);
+		if (nm.nPos + nm.nLen < n && Src[nm.nPos + nm.nLen] == '(') {
+			FnMacros[szName] = 1;
+			size_t p = nm.nPos + nm.nLen + 1;
+			size_t q = Src.find(')', p);
+			if (q != std::string::npos && q < e) {
+				std::string szParams = Src.substr(p, q - p);
+				size_t a = 0;
+				while (a < szParams.size()) {
+					while (a < szParams.size() && !PPIdentStart(szParams[a])) a++;
+					size_t b = a;
+					while (b < szParams.size() && PPIdentChar(szParams[b])) b++;
+					if (b > a) def.Params.insert(szParams.substr(a, b - a));
+					a = b;
+				}
+			}
+		}
+		Defines.push_back(def);
+	}
+
+	if (FnMacros.empty()) {
+		return;
+	}
+
+	// Which ones are also used as plain identifiers?
+	std::set<size_t> NameIdents;
+	for (size_t d = 0; d < Defines.size(); d++) NameIdents.insert(Defines[d].nNameIdent);
+
+	std::set<std::string> Ambiguous;
+	for (size_t k = 0; k < Idents.size(); k++) {
+		const PPIdent& id = Idents[k];
+		if (id.bCall || NameIdents.count(k)) continue;
+		std::string szName = Src.substr(id.nPos, id.nLen);
+		if (!FnMacros.count(szName)) continue;
+
+		// "#ifdef X", "#ifndef X", "#undef X", "defined X", "defined(X)" refer to the macro
+		bool bDirective = false;
+		if (k > 0) {
+			const PPIdent& prev = Idents[k - 1];
+			std::string szPrev = Src.substr(prev.nPos, prev.nLen);
+			if (szPrev == "ifdef" || szPrev == "ifndef" || szPrev == "undef" || szPrev == "defined") bDirective = true;
+		}
+		if (bDirective) continue;
+
+		// a parameter of a #define with the same name doesn't count
+		bool bParam = false;
+		for (size_t d = 0; d < Defines.size() && !bParam; d++) {
+			size_t nStart = Idents[Defines[d].nNameIdent].nPos;
+			if (id.nPos > nStart && id.nPos < Defines[d].nLineEnd && Defines[d].Params.count(szName)) bParam = true;
+		}
+		if (bParam) continue;
+
+		Ambiguous.insert(szName);
+	}
+
+	if (Ambiguous.empty()) {
+		return;
+	}
+
+	// Rename the macro and its uses as a macro (back to front, so positions stay valid)
+	for (size_t k = Idents.size(); k > 0; k--) {
+		const PPIdent& id = Idents[k - 1];
+		std::string szName = Src.substr(id.nPos, id.nLen);
+		if (!Ambiguous.count(szName)) continue;
+
+		bool bRename = NameIdents.count(k - 1) > 0 || id.bCall;
+		if (!bRename && k > 1) {
+			const PPIdent& prev = Idents[k - 2];
+			std::string szPrev = Src.substr(prev.nPos, prev.nLen);
+			if (szPrev == "ifdef" || szPrev == "ifndef" || szPrev == "undef" || szPrev == "defined") bRename = true;
+		}
+		if (!bRename) continue;
+
+		// not a parameter of an enclosing #define
+		bool bParam = false;
+		for (size_t d = 0; d < Defines.size() && !bParam; d++) {
+			size_t nStart = Idents[Defines[d].nNameIdent].nPos;
+			if (id.nPos > nStart && id.nPos < Defines[d].nLineEnd && Defines[d].Params.count(szName)) bParam = true;
+		}
+		if (bParam) continue;
+
+		Src.replace(id.nPos, id.nLen, "fbneo_fn_" + szName);
+	}
 }
 
 void D3D11ShaderExtractParams(const std::string& Source, std::vector<D3D11ShaderParam>& Params)
@@ -501,6 +703,8 @@ public:
 	std::set<std::string> Constructors;
 	std::set<std::string> MemberNames;			// all struct member names
 	std::set<std::string> UserFunctions;		// all function names defined by the shader
+	std::set<std::string> ParamTextures;		// sampler parameters of helper functions (they get a SamplerState parameter too)
+	std::map<std::string, std::set<size_t> > SamplerParamFuncs;	// helper function -> argument positions that are samplers
 };
 
 static bool IsIdentStart(char c) { return isalpha((unsigned char)c) || c == '_'; }
@@ -892,6 +1096,18 @@ std::string Translator::EmitPlain(size_t nFirst, size_t nLast)
 	return s;
 }
 
+static bool IsScalarOrMatrixType(const std::string& s)
+{
+	static const char* Bases[] = { "float", "half", "int", "uint", "bool", "fixed", "double", NULL };
+	for (int b = 0; Bases[b]; b++) {
+		size_t l = strlen(Bases[b]);
+		if (s.compare(0, l, Bases[b]) != 0) continue;
+		if (s.size() == l) return true;
+		if (s.size() == l + 3 && s[l] >= '1' && s[l] <= '4' && s[l + 1] == 'x' && s[l + 2] >= '1' && s[l + 2] <= '4') return true;
+	}
+	return false;
+}
+
 static bool EndsWith(const std::string& s, const char* e)
 {
 	size_t l = strlen(e);
@@ -973,6 +1189,36 @@ std::string Translator::Emit(size_t nFirst, size_t nLast)
 				}
 			}
 
+			// a helper function that takes samplers: pass each texture's sampler state along with it
+			if (SamplerParamFuncs.count(n) && (i == 0 || Toks[i - 1].nType != T_IDENT || Toks[i - 1].szText == "return" || Toks[i - 1].szText == "else" || Toks[i - 1].szText == "do")) {
+				const std::set<size_t>& Pos = SamplerParamFuncs[n];
+				size_t nOpen = i + 1;
+				size_t nClose = Match(nOpen);
+				std::string r = t.szBefore + t.szSpace + n + t.szAfter + Toks[nOpen].szBefore + Toks[nOpen].szSpace + "(" + Toks[nOpen].szAfter;
+				size_t a = nOpen + 1, nArg = 0;
+				while (a < nClose) {
+					size_t e = a;
+					while (e < nClose && Toks[e].szText != ",") {
+						if (Toks[e].szText == "(" || Toks[e].szText == "[" || Toks[e].szText == "{") e = Match(e);
+						e++;
+					}
+					std::string szArg = Emit(a, e - 1);
+					std::string szName = Trim(szArg);
+					r += szArg;
+					if (Pos.count(nArg)) {
+						bool bKnown = GlobalTextures.count(szName) || ParamTextures.count(szName);
+						r += bKnown ? (", fbneo_smp_" + szName) : std::string(", fbneo_smp");
+					}
+					if (e < nClose) r += Toks[e].szBefore + Toks[e].szSpace + "," + Toks[e].szAfter;
+					a = e + 1;
+					nArg++;
+				}
+				r += Toks[nClose].szBefore + Toks[nClose].szSpace + ")" + Toks[nClose].szAfter;
+				Out += r;
+				i = nClose;
+				continue;
+			}
+
 			int nTexDim = TextureFunctionDim(n);
 			bool bTex = (nTexDim > 0);
 			bool bCtor = IsVectorType(n);
@@ -1004,7 +1250,7 @@ std::string Translator::Emit(size_t nFirst, size_t nLast)
 						r += ")";
 					} else {
 						std::string szTex = Trim(Args[0]);
-						std::string szSampler = GlobalTextures.count(szTex) ? ("fbneo_smp_" + szTex) : std::string("fbneo_smp");
+						std::string szSampler = (GlobalTextures.count(szTex) || ParamTextures.count(szTex)) ? ("fbneo_smp_" + szTex) : std::string("fbneo_smp");
 						std::string T = "(" + szTex + ")";
 						static const char* Coord[4] = { "", ".x", ".xy", ".xyz" };
 						std::string C = Coord[nTexDim];
@@ -1066,6 +1312,244 @@ static void SetSemantic(Token& t, const std::string& szNew)
 	t.szText = szNew;
 }
 
+struct EntryParam {
+	std::string szType, szName, szArray;
+	std::string szInSem;			// semantic as written (upper case)
+	std::string szSem;				// semantic after translation (upper case, "" for struct parameters)
+	bool bIn, bOut, bStruct;
+	std::string szText;				// the translated parameter declaration
+};
+
+// Canonical form of a varying semantic: "TEXCOORD" == "TEXCOORD0", all the position semantics == "SV_POSITION"
+static std::string NormSem(const std::string& s)
+{
+	std::string u = Upper(Trim(s));
+	if (u == "POSITION" || u == "POSITION0" || u == "POS" || u == "VPOS" || u == "WPOS" || u == "SV_POSITION") {
+		return "SV_POSITION";
+	}
+	if (!u.empty() && !isdigit((unsigned char)u[u.size() - 1])) {
+		u += "0";
+	}
+	return u;
+}
+
+// Number of components of a scalar / vector type (0 = something else)
+static int VecDim(const std::string& t)
+{
+	static const char* Bases[] = { "float", "half", "fixed", "int", "uint", "bool", "double", NULL };
+	for (int b = 0; Bases[b]; b++) {
+		size_t l = strlen(Bases[b]);
+		if (t.compare(0, l, Bases[b]) != 0) continue;
+		if (t.size() == l) return 1;
+		if (t.size() == l + 1 && t[l] >= '1' && t[l] <= '4') return t[l] - '0';
+	}
+	return 0;
+}
+
+static std::string Convert(const std::string& szDstType, const std::string& szSrcType, const std::string& szExpr)
+{
+	int d = VecDim(szDstType), s = VecDim(szSrcType);
+	if (d == 0 || s == 0 || d == s) {
+		return szExpr;
+	}
+	if (d < s) {
+		return "(" + szDstType + ")(" + szExpr + ")";
+	}
+	std::string r = szDstType + "(" + szExpr;
+	for (int i = s; i < d; i++) r += ", 0";
+	return r + ")";
+}
+
+static bool IsIntegerType(const std::string& t)
+{
+	return t.compare(0, 3, "int") == 0 || t.compare(0, 4, "uint") == 0 || t.compare(0, 4, "bool") == 0;
+}
+
+struct Varying {
+	std::string szType, szArray, szSem;		// szSem normalised
+	std::string szSource;					// expression in the vertex shader wrapper
+};
+
+static std::string MakeStageWrappers(Translator& x, Function* pVS, Function* pPS, std::vector<EntryParam>* EntryParams,
+									 std::map<std::string, std::map<std::string, std::string> >& MemberSem)
+{
+	std::vector<Varying> V;
+	struct Local {
+		static int Find(std::vector<Varying>& V, const std::string& szSem) {
+			for (size_t i = 0; i < V.size(); i++) if (V[i].szSem == szSem) return (int)i;
+			return -1;
+		}
+		static void Add(std::vector<Varying>& V, const std::string& szType, const std::string& szArray, const std::string& szSem, const std::string& szSource) {
+			if (szSem.empty() || Find(V, szSem) >= 0) return;
+			Varying v; v.szType = szType; v.szArray = szArray; v.szSem = szSem; v.szSource = szSource;
+			V.push_back(v);
+		}
+	};
+
+	// ---- vertex shader wrapper: collect the outputs
+	// (the wrapper's own locals are named fbneo_lN: a parameter may have the same name as its type)
+	std::string szVSParams, szVSLocals, szVSArgs;
+	for (size_t i = 0; i < EntryParams[0].size(); i++) {
+		const EntryParam& p = EntryParams[0][i];
+		char szLocal[32];
+		sprintf(szLocal, "fbneo_l%d", (int)i);
+
+		if (!p.bOut) {
+			szVSParams += std::string(szVSParams.empty() ? "" : ",") + p.szText;
+			szVSArgs += std::string(i ? ", " : "") + p.szName;
+			continue;
+		}
+
+		szVSArgs += std::string(i ? ", " : "") + szLocal;
+
+		if (p.bIn) {
+			// inout: input under its original semantic, passed through a local
+			szVSParams += std::string(szVSParams.empty() ? "" : ",") + " " + p.szType + " fbneo_in_" + p.szName + p.szArray + (p.szInSem.empty() ? "" : " : " + p.szInSem);
+			szVSLocals += "\t" + p.szType + " " + szLocal + p.szArray + " = fbneo_in_" + p.szName + ";\n";
+		} else {
+			szVSLocals += "\t" + p.szType + " " + szLocal + p.szArray + " = (" + p.szType + ")0;\n";
+		}
+
+		if (p.bStruct) {
+			const Struct* s = x.FindStruct(p.szType);
+			for (size_t m = 0; m < s->Members.size(); m++) {
+				const Member& mb = s->Members[m];
+				Local::Add(V, mb.szType, mb.szArray, NormSem(MemberSem[s->szName][mb.szName]), std::string(szLocal) + "." + mb.szName);
+			}
+		} else {
+			Local::Add(V, p.szType, p.szArray, NormSem(p.szSem), szLocal);
+		}
+	}
+
+	std::string szVSRet = x.Toks[pVS->nReturnType].szText;
+	std::string szVSCall;
+	if (szVSRet != "void") {
+		szVSCall = "\t" + szVSRet + " fbneo_ret = fbneo_main_vertex(" + szVSArgs + ");\n";
+		const Struct* s = x.FindStruct(szVSRet);
+		if (s) {
+			for (size_t m = 0; m < s->Members.size(); m++) {
+				const Member& mb = s->Members[m];
+				Local::Add(V, mb.szType, mb.szArray, NormSem(MemberSem[s->szName][mb.szName]), "fbneo_ret." + mb.szName);
+			}
+		} else if (pVS->nSemantic) {
+			Local::Add(V, szVSRet, "", NormSem(x.Toks[pVS->nSemantic].szText), "fbneo_ret");
+		}
+	} else {
+		szVSCall = "\tfbneo_main_vertex(" + szVSArgs + ");\n";
+	}
+
+	// ---- pixel shader wrapper: build the inputs from the shared struct
+	std::string szPSParams = " fbneo_v2f fbneo_in", szPSLocals, szPSArgs;
+	for (size_t i = 0; i < EntryParams[1].size(); i++) {
+		const EntryParam& p = EntryParams[1][i];
+		char szLocal[32];
+		sprintf(szLocal, "fbneo_l%d", (int)i);
+
+		if (p.bOut) {
+			szPSParams += "," + p.szText;
+			szPSArgs += std::string(i ? ", " : "") + p.szName;
+			continue;
+		}
+
+		std::string szSemCheck = NormSem(p.szSem);
+		if (!p.bStruct && StartsWith(szSemCheck, "SV_") && szSemCheck != "SV_POSITION") {
+			szPSParams += "," + p.szText;						// SV_IsFrontFace etc.
+			szPSArgs += std::string(i ? ", " : "") + p.szName;
+			continue;
+		}
+
+		szPSArgs += std::string(i ? ", " : "") + szLocal;
+
+		if (p.bStruct) {
+			const Struct* s = x.FindStruct(p.szType);
+			szPSLocals += "\t" + p.szType + " " + szLocal + " = (" + p.szType + ")0;\n";
+			for (size_t m = 0; m < s->Members.size(); m++) {
+				const Member& mb = s->Members[m];
+				std::string szSem = NormSem(MemberSem[s->szName][mb.szName]);
+				if (szSem.empty() || szSem == "0") continue;
+				int n = Local::Find(V, szSem);
+				if (n < 0) {
+					Local::Add(V, mb.szType, mb.szArray, szSem, "");
+					n = (int)V.size() - 1;
+				}
+				char szField[32];
+				sprintf(szField, "fbneo_in.v%d", n);
+				szPSLocals += "\t" + std::string(szLocal) + "." + mb.szName + " = " + (mb.szArray.empty() ? Convert(mb.szType, V[n].szType, szField) : std::string(szField)) + ";\n";
+			}
+			continue;
+		}
+
+		std::string szSem = szSemCheck;
+		if (szSem.empty() || szSem == "0") {
+			szPSLocals += "\t" + p.szType + " " + szLocal + p.szArray + " = (" + p.szType + ")0;\n";
+			continue;
+		}
+		int n = Local::Find(V, szSem);
+		if (n < 0) {
+			Local::Add(V, p.szType, p.szArray, szSem, "");
+			n = (int)V.size() - 1;
+		}
+		char szField[32];
+		sprintf(szField, "fbneo_in.v%d", n);
+		szPSLocals += "\t" + p.szType + " " + szLocal + p.szArray + " = " + (p.szArray.empty() ? Convert(p.szType, V[n].szType, szField) : std::string(szField)) + ";\n";
+	}
+
+	// ---- the shared struct
+	std::string Out = "\n// Stage linkage generated by FBNeo\nstruct fbneo_v2f {\n";
+	bool bHasPosition = false;
+	for (size_t i = 0; i < V.size(); i++) {
+		std::string szSem = V[i].szSem;
+		if (szSem == "SV_POSITION") {
+			szSem = "SV_Position";
+			bHasPosition = true;
+		}
+		char szField[32];
+		sprintf(szField, "v%d", (int)i);
+		Out += "\t" + std::string(IsIntegerType(V[i].szType) ? "nointerpolation " : "") + V[i].szType + " " + szField + V[i].szArray + " : " + szSem + ";\n";
+	}
+	if (!bHasPosition) {
+		Out += "\tfloat4 fbneo_pos : SV_Position;\n";
+	}
+	Out += "};\n\n";
+
+	// ---- vertex shader wrapper
+	Out += "fbneo_v2f main_vertex(" + szVSParams + ")\n{\n" + szVSLocals + szVSCall + "\tfbneo_v2f fbneo_out = (fbneo_v2f)0;\n";
+	for (size_t i = 0; i < V.size(); i++) {
+		if (V[i].szSource.empty()) continue;
+		char szField[32];
+		sprintf(szField, "fbneo_out.v%d", (int)i);
+		Out += std::string("\t") + szField + " = " + V[i].szSource + ";\n";
+	}
+	Out += "\treturn fbneo_out;\n}\n\n";
+
+	// ---- pixel shader wrapper
+	std::string szPSRet = x.Toks[pPS->nReturnType].szText;
+	std::string szPSSem;
+	if (pPS->nSemantic) {
+		szPSSem = " : " + x.Toks[pPS->nSemantic].szText;
+	}
+	Out += szPSRet + " main_fragment(" + szPSParams + ")" + szPSSem + "\n{\n" + szPSLocals;
+	Out += std::string(szPSRet == "void" ? "\t" : "\treturn ") + "fbneo_main_fragment(" + szPSArgs + ");\n}\n";
+
+	// ---- the original functions become ordinary functions
+	x.Toks[pVS->nName].szText = "fbneo_main_vertex";
+	x.Toks[pPS->nName].szText = "fbneo_main_fragment";
+
+	// An entry point may end a path with 'discard' and no return value, an ordinary function may not
+	if (szPSRet != "void") {
+		x.Toks[pPS->nBodyClose].szBefore += "\n\treturn (" + szPSRet + ")0;\n";
+	}
+	Function* Fn[2] = { pVS, pPS };
+	for (int f = 0; f < 2; f++) {
+		if (Fn[f]->nSemantic) {
+			x.Toks[Fn[f]->nSemantic].szText = "";
+			x.Toks[Fn[f]->nSemantic - 1].szText = "";		// the ':'
+		}
+	}
+
+	return Out;
+}
+
 bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::string* pError)
 {
 	Translator x;
@@ -1100,21 +1584,85 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 		for (size_t k = x.Functions[i].nOpen + 1; k < x.Functions[i].nClose; k++) {
 			if (x.Toks[k].nType == T_IDENT && x.Toks[k].szText == "static") x.Toks[k].szText = "";
 		}
+
+		// Cg accepts functions where not every path returns a value, HLSL doesn't: add an (unreachable) return
+		// (the entry points are handled by MakeStageWrappers())
+		{
+			const Function& f = x.Functions[i];
+			const std::string& szRet = x.Toks[f.nReturnType].szText;
+			if (szRet != "void" && f.szName != "main_vertex" && f.szName != "main_fragment" && f.nReturnType < f.nName) {
+				x.Toks[f.nBodyClose].szBefore += "\n\treturn (" + szRet + ")0;\n";
+			}
+		}
+
+		// Cg doesn't require a function to write all of its 'out' parameters, HLSL does: zero them first
+		{
+			const Function& f = x.Functions[i];
+			for (size_t pi = 0; pi < f.Params.size(); pi++) {
+				const Param& p = f.Params[pi];
+				if (!p.bOut || p.bIn || p.szName.empty() || !p.szArray.empty() || IsSamplerType(p.szType)) continue;
+				x.Toks[f.nBodyOpen].szAfter += "\n\t" + p.szName + " = (" + p.szType + ")0;";
+			}
+		}
+
+		// Cg doesn't mind locals being read before they're written, the HLSL compiler may refuse:
+		// give uninitialised scalar / vector / matrix / struct locals a zero initialiser
+		{
+			const Function& f = x.Functions[i];
+			for (size_t k = f.nBodyOpen + 1; k + 2 < f.nBodyClose; k++) {
+				const std::string& szPrev = x.Toks[k - 1].szText;
+				if (szPrev != ";" && szPrev != "{" && szPrev != "}") continue;
+				if (x.Toks[k].nType != T_IDENT || x.Toks[k + 1].nType != T_IDENT) continue;
+				const std::string& szType = x.Toks[k].szText;
+				if (!IsVectorType(szType) && !IsScalarOrMatrixType(szType) && !x.FindStruct(szType)) continue;
+
+				// declarators up to the ';'
+				size_t d = k + 1;
+				while (d < f.nBodyClose && x.Toks[d].nType == T_IDENT) {
+					size_t nName = d;
+					d++;
+					bool bArray = false, bInit = false;
+					if (x.Toks[d].szText == "[") { d = x.Match(d) + 1; bArray = true; }
+					if (x.Toks[d].szText == ":") { d += 2; }							// semantic
+					if (x.Toks[d].szText == "=") {
+						bInit = true;
+						while (d < f.nBodyClose && x.Toks[d].szText != "," && x.Toks[d].szText != ";") {
+							if (x.Toks[d].szText == "(" || x.Toks[d].szText == "[" || x.Toks[d].szText == "{") d = x.Match(d);
+							d++;
+						}
+					}
+					if (!bInit && !bArray && (x.Toks[d].szText == "," || x.Toks[d].szText == ";")) {
+						x.Toks[nName].szAfter += " = (" + szType + ")0";
+					}
+					if (x.Toks[d].szText != ",") break;
+					d++;
+				}
+			}
+		}
+
+		// Cg lets 'static const' locals be initialised from parameters; HLSL needs constant
+		// initialisers for static locals, but plain 'const' locals work the same here
+		for (size_t k = x.Functions[i].nBodyOpen + 1; k + 1 < x.Functions[i].nBodyClose; k++) {
+			if (x.Toks[k].nType == T_IDENT && x.Toks[k].szText == "static" && x.Toks[k + 1].szText == "const") x.Toks[k].szText = "";
+		}
 	}
 
 	// Cg lets shaders write to global variables; in HLSL they have to be static
 	for (size_t d = 0; d < x.Decls.size(); d++) {
 		GlobalDecl& g = x.Decls[d];
 		bool bQualified = false;
+		size_t nUniform = 0;
 		size_t nType = g.nFirst;
 		while (nType <= g.nLast && x.Toks[nType].nType == T_IDENT && IsQualifier(x.Toks[nType].szText)) {
 			const std::string& q = x.Toks[nType].szText;
-			if (q == "uniform" || q == "static" || q == "const") bQualified = true;
+			if (q == "static" || q == "const") bQualified = true;
+			if (q == "uniform") nUniform = nType;
 			nType++;
 		}
 		if (bQualified || nType > g.nLast || x.Toks[nType].nType != T_IDENT || x.Toks[nType].szText == "struct" || x.Toks[nType].szText == "typedef") continue;
+		if (nUniform && IsSamplerType(x.Toks[nType].szText)) continue;
 
-		bool bStatic = (x.FindStruct(x.Toks[nType].szText) != NULL);
+		bool bStatic = (x.FindStruct(x.Toks[nType].szText) != NULL) && nUniform == 0;
 
 		for (size_t f = 0; f < x.Functions.size() && !bStatic; f++) {
 			for (size_t k = x.Functions[f].nBodyOpen + 1; k < x.Functions[f].nBodyClose && !bStatic; k++) {
@@ -1137,6 +1685,9 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 		}
 
 		if (bStatic) {
+			if (nUniform) {
+				x.Toks[nUniform].szText = "";
+			}
 			x.Toks[g.nFirst].szBefore += "static ";
 		}
 	}
@@ -1198,6 +1749,48 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 			}
 			Flatten[p.szName] = p.szType;
 			UniformStructs.insert(p.szType);
+		}
+	}
+
+	// Pass inputs used without being declared, e.g. "MASK_RESIZE.texture" in a branch that can't be
+	// taken (crt-royale's integrated graphics versions): Cg tolerates these, HLSL doesn't, so declare
+	// them as if they were uniform parameters (they're bound by name, like any pass input)
+	{
+		const Struct* pPassStruct = NULL;
+		for (std::set<std::string>::iterator it = UniformStructs.begin(); it != UniformStructs.end() && pPassStruct == NULL; ++it) {
+			const Struct* s = x.FindStruct(*it);
+			bool bTexture = false, bTextureSize = false;
+			for (size_t m = 0; m < s->Members.size(); m++) {
+				if (s->Members[m].szName == "texture") bTexture = true;
+				if (s->Members[m].szName == "texture_size") bTextureSize = true;
+			}
+			if (bTexture && bTextureSize) pPassStruct = s;
+		}
+
+		if (pPassStruct) {
+			std::set<std::string> Candidates, DeclaredNames;
+			for (size_t fi = 0; fi < x.Functions.size(); fi++) {
+				for (size_t i = 0; i < x.Functions[fi].Params.size(); i++) {
+					DeclaredNames.insert(x.Functions[fi].Params[i].szName);
+				}
+			}
+			for (size_t i = 0; i + 2 < x.Toks.size(); i++) {
+				const Token& t = x.Toks[i];
+				if (t.nType != T_IDENT) continue;
+				if (i > 0 && x.Toks[i - 1].nType == T_IDENT) {
+					DeclaredNames.insert(t.szText);				// "type name"
+				}
+				if (i > 0 && x.Toks[i - 1].szText == ".") continue;
+				if (x.Toks[i + 1].szText != ".") continue;
+				const std::string& m = x.Toks[i + 2].szText;
+				if (m == "texture" || m == "texture_size" || m == "video_size" || m == "tex_coord") {
+					Candidates.insert(t.szText);
+				}
+			}
+			for (std::set<std::string>::iterator it = Candidates.begin(); it != Candidates.end(); ++it) {
+				if (Flatten.count(*it) || DeclaredNames.count(*it) || x.GlobalNames.count(*it) || x.FindStruct(*it)) continue;
+				Flatten[*it] = pPassStruct->szName;
+			}
 		}
 	}
 
@@ -1340,6 +1933,10 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 			Function* f = Entries[e];
 			if (f == NULL) continue;
 			for (size_t i = 0; i < f->Params.size(); i++) {
+				// Cg numbers the vertex shader's outputs independently: ignore the vertex attributes, and the
+				// fragment shader's inputs (they name the vertex outputs they read)
+				if (f == pVS && !f->Params[i].bOut) continue;
+				if (f != pVS && pVS && !f->Params[i].bOut) continue;
 				const std::string& sem = f->Params[i].szSemantic;
 				if (StartsWith(sem, "TEXCOORD")) UsedTexCoords.insert(IsNumber(sem.substr(8)) ? atoi(sem.substr(8).c_str()) : 0);
 			}
@@ -1351,6 +1948,7 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 	// Entry point parameters
 
 	std::string VSBodyStart, PSBodyStart;
+	std::vector<EntryParam> EntryParams[2];			// the entry points' remaining (varying / output) parameters
 
 	for (int e = 0; e < 2; e++) {
 		Function* f = Entries[e];
@@ -1387,6 +1985,7 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 				while (k < p.nLast && x.Toks[k].szText != p.szName) k++;
 				if (k < p.nLast && x.Toks[k + 1].szText == "[") k = x.Match(k + 1);
 				x.Toks[k].szAfter += szSem;
+				p.szSemantic = szSem + 3;
 			}
 
 			// semantics
@@ -1399,10 +1998,31 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 			}
 
 			Kept.push_back(x.Emit(p.nFirst, p.nLast));
+
+			EntryParam ep;
+			ep.szType = p.szType;
+			ep.szName = p.szName;
+			ep.szArray = p.szArray;
+			ep.szInSem = p.szSemantic;
+			ep.szSem = p.nSemantic ? Upper(x.Toks[p.nSemantic].szText) : p.szSemantic;
+			ep.bOut = p.bOut;
+			ep.bIn = p.bIn || !p.bOut;
+			ep.bStruct = (x.FindStruct(p.szType) != NULL);
+			ep.szText = Kept.back();
+			EntryParams[e].push_back(ep);
 		}
 
 		if (bVS && bTexCoordUsedInVS) {
 			Kept.push_back(" float2 fbneo_uv01_in : FBNEOUV");
+			EntryParam ep;
+			ep.szType = "float2";
+			ep.szName = "fbneo_uv01_in";
+			ep.szInSem = ep.szSem = "FBNEOUV";
+			ep.bOut = false;
+			ep.bIn = true;
+			ep.bStruct = false;
+			ep.szText = Kept.back();
+			EntryParams[e].push_back(ep);
 			for (std::set<std::string>::iterator it = TexCoordStructs.begin(); it != TexCoordStructs.end(); ++it) {
 				VSBodyStart += "\n\t" + *it + "_tex_coord = fbneo_uv01_in * " + *it + "_video_size / " + *it + "_texture_size;";
 			}
@@ -1447,8 +2067,15 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 	// -------------------------------------------------------------
 	// Struct definitions
 
+	std::map<std::string, std::map<std::string, std::string> > MemberSem;	// varying struct -> member -> semantic
+
 	for (size_t si = 0; si < x.Structs.size(); si++) {
 		Struct& s = x.Structs[si];
+
+		// 'uniform' isn't valid on a struct member in HLSL (Cg ignores it)
+		for (size_t k = s.nOpen + 1; k < s.nClose; k++) {
+			if (x.Toks[k].nType == T_IDENT && x.Toks[k].szText == "uniform") x.Toks[k].szText = "";
+		}
 
 		if (UniformStructs.count(s.szName)) {
 			// uniform struct: remove sampler members, 'uniform' qualifiers and TEXUNIT semantics
@@ -1500,12 +2127,14 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 					if (bVarying && (sem == "POSITION" || sem == "POSITION0" || sem == "POS" || sem == "VPOS" || sem == "WPOS")) SetSemantic(x.Toks[mb.nSemantic], "SV_Position");
 					if (bPSOut && StartsWith(sem, "COLOR")) SetSemantic(x.Toks[mb.nSemantic], "SV_Target" + sem.substr(5));
 					if (bPSOut && sem == "DEPTH") SetSemantic(x.Toks[mb.nSemantic], "SV_Depth");
+					if (bVarying) MemberSem[s.szName][mb.szName] = Upper(x.Toks[mb.nSemantic].szText);
 				} else if (bVarying) {
 					// Cg assigns semantics automatically; HLSL needs them spelled out
 					while (Used.count(nNext)) nNext++;
 					char szSem[32];
 					sprintf(szSem, " : TEXCOORD%d", nNext);
 					Used.insert(nNext);
+					MemberSem[s.szName][mb.szName] = szSem + 3;
 					// insert after the name (and array)
 					size_t k = mb.nFirst;
 					while (k < mb.nLast && x.Toks[k].szText != mb.szName) k++;
@@ -1547,6 +2176,22 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 	}
 
 	// -------------------------------------------------------------
+	// Sampler parameters of helper functions: add a SamplerState parameter after each, so lookups use
+	// the right sampler (filter / wrap mode) for whichever texture is passed in
+
+	for (size_t fi = 0; fi < x.Functions.size(); fi++) {
+		Function& f = x.Functions[fi];
+		if (&f == pVS || &f == pPS) continue;
+		for (size_t i = 0; i < f.Params.size(); i++) {
+			const Param& p = f.Params[i];
+			if (!IsSamplerType(p.szType) || p.bOut || p.szName.empty() || !p.szArray.empty()) continue;
+			x.Toks[p.nLast].szAfter += ", SamplerState fbneo_smp_" + p.szName;
+			x.ParamTextures.insert(p.szName);
+			x.SamplerParamFuncs[f.szName].insert(i);
+		}
+	}
+
+	// -------------------------------------------------------------
 	// Global sampler declarations -> Texture2D + SamplerState
 
 	{
@@ -1577,6 +2222,22 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 				while (nSemi + 1 < x.Toks.size() && x.Toks[nSemi].szText != ";") nSemi++;
 				x.Toks[nSemi].szAfter += "\nSamplerState fbneo_smp_" + szName + ";";
 				x.GlobalTextures.insert(szName);
+			} else if (nDepth > 0 && x.Toks[i + 1].nType == T_IDENT && i + 3 < x.Toks.size() && x.Toks[i + 2].szText == "=") {
+				// local alias: "sampler2D a = b;" -> the sampler state goes along with it
+				std::string szName = x.Toks[i + 1].szText;
+				std::string szSource;
+				int nTokens = 0;
+				size_t k = i + 3;
+				for (; k < x.Toks.size() && x.Toks[k].szText != ";"; k++) {
+					if (x.Toks[k].szText.empty()) continue;
+					szSource = x.Toks[k].szText;
+					nTokens++;
+				}
+				if (k < x.Toks.size()) {
+					bool bKnown = (nTokens == 1) && (x.GlobalTextures.count(szSource) || x.ParamTextures.count(szSource));
+					x.Toks[k].szAfter += " SamplerState fbneo_smp_" + szName + " = " + (bKnown ? "fbneo_smp_" + szSource : std::string("fbneo_smp")) + ";";
+					x.ParamTextures.insert(szName);
+				}
 			}
 
 			if (t.szText == "sampler1D") t.szText = "Texture1D";
@@ -1597,6 +2258,7 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 		"#define triangle fbneo_triangle\n#define linear fbneo_linear\n#define pass fbneo_pass\n#define string fbneo_string\n"
 		"#define precise fbneo_precise\n#define shared fbneo_shared\n#define snorm fbneo_snorm\n#define unorm fbneo_unorm\n"
 		"#define technique fbneo_technique\n#define compile fbneo_compile\n#define lineadj fbneo_lineadj\n#define triangleadj fbneo_triangleadj\n"
+		"#define matrix fbneo_matrix\n#define vector fbneo_vector\n"
 		"#ifdef FBNEO_LEVEL9\n"
 		" #define FBNEO_SAMPLE_LEVEL(t, s, uv, l) t.Sample(s, uv)\n"
 		" #define FBNEO_SAMPLE_BIAS(t, s, uv, b) t.Sample(s, uv)\n"
@@ -1614,6 +2276,7 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 	{
 		static const struct { const char* szName; const char* szDefine; } Glsl[] = {
 			{ "fract", "#define fract frac\n" },
+			{ "double", "#define double float\n" }, { "double2", "#define double2 float2\n" }, { "double3", "#define double3 float3\n" }, { "double4", "#define double4 float4\n" },
 			{ "mix", "#define mix lerp\n" },
 			{ "mod", "#define mod(x, y) ((x) - (y) * floor((x) / (y)))\n" },
 			{ "inversesqrt", "#define inversesqrt rsqrt\n" },
@@ -1634,7 +2297,7 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 				for (size_t i = 1; i < x.Toks.size() && !bLocal; i++) {
 					if (x.Toks[i].szText != Glsl[g].szName || x.Toks[i - 1].nType != T_IDENT) continue;
 					const std::string& p = x.Toks[i - 1].szText;
-					if (p != "return" && p != "else" && p != "case" && p != "do") bLocal = true;
+					if (p != "return" && p != "else" && p != "case" && p != "do" && !IsQualifier(p) && p != "inline" && p != "typedef") bLocal = true;
 				}
 				if (!bLocal) {
 					Prelude += Glsl[g].szDefine;
@@ -1643,7 +2306,17 @@ bool D3D11TranslateCg(const std::string& Source, D3D11CgTranslation* pOut, std::
 		}
 	}
 
-	pOut->szHLSL = Prelude + Globals + x.Emit(0, x.Toks.size() - 1);
+	// -------------------------------------------------------------
+	// Cg links the vertex shader outputs to the pixel shader inputs by semantic, Direct3D 11 by
+	// register. So the entry points become wrappers around the original functions, passing one
+	// struct (built from the vertex shader outputs) between the two stages.
+
+	std::string Wrappers;
+	if (pVS && pPS) {
+		Wrappers = MakeStageWrappers(x, pVS, pPS, EntryParams, MemberSem);
+	}
+
+	pOut->szHLSL = Prelude + Globals + x.Emit(0, x.Toks.size() - 1) + Wrappers;
 
 	return true;
 }

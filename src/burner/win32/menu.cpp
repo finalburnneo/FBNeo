@@ -198,8 +198,10 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
         miiText.dwTypeData = szText;
         miiText.cch = 256;
         GetMenuItemInfo(hMenu, i, TRUE, &miiText);
-
-		_tcscpy_s(currentMenuInfo->sText, _countof(currentMenuInfo->sText), szText);
+		// _tcscpy_s() don't work on winXP
+		// _tcscpy_s(currentMenuInfo->sText, _countof(currentMenuInfo->sText), szText);
+		_tcsncpy(currentMenuInfo->sText, szText, _countof(currentMenuInfo->sText) - 1);
+		currentMenuInfo->sText[_countof(currentMenuInfo->sText) - 1] = 0;
 
         mii.fType    |= MFT_OWNERDRAW;
         mii.dwItemData = (ULONG_PTR)currentMenuInfo; 

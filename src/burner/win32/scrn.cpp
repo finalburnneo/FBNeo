@@ -2071,6 +2071,15 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_HOTKEYS:
+			AudBlankSound();
+			if (UseDialogs()) {
+				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
+				HotkeysCreate();
+				GameInpCheckMouse();
+			}
+			break;
+
 		case MENU_INP_PLUGIN_1:
 			InputSelect(0);
 			POST_INITIALISE_MESSAGE;

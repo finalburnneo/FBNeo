@@ -70,7 +70,7 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 	// Pause
 	if (macroSystemPause && macroSystemPause != prevPause && timeGetTime() > prevPause_debounce+90) {
 		if (bHasFocus) {
-			PostMessage(hScrnWnd, WM_KEYDOWN, VK_PAUSE, 0);
+			PostMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_PAUSE, 1), 0);
 			prevPause_debounce = timeGetTime();
 		}
 	}
@@ -126,22 +126,22 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 	}
 	// Load State
 	if (macroSystemLoadState && macroSystemLoadState != prevLState) {
-		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F9, 0);
+		PostMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_STATE_LOAD_SLOT, 1), 0);
 	}
 	prevLState = macroSystemLoadState;
 	// Save State
 	if (macroSystemSaveState && macroSystemSaveState != prevSState) {
-		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F10, 0);
+		PostMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_STATE_SAVE_SLOT, 1), 0);
 	}
 	prevSState = macroSystemSaveState;
 	// Next State
 	if (macroSystemNextState && macroSystemNextState != prevNState) {
-		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F11, 0);
+		PostMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_STATE_NEXTSLOT, 1), 0);
 	}
 	prevNState = macroSystemNextState;
 	// Previous State
 	if (macroSystemPreviousState && macroSystemPreviousState != prevPState) {
-		PostMessage(hScrnWnd, WM_KEYDOWN, VK_F8, 0);
+		PostMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_STATE_PREVSLOT, 1), 0);
 	}
 	prevPState = macroSystemPreviousState;
 	// UNDO State
@@ -547,6 +547,133 @@ int k_player_id = 0;             // data from the Kaillera Client
 int k_numplayers = 0;            // ""
 char k_game_str[255] = { 0, };   // ""
 
+// Volume changes from the emulator hotkeys ('Silence' & 'Sound Restored' code added by CaptainCPS-X)
+static void RunToggleMute()
+{
+	TCHAR buffer[60];
+	bMute = !bMute;
+
+	if (bMute) {
+		nOldAudVolume = nAudVolume;
+		nAudVolume = 0;// mute sound
+		_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE, true), nAudVolume / 100);
+	} else {
+		nAudVolume = nOldAudVolume;// restore volume
+		_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE_OFF, true), nAudVolume / 100);
+	}
+	if (AudSoundSetVolume() == 0) {
+		VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+	} else {
+		VidSNewShortMsg(buffer);
+	}
+}
+
+static void RunChangeVolume(int nDelta)
+{
+	if (bMute) return; // if mute, not do this
+
+	TCHAR buffer[60];
+	nOldAudVolume = nAudVolume;
+
+	nAudVolume += nDelta;
+	if (nAudVolume > 10000) nAudVolume = 10000;
+	if (nAudVolume < 0)     nAudVolume = 0;
+
+	if (AudSoundSetVolume() == 0) {
+		VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
+	} else {
+		_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
+		VidSNewShortMsg(buffer);
+	}
+	MenuUpdateVolume();
+}
+
+// Emulator hotkeys that aren't menu commands (those go through the accelerator table, see hotkeys.cpp)
+static void RunHandleHotkey(INT32 nAction, MSG* pMsg)
+{
+	switch (nAction) {
+		case HOTKEY_ACT_EXIT_FULLSCREEN: {
+			if (nCmdOptUsed & 1) {
+				PostQuitMessage(0);
+			} else {
+				if (nVidFullscreen) {
+					nVidFullscreen = 0;
+					POST_INITIALISE_MESSAGE;
+				}
+			}
+			break;
+		}
+		case HOTKEY_ACT_TOGGLE_MENU: {
+			bMenuEnabled = !bMenuEnabled;
+			POST_INITIALISE_MESSAGE;
+			break;
+		}
+		case HOTKEY_ACT_REWIND: {
+			bAppDoRewind = 1;
+			break;
+		}
+		case HOTKEY_ACT_FFWD:
+		case HOTKEY_ACT_FFWD_TOGGLE: {
+			bool bOldAppDoFast = bAppDoFast;
+
+			if (kNetGame) {
+				break;
+			}
+
+			if (nAction == HOTKEY_ACT_FFWD) {
+				if (bRunPause) {
+					bAppDoStep = 1;
+				} else {
+					bAppDoFast = 1;
+				}
+			} else {
+				bAppDoFast = !bAppDoFast;
+				bAppDoFasttoggled = bAppDoFast;
+			}
+
+			if (bOldAppDoFast != bAppDoFast) {
+				DisplayFPSInit(); // resync fps display
+			}
+			break;
+		}
+		case HOTKEY_ACT_TOGGLE_FRAMECOUNTER: {
+			bReplayFrameCounterDisplay = !bReplayFrameCounterDisplay;
+			if (!bReplayFrameCounterDisplay) {
+				VidSKillTinyMsg();
+			}
+			break;
+		}
+		case HOTKEY_ACT_TOGGLE_FPS: {
+			bShowFPS = !bShowFPS;
+			if (bShowFPS) {
+				DisplayFPSInit();
+			} else {
+				VidSKillShortMsg();
+			}
+			break;
+		}
+		case HOTKEY_ACT_NETPLAY_CHAT: {
+			if (kNetGame && hwndChat == NULL) {
+				if (AppMessage(pMsg)) {
+					ActivateChat();
+				}
+			}
+			break;
+		}
+		case HOTKEY_ACT_MUTE:				RunToggleMute();			break;
+		case HOTKEY_ACT_VOLUME_UP:			RunChangeVolume(+1000);		break;
+		case HOTKEY_ACT_VOLUME_DOWN:		RunChangeVolume(-1000);		break;
+		case HOTKEY_ACT_VOLUME_UP_FINE:		RunChangeVolume(+100);		break;
+		case HOTKEY_ACT_VOLUME_DOWN_FINE:	RunChangeVolume(-100);		break;
+
+		case HOTKEY_ACT_LUA_OPEN:			ScrnInitLua();																break;	// Open (L)ua Dialog
+		case HOTKEY_ACT_LUA_CLOSE:			PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);								break;
+		case HOTKEY_ACT_LUA_RUN:			PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUARUN, 0);				break;
+		case HOTKEY_ACT_LUA_STOP:			PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUASTOP, 0);				break;	// (P)ause Lua Scripting (This is the stop button)
+		case HOTKEY_ACT_LUA_BROWSE:			PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUABROWSE, 0);			break;	// (B)rowse Lua Scripts
+	}
+}
+
 // The main message loop
 int RunMessageLoop()
 {
@@ -582,7 +709,7 @@ int RunMessageLoop()
 			static INT32 bLoaded = 0; // only do this once (at startup!)
 
 			if (bLoaded == 0)
-				PostMessage(hScrnWnd, WM_KEYDOWN, VK_F6, 0);
+				PostMessage(hScrnWnd, WM_COMMAND, MAKEWPARAM(MENU_LOAD, 1), 0);
 			bLoaded = 1;
 		}
 
@@ -658,263 +785,79 @@ int RunMessageLoop()
 				}
 
 				if (Msg.message == WM_SYSKEYDOWN || Msg.message == WM_KEYDOWN) {
-					if (Msg.lParam & 0x20000000) {
-						// An Alt/AltGr-key was pressed
-						switch (Msg.wParam) {
+					const UINT nVK = (UINT)Msg.wParam;
+					const bool bAltDown = (Msg.lParam & 0x20000000) != 0;		// An Alt/AltGr-key is held
+
+					if (bAltDown && nVK == VK_MENU) {
+						continue;
+					}
+
+					if (!bAltDown && cBurnerKeyCallback) {
+						BurnerHandlerKeyCallback(&Msg, (Msg.message == WM_KEYDOWN) ? 1 : 0, 0);
+					}
 
 #if defined (FBNEO_DEBUG)
-							case 'C': {
-								static int count = 0;
-								if (count == 0) {
-									count++;
-									{ char* p = NULL; if (*p) { printf("crash...\n"); } }
-								}
-								break;
-							}
+					if (bAltDown && nVK == 'C') {
+						static int count = 0;
+						if (count == 0) {
+							count++;
+							{ char* p = NULL; if (*p) { printf("crash...\n"); } }
+						}
+					}
+					if (!bAltDown && (nVK == 'N' || nVK == 'M')) {
+						counter += (nVK == 'M') ? 1 : -1;
+						if (counter < 0) {
+							bprintf(PRINT_IMPORTANT, _T("*** New counter value: %04X (%d).\n"), counter, counter);
+						} else {
+							bprintf(PRINT_IMPORTANT, _T("*** New counter value: %04X.\n"), counter);
+						}
+					}
 #endif
 
-              				// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X)
-							case 'S': {
-								TCHAR buffer[60];
-								bMute = !bMute;
-
-								if (bMute) {
-									nOldAudVolume = nAudVolume;
-									nAudVolume = 0;// mute sound
-									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE, true), nAudVolume / 100);
-								} else {
-									nAudVolume = nOldAudVolume;// restore volume
-									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE_OFF, true), nAudVolume / 100);
+					if (hwndChat) {
+						// Netplay chat is active: Esc / Enter close / send it, other emulator hotkeys are suspended while typing
+						if (!bAltDown && nVK == VK_ESCAPE) {
+							DeActivateChat();
+						}
+						if (!bAltDown && nVK == VK_RETURN) {
+							int i = 0;
+							while (EditText[i]) {
+								if (EditText[i++] != 0x20) {
+									break;
 								}
-								if (AudSoundSetVolume() == 0) {
-									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
-								} else {
-									VidSNewShortMsg(buffer);
-								}
-								break;
 							}
-
-							case VK_OEM_PLUS: {
-								if (bMute) break; // if mute, not do this
-								nOldAudVolume = nAudVolume;
-								TCHAR buffer[60];
-
-								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									nAudVolume += 100;
-								} else {
-									nAudVolume += 1000;
-								}
-
-								if (nAudVolume > 10000) {
-									nAudVolume = 10000;
-								}
-								if (AudSoundSetVolume() == 0) {
-									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
-								} else {
-									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
-									VidSNewShortMsg(buffer);
-								}
-								MenuUpdateVolume();
-								break;
+							if (i) {
+								Kaillera_Chat_Send(TCHARToANSI(EditText, NULL, 0));
 							}
-							case VK_OEM_MINUS: {
-								if (bMute) break; // if mute, not do this
-							  	nOldAudVolume = nAudVolume;
-								TCHAR buffer[60];
-
-								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									nAudVolume -= 100;
-								} else {
-									nAudVolume -= 1000;
-								}
-
-								if (nAudVolume < 0) {
-									nAudVolume = 0;
-								}
-								if (AudSoundSetVolume() == 0) {
-									VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_SOUND_NOVOLUME, true));
-								} else {
-									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_VOLUMESET, true), nAudVolume / 100);
-									VidSNewShortMsg(buffer);
-								}
-								MenuUpdateVolume();
-								break;
-							}
-							case VK_MENU: {
-								continue;
-							}
-
-							// Open (L)ua Dialog
-							case 'L': {
-								ScrnInitLua();
-								break;
-							}
-							case 'T': {
-								PostMessage(LuaConsoleHWnd, WM_CLOSE, 0, 0);
-								break;
-							}
-							case 'E': {
-								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUARUN, 0);
-								break;
-							}
-			                // (P)ause Lua Scripting (This is the stop button)
-							case 'P': {
-								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUASTOP, 0);
-								break;
-							}
-							// (B)rowse Lua Scripts
-							case 'B': {
-								PostMessage(LuaConsoleHWnd, WM_COMMAND, IDC_BUTTON_LUABROWSE, 0);
-								break;
-							}
-							break;
+							DeActivateChat();
 						}
 					} else {
-
-						if (cBurnerKeyCallback)
-							BurnerHandlerKeyCallback(&Msg, (Msg.message == WM_KEYDOWN) ? 1 : 0, 0);
-
-						switch (Msg.wParam) {
-
-#if defined (FBNEO_DEBUG)
-							case 'N':
-								counter--;
-								if (counter < 0) {
-									bprintf(PRINT_IMPORTANT, _T("*** New counter value: %04X (%d).\n"), counter, counter);
-								} else {
-									bprintf(PRINT_IMPORTANT, _T("*** New counter value: %04X.\n"), counter);
-								}
-								break;
-							case 'M':
-								counter++;
-								if (counter < 0) {
-									bprintf(PRINT_IMPORTANT, _T("*** New counter value: %04X (%d).\n"), counter, counter);
-								} else {
-									bprintf(PRINT_IMPORTANT, _T("*** New counter value: %04X.\n"), counter);
-								}
-								break;
-#endif
-							case VK_ESCAPE: {
-								if (hwndChat) {
-									DeActivateChat();
-								} else {
-									if (nCmdOptUsed & 1) {
-										PostQuitMessage(0);
-									} else {
-										if (nVidFullscreen) {
-											nVidFullscreen = 0;
-											POST_INITIALISE_MESSAGE;
-										}
-									}
-								}
-								break;
-							}
-							case VK_RETURN: {
-								if (hwndChat) {
-									int i = 0;
-									while (EditText[i]) {
-										if (EditText[i++] != 0x20) {
-											break;
-										}
-									}
-									if (i) {
-										Kaillera_Chat_Send(TCHARToANSI(EditText, NULL, 0));
-										//kailleraChatSend(TCHARToANSI(EditText, NULL, 0));
-									}
-									DeActivateChat();
-
-									break;
-								}
-								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									bMenuEnabled = !bMenuEnabled;
-									POST_INITIALISE_MESSAGE;
-
-									break;
-								}
-
-								break;
-							}
-							case VK_PRIOR: {
-								bAppDoRewind = 1;
-								break;
-							}
-							case VK_F1: {
-								bool bOldAppDoFast = bAppDoFast;
-
-								if (kNetGame) {
-									break;
-								}
-
-								if (((GetAsyncKeyState(VK_CONTROL) | GetAsyncKeyState(VK_SHIFT)) & 0x80000000) == 0) {
-									if (bRunPause) {
-										bAppDoStep = 1;
-									} else {
-										bAppDoFast = 1;
-									}
-								}
-
-								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL)) { // Shift-F1: toggles FFWD state
-									bAppDoFast = !bAppDoFast;
-									bAppDoFasttoggled = bAppDoFast;
-								}
-
-								if (bOldAppDoFast != bAppDoFast) {
-									DisplayFPSInit(); // resync fps display
-								}
-								break;
-							}
-							case VK_BACK: {
-								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL))
-								{ // Shift-Backspace: toggles recording/replay frame counter
-									bReplayFrameCounterDisplay = !bReplayFrameCounterDisplay;
-									if (!bReplayFrameCounterDisplay) {
-										VidSKillTinyMsg();
-									}
-								} else
-								{ // Backspace: toggles FPS counter
-									bShowFPS = !bShowFPS;
-									if (bShowFPS) {
-										DisplayFPSInit();
-									} else {
-										VidSKillShortMsg();
-									}
-								}
-								break;
-							}
-							case VK_OEM_2: {
-								if (kNetGame && hwndChat == NULL) {
-									if (AppMessage(&Msg)) {
-										ActivateChat();
-									}
-								}
-								break;
-							}
-						}
+						RunHandleHotkey(HotkeyFindAction(nVK, HotkeyGetModifiers(&Msg)), &Msg);
 					}
 				} else {
 					if (Msg.message == WM_SYSKEYUP || Msg.message == WM_KEYUP) {
+						const UINT nVK = (UINT)Msg.wParam;
 
 						if (cBurnerKeyCallback)
-							BurnerHandlerKeyCallback(&Msg, (Msg.message == WM_KEYDOWN) ? 1 : 0, 0);
+							BurnerHandlerKeyCallback(&Msg, 0, 0);
 
-						switch (Msg.wParam) {
-							case VK_MENU:
-								continue;
+						if (nVK == VK_MENU) {
+							continue;
+						}
 
-							case VK_PRIOR:
-								bAppDoRewind = 0;
-								break;
+						// "Hold" hotkeys stop when their key is released, whatever modifiers are held at that point
+						if (HotkeyActionUsesKey(HOTKEY_ACT_REWIND, nVK)) {
+							bAppDoRewind = 0;
+						}
 
-							case VK_F1: {
-								bool bOldAppDoFast = bAppDoFast;
+						if (HotkeyActionUsesKey(HOTKEY_ACT_FFWD, nVK) || HotkeyActionUsesKey(HOTKEY_ACT_FFWD_TOGGLE, nVK)) {
+							bool bOldAppDoFast = bAppDoFast;
 
-								if (!bAppDoFasttoggled)
-									bAppDoFast = 0;
-								bAppDoFasttoggled = 0;
-								if (bOldAppDoFast != bAppDoFast) {
-									DisplayFPSInit(); // resync fps display
-								}
-								break;
+							if (!bAppDoFasttoggled)
+								bAppDoFast = 0;
+							bAppDoFasttoggled = 0;
+							if (bOldAppDoFast != bAppDoFast) {
+								DisplayFPSInit(); // resync fps display
 							}
 						}
 					}

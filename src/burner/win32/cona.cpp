@@ -547,6 +547,9 @@ int ConfigAppLoad()
 		VAR(nSocd[4]);
 		VAR(nSocd[5]);
 
+		// Emulator hotkeys
+		HotkeysConfigLoadLine(szLine);
+
 #undef DRV
 #undef PAT
 #undef STR
@@ -557,6 +560,8 @@ int ConfigAppLoad()
 	}
 
 	fclose(h);
+
+	HotkeysApply();
 
 	return 0;
 }
@@ -1060,6 +1065,8 @@ int ConfigAppSave()
 	VAR(nSocd[3]);
 	VAR(nSocd[4]);
 	VAR(nSocd[5]);
+
+	HotkeysConfigSave(h);
 
 	_ftprintf(h, _T("\n\n\n"));
 

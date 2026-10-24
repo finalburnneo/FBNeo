@@ -57,6 +57,7 @@
 #define IDD_HARDFXSETTINGS                  84
 #define IDD_ROMDATA_MANAGER					85
 #define IDD_ROMDATA_COVER_DLG				86
+#define IDD_HOTKEYS							87
 
 #define IDR_MENU                        	100
 #define IDR_MENU_BLITTER_1					110
@@ -551,6 +552,14 @@
 #define IDC_ROMDATA_LABELDAT				21215
 #define IDC_ROMDATA_LABELDRIVER				21216
 #define IDC_ROMDATA_COVER_PREVIEW_PIC		21217
+
+#define IDC_HOTKEYS_LIST					21400
+#define IDC_HOTKEYS_STATUS					21401
+#define IDC_HOTKEYS_SET						21402
+#define IDC_HOTKEYS_SETALT					21403
+#define IDC_HOTKEYS_CLEAR					21404
+#define IDC_HOTKEYS_DEFAULT					21405
+#define IDC_HOTKEYS_RESETALL				21406
 
 #define MENU_LOAD                       	10001
 #define MENU_STARTNET			 			10002
@@ -1122,6 +1131,8 @@
 #define MENU_UI_DARK_MODE                   11906
 #define BMP_DARK_MODE_SPLASH                11907 
 #define MENU_UI_DEFAULT_MODE                11908
+
+#define MENU_HOTKEYS                        11960
 
 // Next default values for new objects
 //

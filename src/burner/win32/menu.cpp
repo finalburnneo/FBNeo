@@ -1629,6 +1629,8 @@ void MenuUpdate()
 #if defined BUILD_X64_EXE
 	EnableMenuItem(hMenu, MENU_BLITTER_2, MF_GRAYED  | MF_BYCOMMAND);
 #endif
+
+	HotkeysUpdateMenu();						// Show the user's hotkeys next to the menu items
 }
 
 void MenuEnableItems()

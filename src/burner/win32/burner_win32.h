@@ -506,6 +506,43 @@ int StatedLoad(int nSlot);
 int StatedUNDO(int nSlot);
 int StatedSave(int nSlot);
 
+// hotkeys.cpp
+#define HOTKEY_MOD_SHIFT	0x0100
+#define HOTKEY_MOD_CTRL		0x0200
+#define HOTKEY_MOD_ALT		0x0400
+#define HOTKEY_MOD_MASK		(HOTKEY_MOD_SHIFT | HOTKEY_MOD_CTRL | HOTKEY_MOD_ALT)
+#define HOTKEY_KEY_MASK		(HOTKEY_MOD_MASK | 0xFF)
+enum {
+	HOTKEY_ACT_NONE = 0,
+	HOTKEY_ACT_FFWD,					// fast forward while held, frame advance when paused
+	HOTKEY_ACT_FFWD_TOGGLE,
+	HOTKEY_ACT_REWIND,					// while held
+	HOTKEY_ACT_EXIT_FULLSCREEN,
+	HOTKEY_ACT_TOGGLE_MENU,
+	HOTKEY_ACT_TOGGLE_FPS,
+	HOTKEY_ACT_TOGGLE_FRAMECOUNTER,
+	HOTKEY_ACT_MUTE,
+	HOTKEY_ACT_VOLUME_UP,
+	HOTKEY_ACT_VOLUME_DOWN,
+	HOTKEY_ACT_VOLUME_UP_FINE,
+	HOTKEY_ACT_VOLUME_DOWN_FINE,
+	HOTKEY_ACT_LUA_OPEN,
+	HOTKEY_ACT_LUA_CLOSE,
+	HOTKEY_ACT_LUA_RUN,
+	HOTKEY_ACT_LUA_STOP,
+	HOTKEY_ACT_LUA_BROWSE,
+	HOTKEY_ACT_NETPLAY_CHAT,
+};
+UINT32 HotkeyGetModifiers(const MSG* pMsg);
+INT32 HotkeyFindAction(UINT nVK, UINT32 nMods);
+bool HotkeyActionUsesKey(INT32 nAction, UINT nVK);
+void HotkeyToString(UINT16 nKey, TCHAR* szString, INT32 nLen);
+void HotkeysApply();						// (re)builds the accelerator table and updates the menu labels
+void HotkeysUpdateMenu();
+void HotkeysConfigLoadLine(TCHAR* szLine);
+void HotkeysConfigSave(FILE* h);
+int HotkeysCreate();
+
 // numdial.cpp
 int NumDialCreate(int bDial);
 void GammaDialog();

@@ -15,11 +15,11 @@
 #include "burner.h"
 #include "fbheadless.h"
 
-static unsigned char *nativeBuffer = NULL;  // FBNeo renders here (pBurnDraw)
-static unsigned char *displayBuffer = NULL; // exposed to the host (upright)
+static unsigned char *nativeBuffer = NULL;  // FBNeo renders here (pBurnDraw), nativeBpp deep
+static unsigned char *displayBuffer = NULL; // exposed to the host, always 32bpp upright
 static int nativeW = 0, nativeH = 0;
 static int dispW = 0, dispH = 0;
-static int bpp = 0;
+static int nativeBpp = 0; // FBNeo render depth in bytes: 2 (BDF_16BIT_ONLY) or 4
 static int rotate = 0; // 0 none, 1 CW90, 2 180, 3 CCW90
 
 static void freeBuffers()
@@ -37,10 +37,17 @@ static int HeadlessVideoInit()
 	int flags = BurnDrvGetFlags();
 	BurnDrvGetVisibleSize(&vw, &vh);
 
-	// 32bpp XRGB8888 output so the host renderer can consume it directly.
-	nVidImageDepth = 32;
-	nVidImageBPP = 4;
-	bpp = 4;
+	// Some drivers (Cave, CPS3, Megadrive) are BDF_16BIT_ONLY: their blitters only
+	// write RGB565, so render those at 16bpp and convert to 32bpp on present. All
+	// others render straight 32bpp XRGB8888, which the host consumes directly.
+	if (flags & BDF_16BIT_ONLY) {
+		nativeBpp = 2;
+		nVidImageDepth = 16;
+	} else {
+		nativeBpp = 4;
+		nVidImageDepth = 32;
+	}
+	nVidImageBPP = nativeBpp;
 	SetBurnHighCol(nVidImageDepth);
 
 	if (flags & BDF_ORIENTATION_VERTICAL) {
@@ -55,26 +62,29 @@ static int HeadlessVideoInit()
 	}
 
 	freeBuffers();
-	nativeBuffer = (unsigned char *)malloc(nativeW * nativeH * bpp);
+	nativeBuffer = (unsigned char *)malloc(nativeW * nativeH * nativeBpp);
 	if (nativeBuffer == NULL)
 		return 1;
-	memset(nativeBuffer, 0, nativeW * nativeH * bpp);
+	memset(nativeBuffer, 0, nativeW * nativeH * nativeBpp);
 
-	if (rotate == 0) {
+	// The host always receives 32bpp. Zero-copy only when FBNeo already renders
+	// 32bpp AND upright; otherwise present() fills a dedicated 32bpp buffer
+	// (converting 16->32 and/or rotating).
+	if (nativeBpp == 4 && rotate == 0) {
 		displayBuffer = nativeBuffer;
 	} else {
-		displayBuffer = (unsigned char *)malloc(dispW * dispH * bpp);
+		displayBuffer = (unsigned char *)malloc(dispW * dispH * 4);
 		if (displayBuffer == NULL)
 			return 1;
-		memset(displayBuffer, 0, dispW * dispH * bpp);
+		memset(displayBuffer, 0, dispW * dispH * 4);
 	}
 
 	// FBNeo draws into the native buffer, pitch = native width.
 	nVidImageWidth = nativeW;
 	nVidImageHeight = nativeH;
-	nVidImagePitch = nativeW * bpp;
-	nBurnBpp = bpp;
-	nBurnPitch = nativeW * bpp;
+	nVidImagePitch = nativeW * nativeBpp;
+	nBurnBpp = nativeBpp;
+	nBurnPitch = nativeW * nativeBpp;
 	pVidImage = nativeBuffer;
 
 	return 0;
@@ -83,32 +93,60 @@ static int HeadlessVideoInit()
 static int HeadlessVideoExit()
 {
 	freeBuffers();
-	nativeW = nativeH = dispW = dispH = bpp = rotate = 0;
+	nativeW = nativeH = dispW = dispH = nativeBpp = rotate = 0;
 	return 0;
 }
 
-// Rotate the freshly rendered native frame into the upright display buffer.
-// Called by the frontend after BurnDrvFrame.
+// RGB565 -> 0x00RRGGBB, matching SetBurnHighCol(32)'s component order.
+static inline uint32_t rgb565_to_xrgb8888(uint16_t p)
+{
+	uint32_t r = (p >> 11) & 0x1F;
+	uint32_t g = (p >> 5)  & 0x3F;
+	uint32_t b =  p        & 0x1F;
+	r = (r << 3) | (r >> 2);
+	g = (g << 2) | (g >> 4);
+	b = (b << 3) | (b >> 2);
+	return (r << 16) | (g << 8) | b;
+}
+
+// Map a display pixel (dx,dy) back to its native-buffer coordinate for the
+// current rotation. Native/display dims are swapped for the 90-degree cases.
+static inline void src_coord(int dx, int dy, int *sx, int *sy)
+{
+	switch (rotate) {
+	case 1:  *sx = dy;               *sy = nativeH - 1 - dx; break; // CW 90
+	case 3:  *sx = nativeW - 1 - dy; *sy = dx;               break; // CCW 90
+	case 2:  *sx = dispW - 1 - dx;   *sy = dispH - 1 - dy;   break; // 180
+	default: *sx = dx;               *sy = dy;               break; // none
+	}
+}
+
+// Present the freshly rendered native frame to the host: convert 16->32bpp for
+// BDF_16BIT_ONLY drivers and/or rotate vertical games upright. Called by the
+// frontend after BurnDrvFrame. The zero-copy case (32bpp, upright) is a no-op.
 void headless_video_present(void)
 {
-	if (rotate == 0 || displayBuffer == nativeBuffer)
+	if (displayBuffer == nativeBuffer)
 		return;
 
-	const uint32_t *src = (const uint32_t *)nativeBuffer;
 	uint32_t *dst = (uint32_t *)displayBuffer;
 
-	if (rotate == 2) { // 180
+	if (nativeBpp == 2) {
+		const uint16_t *src = (const uint16_t *)nativeBuffer;
 		for (int dy = 0; dy < dispH; dy++)
-			for (int dx = 0; dx < dispW; dx++)
-				dst[dy * dispW + dx] = src[(dispH - 1 - dy) * nativeW + (dispW - 1 - dx)];
-	} else if (rotate == 1) { // CW 90 (dispW == nativeH, dispH == nativeW)
+			for (int dx = 0; dx < dispW; dx++) {
+				int sx, sy;
+				src_coord(dx, dy, &sx, &sy);
+				dst[dy * dispW + dx] = rgb565_to_xrgb8888(src[sy * nativeW + sx]);
+			}
+	} else {
+		const uint32_t *src = (const uint32_t *)nativeBuffer;
 		for (int dy = 0; dy < dispH; dy++)
-			for (int dx = 0; dx < dispW; dx++)
-				dst[dy * dispW + dx] = src[(nativeH - 1 - dx) * nativeW + dy];
-	} else { // CCW 90
-		for (int dy = 0; dy < dispH; dy++)
-			for (int dx = 0; dx < dispW; dx++)
-				dst[dy * dispW + dx] = src[dx * nativeW + (nativeW - 1 - dy)];
+			for (int dx = 0; dx < dispW; dx++) {
+				int sx, sy;
+				src_coord(dx, dy, &sx, &sy);
+				dst[dy * dispW + dx] = src[sy * nativeW + sx];
+			}
 	}
 }
 
@@ -150,5 +188,5 @@ struct VidOut VidOutHeadless = {
 extern "C" const unsigned char *FBHeadlessGetVideoBuffer(void) { return displayBuffer; }
 extern "C" int FBHeadlessGetVideoWidth(void)  { return dispW; }
 extern "C" int FBHeadlessGetVideoHeight(void) { return dispH; }
-extern "C" int FBHeadlessGetVideoPitch(void)  { return dispW * bpp; }
-extern "C" int FBHeadlessGetVideoBPP(void)    { return bpp; }
+extern "C" int FBHeadlessGetVideoPitch(void)  { return dispW * 4; }
+extern "C" int FBHeadlessGetVideoBPP(void)    { return 4; }

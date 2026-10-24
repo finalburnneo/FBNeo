@@ -5,6 +5,7 @@ INT32 Cps = 0;							// 1 = CPS1, 2 = CPS2, 3 = CPS Changer
 INT32 Cps1Qs = 0;
 INT32 Cps1DisablePSnd = 0;				// Disables the Z80 as well
 INT32 Cps2DisableQSnd = 0;				// Disables the Z80 as well
+INT32 Cps2Plus = 0;
 
 INT32 nCPS68KClockspeed = 0;
 INT32 nCpsCycles = 0;						// 68K Cycles per frame
@@ -15,6 +16,7 @@ UINT8 *CpsRom =NULL; UINT32 nCpsRomLen =0; // Program Rom (as in rom)
 UINT8 *CpsCode=NULL; UINT32 nCpsCodeLen=0; // Program Rom (decrypted)
 UINT8 *CpsZRom=NULL; UINT32 nCpsZRomLen=0; // Z80 Roms
 INT8 *CpsQSam=NULL; UINT32 nCpsQSamLen=0;	// QSound Sample Roms
+UINT32 nCpsQSamMask = 0;
 UINT8 *CpsAd  =NULL; UINT32 nCpsAdLen  =0; // ADPCM Data
 UINT8 *CpsStar=NULL;
 UINT8 *CpsKey=NULL; UINT32 nCpsKeyLen = 0;
@@ -2194,6 +2196,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		}
 
 		cps2_decrypt_game_data();
+		if (Cps2Plus && CpsCode == NULL) return 1;
 
 //		if (!nCpsCodeLen) return 1;
 	} else {
@@ -2201,6 +2204,8 @@ static INT32 CpsGetROMs(bool bLoad)
 		if (nGfxMaxSize != ~0U) {
 			nCpsGfxLen = nGfxNum * nGfxMaxSize;
 		}
+		// Unpopulated sockets still decode within the board's 64 MiB graphics region.
+		if (Cps2Plus) nCpsGfxLen = 0x4000000;
 		
 #if 1 && defined FBNEO_DEBUG
 		if (!nCpsCodeLen) {
@@ -2333,6 +2338,68 @@ INT32 Cps2Init()
 	return CpsRunInit();
 }
 
+// Validate the expanded board before the common CPS2 loader allocates or decodes ROMs.
+static INT32 Cps2PlusCheckROMs(UINT32 nSampleMask)
+{
+	UINT32 nSize[16] = { 0 };
+	UINT32 nGfxLane = 0, nGfxSize = 0;
+	struct BurnRomInfo ri;
+
+	for (INT32 i = 0; !BurnDrvGetRomInfo(&ri, i); i++) {
+		if (!ri.nLen) continue;
+		UINT32 nType = ri.nType & 0x0f;
+		if ((nGfxLane & 3) && nType != CPS2_GFX) return 1;
+		UINT32 nLimit;
+		switch (nType) {
+			case CPS2_PRG_68K:        nLimit = 0x800000; break;
+			case CPS2_GFX:            nLimit = 0x4000000; break;
+			case CPS2_PRG_Z80:        nLimit = 0x80000; break;
+			case CPS2_QSND:           nLimit = 0x2000000; break;
+			case CPS2_ENCRYPTION_KEY: nLimit = 0x14; break;
+			default: return 1;
+		}
+		if (ri.nLen > nLimit - nSize[nType]) return 1;
+		if ((nType == CPS2_PRG_68K || nType == CPS2_QSND) && (ri.nLen & 1)) return 1;
+		if (nType == CPS2_ENCRYPTION_KEY && ri.nLen != 0x14) return 1;
+		if (nType == CPS2_GFX) {
+			if ((nGfxLane & 3) == 0) {
+				// The common loader packs smaller graphics groups after larger ones.
+				if (nGfxSize && ri.nLen > nGfxSize) return 1;
+				nGfxSize = ri.nLen;
+			}
+			if (ri.nLen < 0x80000 || (ri.nLen & 0x7ffff) || ri.nLen != nGfxSize) return 1;
+			nGfxLane++;
+		}
+		nSize[nType] += ri.nLen;
+	}
+
+	if (nSize[CPS2_PRG_68K] != 0x800000 || nSize[CPS2_GFX] < 0x2000000 ||
+		(nSize[CPS2_PRG_Z80] != 0x40000 && nSize[CPS2_PRG_Z80] != 0x80000) ||
+		nSize[CPS2_ENCRYPTION_KEY] != 0x14 || (nGfxLane & 3)) return 1;
+	UINT32 nSamples = nSize[CPS2_QSND];
+	if (nSamples != 0x800000 && nSamples != 0x1000000 && nSamples != 0x2000000) return 1;
+	return nSamples <= nSampleMask;
+}
+
+INT32 Cps2PlusInit(INT32 nSampleBits)
+{
+	Cps = 2;
+	Cps2Plus = 0;
+	nCpsQSamMask = 0;
+	if (nSampleBits != 23 && nSampleBits != 24 && nSampleBits != 25) return 1;
+
+	UINT32 nSampleMask = (1U << nSampleBits) - 1;
+	if (Cps2PlusCheckROMs(nSampleMask)) return 1;
+
+	Cps2Plus = 1;
+	nCpsQSamMask = nSampleMask;
+	INT32 nRet = Cps2Init();
+	// The frontend calls the driver's exit function after a failed init.
+	// Before decryption, CpsCode still points inside the shared ROM allocation.
+	if (nRet && !nCpsCodeLen) CpsCode = NULL;
+	return nRet;
+}
+
 INT32 CpsExit()
 {
 	if (!(Cps & 1)) {
@@ -2351,6 +2418,7 @@ INT32 CpsExit()
 	nCpsCodeLen = nCpsRomLen = nCpsGfxLen = nCpsZRomLen = nCpsQSamLen = nCpsAdLen = nCpsKeyLen = 0;
 	CpsRom = CpsZRom = CpsAd = CpsStar = NULL;
 	CpsQSam = NULL;
+	nCpsQSamMask = 0;
 	CpsKey = NULL;
 
 	// All Memory is allocated to this (this is the only one we can free)
@@ -2362,6 +2430,7 @@ INT32 CpsExit()
 
 	nCPS68KClockspeed = 0;
 	Cps = 0;
+	Cps2Plus = 0;
 	nCpsNumScanlines = 262;
 
 	nCpsScreenWidth = 384;

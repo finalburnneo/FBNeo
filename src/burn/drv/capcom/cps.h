@@ -23,6 +23,7 @@ extern INT32 Cps;														// 1 = CPS1, 2 = CPS2, 3 = CPS CHanger
 extern INT32 Cps1Qs;
 extern INT32 Cps1DisablePSnd;
 extern INT32 Cps2DisableQSnd;
+extern INT32 Cps2Plus;
 extern INT32 nCPS68KClockspeed;
 extern INT32 nCpsCycles;												// Cycles per frame
 extern INT32 nCpsZ80Cycles;
@@ -31,6 +32,7 @@ extern UINT8 *CpsRom;  extern UINT32 nCpsRomLen;		// Program Rom (as in rom)
 extern UINT8 *CpsCode; extern UINT32 nCpsCodeLen;		// Program Rom (decrypted)
 extern UINT8 *CpsZRom; extern UINT32 nCpsZRomLen;		// Z80 Roms
 extern  INT8 *CpsQSam; extern UINT32 nCpsQSamLen;		// QSound Sample Roms
+extern UINT32 nCpsQSamMask;							// Optional sample decoder mask; 0 uses the ROM size
 extern UINT8 *CpsAd;   extern UINT32 nCpsAdLen;		    // ADPCM Data
 extern UINT8 *CpsKey; extern UINT32 nCpsKeyLen;
 extern UINT32 nCpsGfxScroll[4];								// Offset to Scroll tiles
@@ -38,6 +40,7 @@ extern UINT32 nCpsGfxMask;									// Address mask
 extern UINT8* CpsStar;
 INT32 CpsInit();
 INT32 Cps2Init();
+INT32 Cps2PlusInit(INT32 nSampleBits);
 INT32 CpsExit();
 INT32 CpsLoadTiles(UINT8 *Tile,INT32 nStart);
 INT32 CpsLoadTilesByte(UINT8 *Tile,INT32 nStart);
@@ -188,6 +191,8 @@ extern INT32 bCpsUpdatePalEveryFrame;
 INT32 CpsPalInit();
 INT32 CpsPalExit();
 INT32 CpsPalUpdate(UINT8 *pNewPal);
+INT32 CpsPalVisualScan(INT32 nAction);
+INT32 CpsPalConsumeRestoredCache();
 
 // cps_mem.cpp
 extern UINT8 *CpsRam90;
@@ -198,6 +203,8 @@ extern UINT8 *CpsSaveReg[MAX_RASTER + 1];
 extern UINT8 *CpsSaveFrg[2];
 extern UINT8 *CpsRamFF;
 void CpsMapObjectBanks(INT32 nBank);
+extern UINT8 *Cps2PlusObjExt;
+INT32 CpsVisualScan(INT32 nAction);
 INT32 CpsMemInit();
 INT32 CpsMemExit();
 INT32 CpsAreaScan(INT32 nAction,INT32 *pnMin);
@@ -352,6 +359,7 @@ void QsndSyncZ80();
 INT32 QsndScan(INT32 nAction);
 
 // qs_z.cpp
+void QsndZReset();
 INT32 QsndZInit();
 INT32 QsndZExit();
 INT32 QsndZScan(INT32 nAction);
@@ -420,6 +428,8 @@ extern Cps1ObjGetCallback Cps1ObjGetCallbackFunction;
 typedef INT32 (*Cps1ObjDrawCallback)(INT32, INT32);
 extern Cps1ObjDrawCallback Cps1ObjDrawCallbackFunction;
 
+void CpsObjReset();
+INT32 CpsObjVisualScan(INT32 nAction);
 INT32  CpsObjInit();
 INT32  CpsObjExit();
 INT32  CpsObjGet();
@@ -448,6 +458,14 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy);
 INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy);
 INT32 Cps2Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy);
 INT32 Cps2Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy);
+
+// Shared by the three CPS2 scroll layers, including the row-scroll path.
+inline static INT32 Cps2ScrollAddress(INT32 nAddress, INT32 nAttributes)
+{
+	// The native address wraps before attribute bit 9 selects the upper graphics half.
+	if (Cps2Plus) return (nAddress & 0x1ffffff) | ((nAttributes & 0x200) << 16);
+	return nAddress;
+}
 
 // cpsr.cpp
 extern UINT8 *CpsrBase;						// Tile data base
@@ -571,10 +589,5 @@ void CpsXmvSixExit();
 INT32 CpsXmvSixReset();
 INT32 CpsXmvSixScan(INT32 nAction, INT32* pnMin);
 const UINT8* CpsXmvScroll1Extension();
-// ... and its exact save states (run-ahead, netplay): the display state other games rebuild after a load
-INT32 CpsXmvVisualScan(INT32 nAction);		// cps_mem.cpp
-INT32 CpsObjVisualScan(INT32 nAction);		// cps_obj.cpp
-INT32 CpsPalVisualScan(INT32 nAction);		// cps_pal.cpp
-INT32 CpsPalConsumeRestoredCache();
 
 #endif

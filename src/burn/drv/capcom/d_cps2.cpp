@@ -18358,6 +18358,317 @@ struct BurnDriver BurnDrvCpsVsav2te = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+static INT32 VampireArrangeInit()
+{
+	return Cps2PlusInit(24);
+}
+
+// Vampire Savior Arrange (Hack, English RC3)
+
+static struct BurnRomInfo Vsavs01RomDesc[] = {
+	{ "c71s01.p1",		0x080000, 0x33bd7728, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s01.p2",		0x080000, 0x23d6fc9b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s01.p3",		0x080000, 0xf0dbcf28, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3j.06b",		0x080000, 0x2c4297e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s01.p5",		0x080000, 0x7af80c9c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3j.08a",		0x080000, 0x5773e5c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s01.p7",		0x080000, 0x6428a025, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s01.p8",		0x080000, 0x29316daa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s01.p9",		0x400000, 0xa7e15abc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c71s01.c1",		0x400000, 0x2eb67fcc, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c2",		0x400000, 0xaee349f0, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c3",		0x400000, 0x0e345bb8, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c4",		0x400000, 0x33faf930, CPS2_GFX | BRF_GRA },
+	{ "vm3.14m",		0x400000, 0xc1a28e6c, CPS2_GFX | BRF_GRA },
+	{ "vm3.16m",		0x400000, 0x194a7304, CPS2_GFX | BRF_GRA },
+	{ "vm3.18m",		0x400000, 0xdf9a9f47, CPS2_GFX | BRF_GRA },
+	{ "vm3.20m",		0x400000, 0xc22fc3d9, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c9",		0x200000, 0x8507f41f, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c10",		0x200000, 0x68b94ec0, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c11",		0x200000, 0x8f7e8873, CPS2_GFX | BRF_GRA },
+	{ "c71s01.c12",		0x200000, 0x25f15b49, CPS2_GFX | BRF_GRA },
+
+	{ "c71s01.m1",		0x020000, 0xb866c03c, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vm3.02",		0x020000, 0xcc09faa1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c71s01.m3",		0x040000, 0xc95152a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vm3.11m",		0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
+	{ "vm3.12m",		0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	{ "c71s01.q3",		0x800000, 0xfd3a78ec, CPS2_QSND | BRF_SND },
+
+	{ "vsavj.key",		0x000014, 0x36d28ab8, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vsavs01)
+STD_ROM_FN(Vsavs01)
+
+struct BurnDriver BurnDrvCpsVsavs01 = {
+	"vsavs01", "vsav", NULL, NULL, "2026",
+	"Vampire Savior Arrange (Hack, English RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vsavs01RomInfo, Vsavs01RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	VampireArrangeInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Vampire Savior Arrange (Hack, Japan RC3)
+
+static struct BurnRomInfo Vsavs02RomDesc[] = {
+	{ "c71s02.p1",		0x080000, 0x91599c43, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s02.p2",		0x080000, 0x989cde13, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s02.p3",		0x080000, 0xf0dbcf28, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3j.06b",		0x080000, 0x2c4297e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s02.p5",		0x080000, 0x853d837e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vm3j.08a",		0x080000, 0x5773e5c9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s02.p7",		0x080000, 0x6428a025, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s02.p8",		0x080000, 0x29316daa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c71s02.p9",		0x400000, 0xe2089282, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c71s02.c1",		0x400000, 0x2eb67fcc, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c2",		0x400000, 0xaee349f0, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c3",		0x400000, 0x0e345bb8, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c4",		0x400000, 0x33faf930, CPS2_GFX | BRF_GRA },
+	{ "vm3.14m",		0x400000, 0xc1a28e6c, CPS2_GFX | BRF_GRA },
+	{ "vm3.16m",		0x400000, 0x194a7304, CPS2_GFX | BRF_GRA },
+	{ "vm3.18m",		0x400000, 0xdf9a9f47, CPS2_GFX | BRF_GRA },
+	{ "vm3.20m",		0x400000, 0xc22fc3d9, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c9",		0x200000, 0x8507f41f, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c10",		0x200000, 0x68b94ec0, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c11",		0x200000, 0x8f7e8873, CPS2_GFX | BRF_GRA },
+	{ "c71s02.c12",		0x200000, 0x25f15b49, CPS2_GFX | BRF_GRA },
+
+	{ "c71s02.m1",		0x020000, 0xb866c03c, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vm3.02",		0x020000, 0xcc09faa1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c71s02.m3",		0x040000, 0xc95152a3, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vm3.11m",		0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
+	{ "vm3.12m",		0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	{ "c71s02.q3",		0x800000, 0xfd3a78ec, CPS2_QSND | BRF_SND },
+
+	{ "vsavj.key",		0x000014, 0x36d28ab8, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vsavs02)
+STD_ROM_FN(Vsavs02)
+
+struct BurnDriver BurnDrvCpsVsavs02 = {
+	"vsavs02", "vsav", NULL, NULL, "2026",
+	"Vampire Savior Arrange (Hack, Japan RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vsavs02RomInfo, Vsavs02RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	VampireArrangeInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Vampire Savior 2 Arrange (Hack, English RC3)
+
+static struct BurnRomInfo Vsav2s05RomDesc[] = {
+	{ "c76s05.p1",		0x080000, 0xeeefba15, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s05.p2",		0x080000, 0xe39be4dc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s05.p3",		0x080000, 0x5fbed75f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s05.p4",		0x080000, 0x253b76ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.07",		0x080000, 0x8f885809, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s05.p6",		0x080000, 0x4e1b8eae, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.09",		0x080000, 0xfac3c217, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s05.p8",		0x080000, 0x1e8a3df5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s05.p9",		0x400000, 0xd524fdaa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c76s05.c1",		0x400000, 0xb0c5665b, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c2",		0x400000, 0xc5b6049f, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c3",		0x400000, 0xa6448812, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c4",		0x400000, 0x84067f87, CPS2_GFX | BRF_GRA },
+	{ "vs2.14m",		0x400000, 0xcd09bd63, CPS2_GFX | BRF_GRA },
+	{ "vs2.16m",		0x400000, 0xe0182c15, CPS2_GFX | BRF_GRA },
+	{ "vs2.18m",		0x400000, 0x778dc4f6, CPS2_GFX | BRF_GRA },
+	{ "vs2.20m",		0x400000, 0x605d9d1d, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c9",		0x400000, 0xa45e1119, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c10",		0x400000, 0x8b6832d1, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c11",		0x400000, 0x58cacc2f, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c12",		0x400000, 0x3d1408fe, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c13",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c14",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c15",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+	{ "c76s05.c16",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+
+	{ "c76s05.m1",		0x020000, 0x880f16d1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vs2.02",		0x020000, 0xc32dba09, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vs2.11m",		0x400000, 0xd67e47b7, CPS2_QSND | BRF_SND },
+	{ "vs2.12m",		0x400000, 0x6d020a14, CPS2_QSND | BRF_SND },
+	{ "c76s05.q3",		0x800000, 0xeb50211e, CPS2_QSND | BRF_SND },
+
+	{ "vsav2.key",		0x000014, 0x289028ce, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vsav2s05)
+STD_ROM_FN(Vsav2s05)
+
+struct BurnDriver BurnDrvCpsVsav2s05 = {
+	"vsav2s05", "vsav2", NULL, NULL, "2026",
+	"Vampire Savior 2 Arrange (Hack, English RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vsav2s05RomInfo, Vsav2s05RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	VampireArrangeInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Vampire Savior 2 Arrange (Hack, Japan RC3)
+
+static struct BurnRomInfo Vsav2s06RomDesc[] = {
+	{ "c76s06.p1",		0x080000, 0x300870ae, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s06.p2",		0x080000, 0xcfe4a7b2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s06.p3",		0x080000, 0x5fbed75f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s06.p4",		0x080000, 0x253b76ef, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.07",		0x080000, 0x8f885809, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s06.p6",		0x080000, 0x7bc795c2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "vs2j.09",		0x080000, 0xfac3c217, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s06.p8",		0x080000, 0x1e8a3df5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c76s06.p9",		0x400000, 0x1421c60b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c76s06.c1",		0x400000, 0xb7751dee, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c2",		0x400000, 0xa6dcea63, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c3",		0x400000, 0x968eeeb0, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c4",		0x400000, 0x591944a1, CPS2_GFX | BRF_GRA },
+	{ "vs2.14m",		0x400000, 0xcd09bd63, CPS2_GFX | BRF_GRA },
+	{ "vs2.16m",		0x400000, 0xe0182c15, CPS2_GFX | BRF_GRA },
+	{ "vs2.18m",		0x400000, 0x778dc4f6, CPS2_GFX | BRF_GRA },
+	{ "vs2.20m",		0x400000, 0x605d9d1d, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c9",		0x400000, 0xa45e1119, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c10",		0x400000, 0x8b6832d1, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c11",		0x400000, 0x58cacc2f, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c12",		0x400000, 0x3d1408fe, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c13",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c14",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c15",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+	{ "c76s06.c16",		0x400000, 0x7d5b6975, CPS2_GFX | BRF_GRA },
+
+	{ "c76s06.m1",		0x020000, 0x880f16d1, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "vs2.02",		0x020000, 0xc32dba09, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vs2.11m",		0x400000, 0xd67e47b7, CPS2_QSND | BRF_SND },
+	{ "vs2.12m",		0x400000, 0x6d020a14, CPS2_QSND | BRF_SND },
+	{ "c76s06.q3",		0x800000, 0xeb50211e, CPS2_QSND | BRF_SND },
+
+	{ "vsav2.key",		0x000014, 0x289028ce, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vsav2s06)
+STD_ROM_FN(Vsav2s06)
+
+struct BurnDriver BurnDrvCpsVsav2s06 = {
+	"vsav2s06", "vsav2", NULL, NULL, "2026",
+	"Vampire Savior 2 Arrange (Hack, Japan RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vsav2s06RomInfo, Vsav2s06RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	VampireArrangeInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Night Warriors 2 Arrange (Hack, English RC3)
+
+static struct BurnRomInfo Vhunt2s02RomDesc[] = {
+	{ "c75s02.p1",		0x080000, 0x9354e632, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p2",		0x080000, 0x7f10f35e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p3",		0x080000, 0x87edf306, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p4",		0x080000, 0x94118a84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p5",		0x080000, 0xa324ffeb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p6",		0x080000, 0x17b37f5a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p7",		0x080000, 0xf3159a3a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p8",		0x080000, 0xecd2d939, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s02.p9",		0x400000, 0x673d43b1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c75s02.c1",		0x400000, 0x82e825c6, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c2",		0x400000, 0x678feab2, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c3",		0x400000, 0xb9e1cbf8, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c4",		0x400000, 0x68d603b4, CPS2_GFX | BRF_GRA },
+	{ "vh2.14m",		0x400000, 0xcd09bd63, CPS2_GFX | BRF_GRA },
+	{ "vh2.16m",		0x400000, 0xe0182c15, CPS2_GFX | BRF_GRA },
+	{ "vh2.18m",		0x400000, 0x778dc4f6, CPS2_GFX | BRF_GRA },
+	{ "vh2.20m",		0x400000, 0x605d9d1d, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c9",		0x200000, 0xd7d4fecc, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c10",		0x200000, 0x95c0d576, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c11",		0x200000, 0x66a27497, CPS2_GFX | BRF_GRA },
+	{ "c75s02.c12",		0x200000, 0x958494ec, CPS2_GFX | BRF_GRA },
+
+	{ "c75s02.m1",		0x020000, 0xf6088d87, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c75s02.m2",		0x020000, 0x7c4fae46, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c75s02.m3",		0x040000, 0x04ef903d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vh2.11m",		0x400000, 0x38922efd, CPS2_QSND | BRF_SND },
+	{ "vh2.12m",		0x400000, 0x6e2430af, CPS2_QSND | BRF_SND },
+	{ "c75s02.q3",		0x800000, 0x24813909, CPS2_QSND | BRF_SND },
+
+	{ "vhunt2.key",		0x000014, 0x61306b20, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vhunt2s02)
+STD_ROM_FN(Vhunt2s02)
+
+struct BurnDriver BurnDrvCpsVhunt2s02 = {
+	"vhunt2s02", "vhunt2", NULL, NULL, "2026",
+	"Night Warriors 2 Arrange (Hack, English RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vhunt2s02RomInfo, Vhunt2s02RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	VampireArrangeInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Vampire Hunter 2 Arrange (Hack, Japan RC3)
+
+static struct BurnRomInfo Vhunt2s03RomDesc[] = {
+	{ "c75s03.p1",		0x080000, 0x7797e2a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p2",		0x080000, 0xc0703475, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p3",		0x080000, 0x87edf306, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p4",		0x080000, 0x94118a84, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p5",		0x080000, 0xa324ffeb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p6",		0x080000, 0x79dbd15c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p7",		0x080000, 0xf3159a3a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p8",		0x080000, 0xecd2d939, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "c75s03.p9",		0x400000, 0x2d91d6a5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "c75s03.c1",		0x400000, 0x6a3d7b6a, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c2",		0x400000, 0xebcb10da, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c3",		0x400000, 0xda8cfcd4, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c4",		0x400000, 0x108fd9e0, CPS2_GFX | BRF_GRA },
+	{ "vh2.14m",		0x400000, 0xcd09bd63, CPS2_GFX | BRF_GRA },
+	{ "vh2.16m",		0x400000, 0xe0182c15, CPS2_GFX | BRF_GRA },
+	{ "vh2.18m",		0x400000, 0x778dc4f6, CPS2_GFX | BRF_GRA },
+	{ "vh2.20m",		0x400000, 0x605d9d1d, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c9",		0x200000, 0x069fd6cc, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c10",		0x200000, 0xdfde0582, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c11",		0x200000, 0x2438f71b, CPS2_GFX | BRF_GRA },
+	{ "c75s03.c12",		0x200000, 0xdf587c66, CPS2_GFX | BRF_GRA },
+
+	{ "c75s03.m1",		0x020000, 0xf6088d87, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c75s03.m2",		0x020000, 0x7c4fae46, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "c75s03.m3",		0x040000, 0x04ef903d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "vh2.11m",		0x400000, 0x38922efd, CPS2_QSND | BRF_SND },
+	{ "vh2.12m",		0x400000, 0x6e2430af, CPS2_QSND | BRF_SND },
+	{ "c75s03.q3",		0x800000, 0x24813909, CPS2_QSND | BRF_SND },
+
+	{ "vhunt2.key",		0x000014, 0x61306b20, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Vhunt2s03)
+STD_ROM_FN(Vhunt2s03)
+
+struct BurnDriver BurnDrvCpsVhunt2s03 = {
+	"vhunt2s03", "vhunt2", NULL, NULL, "2026",
+	"Vampire Hunter 2 Arrange (Hack, Japan RC3)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_DSTLK,
+	NULL, Vhunt2s03RomInfo, Vhunt2s03RomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	VampireArrangeInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Ultra Street Fighter II: The Final Challengers (USA, Backport RC3)
 // 2026-10-21
 static struct BurnRomInfo Usf2tRomDesc[] = {

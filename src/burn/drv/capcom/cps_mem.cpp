@@ -14,6 +14,7 @@ static UINT8 *CpsSaveRegData = NULL;
 static UINT8 *CpsSaveFrgData = NULL;
 UINT8 *CpsRam660=NULL,*CpsRam708=NULL,*CpsReg=NULL,*CpsFrg=NULL;
 UINT8 *CpsRamFF=NULL;
+UINT8 *Cps2PlusObjExt=NULL;
 
 CpsMemScanCallback CpsMemScanCallbackFunction = NULL;
 
@@ -37,6 +38,9 @@ static INT32 CpsMemIndex()
 	if (Cps == 2) {
 		CpsRam660 = Next; Next += 0x004000;							// Extra Memory
 		CpsRam708 = Next; Next += 0x010000;							// Obj Ram
+		if (Cps2Plus) {
+			Cps2PlusObjExt = Next; Next += 0x800;              // Object graphics bank bits
+		}
 		CpsFrg    = Next; Next += 0x000010;							// 'Four' Registers (Registers at 0x400000)
 
 		ZBuf      = (UINT16*)Next; Next += nCpsScreenWidth * nCpsScreenHeight * 2;	// Sprite Masking Z buffer
@@ -82,10 +86,50 @@ static INT32 AllocateMemory()
 	return 0;
 }
 
+static UINT32 Cps2PlusObjectOffset(UINT32 a)
+{
+	// A15 and the bank register choose physical RAM; A13 and A14 mirror its entries.
+	return (((a >> 15) ^ nCpsObjectBank) & 1) * 0x8000 + (a & 0x1fff);
+}
+
+static UINT8 __fastcall Cps2PlusObjectReadByte(UINT32 a)
+{
+	return CpsRam708[Cps2PlusObjectOffset(a) ^ 1];
+}
+
+static UINT16 __fastcall Cps2PlusObjectReadWord(UINT32 a)
+{
+	return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CpsRam708 + Cps2PlusObjectOffset(a)));
+}
+
+static void Cps2PlusObjectWrite(UINT32 a)
+{
+	// A14 is a write selector, not an extra address line in object RAM.
+	UINT32 nOffset = Cps2PlusObjectOffset(a);
+	Cps2PlusObjExt[(nOffset >> 15) * 0x400 + ((a & 0x1fff) >> 3)] = (a >> 14) & 1;
+}
+
+static void __fastcall Cps2PlusObjectWriteByte(UINT32 a, UINT8 d)
+{
+	CpsRam708[Cps2PlusObjectOffset(a) ^ 1] = d;
+	Cps2PlusObjectWrite(a);
+}
+
+static void __fastcall Cps2PlusObjectWriteWord(UINT32 a, UINT16 d)
+{
+	*(UINT16*)(CpsRam708 + Cps2PlusObjectOffset(a)) = BURN_ENDIAN_SWAP_INT16(d);
+	Cps2PlusObjectWrite(a);
+}
+
 // Map the correct bank of obj memory to the 68000 address space (including mirrors).
 void CpsDoMapObjectBanks(INT32 nBank)
 {
 	nCpsObjectBank = nBank;
+
+	if (Cps2Plus) {
+		// The object handlers use nCpsObjectBank directly.
+		return;
+	}
 
 	if (nCpsObjectBank) {
 		SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, MAP_RAM);
@@ -370,19 +414,29 @@ INT32 CpsMemInit()
 
 	// Map in memory:
 	// 68000 Rom (as seen as is, through read)
-	SekMapMemory(CpsRom, 0, nCpsRomLen - 1, MAP_READ);
+	UINT32 nRomMapLen = Cps2Plus ? 0x400000 : nCpsRomLen;
+	SekMapMemory(CpsRom, 0, nRomMapLen - 1, MAP_READ);
 
 	// 68000 Rom (as seen decrypted, through fetch)
 	if (nCpsCodeLen > 0) {
 		// Decoded part (up to nCpsCodeLen)
 		SekMapMemory(CpsCode, 0, nCpsCodeLen - 1, MAP_FETCH);
 	}
-	if (nCpsRomLen > nCpsCodeLen) {
-		// The rest (up to nCpsRomLen)
-		SekMapMemory(CpsRom + nCpsCodeLen, nCpsCodeLen, nCpsRomLen - 1, MAP_FETCH);
+	if (nRomMapLen > nCpsCodeLen) {
+		// The remaining program data is fetched without decryption.
+		SekMapMemory(CpsRom + nCpsCodeLen, nCpsCodeLen, nRomMapLen - 1, MAP_FETCH);
 	}
 
 	if (Cps == 2) {
+		if (Cps2Plus) {
+			SekMapMemory(CpsRom + 0x400000, 0xa00000, 0xdfffff, MAP_ROM);
+			SekMapHandler(4, 0x700000, 0x70ffff, MAP_RAM);
+			SekSetReadByteHandler(4, Cps2PlusObjectReadByte);
+			SekSetReadWordHandler(4, Cps2PlusObjectReadWord);
+			SekSetWriteByteHandler(4, Cps2PlusObjectWriteByte);
+			SekSetWriteWordHandler(4, Cps2PlusObjectWriteWord);
+		}
+
 		nCpsObjectBank = -1;
 		CpsMapObjectBanks(0);
 
@@ -456,6 +510,7 @@ INT32 CpsMemExit()
 	BurnFree(CpsMem);
 	
 	CpsMemScanCallbackFunction = NULL;
+	Cps2PlusObjExt = NULL;
 
 	return 0;
 }
@@ -541,6 +596,18 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(nCps1LayerOffs);
 		}
 
+		if (Cps2Plus) {
+			ba.Data = Cps2PlusObjExt;
+			ba.nLen = 0x800;
+			ba.szName = "CPS2+ object banks";
+			BurnAcb(&ba);
+			if (nAction & ACB_WRITE) {
+				for (INT32 i = 0; i < 0x800; i++) {
+					if (Cps2PlusObjExt[i] > 1) return 1;
+				}
+			}
+		}
+
 		CpsRwScan();									// scan cps_rw.cpp stuff
 
 		if (Cps2Turbo) {
@@ -568,20 +635,26 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		CpsMemScanCallbackFunction(nAction, pnMin);
 	}
 	
+	if (Cps2Plus) return CpsVisualScan(nAction);
 	return 0;
 }
 
-// xmvsf3v3: the display state other games rebuild after a load (latched palette, registers and
-// 'four' registers, sprite lag buffers), so its states restore exactly, a paused redraw included
-INT32 CpsXmvVisualScan(INT32 nAction)
+// Preserve latched display state so a paused redraw does not read the next frame's RAM.
+INT32 CpsVisualScan(INT32 nAction)
 {
-	if (!CpsXmvSixEnabled || !(nAction & ACB_DRIVER_DATA)) return 0;
+	if ((!Cps2Plus && !CpsXmvSixEnabled) || !(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));
-	ba.Data = CpsSavePal;		ba.nLen = 0x2000;								ba.szName = "XMvsSF 3v3 latched palette";	BurnAcb(&ba);
-	ba.Data = CpsSaveRegData;	ba.nLen = 0x100 * (MAX_RASTER + 1);				ba.szName = "XMvsSF 3v3 latched registers";	BurnAcb(&ba);
-	ba.Data = CpsSaveFrgData;	ba.nLen = 0x20;									ba.szName = "XMvsSF 3v3 latched frg";		BurnAcb(&ba);
+	ba.Data = CpsSavePal;		ba.nLen = 0x2000;								ba.szName = "Latched palette";
+	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 latched palette";
+	BurnAcb(&ba);
+	ba.Data = CpsSaveRegData;	ba.nLen = 0x100 * (MAX_RASTER + 1);				ba.szName = "Latched registers";
+	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 latched registers";
+	BurnAcb(&ba);
+	ba.Data = CpsSaveFrgData;	ba.nLen = 0x20;									ba.szName = "Latched frg";
+	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 latched frg";
+	BurnAcb(&ba);
 
 	if (CpsObjVisualScan(nAction)) return 1;
 

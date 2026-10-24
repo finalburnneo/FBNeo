@@ -51,7 +51,8 @@ void __fastcall QsndZWrite(UINT16 a, UINT8 d)
 		return;
 	}
 	if (a == 0xd003) {
-		INT32 nNewBank = d & 0x0f;
+		INT32 nNewBank = d & ((Cps2Plus && nCpsZRomLen == 0x80000) ? 0x1f : 0x0f);
+		if (Cps2Plus && nCpsZRomLen == 0x80000 && nNewBank >= 30) nNewBank = 0;
 		if (nQsndZBank != nNewBank) {
 			nQsndZBank = nNewBank;
 			QsndZBankMap();
@@ -62,7 +63,8 @@ void __fastcall QsndZWrite(UINT16 a, UINT8 d)
 UINT8 __fastcall QsndZRead(UINT16 a)
 {
 	if (a == 0xd007) {						// DSP status
-		return QscRead();
+		UINT8 nStatus = QscRead();
+		return (Cps2Plus && nCpsZRomLen == 0x80000) ? (nStatus & 0x80) | 0x60 | nQsndZBank : nStatus;
 	}
 	return 0;
 }
@@ -117,6 +119,13 @@ INT32 QsndZInit()
 	QscCmd[0] = QscCmd[1] = 0;
 
 	return 0;
+}
+
+void QsndZReset()
+{
+	nQsndZBank = 0;
+	QsndZBankMap();
+	QscCmd[0] = QscCmd[1] = 0;
 }
 
 INT32 QsndZExit()

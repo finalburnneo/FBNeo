@@ -642,7 +642,7 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 // Preserve latched display state so a paused redraw does not read the next frame's RAM.
 INT32 CpsVisualScan(INT32 nAction)
 {
-	if (!(nAction & ACB_DRIVER_DATA)) return 0;
+	if ((!Cps2Plus && !CpsXmvSixEnabled) || !(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));

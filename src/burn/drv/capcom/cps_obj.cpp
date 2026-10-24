@@ -942,7 +942,7 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 // depend on which frames were drawn. Each frame starts above the old Z values.
 INT32 CpsObjVisualScan(INT32 nAction)
 {
-	if (!(nAction & ACB_DRIVER_DATA)) return 0;
+	if ((!Cps2Plus && !CpsXmvSixEnabled) || !(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));

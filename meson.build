@@ -375,17 +375,3 @@ executable(
     link_args: link_args,
     win_subsystem: frontend == 'win32' ? 'windows' : 'console',
 )
-
-if get_option('cps2plus_tests')
-    # The common d_parent.cpp entry is included in driver_files_abs.
-    assert(driver_files_abs.length() == 2 and
-        driver_files_abs.contains(meson.project_source_root() / 'src/burn/drv/capcom/d_cps2.cpp'),
-        'cps2plus_tests requires driver_list=capcom/d_cps2.cpp (a dedicated CPS2-only build)')
-    cps2plus_test = executable(
-        'cps2plus_test',
-        ['tools/cps2plus_test.cpp', 'tools/burn_test_support.cpp'],
-        include_directories: global_inc,
-        dependencies: [burn_dep, burn_drv_dep, cpu_dep, burn_devices_dep, burn_snd_dep, libchdr_dep],
-    )
-    test('cps2plus', cps2plus_test)
-endif

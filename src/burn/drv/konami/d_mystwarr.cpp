@@ -2505,9 +2505,9 @@ static void GaiapolisRozTilemapdraw()
 		INT32 color = 0;
 
 		if (offs & 1)
-			color = dat1[offs>>1]&0xf;
+			color = (dat1[offs>>1]>>4)&0xf;
 		else
-			color = dat1[offs>>1]>>4;
+			color = dat1[offs>>1]&0xf;
 
 		if (dat2[offs] & 0x80) color |= 0x10;
 

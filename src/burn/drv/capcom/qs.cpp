@@ -21,18 +21,9 @@ INT32 QsndInit()
 	}
 	BurnTimerInit(qsndTimerOver, NULL);
 
-	if (Cps1Qs == 1) {
-		nCpsZ80Cycles = 8000000 * 100 / nBurnFPS;
-		BurnTimerAttachZet(8000000);
-	} else {
-		if (Cps2Turbo) {
-			nCpsZ80Cycles = 16000000 * 100 / nBurnFPS;
-			BurnTimerAttachZet(16000000);
-		} else {
-			nCpsZ80Cycles = 8000000 * 100 / nBurnFPS;
-			BurnTimerAttachZet(8000000);
-		}
-	}
+	INT32 nClock = (Cps1Qs == 1) ? 8000000 : nQsndZ80Clock;
+	nCpsZ80Cycles = nClock * 100 / nBurnFPS;
+	BurnTimerAttachZet(nClock);
 
 	if (nBurnSoundRate >= 0) {
 		nRate = nBurnSoundRate;
@@ -53,10 +44,6 @@ void QsndSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 void QsndReset()
 {
 	ZetOpen(0);
-	if (Cps2Plus) {
-		QsndZReset();
-		QscReset();
-	}
 	BurnTimerReset();
 	BurnTimerSetRetrig(0, 1.0 / 252.0);
 	ZetClose();
@@ -70,11 +57,11 @@ void QsndExit()
 	QsndZExit();
 }
 
-INT32 QsndScan(INT32 nAction)
+INT32 QsndScan(INT32 nAction, INT32 bScanHistory)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		QsndZScan(nAction);				// Scan Z80
-		QscScan(nAction);				// Scan QSound Chip
+		QscScan(nAction, bScanHistory);				// Scan QSound Chip
 
 		BurnTimerScan(nAction, NULL);
 		SCAN_VAR(nQsndCyclesExtra);
@@ -97,9 +84,6 @@ void QsndEndFrame()
 {
 	BurnTimerEndFrame(nCpsZ80Cycles);
 	if (pBurnSoundOut) QscUpdate(nBurnSoundLen);
-	if (Cps2Turbo && pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-	}
 
 	nQsndCyclesExtra = ZetTotalCycles() - nCpsZ80Cycles;
 	ZetClose();

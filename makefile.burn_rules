@@ -14,7 +14,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_atarisy1.o d_atarisy2.o d_badl
 			\
 			d_cps1.o d_mitchell.o \
 			\
-			d_cps2.o \
+			d_cps2.o d_cps2_custom.o \
 			\
 			d_cps3.o \
 			\

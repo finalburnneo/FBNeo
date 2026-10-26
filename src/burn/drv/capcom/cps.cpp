@@ -5,7 +5,6 @@ INT32 Cps = 0;							// 1 = CPS1, 2 = CPS2, 3 = CPS Changer
 INT32 Cps1Qs = 0;
 INT32 Cps1DisablePSnd = 0;				// Disables the Z80 as well
 INT32 Cps2DisableQSnd = 0;				// Disables the Z80 as well
-INT32 Cps2Plus = 0;
 
 INT32 nCPS68KClockspeed = 0;
 INT32 nCpsCycles = 0;						// 68K Cycles per frame
@@ -17,6 +16,7 @@ UINT8 *CpsCode=NULL; UINT32 nCpsCodeLen=0; // Program Rom (decrypted)
 UINT8 *CpsZRom=NULL; UINT32 nCpsZRomLen=0; // Z80 Roms
 INT8 *CpsQSam=NULL; UINT32 nCpsQSamLen=0;	// QSound Sample Roms
 UINT32 nCpsQSamMask = 0;
+UINT32 nCpsRomMapLen = 0;
 UINT8 *CpsAd  =NULL; UINT32 nCpsAdLen  =0; // ADPCM Data
 UINT8 *CpsStar=NULL;
 UINT8 *CpsKey=NULL; UINT32 nCpsKeyLen = 0;
@@ -1780,23 +1780,7 @@ INT32 Cps2LoadTiles(UINT8* Tile, INT32 nStart)
 	return 0;
 }
 
-#if 0
-"usual cps2":
-rom0 12
-rom1 34
-rom2 56
-rom3 78
-
-"interleaved (zero800/cps2turbo)"
-rom 12345678
-
-    12      12      12      12
-      34      34      34      34
-        56      56      56      56
-          78      78      78      78
-(visualization helper)
-#endif
-
+// Four interleaved ROM lanes in one source image.
 #define BLOCK_MOD 4
 
 inline static void Cps2LoadBlockInterleaved(UINT8* Tile, UINT8* Sect, INT32 nShift)
@@ -1857,19 +1841,6 @@ INT32 Cps2LoadTilesInterleaved(UINT8 *Tile, UINT8 *pSrc, UINT32 nSize)
 }
 
 #undef BLOCK_MOD
-
-INT32 Cps2LoadTilesTurbo(UINT8* Tile, INT32 nSize) // cps2turbo
-{
-	UINT8 *Rom = (UINT8*)BurnMalloc(nSize);
-	memcpy(Rom, Tile, nSize);
-	memset(Tile, 0, nSize);
-
-	Cps2LoadTilesInterleaved(Tile, Rom, nSize);
-
-	BurnFree(Rom);
-
-	return 0;
-}
 
 INT32 Cps2LoadTilesSplit4(UINT8* Tile, INT32 nStart)
 {
@@ -1988,7 +1959,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc)
 
 static UINT32 nGfxMaxSize;
 
-static INT32 CpsGetROMs(bool bLoad)
+static INT32 CpsGetROMs(bool bLoad, INT32 bLinear)
 {
 	struct BurnRomInfo ri;
 
@@ -2025,7 +1996,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
 			if (bLoad) {
 				if (BurnLoadRom(CpsRomLoad, i, 1)) return 1;
-				if (Cps2Turbo) BurnByteswap(CpsRomLoad, ri.nLen);
+				if (bLinear) BurnByteswap(CpsRomLoad, ri.nLen);
 				CpsRomLoad += ri.nLen;
 			} else {
 				nCpsRomLen += ri.nLen;
@@ -2054,7 +2025,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_GFX) {
 			if (bLoad) {
-				if (Cps2Turbo) {
+				if (bLinear) {
 					BurnLoadRom(CpsGfxLoad, i, 1);
 
 					CpsGfxLoad += ri.nLen;
@@ -2144,7 +2115,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		if ((ri.nType & 0x0f) == CPS2_QSND) {
 			if (bLoad) {
 				BurnLoadRom(CpsQSamLoad, i, 1);
-				if (Cps2Turbo == 0) {
+				if (!bLinear) {
 					BurnByteswap(CpsQSamLoad, ri.nLen);
 				}
 				CpsQSamLoad += ri.nLen;
@@ -2191,12 +2162,8 @@ static INT32 CpsGetROMs(bool bLoad)
 			((UINT32*)CpsCode)[i] ^= ((UINT32*)CpsRom)[i];
 		}
 #endif
-		if (Cps2Turbo) {
-			Cps2LoadTilesTurbo(CpsGfx, nCpsGfxLen);
-		}
-
 		cps2_decrypt_game_data();
-		if (Cps2Plus && CpsCode == NULL) return 1;
+		if (nCpsCodeLen && CpsCode == NULL) return 1;
 
 //		if (!nCpsCodeLen) return 1;
 	} else {
@@ -2204,8 +2171,6 @@ static INT32 CpsGetROMs(bool bLoad)
 		if (nGfxMaxSize != ~0U) {
 			nCpsGfxLen = nGfxNum * nGfxMaxSize;
 		}
-		// Unpopulated sockets still decode within the board's 64 MiB graphics region.
-		if (Cps2Plus) nCpsGfxLen = 0x4000000;
 		
 #if 1 && defined FBNEO_DEBUG
 		if (!nCpsCodeLen) {
@@ -2256,9 +2221,6 @@ INT32 CpsInit()
 		} else {
 			nCPS68KClockspeed = 10000000;
 		}
-	}
-	if (Cps2Turbo) {
-		nCPS68KClockspeed = 32000000;
 	}
 	nCPS68KClockspeed = (INT64)nCPS68KClockspeed * 100 / nBurnFPS;
 
@@ -2323,81 +2285,28 @@ INT32 CpsInit()
 
 INT32 Cps2Init()
 {
-	Cps = 2;
+	return Cps2Init(0, 0, 0);
+}
 
-	if (CpsGetROMs(false)) {
+INT32 Cps2Init(INT32 nMapLen, UINT32 nGfxSize, INT32 bLinear)
+{
+	Cps = 2;
+	nCpsRomMapLen = nMapLen;
+
+	if (CpsGetROMs(false, bLinear)) {
 		return 1;
 	}
 
-	CpsInit();
+	if (nGfxSize) nCpsGfxLen = nGfxSize;
+	if (CpsInit()) return 1;
 
-	if (CpsGetROMs(true)) {
+	if (CpsGetROMs(true, bLinear)) {
+		// Before decryption, CpsCode aliases the shared ROM allocation.
+		if (!nCpsCodeLen) CpsCode = NULL;
 		return 1;
 	}
 
 	return CpsRunInit();
-}
-
-// Validate the expanded board before the common CPS2 loader allocates or decodes ROMs.
-static INT32 Cps2PlusCheckROMs(UINT32 nSampleMask)
-{
-	UINT32 nSize[16] = { 0 };
-	UINT32 nGfxLane = 0, nGfxSize = 0;
-	struct BurnRomInfo ri;
-
-	for (INT32 i = 0; !BurnDrvGetRomInfo(&ri, i); i++) {
-		if (!ri.nLen) continue;
-		UINT32 nType = ri.nType & 0x0f;
-		if ((nGfxLane & 3) && nType != CPS2_GFX) return 1;
-		UINT32 nLimit;
-		switch (nType) {
-			case CPS2_PRG_68K:        nLimit = 0x800000; break;
-			case CPS2_GFX:            nLimit = 0x4000000; break;
-			case CPS2_PRG_Z80:        nLimit = 0x80000; break;
-			case CPS2_QSND:           nLimit = 0x2000000; break;
-			case CPS2_ENCRYPTION_KEY: nLimit = 0x14; break;
-			default: return 1;
-		}
-		if (ri.nLen > nLimit - nSize[nType]) return 1;
-		if ((nType == CPS2_PRG_68K || nType == CPS2_QSND) && (ri.nLen & 1)) return 1;
-		if (nType == CPS2_ENCRYPTION_KEY && ri.nLen != 0x14) return 1;
-		if (nType == CPS2_GFX) {
-			if ((nGfxLane & 3) == 0) {
-				// The common loader packs smaller graphics groups after larger ones.
-				if (nGfxSize && ri.nLen > nGfxSize) return 1;
-				nGfxSize = ri.nLen;
-			}
-			if (ri.nLen < 0x80000 || (ri.nLen & 0x7ffff) || ri.nLen != nGfxSize) return 1;
-			nGfxLane++;
-		}
-		nSize[nType] += ri.nLen;
-	}
-
-	if (nSize[CPS2_PRG_68K] != 0x800000 || nSize[CPS2_GFX] < 0x2000000 ||
-		(nSize[CPS2_PRG_Z80] != 0x40000 && nSize[CPS2_PRG_Z80] != 0x80000) ||
-		nSize[CPS2_ENCRYPTION_KEY] != 0x14 || (nGfxLane & 3)) return 1;
-	UINT32 nSamples = nSize[CPS2_QSND];
-	if (nSamples != 0x800000 && nSamples != 0x1000000 && nSamples != 0x2000000) return 1;
-	return nSamples <= nSampleMask;
-}
-
-INT32 Cps2PlusInit(INT32 nSampleBits)
-{
-	Cps = 2;
-	Cps2Plus = 0;
-	nCpsQSamMask = 0;
-	if (nSampleBits != 23 && nSampleBits != 24 && nSampleBits != 25) return 1;
-
-	UINT32 nSampleMask = (1U << nSampleBits) - 1;
-	if (Cps2PlusCheckROMs(nSampleMask)) return 1;
-
-	Cps2Plus = 1;
-	nCpsQSamMask = nSampleMask;
-	INT32 nRet = Cps2Init();
-	// The frontend calls the driver's exit function after a failed init.
-	// Before decryption, CpsCode still points inside the shared ROM allocation.
-	if (nRet && !nCpsCodeLen) CpsCode = NULL;
-	return nRet;
 }
 
 INT32 CpsExit()
@@ -2430,7 +2339,6 @@ INT32 CpsExit()
 
 	nCPS68KClockspeed = 0;
 	Cps = 0;
-	Cps2Plus = 0;
 	nCpsNumScanlines = 262;
 
 	nCpsScreenWidth = 384;
@@ -2438,10 +2346,10 @@ INT32 CpsExit()
 	nCpsGlobalXOffset = 0;
 	nCpsGlobalYOffset = 0;
 
-	if (Cps2Turbo) {
-		BurnSampleExit();
-		Cps2Turbo = 0;
-	}
+	nCpsRomMapLen = 0;
+	CpsDrawPaletteCallbackFunction = NULL;
+	Cps2ScrollCallbackFunction = NULL;
+	Cps2Scroll1CallbackFunction = NULL;
 
 	return 0;
 }

@@ -206,6 +206,9 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2.cpp">
       <Filter>Source Files\burn\drv\capcom</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2_custom.cpp">
+      <Filter>Source Files\burn\drv\capcom</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\kabuki.cpp">
       <Filter>Source Files\burn\drv\capcom</Filter>
     </ClCompile>

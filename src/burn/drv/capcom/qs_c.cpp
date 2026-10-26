@@ -765,7 +765,7 @@ void QscSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	QsndOutputDir[nIndex] = nRouteDir;
 }
 
-INT32 QscScan(INT32 nAction)
+INT32 QscScan(INT32 nAction, INT32 bScanHistory)
 {
 	struct BurnArea ba;
 	char szName[16];
@@ -778,7 +778,7 @@ INT32 QscScan(INT32 nAction)
 	ba.szName	= szName;
 	BurnAcb(&ba);
 
-	if (CpsXmvSixEnabled || Cps2Plus) {
+	if (bScanHistory) {
 		// Preserve resampler history when replaying a saved frame.
 		SCAN_VAR(nDelta);
 		SCAN_VAR(nPos);

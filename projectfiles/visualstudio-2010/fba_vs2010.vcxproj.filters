@@ -1227,6 +1227,9 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2.cpp">
       <Filter>Burn\drv\capcom</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2_custom.cpp">
+      <Filter>Burn\drv\capcom</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\fcrash_snd.cpp">
       <Filter>Burn\drv\capcom</Filter>
     </ClCompile>

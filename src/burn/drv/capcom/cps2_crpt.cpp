@@ -643,10 +643,10 @@ static void cps2_decrypt(const UINT32 *master_key, UINT32 lower_limit, UINT32 up
 	UINT16 *rom = (UINT16 *)CpsRom;
 	UINT32 length = (upper_limit > 0) ? (upper_limit * 2) : nCpsRomLen;
 	if (length > nCpsRomLen) length = nCpsRomLen;
-	if (Cps2Plus && length > 0x400000) length = 0x400000;
+	if (nCpsRomMapLen && length > nCpsRomMapLen) length = nCpsRomMapLen;
+	nCpsCodeLen = length;
 	CpsCode = (UINT8*)BurnMalloc(length);
 	if (CpsCode == NULL) return;
-	nCpsCodeLen = length;
 	UINT16 *dec = (UINT16*)CpsCode;
 
 	INT32 i;

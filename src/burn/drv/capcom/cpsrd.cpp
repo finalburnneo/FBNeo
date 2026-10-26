@@ -77,8 +77,7 @@ static void Cps2TileLine(INT32 y,INT32 sx)
     t = BURN_ENDIAN_SWAP_INT16(pst[0]);
     t<<=7; // Get real tile address
 	a = BURN_ENDIAN_SWAP_INT16(pst[1]);
-    t+=nCpsGfxScroll[2];
-	t = Cps2ScrollAddress(t, a);
+	t = Cps2ScrollAddress(t, a, 2);
 	if (t==nKnowBlank) continue; // Don't draw: we know it's blank
 
     CpstSetPal(0x40 | (a&0x1f));
@@ -187,8 +186,7 @@ static void Cps2TileLineRows(INT32 y,struct CpsrLineInfo *pli)
     t = BURN_ENDIAN_SWAP_INT16(pst[0]);
     t<<=7; // Get real tile address
 	a = BURN_ENDIAN_SWAP_INT16(pst[1]);
-    t+=nCpsGfxScroll[2];
-	t = Cps2ScrollAddress(t, a);
+	t = Cps2ScrollAddress(t, a, 2);
 
     if (t==nKnowBlank) continue; // Don't draw: we know it's blank
 

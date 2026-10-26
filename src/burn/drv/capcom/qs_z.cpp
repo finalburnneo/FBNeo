@@ -1,6 +1,9 @@
 #include "cps.h"
 // QSound - Z80
 
+INT32 nQsndZ80Clock = 8000000;
+INT32 nQsndZBankOffset = 0x8000;
+
 static INT32 nQsndZBank = 0;
 static UINT8 QscCmd[2] = {0, 0};
 
@@ -10,7 +13,7 @@ static INT32 QsndZBankMap()
 	UINT32 nOff;
 	UINT8* Bank;
 	nOff = nQsndZBank << 14;
-	nOff += (Cps2Turbo) ? 0x10000 : 0x8000; // sfz3mix .22 z80 rom stored in mame memmap format (banks start at 0x10000, instead of 0x8000 like fbneo)
+	nOff += nQsndZBankOffset;
 
 	if (Cps1Qs == 0) {
 		if (nOff + 0x4000 > nCpsZRomLen) {			// End of bank is out of range
@@ -51,20 +54,15 @@ void __fastcall QsndZWrite(UINT16 a, UINT8 d)
 		return;
 	}
 	if (a == 0xd003) {
-		INT32 nNewBank = d & ((Cps2Plus && nCpsZRomLen == 0x80000) ? 0x1f : 0x0f);
-		if (Cps2Plus && nCpsZRomLen == 0x80000 && nNewBank >= 30) nNewBank = 0;
-		if (nQsndZBank != nNewBank) {
-			nQsndZBank = nNewBank;
-			QsndZBankMap();
-		}
+		INT32 nNewBank = d & 0x0f;
+		QsndZSetBank(nNewBank);
 	}
 }
 
 UINT8 __fastcall QsndZRead(UINT16 a)
 {
 	if (a == 0xd007) {						// DSP status
-		UINT8 nStatus = QscRead();
-		return (Cps2Plus && nCpsZRomLen == 0x80000) ? (nStatus & 0x80) | 0x60 | nQsndZBank : nStatus;
+		return QscRead();
 	}
 	return 0;
 }
@@ -121,6 +119,19 @@ INT32 QsndZInit()
 	return 0;
 }
 
+void QsndZSetBank(INT32 nBank)
+{
+	if (nQsndZBank != nBank) {
+		nQsndZBank = nBank;
+		QsndZBankMap();
+	}
+}
+
+INT32 QsndZGetBank()
+{
+	return nQsndZBank;
+}
+
 void QsndZReset()
 {
 	nQsndZBank = 0;
@@ -130,6 +141,8 @@ void QsndZReset()
 
 INT32 QsndZExit()
 {
+	nQsndZ80Clock = 8000000;
+	nQsndZBankOffset = 0x8000;
 	ZetExit();
 	return 0;
 }

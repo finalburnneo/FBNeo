@@ -1,8 +1,8 @@
 #include "cps.h"
-#include "xmvsf3v3.h"
 // CPS Objs (sprites)
 
 INT32 nCpsObjectBank;
+INT32 nCpsObjExtraLen = 0;
 INT32 Sfa2ObjHack = 0;
 
 UINT8 *CpsBootlegSpriteRam = NULL;
@@ -12,6 +12,10 @@ INT32 Cps1DetectEndSpriteList8000 = 0;
 
 Cps1ObjGetCallback Cps1ObjGetCallbackFunction = NULL;
 Cps1ObjDrawCallback Cps1ObjDrawCallbackFunction = NULL;
+Cps2ObjGetCallback Cps2ObjGetCallbackFunction = NULL;
+Cps2ObjTileCallback Cps2ObjTileCallbackFunction = NULL;
+Cps2ObjPaletteCallback Cps2ObjPaletteCallbackFunction = NULL;
+INT32 bCpsUseParentBlend = 1;
 
 // Our copy of the sprite table
 static UINT8 *ObjMem = NULL;
@@ -29,7 +33,7 @@ static INT32 nZOffset;
 struct ObjFrame {
 	INT32 nShiftX, nShiftY;
 	UINT8* Obj;
-	UINT8* GfxBank;
+	UINT8* Extra;
 	INT32 nCount;
 };
 
@@ -37,10 +41,12 @@ static INT32 nFrameCount = 0;
 static struct ObjFrame of[3];
 
 static UINT8 *blendtable;
+static UINT32 nBlendCount;
 
 static void CpsBlendInit()
 {
 	blendtable = NULL;
+	nBlendCount = 0;
 
 	TCHAR filename[MAX_PATH];
 
@@ -48,12 +54,8 @@ static void CpsBlendInit()
 
 	FILE *fa = _tfopen(filename, _T("rt"));
 
-	INT32 is_sfz3mix = strstr("sfz3mix", BurnDrvGetTextA(DRV_NAME)) != NULL;
-
 	if (fa == NULL) {
-		if (is_sfz3mix) {
-			// for sfz3mix, don't use parent's blend table. sfz3mix uses different
-			// sprite indexing
+		if (!bCpsUseParentBlend) {
 			return;
 		}
 
@@ -68,7 +70,9 @@ static void CpsBlendInit()
 
 	bprintf (PRINT_IMPORTANT, _T("Using sprite blending (.bld) table!\n"));
 
-	INT32 nBlendCount = Cps2Plus ? 0x80000 : 0x40000;
+	// One entry per 16x16 tile; retain the native range for mirrored tile addresses.
+	nBlendCount = (nCpsGfxMask + 1) >> 7;
+	if (nBlendCount < 0x40000) nBlendCount = 0x40000;
 	blendtable = (UINT8*)BurnMalloc(nBlendCount);
 	if (blendtable == NULL) {
 		fclose(fa);
@@ -104,7 +108,7 @@ static void CpsBlendInit()
 		}
 
 		for (k = min; k <= max; k++) {
-			if (k < (UINT32)nBlendCount)
+			if (k < nBlendCount)
 				blendtable[k] = table[type&3];
 		}
 	}
@@ -125,21 +129,17 @@ INT32 CpsObjInit()
 	nFrameCount = 2;			// CPS2 sprites lagged by 1 frame and double buffered
 								// CPS1 sprites lagged by 1 frame
 
-	nObjMemLen = ((nMax << 3) + (Cps2Plus ? nMax : 0)) * nFrameCount;
+	nObjMemLen = ((nMax << 3) + nCpsObjExtraLen) * nFrameCount;
 	ObjMem = (UINT8*)BurnMalloc(nObjMemLen);
 	if (ObjMem == NULL) {
 		return 1;
 	}
 
-	// Initialize the buffers included in exact frame replay states.
-	if (CpsXmvSixEnabled || Cps2Plus) memset(ObjMem, 0, nObjMemLen);
-
 	// Set up the frame buffers
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		of[i].Obj = ObjMem + (nMax << 3) * i;
-		of[i].GfxBank = Cps2Plus ? ObjMem + (nMax << 3) * nFrameCount + nMax * i : NULL;
+		of[i].Extra = nCpsObjExtraLen ? ObjMem + (nMax << 3) * nFrameCount + nCpsObjExtraLen * i : NULL;
 		of[i].nCount = 0;
-		if (CpsXmvSixEnabled || Cps2Plus) of[i].nShiftX = of[i].nShiftY = 0;
 	}
 
 	nGetNext=0;
@@ -155,12 +155,18 @@ INT32 CpsObjInit()
 
 INT32 CpsObjExit()
 {
+	Cps2ObjGetCallbackFunction = NULL;
+	Cps2ObjTileCallbackFunction = NULL;
+	Cps2ObjPaletteCallbackFunction = NULL;
+	bCpsUseParentBlend = 1;
+	nCpsObjExtraLen = 0;
+
 	if (blendtable)
 		BurnFree(blendtable);
 
 	for (INT32 i = 0; i < nFrameCount; i++) {
 		of[i].Obj = NULL;
-		of[i].GfxBank = NULL;
+		of[i].Extra = NULL;
 		of[i].nCount = 0;
 	}
 
@@ -179,10 +185,12 @@ INT32 CpsObjExit()
 
 void CpsObjReset()
 {
-	if (Cps2PlusObjExt) memset(Cps2PlusObjExt, 0, 0x800);
 	if (ObjMem == NULL) return;
 	memset(ObjMem, 0, nObjMemLen);
-	for (INT32 i = 0; i < nFrameCount; i++) of[i].nCount = 0;
+	for (INT32 i = 0; i < nFrameCount; i++) {
+		of[i].nCount = 0;
+		of[i].nShiftX = of[i].nShiftY = 0;
+	}
 	nGetNext = 0;
 }
 
@@ -255,10 +263,7 @@ INT32 CpsObjGet()
 
 		// Okay - this sprite is active:
 		memcpy(po, pg, 8); // copy it over
-		if (pof->GfxBank) {
-			// Blanked entries are skipped, so latch metadata alongside the compacted list.
-			pof->GfxBank[pof->nCount] = Cps2PlusObjExt[((nCpsObjectBank ^ 1) << 10) + i];
-		}
+		if (Cps2ObjGetCallbackFunction) Cps2ObjGetCallbackFunction(pof->Extra, pof->nCount, i);
 
 		pof->nCount++;
 		po += 8;
@@ -454,35 +459,17 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 //		y -= CpsSaveFrg[0][0xB];
 
 #endif
-		if (Cps2Turbo) {
-			if (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x1000) ps[1] |= BURN_ENDIAN_SWAP_INT16(0x8000);
-			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0xe000) << 3;	// high bits of address
-		} else {
-			n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;	// high bits of address
-		}
-		
-		if (pof->GfxBank) {
-			INT32 nEntry = ((UINT8*)ps - pof->Obj) >> 3;
-			n |= pof->GfxBank[nEntry] << 18;
-		}
+		n |= (BURN_ENDIAN_SWAP_INT16(ps[1]) & 0x6000) << 3;
 
 		// Find the palette for the tiles on this sprite
 		CpstPal = CpsPal + ((a & 0x1F) << 4);
 
-		// xmvsf3v3: the HUD's mini portraits in each fighter's colour, decoded from the program ROM
 		UINT32* pStockPal = CpstPal;
-		UINT32 nPortraitPal[16];
-		UINT32 nPortraitColor = 0;
-		if (CpsXmvSixEnabled && XmvPortraitObject(n, BURN_ENDIAN_SWAP_INT16(ps[0]), BURN_ENDIAN_SWAP_INT16(ps[1]), a, CpsXmvWide != 0, &nPortraitColor)) {
-			UINT16 nColors[16];
-			if (!XmvPortraitColors(CpsRom, nCpsRomLen, n, nPortraitColor, nColors)) {
-				continue;	// the marker isn't a palette, so don't draw it with one
-			}
-			for (INT32 pen = 0; pen < 16; pen++) {
-				UINT32 c = nColors[pen];
-				nPortraitPal[pen] = BurnHighCol(((c >> 8) & 15) * 17, ((c >> 4) & 15) * 17, (c & 15) * 17, 0);
-			}
-			CpstPal = nPortraitPal;
+		UINT32 nObjectPal[16];
+		if (Cps2ObjPaletteCallbackFunction) {
+			INT32 nResult = Cps2ObjPaletteCallbackFunction(n, BURN_ENDIAN_SWAP_INT16(ps[0]), BURN_ENDIAN_SWAP_INT16(ps[1]), a, nObjectPal);
+			if (nResult < 0) continue;
+			if (nResult) CpstPal = nObjectPal;
 		}
 
 		nFlip = (a >> 5) & 3;
@@ -523,8 +510,10 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 
 //				nCpstTile = n + (dy << 4) + dx;								// normal version
 				nCpstTile = (n & ~0x0F) + (dy << 4) + ((n + dx) & 0x0F); // pgear fix
-				// CPS2+ row arithmetic wraps within the selected 16-bit tile bank.
-				if (pof->GfxBank) nCpstTile = (nCpstTile & 0xffff) | (n & 0x70000);
+				if (Cps2ObjTileCallbackFunction) {
+					INT32 nEntry = ((UINT8*)ps - pof->Obj) >> 3;
+					nCpstTile = Cps2ObjTileCallbackFunction(ps, nCpstTile, pof->Extra, nEntry);
+				}
 				
 				if (Sfa2ObjHack) {
 					// hack to not render blue squares on high score screen after name entry - they should be hidden by priority from what I can see
@@ -533,7 +522,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 					//if (ps[2] == 0xa410) bprintf(PRINT_NORMAL, _T("%x, %x, %x, %x, %x, %x, %x\n"), nCpstTile, a & 0x1f, nCpstX, nCpstY, v, nLevelFrom, nLevelTo);
 				}
 				
-				nCpsBlend = (blendtable) ? blendtable[nCpstTile] : 0;
+				nCpsBlend = (blendtable && nCpstTile < nBlendCount) ? blendtable[nCpstTile] : 0;
 				nCpstTile <<= 7;						// Find real tile address					
 
 				pCpstOne();
@@ -541,7 +530,7 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 			}
 		}
 
-		CpstPal = pStockPal;	// never leave it pointing at nPortraitPal
+		CpstPal = pStockPal;	// never leave it pointing at nObjectPal
 	}
 
 	return 0;
@@ -940,16 +929,15 @@ INT32 FcrashObjDraw(INT32 nLevelFrom,INT32 nLevelTo)
 // Save the sprite lag buffers, but rebuild their pointers on initialization.
 // The Z buffer and counters are drawing scratch: saving them would make states
 // depend on which frames were drawn. Each frame starts above the old Z values.
-INT32 CpsObjVisualScan(INT32 nAction)
+INT32 CpsObjScan(INT32 nAction, char* szName)
 {
-	if ((!Cps2Plus && !CpsXmvSixEnabled) || !(nAction & ACB_DRIVER_DATA)) return 0;
+	if (!(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));
 	ba.Data = ObjMem;
 	ba.nLen = nObjMemLen;
-	ba.szName = "Sprite lag buffers";
-	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 sprite lag buffers";
+	ba.szName = szName;
 	BurnAcb(&ba);
 
 	SCAN_VAR(nGetNext);

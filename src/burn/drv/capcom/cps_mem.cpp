@@ -14,9 +14,11 @@ static UINT8 *CpsSaveRegData = NULL;
 static UINT8 *CpsSaveFrgData = NULL;
 UINT8 *CpsRam660=NULL,*CpsRam708=NULL,*CpsReg=NULL,*CpsFrg=NULL;
 UINT8 *CpsRamFF=NULL;
-UINT8 *Cps2PlusObjExt=NULL;
 
 CpsMemScanCallback CpsMemScanCallbackFunction = NULL;
+CpsMemScanCallback CpsMemScanExtraCallbackFunction = NULL;
+CpsSoundScanCallback CpsSoundScanCallbackFunction = NULL;
+INT32 bCpsObjectBankHandlers = 0;
 
 // This routine is called first to determine how much memory is needed
 // and then to set up all the pointers.
@@ -38,9 +40,6 @@ static INT32 CpsMemIndex()
 	if (Cps == 2) {
 		CpsRam660 = Next; Next += 0x004000;							// Extra Memory
 		CpsRam708 = Next; Next += 0x010000;							// Obj Ram
-		if (Cps2Plus) {
-			Cps2PlusObjExt = Next; Next += 0x800;              // Object graphics bank bits
-		}
 		CpsFrg    = Next; Next += 0x000010;							// 'Four' Registers (Registers at 0x400000)
 
 		ZBuf      = (UINT16*)Next; Next += nCpsScreenWidth * nCpsScreenHeight * 2;	// Sprite Masking Z buffer
@@ -86,50 +85,12 @@ static INT32 AllocateMemory()
 	return 0;
 }
 
-static UINT32 Cps2PlusObjectOffset(UINT32 a)
-{
-	// A15 and the bank register choose physical RAM; A13 and A14 mirror its entries.
-	return (((a >> 15) ^ nCpsObjectBank) & 1) * 0x8000 + (a & 0x1fff);
-}
-
-static UINT8 __fastcall Cps2PlusObjectReadByte(UINT32 a)
-{
-	return CpsRam708[Cps2PlusObjectOffset(a) ^ 1];
-}
-
-static UINT16 __fastcall Cps2PlusObjectReadWord(UINT32 a)
-{
-	return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(CpsRam708 + Cps2PlusObjectOffset(a)));
-}
-
-static void Cps2PlusObjectWrite(UINT32 a)
-{
-	// A14 is a write selector, not an extra address line in object RAM.
-	UINT32 nOffset = Cps2PlusObjectOffset(a);
-	Cps2PlusObjExt[(nOffset >> 15) * 0x400 + ((a & 0x1fff) >> 3)] = (a >> 14) & 1;
-}
-
-static void __fastcall Cps2PlusObjectWriteByte(UINT32 a, UINT8 d)
-{
-	CpsRam708[Cps2PlusObjectOffset(a) ^ 1] = d;
-	Cps2PlusObjectWrite(a);
-}
-
-static void __fastcall Cps2PlusObjectWriteWord(UINT32 a, UINT16 d)
-{
-	*(UINT16*)(CpsRam708 + Cps2PlusObjectOffset(a)) = BURN_ENDIAN_SWAP_INT16(d);
-	Cps2PlusObjectWrite(a);
-}
-
 // Map the correct bank of obj memory to the 68000 address space (including mirrors).
 void CpsDoMapObjectBanks(INT32 nBank)
 {
 	nCpsObjectBank = nBank;
 
-	if (Cps2Plus) {
-		// The object handlers use nCpsObjectBank directly.
-		return;
-	}
+	if (bCpsObjectBankHandlers) return;
 
 	if (nCpsObjectBank) {
 		SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, MAP_RAM);
@@ -161,106 +122,6 @@ INT32 __fastcall CPSResetCallback()
 	return 0;
 }
 
-// samples:
-// empty + 0x3f L, channel 0, sample + 0x00
-// empty + 0x3f R, channel 1, sample + 0x40
-
-static void samples_l_start(int channel, int sample, int loop)
-{
-	BurnSampleChannelPlay(channel + 0x00, sample + 0x00, loop);
-}
-
-static int samples_l_playing()
-{
-	return BurnSampleGetChannelStatus(0x00) == SAMPLE_PLAYING;
-}
-static int samples_r_playing()
-{
-	return BurnSampleGetChannelStatus(0x01) == SAMPLE_PLAYING;
-}
-
-static void samples_r_start(int channel, int sample, int loop)
-{
-	BurnSampleChannelPlay(channel + 0x01, sample + 0x40, loop);
-}
-
-// ----------------------------------------------------------------------------
-static void qsound_cps2turbo_write(UINT32 offset, UINT8 data) //Zero800 allows you to write and signal when a new song is played
-{
-	UINT8 *m_qsound_sharedram1 = CpsZRamC0;
-	UINT8 *m_qsound_sharedram2 = CpsZRamF0;
-	if (offset == 0x0001 && (data & 0xff) == 0x00 && m_qsound_sharedram1[0x00] == 0xff) //stop samples sound
-	{
-		samples_l_start(0, 0, 0);
-		samples_r_start(0, 0, 0);
-		bprintf(0, _T("Stop: %02x to %x\n"), offset, offset);
-	}
-
-	if (offset == 0xffe)
-	{
-		if (m_qsound_sharedram1[0x80] == 0x77) //stop music condition in audiocpu = C080 (z80 hacked)
-		{
-			samples_l_start(0, 0, 0); //init L samples
-			samples_r_start(0, 0, 0); //init R samples
-			m_qsound_sharedram2[0x27] = 0xc9; //Enable Qsound Volume
-			m_qsound_sharedram1[0x80] = 0xff; //Reset music id flag
-			m_qsound_sharedram1[0x81] = 0xff; //Reset music id flag
-			bprintf(0, _T("Clear: %02x to %x\n"), data, offset);
-		}
-		else
-			if (m_qsound_sharedram1[0x81] > 0x00 && m_qsound_sharedram1[0x81] < 0x40) //play music condition in audiocpu = C081 (z80 hacked)
-			{
-				int data_byte = m_qsound_sharedram1[0x81];
-				m_qsound_sharedram1[0x80] = 0xff; //Reset music id flag
-				m_qsound_sharedram1[0x81] = 0xff; //Reset music id flag
-				bprintf(0, _T("Music: %02x to %x\n"), data_byte, offset);
-				samples_l_start(0, data_byte, 1);
-				if (samples_l_playing() == 1)
-				{
-					m_qsound_sharedram2[0x27] = 0x00; //Qsound music volume = 0
-				}
-				else
-					samples_l_start(0, 0, 0); //init L samples
-
-				samples_r_start(0, data_byte, 1);
-				if (samples_r_playing() == 1)
-				{
-					m_qsound_sharedram2[0x27] = 0x00; //Qsound music volume = 0
-				}
-				else
-					samples_r_start(0, 0, 0); //init R samples
-			}
-			else
-				if (m_qsound_sharedram2[0x27] == 0x00 && samples_l_playing() != 1) //if loadstate and qsound volume = 0 && samples stopped
-				{
-					samples_l_start(0, 0, 0); //init L samples
-					samples_r_start(0, 0, 0); //init R samples
-					m_qsound_sharedram2[0x27] = 0xc9; //Enable Qsound Volume
-					m_qsound_sharedram1[0x80] = 0xff; //Reset music id flag
-					m_qsound_sharedram1[0x81] = 0xff; //Reset music id flag
-					bprintf(0, _T("Volume0: %02x to %x\n"), data, offset);
-				}
-				else
-					if (m_qsound_sharedram2[0x27] != 0x00 && samples_l_playing() == 1) //if loadstate and qsound volume != 0 && samples playing
-					{
-						samples_l_start(0, 0, 0); //init L samples
-						samples_r_start(0, 0, 0); //init R samples
-						m_qsound_sharedram2[0x27] = 0xc9; //Enable Qsound Volume
-						m_qsound_sharedram1[0x80] = 0xff; //Reset music id flag
-						m_qsound_sharedram1[0x81] = 0xff; //Reset music id flag
-						bprintf(0, _T("Volume0: %02x to %x\n"), data, offset);
-					}
-					else
-						if ((data & 0xff) == 0x55) //init samples in rom start
-						{
-							samples_l_start(0, 0, 0);
-							samples_r_start(0, 0, 0);
-						}
-	}
-
-	m_qsound_sharedram1[offset] = data;	//Play data Qsound
-}
-
 UINT8 __fastcall CPSQSoundC0ReadByte(UINT32 sekAddress)
 {
 //	bprintf(PRINT_NORMAL, _T("    QS %06X read\n"), sekAddress);
@@ -284,10 +145,6 @@ void __fastcall CPSQSoundC0WriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 
 	sekAddress &= 0x1FFF;
-
-	if (Cps2Turbo) {
-		qsound_cps2turbo_write(sekAddress >> 1, byteValue);
-	}
 
 #if 1 && defined USE_SPEEDHACKS
 	// Sync only when the last byte of the sound command is written
@@ -405,16 +262,9 @@ INT32 CpsMemInit()
 
 	SekSetResetCallback(CPSResetCallback);
 
-	if (Cps2Turbo) {
-		// hmmmmmm
-		bprintf(0, _T("limit 68k to 0x400000\n"));
-		nCpsRomLen = 0x400000;
-		nCpsCodeLen = 0x400000;
-	}
-
 	// Map in memory:
 	// 68000 Rom (as seen as is, through read)
-	UINT32 nRomMapLen = Cps2Plus ? 0x400000 : nCpsRomLen;
+	UINT32 nRomMapLen = nCpsRomMapLen ? nCpsRomMapLen : nCpsRomLen;
 	SekMapMemory(CpsRom, 0, nRomMapLen - 1, MAP_READ);
 
 	// 68000 Rom (as seen decrypted, through fetch)
@@ -428,15 +278,6 @@ INT32 CpsMemInit()
 	}
 
 	if (Cps == 2) {
-		if (Cps2Plus) {
-			SekMapMemory(CpsRom + 0x400000, 0xa00000, 0xdfffff, MAP_ROM);
-			SekMapHandler(4, 0x700000, 0x70ffff, MAP_RAM);
-			SekSetReadByteHandler(4, Cps2PlusObjectReadByte);
-			SekSetReadWordHandler(4, Cps2PlusObjectReadWord);
-			SekSetWriteByteHandler(4, Cps2PlusObjectWriteByte);
-			SekSetWriteWordHandler(4, Cps2PlusObjectWriteWord);
-		}
-
 		nCpsObjectBank = -1;
 		CpsMapObjectBanks(0);
 
@@ -510,7 +351,9 @@ INT32 CpsMemExit()
 	BurnFree(CpsMem);
 	
 	CpsMemScanCallbackFunction = NULL;
-	Cps2PlusObjExt = NULL;
+	CpsMemScanExtraCallbackFunction = NULL;
+	CpsSoundScanCallbackFunction = NULL;
+	bCpsObjectBankHandlers = 0;
 
 	return 0;
 }
@@ -596,23 +439,9 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(nCps1LayerOffs);
 		}
 
-		if (Cps2Plus) {
-			ba.Data = Cps2PlusObjExt;
-			ba.nLen = 0x800;
-			ba.szName = "CPS2+ object banks";
-			BurnAcb(&ba);
-			if (nAction & ACB_WRITE) {
-				for (INT32 i = 0; i < 0x800; i++) {
-					if (Cps2PlusObjExt[i] > 1) return 1;
-				}
-			}
-		}
+		if (CpsMemScanExtraCallbackFunction && CpsMemScanExtraCallbackFunction(nAction, pnMin)) return 1;
 
 		CpsRwScan();									// scan cps_rw.cpp stuff
-
-		if (Cps2Turbo) {
-			BurnSampleScan(nAction, pnMin);
-		}
 
 		if (nAction & ACB_WRITE) {						// Palette could have changed
 			CpsRecalcPal = 1;
@@ -626,7 +455,8 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {						// Scan QSound chips
-		QsndScan(nAction);
+		if (CpsSoundScanCallbackFunction) CpsSoundScanCallbackFunction(nAction, pnMin);
+		else QsndScan(nAction);
 	} else {											// Scan PSound chips
 		if ((Cps & 1) && !Cps1DisablePSnd) PsndScan(nAction, pnMin);
 	}
@@ -635,28 +465,5 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		CpsMemScanCallbackFunction(nAction, pnMin);
 	}
 	
-	if (Cps2Plus) return CpsVisualScan(nAction);
 	return 0;
-}
-
-// Preserve latched display state so a paused redraw does not read the next frame's RAM.
-INT32 CpsVisualScan(INT32 nAction)
-{
-	if ((!Cps2Plus && !CpsXmvSixEnabled) || !(nAction & ACB_DRIVER_DATA)) return 0;
-
-	struct BurnArea ba;
-	memset(&ba, 0, sizeof(ba));
-	ba.Data = CpsSavePal;		ba.nLen = 0x2000;								ba.szName = "Latched palette";
-	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 latched palette";
-	BurnAcb(&ba);
-	ba.Data = CpsSaveRegData;	ba.nLen = 0x100 * (MAX_RASTER + 1);				ba.szName = "Latched registers";
-	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 latched registers";
-	BurnAcb(&ba);
-	ba.Data = CpsSaveFrgData;	ba.nLen = 0x20;									ba.szName = "Latched frg";
-	if (CpsXmvSixEnabled) ba.szName = "XMvsSF 3v3 latched frg";
-	BurnAcb(&ba);
-
-	if (CpsObjVisualScan(nAction)) return 1;
-
-	return CpsPalVisualScan(nAction);
 }

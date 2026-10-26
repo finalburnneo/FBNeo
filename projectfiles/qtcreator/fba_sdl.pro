@@ -317,6 +317,7 @@ $$DRV_CAPCOM {
 	    ../../src/burn/drv/capcom/ctv.cpp \
 	    ../../src/burn/drv/capcom/d_cps1.cpp \
 	    ../../src/burn/drv/capcom/d_cps2.cpp \
+	    ../../src/burn/drv/capcom/d_cps2_custom.cpp \
 	    ../../src/burn/drv/capcom/fcrash_snd.cpp \
 	    ../../src/burn/drv/capcom/kabuki.cpp \
 	    ../../src/burn/drv/capcom/ps_m.cpp \

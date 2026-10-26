@@ -14880,6 +14880,24 @@ struct BurnDriver BurnDrvnes_amazorundie = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Amber's Super Adventure (HB, v1.1)
+static struct BurnRomInfo nes_ambersaRomDesc[] = {
+	{ "Amber's Super Adventure v1.1 (2026)(Doby Games).nes",          524304, 0x93fbdd60, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ambersa)
+STD_ROM_FN(nes_ambersa)
+
+struct BurnDriver BurnDrvnes_ambersa = {
+	"nes_ambersa", NULL, NULL, NULL, "2026",
+	"Amber's Super Adventure (HB, v1.1)\0", NULL, "Doby Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ambersaRomInfo, nes_ambersaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Anguna: Scourge of the Goblin King (HB)
 static struct BurnRomInfo nes_angunaRomDesc[] = {
 	{ "Anguna - Scourge of the Goblin King (2021)(The 6502 Collective).nes",          524304, 0x1119efff, BRF_ESS | BRF_PRG },
@@ -21853,6 +21871,24 @@ struct BurnDriver BurnDrvnes_mariotank = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Mary Worth Spills the Tea (HB)
+static struct BurnRomInfo nes_maryworthRomDesc[] = {
+	{ "Mary Worth Spills the Tea (2026)(Recreational Runners).nes",          131088, 0x08e8522d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_maryworth)
+STD_ROM_FN(nes_maryworth)
+
+struct BurnDriver BurnDrvnes_maryworth = {
+	"nes_maryworth", NULL, NULL, NULL, "2026",
+	"Mary Worth Spills the Tea (HB)\0", NULL, "Recreational Runners", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_maryworthRomInfo, nes_maryworthRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Master of Light (HB)
 static struct BurnRomInfo nes_masterlightRomDesc[] = {
 	{ "Master of Light (2026)(Board-B).nes",          524304, 0x24ba68d2, BRF_ESS | BRF_PRG },
@@ -24105,6 +24141,24 @@ struct BurnDriver BurnDrvnes_purplecapeman = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Puzzle Pals (HB, v08)
+static struct BurnRomInfo nes_puzzlepalsRomDesc[] = {
+	{ "Puzzle Pals v08 (2026)(Sija Game).nes",          32784, 0xc7b0d775, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_puzzlepals)
+STD_ROM_FN(nes_puzzlepals)
+
+struct BurnDriver BurnDrvnes_puzzlepals = {
+	"nes_puzzlepals", NULL, NULL, NULL, "2026",
+	"Puzzle Pals (HB, v08)\0", NULL, "Sija Game", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_puzzlepalsRomInfo, nes_puzzlepalsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Pyramids of Ra (HB)
 static struct BurnRomInfo nes_pyramidsraRomDesc[] = {
 	{ "Pyramids of Ra (2019)(Piko Interactive).nes",          393232, 0x0bcee664, BRF_ESS | BRF_PRG },
@@ -25963,6 +26017,24 @@ struct BurnDriver BurnDrvnes_storiedsword = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Stunt Car Racer (HB)
+static struct BurnRomInfo nes_stuntcarRomDesc[] = {
+	{ "Stunt Car Racer (2026)(cobbpg).nes",          262160, 0x192c7f2d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_stuntcar)
+STD_ROM_FN(nes_stuntcar)
+
+struct BurnDriver BurnDrvnes_stuntcar = {
+	"nes_stuntcar", NULL, NULL, NULL, "2026",
+	"Stunt Car Racer (HB)\0", NULL, "cobbpg", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RACING, 0,
+	NESGetZipName, nes_stuntcarRomInfo, nes_stuntcarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Sub Hunt (HB)
 static struct BurnRomInfo nes_subhuntRomDesc[] = {
 	{ "Sub Hunt (2014)(Intellivision).nes",          24592, 0x75f94401, BRF_ESS | BRF_PRG },
@@ -26051,6 +26123,24 @@ struct BurnDriver BurnDrvnes_supercgs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_supercgsRomInfo, nes_supercgsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Flappy Mario (HB)
+static struct BurnRomInfo nes_sfmarioRomDesc[] = {
+	{ "Super Flappy Mario (2026)(PurpBatBoi).nes",          98320, 0xd61d64e8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sfmario)
+STD_ROM_FN(nes_sfmario)
+
+struct BurnDriver BurnDrvnes_sfmario = {
+	"nes_sfmario", NULL, NULL, NULL, "2026",
+	"Super Flappy Mario (HB)\0", NULL, "PurpBatBoi", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_sfmarioRomInfo, nes_sfmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -27876,6 +27966,24 @@ struct BurnDriver BurnDrvnes_nesvircle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_nesvircleRomInfo, nes_nesvircleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Voidbreaker (HB)
+static struct BurnRomInfo nes_voidbreakerRomDesc[] = {
+	{ "Voidbreaker (2026)(PolyBound).nes",          393232, 0x64cbcec6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_voidbreaker)
+STD_ROM_FN(nes_voidbreaker)
+
+struct BurnDriver BurnDrvnes_voidbreaker = {
+	"nes_voidbreaker", NULL, NULL, NULL, "2026",
+	"Voidbreaker (HB)\0", NULL, "PolyBound", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_voidbreakerRomInfo, nes_voidbreakerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

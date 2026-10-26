@@ -140,6 +140,36 @@ static INT32 GetCurrentMonitorHigh() {
 	return monitorInfo.rcMonitor.bottom;
 }
 
+//In order to properly clean up the currentMenuInfo structs created to handle owner Drawn components it is necessary to iterate over all the menus and clean 
+//the mii.dwItemData variable
+void CleanUpMenuInfos(HMENU hMenu)
+{
+	MENUINFO mi = { sizeof(MENUINFO) };
+	int count = GetMenuItemCount(hMenu);
+	for (int i = 0; i < count; i++) {
+		HMENU hSub = GetSubMenu(hMenu, i);
+		if(hSub)
+		{
+			CleanUpMenuInfos(hSub);
+		}
+
+		MENUITEMINFO mii = { sizeof(MENUITEMINFO) };
+
+        mii.fMask = MIIM_FTYPE | MIIM_DATA;
+        if (!GetMenuItemInfo(hMenu, i, TRUE, &mii))
+            continue;
+
+		if ((mii.fType & MFT_OWNERDRAW) && mii.dwItemData != 0)
+		{
+			delete (CurrentItemInfo*)mii.dwItemData;
+			mii.fMask = MIIM_DATA;  
+            mii.dwItemData = 0;
+            SetMenuItemInfo(hMenu, i, TRUE, &mii);
+		}
+
+	}
+}
+
 void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
 {
     MENUINFO mi = { sizeof(MENUINFO) };
@@ -438,6 +468,11 @@ void DisplayPopupMenu(int nMenu)
 		if (!bModelessMenu) {
 			UnhookWindowsHookEx(hMenuHook);
 		}
+
+		if (uiOwnerDrawActive) {
+			CleanUpMenuInfos(hPopupMenu);
+		}
+
 	}
 }
 

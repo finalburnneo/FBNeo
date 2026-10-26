@@ -1,6 +1,8 @@
 #include "cps.h"
 // CPS - Draw
 
+CpsDrawPaletteCallback CpsDrawPaletteCallbackFunction = NULL;
+
 UINT8 CpsRecalcPal = 0;			// Flag - If it is 1, recalc the whole palette
 
 static INT32 LayerCont;
@@ -499,8 +501,7 @@ static void DoDraw(INT32 Recalc)
 {
 	CtvReady();								// Point to correct tile drawing functions
 
-	// xmvsf3v3: a state load restores the effective palette itself; rereading palette RAM would lose it
-	if (!CpsPalConsumeRestoredCache()) {
+	if (!CpsDrawPaletteCallbackFunction || !CpsDrawPaletteCallbackFunction()) {
 		if (CpsRecalcPal || bCpsUpdatePalEveryFrame) GetPalette(0, 6);
 		if (Recalc || bCpsUpdatePalEveryFrame) CpsPalUpdate(CpsSavePal);		// recalc whole palette if needed
 	}

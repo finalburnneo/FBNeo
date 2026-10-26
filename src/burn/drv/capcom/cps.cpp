@@ -15,6 +15,8 @@ UINT8 *CpsRom =NULL; UINT32 nCpsRomLen =0; // Program Rom (as in rom)
 UINT8 *CpsCode=NULL; UINT32 nCpsCodeLen=0; // Program Rom (decrypted)
 UINT8 *CpsZRom=NULL; UINT32 nCpsZRomLen=0; // Z80 Roms
 INT8 *CpsQSam=NULL; UINT32 nCpsQSamLen=0;	// QSound Sample Roms
+UINT32 nCpsQSamMask = 0;
+UINT32 nCpsRomMapLen = 0;
 UINT8 *CpsAd  =NULL; UINT32 nCpsAdLen  =0; // ADPCM Data
 UINT8 *CpsStar=NULL;
 UINT8 *CpsKey=NULL; UINT32 nCpsKeyLen = 0;
@@ -1778,23 +1780,7 @@ INT32 Cps2LoadTiles(UINT8* Tile, INT32 nStart)
 	return 0;
 }
 
-#if 0
-"usual cps2":
-rom0 12
-rom1 34
-rom2 56
-rom3 78
-
-"interleaved (zero800/cps2turbo)"
-rom 12345678
-
-    12      12      12      12
-      34      34      34      34
-        56      56      56      56
-          78      78      78      78
-(visualization helper)
-#endif
-
+// Four interleaved ROM lanes in one source image.
 #define BLOCK_MOD 4
 
 inline static void Cps2LoadBlockInterleaved(UINT8* Tile, UINT8* Sect, INT32 nShift)
@@ -1855,19 +1841,6 @@ INT32 Cps2LoadTilesInterleaved(UINT8 *Tile, UINT8 *pSrc, UINT32 nSize)
 }
 
 #undef BLOCK_MOD
-
-INT32 Cps2LoadTilesTurbo(UINT8* Tile, INT32 nSize) // cps2turbo
-{
-	UINT8 *Rom = (UINT8*)BurnMalloc(nSize);
-	memcpy(Rom, Tile, nSize);
-	memset(Tile, 0, nSize);
-
-	Cps2LoadTilesInterleaved(Tile, Rom, nSize);
-
-	BurnFree(Rom);
-
-	return 0;
-}
 
 INT32 Cps2LoadTilesSplit4(UINT8* Tile, INT32 nStart)
 {
@@ -1986,7 +1959,7 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc)
 
 static UINT32 nGfxMaxSize;
 
-static INT32 CpsGetROMs(bool bLoad)
+static INT32 CpsGetROMs(bool bLoad, INT32 bLinear)
 {
 	struct BurnRomInfo ri;
 
@@ -2023,7 +1996,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
 			if (bLoad) {
 				if (BurnLoadRom(CpsRomLoad, i, 1)) return 1;
-				if (Cps2Turbo) BurnByteswap(CpsRomLoad, ri.nLen);
+				if (bLinear) BurnByteswap(CpsRomLoad, ri.nLen);
 				CpsRomLoad += ri.nLen;
 			} else {
 				nCpsRomLen += ri.nLen;
@@ -2052,7 +2025,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_GFX) {
 			if (bLoad) {
-				if (Cps2Turbo) {
+				if (bLinear) {
 					BurnLoadRom(CpsGfxLoad, i, 1);
 
 					CpsGfxLoad += ri.nLen;
@@ -2142,7 +2115,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		if ((ri.nType & 0x0f) == CPS2_QSND) {
 			if (bLoad) {
 				BurnLoadRom(CpsQSamLoad, i, 1);
-				if (Cps2Turbo == 0) {
+				if (!bLinear) {
 					BurnByteswap(CpsQSamLoad, ri.nLen);
 				}
 				CpsQSamLoad += ri.nLen;
@@ -2189,11 +2162,8 @@ static INT32 CpsGetROMs(bool bLoad)
 			((UINT32*)CpsCode)[i] ^= ((UINT32*)CpsRom)[i];
 		}
 #endif
-		if (Cps2Turbo) {
-			Cps2LoadTilesTurbo(CpsGfx, nCpsGfxLen);
-		}
-
 		cps2_decrypt_game_data();
+		if (nCpsCodeLen && CpsCode == NULL) return 1;
 
 //		if (!nCpsCodeLen) return 1;
 	} else {
@@ -2251,9 +2221,6 @@ INT32 CpsInit()
 		} else {
 			nCPS68KClockspeed = 10000000;
 		}
-	}
-	if (Cps2Turbo) {
-		nCPS68KClockspeed = 32000000;
 	}
 	nCPS68KClockspeed = (INT64)nCPS68KClockspeed * 100 / nBurnFPS;
 
@@ -2318,15 +2285,24 @@ INT32 CpsInit()
 
 INT32 Cps2Init()
 {
-	Cps = 2;
+	return Cps2Init(0, 0, 0);
+}
 
-	if (CpsGetROMs(false)) {
+INT32 Cps2Init(INT32 nMapLen, UINT32 nGfxSize, INT32 bLinear)
+{
+	Cps = 2;
+	nCpsRomMapLen = nMapLen;
+
+	if (CpsGetROMs(false, bLinear)) {
 		return 1;
 	}
 
-	CpsInit();
+	if (nGfxSize) nCpsGfxLen = nGfxSize;
+	if (CpsInit()) return 1;
 
-	if (CpsGetROMs(true)) {
+	if (CpsGetROMs(true, bLinear)) {
+		// Before decryption, CpsCode aliases the shared ROM allocation.
+		if (!nCpsCodeLen) CpsCode = NULL;
 		return 1;
 	}
 
@@ -2351,6 +2327,7 @@ INT32 CpsExit()
 	nCpsCodeLen = nCpsRomLen = nCpsGfxLen = nCpsZRomLen = nCpsQSamLen = nCpsAdLen = nCpsKeyLen = 0;
 	CpsRom = CpsZRom = CpsAd = CpsStar = NULL;
 	CpsQSam = NULL;
+	nCpsQSamMask = 0;
 	CpsKey = NULL;
 
 	// All Memory is allocated to this (this is the only one we can free)
@@ -2369,10 +2346,10 @@ INT32 CpsExit()
 	nCpsGlobalXOffset = 0;
 	nCpsGlobalYOffset = 0;
 
-	if (Cps2Turbo) {
-		BurnSampleExit();
-		Cps2Turbo = 0;
-	}
+	nCpsRomMapLen = 0;
+	CpsDrawPaletteCallbackFunction = NULL;
+	Cps2ScrollCallbackFunction = NULL;
+	Cps2Scroll1CallbackFunction = NULL;
 
 	return 0;
 }

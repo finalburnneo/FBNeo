@@ -12562,7 +12562,7 @@ struct BurnDriver BurnDrvPulstar = {
 };
 
 
-// Pulstar Aegis (Hack)
+// Pulstar Aegis (Hack, v1.0.0)
 // https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/pulstar
 static struct BurnRomInfo pulstaraeRomDesc[] = {
 	{ "089-p1ae.p1",  0x100000, 0xdcb02236, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
@@ -12590,7 +12590,7 @@ STD_ROM_FN(pulstarae)
 
 struct BurnDriver BurnDrvPulstarae = {
 	"pulstarae", "pulstar", "neogeo", NULL, "2026",
-	"Pulstar Aegis (Hack)\0", NULL, "Boomchil", "Neo Geo MVS",
+	"Pulstar Aegis (Hack, v1.0.0)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
 	NULL, pulstaraeRomInfo, pulstaraeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

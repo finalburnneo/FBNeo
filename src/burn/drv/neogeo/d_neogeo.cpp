@@ -27937,37 +27937,6 @@ struct BurnDriver BurnDrvDoubled1 = {
 };
 
 
-// Double Dragon One (HB, Early Demo)
-
-static struct BurnRomInfo doubled1edRomDesc[] = {
-	{ "doubledd-p1.bin",		0x0100000, 0x518ac649, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "doubledd-p2.bin",		0x0400000, 0x87cf345c, 1 | BRF_ESS | BRF_PRG }, //  1
-
-	{ "doubledd-s1.bin",		0x0020000, 0x9886a683, 2 | BRF_GRA },           //  2 Text layer tiles
-
-	{ "doubledd-c1.bin",		0x1000000, 0x905b6f78, 3 | BRF_GRA },           //  3 Sprite data
-	{ "doubledd-c2.bin",		0x1000000, 0xc677a62f, 3 | BRF_GRA },           //  4
-
-	{ "doubledd-m1.bin",		0x0010000, 0xd20925ae, 4 | BRF_ESS | BRF_PRG }, //  5 Z80 code
-
-	{ "doubledd-v1.bin",		0x0800000, 0x197b6305, 5 | BRF_SND },           //  6 Sound data
-	{ "doubledd-v2.bin",		0x0800000, 0x8135d5a8, 5 | BRF_SND },           //  7
-};
-
-STDROMPICKEXT(doubled1ed, doubled1ed, neogeo)
-STD_ROM_FN(doubled1ed)
-
-struct BurnDriver BurnDrvDoubled1ed = {
-	"doubled1ed", "doubled1", "neogeo", NULL, "2025",
-	"Double Dragon One (HB, Early Demo)\0", NULL, "OzzyOuzo", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_SCRFIGHT, 0,
-	NULL, doubled1edRomInfo, doubled1edRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	320, 224, 4, 3
-};
-
-
 // Bad Dudes - Burger Edition (Demo Version)
 // https://ozzyouzo.itch.io/bad-dudes
 

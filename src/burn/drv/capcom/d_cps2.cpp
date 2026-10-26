@@ -16558,34 +16558,34 @@ struct BurnDriver BurnDrvCpsSsf2xdced = {
 // https://strygo.github.io/arcade-patches/
 // -----------------------------------------------------------------------------
 
-// Final Fight EX (Hack, CPS2 hardware, USA RC1)
-
+// Final Fight EX (Hack, CPS2 hardware, USA RC2)
+// 2026-10-25
 static struct BurnRomInfo Ffex2uRomDesc[] = {
-	{ "sz3ud.03c",		0x080000, 0xe022fd18, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3ud.04c",		0x080000, 0x9c228c18, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.05c",		0x080000, 0x787bb7f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.06c",		0x080000, 0x5652684a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.07c",		0x080000, 0x6e430b5c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.08c",		0x080000, 0x0b37c61a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.09c",		0x080000, 0xc0a36b4d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.10b",		0x080000, 0x85f1c748, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexd.03c",		0x080000, 0x4f9873c4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexd.04c",		0x080000, 0x4957978c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.05c",		0x080000, 0x787bb7f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.06c",		0x080000, 0x5652684a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.07c",		0x080000, 0x6e430b5c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.08c",		0x080000, 0x0b37c61a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.09c",		0x080000, 0xc0a36b4d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.10b",		0x080000, 0x85f1c748, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sz3.13m",		0x400000, 0x48cbc129, CPS2_GFX | BRF_GRA },
-	{ "sz3.15m",		0x400000, 0xfd20f3aa, CPS2_GFX | BRF_GRA },
-	{ "sz3.17m",		0x400000, 0x5ea87831, CPS2_GFX | BRF_GRA },
-	{ "sz3.19m",		0x400000, 0xda6a3e7e, CPS2_GFX | BRF_GRA },
-	{ "sz3.14m",		0x400000, 0xeca6de34, CPS2_GFX | BRF_GRA },
-	{ "sz3.16m",		0x400000, 0x17069cbd, CPS2_GFX | BRF_GRA },
-	{ "sz3.18m",		0x400000, 0x0f560d8c, CPS2_GFX | BRF_GRA },
-	{ "sz3.20m",		0x400000, 0xe96d3923, CPS2_GFX | BRF_GRA },
+	{ "ffex.13m",		0x400000, 0x48cbc129, CPS2_GFX | BRF_GRA },
+	{ "ffex.15m",		0x400000, 0xfd20f3aa, CPS2_GFX | BRF_GRA },
+	{ "ffex.17m",		0x400000, 0x5ea87831, CPS2_GFX | BRF_GRA },
+	{ "ffex.19m",		0x400000, 0xda6a3e7e, CPS2_GFX | BRF_GRA },
+	{ "ffex.14m",		0x400000, 0xeca6de34, CPS2_GFX | BRF_GRA },
+	{ "ffex.16m",		0x400000, 0x17069cbd, CPS2_GFX | BRF_GRA },
+	{ "ffex.18m",		0x400000, 0x0f560d8c, CPS2_GFX | BRF_GRA },
+	{ "ffex.20m",		0x400000, 0xe96d3923, CPS2_GFX | BRF_GRA },
 
-	{ "sz3.01",		0x020000, 0x03d74a70, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",		0x020000, 0x7ee8cdcd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "ffex.01",		0x020000, 0x03d74a70, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "ffex.02",		0x020000, 0x7ee8cdcd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sz3.11m",		0x400000, 0xbea96b44, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",		0x400000, 0xdf5e34c3, CPS2_QSND | BRF_SND },
+	{ "ffex.11m",		0x400000, 0xbea96b44, CPS2_QSND | BRF_SND },
+	{ "ffex.12m",		0x400000, 0xdf5e34c3, CPS2_QSND | BRF_SND },
 
-	{ "phoenix.key",		0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ffex2u)
@@ -16593,7 +16593,7 @@ STD_ROM_FN(Ffex2u)
 
 struct BurnDriver BurnDrvCpsFfex2u = {
 	"ffex2u", NULL, NULL, NULL, "2026",
-	"Final Fight EX (Hack, CPS2 hardware, USA RC1)\0", NULL, "Strygo", "CPS2",
+	"Final Fight EX (Hack, CPS2 hardware, USA RC2)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ffex2uRomInfo, Ffex2uRomName, NULL, NULL, NULL, NULL, Ffex2InputInfo, NULL,
@@ -16601,34 +16601,34 @@ struct BurnDriver BurnDrvCpsFfex2u = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Final Fight EX (Hack, CPS2 hardware, Japan RC1)
-
+// Final Fight EX (Hack, CPS2 hardware, Japan RC2)
+// 2026-10-25
 static struct BurnRomInfo Ffex2jRomDesc[] = {
-	{ "sz3ud.03c",		0x080000, 0x9eb92f51, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3ud.04c",		0x080000, 0x3a2393c0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.05c",		0x080000, 0x787bb7f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.06c",		0x080000, 0xa8d2d10b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.07c",		0x080000, 0xbcf7297e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.08c",		0x080000, 0x7afbcbad, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.09c",		0x080000, 0x0642626b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.10b",		0x080000, 0xb4208a79, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexjd.03c",		0x080000, 0x789ff036, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexjd.04c",		0x080000, 0x613c6ecc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.05c",		0x080000, 0x787bb7f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexj.06c",		0x080000, 0xa8d2d10b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexj.07c",		0x080000, 0xbcf7297e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexj.08c",		0x080000, 0x7afbcbad, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexj.09c",		0x080000, 0x0642626b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexj.10b",		0x080000, 0xb4208a79, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sz3.13m",		0x400000, 0xd24130e3, CPS2_GFX | BRF_GRA },
-	{ "sz3.15m",		0x400000, 0xcef0a6b3, CPS2_GFX | BRF_GRA },
-	{ "sz3.17m",		0x400000, 0x00464598, CPS2_GFX | BRF_GRA },
-	{ "sz3.19m",		0x400000, 0x6f5379cc, CPS2_GFX | BRF_GRA },
-	{ "sz3.14m",		0x400000, 0xae054c04, CPS2_GFX | BRF_GRA },
-	{ "sz3.16m",		0x400000, 0x0e09c2ba, CPS2_GFX | BRF_GRA },
-	{ "sz3.18m",		0x400000, 0x0f560d8c, CPS2_GFX | BRF_GRA },
-	{ "sz3.20m",		0x400000, 0xe96d3923, CPS2_GFX | BRF_GRA },
+	{ "ffexj.13m",		0x400000, 0xd24130e3, CPS2_GFX | BRF_GRA },
+	{ "ffexj.15m",		0x400000, 0xcef0a6b3, CPS2_GFX | BRF_GRA },
+	{ "ffexj.17m",		0x400000, 0x00464598, CPS2_GFX | BRF_GRA },
+	{ "ffexj.19m",		0x400000, 0x6f5379cc, CPS2_GFX | BRF_GRA },
+	{ "ffexj.14m",		0x400000, 0xae054c04, CPS2_GFX | BRF_GRA },
+	{ "ffexj.16m",		0x400000, 0x0e09c2ba, CPS2_GFX | BRF_GRA },
+	{ "ffex.18m",		0x400000, 0x0f560d8c, CPS2_GFX | BRF_GRA },
+	{ "ffex.20m",		0x400000, 0xe96d3923, CPS2_GFX | BRF_GRA },
 
-	{ "sz3.01",		0x020000, 0x36ef522c, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",		0x020000, 0x7ee8cdcd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "ffexj.01",		0x020000, 0x36ef522c, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "ffex.02",		0x020000, 0x7ee8cdcd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sz3.11m",		0x400000, 0xbea96b44, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",		0x400000, 0xdf5e34c3, CPS2_QSND | BRF_SND },
+	{ "ffex.11m",		0x400000, 0xbea96b44, CPS2_QSND | BRF_SND },
+	{ "ffex.12m",		0x400000, 0xdf5e34c3, CPS2_QSND | BRF_SND },
 
-	{ "phoenix.key",		0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ffex2j)
@@ -16636,7 +16636,7 @@ STD_ROM_FN(Ffex2j)
 
 struct BurnDriver BurnDrvCpsFfex2j = {
 	"ffex2j", "ffex2u", NULL, NULL, "2026",
-	"Final Fight EX (Hack, CPS2 hardware, Japan RC1)\0", NULL, "Strygo", "CPS2",
+	"Final Fight EX (Hack, CPS2 hardware, Japan RC2)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ffex2jRomInfo, Ffex2jRomName, NULL, NULL, NULL, NULL, Ffex2InputInfo, NULL,
@@ -16644,34 +16644,34 @@ struct BurnDriver BurnDrvCpsFfex2j = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Final Fight EX (Hack, CPS2 hardware, English Restoration RC1)
-
+// Final Fight EX (Hack, CPS2 hardware, English Restoration RC2)
+// 2026-10-25
 static struct BurnRomInfo Ffex2rRomDesc[] = {
-	{ "sz3ud.03c",		0x080000, 0xd1129b95, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3ud.04c",		0x080000, 0x5d10506d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.05c",		0x080000, 0x787bb7f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.06c",		0x080000, 0x5652684a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.07c",		0x080000, 0x6e430b5c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.08c",		0x080000, 0x64f42ba9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.09c",		0x080000, 0xbd69566a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz3.10b",		0x080000, 0x9539a4aa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexrd.03c",		0x080000, 0xbce36dc0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexrd.04c",		0x080000, 0x273ae5d9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.05c",		0x080000, 0x787bb7f2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.06c",		0x080000, 0x5652684a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffex.07c",		0x080000, 0x6e430b5c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexr.08c",		0x080000, 0x64f42ba9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexr.09c",		0x080000, 0xbd69566a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "ffexr.10b",		0x080000, 0x9539a4aa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "sz3.13m",		0x400000, 0x231f811f, CPS2_GFX | BRF_GRA },
-	{ "sz3.15m",		0x400000, 0x26cea23a, CPS2_GFX | BRF_GRA },
-	{ "sz3.17m",		0x400000, 0xf118f464, CPS2_GFX | BRF_GRA },
-	{ "sz3.19m",		0x400000, 0x876d7d45, CPS2_GFX | BRF_GRA },
-	{ "sz3.14m",		0x400000, 0xeca6de34, CPS2_GFX | BRF_GRA },
-	{ "sz3.16m",		0x400000, 0x17069cbd, CPS2_GFX | BRF_GRA },
-	{ "sz3.18m",		0x400000, 0x0f560d8c, CPS2_GFX | BRF_GRA },
-	{ "sz3.20m",		0x400000, 0xe96d3923, CPS2_GFX | BRF_GRA },
+	{ "ffexr.13m",		0x400000, 0x231f811f, CPS2_GFX | BRF_GRA },
+	{ "ffexr.15m",		0x400000, 0x26cea23a, CPS2_GFX | BRF_GRA },
+	{ "ffexr.17m",		0x400000, 0xf118f464, CPS2_GFX | BRF_GRA },
+	{ "ffexr.19m",		0x400000, 0x876d7d45, CPS2_GFX | BRF_GRA },
+	{ "ffex.14m",		0x400000, 0xeca6de34, CPS2_GFX | BRF_GRA },
+	{ "ffex.16m",		0x400000, 0x17069cbd, CPS2_GFX | BRF_GRA },
+	{ "ffex.18m",		0x400000, 0x0f560d8c, CPS2_GFX | BRF_GRA },
+	{ "ffex.20m",		0x400000, 0xe96d3923, CPS2_GFX | BRF_GRA },
 
-	{ "sz3.01",		0x020000, 0x3c1c4965, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "sz3.02",		0x020000, 0x7ee8cdcd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "ffexr.01",		0x020000, 0x3c1c4965, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "ffex.02",		0x020000, 0x7ee8cdcd, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "sz3.11m",		0x400000, 0xbea96b44, CPS2_QSND | BRF_SND },
-	{ "sz3.12m",		0x400000, 0xdf5e34c3, CPS2_QSND | BRF_SND },
+	{ "ffex.11m",		0x400000, 0xbea96b44, CPS2_QSND | BRF_SND },
+	{ "ffex.12m",		0x400000, 0xdf5e34c3, CPS2_QSND | BRF_SND },
 
-	{ "phoenix.key",		0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
+	{ "phoenix.key",	0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ffex2r)
@@ -16679,7 +16679,7 @@ STD_ROM_FN(Ffex2r)
 
 struct BurnDriver BurnDrvCpsFfex2r = {
 	"ffex2r", "ffex2u", NULL, NULL, "2026",
-	"Final Fight EX (Hack, CPS2 hardware, English Restoration RC1)\0", NULL, "Strygo", "CPS2",
+	"Final Fight EX (Hack, CPS2 hardware, English Restoration RC2)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_SCRFIGHT, 0,
 	NULL, Ffex2rRomInfo, Ffex2rRomName, NULL, NULL, NULL, NULL, Ffex2InputInfo, NULL,

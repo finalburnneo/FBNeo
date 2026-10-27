@@ -38677,10 +38677,10 @@ struct BurnDriver BurnDrvmd_bioblade = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Black Tiger (HB, v1.9.1)
+// Black Tiger (HB, v1.9.3)
 // https://rester159.itch.io/black-tiger-md
 static struct BurnRomInfo md_blacktigerRomDesc[] = {
-	{ "Black Tiger v1.9.1 (2026)(rester159).bin", 4194304, 0xa1b19794, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Black Tiger v1.9.3 (2026)(rester159).bin", 4194304, 0xe5debe42, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_blacktiger)
@@ -38688,7 +38688,7 @@ STD_ROM_FN(md_blacktiger)
 
 struct BurnDriver BurnDrvmd_blacktiger = {
 	"md_blacktiger", NULL, NULL, NULL, "2026",
-	"Black Tiger (HB, v1.9.1)\0", NULL, "rester159", "Genesis / Mega Drive",
+	"Black Tiger (HB, v1.9.3)\0", NULL, "rester159", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_blacktigerRomInfo, md_blacktigerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42625,10 +42625,10 @@ struct BurnDriver BurnDrvmd_pandajump = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pang (DavidGames) (HB, Beta v1.03)
+// Pang (DavidGames) (HB, v1.00)
 // https://davidsgame.itch.io/pang-md
 static struct BurnRomInfo md_pangRomDesc[] = {
-	{ "Pang Beta v1.03 (2026)(DavidGames).bin", 1310720, 0xbdd4517a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Pang v1.00 (2026)(DavidGames).bin", 1310720, 0x2d816dcb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pang)
@@ -42636,7 +42636,7 @@ STD_ROM_FN(md_pang)
 
 struct BurnDriver BurnDrvmd_pang = {
 	"md_pang", NULL, NULL, NULL, "2026",
-	"Pang (DavidGames) (HB, Beta v1.03)\0", NULL, "DavidGames", "Genesis / Mega Drive",
+	"Pang (DavidGames) (HB, v1.00)\0", NULL, "DavidGames", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_pangRomInfo, md_pangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42644,10 +42644,10 @@ struct BurnDriver BurnDrvmd_pang = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pang (Oldschool Is Beautiful) (HB, Beta 3)
+// Pang (Oldschool Is Beautiful) (HB, v1.00)
 // https://mlouvet.itch.io/pang-megadrive
 static struct BurnRomInfo md_pangoibRomDesc[] = {
-	{ "Pang Beta 3 (2026)(Oldschool Is Beautiful).bin", 3877096, 0xa789941b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Pang v1.00 (2026)(Oldschool Is Beautiful).bin", 3909708, 0x2022a547, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_pangoib)
@@ -42655,7 +42655,7 @@ STD_ROM_FN(md_pangoib)
 
 struct BurnDriver BurnDrvmd_pangoib = {
 	"md_pangoib", NULL, NULL, NULL, "2026",
-	"Pang (Oldschool Is Beautiful) (HB, Beta 3)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Pang (Oldschool Is Beautiful) (HB, v1.00)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_pangoibRomInfo, md_pangoibRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -42952,10 +42952,10 @@ struct BurnDriver BurnDrvmd_papriumunlck = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Parasol Stars (HB, v1.0 RC3)
+// Parasol Stars (HB, v1.0.2)
 // https://mlouvet.itch.io/parasol-stars-megadrive-genesis
 static struct BurnRomInfo md_parasolRomDesc[] = {
-	{ "Parasol Stars v1.0 RC3 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x181b816a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Parasol Stars v1.0.2 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x72fc1b17, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_parasol)
@@ -42963,7 +42963,7 @@ STD_ROM_FN(md_parasol)
 
 struct BurnDriver BurnDrvmd_parasol = {
 	"md_parasol", NULL, NULL, NULL, "2026",
-	"Parasol Stars (HB, v1.0 RC3)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Parasol Stars (HB, v1.0.2)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_parasolRomInfo, md_parasolRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44619,10 +44619,10 @@ struct BurnDriver BurnDrvmd_threestooges = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tiger Road (hombreimaginario) (HB, 2026-10-23)
+// Tiger Road (hombreimaginario) (HB, 2026-10-26)
 // https://hombreimaginario.itch.io/tiger-road-md
 static struct BurnRomInfo md_tigeroadRomDesc[] = {
-	{ "Tiger Road 2026-10-23 (2026)(hombreimaginario).bin", 2490368, 0x8db153ab, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tiger Road 2026-10-26 (2026)(hombreimaginario).bin", 2490368, 0x98decaf0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tigeroad)
@@ -44630,7 +44630,7 @@ STD_ROM_FN(md_tigeroad)
 
 struct BurnDriver BurnDrvmd_tigeroad = {
 	"md_tigeroad", NULL, NULL, NULL, "2026",
-	"Tiger Road (hombreimaginario) (HB, 2026-10-23)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
+	"Tiger Road (hombreimaginario) (HB, 2026-10-26)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_tigeroadRomInfo, md_tigeroadRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

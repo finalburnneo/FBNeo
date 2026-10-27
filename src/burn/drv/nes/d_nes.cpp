@@ -14699,7 +14699,27 @@ struct BurnDriver BurnDrvnes_aliensmash = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// All Hell Unleashed - Ultimate Edition (HB)
+// https://8bitslasher.itch.io/ahu
+static struct BurnRomInfo nes_allhellunlueRomDesc[] = {
+	{ "All Hell Unleashed - Ultimate Edition (2025-26)(Fista Productions).nes",          524304, 0x205da9ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_allhellunlue)
+STD_ROM_FN(nes_allhellunlue)
+
+struct BurnDriver BurnDrvnes_allhellunlue = {
+	"nes_allhellunlue", NULL, NULL, NULL, "2025-26",
+	"All Hell Unleashed - Ultimate Edition (HB)\0", NULL, "Fista Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	NESGetZipName, nes_allhellunlueRomInfo, nes_allhellunlueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // All Hell Unleashed (HB, v6.66)
+// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunl666RomDesc[] = {
 	{ "All Hell Unleashed v6.66 (2025)(Fista Productions).nes",          524304, 0x4203e09a, BRF_ESS | BRF_PRG },
 };
@@ -14708,16 +14728,17 @@ STD_ROM_PICK(nes_allhellunl666)
 STD_ROM_FN(nes_allhellunl666)
 
 struct BurnDriver BurnDrvnes_allhellunl666 = {
-	"nes_allhellunl666", NULL, NULL, NULL, "2025",
+	"nes_allhellunl666", "nes_allhellunlue", NULL, NULL, "2025",
 	"All Hell Unleashed (HB, v6.66)\0", NULL, "Fista Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	NESGetZipName, nes_allhellunl666RomInfo, nes_allhellunl666RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
 // All Hell Unleashed (HB)
+// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunlRomDesc[] = {
 	{ "All Hell Unleashed (2025)(Fista Productions).nes",          524304, 0x2f78164f, BRF_ESS | BRF_PRG },
 };
@@ -14726,7 +14747,7 @@ STD_ROM_PICK(nes_allhellunl)
 STD_ROM_FN(nes_allhellunl)
 
 struct BurnDriver BurnDrvnes_allhellunl = {
-	"nes_allhellunl", "nes_allhellunl666", NULL, NULL, "2025",
+	"nes_allhellunl", "nes_allhellunlue", NULL, NULL, "2025",
 	"All Hell Unleashed (HB)\0", NULL, "Fista Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
@@ -14894,6 +14915,24 @@ struct BurnDriver BurnDrvnes_ambersa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_ambersaRomInfo, nes_ambersaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Angry Video Game Nerd 8-bit, The (HB)
+static struct BurnRomInfo nes_angrynerdRomDesc[] = {
+	{ "Angry Video Game Nerd 8-bit, The (2025)(Retroware - Mega Cat Studios).nes",          786448, 0xfd8ddfb7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_angrynerd)
+STD_ROM_FN(nes_angrynerd)
+
+struct BurnDriver BurnDrvnes_angrynerd = {
+	"nes_angrynerd", NULL, NULL, NULL, "2025",
+	"Angry Video Game Nerd 8-bit, The (HB)\0", NULL, "Retroware - Mega Cat Studios", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_angrynerdRomInfo, nes_angrynerdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21542,7 +21581,7 @@ struct BurnDriver BurnDrvnes_machinecave = {
 // Mad Mix Game R (HB)
 // https://enriqueggalvez.itch.io/mad-mix-game-r
 static struct BurnRomInfo nes_madmixgrRomDesc[] = {
-	{ "Mad Mix Game R (2026)(Magic Games).nes",          2097168, 0x58702f7d, BRF_ESS | BRF_PRG },
+	{ "Mad Mix Game R (2026)(Magic Games).nes",          2097168, 0xbb5d8cc7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_madmixgr)

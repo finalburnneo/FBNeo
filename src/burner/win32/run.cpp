@@ -60,6 +60,10 @@ struct lua_hotkey_handler hotkey_debounces[] = {
 	{ NULL, 0, 0, NULL }
 };
 
+bool EmulatorAppIsFast() {
+	return bAppDoFast;
+}
+
 void EmulatorAppDoFast(bool dofast) {
 	bAppDoFast = dofast;
 	bAppDoFasttoggled = 0;

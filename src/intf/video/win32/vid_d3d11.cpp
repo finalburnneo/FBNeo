@@ -3447,7 +3447,7 @@ static int d3d11Paint(int bValidate)
 		return 1;
 	}
 
-	HRESULT hr = pSwapChain->Present(bVidVSync ? 1 : 0, 0);
+	HRESULT hr = pSwapChain->Present((bVidVSync && !EmulatorAppIsFast()) ? 1 : 0, 0);
 
 	bInPaint = false;
 

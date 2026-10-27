@@ -269,6 +269,7 @@ int RunFrame(int bDraw, int bPause);
 int RunMessageLoop();
 int RunReset();
 void ToggleLayer(unsigned char thisLayer);
+bool EmulatorAppIsFast();
 
 // scrn.cpp
 extern HWND hScrnWnd;								// Handle to the screen window

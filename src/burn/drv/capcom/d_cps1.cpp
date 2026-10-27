@@ -16387,6 +16387,57 @@ static struct BurnRomInfo StriderfixRomDesc[] = {
 STD_ROM_PICK(Striderfix)
 STD_ROM_FN(Striderfix)
 
+static struct BurnRomInfo Striderus01RomDesc[] = {
+	{ "c03us01.p1",	0x020000, 0x457395b9, CPS1_68K_PROGRAM_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03us01.p2",	0x020000, 0x118f8690, CPS1_68K_PROGRAM_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03us01.p3",	0x020000, 0x3306fd0f, CPS1_68K_PROGRAM_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03us01.p4",	0x020000, 0x1ac8cad9, CPS1_68K_PROGRAM_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03us01.p5",	0x080000, 0x06edfbaf, CPS1_68K_PROGRAM_NO_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03us01.p6",	0x100000, 0x075dfc39, CPS1_68K_PROGRAM_NO_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03us01.c01",	0x080000, 0xf92cc010, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c03",	0x080000, 0x9abd7b1e, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c05",	0x080000, 0x085ec243, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c07",	0x080000, 0x2443df27, CPS1_TILES | BRF_GRA },
+	{ "c03.c17",	0x080000, 0x005f000b, CPS1_TILES | BRF_GRA },
+	{ "c03.c19",	0x080000, 0xb9441519, CPS1_TILES | BRF_GRA },
+	{ "c03.c21",	0x080000, 0xb7d04e8b, CPS1_TILES | BRF_GRA },
+	{ "c03.c23",	0x080000, 0x6b4713b4, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c25",	0x100000, 0xe8507e5b, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c27",	0x100000, 0x1120f48d, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c29",	0x100000, 0xf7a36cd4, CPS1_TILES | BRF_GRA },
+	{ "c03us01.c31",	0x100000, 0xb0ef929a, CPS1_TILES | BRF_GRA },
+	{ "c03us01.m1",	0x010000, 0xa08e24b9, CPS1_Z80_PROGRAM | BRF_ESS | BRF_PRG },
+	{ "c03us01.v1",	0x020000, 0x897269dd, CPS1_OKIM6295_SAMPLES | BRF_SND },
+	{ "c03us01.v2",	0x020000, 0x3f56c8cc, CPS1_OKIM6295_SAMPLES | BRF_SND },
+};
+
+STD_ROM_PICK(Striderus01)
+STD_ROM_FN(Striderus01)
+
+static struct BurnRomInfo Striderjs01RomDesc[] = {
+	{ "c03js01.p1",	0x080000, 0x39260f46, CPS1_68K_PROGRAM_NO_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03js01.p5",	0x080000, 0xabc6d8ff, CPS1_68K_PROGRAM_NO_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03js01.p6",	0x100000, 0x150e1549, CPS1_68K_PROGRAM_NO_BYTESWAP | BRF_ESS | BRF_PRG },
+	{ "c03js01.c01",	0x080000, 0xf92cc010, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c03",	0x080000, 0x9abd7b1e, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c05",	0x080000, 0x085ec243, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c07",	0x080000, 0x2443df27, CPS1_TILES | BRF_GRA },
+	{ "c03.c17",	0x080000, 0x005f000b, CPS1_TILES | BRF_GRA },
+	{ "c03.c19",	0x080000, 0xb9441519, CPS1_TILES | BRF_GRA },
+	{ "c03.c21",	0x080000, 0xb7d04e8b, CPS1_TILES | BRF_GRA },
+	{ "c03.c23",	0x080000, 0x6b4713b4, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c25",	0x100000, 0xe8507e5b, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c27",	0x100000, 0x1120f48d, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c29",	0x100000, 0xf7a36cd4, CPS1_TILES | BRF_GRA },
+	{ "c03js01.c31",	0x100000, 0xb0ef929a, CPS1_TILES | BRF_GRA },
+	{ "c03js01.m1",	0x010000, 0xa08e24b9, CPS1_Z80_PROGRAM | BRF_ESS | BRF_PRG },
+	{ "c03js01.v1",	0x020000, 0x897269dd, CPS1_OKIM6295_SAMPLES | BRF_SND },
+	{ "c03js01.v2",	0x020000, 0x3f56c8cc, CPS1_OKIM6295_SAMPLES | BRF_SND },
+};
+
+STD_ROM_PICK(Striderjs01)
+STD_ROM_FN(Striderjs01)
+
 static struct BurnRomInfo UnsquadRomDesc[] = {
 	{ "aru_30.11f",    0x020000, 0x24d8f88d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "aru_35.11h",    0x020000, 0x8b954b59, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -17908,6 +17959,8 @@ static const struct GameConfig ConfigTable[] =
 	{ "slampic"       , CPS_B_21_QS4, mapper_MB63B , 0, slammast_patch		},
 	{ "slampic2"      , CPS_B_21_QS4, mapper_MB63B , 0, NULL                },
 	{ "strider"       , CPS_B_01    , mapper_ST24M1, 1, NULL                },
+	{ "striderus01"  , CPS_B_01    , mapper_STRIDEREX, 1, NULL             },
+	{ "striderjs01"  , CPS_B_21_DEF, mapper_STRIDEREX, 1, NULL             },
 	{ "striderua"     , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "strideruc"     , CPS_B_17    , mapper_ST24M1, 1, NULL                },
 	{ "striderjr"     , CPS_B_21_DEF, mapper_ST24M1, 1, NULL                },
@@ -22084,6 +22137,29 @@ static INT32 StriderjrInit()
 		Cps1DrawAtVblank = 1;
 	}
 
+	return nRet;
+}
+
+// EX adds a program ROM before the graphics; derive the star ROM index
+// from the loaded program inventory rather than the stock parent's index.
+static INT32 StriderusexInit()
+{
+	INT32 nRet = Cps1RasterInit();
+	if (!nRet) {
+		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
+		CpsLoadStars(CpsStar, nCps68KByteswapRomNum + nCps68KNoByteswapRomNum);
+	}
+	return nRet;
+}
+
+static INT32 StriderjexInit()
+{
+	INT32 nRet = TwelveMhzInit();
+	if (!nRet) {
+		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
+		CpsLoadStars(CpsStar, nCps68KByteswapRomNum + nCps68KNoByteswapRomNum);
+		Cps1DrawAtVblank = 1;
+	}
 	return nRet;
 }
 
@@ -26333,6 +26409,26 @@ struct BurnDriver BurnDrvCpsStriderjr = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, StriderjrRomInfo, StriderjrRomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
 	StriderjrInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsStriderus01 = {
+	"striderus01", "strider", NULL, NULL, "2026",
+	"Strider EX (USA, Backport RC1)\0", NULL, "Strygo", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, Striderus01RomInfo, Striderus01RomName, NULL, NULL, NULL, NULL, StriderInputInfo, StrideruaDIPInfo,
+	StriderusexInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsStriderjs01 = {
+	"striderjs01", "strider", NULL, NULL, "2026",
+	"Strider Hiryu EX (Japan, Backport RC1)\0", NULL, "Strygo", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	NULL, Striderjs01RomInfo, Striderjs01RomName, NULL, NULL, NULL, NULL, StriderInputInfo, StriderDIPInfo,
+	StriderjexInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

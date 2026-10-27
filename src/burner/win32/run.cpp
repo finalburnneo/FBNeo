@@ -168,31 +168,59 @@ static int GetInput(bool bCopy)
 	return 0;
 }
 
-static time_t fpstimer;
-static unsigned int nPreviousFrames;
+static LARGE_INTEGER qpcFreq, qpcLast;
+static UINT32 nLastEmu;
 
 static void DisplayFPSInit()
 {
 	nDoFPS = 0;
-	fpstimer = 0;
-	nPreviousFrames = (bAppDoFast) ? nFramesEmulated : nFramesRendered;
+	QueryPerformanceFrequency(&qpcFreq);
+	QueryPerformanceCounter(&qpcLast);
+	nLastEmu = nFramesEmulated;
 }
 
 static void DisplayFPS()
 {
-	const int nFPSTotal = (bAppDoFast) ? nFramesEmulated : nFramesRendered;
+	LARGE_INTEGER now;
+	QueryPerformanceCounter(&now);
+	double dt = (double)(now.QuadPart - qpcLast.QuadPart) / qpcFreq.QuadPart;
+	if (dt < 1.0) return; // update once per second
 
-	TCHAR fpsstring[20];
-	time_t temptime = clock();
-	double fps = (double)(nFPSTotal - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
+	double fps = (nFramesEmulated - nLastEmu) / dt;
 
-	_sntprintf(fpsstring, 7, _T("%2.2lf"), fps);
-	if (fpstimer && temptime - fpstimer>0) { // avoid strange fps values
-		VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
+	TCHAR s[32];
+	_sntprintf(s, 32, _T("%2.2lf"), fps);
+	VidSNewShortMsg(s, 0xDFDFFF, 480, 0);
+
+	qpcLast = now;
+	nLastEmu = nFramesEmulated;
+}
+
+static void DisplayFPSCheckState()
+{
+	static int bLastFast = -1, bLastPause = -1;
+	static LONGLONG nLastCall = 0;
+	static int timer = 0;
+
+	LARGE_INTEGER now;
+	QueryPerformanceCounter(&now);
+
+	// frame normally runs every ~16.67ms (at 60hz)
+	// a gap over 100ms means something blocked the loop: menu, window drag, dialog, loading...
+	const bool bStalled = nLastCall && qpcFreq.QuadPart &&
+	                      (now.QuadPart - nLastCall) > qpcFreq.QuadPart / 10;
+	nLastCall = now.QuadPart;
+
+	if (bStalled || bAppDoFast != bLastFast || bRunPause != bLastPause) {
+		timer = 30;
+		bLastFast  = bAppDoFast;
+		bLastPause = bRunPause;
 	}
-
-	fpstimer = temptime;
-	nPreviousFrames = nFPSTotal;
+	if (timer > 0) {
+		// it takes a few frames to stabilize...
+		timer--;
+		DisplayFPSInit();
+	}
 }
 
 // define this function somewhere above RunMessageLoop()
@@ -231,6 +259,8 @@ int RunFrame(int bDraw, int bPause)
 {
 	static int bPrevPause = 0;
 	static int bPrevDraw = 0;
+
+	if (bShowFPS) DisplayFPSCheckState();
 
 	if (bPrevDraw && !bPause) {
 		VidPaint(0);							// paint the screen (no need to validate)

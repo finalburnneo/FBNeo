@@ -376,6 +376,8 @@ int ConfigAppLoad()
 		VAR(nAudDSPModule[0]);
 		VAR(nAudSampleRate[1]);
 		VAR(nAudDSPModule[1]);
+		VAR(nAudSampleRate[2]);
+		VAR(nAudDSPModule[2]);
 
 		// Other
 		STR(szPlaceHolder);
@@ -784,7 +786,7 @@ int ConfigAppSave()
 	VAR(nInputSelect);
 	_ftprintf(h, _T("\n"));
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
-	_ftprintf(h, _T("\n// The selected audio plugin\n"));
+	_ftprintf(h, _T("\n// The selected audio plugin (0 = DirectSound, 1 = XAudio2, 2 = WASAPI)\n"));
 	VAR(nAudSelect);
 	_ftprintf(h, _T("\n// Audio Volume\n"));
 	VAR(nAudVolume);
@@ -806,6 +808,12 @@ int ConfigAppSave()
 	VAR(nAudSampleRate[1]);
 	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter, 2 = reverb\n"));
 	VAR(nAudDSPModule[1]);
+	_ftprintf(h, _T("\n"));
+	_ftprintf(h, _T("// --- WASAPI plugin settings -------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// Sample rate\n"));
+	VAR(nAudSampleRate[2]);
+	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter\n"));
+	VAR(nAudDSPModule[2]);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- UI ---------------------------------------------------------------------\n"));

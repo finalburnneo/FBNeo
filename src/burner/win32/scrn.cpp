@@ -2932,6 +2932,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			POST_INITIALISE_MESSAGE;
 			break;
 
+		case MENU_AUD_PLUGIN_3:
+			AudSelect(2);
+			POST_INITIALISE_MESSAGE;
+			break;
+
 		case MENU_DSOUND_NOSOUND:
 			if (!bDrvOkay) {
 				nAudSampleRate[0] = 0;
@@ -2966,6 +2971,25 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_XAUDIO_48000:
 			if (!bDrvOkay) {
 				nAudSampleRate[1] = 48000;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+
+		case MENU_WASAPI_NOSOUND:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 0;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		case MENU_WASAPI_44100:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 44100;
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+		case MENU_WASAPI_48000:
+			if (!bDrvOkay) {
+				nAudSampleRate[2] = 48000;
 				POST_INITIALISE_MESSAGE;
 			}
 			break;
@@ -3010,6 +3034,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_XAUDIO_REVERB:
 			nAudDSPModule[1] ^= 2;
+			break;
+
+		case MENU_WASAPI_BASS:
+			nAudDSPModule[2] ^= 1;
 			break;
 
 		case MENU_WLOGSTART:

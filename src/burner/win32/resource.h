@@ -68,6 +68,7 @@
 #define IDR_MENU_BLITTER_6					115
 #define IDR_MENU_AUD_PLUGIN_1				130
 #define IDR_MENU_AUD_PLUGIN_2				131
+#define IDR_MENU_AUD_PLUGIN_3				132
 #define	IDR_MENU_GAMESEL					140
 #define	IDR_MENU_LUAWINDOW					150
 #define IDR_ACCELERATOR                 	160
@@ -658,12 +659,16 @@
 #define MENU_DSOUND_BASS                    10201
 #define MENU_XAUDIO_BASS                    10202
 #define MENU_XAUDIO_REVERB                  10203
+#define MENU_WASAPI_BASS                    10204
 #define MENU_DSOUND_NOSOUND					10210
 #define MENU_DSOUND_44100               	10213
 #define MENU_DSOUND_48000               	10214
 #define MENU_XAUDIO_NOSOUND					10220
 #define MENU_XAUDIO_44100                   10223
 #define MENU_XAUDIO_48000                   10224
+#define MENU_WASAPI_NOSOUND					10225
+#define MENU_WASAPI_44100                   10226
+#define MENU_WASAPI_48000                   10227
 #define MENU_INTERPOLATE_0					10230
 #define MENU_INTERPOLATE_1					10231
 #define MENU_INTERPOLATE_3					10233

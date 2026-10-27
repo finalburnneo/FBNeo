@@ -1325,6 +1325,7 @@ BEGIN
     	BEGIN
     	    MENUITEM "DirectSound",					MENU_AUD_PLUGIN_1
     	    MENUITEM "XAudio2",						MENU_AUD_PLUGIN_2
+    	    MENUITEM "WASAPI",						MENU_AUD_PLUGIN_3
     	END
     	MENUITEM "Plugin &options",					MENU_AUDIO_OPTIONS, GRAYED
 		POPUP "&Audio Volume"
@@ -1989,6 +1990,18 @@ BEGIN
 		MENUITEM "Sound disabled",					MENU_XAUDIO_NOSOUND
         	MENUITEM "44100Hz samplerate",					MENU_XAUDIO_44100
         	MENUITEM "48000Hz samplerate",					MENU_XAUDIO_48000
+	END
+END
+
+IDR_MENU_AUD_PLUGIN_3 MENU
+BEGIN
+	POPUP "WASAPI plugin"
+	BEGIN
+		MENUITEM "Use Low-pass filter",					MENU_WASAPI_BASS
+		MENUITEM SEPARATOR
+		MENUITEM "Sound disabled",					MENU_WASAPI_NOSOUND
+        	MENUITEM "44100Hz samplerate",					MENU_WASAPI_44100
+        	MENUITEM "48000Hz samplerate",					MENU_WASAPI_48000
 	END
 END
 

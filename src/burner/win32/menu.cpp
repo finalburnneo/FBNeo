@@ -728,6 +728,7 @@ int MenuCreate()
 
 		hAudioPluginMenu[0] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_1));
 		hAudioPluginMenu[1] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_2));
+		hAudioPluginMenu[2] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_3));
 	}
 
 	if (hMenuPopup == NULL) {
@@ -1417,6 +1418,25 @@ void MenuUpdate()
 			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_ENABLED  | MF_BYCOMMAND);
 			break;
 		}
+
+		case 2: {
+			var = MENU_WASAPI_NOSOUND;
+			if (nAudSampleRate[2] > 0) {
+				if (nAudSampleRate[2] <= 44100) {
+					var = MENU_WASAPI_44100;
+					nAudSampleRate[2] = 44100; // sanity
+				} else {
+					var = MENU_WASAPI_48000;
+					nAudSampleRate[2] = 48000;
+				}
+			}
+			CheckMenuRadioItem(hMenu, MENU_WASAPI_NOSOUND, MENU_WASAPI_48000, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_WASAPI_BASS, (nAudDSPModule[2] & 1) ? MF_CHECKED : MF_UNCHECKED);
+			// WASAPI is able to amp volume above 0db, enable:
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_ENABLED  | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_ENABLED  | MF_BYCOMMAND);
+			break;
+		}
 	}
 
 	var = MENU_INTERPOLATE_0 + nInterpolation;
@@ -1689,7 +1709,7 @@ void MenuEnableItems()
 		SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
 	}
 
-	if (hBlitterMenu[nAudSelect]) {
+	if (hAudioPluginMenu[nAudSelect]) {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
@@ -1766,6 +1786,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_44100,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_48000,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_44100,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_48000,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INTERPOLATE_FM_0,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INTERPOLATE_FM_3,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_FRAMES,				MF_GRAYED  | MF_BYCOMMAND);
@@ -1783,6 +1806,7 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_3,		MF_GRAYED   | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
@@ -2080,6 +2104,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_44100,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_48000,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_NOSOUND,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_44100,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_48000,				MF_ENABLED | MF_BYCOMMAND);
 //		EnableMenuItem(hMenu, MENU_INTERPOLATE_1,		MF_ENABLED | MF_BYCOMMAND);
 //		EnableMenuItem(hMenu, MENU_INTERPOLATE_3,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_WLOGSTART,			MF_GRAYED  | MF_BYCOMMAND);
@@ -2100,6 +2127,7 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, 		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_3,		 MF_ENABLED  | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_1,		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_2,		MF_ENABLED  | MF_BYCOMMAND);

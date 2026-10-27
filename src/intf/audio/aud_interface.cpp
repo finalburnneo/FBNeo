@@ -1,7 +1,7 @@
 // Audio Output
 #include "burner.h"
 
-INT32 nAudSampleRate[8] = { 44100, 44100, 22050, 22050, 22050, 22050, 22050, 22050 };			// sample rate
+INT32 nAudSampleRate[8] = { 44100, 44100, 48000, 22050, 22050, 22050, 22050, 22050 };			// sample rate
 INT32 nAudVolume = 10000;				// Sound volume (% * 100)
 INT32 nAudSegCount = 6;				// Segs in the pdsbLoop buffer
 INT32 nAudSegLen = 0;					// Seg length in samples (calculated from Rate/Fps)
@@ -19,6 +19,7 @@ static UINT32 nAudActive = 0;
 #if defined (BUILD_WIN32)
 	extern struct AudOut AudOutDx;
 	extern struct AudOut AudOutXAudio2;
+	extern struct AudOut AudOutWASAPI;
 #elif defined (BUILD_MACOS)
     extern struct AudOut AudOutMacOS;
 #elif defined (BUILD_SDL) 
@@ -43,6 +44,7 @@ static struct AudOut *pAudOut[]=
 #if defined (BUILD_WIN32)
 	&AudOutDx,
 	&AudOutXAudio2,
+	&AudOutWASAPI,
 #elif defined (BUILD_MACOS)
     &AudOutMacOS,
 #elif defined (BUILD_SDL) 

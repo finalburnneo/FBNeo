@@ -88,7 +88,8 @@ typedef enum {
 	FBHeadlessButton6,
 	FBHeadlessButtonStart,
 	FBHeadlessButtonCoin,
-	FBHeadlessButtonService,
+	FBHeadlessButtonService,   // test switch (settings menu); "service" when there is none
+	FBHeadlessButtonConfigure, // "service" input of drivers that also have a test switch
 	FBHeadlessButtonCount
 } FBHeadlessButton;
 void FBHeadlessSetInput(int player, int button, int value);

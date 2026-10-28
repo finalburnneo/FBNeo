@@ -73,11 +73,37 @@ static int hl_classify(const char *szInfo, int *outPlayer, int *outButton)
 	return 0;
 }
 
+// Cabinet-wide test switch ("diag" in most drivers), which opens the game's
+// settings menu.
+static int hl_is_test_switch(const char *szInfo)
+{
+	return szInfo != NULL &&
+	       (!strcmp(szInfo, "diag") || !strcmp(szInfo, "diagnostic") ||
+	        !strcmp(szInfo, "diagnostics") || !strcmp(szInfo, "test"));
+}
+
+// Cabinet-wide "service" input. Drivers with a separate test switch use it as a
+// service credit; older drivers without one use it as the test switch itself.
+static int hl_is_service_switch(const char *szInfo)
+{
+	return szInfo != NULL && !strcmp(szInfo, "service");
+}
+
 // Rebind every digital input of the loaded driver to the headless code space.
 // Called after DrvInit (which runs GameInpInit/GameInpDefault).
 void headless_map_inputs(void)
 {
 	struct BurnInputInfo bii;
+
+	// Service always opens the settings menu: it drives the test switch when the
+	// driver has one (and Configure drives "service"), otherwise "service".
+	int hasTestSwitch = 0;
+	for (UINT32 i = 0; i < nGameInpCount; i++) {
+		if (BurnDrvGetInputInfo(&bii, i) == 0 && bii.nType == BIT_DIGITAL && hl_is_test_switch(bii.szInfo)) {
+			hasTestSwitch = 1;
+			break;
+		}
+	}
 
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		if (BurnDrvGetInputInfo(&bii, i))
@@ -88,7 +114,11 @@ void headless_map_inputs(void)
 		GameInp[i].nInput = GIT_SWITCH;
 
 		int player = 0, button = 0;
-		if (hl_classify(bii.szInfo, &player, &button) && player >= 0 && player < 4)
+		if (hl_is_test_switch(bii.szInfo))
+			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(0, FBHeadlessButtonService);
+		else if (hl_is_service_switch(bii.szInfo))
+			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(0, hasTestSwitch ? FBHeadlessButtonConfigure : FBHeadlessButtonService);
+		else if (hl_classify(bii.szInfo, &player, &button) && player >= 0 && player < 4)
 			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(player, button);
 		else
 			GameInp[i].Input.Switch.nCode = HL_CODE_DEAD;

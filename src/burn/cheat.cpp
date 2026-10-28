@@ -888,18 +888,17 @@ unsigned int ReadMemoryRange(HWAddressType address, unsigned char *buffer, unsig
 	return i;
 }
 
-// Multi-byte order hint for the host's cheat search. This deliberately does NOT
-// return the CPU's native endianness. RetroAchievements sets and libretro .cht
-// cheats (the formats the host matches) are authored little-endian for the 68K
-// arcade boards -- every FBNeo libretro .cht is big_endian="false" -- so those
-// report 0 here, which is what the host needs. MB_CHEAT_ENDI_SWAP is set only by
-// V60/TMS34010, which report 1; no multi-byte cheats target those boards today
-// and RA reads raw bytes, so that case is a known, currently-harmless mismatch
-// rather than a reason to switch to (nAddressFlags & 3).
+// Multi-byte order hint for the host's cheat search and cheat writes. This is
+// deliberately NOT derived from nAddressFlags: RetroAchievements sets and
+// libretro .cht cheats (the formats the host matches) are authored
+// little-endian for the 68K arcade boards -- every FBNeo libretro .cht is
+// big_endian="false" -- and the CPUs that set MB_CHEAT_ENDI_SWAP (TMS34010,
+// V60) are natively little-endian; the flag only exists because FBNeo's own
+// cheat engine stores values big-endian. Reporting 1 for those made the host
+// write "0000A260:00A1" in Mortal Kombat as bytes 00 A1, so the game read
+// P1 health as 0xA100. Every board is therefore reported little-endian.
 int GetMainMemoryBigEndian()
 {
-	if (!bDrvOkay)
-		return 0;
-	return (cpus[0].cpuconfig->nAddressFlags & MB_CHEAT_ENDI_SWAP) ? 1 : 0;
+	return 0;
 }
 #endif

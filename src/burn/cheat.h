@@ -86,5 +86,5 @@ bool IsHardwareAddressValid(HWAddressType address);
 // OpenEmu-Silicon headless helpers (see cheat.cpp).
 unsigned int GetMainMemorySize();
 unsigned int ReadMemoryRange(HWAddressType address, unsigned char *buffer, unsigned int length);
-int GetMainMemoryBigEndian(); // 1 if the main CPU needs big-endian multibyte cheats
+int GetMainMemoryBigEndian(); // multibyte order for host cheats; always 0 (little-endian), see cheat.cpp
 #endif

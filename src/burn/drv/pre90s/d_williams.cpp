@@ -2657,8 +2657,6 @@ static INT32 DrvFrame()
 	{
 		scanline = i;
 
-		CPU_RUN(0, M6809);
-
 		if (williams2) {
 			if ((scanline & 0x1f) == 0 && scanline < 256) { // va11
 				pia_set_input_cb1(0, scanline & 0x20);
@@ -2680,6 +2678,7 @@ static INT32 DrvFrame()
 			if (scanline == 0 || scanline == 240)
 				pia_set_input_ca1(1, scanline >= 240 ? 1 : 0);
 		}
+		CPU_RUN(0, M6809);
 
 		M6800Open(0);
 		if (has_s11_bg) joust2_bg_cb2_flush(); // slightly delayed message(s) from s11bg -> main sound

@@ -105,7 +105,7 @@ int FBHeadlessLoadDriver(const char *shortName)
 	InputInit();
 	AudSoundInit();
 
-	if (DrvInit(i, false))
+	if (DrvInit(i, true)) // true: restore battery-backed RAM
 		return 1;
 
 	VidInit(); // after DrvInit: the game's visible size is known
@@ -167,7 +167,7 @@ void FBHeadlessReset(void)
 {
 	if (!bDrvOkay)
 		return;
-	DrvInit(nBurnDrvActive, false); // full re-init (DrvInit calls DrvExit first)
+	DrvInit(nBurnDrvActive, true);  // full re-init; DrvExit saves battery RAM, DrvInit restores it
 	VidInit();                      // DrvInit defers blitter init + frees buffers; recreate them
 	headless_map_inputs();
 	FBHeadlessCheevosInit();         // RAM buffers were reallocated; refresh the map

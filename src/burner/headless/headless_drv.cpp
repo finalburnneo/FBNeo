@@ -16,6 +16,20 @@ char szAppRomPaths[DIRS_MAX][MAX_PATH] = { { "roms/" }, };
 
 static bool bSaveRAM = false;
 
+// Battery-backed RAM (ACB_NVRAM: Mortal Kombat's settings, Robotron's high
+// scores...) is not saved by the driver, unlike the EEPROM device. Like the
+// Windows burner's StatedAuto, keep it in <szAppEEPROMPath><set>.fs: loaded
+// after init and saved before exit. Drivers without NVRAM write no file.
+static void DrvNvramAuto(int bSave)
+{
+	TCHAR szName[MAX_PATH];
+	_stprintf(szName, _T("%s%s.fs"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
+	if (bSave)
+		BurnStateSave(szName, 0);
+	else
+		BurnStateLoad(szName, 0, NULL);
+}
+
 static int DoLibInit() // Init the Burn library's driver
 {
 	BzipOpen(false);
@@ -72,6 +86,10 @@ int DrvInit(int nDrvNum, bool bRestore)
 	nBurnLayer = 0xFF;
 	ConfigCheatLoad();
 	RunReset();
+	if (bRestore) {
+		DrvNvramAuto(0);
+		bSaveRAM = true;
+	}
 	return 0;
 }
 
@@ -84,6 +102,10 @@ int DrvExit()
 {
 	if (bDrvOkay) {
 		if (nBurnDrvActive < nBurnDrvCount) {
+			if (bSaveRAM) {
+				DrvNvramAuto(1);
+				bSaveRAM = false;
+			}
 			ConfigGameSave(bSaveInputs);
 			GameInpExit();
 			BurnDrvExit();

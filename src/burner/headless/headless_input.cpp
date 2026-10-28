@@ -89,6 +89,78 @@ static int hl_is_service_switch(const char *szInfo)
 	return szInfo != NULL && !strcmp(szInfo, "service");
 }
 
+// Index of a direction word at the start of s (0 left, 1 up, 2 down, 3 right),
+// or -1. *len receives its length.
+static int hl_direction(const char *s, size_t *len)
+{
+	static const char *const dirs[] = { "left", "up", "down", "right" };
+	for (int d = 0; d < 4; d++) {
+		size_t n = strlen(dirs[d]);
+		if (!strncasecmp(s, dirs[d], n)) {
+			*len = n;
+			return d;
+		}
+	}
+	return -1;
+}
+
+// Twin-stick games (Robotron, Smash TV, Angel Kids, Ikari Warriors...), mapped
+// the way the MAME core does: the left stick on the player's d-pad, the right
+// stick on buttons 1-4 (left, up, down, right), since OpenEmu's arcade
+// controller has one stick. Drivers name the sticks inconsistently: the second
+// stick may be "pN <dir> 2", or either stick may borrow another player's plain
+// d-pad ("p2 up" for Robotron's "Fire Up", "p3 up" for Angel Kids' "P1 Left
+// Stick Up"). The display name, when it names a stick, decides the stick and
+// the player; otherwise "pN <dir> 2" is player N's right stick.
+static int hl_twin_stick(const char *szName, const char *szInfo, int *outPlayer, int *outButton)
+{
+	if (szName == NULL || szInfo == NULL)
+		return 0;
+	if (szInfo[0] != 'p' || szInfo[1] < '1' || szInfo[1] > '4' || szInfo[2] != ' ')
+		return 0;
+
+	size_t len = 0;
+	int dir = hl_direction(szInfo + 3, &len);
+	if (dir < 0)
+		return 0;
+	const char *rest = szInfo + 3 + len;
+	int secondStick = !strcmp(rest, " 2");
+	if (!secondStick && *rest != '\0')
+		return 0;
+
+	static const struct { const char *prefix; int right; } sticks[] = {
+		{ "Left Stick ", 0 }, { "Lft Stick ", 0 }, { "L Stick ", 0 }, { "Left ", 0 },
+		{ "Right Stick ", 1 }, { "Rght Stick ", 1 }, { "ight Stick ", 1 }, { "R Stick ", 1 },
+		{ "Right ", 1 }, { "Fire ", 1 }, { "Shoot ", 1 }, { "Aim ", 1 },
+	};
+	static const int dpad[] = { FBHeadlessButtonLeft, FBHeadlessButtonUp, FBHeadlessButtonDown, FBHeadlessButtonRight };
+
+	const char *n = szName;
+	int player = 0;
+	if ((n[0] == 'P' || n[0] == 'p') && n[1] >= '1' && n[1] <= '4' && n[2] == ' ') {
+		player = n[1] - '1';
+		n += 3;
+	}
+	for (size_t s = 0; s < sizeof(sticks) / sizeof(sticks[0]); s++) {
+		size_t sl = strlen(sticks[s].prefix);
+		size_t nameDirLen = 0;
+		if (strncasecmp(n, sticks[s].prefix, sl) != 0)
+			continue;
+		if (hl_direction(n + sl, &nameDirLen) != dir || n[sl + nameDirLen] != '\0')
+			break;
+		*outPlayer = player;
+		*outButton = sticks[s].right ? FBHeadlessButton1 + dir : dpad[dir];
+		return 1;
+	}
+
+	if (secondStick) {
+		*outPlayer = szInfo[1] - '1';
+		*outButton = FBHeadlessButton1 + dir;
+		return 1;
+	}
+	return 0;
+}
+
 // Rebind every digital input of the loaded driver to the headless code space.
 // Called after DrvInit (which runs GameInpInit/GameInpDefault).
 void headless_map_inputs(void)
@@ -118,6 +190,8 @@ void headless_map_inputs(void)
 			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(0, FBHeadlessButtonService);
 		else if (hl_is_service_switch(bii.szInfo))
 			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(0, hasTestSwitch ? FBHeadlessButtonConfigure : FBHeadlessButtonService);
+		else if (hl_twin_stick(bii.szName, bii.szInfo, &player, &button))
+			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(player, button);
 		else if (hl_classify(bii.szInfo, &player, &button) && player >= 0 && player < 4)
 			GameInp[i].Input.Switch.nCode = (UINT16)hl_code(player, button);
 		else

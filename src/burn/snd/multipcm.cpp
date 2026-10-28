@@ -466,9 +466,40 @@ void MultiPCMExit()
 	}
 }
 
+// The slot pointers (sample, LFO tables) are only valid in the process that set
+// them, a state loaded in another one (netplay) would crash. They are kept out of
+// the state and rebuilt from the slot registers, as WriteSlot sets them: reg 1
+// selects the sample, regs 6 and 7 the LFO scales (an LFO is only stepped when
+// its depth, reg & 7, is not zero).
+static void ClearSlotPointers()
+{
+	for (INT32 i = 0; i < 28; i++) {
+		SLOT *slot = &chip.Slots[i];
+
+		slot->Sample = NULL;
+		slot->PLFO.table = slot->PLFO.scale = NULL;
+		slot->ALFO.table = slot->ALFO.scale = NULL;
+	}
+}
+
+static void RebuildSlotPointers()
+{
+	for (INT32 i = 0; i < 28; i++) {
+		SLOT *slot = &chip.Slots[i];
+
+		slot->Sample = chip.Samples + slot->Regs[1];
+		slot->PLFO.table = PLFO_TRI;
+		slot->PLFO.scale = PSCALES[slot->Regs[6] & 7];
+		slot->ALFO.table = ALFO_TRI;
+		slot->ALFO.scale = ASCALES[slot->Regs[7] & 7];
+	}
+}
+
 void MultiPCMScan(INT32 nAction, INT32 *pnMin)
 {
+	ClearSlotPointers();
 	SCAN_VAR(chip);
+	RebuildSlotPointers();
 }
 
 void MultiPCMReset()

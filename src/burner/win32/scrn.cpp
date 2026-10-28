@@ -2295,6 +2295,8 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bVidDWMSync = !bVidDWMSync;
 			if (bVidDWMSync && bVidVSync)
 				bVidVSync = 0;
+			if (bVidDWMSync)
+				bVidVRR = 0;
 
 			POST_INITIALISE_MESSAGE;
 			break;
@@ -2909,6 +2911,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bVidVSync = !bVidVSync;
 			if (bVidVSync && bVidDWMSync)
 				bVidDWMSync = 0;
+			if (bVidVSync)
+				bVidVRR = 0;
+
+			POST_INITIALISE_MESSAGE;
+			break;
+
+		case MENU_VRR:
+			bVidVRR = !bVidVRR;
+			if (bVidVRR) {
+				bVidVSync = 0;
+				bVidDWMSync = 0;
+			}
 
 			POST_INITIALISE_MESSAGE;
 			break;

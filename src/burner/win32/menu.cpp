@@ -1072,6 +1072,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_WINFS, bVidDX9WinFullscreen ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_DWMFIX, bVidDWMSync ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_VRR, bVidVRR ? MF_CHECKED : MF_UNCHECKED);
 
 	var = nVidSelect + MENU_BLITTER_1;
 	CheckMenuRadioItem(hMenu, MENU_BLITTER_1, MENU_BLITTER_8, var, MF_BYCOMMAND);

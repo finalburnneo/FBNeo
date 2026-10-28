@@ -257,6 +257,62 @@ void do_shonky_profile()
 }
 #endif
 
+// Present pacing when no video sync is active.
+// Frames are produced when the audio engine signals a free segment, which happens on
+// its own period (~10ms on Vista+), so frame times alternate e.g. 20/20/10ms.
+// Presents are held back to a steady QPC schedule which follows the audio clock.
+static LARGE_INTEGER qpcPaceFreq;
+static LONGLONG nPaceNext = 0;
+
+static bool RunPaceActive()
+{
+	if (bVidVSync || (bVidDWMSync && !nVidFullscreen)) return false;
+	if (bAppDoFast || kNetGame) return false;
+
+	return true;
+}
+
+static void RunPacePresent()
+{
+	if (!RunPaceActive()) {
+		nPaceNext = 0;
+		return;
+	}
+
+	if (qpcPaceFreq.QuadPart == 0) {
+		QueryPerformanceFrequency(&qpcPaceFreq);
+	}
+
+	LONGLONG nPeriod;
+	if (bAudPlaying && nBurnSoundRate > 0 && nBurnSoundLen > 0) {
+		nPeriod = qpcPaceFreq.QuadPart * nBurnSoundLen / nBurnSoundRate;
+	} else {
+		nPeriod = qpcPaceFreq.QuadPart * 100 / nAppVirtualFps;
+	}
+
+	LARGE_INTEGER now;
+	QueryPerformanceCounter(&now);
+
+	LONGLONG nLead = nPaceNext - now.QuadPart;
+	if (nPaceNext == 0 || nLead < 0) {
+		// late (or first frame): present now, the schedule follows
+		nPaceNext = now.QuadPart;
+	} else if (nLead > nPeriod) {
+		// schedule drifted ahead of the frame source, pull it back
+		nPaceNext = now.QuadPart + nPeriod;
+	}
+
+	const LONGLONG nSleepMargin = qpcPaceFreq.QuadPart * 2 / 1000;
+	for (;;) {
+		QueryPerformanceCounter(&now);
+		LONGLONG nRemain = nPaceNext - now.QuadPart;
+		if (nRemain <= 0) break;
+		Sleep((bEnableHighResTimer && nRemain > nSleepMargin) ? 1 : 0);
+	}
+
+	nPaceNext += nPeriod;
+}
+
 // With or without sound, run one frame.
 // If bDraw is true, it's the last frame before we are up to date, and so we should draw the screen
 int RunFrame(int bDraw, int bPause)
@@ -267,6 +323,7 @@ int RunFrame(int bDraw, int bPause)
 	if (bShowFPS) DisplayFPSCheckState();
 
 	if (bPrevDraw && !bPause) {
+		RunPacePresent();
 		VidPaint(0);							// paint the screen (no need to validate)
 
 		if (!nVidFullscreen && bVidDWMSync)     // Sync to DWM (Win7+, windowed)
@@ -523,6 +580,7 @@ int RunReset()
 {
 	// Reset the speed throttling code
 	nNormalLast = 0; nNormalFrac = 0;
+	nPaceNext = 0;
 
 	// Reset FPS display
 	DisplayFPSInit();

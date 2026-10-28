@@ -1316,6 +1316,7 @@ BEGIN
         MENUITEM "Enable Windowed Fullscreen (DX9/DX11 Blitters)",	MENU_WINFS
 		MENUITEM "Enable VSync (Windowed)",						MENU_VIDEOVSYNC
 		MENUITEM "Enable DWM Sync (Windowed)",				MENU_DWMFIX
+		MENUITEM "Enable Variable Refresh Rate (DX11, Win10+)",	MENU_VRR
 		MENUITEM "Auto Frameskip",								MENU_AUTOFRAMESKIP
 		MENUITEM "Enable RunAhead",								MENU_RUNAHEAD
     END

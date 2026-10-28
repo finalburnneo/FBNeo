@@ -602,6 +602,7 @@
 #define MENU_WINFS                          10101
 #define MENU_FULL                       	10102
 #define MENU_DWMFIX							10103
+#define MENU_VRR							10104
 #define MENU_NOSTRETCH                  	10110
 #define MENU_STRETCH                    	10111
 #define MENU_ASPECT                     	10112

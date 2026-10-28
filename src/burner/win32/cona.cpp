@@ -296,6 +296,7 @@ int ConfigAppLoad()
 		VAR(bVidDX9WinFullscreen);
 		VAR(bVidVSync);
 		VAR(bVidDWMSync);
+		VAR(bVidVRR);
 
 		VAR(bVidScanlines);
 		VAR(nVidScanIntensity);
@@ -687,6 +688,8 @@ int ConfigAppSave()
 	VAR(bVidVSync);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise to DWM on Windows 7+, this fixes frame stuttering problems.\n"));
 	VAR(bVidDWMSync);
+	_ftprintf(h, _T("\n// If non-zero, use variable refresh rate (G-Sync/FreeSync) with the DX11 blitter on Windows 10+\n"));
+	VAR(bVidVRR);
 	_ftprintf(h, _T("\n// Transfer method:  0 = blit from system memory / use driver/DirectX texture management;\n"));
 	_ftprintf(h, _T("//                   1 = copy to a video memory surface, then use bltfast();\n"));
 	_ftprintf(h, _T("//                  -1 = autodetect for DirectDraw, equals 1 for Direct3D\n"));

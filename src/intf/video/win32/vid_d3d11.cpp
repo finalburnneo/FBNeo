@@ -53,6 +53,7 @@
 static const GUID FBNEO_IID_IDXGIDevice		= { 0x54ec77fa, 0x1377, 0x44e6, { 0x8c, 0x32, 0x88, 0xfd, 0x5f, 0x44, 0xc8, 0x4c } };
 static const GUID FBNEO_IID_IDXGIDevice1	= { 0x77db970f, 0x6276, 0x48ba, { 0xba, 0x28, 0x07, 0x01, 0x43, 0xb4, 0x39, 0x2c } };
 static const GUID FBNEO_IID_IDXGIFactory	= { 0x7b7166ec, 0x21c7, 0x44ae, { 0xb2, 0x1a, 0xc9, 0xae, 0x32, 0x1a, 0xe3, 0x69 } };
+static const GUID FBNEO_IID_IDXGIFactory5	= { 0x7632e1f5, 0xee65, 0x4dca, { 0x87, 0xfd, 0x84, 0xcd, 0x75, 0xf8, 0x83, 0x8d } };
 static const GUID FBNEO_IID_ID3D11Texture2D	= { 0x6f15aaf2, 0xd208, 0x4e89, { 0x9a, 0xb4, 0x48, 0x95, 0x35, 0xd3, 0x4f, 0x9c } };
 // ID3D11ShaderReflection changed IID between d3dcompiler versions
 static const GUID FBNEO_IID_ID3D11ShaderReflection_47 = { 0x8d536ca1, 0x0cca, 0x4956, { 0xa8, 0x37, 0x78, 0x69, 0x63, 0x75, 0x55, 0x84 } };
@@ -61,6 +62,9 @@ static const GUID FBNEO_IID_ID3D11ShaderReflection_43 = { 0x0a233719, 0x3960, 0x
 // DXGI values that older headers may not have
 #define FBNEO_DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL	((DXGI_SWAP_EFFECT)3)
 #define FBNEO_DXGI_SWAP_EFFECT_FLIP_DISCARD		((DXGI_SWAP_EFFECT)4)
+#define FBNEO_DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING	0x800
+#define FBNEO_DXGI_PRESENT_ALLOW_TEARING		0x200
+#define FBNEO_DXGI_FEATURE_PRESENT_ALLOW_TEARING	0
 
 // ----------------------------------------------------------------------------
 // Runtime-loaded DLLs
@@ -165,6 +169,7 @@ static ID3D11RenderTargetView* pRenderTarget = NULL;
 static D3D_FEATURE_LEVEL nFeatureLevel = D3D_FEATURE_LEVEL_9_1;
 static bool bWarpDevice = false;
 static DXGI_SWAP_EFFECT nSwapEffect = DXGI_SWAP_EFFECT_DISCARD;
+static UINT nSwapChainFlags = 0;
 static UINT nSwapChainWidth = 0, nSwapChainHeight = 0;
 static UINT nDeviceGeneration = 0;					// bumped every time a device is created (OSD textures follow it)
 static bool bDeviceLost = false;
@@ -2579,7 +2584,7 @@ static int d3d11ResizeSwapChain(UINT nWidth, UINT nHeight)
 	pContext->OMSetRenderTargets(0, NULL, NULL);
 	D3D11_RELEASE(pRenderTarget);
 
-	if (FAILED(pSwapChain->ResizeBuffers(0, nWidth, nHeight, DXGI_FORMAT_UNKNOWN, 0))) {
+	if (FAILED(pSwapChain->ResizeBuffers(0, nWidth, nHeight, DXGI_FORMAT_UNKNOWN, nSwapChainFlags))) {
 		return 1;
 	}
 
@@ -2587,6 +2592,27 @@ static int d3d11ResizeSwapChain(UINT nWidth, UINT nHeight)
 	nSwapChainHeight = nHeight;
 
 	return d3d11CreateRenderTarget();
+}
+
+// IDXGIFactory5::CheckFeatureSupport() is called through the vtable, so no DXGI 1.5 headers are needed
+static bool d3d11TearingSupported(IDXGIFactory* pFactory)
+{
+	typedef HRESULT (STDMETHODCALLTYPE* pfnCheckFeatureSupport)(void*, UINT, void*, UINT);
+	void* pFactory5 = NULL;
+	BOOL bAllowTearing = FALSE;
+
+	if (FAILED(pFactory->QueryInterface(FBNEO_IID_IDXGIFactory5, &pFactory5))) {
+		return false;
+	}
+
+	pfnCheckFeatureSupport pCheckFeatureSupport = (pfnCheckFeatureSupport)((*(void***)pFactory5)[28]);
+	if (FAILED(pCheckFeatureSupport(pFactory5, FBNEO_DXGI_FEATURE_PRESENT_ALLOW_TEARING, &bAllowTearing, sizeof(bAllowTearing)))) {
+		bAllowTearing = FALSE;
+	}
+
+	((IUnknown*)pFactory5)->Release();
+
+	return bAllowTearing != FALSE;
 }
 
 static int d3d11CreateSwapChain()
@@ -2613,6 +2639,9 @@ static int d3d11CreateSwapChain()
 	nSwapChainWidth = (rect.right > 0) ? rect.right : 1;
 	nSwapChainHeight = (rect.bottom > 0) ? rect.bottom : 1;
 
+	bool bTearing = bVidVRR && d3d11TearingSupported(pFactory);
+	nSwapChainFlags = 0;
+
 	// Prefer the flip model (Win10: FLIP_DISCARD, Win8: FLIP_SEQUENTIAL), fall back to the blt model (Win7)
 	static const DXGI_SWAP_EFFECT SwapEffects[] = { FBNEO_DXGI_SWAP_EFFECT_FLIP_DISCARD, FBNEO_DXGI_SWAP_EFFECT_FLIP_SEQUENTIAL, DXGI_SWAP_EFFECT_DISCARD };
 
@@ -2630,9 +2659,11 @@ static int d3d11CreateSwapChain()
 		scd.OutputWindow = hD3D11View;
 		scd.Windowed = TRUE;
 		scd.SwapEffect = SwapEffects[i];
+		scd.Flags = (bFlip && bTearing) ? FBNEO_DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING : 0;
 
 		if (SUCCEEDED(pFactory->CreateSwapChain(pDevice, &scd, &pSwapChain))) {
 			nSwapEffect = SwapEffects[i];
+			nSwapChainFlags = scd.Flags;
 		} else {
 			pSwapChain = NULL;
 		}
@@ -3447,7 +3478,10 @@ static int d3d11Paint(int bValidate)
 		return 1;
 	}
 
-	HRESULT hr = pSwapChain->Present((bVidVSync && !EmulatorAppIsFast()) ? 1 : 0, 0);
+	UINT nSyncInterval = (bVidVSync && !EmulatorAppIsFast()) ? 1 : 0;
+	// VRR: present immediately, the display follows our own frame pacing
+	UINT nPresentFlags = (nSyncInterval == 0 && (nSwapChainFlags & FBNEO_DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING)) ? FBNEO_DXGI_PRESENT_ALLOW_TEARING : 0;
+	HRESULT hr = pSwapChain->Present(nSyncInterval, nPresentFlags);
 
 	bInPaint = false;
 
@@ -3487,6 +3521,12 @@ static int d3d11GetSettings(InterfaceInfo* pInfo)
 		IntInfoAddStringModule(pInfo, _T("Using a blt-model swap chain"));
 	} else {
 		IntInfoAddStringModule(pInfo, _T("Using a flip-model swap chain"));
+	}
+
+	if (nSwapChainFlags & FBNEO_DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING) {
+		IntInfoAddStringModule(pInfo, _T("Variable refresh rate (tearing) presents enabled"));
+	} else if (bVidVRR) {
+		IntInfoAddStringModule(pInfo, _T("Variable refresh rate requested, but not supported"));
 	}
 
 	if (nVidFullscreen) {

@@ -17918,25 +17918,9 @@ struct BurnDriver BurnDrvCpsVsav2te = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Also accept the unmodified public HBMAME archives without renaming the
-// registered drivers (and their configuration, NVRAM and save-state paths).
-static INT32 Usf2GetZipName(char** pszName, UINT32 i)
-{
-	if (pszName == NULL) return 1;
-	*pszName = NULL;
-	if (i == 0) *pszName = BurnDrvGetTextA(DRV_NAME);
-	if (i == 1) {
-		static char usa[] = "usf2t8";
-		static char japan[] = "usf2j8";
-		*pszName = !strcmp(BurnDrvGetTextA(DRV_NAME), "usf2t") ? usa : japan;
-	}
-	if (i == 2) *pszName = BurnDrvGetTextA(DRV_PARENT);
-	return *pszName == NULL ? 1 : 0;
-}
-
 // Ultra Street Fighter II: The Final Challengers (USA, Backport RC5)
 // 2026-10-28
-static struct BurnRomInfo Usf2tRomDesc[] = {
+static struct BurnRomInfo Usf2uRomDesc[] = {
 	{ "sfxj.03d",		0x080000, 0xb68685d2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.04a",		0x080000, 0x98f735de, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.05",		0x080000, 0xf4ff18f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -17974,22 +17958,22 @@ static struct BurnRomInfo Usf2tRomDesc[] = {
 	{ "ssf2xj.key",		0x000014, 0x160d1424, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Usf2t)
-STD_ROM_FN(Usf2t)
+STD_ROM_PICK(Usf2u)
+STD_ROM_FN(Usf2u)
 
-struct BurnDriver BurnDrvCpsUsf2t = {
-	"usf2t", "ssf2t", NULL, NULL, "2026",
+struct BurnDriver BurnDrvCpsUsf2u = {
+	"usf2u", "ssf2t", NULL, NULL, "2026",
 	"Ultra Street Fighter II: The Final Challengers (USA, Backport RC5)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	Usf2GetZipName, Usf2tRomInfo, Usf2tRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	NULL, Usf2uRomInfo, Usf2uRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Usf2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
 // Ultra Street Fighter II: The Final Challengers (Japan, Backport RC5)
 // 2026-10-28
-static struct BurnRomInfo Usf2xjRomDesc[] = {
+static struct BurnRomInfo Usf2jRomDesc[] = {
 	{ "sfxj.03d",		0x080000, 0xe3c398a2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.04a",		0x080000, 0x14b3193b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxj.05",		0x080000, 0xf4ff18f5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -18027,15 +18011,15 @@ static struct BurnRomInfo Usf2xjRomDesc[] = {
 	{ "ssf2xj.key",		0x000014, 0x160d1424, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Usf2xj)
-STD_ROM_FN(Usf2xj)
+STD_ROM_PICK(Usf2j)
+STD_ROM_FN(Usf2j)
 
-struct BurnDriver BurnDrvCpsUsf2xj = {
-	"usf2xj", "ssf2t", NULL, NULL, "2026",
+struct BurnDriver BurnDrvCpsUsf2j = {
+	"usf2j", "ssf2t", NULL, NULL, "2026",
 	"Ultra Street Fighter II: The Final Challengers (Japan, Backport RC5)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	Usf2GetZipName, Usf2xjRomInfo, Usf2xjRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	NULL, Usf2jRomInfo, Usf2jRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Usf2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

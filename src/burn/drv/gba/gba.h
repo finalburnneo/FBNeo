@@ -1,4 +1,4 @@
-// FBNeo GBA core — central header: MMIO map, core state, host glue, public API.
+// FBNeo GBA core - central header: MMIO map, core state, host glue, public API.
 // Core implementation derived from SkyEmu/Cult-of-GBA; see license.txt.
 
 #pragma once
@@ -444,6 +444,10 @@ typedef struct {
 	float  ghosting_strength;
 	UINT32 mosaic_y_counter;
 	bool   render_per_pixel;	// per-pixel sampling vs whole-scanline render
+	// VRAM byte range [lo,hi) written since the last per-scanline checkpoint.
+	// The worker captures per-line VRAM from it (see gbappu_worker.h).
+	UINT32 vram_dirty_lo;
+	UINT32 vram_dirty_hi;
 } gba_ppu_t;
 
 typedef struct {
@@ -481,17 +485,26 @@ typedef struct {
 		INT8  data[64];
 		INT32 read_ptr;
 		INT32 write_ptr;
+		INT32 aud_ptr;		// Render-side read cursor, advances at sample rate
+		double fifo_cycles;	// CPU cycles accumulated toward the next FIFO pop
 	} fifo[2];
 	double current_sim_time;
 	double current_sample_generated_time;
-	UINT16 wave_freq_timer;
-	UINT16 wave_sample_offset;
-	UINT8  curr_wave_sample;
-	UINT8  curr_wave_data;
+	double wave_cycles;		// 4 MHz nibble-timer ticks accumulated toward the next wave nibble
+	UINT16 wave_sample_offset;	// Index of the last consumed nibble within wave_play[]
+	UINT8  curr_wave_sample;	// High/low nibble (0..15) currently being output
+	UINT8  curr_wave_data;		// Byte that curr_wave_sample was extracted from
 	float  capacitor_l;
 	float  capacitor_r;
 	gba_frame_sequencer_t sequencer;
 	UINT32 audio_clock;
+	//Wave RAM is banked: mem.io[0x90..0x9f] exposes the bank that is NOT
+	//playing, while this holds the bank selected by SOUND3CNT_L bit6.
+	UINT8  wave_play[16];
+	UINT8  wave_play_bank;
+	//BLEP residual buffers for square channels 1/2; blep_idx is the ring head.
+	float  blep_buf[2][64];
+	UINT8  blep_idx[2];
 } gba_audio_t;
 
 typedef struct {
@@ -542,6 +555,7 @@ typedef struct gba_t {
 	gba_event_t  sio_event;
 	gba_event_t  audio_event;
 	gba_event_t  dma_event;
+	UINT32 next_event_tick;		// cached absolute when of the next due event; 0xFFFFFFFF = none
 	gba_audio_t  audio;
 	bool   prev_key_interrupt;
 	UINT32 first_target_buffer[GBA_LCD_W];
@@ -572,6 +586,35 @@ typedef struct {
 	char  save_file_path[SB_FILE_PATH_SIZE];
 } gba_scratch_t;
 
+// refresh next_event_tick from the active head
+static inline void gba_timing_recache(gba_t* gba)
+{
+	if (gba->timing.head) {
+		gba->next_event_tick = gba->timing.head->when;
+	} else {
+		gba->next_event_tick = 0xFFFFFFFFu;
+	}
+}
+
+// true when the timer is the head event and another event shares its tick: the timer
+// latches one cycle after its scheduled tick, a shared tick fires at the tick itself
+static inline bool gba_timing_timer_tie(gba_t* gba)
+{
+	return gba->timer_event.next && gba->timer_event.next->when == gba->timer_event.when;
+}
+
+// cycles until the head event, with the timer's one-cycle latch applied on a shared tick
+static inline INT32 gba_timing_horizon(gba_t* gba)
+{
+	INT32 event_free = (INT32)(gba->next_event_tick - gba->global_timer);
+	if (gba->timing.head == &gba->timer_event && !gba_timing_timer_tie(gba)) {
+		event_free = event_free <= 0 ? 0 : event_free + 1;
+	} else if (event_free < 0) {
+		event_free = 0;
+	}
+	return event_free;
+}
+
 static inline void gba_timing_deschedule(gba_t* gba, gba_event_t* event)
 {
 	gba_event_t** previous = &gba->timing.head;
@@ -581,6 +624,7 @@ static inline void gba_timing_deschedule(gba_t* gba, gba_event_t* event)
 			*previous     = next->next;
 			event->next   = NULL;
 			event->active = false;
+			gba_timing_recache(gba);
 			return;
 		}
 		previous = &next->next;
@@ -607,6 +651,7 @@ static inline void gba_timing_schedule(gba_t* gba, gba_event_t* event, INT32 whe
 	}
 	event->next = next;
 	*previous   = event;
+	gba_timing_recache(gba);
 }
 
 // cycles until the head event (0 if due); large when nothing is scheduled
@@ -630,6 +675,7 @@ static inline void gba_timing_dispatch(gba_t* gba, sb_emu_state_t* emu)
 		gba->timing.head = next->next;
 		next->next   = NULL;
 		next->active = false;
+		gba_timing_recache(gba);
 		next->callback(gba, emu, (UINT32)(-when));
 	}
 }
@@ -647,6 +693,7 @@ static inline void gba_timing_rebuild(gba_t* gba)
 		event->active = false;
 		gba_timing_schedule(gba, event, (INT32)(event->when - gba->global_timer));
 	}
+	gba_timing_recache(gba);
 }
 
 void gba_timing_init(gba_t* gba);
@@ -742,7 +789,5 @@ size_t GbaCoreStateSize();
 INT32  GbaCoreSaveState(const GbaCore *core, void *data, size_t size);
 INT32  GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 preservePresentation = 0);
 void   GbaCoreRebind(GbaCore *core);
-
-
 
 #endif

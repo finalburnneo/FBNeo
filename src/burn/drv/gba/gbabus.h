@@ -9,6 +9,37 @@
 #define GUEST_HALF_SHIFT(a) ((a) & 2 ? 16 : 0)
 #define GUEST_BYTE_SHIFT(k) ((k) * 8)
 
+// Shared ROM read fast path (bank 0x08-0x0d); on a hit *out_word is the host-endian word.
+// Callers keep their own waitstate/openbus handling; check_gpio rejects the GPIO window.
+SB_ALWAYS_INLINE bool gba_rom_fast_path_word(gba_t* gba, UINT32 address, bool check_gpio, UINT32* out_word)
+{
+	if (SB_UNLIKELY((UINT32)((address >> 24) - 0x08) > 5))
+		return false;
+	UINT32 maddr = address & 0x1fffffc;
+	if (SB_LIKELY(!gba->cart.matrix.active
+			&& gba->cart.backup_type != GBA_BACKUP_EEPROM
+			&& maddr < gba->cart.rom_size
+			&& (!check_gpio || !gba_gpio_address(gba, address)))) {
+		*out_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.cart_rom + maddr));
+		return true;
+	}
+	return false;
+}
+
+// Simple-RAM fast path: EWRAM/IWRAM/Palette/OAM are plain arrays with no read side effects.
+// VRAM is excluded (mirror/bitmap-mode blocking is nontrivial).
+SB_ALWAYS_INLINE bool gba_simple_ram_fast_path_word(gba_t* gba, UINT32 address, UINT32* out_word)
+{
+	UINT32 bank = address >> 24;
+	switch (bank) {
+		case 0x02: *out_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.wram0 + (address & 0x3fffc))); return true;
+		case 0x03: *out_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.wram1 + (address & 0x7ffc)));  return true;
+		case 0x05: *out_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.palette + (address & 0x3fc)));  return true;
+		case 0x07: *out_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.oam + (address & 0x3fc)));      return true;
+		default:   return false;
+	}
+}
+
 static inline UINT32 gba_read32(gba_t* gba, UINT32 baddr)
 {
 	if (gba_gpio_address(gba, baddr)) {
@@ -227,7 +258,7 @@ static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 	gba_io_store16(gba, GBA_WAITCNT, waitcnt);
 }
 
-static inline void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 request_size /*0: 1B,1: 2B,3: 4B*/)
+SB_ALWAYS_INLINE void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT32 request_size /*0: 1B,1: 2B,3: 4B*/)
 {
 	INT32 bank        = SB_BFE(address, 24, 4);
 	bool  prefetch_en = gba->mem.prefetch_en;
@@ -293,16 +324,36 @@ static inline UINT32 arm7_read16(void* user_data, UINT32 address)
 
 static inline UINT32 arm7_read32_seq(void* user_data, UINT32 address, bool seq)
 {
+	// ROM/simple-RAM read fast path; covers sequential fetches, branch
+	// targets and LDM data loads. Callers handle GPIO/side effects.
+	gba_t* gba = (gba_t*)user_data;
+	UINT32 word;
+	if (SB_LIKELY(gba_rom_fast_path_word(gba, address, true, &word)
+			|| gba_simple_ram_fast_path_word(gba, address, &word))) {
+		gba_compute_access_cycles(gba, address, seq ? 2 : 3);
+		gba->mem.openbus_word = word;
+		return gba->mem.openbus_word;
+	}
 	gba_compute_access_cycles((gba_t*)user_data, address, seq ? 2 : 3);
 	return gba_read32((gba_t*)user_data, address);
 }
 
 static inline UINT32 arm7_read16_seq(void* user_data, UINT32 address, bool seq)
 {
+	// ROM/simple-RAM read fast path; see arm7_read32_seq.
+	gba_t* gba = (gba_t*)user_data;
+	UINT32 word;
+	bool is_rom = gba_rom_fast_path_word(gba, address, true, &word);
+	if (SB_LIKELY(is_rom || gba_simple_ram_fast_path_word(gba, address, &word))) {
+		gba_compute_access_cycles(gba, address, seq ? 0 : 1);
+		UINT16 res16 = (UINT16)(word >> GUEST_HALF_SHIFT(address));
+		// ROM mirrors the halfword on the bus; RAM leaves the whole word
+		gba->mem.openbus_word = is_rom ? ((UINT32)res16 * 0x10001u) : word;
+		return (UINT32)res16;
+	}
 	gba_compute_access_cycles((gba_t*)user_data, address, seq ? 0 : 1);
 	return gba_read16((gba_t*)user_data, address);
 }
-
 
 //Used to process special behavior triggered by MMIO write
 static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 data, INT32 req_size_bytes);
@@ -357,15 +408,14 @@ SB_ALWAYS_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_typ
 {
 	UINT32 bank = addr >> 24;
 
-	// ROM fast path (bank 0x08-0x0d, the busiest); matrix/EEPROM/OOB fall through
-	if (SB_LIKELY((UINT32)(bank - 0x08) <= 5)) {
-		INT32 maddr = addr & 0x1fffffc;
-		if (SB_LIKELY(!gba->cart.matrix.active
-				&& gba->cart.backup_type != GBA_BACKUP_EEPROM
-				&& maddr < gba->cart.rom_size)) {
-			gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(gba->mem.cart_rom + maddr));
+	// ROM fast path (bank 0x08-0x0d); matrix/EEPROM/OOB fall through, and the
+	// gba_read* callers have already filtered GPIO.
+	{
+		UINT32 word;
+		if (SB_LIKELY(gba_rom_fast_path_word(gba, addr, false, &word))) {
+			gba->mem.openbus_word = word;
 			if (req_type & 0x3) {
-				UINT16 res16 = (UINT16)(gba->mem.openbus_word >> GUEST_HALF_SHIFT(addr));
+				UINT16 res16 = (UINT16)(word >> GUEST_HALF_SHIFT(addr));
 				gba->mem.openbus_word = ((UINT32)res16) * 0x10001u;
 			}
 			return &gba->mem.openbus_word;
@@ -413,6 +463,13 @@ SB_ALWAYS_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_typ
 			gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(*ret);
 			break;
 		case 0x6:
+			if (req_type & GBA_REQ_WRITE) {
+				// VRAM about to change; record the bound for the worker's per-line
+				// VRAM capture (a 4-byte span also covers the 2-byte store form).
+				UINT32 vo = (addr & 0x10000) ? ((addr & 0x07ffc) | 0x10000u) : (addr & 0x1fffc);
+				if (vo < gba->ppu.vram_dirty_lo) gba->ppu.vram_dirty_lo = vo;
+				if (vo + 4 > gba->ppu.vram_dirty_hi) gba->ppu.vram_dirty_hi = vo + 4;
+			}
 			if (addr & 0x10000) {
 				ret = (UINT32*)(gba->mem.vram + (addr & 0x07ffc) + 0x10000);
 				gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(*ret);
@@ -622,12 +679,16 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba_update_interrupt_pending(gba);
 		return true;
 	} else if (address_u32 == GBA_SOUNDCNT_L) {
+		//High half of a 32-bit (or unaligned 16-bit) write targets SOUNDCNT_H:
+		//honor the FIFO reset W1 bits (bit11 for FIFO A, bit15 for FIFO B).
 		if (word_mask & 0xffff0000) {
 			UINT16 soundcnt_h = word_data >> 16;
 			for (INT32 i = 0;i < 2;++i) {
 				if (SB_BFE(soundcnt_h, 11 + i * 4, 1)) {
 					gba->audio.fifo[i].read_ptr  = 0;
 					gba->audio.fifo[i].write_ptr = 0;
+					gba->audio.fifo[i].aud_ptr   = 0;
+					gba->audio.fifo[i].fifo_cycles = 0.0;
 					for (INT32 d = 0;d < 32;++d)
 						gba->audio.fifo[i].data[d] = 0;
 					word_data &= ~(1u << (27 + i * 4));
@@ -712,12 +773,21 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		return true;
 	} else if (address_u32 >= GBA_SOUND1CNT_L && address_u32 < GBA_WAVE_RAM) {
 		for (INT32 i = 0;i < 4;++i) {
-			if (word_mask & (0xff << (i * 8))) {
-				UINT8 byte = gba_audio_process_byte_write(gba, address_u32 + i, SB_BFE(word_data, (i * 8), 8));
+			if (word_mask & (0xffu << (i * 8))) {
+				UINT8 byte = gba_audio_process_reg_write(gba, address_u32 + i, SB_BFE(word_data, (i * 8), 8));
 				gba_io_store8(gba, address_u32 + i, byte);
 			}
 		}
-		gba_process_audio_writes(gba);
+		gba_audio_apply_writes(gba);
+		return true;
+	} else if (address_u32 >= GBA_WAVE_RAM && address_u32 < GBA_WAVE_RAM + 16) {
+		//Wave RAM bytes are stored by the byte write itself (it relocates them
+		//while ch3 plays); storing again here would corrupt the sample pointer.
+		for (INT32 i = 0;i < 4;++i) {
+			if (word_mask & (0xffu << (i * 8))) {
+				(void)gba_audio_process_reg_write(gba, address_u32 + i, SB_BFE(word_data, (i * 8), 8));
+			}
+		}
 		return true;
 	}
 	return false;

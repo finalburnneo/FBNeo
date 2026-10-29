@@ -4590,7 +4590,10 @@ static void TmntDecodeTitleSample()
 	  	val = (val >> 3) & (0x3ff);
 		val -= 0x200;
 
-		val <<= (expo-3);
+		// expo-3 can be negative; a negative left-shift is undefined behaviour
+		// (produced garbage spikes on arm64). Shift right for the negative case.
+		INT32 sh = expo - 3;
+		if (sh >= 0) val <<= sh; else val >>= (-sh);
 
 		DrvTitleSample[i] = val;
 	}
@@ -5892,7 +5895,7 @@ static void RenderTitleSample(INT16 *pSoundBuf, INT32 nLength)
 {
 	double Addr = TitleSamplePos;
 	double Step = (double)20000 / nBurnSoundRate;
-	
+
 	for (INT32 i = 0; i < nLength; i += 2) {
 		if (Addr > 0x3ffff) break;
 		INT16 Sample = DrvTitleSample[(INT32)Addr];

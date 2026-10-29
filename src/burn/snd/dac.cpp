@@ -13,6 +13,8 @@ struct dac_info
 	INT32	Initialized;
 	INT32	OutputDir;
 	INT32	(*pSyncCallback)();
+	INT32	(*pCPUTotalCycles)();
+	UINT32	nCPUMHZ;
 };
 
 static struct dac_info dac_table[DAC_NUM];
@@ -26,9 +28,6 @@ static INT16 *rBuffer = NULL;
 static INT32 NumChips;
 
 static INT32 bAddSignal;
-
-static INT32 (*pCPUTotalCycles)() = NULL;
-static UINT32 nDACCPUMHZ = 0;
 
 // single-order dc blocking filter
 static INT32 dac_dcblock   = 0; // enable
@@ -62,9 +61,13 @@ static INT16 dc_blockL(INT16 sam)
     return outl;
 }
 
-static INT32 DACSyncInternal()
+static INT32 DACSyncPos(dac_info *ptr)
 {
-	return (INT32)(float)(nBurnSoundLen * (pCPUTotalCycles() / (nDACCPUMHZ / (nBurnFPS / 100.0000))));
+	if (ptr->pCPUTotalCycles) {
+		return (INT32)(float)(nBurnSoundLen * (ptr->pCPUTotalCycles() / (ptr->nCPUMHZ / (nBurnFPS / 100.0000))));
+	}
+
+	return ptr->pSyncCallback();
 }
 
 static void UpdateStream(INT32 chip, INT32 length)
@@ -168,7 +171,7 @@ void DACWrite(INT32 Chip, UINT8 Data)
 
 	ptr = &dac_table[Chip];
 
-	UpdateStream(Chip, ptr->pSyncCallback());
+	UpdateStream(Chip, DACSyncPos(ptr));
 
 	ptr->Output = (INT32)(UnsignedVolTable[Data] * ptr->nVolume);
 }
@@ -187,7 +190,7 @@ void DACWrite16(INT32 Chip, INT16 Data)
 	Data = (INT32)(Data * ptr->nVolume);
 
 	if (Data != ptr->Output) {
-		UpdateStream(Chip, ptr->pSyncCallback());
+		UpdateStream(Chip, DACSyncPos(ptr));
 		ptr->Output = Data;
 	}
 }
@@ -207,7 +210,7 @@ void DACWrite16Stereo(INT32 Chip, INT16 Data, INT16 Data2)
 	Data2 = (INT32)(Data2 * ptr->nVolume);
 
 	if (Data != ptr->Output || Data2 != ptr->Output2) {
-		UpdateStream(Chip, ptr->pSyncCallback());
+		UpdateStream(Chip, DACSyncPos(ptr));
 		ptr->Output = Data;
 		ptr->Output2 = Data2;
 	}
@@ -229,7 +232,7 @@ void DACWrite16Signed(INT32 Chip, UINT16 Data)
 	Data = (INT32)(Signed * ptr->nVolume);
 
 	if (Data != ptr->Output) {
-		UpdateStream(Chip, ptr->pSyncCallback());
+		UpdateStream(Chip, DACSyncPos(ptr));
 		ptr->Output = Data;
 	}
 }
@@ -244,14 +247,14 @@ void DACSignedWrite(INT32 Chip, UINT8 Data)
 
 	ptr = &dac_table[Chip];
 
-	UpdateStream(Chip, ptr->pSyncCallback());
+	UpdateStream(Chip, DACSyncPos(ptr));
 
 	ptr->Output = (INT32)(SignedVolTable[Data] * ptr->nVolume);
 }
 
 static void DACBuildVolTables()
 {
-	for (INT32 i = 0;i < 256;i++) {
+	for (INT32 i = 0; i < 256; i++) {
 		UnsignedVolTable[i] = i * 0x101 / 2;
 		SignedVolTable[i] = i * 0x101 - 0x8000;
 	}
@@ -270,34 +273,13 @@ void DACStereoMode(INT32 Chip)
 	ptr->Stereo = 1;
 }
 
-void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd, INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+static void DACInitChip(INT32 Num, INT32 bAdd, INT32 (*pSyncCB)(), INT32 (*pCPUCyclesCB)(), UINT32 nCpuMHZ)
 {
-	if (pCPUCyclesCB == NULL) {
-		bprintf(PRINT_ERROR, _T("DACInit pCPUCyclesCB is NULL.\n"));
-	}
-	if (nCpuMHZ == 0) {
-		bprintf(PRINT_ERROR, _T("DACInit nCPUMHZ is 0.\n"));
-	}
-
-	pCPUTotalCycles = pCPUCyclesCB;
-	nDACCPUMHZ = nCpuMHZ;
-
-	DACInit(Num, Clock, bAdd, DACSyncInternal);
-}
-
-
-void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
-{
-#if defined FBNEO_DEBUG
-	if (Num >= DAC_NUM) bprintf (PRINT_ERROR, _T("DACInit called for too many chips (%d)! Change DAC_NUM (%d)!\n"), Num, DAC_NUM);
-	if (pSyncCB == NULL) bprintf (PRINT_ERROR, _T("DACInit called with NULL callback!\n"));
-#endif
-
 	struct dac_info *ptr;
 
 	DebugSnd_DACInitted = 1;
-	
-	NumChips = Num + 1;
+
+	if (Num + 1 > NumChips) NumChips = Num + 1; // don't shrink if chips are inited out of order
 
 	ptr = &dac_table[Num];
 
@@ -308,10 +290,37 @@ void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
 	ptr->OutputDir = BURN_SND_ROUTE_BOTH;
 	ptr->Stereo = 0;
 	ptr->pSyncCallback = pSyncCB;
+	ptr->pCPUTotalCycles = pCPUCyclesCB;
+	ptr->nCPUMHZ = nCpuMHZ;
 
 	DACBuildVolTables(); // necessary to build for every chip?
-	
+
 	bAddSignal = bAdd;
+}
+
+void DACInit(INT32 Num, UINT32 Clock, INT32 bAdd, INT32 (*pCPUCyclesCB)(), INT32 nCpuMHZ)
+{
+#if defined FBNEO_DEBUG
+	if (Num >= DAC_NUM) bprintf (PRINT_ERROR, _T("DACInit called for too many chips (%d)! Change DAC_NUM (%d)!\n"), Num, DAC_NUM);
+#endif
+	if (pCPUCyclesCB == NULL) {
+		bprintf(PRINT_ERROR, _T("DACInit pCPUCyclesCB is NULL.\n"));
+	}
+	if (nCpuMHZ == 0) {
+		bprintf(PRINT_ERROR, _T("DACInit nCPUMHZ is 0.\n"));
+	}
+
+	DACInitChip(Num, bAdd, NULL, pCPUCyclesCB, nCpuMHZ);
+}
+
+void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
+{
+#if defined FBNEO_DEBUG
+	if (Num >= DAC_NUM) bprintf (PRINT_ERROR, _T("DACInit called for too many chips (%d)! Change DAC_NUM (%d)!\n"), Num, DAC_NUM);
+	if (pSyncCB == NULL) bprintf (PRINT_ERROR, _T("DACInit called with NULL callback!\n"));
+#endif
+
+	DACInitChip(Num, bAdd, pSyncCB, NULL, 0);
 }
 
 void DACSetRoute(INT32 Chip, double nVolume, INT32 nRouteDir)
@@ -356,21 +365,13 @@ void DACExit()
 
 	if (!DebugSnd_DACInitted) return;
 
-	struct dac_info *ptr;
-
 	for (INT32 i = 0; i < DAC_NUM; i++) {
-		ptr = &dac_table[i];
-
-		ptr->Initialized = 0;
-		ptr->pSyncCallback = NULL;
+		memset(&dac_table[i], 0, sizeof(dac_info));
 	}
 
-	pCPUTotalCycles = NULL;
-	nDACCPUMHZ = 0;
-
 	NumChips = 0;
-
     dac_dcblock = 0;
+	bAddSignal = 0;
 
 	DebugSnd_DACInitted = 0;
 
@@ -385,11 +386,11 @@ void DACScan(INT32 nAction, INT32 *pnMin)
 #if defined FBNEO_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACScan called without init\n"));
 #endif
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
-	
+
 	struct dac_info *ptr;
 
 	if (nAction & ACB_DRIVER_DATA) {

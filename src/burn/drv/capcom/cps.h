@@ -28,9 +28,11 @@ extern INT32 nCpsCycles;												// Cycles per frame
 extern INT32 nCpsZ80Cycles;
 extern UINT8 *CpsGfx;  extern UINT32 nCpsGfxLen;		// All the graphics
 extern UINT8 *CpsRom;  extern UINT32 nCpsRomLen;		// Program Rom (as in rom)
+extern UINT32 nCpsRomMapLen;							// Optional program mapping size; 0 uses the ROM size
 extern UINT8 *CpsCode; extern UINT32 nCpsCodeLen;		// Program Rom (decrypted)
 extern UINT8 *CpsZRom; extern UINT32 nCpsZRomLen;		// Z80 Roms
 extern  INT8 *CpsQSam; extern UINT32 nCpsQSamLen;		// QSound Sample Roms
+extern UINT32 nCpsQSamMask;							// Optional sample decoder mask; 0 uses the ROM size
 extern UINT8 *CpsAd;   extern UINT32 nCpsAdLen;		    // ADPCM Data
 extern UINT8 *CpsKey; extern UINT32 nCpsKeyLen;
 extern UINT32 nCpsGfxScroll[4];								// Offset to Scroll tiles
@@ -38,6 +40,7 @@ extern UINT32 nCpsGfxMask;									// Address mask
 extern UINT8* CpsStar;
 INT32 CpsInit();
 INT32 Cps2Init();
+INT32 Cps2Init(INT32 nMapLen, UINT32 nGfxSize, INT32 bLinear);
 INT32 CpsExit();
 INT32 CpsLoadTiles(UINT8 *Tile,INT32 nStart);
 INT32 CpsLoadTilesByte(UINT8 *Tile,INT32 nStart);
@@ -82,6 +85,7 @@ INT32 CpsLoadStarsByte(UINT8 *pStar, INT32 nStart);
 INT32 CpsLoadStarsForgottnAlt(UINT8 *pStar, INT32 nStart);
 INT32 Cps2LoadTiles(UINT8 *Tile,INT32 nStart);
 INT32 Cps2LoadTilesSIM(UINT8 *Tile,INT32 nStart);
+INT32 Cps2LoadTilesInterleaved(UINT8 *Tile, UINT8 *pSrc, UINT32 nSize);
 INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 
 // cps_config.h
@@ -177,6 +181,8 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_pang3b4		48
 #define mapper_TKSGZB		49
 #define mapper_varthb2		50
+#define mapper_STRIDEREX		51
+#define mapper_FFIGHTEX		52
 extern void SetGfxMapper(INT32 MapperId);
 extern INT32 GfxRomBankMapper(INT32 Type, INT32 Code);
 extern void SetCpsBId(INT32 CpsBId, INT32 bStars);
@@ -188,6 +194,9 @@ extern INT32 bCpsUpdatePalEveryFrame;
 INT32 CpsPalInit();
 INT32 CpsPalExit();
 INT32 CpsPalUpdate(UINT8 *pNewPal);
+typedef void (*CpsPalUpdateCallback)(INT32 nPage, const UINT16* pPalette);
+extern CpsPalUpdateCallback CpsPalUpdateCallbackFunction;
+void CpsPalRecalc(const UINT16* pRaw);
 
 // cps_mem.cpp
 extern UINT8 *CpsRam90;
@@ -204,6 +213,13 @@ INT32 CpsAreaScan(INT32 nAction,INT32 *pnMin);
 
 typedef INT32 (*CpsMemScanCallback)(INT32, INT32*);
 extern CpsMemScanCallback CpsMemScanCallbackFunction;
+// Additional device state precedes sound state in the scan order.
+extern CpsMemScanCallback CpsMemScanExtraCallbackFunction;
+// Optional replacement for the QSound state scan.
+typedef void (*CpsSoundScanCallback)(INT32, INT32*);
+extern CpsSoundScanCallback CpsSoundScanCallbackFunction;
+
+extern INT32 bCpsObjectBankHandlers;
 
 // cps_run.cpp
 extern UINT8 CpsReset;
@@ -287,7 +303,6 @@ extern INT32 Ssf2tb;
 extern INT32 Dinohunt;
 extern INT32 Port6SoundWrite;
 extern INT32 CpsBootlegEEPROM;
-extern INT32 Cps2Turbo;
 extern INT32 Jurassic99;
 extern INT32 Dinoh;
 extern INT32 Wofhfh;
@@ -312,8 +327,14 @@ void __fastcall CpsWriteWord(UINT32 a, UINT16 d);
 
 typedef void (*CpsRWSoundCommandCallback)(UINT16);
 extern CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction;
+// Prepare inputs before port compilation; return the number of stock-port players.
+typedef INT32 (*CpsRwGetInpCallback)();
+extern CpsRwGetInpCallback CpsRwGetInpCallbackFunction;
 
 // cps_draw.cpp
+typedef INT32 (*CpsDrawPaletteCallback)();
+// Return nonzero when the palette is already current for this draw.
+extern CpsDrawPaletteCallback CpsDrawPaletteCallbackFunction;
 extern UINT8 CpsRecalcPal;				// Flag - If it is 1, recalc the whole palette
 extern INT32 nCpsLcReg;							// Address of layer controller register
 extern INT32 CpsLayEn[6];							// bits for layer enable
@@ -349,9 +370,15 @@ void QsndReset();
 void QsndNewFrame();
 void QsndEndFrame();
 void QsndSyncZ80();
-INT32 QsndScan(INT32 nAction);
+INT32 QsndScan(INT32 nAction, INT32 bScanHistory = 0);
 
 // qs_z.cpp
+extern INT32 nQsndZ80Clock, nQsndZBankOffset;
+void QsndZReset();
+void QsndZSetBank(INT32 nBank);
+INT32 QsndZGetBank();
+UINT8 __fastcall QsndZRead(UINT16 a);
+void __fastcall QsndZWrite(UINT16 a, UINT8 d);
 INT32 QsndZInit();
 INT32 QsndZExit();
 INT32 QsndZScan(INT32 nAction);
@@ -361,7 +388,7 @@ INT32 QscInit(INT32 nRate);
 void QscSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void QscReset();
 void QscExit();
-INT32 QscScan(INT32 nAction);
+INT32 QscScan(INT32 nAction, INT32 bScanHistory = 0);
 void QscNewFrame();
 void QscWrite(INT32 a, INT32 d);
 UINT8 QscRead();
@@ -411,6 +438,7 @@ INT32 CtvReady();
 
 // cps_obj.cpp
 extern INT32 nCpsObjectBank;
+extern INT32 nCpsObjExtraLen;		// Optional extra data bytes per buffered sprite frame
 extern UINT8 *CpsBootlegSpriteRam;
 extern INT32 Cps1LockSpriteList910000;
 extern INT32 Cps1DetectEndSpriteList8000;
@@ -419,7 +447,17 @@ typedef INT32 (*Cps1ObjGetCallback)();
 extern Cps1ObjGetCallback Cps1ObjGetCallbackFunction;
 typedef INT32 (*Cps1ObjDrawCallback)(INT32, INT32);
 extern Cps1ObjDrawCallback Cps1ObjDrawCallbackFunction;
+extern INT32 bCpsUseParentBlend;
+typedef void (*Cps2ObjGetCallback)(UINT8* pExtra, INT32 nEntry, INT32 nSource);
+extern Cps2ObjGetCallback Cps2ObjGetCallbackFunction;
+typedef INT32 (*Cps2ObjTileCallback)(UINT16* pObject, INT32 nTile, const UINT8* pExtra, INT32 nEntry);
+extern Cps2ObjTileCallback Cps2ObjTileCallbackFunction;
+// Negative skips the object, zero uses its palette, positive supplies 16 colors.
+typedef INT32 (*Cps2ObjPaletteCallback)(INT32, UINT16, UINT16, INT32, UINT32*);
+extern Cps2ObjPaletteCallback Cps2ObjPaletteCallbackFunction;
 
+void CpsObjReset();
+INT32 CpsObjScan(INT32 nAction, char* szName);
 INT32  CpsObjInit();
 INT32  CpsObjExit();
 INT32  CpsObjGet();
@@ -448,6 +486,18 @@ INT32 Cps1Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy);
 INT32 Cps1Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy);
 INT32 Cps2Scr1Draw(UINT8 *Base,INT32 sx,INT32 sy);
 INT32 Cps2Scr3Draw(UINT8 *Base,INT32 sx,INT32 sy);
+
+typedef INT32 (*Cps2ScrollCallback)(INT32, INT32, INT32);
+extern Cps2ScrollCallback Cps2ScrollCallbackFunction;
+typedef const UINT8* (*Cps2Scroll1Callback)();
+extern Cps2Scroll1Callback Cps2Scroll1CallbackFunction;
+
+// Resolve a scroll tile address, including its layer's graphics offset.
+inline static INT32 Cps2ScrollAddress(INT32 nAddress, INT32 nAttributes, INT32 nLayer)
+{
+	if (Cps2ScrollCallbackFunction) return Cps2ScrollCallbackFunction(nAddress, nAttributes, nLayer);
+	return nAddress + nCpsGfxScroll[nLayer];
+}
 
 // cpsr.cpp
 extern UINT8 *CpsrBase;						// Tile data base
@@ -560,21 +610,4 @@ extern UINT16 Cps2VolumeStates[40];
 extern INT32 Cps2DisableDigitalVolume;
 extern UINT8 Cps2VolUp;
 extern UINT8 Cps2VolDwn;
-extern UINT8 AspectDIP;
-
-// cps_rw.cpp: X-Men Vs. Street Fighter 3v3 + DHC board additions (xmvsf3v3.h)
-extern UINT8 CpsXmvSixButtons[6][13];
-extern INT32 CpsXmvSixEnabled;
-extern INT32 CpsXmvWide;
-INT32 CpsXmvSixInit(INT32 bWide);
-void CpsXmvSixExit();
-INT32 CpsXmvSixReset();
-INT32 CpsXmvSixScan(INT32 nAction, INT32* pnMin);
-const UINT8* CpsXmvScroll1Extension();
-// ... and its exact save states (run-ahead, netplay): the display state other games rebuild after a load
-INT32 CpsXmvVisualScan(INT32 nAction);		// cps_mem.cpp
-INT32 CpsObjVisualScan(INT32 nAction);		// cps_obj.cpp
-INT32 CpsPalVisualScan(INT32 nAction);		// cps_pal.cpp
-INT32 CpsPalConsumeRestoredCache();
-
 #endif

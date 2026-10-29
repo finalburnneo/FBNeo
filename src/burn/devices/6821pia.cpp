@@ -52,6 +52,7 @@ struct pia6821
 	UINT8 irq_b2;
 	UINT8 irq_b_state;
 	UINT8 in_set; // which input ports are set
+	UINT8 a_input_overrides_output_mask; // port a output pins that can be driven externally (config, not scanned)
 
 	const struct pia6821_interface *intf;
 };
@@ -139,8 +140,18 @@ void pia_reset(void)
 {
 	int i;
 
-	/* zap each structure, preserving the interface and swizzle */
-	for (i = 0; i < MAX_PIA; i++) pia_config(i, pia[i].addr, pia[i].intf);
+	/* zap each structure, preserving the interface, swizzle and port a override mask */
+	for (i = 0; i < MAX_PIA; i++) {
+		UINT8 mask = pia[i].a_input_overrides_output_mask;
+		pia_config(i, pia[i].addr, pia[i].intf);
+		pia[i].a_input_overrides_output_mask = mask;
+	}
+}
+
+void pia_set_port_a_input_overrides_output_mask(int which, UINT8 mask)
+{
+	if (which >= MAX_PIA) return;
+	pia[which].a_input_overrides_output_mask = mask;
 }
 
 
@@ -230,8 +241,8 @@ int pia_read(int which, int offset)
 				}
 #endif // MAME_DEBUG
 
-				/* combine input and output values */
-				val = (p->out_a & p->ddr_a) + (p->in_a & ~p->ddr_a);
+				/* combine input and output values, external devices may drive output pins */
+				val = (p->out_a & p->ddr_a & ~p->a_input_overrides_output_mask) | (p->in_a & p->ddr_a & p->a_input_overrides_output_mask) | (p->in_a & ~p->ddr_a);
 
 				/* IRQ flags implicitly cleared by a read */
 				p->irq_a1 = p->irq_a2 = 0;

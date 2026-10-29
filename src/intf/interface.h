@@ -241,6 +241,7 @@ extern INT64 nVidBlitterOpt[];
 extern INT32 bVidFullStretch;
 extern INT32 bVidTripleBuffer;
 extern INT32 bVidVSync;
+extern INT32 bVidVRR;
 extern double dVidCubicB;
 extern double dVidCubicC;
 extern INT32 bVidDX9Bilinear;

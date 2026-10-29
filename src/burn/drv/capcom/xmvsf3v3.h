@@ -7,7 +7,7 @@
 //   0x810000-0x81ffff  64KB of extra work RAM, each 68000 word stored high byte first
 // The ROMs also mark the mini portraits on the HUD so that this board can draw them in the
 // fighter's chosen colour (one of eighteen), decoded from the colour table in the program ROM.
-// Nothing here is used by any other game: cps_rw.cpp only enables it for the 3v3 drivers.
+// Enabled by the 3v3 drivers in d_cps2_custom.cpp.
 
 #ifndef XMVSF3V3_H
 #define XMVSF3V3_H

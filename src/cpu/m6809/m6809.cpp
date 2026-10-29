@@ -536,6 +536,11 @@ void m6809_end_timeslice()
 	m6809.end_run = 1;
 }
 
+void m6809_eat_cycles(int cycles)
+{
+	m6809_ICount -= cycles;
+}
+
 /* execute instructions on this CPU until icount expires */
 int m6809_execute(int cycles)	/* NS 970908 */
 {

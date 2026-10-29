@@ -854,7 +854,7 @@ static int AppInit()
 		VidSelect(nVidSelect);
 	}
 
-	hAccel = LoadAccelerators(hAppInst, MAKEINTRESOURCE(IDR_ACCELERATOR));
+	HotkeysApply();												// Build the accelerator table from the (configurable) emulator hotkeys
 
 	// nExport:
 	// -1 Error

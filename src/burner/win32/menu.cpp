@@ -17,6 +17,83 @@ HMENU hMenu = NULL;
 HMENU hMenuPopup = NULL;
 HWND hMenubar = NULL;			  			// Handle to the Toolbar control comprising the menu
 static HMENU hBlitterMenu[8] = {NULL, };	// Handles to the blitter-specific sub-menus
+static HMENU hD3D11RecentMenu = NULL;		// "Recent shaders" sub-menu of the Direct3D 11 blitter
+
+// Find the (sub) menu that contains the item nID
+static HMENU MenuFindItemParent(HMENU hParent, UINT nID)
+{
+	if (hParent == NULL) {
+		return NULL;
+	}
+	for (int i = 0; i < GetMenuItemCount(hParent); i++) {
+		if (GetMenuItemID(hParent, i) == nID) {
+			return hParent;
+		}
+		HMENU hFound = MenuFindItemParent(GetSubMenu(hParent, i), nID);
+		if (hFound) {
+			return hFound;
+		}
+	}
+	return NULL;
+}
+
+// Rebuild the list of recently used Direct3D 11 shaders
+static void MenuUpdateD3D11Shaders()
+{
+	if (hD3D11RecentMenu) {
+		while (GetMenuItemCount(hD3D11RecentMenu) > 0) {
+			DeleteMenu(hD3D11RecentMenu, 0, MF_BYPOSITION);
+		}
+
+		int nItems = 0;
+		for (int i = 0; i < D3D11_SHADER_MRU_SIZE; i++) {
+			const TCHAR* szPath = szVidD3D11ShaderMRU[i];
+			if (szPath[0] == 0) {
+				continue;
+			}
+
+			// "&1  name.cgp<tab>folder"
+			const TCHAR* pName = szPath;
+			for (const TCHAR* p = szPath; *p; p++) {
+				if (*p == _T('\\') || *p == _T('/')) pName = p + 1;
+			}
+			TCHAR szFolder[MAX_PATH] = _T("");
+			if (pName > szPath + 1) {
+				int nLen = (int)(pName - szPath) - 1;
+				const TCHAR* pFolder = szPath;
+				for (int k = 0; k < nLen; k++) {
+					if (szPath[k] == _T('\\') || szPath[k] == _T('/')) pFolder = szPath + k + 1;
+				}
+				int nFolderLen = (int)(szPath + nLen - pFolder);
+				if (nFolderLen > 0 && nFolderLen < MAX_PATH) {
+					_tcsncpy(szFolder, pFolder, nFolderLen);
+					szFolder[nFolderLen] = 0;
+				}
+			}
+
+			TCHAR szItem[MAX_PATH * 2];
+			_sntprintf(szItem, MAX_PATH * 2, _T("&%d  %s\t%s"), (i + 1) % 10, pName, szFolder);
+			szItem[MAX_PATH * 2 - 1] = 0;
+
+			UINT nFlags = MF_STRING;
+			if (_tcsicmp(szPath, szVidD3D11Shader) == 0) {
+				nFlags |= MF_CHECKED;
+			}
+			AppendMenu(hD3D11RecentMenu, nFlags, MENU_D3D11_SHADER_MRU + i, szItem);
+			nItems++;
+		}
+
+		if (nItems == 0) {
+			AppendMenu(hD3D11RecentMenu, MF_STRING | MF_GRAYED, MENU_D3D11_SHADER_MRU, _T("(empty)"));
+		} else {
+			AppendMenu(hD3D11RecentMenu, MF_SEPARATOR, 0, NULL);
+			AppendMenu(hD3D11RecentMenu, MF_STRING, MENU_D3D11_SHADER_MRU_CLEAR, _T("Clear this list"));
+		}
+	}
+
+	CheckMenuItem(hMenu, MENU_D3D11_SHADER_NONE, szVidD3D11Shader[0] ? MF_UNCHECKED : MF_CHECKED);
+	EnableMenuItem(hMenu, MENU_D3D11_SHADER_PARAMS, (VidD3D11ShaderParamCount() > 0) ? (MF_ENABLED | MF_BYCOMMAND) : (MF_GRAYED | MF_BYCOMMAND));
+}
 static HMENU hAudioPluginMenu[8] = {NULL, };
 
 bool bMenuDisplayed = false;
@@ -61,6 +138,36 @@ static INT32 GetCurrentMonitorHigh() {
 	if (!GetMonitorInfo(hMonitor, &monitorInfo)) return -1;
 
 	return monitorInfo.rcMonitor.bottom;
+}
+
+//In order to properly clean up the currentMenuInfo structs created to handle owner Drawn components it is necessary to iterate over all the menus and clean 
+//the mii.dwItemData variable
+void CleanUpMenuInfos(HMENU hMenu)
+{
+	MENUINFO mi = { sizeof(MENUINFO) };
+	int count = GetMenuItemCount(hMenu);
+	for (int i = 0; i < count; i++) {
+		HMENU hSub = GetSubMenu(hMenu, i);
+		if(hSub)
+		{
+			CleanUpMenuInfos(hSub);
+		}
+
+		MENUITEMINFO mii = { sizeof(MENUITEMINFO) };
+
+        mii.fMask = MIIM_FTYPE | MIIM_DATA;
+        if (!GetMenuItemInfo(hMenu, i, TRUE, &mii))
+            continue;
+
+		if ((mii.fType & MFT_OWNERDRAW) && mii.dwItemData != 0)
+		{
+			delete (CurrentItemInfo*)mii.dwItemData;
+			mii.fMask = MIIM_DATA;  
+            mii.dwItemData = 0;
+            SetMenuItemInfo(hMenu, i, TRUE, &mii);
+		}
+
+	}
 }
 
 void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
@@ -121,8 +228,10 @@ void ApplyMenuBackground(HMENU hMenu, HBRUSH hbr)
         miiText.dwTypeData = szText;
         miiText.cch = 256;
         GetMenuItemInfo(hMenu, i, TRUE, &miiText);
-
-		_tcscpy_s(currentMenuInfo->sText, _countof(currentMenuInfo->sText), szText);
+		// _tcscpy_s() don't work on winXP
+		// _tcscpy_s(currentMenuInfo->sText, _countof(currentMenuInfo->sText), szText);
+		_tcsncpy(currentMenuInfo->sText, szText, _countof(currentMenuInfo->sText) - 1);
+		currentMenuInfo->sText[_countof(currentMenuInfo->sText) - 1] = 0;
 
         mii.fType    |= MFT_OWNERDRAW;
         mii.dwItemData = (ULONG_PTR)currentMenuInfo; 
@@ -359,6 +468,11 @@ void DisplayPopupMenu(int nMenu)
 		if (!bModelessMenu) {
 			UnhookWindowsHookEx(hMenuHook);
 		}
+
+		if (uiOwnerDrawActive) {
+			CleanUpMenuInfos(hPopupMenu);
+		}
+
 	}
 }
 
@@ -609,9 +723,12 @@ int MenuCreate()
 		hBlitterMenu[2] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_3));	// Software effects blitter
 		hBlitterMenu[3] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_4));	// DirectX 9
 		hBlitterMenu[4] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_5));	// DirectX 9 Alt
+		hBlitterMenu[5] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_6));	// Direct3D 11
+		hD3D11RecentMenu = MenuFindItemParent(hBlitterMenu[5], MENU_D3D11_SHADER_MRU);
 
 		hAudioPluginMenu[0] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_1));
 		hAudioPluginMenu[1] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_2));
+		hAudioPluginMenu[2] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_3));
 	}
 
 	if (hMenuPopup == NULL) {
@@ -722,12 +839,13 @@ void MenuDestroy()
 			SetMenuItemInfo(GetSubMenu(hMenuPopup, 1), 1, TRUE, &myMenuItemInfo);
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 8; i++) {
 			if (hBlitterMenu[i]) {
 				DestroyMenu(hBlitterMenu[i]);
 				hBlitterMenu[i] = 0;
 			}
 		}
+		hD3D11RecentMenu = NULL;
 
 		for (int i = 0; i < 2; i++) {
 			if (hAudioPluginMenu[i]) {
@@ -954,6 +1072,7 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_WINFS, bVidDX9WinFullscreen ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_DWMFIX, bVidDWMSync ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_VRR, bVidVRR ? MF_CHECKED : MF_UNCHECKED);
 
 	var = nVidSelect + MENU_BLITTER_1;
 	CheckMenuRadioItem(hMenu, MENU_BLITTER_1, MENU_BLITTER_8, var, MF_BYCOMMAND);
@@ -1054,6 +1173,7 @@ void MenuUpdate()
 			CheckMenuRadioItem(hMenu, MENU_DX9_CUBIC0, MENU_DX9_CUBIC0 + 8, var, MF_BYCOMMAND);
 			break;
 		case 4:
+		case 5:
 			var = (nVidBlitterOpt[nVidSelect] & 0xFF) + MENU_DX9_ALT_SOFT_STRETCH;
 			CheckMenuRadioItem(hMenu, MENU_DX9_ALT_SOFT_STRETCH, MENU_DX9_ALT_SOFT_STRETCH + FILTER_LAST, var, MF_BYCOMMAND);
 			CheckMenuItem(hMenu, MENU_DX9_ALT_SOFT_AUTOSIZE, (nVidBlitterOpt[nVidSelect] & 0x0100) ? MF_CHECKED : MF_UNCHECKED);
@@ -1067,6 +1187,10 @@ void MenuUpdate()
 			EnableMenuItem(hMenu, MENU_DX9_ALT_HARD_FX_SETTINGS, hFXDisabled ? (MF_GRAYED | MF_BYCOMMAND) : (MF_ENABLED | MF_BYCOMMAND));
 
 			CheckMenuItem(hMenu, MENU_DX9_ALT_FORCE_16BIT, bVidForce16bitDx9Alt ? MF_CHECKED : MF_UNCHECKED);
+
+			if (nVidSelect == 5) {
+				MenuUpdateD3D11Shaders();
+			}
 			break;
 	}
 
@@ -1291,6 +1415,25 @@ void MenuUpdate()
 			CheckMenuItem(hMenu, MENU_XAUDIO_BASS, (nAudDSPModule[1] & 1) ? MF_CHECKED : MF_UNCHECKED);
 			CheckMenuItem(hMenu, MENU_XAUDIO_REVERB, (nAudDSPModule[1] & 2) ? MF_CHECKED : MF_UNCHECKED);
 			// XAudio2 is able to amp volume above 0db, enable:
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_ENABLED  | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_ENABLED  | MF_BYCOMMAND);
+			break;
+		}
+
+		case 2: {
+			var = MENU_WASAPI_NOSOUND;
+			if (nAudSampleRate[2] > 0) {
+				if (nAudSampleRate[2] <= 44100) {
+					var = MENU_WASAPI_44100;
+					nAudSampleRate[2] = 44100; // sanity
+				} else {
+					var = MENU_WASAPI_48000;
+					nAudSampleRate[2] = 48000;
+				}
+			}
+			CheckMenuRadioItem(hMenu, MENU_WASAPI_NOSOUND, MENU_WASAPI_48000, var, MF_BYCOMMAND);
+			CheckMenuItem(hMenu, MENU_WASAPI_BASS, (nAudDSPModule[2] & 1) ? MF_CHECKED : MF_UNCHECKED);
+			// WASAPI is able to amp volume above 0db, enable:
 			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_150,			MF_ENABLED  | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AUDIO_VOLUME_200,			MF_ENABLED  | MF_BYCOMMAND);
 			break;
@@ -1542,6 +1685,8 @@ void MenuUpdate()
 #if defined BUILD_X64_EXE
 	EnableMenuItem(hMenu, MENU_BLITTER_2, MF_GRAYED  | MF_BYCOMMAND);
 #endif
+
+	HotkeysUpdateMenu();						// Show the user's hotkeys next to the menu items
 }
 
 void MenuEnableItems()
@@ -1565,7 +1710,7 @@ void MenuEnableItems()
 		SetMenuItemInfo(GetSubMenu(hMenu, 1), 1, TRUE, &myMenuItemInfo);
 	}
 
-	if (hBlitterMenu[nAudSelect]) {
+	if (hAudioPluginMenu[nAudSelect]) {
 		MENUITEMINFO myMenuItemInfo;
 		myMenuItemInfo.cbSize = sizeof(MENUITEMINFO);
 		myMenuItemInfo.fMask = MIIM_SUBMENU | MIIM_STATE;
@@ -1629,6 +1774,7 @@ void MenuEnableItems()
 	EnableMenuItem(hBlitterMenu[1], MENU_ENHANCED_SOFT_HQ3XS_VBA,	MF_ENABLED | MF_BYCOMMAND);
 	EnableMenuItem(hBlitterMenu[2], MENU_SOFTFX_SOFT_HQ3XS_VBA,		MF_ENABLED | MF_BYCOMMAND);
 	EnableMenuItem(hBlitterMenu[4], MENU_DX9_ALT_SOFT_HQ3XS_VBA,	MF_ENABLED | MF_BYCOMMAND);
+	EnableMenuItem(hBlitterMenu[5], MENU_DX9_ALT_SOFT_HQ3XS_VBA,	MF_ENABLED | MF_BYCOMMAND);
 #endif
 
 	if (bDrvOkay) {
@@ -1641,6 +1787,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_44100,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_48000,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_NOSOUND,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_44100,		MF_GRAYED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_48000,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INTERPOLATE_FM_0,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INTERPOLATE_FM_3,	MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_FRAMES,				MF_GRAYED  | MF_BYCOMMAND);
@@ -1658,6 +1807,7 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_3,		MF_GRAYED   | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
@@ -1955,6 +2105,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_XAUDIO_NOSOUND,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_44100,				MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_XAUDIO_48000,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_NOSOUND,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_44100,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_WASAPI_48000,				MF_ENABLED | MF_BYCOMMAND);
 //		EnableMenuItem(hMenu, MENU_INTERPOLATE_1,		MF_ENABLED | MF_BYCOMMAND);
 //		EnableMenuItem(hMenu, MENU_INTERPOLATE_3,		MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_WLOGSTART,			MF_GRAYED  | MF_BYCOMMAND);
@@ -1975,6 +2128,7 @@ void MenuEnableItems()
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, 		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_3,		 MF_ENABLED  | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_1,		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_INP_PLUGIN_2,		MF_ENABLED  | MF_BYCOMMAND);

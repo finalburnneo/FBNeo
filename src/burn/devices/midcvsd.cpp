@@ -1,4 +1,3 @@
-
 #include "burnint.h"
 #include "m6809_intf.h"
 #include "burn_ym2151.h"
@@ -15,6 +14,11 @@ static UINT8 audio_talkback;
 static INT32 cpu_bank;
 static INT32 cvsd_is_initialized = 0;
 static INT32 cvsd_in_reset;
+static INT32 ym_reset_state;
+
+static void (*cb2_callback)(INT32 state) = NULL;
+static INT32 s11_bg_map = 0; // williams system 11 bg boards: cvsd clock set / digit write are swapped
+static INT32 dac_signed = 0;
 
 static void bankswitch(INT32 data)
 {
@@ -38,13 +42,22 @@ static void cvsd_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf800) == 0x6000) {
-		hc55516_digit_w(data);
-		hc55516_clock_w(0);
+		if (s11_bg_map) {
+			hc55516_clock_w(1);
+		} else {
+			hc55516_digit_w(data);
+			hc55516_clock_w(0);
+		}
 		return;
 	}
 
 	if ((address & 0xf800) == 0x6800) {
-		hc55516_clock_w(1);
+		if (s11_bg_map) {
+			hc55516_clock_w(0);
+			hc55516_digit_w(data & 1);
+		} else {
+			hc55516_clock_w(1);
+		}
 		return;
 	}
 
@@ -69,12 +82,28 @@ static UINT8 cvsd_read(UINT16 address)
 
 static void pia_out_a(UINT16 , UINT8 data)
 {
-	DACWrite(dac_select, data); // signed??
+	if (dac_signed)
+		DACSignedWrite(dac_select, data);
+	else
+		DACWrite(dac_select, data);
 }
 
 static void pia_out_b(UINT16 , UINT8 data)
 {
 	audio_talkback = data;
+}
+
+static void pia_out_ca2(UINT16 , UINT8 data)
+{
+	if (data != ym_reset_state) {
+		ym_reset_state = data;
+		if (data) BurnYM2151Reset();
+	}
+}
+
+static void pia_out_cb2(UINT16 , UINT8 data)
+{
+	if (cb2_callback) cb2_callback(data);
 }
 
 static void pia_irq0(INT32 state)
@@ -90,7 +119,7 @@ static void pia_irq1(INT32 state)
 static pia6821_interface pia_0 = {
 	NULL, NULL,
 	NULL, NULL, NULL, NULL,
-	pia_out_a, pia_out_b, NULL, NULL,
+	pia_out_a, pia_out_b, pia_out_ca2, pia_out_cb2,
 	pia_irq0, pia_irq1
 };
 
@@ -109,49 +138,71 @@ void cvsd_reset_write(INT32 state)
 
 	if (state)
 	{
-		INT32 cpunum = M6809GetActive();
-		if (cpunum == -1) M6809Open(cpu_select);
-		else if (cpunum != cpu_select)
-		{
-			M6809Close();
-			M6809Open(cpu_select);
-		}
+		M6809CPUPush(cpu_select);
 		M6809Reset();
 		M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		M6809SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		bankswitch(0);
-		DACReset();
+		if (dac_select == 0) DACReset();
 		BurnYM2151Reset();
-		if (cpunum == -1) M6809Close();
-		else if (cpunum != cpu_select)
-		{
-			M6809Close();
-			M6809Open(cpunum);
-		}
+		M6809CPUPop();
 	}
+}
+
+void cvsd_cpu_reset()
+{
+	// board reset line only: cpu + rom bank (ym2151 / dac are not affected)
+	if (cvsd_is_initialized == 0) return;
+
+	M6809CPUPush(cpu_select);
+	bankswitch(0);
+	M6809Reset();
+	M6809CPUPop();
 }
 
 void cvsd_data_write(UINT16 data)
 {
 	if (cvsd_is_initialized == 0) return;
 
-	INT32 cpunum = M6809GetActive();
-	if (cpunum == -1) M6809Open(cpu_select);
-	else if (cpunum != cpu_select)
-	{
-		M6809Close();
-		M6809Open(cpu_select);
-	}
+	M6809CPUPush(cpu_select);
 	pia_set_input_b(pia_select,   (data & 0x00ff));
 	pia_set_input_cb1(pia_select, (data & 0x0100) >> 8);
 	pia_set_input_cb2(pia_select, (data & 0x0200) >> 9);
-	if (cpunum == -1) M6809Close();
-	else if (cpunum != cpu_select)
-	{
-		M6809Close();
-		M6809Open(cpunum);
-	}
+	M6809CPUPop();
+}
+
+void cvsd_portb_write(UINT8 data)
+{
+	if (cvsd_is_initialized == 0) return;
+
+	M6809CPUPush(cpu_select);
+	pia_set_input_b(pia_select, data);
+	M6809CPUPop();
+}
+
+void cvsd_cb1_write(INT32 state)
+{
+	if (cvsd_is_initialized == 0) return;
+
+	M6809CPUPush(cpu_select);
+	pia_set_input_cb1(pia_select, state ? 1 : 0);
+	M6809CPUPop();
+}
+
+void cvsd_set_cb2_callback(void (*cb)(INT32 state))
+{
+	cb2_callback = cb;
+}
+
+void cvsd_set_s11_bg_mode(INT32 enable)
+{
+	s11_bg_map = enable;
+}
+
+void cvsd_set_dac_signed(INT32 enable)
+{
+	dac_signed = enable;
 }
 
 UINT8 cvsd_talkback_read()
@@ -181,6 +232,7 @@ void cvsd_reset()
 
 	audio_talkback = 0;
 	cvsd_in_reset = 0;
+	ym_reset_state = 0;
 }
 
 void cvsd_init(INT32 m6809num, INT32 dacnum, INT32 pianum, UINT8 *rom, UINT8 *ram) // cpu is 2000000 hz
@@ -190,6 +242,9 @@ void cvsd_init(INT32 m6809num, INT32 dacnum, INT32 pianum, UINT8 *rom, UINT8 *ra
 	dac_select = dacnum;
 	cpu_select = m6809num;
 	cvsd_is_initialized = 1;
+	cb2_callback = NULL;
+	s11_bg_map = 0;
+	dac_signed = 0;
 
 	M6809Init(cpu_select);
 	M6809Open(cpu_select);
@@ -197,7 +252,7 @@ void cvsd_init(INT32 m6809num, INT32 dacnum, INT32 pianum, UINT8 *rom, UINT8 *ra
 	M6809MapMemory(ram,				0x0800, 0x0fff, MAP_RAM);
 	M6809MapMemory(ram,				0x1000, 0x17ff, MAP_RAM);
 	M6809MapMemory(ram,				0x1800, 0x1fff, MAP_RAM);
-	M6809MapMemory(ram + 0x8000,	0x8000, 0xffff, MAP_ROM);
+	M6809MapMemory(mainrom,			0x8000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(cvsd_write);
 	M6809SetReadHandler(cvsd_read);
 	M6809Close();
@@ -227,6 +282,9 @@ void cvsd_exit()
 	hc55516_exit();
 	if (dac_select == 0) DACExit();
 
+	cb2_callback = NULL;
+	s11_bg_map = 0;
+	dac_signed = 0;
 	cvsd_is_initialized = 0;
 }
 
@@ -268,6 +326,8 @@ void cvsd_scan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(audio_talkback);
 		SCAN_VAR(cpu_bank);
+		SCAN_VAR(cvsd_in_reset);
+		SCAN_VAR(ym_reset_state);
 	}
 
 	if (nAction & ACB_WRITE) {

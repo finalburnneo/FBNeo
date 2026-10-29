@@ -26,7 +26,7 @@ WINDRES=windres
 NAME = fbneo
 COMPILENAME = 3
 
-ifdef BUILD_X64_EXE
+ifneq ($(BUILD_X64_EXE)$(BUILD_ARM64_EXE),)
 ifdef BUILD_A68K
 undefine BUILD_A68K
 endif
@@ -56,6 +56,10 @@ endif
 ifdef BUILD_X64_EXE
 	NAME = fbneo64
 	COMPILENAME = 6
+endif
+ifdef BUILD_ARM64_EXE
+	NAME = fbneoarm64
+	COMPILENAME = a64
 endif
 ifdef	DEBUG
 	NAME := $(NAME)d
@@ -183,8 +187,15 @@ autdrv := $(drvsrc:.cpp=.o)
 #
 #
 
+ifdef BUILD_ARM64_EXE
+# MSYS2 only provides clang for aarch64 (CLANGARM64 environment)
+CC	= clang
+CXX	= clang++
+WINDRES	= llvm-windres
+else
 CC	= gcc
 CXX	= g++
+endif
 LD	= $(CXX)
 AS	= nasm
 
@@ -264,20 +275,22 @@ endif
 endif
 
 ifdef GCC510
+ifdef BUILD_ARM64_EXE
+# keep ARMv8.0 compatibility (MSYS2 supports only ARMv8.1 and will ignore this)
+GCCOPTFLAGS = -march=armv8-a
+else
+GCCOPTFLAGS = -ffloat-store -fforce-addr -finline-limit=1200 -fthread-jumps -fexpensive-optimizations -mwindows
+endif
+
 CFLAGS = -pipe \
-	   -std=gnu99 -O3 -ffloat-store \
-	   -mwindows \
-	   -fforce-addr -finline-limit=1200 -fthread-jumps \
-	   -fexpensive-optimizations \
+	   -std=gnu99 -O3 $(GCCOPTFLAGS) \
 	   -Wall -Wno-long-long -Wno-sign-compare -Wno-uninitialized -Wno-unused \
 	   -Wno-sequence-point -Wno-pedantic \
 	   $(DEF) $(incdir)
 
 CXXFLAGS = -pipe \
-	   -std=gnu++11 -O3 -ffloat-store \
-	   -mwindows \
-	   -fforce-addr -finline-limit=1200 -fthread-jumps \
-	   -fexpensive-optimizations -fcheck-new \
+	   -std=gnu++11 -O3 $(GCCOPTFLAGS) \
+	   -fcheck-new \
 	   -Wall -W -pedantic -Wshadow -Wno-long-long -Wno-write-strings \
 	   -Wunknown-pragmas -Wundef -Wno-conversion -Wno-missing-braces -Wno-multichar \
 	   -Wuninitialized -Wpointer-arith -Wno-inline -Wno-address  -Wno-unused-value \
@@ -290,7 +303,10 @@ ifdef BORKYCRT
 	CFLAGS += -D__USE_MINGW_ANSI_STDIO=0
 	CXXFLAGS += -D__USE_MINGW_ANSI_STDIO=0
 endif
-ifdef BUILD_X64_EXE
+ifdef BUILD_ARM64_EXE
+	# allow nasty C code in i8051.cpp
+	CXXFLAGS += -fpermissive
+else ifdef BUILD_X64_EXE
 	CFLAGS += -m64
 	CXXFLAGS += -m64
 	LDFLAGS += -m64
@@ -490,6 +506,17 @@ endif
 
 ifeq ($(MAKELEVEL),2)
 
+ifdef BUILD_ARM64_EXE
+
+# lld can't do partial links (-r) on COFF, pass every object through a response file instead
+$(NAME).exe:	$(allobj) $(autdrv) $(depobj)
+	@echo
+	@echo Linking executable... $(NAME).exe
+	$(file >$(objdir)link.rsp,$^)
+	@$(LD) $(CFLAGS) $(LDFLAGS) -o $@ @$(objdir)link.rsp $(lib)
+
+else
+
 $(objdir)/drivers.o:		$(autdrv)
 	@echo Linking drivers...
 ifdef BUILD_X64_EXE
@@ -502,6 +529,8 @@ $(NAME).exe:	$(allobj) $(objdir)/drivers.o $(depobj)
 	@echo
 	@echo Linking executable... $(NAME).exe
 	@$(LD) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(lib)
+
+endif
 
 ifdef	DEBUG
 
@@ -729,7 +758,9 @@ else
 endif
 endif
 ifdef GCC510
-ifdef BUILD_X64_EXE
+ifdef BUILD_ARM64_EXE
+	@$(WINDRES) $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
+else ifdef BUILD_X64_EXE
 	@$(WINDRES) -F pe-x86-64 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))
 else
 	@$(WINDRES) -F pe-i386 $(DEF) $< -o $(subst $(srcdir),$(objdir),$(<D))/$(@F) $(foreach dir,$(alldir),--include-dir $(srcdir)$(dir))

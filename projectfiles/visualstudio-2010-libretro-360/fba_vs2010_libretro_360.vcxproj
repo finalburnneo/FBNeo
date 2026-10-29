@@ -71,6 +71,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2_custom.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\fcrash_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\kabuki.cpp" />
     <ClCompile Include="..\..\src\burn\drv\capcom\ps.cpp" />

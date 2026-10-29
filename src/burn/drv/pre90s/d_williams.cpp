@@ -17,20 +17,22 @@
 //  Blaster
 //  Speed Ball
 //  Lottofun
-
-// Not added yet:
-//  mysticm, mysticmp
-//  tshoot
-//  inferno
-//  joust2, joust2r1
+//  Inferno
+//  Mystic Marathon
+//  Turkey Shoot
+//  Joust 2
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
 #include "dac.h"
 #include "hc55516.h"
+#include "midcvsd.h"
+#include "burn_ym2151.h"
+#include "timer.h"
 #include "watchdog.h"
 #include "6821pia.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -41,19 +43,49 @@ static UINT8 *DrvM6800ROM0;
 static UINT8 *DrvM6800ROM1;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvColPROM;
+static UINT8 *DrvTileROM;
+static UINT8 *DrvBgROM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvM6809RAM0;
 static UINT8 *DrvM6800RAM0;
 static UINT8 *DrvM6800RAM1;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvPalRAM;
+static UINT8 *DrvTileRAM;
+static UINT8 *DrvBgRAM;
 
 static UINT8 *DrvBlitRAM; // 8 bytes
+static UINT8 *DrvPalWritten;
 static UINT8 *blitter_remap; // 256*256
 
 static UINT32 *Palette;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+
+// williams 2 config
+static INT32 williams2 = 0;
+static INT32 is_joust2 = 0;
+static INT32 is_tshoot = 0;
+static INT32 is_mysticm = 0;
+static INT32 has_s11_bg = 0; // joust2 bg sound board
+static INT32 w2_bg_color = 0;
+static INT32 has_second_soundboard = 0;
+static INT32 is_blasterkit = 0;
+static INT32 w2_fg_color = 0;
+static INT32 w2_bg_palette_offset = 0;
+static INT32 w2_xscroll = 0;
+static INT32 w2_numtiles = 0;
+static INT32 w2_rom_view_active = 0;
+static INT32 w2_palette_view_active = 0;
+static INT32 w2_bank_entry = 0;
+static UINT8 w2_bank_select_shadow = 0;
+static UINT8 w2_fg_select_shadow = 0;
+static UINT8 w2_bg_select_shadow = 0;
+static UINT8 w2_xscroll_low_shadow = 0;
+static UINT8 w2_xscroll_high_shadow = 0;
+static UINT8 w2_video_control_shadow = 0;
+static UINT8 w2_window_enable_shadow = 0;
+static UINT8 w2_watchdog_shadow = 0;
 
 static INT32 nExtraCycles[3];
 
@@ -92,6 +124,7 @@ static UINT8 lotto_ticket;
 static UINT8 lotto_motor;
 static INT32 TrackX[2] = { 0, 0 };
 static INT32 TrackY[2] = { 0, 0 };
+static INT32 conquest_dial = 0;
 
 static ButtonToggle MemoryProtect; // lottofun
 
@@ -104,6 +137,7 @@ static INT32 sinistarc = 0;
 static INT32 playball = 0;
 static INT32 spdball = 0;
 static INT32 lottofun = 0;
+static INT32 conquest = 0;
 
 static INT32 uses_hc55516 = 0;
 static INT32 uses_colprom = 0;
@@ -227,6 +261,125 @@ static struct BurnInputInfo StargateInputList[] = {
 };
 
 STDINPUTINFO(Stargate)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo ConquestInputList[] = {
+	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
+	{"Fire",					BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"Thrust",					BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
+
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+
+	A("Dial",					BIT_ANALOG_REL,	&DrvAnalogPort0,	"p1 dial"),
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+};
+#undef A
+
+STDINPUTINFO(Conquest)
+
+static struct BurnInputInfo InfernoInputList[] = {
+	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
+	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Up",					BIT_DIGITAL,	DrvJoy4 + 0,	"p1 up (left stick)"	},
+	{"P1 Down",					BIT_DIGITAL,	DrvJoy4 + 3,	"p1 down (left stick)"	},
+	{"P1 Left",					BIT_DIGITAL,	DrvJoy4 + 1,	"p1 left (left stick)"	},
+	{"P1 Right",				BIT_DIGITAL,	DrvJoy4 + 2,	"p1 right (left stick)"	},
+	{"P1 Up 2",					BIT_DIGITAL,	DrvJoy4 + 4,	"p1 up (right stick)"	},
+	{"P1 Down 2",				BIT_DIGITAL,	DrvJoy4 + 7,	"p1 down (right stick)"	},
+	{"P1 Left 2",				BIT_DIGITAL,	DrvJoy4 + 5,	"p1 left (right stick)"	},
+	{"P1 Right 2",				BIT_DIGITAL,	DrvJoy4 + 6,	"p1 right (right stick)"	},
+
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 7,	"p2 start"	},
+	{"P2 Button 1",				BIT_DIGITAL,	DrvJoy1 + 1,	"p2 fire 1"	},
+	{"P2 Up",					BIT_DIGITAL,	DrvJoy5 + 0,	"p2 up (left stick)"	},
+	{"P2 Down",					BIT_DIGITAL,	DrvJoy5 + 3,	"p2 down (left stick)"	},
+	{"P2 Left",					BIT_DIGITAL,	DrvJoy5 + 1,	"p2 left (left stick)"	},
+	{"P2 Right",				BIT_DIGITAL,	DrvJoy5 + 2,	"p2 right (left stick)"	},
+	{"P2 Up 2",					BIT_DIGITAL,	DrvJoy5 + 4,	"p2 up (right stick)"	},
+	{"P2 Down 2",				BIT_DIGITAL,	DrvJoy5 + 7,	"p2 down (right stick)"	},
+	{"P2 Left 2",				BIT_DIGITAL,	DrvJoy5 + 5,	"p2 left (right stick)"	},
+	{"P2 Right 2",				BIT_DIGITAL,	DrvJoy5 + 6,	"p2 right (right stick)"	},
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy2 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy2 + 2,	"service3"	},
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy2 + 3,	"p1 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
+	{"P3 Coin",					BIT_DIGITAL,	DrvJoy2 + 5,	"p3 coin"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy2 + 6,	"tilt"		},
+};
+
+STDINPUTINFO(Inferno)
+
+static struct BurnInputInfo Joust2InputList[] = {
+	{"P1 Start/Transform",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
+	{"P1 Left",					BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",				BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
+	{"P1 Flap",					BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 1"	},
+
+	{"P2 Start/Transform",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Left",					BIT_DIGITAL,	DrvJoy5 + 0,	"p2 left"	},
+	{"P2 Right",				BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
+	{"P2 Flap",					BIT_DIGITAL,	DrvJoy5 + 2,	"p2 fire 1"	},
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 2,	"service3"	},
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"Coin 3",					BIT_DIGITAL,	DrvJoy3 + 5,	"service2"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
+};
+
+STDINPUTINFO(Joust2)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo TshootInputList[] = {
+	{"Start 1",					BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
+	{"Start 2",					BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"Grenade",					BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
+	{"Gobble",					BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 3"	},
+	{"Fire",					BIT_DIGITAL,	DrvJoy4 + 7,	"p1 fire 1"	},
+
+	A("Gun X",                  BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("Gun Y",                  BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 2,	"service3"	},
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"Coin 3",					BIT_DIGITAL,	DrvJoy3 + 5,	"service2"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
+};
+#undef A
+
+STDINPUTINFO(Tshoot)
+
+static struct BurnInputInfo MysticmInputList[] = {
+	{"P1 Up",					BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Right",				BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
+	{"P1 Down",					BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",					BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
+	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 2,	"service3"	},
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
+	{"Coin 3",					BIT_DIGITAL,	DrvJoy3 + 5,	"service2"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
+};
+
+STDINPUTINFO(Mysticm)
 
 static struct BurnInputInfo RobotronInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -453,6 +606,31 @@ static struct BurnInputInfo BlasterInputList[] = {
 
 STDINPUTINFO(Blaster)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo BlasterkitInputList[] = {
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
+	{"Coin 3",					BIT_DIGITAL,	DrvJoy3 + 2,	"service2"	},
+
+	{"P1 Start",				BIT_DIGITAL,	DrvJoy4 + 2,	"p1 start"	},
+	{"P2 Start",				BIT_DIGITAL,	DrvJoy4 + 3,	"p2 start"	},
+	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",				BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
+	{"P1 Button 3",				BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 3"	},
+
+	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"diag"		},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
+};
+#undef A
+
+STDINPUTINFO(Blasterkit)
+
 static struct BurnInputInfo LottofunInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
@@ -645,8 +823,8 @@ static void williams_blitter_write(INT32 offset, UINT8 data)
 	if (w == 0) w = 1;
 	if (h == 0) h = 1;
 
-	//bprintf(0, _T("blit: sstart %X  dstart %X  w %X  h %X  data %X.\n"), sstart, dstart, w, h, data);
 	accesses = blitter_core(sstart, dstart, w, h, data);
+
 
 	if(data & WMS_BLITTER_CONTROLBYTE_SLOW)
 	{
@@ -656,14 +834,16 @@ static void williams_blitter_write(INT32 offset, UINT8 data)
 	{
 		estimated_clocks_at_4MHz = 4 + 2 * (accesses + 3);
 	}
-	
-//	m6809_eat_cycles(-((estimated_clocks_at_4MHz + 3) / 4));
+
+	if (williams2) {
+		M6809EatCycles((estimated_clocks_at_4MHz + 3) / 4); // the cpu is halted while the blitter runs
+	}
 }
 
 static void defender_bank_write(UINT16 address, UINT8 data)
 {
 	//bprintf (0, _T("BW: %4.4x %2.2x\n"), address, data);
-	
+
 	if (address == 0x03ff) {
 		if (data == 0x39) {
 			BurnWatchdogWrite();
@@ -898,6 +1078,295 @@ static UINT8 williams_main_read(UINT16 address)
 	return 0;
 }
 
+static INT32 w2_tile_rom_len = 0;
+static INT32 bg_rom_len = 0;
+
+static INT32 DrvGfxDecode()
+{
+	INT32 thirdBits = (w2_tile_rom_len * 8) / 3;
+
+	w2_numtiles = (thirdBits / 8) / 64;
+	if (w2_numtiles > 256) w2_numtiles = 256;
+
+	INT32 Plane[4] = { STEP4(0,1) };
+	INT32 XOffs[24] = {
+		0+0*8+0*thirdBits, 4+0*8+0*thirdBits, 0+0*8+1*thirdBits, 4+0*8+1*thirdBits, 0+0*8+2*thirdBits, 4+0*8+2*thirdBits,
+		0+1*8+0*thirdBits, 4+1*8+0*thirdBits, 0+1*8+1*thirdBits, 4+1*8+1*thirdBits, 0+1*8+2*thirdBits, 4+1*8+2*thirdBits,
+		0+2*8+0*thirdBits, 4+2*8+0*thirdBits, 0+2*8+1*thirdBits, 4+2*8+1*thirdBits, 0+2*8+2*thirdBits, 4+2*8+2*thirdBits,
+		0+3*8+0*thirdBits, 4+3*8+0*thirdBits, 0+3*8+1*thirdBits, 4+3*8+1*thirdBits, 0+3*8+2*thirdBits, 4+3*8+2*thirdBits
+	};
+	INT32 YOffs[16] = { STEP16(0,4*8) };
+
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x18000);
+	if (tmp == NULL) {
+		return 1;
+	}
+	memcpy (tmp, DrvTileROM, 0x18000);
+
+	GfxDecode(w2_numtiles, 4, 24, 16, Plane, XOffs, YOffs, 4*16*8, tmp, DrvTileROM);
+
+	BurnFree(tmp);
+
+	return 0;
+}
+
+static UINT32 w2_calc_col(INT32 lo, INT32 hi)
+{
+	static const float frgb[256] =
+	{
+		0.001889f, 0.002456f, 0.003196f, 0.004384f, 0.005272f, 0.007672f, 0.011345f, 0.017759f,
+		0.018643f, 0.03103f,  0.051912f, 0.087251f, 0.1256f,   0.204967f, 0.331644f, 0.529628f,
+		0.002524f, 0.003306f, 0.004371f, 0.006072f, 0.007386f, 0.010812f, 0.016096f, 0.02509f,
+		0.02687f,  0.043747f, 0.070899f, 0.114042f, 0.159992f, 0.250108f, 0.391104f, 0.607433f,
+		0.003522f, 0.004666f, 0.006254f, 0.008766f, 0.010795f, 0.015856f, 0.023585f, 0.036228f,
+		0.039487f, 0.062206f, 0.096916f, 0.148811f, 0.20338f,  0.305447f, 0.462741f, 0.700199f,
+		0.004941f, 0.006607f, 0.00895f,  0.012619f, 0.015683f, 0.022944f, 0.033832f, 0.050765f,
+		0.056018f, 0.085033f, 0.127452f, 0.187886f, 0.25112f,  0.364998f, 0.53879f,  0.797876f,
+
+		0.006857f, 0.009233f, 0.012592f, 0.017771f, 0.022172f, 0.03212f,  0.046615f, 0.06811f,
+		0.075696f, 0.110906f, 0.160678f, 0.229149f, 0.300735f, 0.42593f,  0.61584f,  0.896241f,
+		0.010113f, 0.01368f,  0.018726f, 0.02625f,  0.032735f, 0.046462f, 0.065809f, 0.092996f,
+		0.103803f, 0.146292f, 0.204648f, 0.282479f, 0.364084f, 0.502781f, 0.712244f, 1.018759f,
+		0.015744f, 0.021251f, 0.028944f, 0.039945f, 0.049446f, 0.068127f, 0.093445f, 0.127285f,
+		0.14231f,  0.193004f, 0.261153f, 0.349656f, 0.443068f, 0.597642f, 0.830444f, 1.168267f,
+		0.024223f, 0.032378f, 0.043467f, 0.058612f, 0.071646f, 0.09563f,  0.127147f, 0.167588f,
+		0.187237f, 0.246001f, 0.32398f,  0.423282f, 0.528958f, 0.699986f, 0.957283f, 1.328146f,
+
+		0.03429f,  0.045182f, 0.059626f, 0.078588f, 0.094882f, 0.123449f, 0.160233f, 0.206173f,
+		0.230031f, 0.295596f, 0.382005f, 0.490617f, 0.607092f, 0.792615f, 1.071663f, 1.471949f,
+		0.053106f, 0.068185f, 0.087712f, 0.112105f, 0.132967f, 0.167685f, 0.211656f, 0.265082f,
+		0.295044f, 0.369837f, 0.467993f, 0.58972f,  0.721623f, 0.927771f, 1.23799f,  1.680648f,
+		0.083576f, 0.103924f, 0.129726f, 0.160516f, 0.186838f, 0.228722f, 0.281144f, 0.343382f,
+		0.381103f, 0.46708f,  0.5795f,   0.717377f, 0.86859f,  1.100548f, 1.449999f, 1.946101f,
+		0.124032f, 0.149904f, 0.182177f, 0.219335f, 0.251408f, 0.300484f, 0.361692f, 0.433113f,
+		0.479348f, 0.577076f, 0.704911f, 0.860274f, 1.032601f, 1.292736f, 1.685276f, 2.240223f,
+
+		0.175706f, 0.207011f, 0.245689f, 0.289706f, 0.327912f, 0.384501f, 0.455038f, 0.536297f,
+		0.592068f, 0.702442f, 0.847309f, 1.021943f, 1.217772f, 1.509243f, 1.949852f, 2.570528f,
+		0.24927f,  0.287025f, 0.333877f, 0.385984f, 0.431717f, 0.497443f, 0.579727f, 0.673464f,
+		0.741572f, 0.868017f, 1.034559f, 1.234123f, 1.460333f, 1.79207f,  2.295118f, 3.001228f,
+		0.357357f, 0.403448f, 0.460931f, 0.52375f,  0.579557f, 0.656404f, 0.754715f, 0.865436f,
+		0.950203f, 1.097887f, 1.293872f, 1.527752f, 1.795589f, 2.182008f, 2.770169f, 3.593798f,
+		0.494255f, 0.549094f, 0.61884f,  0.693823f, 0.760527f, 0.851544f, 0.968276f, 1.098965f,
+		1.203912f, 1.377026f, 1.608183f, 1.882244f, 2.200036f, 2.652345f, 3.342626f, 4.215708f
+	};
+
+	// default gain/offset per PORT_ADJUSTER defaults: mysticm uses its own monitor_controls_mysticm
+	// (R=80/G=73/B=81 gain, R=73/G=100/B=78 offset); other games use the generic monitor_controls (25/25/25, 100/100/100)
+	static const float gain_mysticm[3]   = { 0.80f, 0.73f, 0.81f };
+	static const float offset_mysticm[3] = { -0.27f, 0.00f, -0.22f };
+	static const float gain_generic[3]   = { 0.25f, 0.25f, 0.25f };
+	static const float offset_generic[3] = { 0.00f, 0.00f, 0.00f };
+	const float *gain   = is_mysticm ? gain_mysticm   : gain_generic;
+	const float *offset = is_mysticm ? offset_mysticm : offset_generic;
+
+	INT32 i  = (hi >> 4) & 15;
+	INT32 ub = (hi >> 0) & 15;
+	INT32 ug = (lo >> 4) & 15;
+	INT32 ur = (lo >> 0) & 15;
+
+	float r = frgb[i * 16 + ur] / 4.22f;
+	float g = frgb[i * 16 + ug] / 4.22f;
+	float b = frgb[i * 16 + ub] / 4.22f;
+
+	r = (r + offset[0] > 0.0f) ? r + offset[0] : 0.0f;
+	g = (g + offset[1] > 0.0f) ? g + offset[1] : 0.0f;
+	b = (b + offset[2] > 0.0f) ? b + offset[2] : 0.0f;
+
+	r = r * gain[0] / 0.25f; if (r > 1.0f) r = 1.0f;
+	g = g * gain[1] / 0.25f; if (g > 1.0f) g = 1.0f;
+	b = b * gain[2] / 0.25f; if (b > 1.0f) b = 1.0f;
+
+	return BurnHighCol((INT32)(r * 255), (INT32)(g * 255), (INT32)(b * 255), 0);
+}
+
+static void w2_update_pen(INT32 entry)
+{
+	if (DrvPalWritten[entry]) {
+		DrvPalette[0x10 + entry] = w2_calc_col(DrvPalRAM[entry * 2 + 0], DrvPalRAM[entry * 2 + 1]);
+	} else {
+		// never written since power on: placeholder colors
+		DrvPalette[0x10 + entry] = BurnHighCol((entry & 1) ? 0xff : 0, (entry & 2) ? 0xff : 0, (entry & 4) ? 0xff : 0, 0);
+	}
+}
+
+static void w2_paletteram_w(INT32 offset)
+{
+	DrvPalWritten[offset / 2] = 1;
+	w2_update_pen(offset / 2);
+}
+
+static void w2_rebuild_palette()
+{
+	for (INT32 i = 0; i < 0x400; i++)
+		w2_update_pen(i);
+}
+
+// williams2 bank select:
+//   page 0    : 0x0000-0x7fff videoram
+//   page 1, 2 : 0x0000-0x7fff rom bank (data & 6) >> 1
+//   page 3    : 0x0000-0x7fff rom bank (data & 4) >> 1, 0x8000-0x87ff palette ram
+
+static void w2_bank_select(UINT8 data)
+{
+	INT32 page = data & 3;
+
+	switch (page)
+	{
+		case 0:
+			w2_rom_view_active = 0;
+			w2_palette_view_active = 0;
+			break;
+
+		case 1:
+		case 2:
+			w2_bank_entry = (data & 6) >> 1;
+			w2_rom_view_active = 1;
+			w2_palette_view_active = 0;
+			break;
+
+		case 3:
+			w2_bank_entry = (data & 4) >> 1;
+			w2_rom_view_active = 1;
+			w2_palette_view_active = 1;
+			break;
+	}
+
+	if (w2_rom_view_active) {
+		M6809MapMemory(DrvM6809ROM0 + 0x10000 + w2_bank_entry * 0x8000, 0x0000, 0x7fff, MAP_ROM);
+	} else {
+		M6809MapMemory(DrvVidRAM, 0x0000, 0x7fff, MAP_RAM);
+	}
+
+	if (w2_palette_view_active) {
+		M6809UnmapMemory(0x8000, 0x87ff, MAP_RAM); // palette ram goes through the handlers
+	} else {
+		M6809MapMemory(DrvVidRAM + 0x8000, 0x8000, 0x87ff, MAP_RAM);
+	}
+}
+
+static void williams2_main_write(UINT16 address, UINT8 data)
+{
+	if ((address & 0xf800) == 0x8000 && w2_palette_view_active) {
+		INT32 offset = (address & 0x7ff);
+		DrvPalRAM[offset] = data;
+		w2_paletteram_w(offset);
+		return;
+	}
+
+	// rom view only overlays reads - writes to 0x0000-0x7fff always land in videoram
+	if (address < 0x8000) {
+		DrvVidRAM[address] = data;
+		return;
+	}
+
+	if ((address & 0xff80) == 0xc800) {
+		w2_bank_select_shadow = data;
+		w2_bank_select(data);
+		return;
+	}
+
+	if ((address & 0xff80) == 0xc880) { // mirror(0x0078)
+		williams_blitter_write(address & 7, data);
+		return;
+	}
+
+	if ((address & 0xff80) == 0xc900) {
+		w2_watchdog_shadow = data;
+		if ((data & 0x3f) == 0x14) {
+			BurnWatchdogWrite();
+		}
+		return;
+	}
+
+	if ((address & 0xff80) == 0xc980) { // mirror(0x0070)
+		INT32 sel = address & 0xc;
+		if (sel == 0x0) { pia_write(1, address & 0x3, data); return; }
+		if (sel == 0x4) { pia_write(0, address & 0x3, data); return; }
+		if (sel == 0xc) { return; } // this is a 7-segment led
+		return;
+	}
+
+	if ((address & 0xffe0) == 0xcb00) {
+		w2_fg_select_shadow = data;
+		w2_fg_color = data & 0x3f;
+		return;
+	}
+
+	if ((address & 0xffe0) == 0xcb20) {
+		w2_bg_select_shadow = data;
+		if (is_mysticm) {
+			w2_bg_color = data;
+		} else {
+			w2_bg_palette_offset = is_joust2 ? ((data & 0x3f) << 4) : ((data & 0x38) << 4);
+		}
+		return;
+	}
+
+	if ((address & 0xffe0) == 0xcb40) {
+		w2_xscroll_low_shadow = data;
+		w2_xscroll = (w2_xscroll & ~0x00f) | ((data & 0x80) >> 4) | (data & 0x07);
+		return;
+	}
+
+	if ((address & 0xffe0) == 0xcb60) {
+		w2_xscroll_high_shadow = data;
+		w2_xscroll = (w2_xscroll & 0x00f) | (data << 4);
+		return;
+	}
+
+	if ((address & 0xffe0) == 0xcb80) {
+		w2_video_control_shadow = data;
+		return;
+	}
+
+	if ((address & 0xffe0) == 0xcba0) {
+		w2_window_enable_shadow = data;
+		blitter_window_enable = data & 1;
+		return;
+	}
+
+	if ((address & 0xfc00) == 0xcc00) {
+		DrvNVRAM[address & 0x3ff] = data | 0xf0;
+		return;
+	}
+
+	if (address >= 0xd000 && address <= 0xdfff) {
+		DrvM6809RAM0[address & 0xfff] = data;
+		return;
+	}
+}
+
+static UINT8 williams2_main_read(UINT16 address)
+{
+	if ((address & 0xf800) == 0x8000 && w2_palette_view_active) {
+		return DrvPalRAM[address & 0x7ff];
+	}
+
+	// c800-c97f and cb00-cbbf are write-only (unmapped reads)
+
+	if ((address & 0xff80) == 0xc980) { // mirror(0x0070)
+		INT32 sel = address & 0xc;
+		if (sel == 0x0) return pia_read(1, address & 3);
+		if (sel == 0x4) return pia_read(0, address & 3);
+		return 0;
+	}
+
+	if ((address & 0xfff0) == 0xcbe0) {
+		return scanline & 0xff;
+	}
+
+	if ((address & 0xfc00) == 0xcc00) {
+		return DrvNVRAM[address & 0x3ff];
+	}
+
+	if (address >= 0xd000 && address <= 0xdfff) {
+		return DrvM6809RAM0[address & 0xfff];
+	}
+
+	return 0;
+}
+
 static void blaster_bankswitch()
 {
 	if (vram_select == 0)
@@ -954,6 +1423,24 @@ static UINT8 defender_sound_read(UINT16 address)
 		return pia_read(2, address & 3);
 	}
 
+	return 0;
+}
+
+static void williams2_sound_write(UINT16 address, UINT8 data)
+{
+	address &= ~0x1ffc;
+	if (address >= 0x2000 && address <= 0x2003) {
+		pia_write(2, address & 0x3, data);
+		return;
+	}
+}
+
+static UINT8 williams2_sound_read(UINT16 address)
+{
+	address &= ~0x1ffc;
+	if (address >= 0x2000 && address <= 0x2003) {
+		return pia_read(2, address & 3);
+	}
 	return 0;
 }
 
@@ -1014,7 +1501,8 @@ static UINT8 pia0_49way_in_a(UINT16 )
 
 static void sync_sound(INT32 num)
 {
-	INT32 cyc = (INT32)(((double)((double)M6809TotalCycles() * 894886) / 1000000)+0.5);
+	INT32 snd_clock = (williams2) ? 1000000 : 894886; // williams2: MASTER_CLOCK/3/4 = 4MHz/4; williams1: 3.579545MHz/4
+	INT32 cyc = (INT32)(((double)((double)M6809TotalCycles() * snd_clock) / 1000000)+0.5);
 	INT32 todo = cyc - M6800TotalCycles();
 	//bprintf(0, _T("m6809 cyc: %d  m6800 cyc: %d.    cyc: %d  todo %d.\n"), M6809TotalCycles(), M6800TotalCycles(), cyc, todo);
 	// Adding in a couple cycles to prevent lost soundcommands.  CPU_RUN_SYNCINT in DrvFrame() will compensate.
@@ -1047,11 +1535,13 @@ static void pia1_out_b(UINT16 , UINT8 data)
 		pia_set_input_cb1(2, (l_data == 0xff) ? 0 : 1);
 		M6800Close();
 
-		M6800Open(1);
-		sync_sound(1);
-		pia_set_input_b(4, r_data);
-		pia_set_input_cb1(4, (r_data == 0xff) ? 0 : 1);
-		M6800Close();
+		if (has_second_soundboard) {
+			M6800Open(1);
+			sync_sound(1);
+			pia_set_input_b(4, r_data);
+			pia_set_input_cb1(4, (r_data == 0xff) ? 0 : 1);
+			M6800Close();
+		}
 	} else {
 		// defender, williams HW (everything else)
 		M6800Open(0);
@@ -1064,6 +1554,11 @@ static void pia1_out_b(UINT16 , UINT8 data)
 }
 
 static void pia2_out_b(UINT16 , UINT8 data)
+{
+	DACWrite(0, data);
+}
+
+static void w2_dac_w(UINT16 , UINT8 data)
 {
 	DACWrite(0, data);
 }
@@ -1086,6 +1581,11 @@ static void hc55516_clock_out(UINT16 , UINT8 data)
 static void pia1_main_irq(INT32 state)
 {
 	M6809SetIRQLine(M6809_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static void mysticm_pia0_firq(INT32 state)
+{
+	M6809SetIRQLine(M6809_FIRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void pia2_sound_irq(INT32 state)
@@ -1119,6 +1619,23 @@ static pia6821_interface pia_49way_0 = {
 	NULL, NULL
 };
 
+static UINT8 pia0_blasterkit_muxed_in_a(UINT16 )
+{
+	return port_select ? pia0_49way_in_a(0) : DrvInputs[3]; // port_select=1: joystick position, =0: IN3 (buttons/start)
+}
+
+static void blasterkit_out_cb2(UINT16 , UINT8 data)
+{
+	port_select = data;
+}
+
+static pia6821_interface pia_blasterkit_0 = {
+	pia0_blasterkit_muxed_in_a, pia0_in_b,
+	NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, blasterkit_out_cb2,
+	NULL, NULL
+};
+
 static pia6821_interface pia_1 = {
 	pia1_in_a, NULL,
 	NULL, NULL, NULL, NULL,
@@ -1147,6 +1664,169 @@ static pia6821_interface pia_2_sinistar = {
 	pia2_sound_irq, pia2_sound_irq
 };
 
+// Williams 2
+static UINT8 w2_mux_in_a(UINT16 )
+{
+	return (port_select == 0) ? DrvInputs[3] : DrvInputs[4];
+}
+
+static UINT8 tshoot_gun_r(INT32 axis)
+{
+	INT16 raw = (axis ? BurnGunReturnX(0) : BurnGunReturnY(0));
+	INT32 data = (raw >> 2) & 0x3f; // scale 0-255 down to 0-0x3f
+	UINT8 result = (data & 0x3f) ^ ((data & 0x3f) >> 1); // gray-code
+	return result;
+}
+
+static UINT8 tshoot_mux_in_a(UINT16 )
+{
+	UINT8 ret = tshoot_gun_r(port_select & 1) | (DrvInputs[3] & 0xc0);
+	return ret;
+}
+
+static UINT8 joust2_mux_in_a(UINT16 )
+{
+	return ((DrvInputs[0] & 0xf0) ^ 0xf0) | (w2_mux_in_a(0) & 0x0f);
+}
+
+static void w2_out_ca2(UINT16 , UINT8 data)
+{
+	port_select = data;
+}
+
+static void w2_snd_cmd_w(UINT16 , UINT8 data)
+{
+	M6800Open(0);
+	sync_sound(0);
+	pia_set_input_a(2, data);
+	M6800Close();
+}
+
+static void w2_pia1_cb2_to_pia2_ca1(UINT16 , UINT8 data)
+{
+	M6800Open(0);
+	sync_sound(0);
+	pia_set_input_ca1(2, data);
+	M6800Close();
+}
+
+static void w2_pia2_ca2_to_pia1_cb1(UINT16 , UINT8 data)
+{
+	pia_set_input_cb1(1, data);
+}
+
+#define BG_CB2_QUEUE	16
+static UINT8 bg_cb2_queue[BG_CB2_QUEUE];
+static INT32 bg_cb2_count = 0;
+static INT32 bg_resetq_state = 1;
+
+static void joust2_bg_cb2_w(INT32 state)
+{
+	if (bg_cb2_count < BG_CB2_QUEUE) bg_cb2_queue[bg_cb2_count++] = state;
+}
+
+static void joust2_bg_cb2_flush()
+{
+	for (INT32 i = 0; i < bg_cb2_count; i++) {
+		pia_set_input_cb1(2, bg_cb2_queue[i]);
+	}
+	bg_cb2_count = 0;
+}
+
+static void joust2_bg_strobe_w(UINT16 , UINT8 state)
+{
+	cvsd_cb1_write(state);
+}
+
+static void joust2_bg_resetq_w(UINT16 , UINT8 state)
+{
+	if (bg_resetq_state && !state) {
+		cvsd_cpu_reset();
+	}
+	bg_resetq_state = state;
+}
+
+static void pia2a_to_pia1_out_b(UINT16 , UINT8 data)
+{
+	pia_set_input_b(1, data);
+}
+
+static pia6821_interface pia_w2_0 = {
+	w2_mux_in_a, pia0_in_a,
+	NULL, NULL, NULL, NULL,
+	NULL, NULL, w2_out_ca2, NULL,
+	NULL, NULL
+};
+
+static pia6821_interface pia_tshoot_0 = {
+	tshoot_mux_in_a, pia0_in_b,
+	NULL, NULL, NULL, NULL,
+	NULL, NULL, w2_out_ca2, NULL,
+	pia1_main_irq, pia1_main_irq
+};
+
+static pia6821_interface pia_mysticm_0 = {
+	pia0_in_a, pia0_in_b,
+	NULL, NULL, NULL, NULL,
+	NULL, NULL, NULL, NULL,
+	mysticm_pia0_firq, pia1_main_irq
+};
+
+static pia6821_interface pia_joust2_0 = {
+	joust2_mux_in_a, pia0_in_b,
+	NULL, NULL, NULL, NULL,
+	NULL, NULL, w2_out_ca2, NULL,
+	NULL, NULL
+};
+
+static pia6821_interface pia_w2_1 = {
+	pia0_in_b, NULL,
+	NULL, NULL, NULL, NULL,
+	NULL, w2_snd_cmd_w, NULL, w2_pia1_cb2_to_pia2_ca1,
+	pia1_main_irq, pia1_main_irq
+};
+
+static pia6821_interface pia_tshoot_1 = {
+	pia1_in_a, NULL,
+	NULL, NULL, NULL, NULL,
+	NULL, w2_snd_cmd_w, NULL, w2_pia1_cb2_to_pia2_ca1,
+	pia1_main_irq, pia1_main_irq
+};
+
+static pia6821_interface pia_mysticm_1 = {
+	pia1_in_a, NULL,
+	NULL, NULL, NULL, NULL,
+	NULL, w2_snd_cmd_w, NULL, w2_pia1_cb2_to_pia2_ca1,
+	pia1_main_irq, pia1_main_irq
+};
+
+static void joust2_snd_cmd_w(UINT16 address, UINT8 data)
+{
+	w2_snd_cmd_w(address, data);
+	cvsd_portb_write(data); // goes to the sound cpu and to the bg board
+}
+
+static pia6821_interface pia_joust2_1 = {
+	pia1_in_a, NULL,
+	NULL, NULL, NULL, NULL,
+	NULL, joust2_snd_cmd_w, joust2_bg_strobe_w, w2_pia1_cb2_to_pia2_ca1,
+	pia1_main_irq, pia1_main_irq
+};
+
+static pia6821_interface pia_w2_2 = {
+	NULL, NULL,
+	NULL, NULL, NULL, NULL,
+	pia2a_to_pia1_out_b, w2_dac_w, w2_pia2_ca2_to_pia1_cb1, NULL,
+	pia2_sound_irq, pia2_sound_irq
+};
+
+static pia6821_interface pia_joust2_2 = {
+	NULL, NULL,
+	NULL, NULL, NULL, NULL,
+	pia2a_to_pia1_out_b, w2_dac_w, w2_pia2_ca2_to_pia1_cb1, joust2_bg_resetq_w,
+	pia2_sound_irq, pia2_sound_irq
+};
+
 static UINT8 pia3_in_a(UINT16 )
 {
 	return DrvInputs[3];
@@ -1168,17 +1848,21 @@ static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
 		memset (AllRam, 0, RamEnd - AllRam);
+		if (williams2) w2_rebuild_palette();
 	}
 
 	M6809Open(0);
 	M6809Reset();
+	if (williams2) {
+		w2_bank_select(0);
+	}
 	M6809Close();
 
 	M6800Open(0);
 	M6800Reset();
 	M6800Close();
 
-	if (blaster || sinistarc) {
+	if ((blaster || sinistarc) && has_second_soundboard) {
 		M6800Open(1);
 		M6800Reset();
 		M6800Close();
@@ -1193,6 +1877,12 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	if (uses_hc55516)
 		hc55516_reset();
 
+	if (has_s11_bg) {
+		cvsd_reset();
+		bg_cb2_count = 0;
+		bg_resetq_state = 1;
+	}
+
 	cocktail = 0;
 	bankselect = 0;
 	vram_select = 0;
@@ -1206,6 +1896,11 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	TrackX[0] = TrackX[1] = 0;
 	TrackY[0] = TrackY[1] = 0;
+	conquest_dial = 0;
+
+	w2_fg_color = 0;
+	w2_bg_palette_offset = 0;
+	w2_xscroll = 0;
 
 	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
@@ -1221,26 +1916,33 @@ static INT32 MemIndex()
 	DrvM6809ROM0		= Next; Next += 0x050000;
 	DrvM6800ROM0		= Next; Next += 0x010000;
 	DrvM6800ROM1		= Next; Next += 0x010000;
-	
+
 	DrvGfxROM			= Next; Next += 0x018000;
-	
+
 	DrvColPROM			= Next; Next += 0x001000;
 
+	DrvTileROM			= Next; Next += 0x018000; // up to 256 tiles * 384 bytes (joust2 has double-size tile ROMs -> 256 tiles)
+
+	DrvBgROM			= Next; Next += 0x080000; // bg board, laid out as U4 / U19 / U20 at 0x00000 / 0x20000 / 0x40000
+
 	Palette				= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
-	DrvPalette			= (UINT32*)Next; Next += (0x0010 + 0x0100) * sizeof(UINT32);
+	DrvPalette			= (UINT32*)Next; Next += (0x0010 + 0x0400) * sizeof(UINT32);
 
 	DrvNVRAM			= Next; Next += 0x000400;
 
 	blitter_remap		= Next; Next += 0x010000;
-	
+
 	AllRam				= Next;
 
 	DrvM6809RAM0		= Next; Next += 0x004000;
 	DrvM6800RAM0		= Next; Next += 0x000100;
 	DrvM6800RAM1		= Next; Next += 0x000100;
 	DrvVidRAM			= Next; Next += 0x00c000;
-	DrvPalRAM			= Next; Next += 0x000010;
+	DrvPalRAM			= Next; Next += 0x000800;
 	DrvBlitRAM			= Next; Next += 0x000008;
+	DrvTileRAM			= Next; Next += 0x000800;
+	DrvPalWritten		= Next; Next += 0x000400;
+	DrvBgRAM			= Next; Next += 0x000800;
 
 	RamEnd				= Next;
 
@@ -1257,6 +1959,9 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 	UINT8 *cLoad = DrvColPROM;
 	UINT8 *gLoad = DrvGfxROM;
 
+	has_second_soundboard = 0;
+	bg_rom_len = 0;
+
 	if (type == 4) mLoad += 0x1000;
 	
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++)
@@ -1268,15 +1973,24 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 
 			// blaster
 			if (ri.nLen == 0x4000 && offset == 0x15000) mLoad += 0x3000; // gap
+			// conquest (incomplete prototype dump - 0xd000-0xdfff is unpopulated on PCB)
+			if (type == 6 && offset == 0xd000) mLoad += 0x1000; // gap
+			// williams2/inferno: fixed window starts at 0xe000 (not 0xd000), and bank 1 (0x18000-0x1ffff) is unpopulated
+			if (type == 7 && offset == 0xd000) mLoad += 0x1000; // gap
+			if (type == 7 && offset == 0x18000) mLoad += 0x8000; // gap (empty bank)
+			// mysticm: fixed window starts at 0xe000 (like inferno); bank1 has only 3 of 4 chips
+			if (type == 9 && offset == 0xd000) mLoad += 0x1000; // gap
+			if (type == 9 && offset == 0x1e000) mLoad += 0x2000; // gap
+			// joust2: 0xd000-0xdfff is real ROM (unlike inferno); bank2 (0x20000-0x27fff) only has 3 of 4 chips
+			if (type == 8 && offset == 0x26000) mLoad += 0x2000; // gap
 			if (type == 2) {
 				if (offset == 0x18000) mLoad += 0x8000;
 				if (offset == 0x24000) mLoad += 0xc000;
 				if (offset == 0x38000) mLoad += 0x8000;
 			}
 			if (type == 3) {
-				if (offset == 0x18000) mLoad += 0x8000;
-				if (offset == 0x26000) mLoad += 0xa000;
-				if (offset == 0x38000) mLoad += 0x8000;
+				// tshoot: bank1 (0x18000-0x1ffff) only has 2 of 4 chips - second half is empty
+				if (offset == 0x1c000) mLoad += 0x4000;
 			}
 			//bprintf(0, _T("loading main ROM @ %04X (%X bytes)\n"), offset, ri.nLen);
 			if (BurnLoadRom(mLoad, i, 1)) return 1;
@@ -1295,6 +2009,7 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 
 		if ((ri.nType & 7) == 3) {
 			bprintf(0, _T("loading second sound rom %x\n"), ri.nLen);
+			has_second_soundboard = 1;
 			memmove (DrvM6800ROM1, DrvM6800ROM1 + ri.nLen, 0x10000 - ri.nLen); // move back
 			if (BurnLoadRom(DrvM6800ROM1 + 0x10000 - ri.nLen, i, 1)) return 1;
 			continue;
@@ -1312,10 +2027,28 @@ static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinist
 			gLoad += ri.nLen;
 			continue;
 		}
+
+		if ((ri.nType & 7) == 6) {
+			if (BurnLoadRom(DrvTileROM + w2_tile_rom_len, i, 1)) return 1;
+			w2_tile_rom_len += ri.nLen;
+			continue;
+		}
+
+		if ((ri.nType & 7) == 7) { // bg board: each 27256 is mirrored over its 0x20000 slot
+			UINT8 *dst = DrvBgROM + bg_rom_len * 0x20000;
+			if (BurnLoadRom(dst, i, 1)) return 1;
+			for (INT32 j = 1; j < 4; j++) memcpy(dst + j * 0x8000, dst, 0x8000);
+			bg_rom_len++;
+			continue;
+		}
 	}
 
 	// colony
 	if ((mLoad - DrvM6809ROM0) == 0x12800) memcpy (DrvM6809ROM0 + 0x12800, DrvM6809ROM0 + 0x12000, 0x0800);
+
+	if (type == 7) memset(DrvM6809ROM0 + 0x18000, 0xff, 0x8000); // inferno: bank 1 (0x18000-0x1ffff) unpop.
+	if (type == 3) memset(DrvM6809ROM0 + 0x1c000, 0xff, 0x4000); // tshoot: bank1 second half unpopulated
+	if (type == 9) memset(DrvM6809ROM0 + 0x1e000, 0xff, 0x2000); // mysticm: bank1 last chip unpopulated
 
 	return 0;
 }
@@ -1347,14 +2080,16 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		if (DrvRomLoad(loadtype)) return 1;
 	}
 
-	// sound HW
-	M6800Init(0);
-	M6800Open(0);
-	M6800MapMemory(DrvM6800RAM0,				0x0000, 0x00ff, MAP_RAM);
-	M6800MapMemory(DrvM6800ROM0 + 0xb000,		0xb000, 0xffff, MAP_ROM);
-	M6800SetWriteHandler(defender_sound_write);
-	M6800SetReadHandler(defender_sound_read);
-	M6800Close();
+	if (maptype != 3) {
+		// pre-williams2 sound HW
+		M6800Init(0);
+		M6800Open(0);
+		M6800MapMemory(DrvM6800RAM0,				0x0000, 0x00ff, MAP_RAM);
+		M6800MapMemory(DrvM6800ROM0 + 0xb000,		0xb000, 0xffff, MAP_ROM);
+		M6800SetWriteHandler(defender_sound_write);
+		M6800SetReadHandler(defender_sound_read);
+		M6800Close();
+	}
 
 	if (maptype == 2) // blaster
 	{
@@ -1367,13 +2102,15 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		M6809SetReadHandler(williams_main_read);
 		M6809Close();
 
-		M6800Init(1);
-		M6800Open(1);
-		M6800MapMemory(DrvM6800RAM1,				0x0000, 0x00ff, MAP_RAM);
-		M6800MapMemory(DrvM6800ROM1 + 0xb000,		0xb000, 0xffff, MAP_ROM);
-		M6800SetWriteHandler(blaster_sound_write);
-		M6800SetReadHandler(blaster_sound_read);
-		M6800Close();
+		if (has_second_soundboard) {
+			M6800Init(1);
+			M6800Open(1);
+			M6800MapMemory(DrvM6800RAM1,				0x0000, 0x00ff, MAP_RAM);
+			M6800MapMemory(DrvM6800ROM1 + 0xb000,		0xb000, 0xffff, MAP_ROM);
+			M6800SetWriteHandler(blaster_sound_write);
+			M6800SetReadHandler(blaster_sound_read);
+			M6800Close();
+		}
 	}
 	else if (maptype == 1) // williams
 	{
@@ -1401,32 +2138,87 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		M6809SetReadHandler(defender_main_read);
 		M6809Close();
 	}
+	else if (maptype == 3) // williams2 (inferno, joust2, tshoot, mysticm)
+	{
+		williams2 = 1;
+		bprintf(0, _T("Williams 2 DrvInit()!\n"));
+		DrvGfxDecode();
+
+		M6800Init(0);
+		M6800Open(0);
+		M6800MapMemory(DrvM6800RAM0,			0x0000, 0x00ff, MAP_RAM);
+		M6800MapMemory(DrvM6800ROM0 + 0xe000,	0xe000, 0xffff, MAP_ROM);
+		M6800SetWriteHandler(williams2_sound_write);
+		M6800SetReadHandler(williams2_sound_read);
+		M6800Close();
+
+		M6809Init(0);
+		M6809Open(0);
+		M6809MapMemory(DrvVidRAM + 0x8800	,0x8800, 0xbfff, MAP_RAM);
+		M6809MapMemory(DrvTileRAM			,0xc000, 0xc7ff, MAP_RAM);
+		M6809MapMemory(DrvNVRAM				,0xcc00, 0xcfff, MAP_ROM);
+		if (is_joust2 || is_tshoot) {
+			M6809MapMemory(DrvM6809ROM0 + 0xd000,	0xd000, 0xdfff, MAP_ROM);
+		} else {
+			M6809MapMemory(DrvM6809RAM0			,0xd000, 0xdfff, MAP_RAM);
+		}
+		M6809MapMemory(DrvM6809ROM0 + 0xe000,0xe000, 0xffff, MAP_ROM);
+		M6809SetWriteHandler(williams2_main_write);
+		M6809SetReadHandler(williams2_main_read);
+		M6809Close();
+
+	}
 
 	pia_init();
-	pia_config(0, 0, &pia_0);
-	pia_config(1, 0, &pia_1);
-	pia_config(2, 0, &pia_2);
-	pia_config(3, 0, &pia_3);
+	if (williams2) {
+		pia_config(0, 0, is_joust2 ? &pia_joust2_0 : is_tshoot ? &pia_tshoot_0 : is_mysticm ? &pia_mysticm_0 : &pia_w2_0);
+		pia_config(1, 0, is_joust2 ? &pia_joust2_1 : is_tshoot ? &pia_tshoot_1 : is_mysticm ? &pia_mysticm_1 : &pia_w2_1);
+		pia_config(2, 0, is_joust2 ? &pia_joust2_2 : &pia_w2_2);
+		if (!is_joust2 && !is_tshoot && !is_mysticm) {
+			pia_set_port_a_input_overrides_output_mask(2, 0xff); // inferno: sound commands can drive pia2 port a output pins
+		}
+	} else {
+		pia_config(0, 0, &pia_0);
+		pia_config(1, 0, &pia_1);
+		pia_config(2, 0, &pia_2);
+		pia_config(3, 0, &pia_3);
+	}
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	DACInit(0, 0, 0, M6800TotalCycles, 894886);
-	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+	DACInit(0, 0, 0, M6800TotalCycles, (williams2) ? 1000000 : 894886);
+	DACSetRoute(0, (williams2) ? 0.13 : 0.35, BURN_SND_ROUTE_BOTH);
 	DACDCBlock(1);
+
+	if (has_s11_bg) { // just joust2
+		cvsd_init(1, 1, 3, DrvBgROM, DrvBgRAM);
+		cvsd_set_cb2_callback(joust2_bg_cb2_w);
+		cvsd_set_s11_bg_mode(1);
+		cvsd_set_dac_signed(1);
+
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
+		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.10, BURN_SND_ROUTE_BOTH);
+		hc55516_volume(0.43); // in cvsd!
+	}
 
 	if (maptype == 2) // blaster, pia config & l+r dac
 	{
 		pia_init();
-		pia_config(0, 0, &pia_49way_0);
+		pia_config(0, 0, is_blasterkit ? &pia_blasterkit_0 : &pia_49way_0);
 		pia_config(1, 0, &pia_1);
 		pia_config(2, 0, &pia_2);
 		pia_config(3, 0, &pia_3);
 		pia_config(4, 0, &pia_4); // 2nd soundboard
 
-		DACSetRoute(0, 0.35, BURN_SND_ROUTE_LEFT);
+		if (has_second_soundboard) {
+			DACSetRoute(0, 0.35, BURN_SND_ROUTE_LEFT);
 
-		DACInit(1, 0, 0, M6800TotalCycles, 894886);
-		DACSetRoute(1, 0.35, BURN_SND_ROUTE_RIGHT);
+			DACInit(1, 0, 0, M6800TotalCycles, 894886);
+			DACSetRoute(1, 0.35, BURN_SND_ROUTE_RIGHT);
+		} else {
+			DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH); // mono kit - single board feeds both channels
+		}
 	}
 
 	blitter_clip_address = blitter_clip_addr;
@@ -1436,6 +2228,8 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 
 	screen_x_adjust = x_adjust;
 
+	if (is_tshoot) BurnGunInit(1, true);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -1443,6 +2237,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 
 static INT32 DrvExit()
 {
+	if (is_tshoot) BurnGunExit();
 	GenericTilesExit();
 
 	M6809Exit();
@@ -1453,6 +2248,9 @@ static INT32 DrvExit()
 
 	if (uses_hc55516)
 		hc55516_exit();
+
+	if (has_s11_bg)
+		cvsd_exit();
 
 	BurnFreeMemIndex();
 
@@ -1467,9 +2265,22 @@ static INT32 DrvExit()
 	spdball = 0;
 	playball = 0;
 	lottofun = 0;
+	conquest = 0;
+
+	williams2 = 0;
+	is_joust2 = 0;
+	is_tshoot = 0;
+	is_mysticm = 0;
+	has_s11_bg = 0;
+
+	w2_tile_rom_len = 0;
+	w2_rom_view_active = 0;
+	w2_palette_view_active = 0;
+	w2_bank_entry = 0;
 
 	uses_hc55516 = 0;
 	uses_colprom = 0;
+	has_s11_bg = 0;
 
 	pStartDraw = NULL;
 	pDrawScanline = NULL;
@@ -1525,6 +2336,88 @@ static void draw_bitmap(INT32 starty, INT32 endy)
 
 			dst[x + 0] = pix >> 4;
 			dst[x + 1] = pix & 0x0f;
+		}
+	}
+}
+
+static INT32 mysticm_color_decode(INT32 base_col, INT32 sig_J1, INT32 y)
+{
+	INT32 v = y << 6;
+	INT32 sig_W11 = (v >> 11) & 1;
+	INT32 sig_W12 = (v >> 12) & 1;
+	INT32 sig_W13 = (v >> 13) & 1;
+
+	INT32 a = 1 | ((base_col & 1) << 2) | ((base_col & 1) << 3);
+	INT32 b = (sig_W12 << 0) | (sig_W13 << 1) | (0 << 2) | (sig_J1 << 3);
+	INT32 color = (a > b) || ((a == b) && !sig_W11);
+
+	return (base_col & 0x3e) | color;
+}
+
+static void w2_draw_bitmap(INT32 starty, INT32 endy)
+{
+	// visible area is x 8-283, y 8-247 of the hardware screen
+	for (INT32 y = starty; y < endy; y++)
+	{
+		if (y >= nScreenHeight) return;
+
+		UINT16 *dst = pTransDraw + (y * nScreenWidth);
+		INT32 sy = y + 8;
+
+		INT32 tile_row = (sy >> 4) & 15; // 16 rows of 16px-tall tiles
+		INT32 fine_y   = sy & 15;
+
+		// background: tilemap (128 cols x 16 rows, 24x16 tiles, TILEMAP_SCAN_COLS)
+		INT32 w2_scrollx_px = (w2_xscroll & 7) + ((w2_xscroll >> 3) * 6);
+		for (INT32 x = 0; x < nScreenWidth; x++)
+		{
+			INT32 scrolled_x = (x + 8) + w2_scrollx_px - 2;
+			INT32 tile_col = (scrolled_x / 24) & 127;
+			INT32 fine_x = scrolled_x % 24;
+
+			INT32 tile_index = tile_col * 16 + tile_row;
+			UINT8 tile_data = DrvTileRAM[tile_index & 0x7ff];
+			INT32 tile_num, flipx;
+			if (is_joust2) {
+				tile_num = tile_data;
+				flipx = 0;
+			} else {
+				tile_num = tile_data & 0x7f;
+				flipx = tile_data & 0x80;
+			}
+			INT32 color, bg_off;
+
+			if (is_mysticm) {
+				color = mysticm_color_decode(w2_bg_color, 0, (tile_index << 4) & 0xff) & 0x3f;
+				bg_off = 0;
+			} else if (is_joust2) {
+				color = 0;
+				bg_off = w2_bg_palette_offset;
+			} else {
+				color = (tile_index >> 1) & 7;
+				bg_off = w2_bg_palette_offset;
+			}
+
+			INT32 px = flipx ? (23 - fine_x) : fine_x;
+
+			UINT8 pix = 0;
+			if (tile_num < w2_numtiles)
+				pix = DrvTileROM[tile_num * (24 * 16) + fine_y * 24 + px];
+
+			INT32 idx = 0x10 + bg_off + color * 16 + pix;
+			dst[x] = idx;
+
+		}
+
+		// foreground: mix in the blitter
+		INT32 fg_col = is_mysticm ? (mysticm_color_decode(w2_fg_color, 1, sy) & 0x3f) : w2_fg_color;
+		UINT8 *src = DrvVidRAM + sy;
+		for (INT32 x = 0; x < nScreenWidth; x += 2)
+		{
+			UINT8 pix = src[((x + 8) / 2) * 256];
+
+			if (pix & 0xf0) dst[x + 0] = 0x10 + fg_col * 16 + (pix >> 4);
+			if (pix & 0x0f) dst[x + 1] = 0x10 + fg_col * 16 + (pix & 0x0f);
 		}
 	}
 }
@@ -1602,6 +2495,32 @@ static void DrvDrawEnd()
 	BurnTransferCopy(DrvPalette);
 }
 
+static INT32 Williams2DrawEnd()
+{
+	if (DrvRecalc) {
+		w2_rebuild_palette();
+		DrvRecalc = 0;
+	}
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
+static INT32 Williams2Draw()
+{
+	if (DrvRecalc) {
+		w2_rebuild_palette();
+		DrvRecalc = 0;
+	}
+
+	w2_draw_bitmap(0, nScreenHeight);
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -1637,7 +2556,7 @@ static INT32 BlasterDraw()
 static INT32 DrvFrame()
 {
 	BurnWatchdogUpdate();
-	
+
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
@@ -1652,8 +2571,15 @@ static INT32 DrvFrame()
 
 		memset (DrvInputs + 3, 0, 7-3);
 
+		if (williams2) {
+			DrvInputs[3] = 0xff; // active low
+			DrvInputs[4] = 0xff;
+		}
+
+		if (is_tshoot) BurnGunMakeInputs(0, DrvAnalogPort0, DrvAnalogPort1);
+
 		if (lottofun) {
-			DrvInputs[2] |= 1; // Memory Protect ON by default (for clean boot)
+			DrvInputs[2] |= 1; // Memory Protect
 			MemoryProtect.Toggle(DrvJoy3[0]);
 		}
 
@@ -1707,11 +2633,21 @@ static INT32 DrvFrame()
 			if (xy < (0x80-0x10)) TrackX[1]-=12;
 
 		}
+
+		if (conquest) {
+			UINT8 xy = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0xff);
+			if (xy > (0x80+0x10)) conquest_dial--;
+			if (xy < (0x80-0x10)) conquest_dial++;
+			conquest_dial &= 0x0f;
+
+			DrvInputs[0] = (DrvInputs[0] & ~0x0c) | (((conquest_dial >> 2) & 3) << 2);
+			DrvInputs[1] = (DrvInputs[1] & ~0x03) | (conquest_dial & 3);
+		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[3] = { 1000000 / 60, 894886 / 60, 894886 / 60 };
-	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
+	INT32 nInterleave = (williams2 && !is_mysticm) ? 260 : 256; // williams2: 260 lines per frame (mysticm: 256)
+	INT32 nCyclesTotal[4] = { 1000000 / 60, (williams2 ? 1000000 : 894886) / 60, 894886 / 60, 2000000 / 60 /*s11bg*/ };
+	INT32 nCyclesDone[4] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2], 0 };
 
 	M6809Open(0);
 
@@ -1721,49 +2657,73 @@ static INT32 DrvFrame()
 	{
 		scanline = i;
 
+		if (williams2) {
+			if ((scanline & 0x1f) == 0 && scanline < 256) { // va11
+				pia_set_input_cb1(0, scanline & 0x20);
+				pia_set_input_ca1(1, scanline & 0x20);
+			}
+			if (scanline == 8 || scanline == 254) {
+				pia_set_input_ca1(0, (scanline >= 254) ? 0 : 1);
+			}
+
+			if (pBurnDraw && scanline >= 8 && scanline < 8 + nScreenHeight) {
+				w2_draw_bitmap(scanline - 8, scanline - 7);
+			}
+		} else {
+			if (scanline % 8 == 0) {
+				pia_set_input_cb1(1, scanline & 0x20);
+				if (pDrawScanline) pDrawScanline();
+			}
+
+			if (scanline == 0 || scanline == 240)
+				pia_set_input_ca1(1, scanline >= 240 ? 1 : 0);
+		}
 		CPU_RUN(0, M6809);
 
-		if (scanline % 8 == 0) {
-			pia_set_input_cb1(1, scanline & 0x20);
-			if (pDrawScanline) pDrawScanline();
-		}
-
-		if (scanline == 0 || scanline == 240)
-			pia_set_input_ca1(1, scanline >= 240 ? 1 : 0);
-
 		M6800Open(0);
+		if (has_s11_bg) joust2_bg_cb2_flush(); // slightly delayed message(s) from s11bg -> main sound
 		CPU_RUN_SYNCINT(1, M6800);
 		M6800Close();
 
-		if (blaster || sinistarc) {
+		if (has_s11_bg) {
+			M6809CPUPush(1);
+			CPU_RUN_TIMER(3);
+			M6809CPUPop();
+		}
+
+		if ((blaster || sinistarc) && has_second_soundboard) {
 			M6800Open(1);
 			CPU_RUN_SYNCINT(2, M6800);
 			M6800Close();
 		}
 	}
 
-	if (pBurnSoundOut) {
-		M6800Open(0);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		if (uses_hc55516)
-			hc55516_update(pBurnSoundOut, nBurnSoundLen);
-		M6800Close();
-	}
-
 	M6809Close();
+
+	if (pBurnSoundOut) {
+		if (has_s11_bg) {
+			cvsd_update(pBurnSoundOut, nBurnSoundLen); // ym2151, dac(main, cvsd board), hc55516
+		} else {
+			DACUpdate(pBurnSoundOut, nBurnSoundLen);
+			if (uses_hc55516)
+				hc55516_update(pBurnSoundOut, nBurnSoundLen);
+		}
+	}
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 	M6800Open(0);
 	nExtraCycles[1] = M6800TotalCycles() - nCyclesTotal[1];
 	M6800Close();
-	if (blaster || sinistarc) {
+	if ((blaster || sinistarc) && has_second_soundboard) {
 		M6800Open(1);
 		nExtraCycles[2] = M6800TotalCycles() - nCyclesTotal[2];
 		M6800Close();
 	}
 
 	if (pBurnDraw) {
-		if (pStartDraw)
+		if (williams2)
+			Williams2DrawEnd();
+		else if (pStartDraw)
 			DrvDrawEnd();
 		else
 			BurnDrvRedraw();
@@ -1774,19 +2734,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029702;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd - AllRam, "All Ram");
 
 		M6809Scan(nAction);
 		M6800Scan(nAction);
@@ -1815,19 +2768,43 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(TrackX);
 			SCAN_VAR(TrackY);
 		}
+
+		if (has_s11_bg) {
+			cvsd_scan(nAction, pnMin);
+			SCAN_VAR(bg_resetq_state);
+		}
+
+		if (is_tshoot) BurnGunScan();
+
+		if (williams2) {
+			SCAN_VAR(port_select);
+			SCAN_VAR(blitter_window_enable);
+			SCAN_VAR(w2_fg_color);
+			SCAN_VAR(w2_bg_color);
+			SCAN_VAR(w2_bg_palette_offset);
+			SCAN_VAR(w2_xscroll);
+			SCAN_VAR(w2_bank_select_shadow);
+			SCAN_VAR(w2_fg_select_shadow);
+			SCAN_VAR(w2_bg_select_shadow);
+			SCAN_VAR(w2_xscroll_low_shadow);
+			SCAN_VAR(w2_xscroll_high_shadow);
+			SCAN_VAR(w2_video_control_shadow);
+			SCAN_VAR(w2_window_enable_shadow);
+			SCAN_VAR(w2_watchdog_shadow);
+		}
 	}
 
 	if (nAction & ACB_NVRAM) {
-		ba.Data		= DrvNVRAM;
-		ba.nLen		= 0x00400;
-		ba.nAddress	= 0;
-		ba.szName	= "NVRAM";
-		BurnAcb(&ba);
+		ScanVar(DrvNVRAM, 0x400, "NVRAM");
 	}
 
 	if (nAction & ACB_WRITE) {
 		M6809Open(0);
-		if (blaster) {
+		if (williams2) {
+			w2_bank_select(w2_bank_select_shadow);
+			DrvRecalc = 1;
+		}
+		else if (blaster) {
 			blaster_bankswitch();
 		}
 		else if (defender) {
@@ -2713,6 +3690,354 @@ struct BurnDriver BurnDrvStargate = {
 };
 
 
+// Conquest (prototype)
+
+static struct BurnRomInfo conquestRomDesc[] = {
+	{ "conquest_b.bin",		0x1000, 0x9aab5516, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (fixed window, mirrored)
+	{ "conquest_b.bin",		0x1000, 0x9aab5516, 1 | BRF_PRG | BRF_ESS }, //  1 (mirror of above)
+	{ "conquest_a.bin",		0x4000, 0xa384f4a2, 1 | BRF_PRG | BRF_ESS }, //  2 (banked)
+
+	{ "video_sound_rom_1.ic12",	0x0800, 0xfefd5b48, 2 | BRF_PRG | BRF_ESS }, //  3 M6800 Code
+
+	{ "decoder.2",			0x0200, 0x8dd98da5, 0 | BRF_OPT },           //  4 Address Decoder
+	{ "decoder.3",			0x0200, 0xc3f45f70, 0 | BRF_OPT },           //  5
+};
+
+STD_ROM_PICK(conquest)
+STD_ROM_FN(conquest)
+
+static INT32 ConquestInit()
+{
+	conquest = 1;
+
+	return DrvInit(1, 6, 6, -1, 0);
+}
+
+struct BurnDriverD BurnDrvConquest = {
+	"conquest", NULL, NULL, NULL, "1982",
+	"Conquest (prototype)\0", NULL, "Williams / Vid Kidz", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, conquestRomInfo, conquestRomName, NULL, NULL, NULL, NULL, ConquestInputInfo, NULL,
+	ConquestInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	240, 292, 3, 4
+};
+
+
+// Inferno
+
+static struct BurnRomInfo infernoRomDesc[] = {
+	{ "ic9.inf",		0x1000, 0x1a013185, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (fixed window)
+	{ "ic10.inf",		0x1000, 0xdbf64a36, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic18.inf",		0x2000, 0x95bcf7b1, 1 | BRF_PRG | BRF_ESS }, //  2 (bank 0)
+	{ "ic16.inf",		0x2000, 0x8bc4f935, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic14.inf",		0x2000, 0xa70508a7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ic12.inf",		0x2000, 0x7ffb87f9, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "ic17.inf",		0x2000, 0xb4684139, 1 | BRF_PRG | BRF_ESS }, //  6 (bank 2)
+	{ "ic15.inf",		0x2000, 0x128a6ad6, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "ic13.inf",		0x2000, 0x83a9e4d6, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "ic11.inf",		0x2000, 0xc2e9c909, 1 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "ic25.inf",		0x2000, 0x103a5951, 1 | BRF_PRG | BRF_ESS }, // 10 (bank 3)
+	{ "ic23.inf",		0x2000, 0xc04749a0, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "ic21.inf",		0x2000, 0xc405f853, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "ic19.inf",		0x2000, 0xade7645a, 1 | BRF_PRG | BRF_ESS }, // 13
+
+	{ "ic8.inf",		0x2000, 0x4e3123b8, 2 | BRF_PRG | BRF_ESS }, // 14 M6800 Code
+
+	{ "ic57.inf",		0x2000, 0x65a4ef79, 6 | BRF_GRA },           // 15 Tilemap Tiles
+	{ "ic58.inf",		0x2000, 0x4bb1c2a0, 6 | BRF_GRA },           // 16
+	{ "ic41.inf",		0x2000, 0xf3f7238f, 6 | BRF_GRA },           // 17
+
+	{ "prom1",			0x0020, 0x85057e40, 0 | BRF_OPT },           // 18 n/c
+	{ "prom2",			0x0100, 0xefb03024, 0 | BRF_OPT },           // 19
+	{ "prom3",			0x0200, 0x0ea3f7fb, 0 | BRF_OPT },           // 20
+};
+
+STD_ROM_PICK(inferno)
+STD_ROM_FN(inferno)
+
+static struct BurnRomInfo joust2RomDesc[] = {
+	{ "cpu_2732_ic55_rom2_rev1.4c",			0x1000, 0x08b0d5bd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (0xd000-0xdfff)
+	{ "cpu_2732_ic9_rom3_rev2.4d",			0x1000, 0x951175ce, 1 | BRF_PRG | BRF_ESS }, //  1 (fixed window)
+	{ "cpu_2732_ic10_rom4_rev2.4f",			0x1000, 0xba6e0f6c, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "cpu_2732_ic18_rom11_rev1.8j",		0x2000, 0x9dc986f9, 1 | BRF_PRG | BRF_ESS }, //  3 (bank 0)
+	{ "cpu_2732_ic16_rom9_rev2.8h",			0x2000, 0x56e2b550, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cpu_2732_ic14_rom7_rev2.6j",			0x2000, 0xf3bce576, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "cpu_2732_ic12_rom5_rev2.6h",			0x2000, 0x5f8b4919, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "cpu_2732_ic26_rom19_rev1.10j",		0x2000, 0x4ef5e805, 1 | BRF_PRG | BRF_ESS }, //  7 (bank 1)
+	{ "cpu_2732_ic24_rom17_rev1.10h",		0x2000, 0x4861f063, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "cpu_2732_ic22_rom15_rev1.9j",		0x2000, 0x421aafa8, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "cpu_2732_ic20_rom13_rev1.9h",		0x2000, 0x3432ff55, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "cpu_2732_ic17_rom10_rev1.8i",		0x2000, 0x3e01b597, 1 | BRF_PRG | BRF_ESS }, // 11 (bank 2, 3 of 4 chips)
+	{ "cpu_2732_ic15_rom8_rev1.8g",			0x2000, 0xff26fb29, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "cpu_2732_ic13_rom6_rev2.6i",			0x2000, 0x5f107db5, 1 | BRF_PRG | BRF_ESS }, // 13
+
+	{ "cpu_2732_ic25_rom18_rev1.10i",		0x2000, 0x47580af5, 1 | BRF_PRG | BRF_ESS }, // 14 (bank 3)
+	{ "cpu_2732_ic23_rom16_rev1.10g",		0x2000, 0x869b5942, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "cpu_2732_ic21_rom14_rev1.9i",		0x2000, 0x0bbd867c, 1 | BRF_PRG | BRF_ESS }, // 16
+	{ "cpu_2732_ic19_rom12_rev1.9g",		0x2000, 0xb9221ed1, 1 | BRF_PRG | BRF_ESS }, // 17
+
+	{ "cpu_2764_ic8_rom1_rev1.0f",			0x2000, 0x84517c3c, 2 | BRF_PRG | BRF_ESS }, // 18 M6800 Code
+
+	{ "vid_27128_ic57_rom20_rev1.8f",		0x4000, 0x572c6b01, 6 | BRF_GRA },           // 19 Tilemap Tiles
+	{ "vid_27128_ic58_rom21_rev1.9f",		0x4000, 0xaa94bf05, 6 | BRF_GRA },           // 20
+	{ "vid_27128_ic41_rom22_rev1.9d",		0x4000, 0xc41e3daa, 6 | BRF_GRA },           // 21
+
+	{ "vid_82s123_ic14_a-5282-10295.2b",	0x0020, 0x85057e40, 0 | BRF_OPT },           // 22 n/c
+	{ "vid_82s129_ic47_a-5282-10294.15d",	0x0100, 0xefb03024, 0 | BRF_OPT },           // 23
+	{ "vid_82s147a_ic60_a-5282-10292.12f",	0x0200, 0x0ea3f7fb, 0 | BRF_OPT },           // 24
+
+	{ "snd_27256_rom23_rev1.u4",			0x8000, 0x3af6b47d, 7 | BRF_SND | BRF_ESS }, // 25 BG sound board M6809 Code
+	{ "snd_27256_rom24_rev1.u19",			0x8000, 0xe7f9ed2e, 7 | BRF_SND | BRF_ESS }, // 26
+	{ "snd_27256_rom25_rev1.u20",			0x8000, 0xc85b29f7, 7 | BRF_SND | BRF_ESS }, // 27
+};
+
+STD_ROM_PICK(joust2)
+STD_ROM_FN(joust2)
+
+static struct BurnRomInfo joust2r1RomDesc[] = {
+	{ "cpu_2732_ic55_rom2_rev1.4c",		0x1000, 0x08b0d5bd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (0xd000-0xdfff)
+	{ "cpu_2732_ic9_rom3_rev1.4d",			0x1000, 0x6f319644, 1 | BRF_PRG | BRF_ESS }, //  1 (fixed window)
+	{ "cpu_2732_ic10_rom4_rev1.4f",			0x1000, 0x027b9f0c, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "cpu_2732_ic18_rom11_rev1.8j",		0x2000, 0x9dc986f9, 1 | BRF_PRG | BRF_ESS }, //  3 (bank 0)
+	{ "cpu_2732_ic16_rom9_rev1.8h",			0x2000, 0x0c77e22f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cpu_2732_ic14_rom7_rev1.6j",			0x2000, 0xfb9455ca, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "cpu_2732_ic12_rom5_rev1.6h",			0x2000, 0x31248a0d, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "cpu_2732_ic26_rom19_rev1.10j",		0x2000, 0x4ef5e805, 1 | BRF_PRG | BRF_ESS }, //  7 (bank 1)
+	{ "cpu_2732_ic24_rom17_rev1.10h",		0x2000, 0x4861f063, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "cpu_2732_ic22_rom15_rev1.9j",		0x2000, 0x421aafa8, 1 | BRF_PRG | BRF_ESS }, //  9
+	{ "cpu_2732_ic20_rom13_rev1.9h",		0x2000, 0x3432ff55, 1 | BRF_PRG | BRF_ESS }, // 10
+
+	{ "cpu_2732_ic17_rom10_rev1.8i",		0x2000, 0x3e01b597, 1 | BRF_PRG | BRF_ESS }, // 11 (bank 2, 3 of 4 chips)
+	{ "cpu_2732_ic15_rom8_rev1.8g",			0x2000, 0xff26fb29, 1 | BRF_PRG | BRF_ESS }, // 12
+	{ "cpu_2732_ic13_rom6_rev1.6i",			0x2000, 0x6a8c87d7, 1 | BRF_PRG | BRF_ESS }, // 13
+
+	{ "cpu_2732_ic25_rom18_rev1.10i",		0x2000, 0x47580af5, 1 | BRF_PRG | BRF_ESS }, // 14 (bank 3)
+	{ "cpu_2732_ic23_rom16_rev1.10g",		0x2000, 0x869b5942, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "cpu_2732_ic21_rom14_rev1.9i",		0x2000, 0x0bbd867c, 1 | BRF_PRG | BRF_ESS }, // 16
+	{ "cpu_2732_ic19_rom12_rev1.9g",		0x2000, 0xb9221ed1, 1 | BRF_PRG | BRF_ESS }, // 17
+
+	{ "cpu_2764_ic8_rom1_rev1.0f",			0x2000, 0x84517c3c, 2 | BRF_PRG | BRF_ESS }, // 18 M6800 Code
+
+	{ "vid_27128_ic57_rom20_rev1.8f",		0x4000, 0x572c6b01, 6 | BRF_GRA },           // 19 Tilemap Tiles
+	{ "vid_27128_ic58_rom21_rev1.9f",		0x4000, 0xaa94bf05, 6 | BRF_GRA },           // 20
+	{ "vid_27128_ic41_rom22_rev1.9d",		0x4000, 0xc41e3daa, 6 | BRF_GRA },           // 21
+
+	{ "vid_82s123_ic14_a-5282-10295.2b",	0x0020, 0x85057e40, 0 | BRF_OPT },           // 22 n/c
+	{ "vid_82s129_ic47_a-5282-10294.15d",	0x0100, 0xefb03024, 0 | BRF_OPT },           // 23
+	{ "vid_82s147a_ic60_a-5282-10292.12f",	0x0200, 0x0ea3f7fb, 0 | BRF_OPT },           // 24
+
+	{ "snd_27256_rom23_rev1.u4",			0x8000, 0x3af6b47d, 7 | BRF_SND | BRF_ESS }, // 25 BG sound board M6809 Code
+	{ "snd_27256_rom24_rev1.u19",			0x8000, 0xe7f9ed2e, 7 | BRF_SND | BRF_ESS }, // 26
+	{ "snd_27256_rom25_rev1.u20",			0x8000, 0xc85b29f7, 7 | BRF_SND | BRF_ESS }, // 27
+};
+
+STD_ROM_PICK(joust2r1)
+STD_ROM_FN(joust2r1)
+
+static struct BurnRomInfo tshootRomDesc[] = {
+	{ "rom18.ic55",		0x1000, 0xeffc33f1, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (0xd000-0xdfff)
+	{ "rom2.ic9",		0x1000, 0xfd982687, 1 | BRF_PRG | BRF_ESS }, //  1 (fixed window)
+	{ "rom3.ic10",		0x1000, 0x9617054d, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "rom11.ic18",		0x2000, 0x60d5fab8, 1 | BRF_PRG | BRF_ESS }, //  3 (bank 0)
+	{ "rom9.ic16",		0x2000, 0xa4dd4a0e, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rom7.ic14",		0x2000, 0xf25505e6, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rom5.ic12",		0x2000, 0x94a7c0ed, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "rom17.ic26",		0x2000, 0xb02d1ccd, 1 | BRF_PRG | BRF_ESS }, //  7 (bank 1, 2 of 4 chips)
+	{ "rom15.ic24",		0x2000, 0x11709935, 1 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "rom10.ic17",		0x2000, 0x0f32bad8, 1 | BRF_PRG | BRF_ESS }, //  9 (bank 2)
+	{ "rom8.ic15",		0x2000, 0xe9b6cbf7, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "rom6.ic13",		0x2000, 0xa49f617f, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "rom4.ic11",		0x2000, 0xb026dc00, 1 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "rom16.ic25",		0x2000, 0x69ce38f8, 1 | BRF_PRG | BRF_ESS }, // 13 (bank 3)
+	{ "rom14.ic23",		0x2000, 0x769a4ae5, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "rom13.ic21",		0x2000, 0xec016c9b, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "rom12.ic19",		0x2000, 0x98ae7afa, 1 | BRF_PRG | BRF_ESS }, // 16
+
+	{ "rom1.ic8",		0x2000, 0x011a94a7, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 Code
+
+	{ "rom20.ic57",		0x2000, 0xc6e1d253, 6 | BRF_GRA },           // 18 Tilemap Tiles
+	{ "rom21.ic58",		0x2000, 0x9874e90f, 6 | BRF_GRA },           // 19
+	{ "rom19.ic41",		0x2000, 0xb9ce4d2a, 6 | BRF_GRA },           // 20
+
+	{ "82s123.ic14a",	0x0020, 0x27a6d555, 0 | BRF_OPT },           // 21 n/c
+	{ "82s129.ic47",	0x0100, 0xefb03024, 0 | BRF_OPT },           // 22
+	{ "7649.ic60",		0x0200, 0x0ea3f7fb, 0 | BRF_OPT },           // 23
+};
+
+STD_ROM_PICK(tshoot)
+STD_ROM_FN(tshoot)
+
+static INT32 TshootInit()
+{
+	is_tshoot = 1;
+
+	return DrvInit(3, 3, 0, -1, 0x9000);
+}
+
+struct BurnDriver BurnDrvTshoot = {
+	"tshoot", NULL, NULL, NULL, "1984",
+	"Turkey Shoot\0", NULL, "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, tshootRomInfo, tshootRomName, NULL, NULL, NULL, NULL, TshootInputInfo, NULL,
+	TshootInit, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
+	276, 240, 4, 3
+};
+
+static struct BurnRomInfo mysticmRomDesc[] = {
+	{ "mm02_2.a09",		0x1000, 0x3a776ea8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (fixed window)
+	{ "mm03_2.a10",		0x1000, 0x6e247c75, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mm11_1.a18",		0x2000, 0xf537968e, 1 | BRF_PRG | BRF_ESS }, //  2 (bank 0)
+	{ "mm09_1.a16",		0x2000, 0x3bd12f6c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "mm07_1.a14",		0x2000, 0xea2a2a68, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "mm05_1.a12",		0x2000, 0xb514eef3, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "mm18_1.a26",		0x2000, 0x9b391a81, 1 | BRF_PRG | BRF_ESS }, //  6 (bank 1, 3 of 4 chips)
+	{ "mm16_1.a24",		0x2000, 0x399e175d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "mm14_1.a22",		0x2000, 0x191153b1, 1 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "mm10_1.a17",		0x2000, 0xd6a37509, 1 | BRF_PRG | BRF_ESS }, //  9 (bank 2)
+	{ "mm08_1.a15",		0x2000, 0x6f1a64f2, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "mm06_1.a13",		0x2000, 0x2e6795d4, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "mm04_1.a11",		0x2000, 0xc222fb64, 1 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "mm17_1.a25",		0x2000, 0xd36f0a96, 1 | BRF_PRG | BRF_ESS }, // 13 (bank 3)
+	{ "mm15_1.a23",		0x2000, 0xcd5d99da, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "mm13_1.a21",		0x2000, 0xef4b79db, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "mm12_1.a19",		0x2000, 0xa1f04bf0, 1 | BRF_PRG | BRF_ESS }, // 16
+
+	{ "mm01_1.a08",		0x2000, 0x65339512, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 Code
+
+	{ "mm20_1.b57",		0x2000, 0x5c0f4f46, 6 | BRF_GRA },           // 18 Tilemap Tiles
+	{ "mm21_1.b58",		0x2000, 0xcb90b3c5, 6 | BRF_GRA },           // 19
+	{ "mm19_1.b41",		0x2000, 0xe274df86, 6 | BRF_GRA },           // 20
+
+	{ "ic14.bpr",		0x0020, 0x27a6d555, 0 | BRF_OPT },           // 21 n/c
+	{ "ic47.bpr",		0x0100, 0xefb03024, 0 | BRF_OPT },           // 22
+	{ "ic60.bpr",		0x0200, 0x0ea3f7fb, 0 | BRF_OPT },           // 23
+};
+
+STD_ROM_PICK(mysticm)
+STD_ROM_FN(mysticm)
+
+static struct BurnRomInfo mysticmpRomDesc[] = {
+	{ "cpu_2732_ic9_rom2_proto6.d4",	0x1000, 0x3e4f53dd, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (fixed window)
+	{ "cpu_2732_ic10_rom3_proto6.f4",	0x1000, 0x6a25ee4b, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "cpu_2764_ic18_rom11_proto5.j8",	0x2000, 0xf537968e, 1 | BRF_PRG | BRF_ESS }, //  2 (bank 0)
+	{ "cpu_2764_ic16_rom9_proto5.h8",	0x2000, 0x3bd12f6c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cpu_2764_ic14_rom7_proto5.j6",	0x2000, 0xea2a2a68, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cpu_2764_ic12_rom5_proto5.h6",	0x2000, 0xb514eef3, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "cpu_2764_ic26_rom18_proto5.j10",	0x2000, 0x9b391a81, 1 | BRF_PRG | BRF_ESS }, //  6 (bank 1, 3 of 4 chips)
+	{ "cpu_2764_ic24_rom16_proto5.h10",	0x2000, 0x399e175d, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "cpu_2764_ic22_rom14_proto5.j9",	0x2000, 0x191153b1, 1 | BRF_PRG | BRF_ESS }, //  8
+
+	{ "cpu_2764_ic17_rom10_proto4.i8",	0x2000, 0xd6a37509, 1 | BRF_PRG | BRF_ESS }, //  9 (bank 2)
+	{ "cpu_2764_ic15_rom8_proto4.g8",	0x2000, 0x6f1a64f2, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "cpu_2764_ic13_rom6_proto4.i6",	0x2000, 0x2e6795d4, 1 | BRF_PRG | BRF_ESS }, // 11
+	{ "cpu_2764_ic11_rom4_proto4.g6",	0x2000, 0xc222fb64, 1 | BRF_PRG | BRF_ESS }, // 12
+
+	{ "cpu_2764_ic25_rom17_proto6.i10",	0x2000, 0x7acc9995, 1 | BRF_PRG | BRF_ESS }, // 13 (bank 3)
+	{ "cpu_2764_ic23_rom15_proto6.g10",	0x2000, 0xc32d1ce5, 1 | BRF_PRG | BRF_ESS }, // 14
+	{ "cpu_2764_ic21_rom13_proto6.i9",	0x2000, 0xe387a785, 1 | BRF_PRG | BRF_ESS }, // 15
+	{ "cpu_2764_ic19_rom12_proto6.g9",	0x2000, 0xa1f04bf0, 1 | BRF_PRG | BRF_ESS }, // 16
+
+	{ "cpu_2764_ic8_rom1_proto4.f0",	0x2000, 0x65339512, 2 | BRF_PRG | BRF_ESS }, // 17 M6800 Code
+
+	{ "ram_2764_ic57_rom20_rev1.f9",	0x2000, 0x5c0f4f46, 6 | BRF_GRA },           // 18 Tilemap Tiles
+	{ "ram_2764_ic58_rom21_rev1.f10",	0x2000, 0xcb90b3c5, 6 | BRF_GRA },           // 19
+	{ "ram_2764_ic41_rom19_rev1.d10",	0x2000, 0xe274df86, 6 | BRF_GRA },           // 20
+};
+
+STD_ROM_PICK(mysticmp)
+STD_ROM_FN(mysticmp)
+
+static INT32 MysticmInit()
+{
+	is_mysticm = 1;
+
+	return DrvInit(3, 9, 0, -1, 0x9000);
+}
+
+struct BurnDriver BurnDrvMysticm = {
+	"mysticm", NULL, NULL, NULL, "1983",
+	"Mystic Marathon\0", "Bad Colors", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, mysticmRomInfo, mysticmRomName, NULL, NULL, NULL, NULL, MysticmInputInfo, NULL,
+	MysticmInit, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
+	276, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvMysticmp = {
+	"mysticmp", "mysticm", NULL, NULL, "1983",
+	"Mystic Marathon (prototype)\0", "Bad Colors", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, mysticmpRomInfo, mysticmpRomName, NULL, NULL, NULL, NULL, MysticmInputInfo, NULL,
+	MysticmInit, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
+	276, 240, 4, 3
+};
+
+static INT32 Joust2Init()
+{
+	is_joust2 = 1;
+	has_s11_bg = 1;
+
+	return DrvInit(3, 8, 0, -1, 0x9000);
+}
+
+struct BurnDriver BurnDrvJoust2 = {
+	"joust2", NULL, NULL, NULL, "1986",
+	"Joust 2 - Survival of the Fittest (revision 2)\0", "S11 background sound board not emulated", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, joust2RomInfo, joust2RomName, NULL, NULL, NULL, NULL, Joust2InputInfo, NULL,
+	Joust2Init, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
+	240, 276, 3, 4
+};
+
+struct BurnDriver BurnDrvJoust2r1 = {
+	"joust2r1", "joust2", NULL, NULL, "1986",
+	"Joust 2 - Survival of the Fittest (revision 1)\0", "S11 background sound board not emulated", "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, joust2r1RomInfo, joust2r1RomName, NULL, NULL, NULL, NULL, Joust2InputInfo, NULL,
+	Joust2Init, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
+	240, 276, 3, 4
+};
+
+static INT32 InfernoInit()
+{
+	return DrvInit(3, 7, 0, -1, 0x9000);
+}
+
+struct BurnDriver BurnDrvInferno = {
+	"inferno", NULL, NULL, NULL, "1984",
+	"Inferno (Williams)\0", NULL, "Williams", "6809 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, infernoRomInfo, infernoRomName, NULL, NULL, NULL, NULL, InfernoInputInfo, NULL,
+	InfernoInit, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
+	276, 240, 4, 3
+};
+
+
 // Robotron: 2084 (Solid Blue label)
 /* "Release 5" Solid Blue labels, "B" type ROMs labeled 3005-13 through 3005-24 */
 
@@ -2757,7 +4082,7 @@ struct BurnDriver BurnDrvRobotron = {
 
 // Robotron: 2084 (Yellow/Orange label)
 /* "Release 4" Yellow label / Red stripe & Black print or Yellow label / Red stripe & Green print "B" type ROMs numbered 3005-13 through 3005-24 */
-	
+
 static struct BurnRomInfo robotronyoRomDesc[] = {
 	{ "2084_rom_10b_3005-10.a7",		0x1000, 0x4a9d5f52, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
 	{ "2084_rom_11b_3005-11.c7",		0x1000, 0x2afc5e7f, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -2794,7 +4119,7 @@ struct BurnDriver BurnDrvRobotronyo = {
 
 // Robotron: 2084 (Release 3)
 /* "Release 3" Censored prototype seen in the Robotron promo videotape, recovered from the Vid Kidz dev system */
-	
+
 static struct BurnRomInfo robotronr3RomDesc[] = {
 	{ "r3_10.a7",						0x1000, 0x1fb75828, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
 	{ "r3_11.c7",						0x1000, 0xccfaf7da, 1 | BRF_PRG | BRF_ESS }, //  1
@@ -3884,6 +5209,23 @@ STD_ROM_FN(blaster)
 static INT32 BlasterInit()
 {
 	blaster = 1;
+	is_blasterkit = 0;
+
+	INT32 nRet = DrvInit(2, 0, 6, 2, 0x9700);
+
+	if (nRet == 0)
+	{
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = BlasterDrawLine;
+	}
+
+	return nRet;
+}
+
+static INT32 BlasterkitInit()
+{
+	blaster = 1;
+	is_blasterkit = 1;
 
 	INT32 nRet = DrvInit(2, 0, 6, 2, 0x9700);
 
@@ -3944,8 +5286,8 @@ struct BurnDriver BurnDrvBlasterkit = {
 	"Blaster (conversion kit)\0", NULL, "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, blasterkitRomInfo, blasterkitRomName, NULL, NULL, NULL, NULL, BlasterInputInfo, NULL,
-	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
+	NULL, blasterkitRomInfo, blasterkitRomName, NULL, NULL, NULL, NULL, BlasterkitInputInfo, NULL,
+	BlasterkitInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x110,
 	292, 240, 4, 3
 };
 

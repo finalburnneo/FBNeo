@@ -51,6 +51,7 @@ void pia_init(void);
 void pia_exit(void);
 void pia_config(int which, int addressing, const struct pia6821_interface *intf);
 void pia_reset(void);
+void pia_set_port_a_input_overrides_output_mask(int which, UINT8 mask);
 void pia_scan(INT32 nAction, INT32 *);
 int pia_read(int which, int offset);
 void pia_write(int which, int offset, int data);

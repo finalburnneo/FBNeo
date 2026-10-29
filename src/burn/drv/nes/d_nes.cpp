@@ -14699,7 +14699,27 @@ struct BurnDriver BurnDrvnes_aliensmash = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// All Hell Unleashed - Ultimate Edition (HB)
+// https://8bitslasher.itch.io/ahu
+static struct BurnRomInfo nes_allhellunlueRomDesc[] = {
+	{ "All Hell Unleashed - Ultimate Edition (2025-26)(Fista Productions).nes",          524304, 0x205da9ad, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_allhellunlue)
+STD_ROM_FN(nes_allhellunlue)
+
+struct BurnDriver BurnDrvnes_allhellunlue = {
+	"nes_allhellunlue", NULL, NULL, NULL, "2025-26",
+	"All Hell Unleashed - Ultimate Edition (HB)\0", NULL, "Fista Productions", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	NESGetZipName, nes_allhellunlueRomInfo, nes_allhellunlueRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // All Hell Unleashed (HB, v6.66)
+// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunl666RomDesc[] = {
 	{ "All Hell Unleashed v6.66 (2025)(Fista Productions).nes",          524304, 0x4203e09a, BRF_ESS | BRF_PRG },
 };
@@ -14708,16 +14728,17 @@ STD_ROM_PICK(nes_allhellunl666)
 STD_ROM_FN(nes_allhellunl666)
 
 struct BurnDriver BurnDrvnes_allhellunl666 = {
-	"nes_allhellunl666", NULL, NULL, NULL, "2025",
+	"nes_allhellunl666", "nes_allhellunlue", NULL, NULL, "2025",
 	"All Hell Unleashed (HB, v6.66)\0", NULL, "Fista Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
 	NESGetZipName, nes_allhellunl666RomInfo, nes_allhellunl666RomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
 // All Hell Unleashed (HB)
+// https://8bitslasher.itch.io/ahu
 static struct BurnRomInfo nes_allhellunlRomDesc[] = {
 	{ "All Hell Unleashed (2025)(Fista Productions).nes",          524304, 0x2f78164f, BRF_ESS | BRF_PRG },
 };
@@ -14726,7 +14747,7 @@ STD_ROM_PICK(nes_allhellunl)
 STD_ROM_FN(nes_allhellunl)
 
 struct BurnDriver BurnDrvnes_allhellunl = {
-	"nes_allhellunl", "nes_allhellunl666", NULL, NULL, "2025",
+	"nes_allhellunl", "nes_allhellunlue", NULL, NULL, "2025",
 	"All Hell Unleashed (HB)\0", NULL, "Fista Productions", "NES / Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_SCRFIGHT | GBF_VSFIGHT, 0,
@@ -14876,6 +14897,42 @@ struct BurnDriver BurnDrvnes_amazorundie = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_amazorundieRomInfo, nes_amazorundieRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Amber's Super Adventure (HB, v1.1)
+static struct BurnRomInfo nes_ambersaRomDesc[] = {
+	{ "Amber's Super Adventure v1.1 (2026)(Doby Games).nes",          524304, 0x93fbdd60, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_ambersa)
+STD_ROM_FN(nes_ambersa)
+
+struct BurnDriver BurnDrvnes_ambersa = {
+	"nes_ambersa", NULL, NULL, NULL, "2026",
+	"Amber's Super Adventure (HB, v1.1)\0", NULL, "Doby Games", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM, 0,
+	NESGetZipName, nes_ambersaRomInfo, nes_ambersaRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Angry Video Game Nerd 8-bit, The (HB)
+static struct BurnRomInfo nes_angrynerdRomDesc[] = {
+	{ "Angry Video Game Nerd 8-bit, The (2025)(Retroware - Mega Cat Studios).nes",          786448, 0xfd8ddfb7, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_angrynerd)
+STD_ROM_FN(nes_angrynerd)
+
+struct BurnDriver BurnDrvnes_angrynerd = {
+	"nes_angrynerd", NULL, NULL, NULL, "2025",
+	"Angry Video Game Nerd 8-bit, The (HB)\0", NULL, "Retroware - Mega Cat Studios", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
+	NESGetZipName, nes_angrynerdRomInfo, nes_angrynerdRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -21524,7 +21581,7 @@ struct BurnDriver BurnDrvnes_machinecave = {
 // Mad Mix Game R (HB)
 // https://enriqueggalvez.itch.io/mad-mix-game-r
 static struct BurnRomInfo nes_madmixgrRomDesc[] = {
-	{ "Mad Mix Game R (2026)(Magic Games).nes",          2097168, 0x58702f7d, BRF_ESS | BRF_PRG },
+	{ "Mad Mix Game R (2026)(Magic Games).nes",          2097168, 0xbb5d8cc7, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(nes_madmixgr)
@@ -21849,6 +21906,24 @@ struct BurnDriver BurnDrvnes_mariotank = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM, 0,
 	NESGetZipName, nes_mariotankRomInfo, nes_mariotankRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Mary Worth Spills the Tea (HB)
+static struct BurnRomInfo nes_maryworthRomDesc[] = {
+	{ "Mary Worth Spills the Tea (2026)(Recreational Runners).nes",          131088, 0x08e8522d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_maryworth)
+STD_ROM_FN(nes_maryworth)
+
+struct BurnDriver BurnDrvnes_maryworth = {
+	"nes_maryworth", NULL, NULL, NULL, "2026",
+	"Mary Worth Spills the Tea (HB)\0", NULL, "Recreational Runners", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_maryworthRomInfo, nes_maryworthRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -24105,6 +24180,24 @@ struct BurnDriver BurnDrvnes_purplecapeman = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Puzzle Pals (HB, v08)
+static struct BurnRomInfo nes_puzzlepalsRomDesc[] = {
+	{ "Puzzle Pals v08 (2026)(Sija Game).nes",          32784, 0xc7b0d775, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_puzzlepals)
+STD_ROM_FN(nes_puzzlepals)
+
+struct BurnDriver BurnDrvnes_puzzlepals = {
+	"nes_puzzlepals", NULL, NULL, NULL, "2026",
+	"Puzzle Pals (HB, v08)\0", NULL, "Sija Game", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_PUZZLE, 0,
+	NESGetZipName, nes_puzzlepalsRomInfo, nes_puzzlepalsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Pyramids of Ra (HB)
 static struct BurnRomInfo nes_pyramidsraRomDesc[] = {
 	{ "Pyramids of Ra (2019)(Piko Interactive).nes",          393232, 0x0bcee664, BRF_ESS | BRF_PRG },
@@ -25963,6 +26056,24 @@ struct BurnDriver BurnDrvnes_storiedsword = {
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
 
+// Stunt Car Racer (HB)
+static struct BurnRomInfo nes_stuntcarRomDesc[] = {
+	{ "Stunt Car Racer (2026)(cobbpg).nes",          262160, 0x192c7f2d, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_stuntcar)
+STD_ROM_FN(nes_stuntcar)
+
+struct BurnDriver BurnDrvnes_stuntcar = {
+	"nes_stuntcar", NULL, NULL, NULL, "2026",
+	"Stunt Car Racer (HB)\0", NULL, "cobbpg", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_RACING, 0,
+	NESGetZipName, nes_stuntcarRomInfo, nes_stuntcarRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
 // Sub Hunt (HB)
 static struct BurnRomInfo nes_subhuntRomDesc[] = {
 	{ "Sub Hunt (2014)(Intellivision).nes",          24592, 0x75f94401, BRF_ESS | BRF_PRG },
@@ -26051,6 +26162,24 @@ struct BurnDriver BurnDrvnes_supercgs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_NES, GBF_PLATFORM | GBF_RUNGUN, 0,
 	NESGetZipName, nes_supercgsRomInfo, nes_supercgsRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Super Flappy Mario (HB)
+static struct BurnRomInfo nes_sfmarioRomDesc[] = {
+	{ "Super Flappy Mario (2026)(PurpBatBoi).nes",          98320, 0xd61d64e8, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_sfmario)
+STD_ROM_FN(nes_sfmario)
+
+struct BurnDriver BurnDrvnes_sfmario = {
+	"nes_sfmario", NULL, NULL, NULL, "2026",
+	"Super Flappy Mario (HB)\0", NULL, "PurpBatBoi", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_NES, GBF_ACTION, 0,
+	NESGetZipName, nes_sfmarioRomInfo, nes_sfmarioRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };
@@ -27876,6 +28005,24 @@ struct BurnDriver BurnDrvnes_nesvircle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_ACTION, 0,
 	NESGetZipName, nes_nesvircleRomInfo, nes_nesvircleRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
+	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
+	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
+};
+
+// Voidbreaker (HB)
+static struct BurnRomInfo nes_voidbreakerRomDesc[] = {
+	{ "Voidbreaker (2026)(PolyBound).nes",          393232, 0x64cbcec6, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(nes_voidbreaker)
+STD_ROM_FN(nes_voidbreaker)
+
+struct BurnDriver BurnDrvnes_voidbreaker = {
+	"nes_voidbreaker", NULL, NULL, NULL, "2026",
+	"Voidbreaker (HB)\0", NULL, "PolyBound", "NES / Famicom",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_NES, GBF_BREAKOUT, 0,
+	NESGetZipName, nes_voidbreakerRomInfo, nes_voidbreakerRomName, NULL, NULL, NULL, NULL, NESInputInfo, NESDIPInfo,
 	NESInit, NESExit, NESFrame, NESDraw, NESScan, &NESRecalc, 0x40,
 	SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT
 };

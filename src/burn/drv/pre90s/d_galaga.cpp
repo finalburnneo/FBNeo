@@ -1,12 +1,15 @@
 // Galaga & Dig-Dug driver for FB Alpha, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
 // Dig Dug added July 27, 2015 - dink
 // Xevious added April 22, 2019 - CupcakeFan
+// Bosconian added October 25, 2026 - dink
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "namco_snd.h"
 #include "samples.h"
 #include "earom.h"
+#include "mb88xx_intf.h"
+#include <math.h>
 
 enum
 {
@@ -324,6 +327,7 @@ enum GAMES_ON_MACHINE
 	NAMCO_GALAGA = 0,
 	NAMCO_DIGDUG,
 	NAMCO_XEVIOUS,
+	NAMCO_BOSCO,
 	NAMCO_TOTAL_GAMES
 };
 
@@ -5023,4 +5027,1901 @@ struct BurnDriver BurnDrvHyexevious = {
 	NULL, HyexeviousRomInfo, HyexeviousRomName, NULL, NULL, XeviousSampleInfo, XeviousSampleName, XeviousInputInfo, SxeviousDIPInfo,
 	xeviousInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL,
 	XEVIOUS_PALETTE_SIZE, NAMCO_SCREEN_WIDTH, NAMCO_SCREEN_HEIGHT, 3, 4
+};
+
+static struct BurnInputInfo BoscoInputList[] =
+{
+	{"P1 Coin"              , BIT_DIGITAL  , &input.ports[0].current.bits.bit[4], "p1 coin"   },
+	{"P1 Start"             , BIT_DIGITAL  , &input.ports[0].current.bits.bit[2], "p1 start"  },
+	{"P1 Up"                , BIT_DIGITAL  , &input.ports[1].current.bits.bit[0], "p1 up"     },
+	{"P1 Down"              , BIT_DIGITAL  , &input.ports[1].current.bits.bit[2], "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , &input.ports[1].current.bits.bit[3], "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , &input.ports[1].current.bits.bit[1], "p1 right"  },
+	{"P1 Button 1"          , BIT_DIGITAL  , &input.ports[1].current.bits.bit[4], "p1 fire 1" },
+
+	{"P2 Coin"              , BIT_DIGITAL  , &input.ports[0].current.bits.bit[5], "p2 coin"   },
+	{"P2 Start"             , BIT_DIGITAL  , &input.ports[0].current.bits.bit[3], "p2 start"  },
+	{"P2 Up (Cocktail)"     , BIT_DIGITAL  , &input.ports[2].current.bits.bit[0], "p2 up"     },
+	{"P2 Down (Cocktail)"   , BIT_DIGITAL  , &input.ports[2].current.bits.bit[2], "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , &input.ports[2].current.bits.bit[3], "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , &input.ports[2].current.bits.bit[1], "p2 right"  },
+	{"P2 Button 1 (Cocktail)", BIT_DIGITAL , &input.ports[2].current.bits.bit[4], "p2 fire 1" },
+
+	{"Reset"                , BIT_DIGITAL  , &input.reset,                        "reset"     },
+	{"Service"              , BIT_DIGITAL  , &input.ports[0].current.bits.bit[6], "service"   },
+	{"Service Mode"         , BIT_DIPSWITCH, &input.ports[0].current.bits.bit[7], "dip"       },
+	{"Dip A"                , BIT_DIPSWITCH, &input.dip[0].byte,                  "dip"       },
+	{"Dip B"                , BIT_DIPSWITCH, &input.dip[1].byte,                  "dip"       },
+};
+
+STDINPUTINFO(Bosco)
+
+#define BOSCO_NUM_OF_DIPSWITCHES      2
+
+#define BOSCO_COMMON_DIPS \
+	{  0,       0xfe,    0,       2,          "Service Mode"           }, \
+	{  0x00,    0x01,    0x01,    0x00,       "Off"                    }, \
+	{  0x00,    0x01,    0x01,    0x01,       "On"                     }, \
+\
+	{  0,       0xfe,    0,       8,          "Coinage"                }, \
+	{  0x01,    0x01,    0x07,    0x01,       "4 Coins 1 Credit"       }, \
+	{  0x01,    0x01,    0x07,    0x02,       "3 Coins 1 Credit"       }, \
+	{  0x01,    0x01,    0x07,    0x03,       "2 Coins 1 Credit"       }, \
+	{  0x01,    0x01,    0x07,    0x07,       "1 Coin  1 Credit"       }, \
+	{  0x01,    0x01,    0x07,    0x04,       "2 Coins 3 Credits"      }, \
+	{  0x01,    0x01,    0x07,    0x06,       "1 Coin  2 Credits"      }, \
+	{  0x01,    0x01,    0x07,    0x05,       "1 Coin  3 Credits"      }, \
+	{  0x01,    0x01,    0x07,    0x00,       "Free Play"              }, \
+\
+	{  0,       0xfe,    0,       8,          "Bonus Fighter (1,2,3) / (5)" }, \
+	{  0x01,    0x01,    0x38,    0x30,       "15K & 50K Only / 30K, 100K, Every 100K" }, \
+	{  0x01,    0x01,    0x38,    0x38,       "20K & 70K Only / 30K, 120K, Every 120K" }, \
+	{  0x01,    0x01,    0x38,    0x08,       "10K, 50K, Every 50K / 15K & 70K Only"   }, \
+	{  0x01,    0x01,    0x38,    0x10,       "15K, 50K, Every 50K / 20K & 70K Only"   }, \
+	{  0x01,    0x01,    0x38,    0x18,       "15K, 70K, Every 70K / 20K & 100K Only"  }, \
+	{  0x01,    0x01,    0x38,    0x20,       "20K, 70K, Every 70K / 30K & 120K Only"  }, \
+	{  0x01,    0x01,    0x38,    0x28,       "30K, 100K, Every 100K / 30K, 80K, Every 80K" }, \
+	{  0x01,    0x01,    0x38,    0x00,       "None / None"            }, \
+\
+	{  0,       0xfe,    0,       4,          "Lives"                  }, \
+	{  0x01,    0x01,    0xc0,    0x00,       "1"                      }, \
+	{  0x01,    0x01,    0xc0,    0x40,       "2"                      }, \
+	{  0x01,    0x01,    0xc0,    0x80,       "3"                      }, \
+	{  0x01,    0x01,    0xc0,    0xc0,       "5"                      },
+
+static struct BurnDIPInfo BoscoDIPList[]=
+{
+	{  0x10,    0xf0,    0x01,    0x00,       NULL                     },
+
+	// nOffset, nID,     nMask,   nDefault,   NULL
+	{  0x00,    0xff,    0x01,    0x00,       NULL                     },
+	{  0x01,    0xff,    0xff,    0xa7,       NULL                     },
+	{  0x02,    0xff,    0xff,    0xf7,       NULL                     },
+
+	BOSCO_COMMON_DIPS
+
+	{  0,       0xfe,    0,       4,          "Difficulty"             },
+	{  0x02,    0x01,    0x03,    0x01,       "Easy"                   },
+	{  0x02,    0x01,    0x03,    0x03,       "Medium"                 },
+	{  0x02,    0x01,    0x03,    0x02,       "Hardest"                },
+	{  0x02,    0x01,    0x03,    0x00,       "Auto"                   },
+
+	{  0,       0xfe,    0,       2,          "Allow Continue"         },
+	{  0x02,    0x01,    0x04,    0x00,       "No"                     },
+	{  0x02,    0x01,    0x04,    0x04,       "Yes"                    },
+
+	{  0,       0xfe,    0,       2,          "Demo Sounds"            },
+	{  0x02,    0x01,    0x08,    0x08,       "Off"                    },
+	{  0x02,    0x01,    0x08,    0x00,       "On"                     },
+
+	{  0,       0xfe,    0,       2,          "Freeze"                 },
+	{  0x02,    0x01,    0x10,    0x10,       "Off"                    },
+	{  0x02,    0x01,    0x10,    0x00,       "On"                     },
+
+	{  0,       0xfe,    0,       2,          "Cabinet"                },
+	{  0x02,    0x01,    0x80,    0x80,       "Upright"                },
+	{  0x02,    0x01,    0x80,    0x00,       "Cocktail"               },
+};
+
+STDDIPINFO(Bosco)
+
+static struct BurnDIPInfo BoscomdDIPList[]=
+{
+	{  0x10,    0xf0,    0x01,    0x00,       NULL                     },
+
+	// nOffset, nID,     nMask,   nDefault,   NULL
+	{  0x00,    0xff,    0x01,    0x00,       NULL                     },
+	{  0x01,    0xff,    0xff,    0xa7,       NULL                     },
+	{  0x02,    0xff,    0xff,    0xef,       NULL                     },
+
+	BOSCO_COMMON_DIPS
+
+	{  0,       0xfe,    0,       2,          "2 Credits Game"         },
+	{  0x02,    0x01,    0x01,    0x00,       "1 Player"               },
+	{  0x02,    0x01,    0x01,    0x01,       "2 Players"              },
+
+	{  0,       0xfe,    0,       4,          "Difficulty"             },
+	{  0x02,    0x01,    0x06,    0x02,       "Easy"                   },
+	{  0x02,    0x01,    0x06,    0x06,       "Medium"                 },
+	{  0x02,    0x01,    0x06,    0x04,       "Hardest"                },
+	{  0x02,    0x01,    0x06,    0x00,       "Auto"                   },
+
+	{  0,       0xfe,    0,       2,          "Allow Continue"         },
+	{  0x02,    0x01,    0x08,    0x00,       "No"                     },
+	{  0x02,    0x01,    0x08,    0x08,       "Yes"                    },
+
+	{  0,       0xfe,    0,       2,          "Demo Sounds"            },
+	{  0x02,    0x01,    0x10,    0x10,       "Off"                    },
+	{  0x02,    0x01,    0x10,    0x00,       "On"                     },
+
+	{  0,       0xfe,    0,       2,          "Freeze"                 },
+	{  0x02,    0x01,    0x20,    0x20,       "Off"                    },
+	{  0x02,    0x01,    0x20,    0x00,       "On"                     },
+
+	{  0,       0xfe,    0,       2,          "Cabinet"                },
+	{  0x02,    0x01,    0x80,    0x80,       "Upright"                },
+	{  0x02,    0x01,    0x80,    0x00,       "Cocktail"               },
+};
+
+STDDIPINFO(Boscomd)
+
+// Bosconian - Star Destroyer (version 5)
+
+static struct BurnRomInfo boscoRomDesc[] = {
+	{ "bos5_1.3p",    0x1000, 0xb1482ad1, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "bos5_2.3m",    0x1000, 0xe0828ef8, BRF_ESS | BRF_PRG  }, //  1
+	{ "bos5_3.2m",    0x1000, 0x229edd51, BRF_ESS | BRF_PRG  }, //  2
+	{ "bos5_4.2l",    0x1000, 0x928a39a0, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "bos5_5.3f",    0x1000, 0x84f7c1ea, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "bos5_6.3j",    0x1000, 0x7fa34d5e, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "bos1_7.2c",    0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "bos1-4.2r",    0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(bosco)
+STD_ROM_FN(bosco)
+
+// Bosconian - Star Destroyer (version 3)
+
+static struct BurnRomInfo bosco3RomDesc[] = {
+	{ "bos3_1.3n",    0x1000, 0x96021267, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "bos1_2.3m",    0x1000, 0x2d8f3ebe, BRF_ESS | BRF_PRG  }, //  1
+	{ "bos1_3.3l",    0x1000, 0xc80ccfa5, BRF_ESS | BRF_PRG  }, //  2
+	{ "bos1_4b.3k",   0x1000, 0xa3f7f4ab, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "bos1_5c.3j",   0x1000, 0xa7c8e432, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "bos3_6.3h",    0x1000, 0x4543cf82, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "bos1_7.3e",    0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "bos1-4.2r",    0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(bosco3)
+STD_ROM_FN(bosco3)
+
+// Bosconian - Star Destroyer (version 1, newer)
+
+static struct BurnRomInfo bosco1RomDesc[] = {
+	{ "bos1_1.3n",    0x1000, 0x0d9920e7, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "bos1_2.3m",    0x1000, 0x2d8f3ebe, BRF_ESS | BRF_PRG  }, //  1
+	{ "bos1_3.3l",    0x1000, 0xc80ccfa5, BRF_ESS | BRF_PRG  }, //  2
+	{ "bos1_4b.3k",   0x1000, 0xa3f7f4ab, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "bos1_5c.3j",   0x1000, 0xa7c8e432, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "bos1_6.3h",    0x1000, 0x31b8c648, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "bos1_7.3e",    0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "bos1-4.2r",    0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(bosco1)
+STD_ROM_FN(bosco1)
+
+// Bosconian - Star Destroyer (version 1, older)
+
+static struct BurnRomInfo bosco1oRomDesc[] = {
+	{ "bos1_1.3n",    0x1000, 0x0d9920e7, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "bos1_2.3m",    0x1000, 0x2d8f3ebe, BRF_ESS | BRF_PRG  }, //  1
+	{ "bos1_3.3l",    0x1000, 0xc80ccfa5, BRF_ESS | BRF_PRG  }, //  2
+	{ "bos1_4.3k",    0x1000, 0x7ebea2b8, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "bos1_5b.3j",   0x1000, 0x3d6955a8, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "bos1_6.3h",    0x1000, 0x31b8c648, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "bos1_7.3e",    0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "bos1-4.2r",    0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(bosco1o)
+STD_ROM_FN(bosco1o)
+
+// Bosconian - Star Destroyer (Midway, new version)
+
+static struct BurnRomInfo boscomdRomDesc[] = {
+	{ "3n",           0x1000, 0x441b501a, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "3m",           0x1000, 0xa3c5c7ef, BRF_ESS | BRF_PRG  }, //  1
+	{ "3l",           0x1000, 0x6ca9a0cf, BRF_ESS | BRF_PRG  }, //  2
+	{ "3k",           0x1000, 0xd83bacc5, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "3j",           0x1000, 0x4374e39a, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "3h",           0x1000, 0x04e9fcef, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "2900.3e",      0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "5300.5d",      0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "5200.5e",      0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "prom.2d",      0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bosco.6b",     0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bosco.4m",     0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "prom.2r",      0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "prom.7h",      0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "prom.1d",      0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "prom.5c",      0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "4900.5n",      0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "5000.5m",      0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "5100.5l",      0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(boscomd)
+STD_ROM_FN(boscomd)
+
+// Bosconian - Star Destroyer (Midway, old version)
+
+static struct BurnRomInfo boscomdoRomDesc[] = {
+	{ "2300.3n",      0x1000, 0xdb6128b0, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "2400.3m",      0x1000, 0x86907614, BRF_ESS | BRF_PRG  }, //  1
+	{ "2500.3l",      0x1000, 0xa21fae11, BRF_ESS | BRF_PRG  }, //  2
+	{ "2600.3k",      0x1000, 0x11d6ae23, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "2700.3j",      0x1000, 0x7254e65e, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "2800.3h",      0x1000, 0x31b8c648, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "2900.3e",      0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "5300.5d",      0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "5200.5e",      0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "prom.2d",      0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bosco.6b",     0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bosco.4m",     0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "prom.2r",      0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "prom.7h",      0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "prom.1d",      0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "prom.5c",      0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "4900.5n",      0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "5000.5m",      0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "5100.5l",      0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(boscomdo)
+STD_ROM_FN(boscomdo)
+
+// Super Bosconian (hack by zeroco)
+
+static struct BurnRomInfo sboscoRomDesc[] = {
+	{ "sbos5_1.3p",   0x1000, 0x0acb49e3, BRF_ESS | BRF_PRG  }, //  0 Z80 #1 Program Code
+	{ "sbos5_2.3m",   0x1000, 0x91c186c2, BRF_ESS | BRF_PRG  }, //  1
+	{ "sbos5_3.2m",   0x1000, 0xbd637799, BRF_ESS | BRF_PRG  }, //  2
+	{ "sbos5_4.2l",   0x1000, 0xd9c299cf, BRF_ESS | BRF_PRG  }, //  3
+
+	{ "sbos5_5.3f",   0x1000, 0x891fcad8, BRF_ESS | BRF_PRG  }, //  4 Z80 #2 Program Code
+	{ "sbos5_6.3j",   0x1000, 0x8bbdcb2e, BRF_ESS | BRF_PRG  }, //  5
+
+	{ "bos1_7.2c",    0x1000, 0xd45a4911, BRF_ESS | BRF_PRG  }, //  6 Z80 #3 Program Code
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "sbos1-4.2r",   0x0100, 0xb37a252d, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(sbosco)
+STD_ROM_FN(sbosco)
+
+#define BOSCO_SCREEN_WIDTH                288
+#define BOSCO_SCREEN_HEIGHT               224
+
+#define BOSCO_NUM_OF_CHAR                 0x100
+#define BOSCO_NUM_OF_SPRITE               0x40
+#define BOSCO_NUM_OF_DOTS                 0x08
+
+#define BOSCO_PALETTE_OFFSET_CHARS        0x000
+#define BOSCO_PALETTE_OFFSET_SPRITE       0x100
+#define BOSCO_PALETTE_OFFSET_BULLETS      0x200
+#define BOSCO_PALETTE_OFFSET_STARS        0x204
+#define BOSCO_PALETTE_BLACK               0x244
+#define BOSCO_PALETTE_SIZE                0x248
+
+#define BOSCO_INTERLEAVE                  (264 * 3)	// 3 slices per scanline
+#define BOSCO_CYCLES_PER_FRAME            ((18432000 / 6) / 60)
+
+static UINT8 *bosco52xxRom;
+static UINT8 *boscoDots;
+static UINT8 *boscoRadarAttr;
+
+static UINT8 boscoScrollX;
+static UINT8 boscoScrollY;
+static UINT8 boscoStarControl;
+static UINT8 boscoStarClr;
+static UINT8 boscoVideoLatch;
+
+#define BOSCO_06XX_CHIPS   2
+
+static UINT8 bosco06xxCtrl[BOSCO_06XX_CHIPS];
+static INT32 bosco06xxNmiAcc[BOSCO_06XX_CHIPS];
+static INT32 bosco06xxCount[BOSCO_06XX_CHIPS];	// byte counter of current transfer
+
+static const INT32 bosco06xxClock[BOSCO_06XX_CHIPS] = { 18432000 / 6 / 64, 18432000 / 6 / 512 };
+
+#define BOSCO_50XX_CHIPS   2
+
+struct Bosco50xx_Def
+{
+	INT32 score[2];
+	INT32 nextBonus[2];
+	INT32 firstBonus;
+	INT32 intervalBonus;
+	INT32 hiScore;
+	INT32 player;
+	INT32 decrement;
+	INT32 fetch;
+	INT32 fetchMode;
+};
+
+static struct Bosco50xx_Def bosco50xx[BOSCO_50XX_CHIPS];
+
+struct Bosco_Filter2
+{
+	double x0, x1, x2;
+	double y0, y1, y2;
+	double a1, a2;
+	double b0, b1, b2;
+};
+
+enum { BOSCO_FILT_LOWPASS = 0, BOSCO_FILT_HIGHPASS, BOSCO_FILT_BANDPASS };
+
+static void boscoFilter2Setup(INT32 type, double fc, double d, double gain, struct Bosco_Filter2 *f, double rate)
+{
+	double two_over_T = 2.0 * rate;
+	double two_over_T_squared = two_over_T * two_over_T;
+	double w = rate * 2.0 * tan(3.14159265358979323846 * fc / rate); // pre-warped
+	double w_squared = w * w;
+	double den = two_over_T_squared + d * w * two_over_T + w_squared;
+
+	f->a1 = 2.0 * (-two_over_T_squared + w_squared) / den;
+	f->a2 = (two_over_T_squared - d * w * two_over_T + w_squared) / den;
+
+	switch (type)
+	{
+		case BOSCO_FILT_LOWPASS:
+			f->b0 = f->b2 = w_squared / den;
+			f->b1 = 2.0 * f->b0;
+			break;
+
+		case BOSCO_FILT_BANDPASS:
+			f->b0 = d * w * two_over_T / den;
+			f->b1 = 0.0;
+			f->b2 = -f->b0;
+			break;
+
+		case BOSCO_FILT_HIGHPASS:
+			f->b0 = f->b2 = two_over_T_squared / den;
+			f->b1 = -2.0 * f->b0;
+			break;
+	}
+
+	f->b0 *= gain;
+	f->b1 *= gain;
+	f->b2 *= gain;
+}
+
+static void boscoFilter2Reset(struct Bosco_Filter2 *f)
+{
+	f->x0 = f->x1 = f->x2 = 0.0;
+	f->y0 = f->y1 = f->y2 = 0.0;
+}
+
+static void boscoFilter2Step(struct Bosco_Filter2 *f)
+{
+	f->y0 = -f->a1 * f->y1 - f->a2 * f->y2 + f->b0 * f->x0 + f->b1 * f->x1 + f->b2 * f->x2;
+	f->x2 = f->x1;
+	f->x1 = f->x0;
+	f->y2 = f->y1;
+	f->y1 = f->y0;
+}
+
+// multiple feedback op-amp bandpass, as used on the 54XX outputs
+static void boscoFilterOpampMBandpassSetup(double r1, double r2, double r3, double c1, double c2, struct Bosco_Filter2 *f, double rate)
+{
+	double r_in, gain;
+
+	if (r2 == 0) {
+		gain = 1;
+		r_in = r1;
+	} else {
+		gain = r2 / (r1 + r2);
+		r_in = 1.0 / (1.0 / r1 + 1.0 / r2);
+	}
+
+	double fc = 1.0 / (2 * 3.14159265358979323846 * sqrt(r_in * r3 * c1 * c2));
+	double d = (c1 + c2) / sqrt(r3 / r_in * c1 * c2);
+	gain *= -r3 / r_in * c2 / (c1 + c2);
+
+	boscoFilter2Setup(BOSCO_FILT_BANDPASS, fc, d, gain, f, rate);
+}
+
+struct Bosco52xx_Def
+{
+	double pbCycle;
+	INT32 start;
+	INT32 end;
+	INT32 length;
+	INT32 pos;
+	struct Bosco_Filter2 hp;
+	struct Bosco_Filter2 lp;
+};
+
+static struct Bosco52xx_Def bosco52xx;
+static double bosco52xxStep;
+
+#define BOSCO_52XX_ROM_SIZE    0x3000
+#define BOSCO_52XX_PLAY_RATE   4000.0	// 555 timer at 6M
+
+// -- 54XX (noise generator, MB8844 MCU) -----------------------------------
+
+#define BOSCO_54XX_CLOCK              (18432000 / 12)               // 1.536 MHz
+#define BOSCO_54XX_CYCLES_PER_FRAME   ((BOSCO_54XX_CLOCK / 6) / 60) // internally divided by 6
+
+struct Bosco54xx_Def
+{
+	UINT8 latchedCmd;
+	UINT8 out[3];       // 4-bit outputs: O low (type A), O high (type B), R1 (type C)
+	INT32 irqTimer;     // slices until the 06XX releases the chip select (/IRQ)
+
+	struct Bosco_Filter2 filt[3];
+};
+
+static struct Bosco54xx_Def bosco54xx;
+static UINT8 *bosco54xxRom;
+
+// filter components on the three 54XX outputs (R42/R33/R24 etc.)
+static const double n54R1[3] = { 150000.0,  47000.0, 100000.0 };
+static const double n54R2[3] = {  22000.0,  10000.0,  22000.0 };
+static const double n54R3[3] = { 470000.0, 150000.0, 220000.0 };
+static const double n54R4[3] = {  10000.0,  33000.0,  33000.0 };
+static const double n54C1[3] = { 0.01e-6, 0.01e-6, 0.001e-6 };
+static const double n54C2[3] = { 0.01e-6, 0.01e-6, 0.001e-6 };
+
+#define BOSCO_SND_BUF_SIZE   4096
+
+static INT32 *boscoSndBuf;
+static INT32 boscoSndPos;
+static INT32 boscoSndRate;
+
+#define BOSCO_STARS_MAX      512
+
+struct Bosco_Star_Def
+{
+	INT16 x;
+	INT16 y;
+	UINT8 colour;
+};
+
+static struct Bosco_Star_Def boscoStarList[BOSCO_STARS_MAX];
+static INT32 boscoStarCount;
+static UINT16 boscoStarLFSR;
+static INT32 boscoStarEnable;
+static INT32 boscoStarSetA;
+static INT32 boscoStarSetB;
+static INT32 boscoStarPreVis;
+static INT32 boscoStarPostVis;
+
+#define STAR_LFSR_HIT_MASK    0xfa14
+#define STAR_LFSR_HIT_VALUE   0x7800
+#define STAR_LFSR_SEED        0x7fff
+
+static const INT32 starSpeedXOffset[8]  = { 0, 1, 2, 3, -4, -3, -2, -1 };
+static const INT32 starPreVisLines[8]   = { 22, 23, 22, 23, 19, 20, 20, 22 };
+static const INT32 starPostVisLines[8]  = { 10, 10, 12, 12,  9,  9, 10,  9 };
+
+static INT32 boscoInit(void);
+static INT32 boscomdInit(void);
+static INT32 boscoExit(void);
+static INT32 boscoReset(void);
+static INT32 boscoFrame(void);
+static INT32 boscoScan(INT32 nAction, INT32 *pnMin);
+static INT32 boscoExtraInit(void);
+
+static void boscoMemoryMap1(void);
+static void boscoMemoryMap2(void);
+static void boscoMemoryMap3(void);
+
+static INT32 boscoCharDecode(void);
+static INT32 boscoSpriteDecode(void);
+static INT32 boscoDotDecode(void);
+
+static UINT8 bosco06xx0DataRead(UINT16 offset);
+static UINT8 bosco06xx0CtrlRead(UINT16 offset);
+static UINT8 bosco06xx1DataRead(UINT16 offset);
+static UINT8 bosco06xx1CtrlRead(UINT16 offset);
+static void bosco06xx0DataWrite(UINT16 offset, UINT8 dta);
+static void bosco06xx0CtrlWrite(UINT16 offset, UINT8 dta);
+static void bosco06xx1DataWrite(UINT16 offset, UINT8 dta);
+static void bosco06xx1CtrlWrite(UINT16 offset, UINT8 dta);
+static void boscoMiscLatchWrite(UINT16 offset, UINT8 dta);
+static void boscoDummyWrite(UINT16 offset, UINT8 dta);
+static void boscoRadarAttrWrite(UINT16 offset, UINT8 dta);
+static void boscoScrollXWrite(UINT16 offset, UINT8 dta);
+static void boscoScrollYWrite(UINT16 offset, UINT8 dta);
+static void boscoStarControlWrite(UINT16 offset, UINT8 dta);
+static void boscoStarClrWrite(UINT16 offset, UINT8 dta);
+static void boscoVideoLatchWrite(UINT16 offset, UINT8 dta);
+
+static void boscoCalcPalette(void);
+static void boscoRenderStars(void);
+static void boscoRenderSprites(void);
+static void boscoRenderBg(void);
+static void boscoRenderRadar(void);
+static void boscoRenderBullets(void);
+
+static struct CPU_Config_Def boscoCPU[NAMCO_BRD_CPU_COUNT] =
+{
+	{
+		/* CPU ID = */          CPU1,
+		/* CPU Read Func = */   namcoZ80ProgRead,
+		/* CPU Write Func = */  namcoZ80ProgWrite,
+		/* Memory Mapping = */  boscoMemoryMap1
+	},
+	{
+		/* CPU ID = */          CPU2,
+		/* CPU Read Func = */   namcoZ80ProgRead,
+		/* CPU Write Func = */  namcoZ80ProgWrite,
+		/* Memory Mapping = */  boscoMemoryMap2
+	},
+	{
+		/* CPU ID = */          CPU3,
+		/* CPU Read Func = */   namcoZ80ProgRead,
+		/* CPU Write Func = */  namcoZ80ProgWrite,
+		/* Memory Mapping = */  boscoMemoryMap3
+	},
+};
+
+static struct CPU_Rd_Table boscoReadTable[] =
+{
+	{ 0x6800, 0x6807, namcoZ80ReadDip         },
+	{ 0x7000, 0x70ff, bosco06xx0DataRead      },
+	{ 0x7100, 0x7100, bosco06xx0CtrlRead      },
+	{ 0x9000, 0x90ff, bosco06xx1DataRead      },
+	{ 0x9100, 0x9100, bosco06xx1CtrlRead      },
+	{ 0x0000, 0x0000, NULL                    },
+};
+
+static struct CPU_Wr_Table boscoWriteTable[] =
+{
+	{ 0x6800, 0x681f, namcoZ80WriteSound      },
+	{ 0x6820, 0x6827, boscoMiscLatchWrite     },
+	{ 0x6830, 0x6830, boscoDummyWrite         }, // watchdog
+	{ 0x7000, 0x70ff, bosco06xx0DataWrite     },
+	{ 0x7100, 0x7100, bosco06xx0CtrlWrite     },
+	{ 0x9000, 0x90ff, bosco06xx1DataWrite     },
+	{ 0x9100, 0x9100, bosco06xx1CtrlWrite     },
+	{ 0x9800, 0x980f, boscoRadarAttrWrite     },
+	{ 0x9810, 0x9810, boscoScrollXWrite       },
+	{ 0x9820, 0x9820, boscoScrollYWrite       },
+	{ 0x9830, 0x9830, boscoStarControlWrite   },
+	{ 0x9840, 0x9840, boscoStarClrWrite       },
+	{ 0x9870, 0x9877, boscoVideoLatchWrite    },
+	{ 0x0000, 0x0000, NULL                    },
+};
+
+static struct Memory_Map_Def boscoMemTable[] =
+{
+	{  &memory.Z80.rom1,             0x04000,                               MEM_PGM        },
+	{  &memory.Z80.rom2,             0x04000,                               MEM_PGM        },
+	{  &memory.Z80.rom3,             0x04000,                               MEM_PGM        },
+	{  &memory.PROM.palette,         0x00020,                               MEM_ROM        },
+	{  &memory.PROM.charLookup,      0x00100,                               MEM_ROM        },
+	{  &NamcoSoundProm,              0x00200,                               MEM_ROM        },
+	{  &bosco52xxRom,                BOSCO_52XX_ROM_SIZE,                   MEM_ROM        },
+	{  &bosco54xxRom,                0x00400,                               MEM_ROM        },
+
+	{  &memory.RAM.video,            0x01000,                               MEM_RAM        },
+	{  &memory.RAM.shared1,          0x00800,                               MEM_RAM        },
+	{  &boscoRadarAttr,              0x00010,                               MEM_RAM        },
+
+	{  &graphics.fgChars,            BOSCO_NUM_OF_CHAR * 8 * 8,             MEM_DATA       },
+	{  &graphics.sprites,            BOSCO_NUM_OF_SPRITE * 16 * 16,         MEM_DATA       },
+	{  &boscoDots,                   BOSCO_NUM_OF_DOTS * 4 * 4,             MEM_DATA       },
+	{  (UINT8 **)&graphics.palette,  BOSCO_PALETTE_SIZE * sizeof(UINT32),   MEM_DATA32     },
+};
+
+#define BOSCO_MEM_TBL_SIZE      (sizeof(boscoMemTable) / sizeof(struct Memory_Map_Def))
+
+static struct ROM_Load_Def boscoROMTable[] =
+{
+	{  &memory.Z80.rom1,             0x00000, NULL                 },
+	{  &memory.Z80.rom1,             0x01000, NULL                 },
+	{  &memory.Z80.rom1,             0x02000, NULL                 },
+	{  &memory.Z80.rom1,             0x03000, NULL                 },
+	{  &memory.Z80.rom2,             0x00000, NULL                 },
+	{  &memory.Z80.rom2,             0x01000, NULL                 },
+	{  &memory.Z80.rom3,             0x00000, NULL                 },
+	{  &tempRom,                     0x00000, boscoCharDecode      },
+	{  &tempRom,                     0x00000, boscoSpriteDecode    },
+	{  &tempRom,                     0x00000, boscoDotDecode       },
+	{  &memory.PROM.palette,         0x00000, NULL                 },
+	{  &memory.PROM.charLookup,      0x00000, NULL                 },
+	{  &tempRom,                     0x00000, NULL                 }, // video layout (not used)
+	{  &tempRom,                     0x00000, NULL                 }, // video timing (not used)
+	{  &NamcoSoundProm,              0x00000, NULL                 },
+	{  &NamcoSoundProm,              0x00100, NULL                 },
+	{  &bosco52xxRom,                0x00000, NULL                 },
+	{  &bosco52xxRom,                0x01000, NULL                 },
+	{  &bosco52xxRom,                0x02000, NULL                 },
+	{  &bosco54xxRom,                0x00000, namcoMachineInit     },
+};
+
+#define BOSCO_ROM_TBL_SIZE      (sizeof(boscoROMTable) / sizeof(struct ROM_Load_Def))
+
+static DrawFunc_t boscoDrawFuncs[] =
+{
+	boscoCalcPalette,
+	boscoRenderStars,
+	boscoRenderSprites,
+	boscoRenderBg,
+	boscoRenderRadar,
+	boscoRenderBullets,
+};
+
+#define BOSCO_DRAW_TBL_SIZE  (sizeof(boscoDrawFuncs) / sizeof(boscoDrawFuncs[0]))
+
+static struct Machine_Config_Def boscoMachineConfig =
+{
+	/*cpus                   */ boscoCPU,
+	/*wrAddrList             */ boscoWriteTable,
+	/*rdAddrList             */ boscoReadTable,
+	/*memMapTable            */ boscoMemTable,
+	/*sizeOfMemMapTable      */ BOSCO_MEM_TBL_SIZE,
+	/*romLayoutTable         */ boscoROMTable,
+	/*sizeOfRomLayoutTable   */ BOSCO_ROM_TBL_SIZE,
+	/*tempRomSize            */ 0x1000,
+	/*tilemapsConfig         */ boscoExtraInit,	// no generic tilemaps, sets up the HLE sound instead
+	/*drawLayerTable         */ boscoDrawFuncs,
+	/*drawTableSize          */ BOSCO_DRAW_TBL_SIZE,
+	/*getSpriteParams        */ NULL,
+	/*reset                  */ boscoReset,
+	/*customRWTable          */ NULL,
+	/*n54xxSampleList        */ NULL
+};
+
+static void boscoMemoryMap1(void)
+{
+	ZetMapMemory(memory.Z80.rom1,    0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(memory.RAM.shared1, 0x7800, 0x7fff, MAP_RAM);
+	ZetMapMemory(memory.RAM.video,   0x8000, 0x8fff, MAP_RAM);
+}
+
+static void boscoMemoryMap2(void)
+{
+	ZetMapMemory(memory.Z80.rom2,    0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(memory.RAM.shared1, 0x7800, 0x7fff, MAP_RAM);
+	ZetMapMemory(memory.RAM.video,   0x8000, 0x8fff, MAP_RAM);
+}
+
+static void boscoMemoryMap3(void)
+{
+	ZetMapMemory(memory.Z80.rom3,    0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(memory.RAM.shared1, 0x7800, 0x7fff, MAP_RAM);
+	ZetMapMemory(memory.RAM.video,   0x8000, 0x8fff, MAP_RAM);
+}
+
+static INT32 boscoCharDecode(void)
+{
+	GfxDecode(
+			  BOSCO_NUM_OF_CHAR,
+			  NAMCO_2BIT_PALETTE_BITS,
+			  8, 8,
+			  (INT32*)planeOffsets2Bit,
+			  (INT32*)xOffsets8x8Tiles2Bit,
+			  (INT32*)yOffsets8x8Tiles2Bit,
+			  0x80,
+			  tempRom,
+			  graphics.fgChars
+			 );
+
+	return 0;
+}
+
+static INT32 boscoSpriteDecode(void)
+{
+	static INT32 xOffs[16] = { STEP4(64,1), STEP4(128,1), STEP4(192,1), STEP4(0,1) };
+	static INT32 yOffs[16] = { STEP8(0,8), STEP8(256,8) };
+
+	GfxDecode(
+			  BOSCO_NUM_OF_SPRITE,
+			  NAMCO_2BIT_PALETTE_BITS,
+			  16, 16,
+			  (INT32*)planeOffsets2Bit,
+			  xOffs,
+			  yOffs,
+			  0x200,
+			  tempRom,
+			  graphics.sprites
+			 );
+
+	return 0;
+}
+
+static INT32 boscoDotDecode(void)
+{
+	static INT32 planes[3] = { 5, 6, 7 };	// 2 bits colour + 1 bit transparency
+	static INT32 xOffs[4]  = { STEP4(0,8) };
+	static INT32 yOffs[4]  = { STEP4(0,32) };
+
+	GfxDecode(BOSCO_NUM_OF_DOTS, 3, 4, 4, planes, xOffs, yOffs, 0x80, tempRom, boscoDots);
+
+	return 0;
+}
+
+static void boscoSoundSync(INT32 target)
+{
+	if (boscoSndBuf == NULL || boscoSndRate == 0) return;
+
+	INT32 len = (nBurnSoundLen > 0) ? nBurnSoundLen : (boscoSndRate / 60);
+	if (len > BOSCO_SND_BUF_SIZE) len = BOSCO_SND_BUF_SIZE;
+	if (target > len) target = len;
+
+	for (; boscoSndPos < target; boscoSndPos++)
+	{
+		INT32 out = 0;
+
+		// 52XX
+		{
+			struct Bosco52xx_Def *c = &bosco52xx;
+
+			if (c->start < c->end)
+			{
+				c->pbCycle += bosco52xxStep;
+				if (c->pbCycle >= 1.0)
+				{
+					INT32 whole = (INT32)c->pbCycle;
+					c->pos += whole;
+					c->pbCycle -= whole;
+				}
+
+				if (c->pos > c->length)
+				{
+					// sample done
+					c->pbCycle = 0;
+					c->start = c->end = c->length = c->pos = 0;
+					boscoFilter2Reset(&c->hp);
+					boscoFilter2Reset(&c->lp);
+				}
+				else
+				{
+					INT32 romPos = c->start + (c->pos >> 1);
+					UINT8 dta = (romPos < BOSCO_52XX_ROM_SIZE) ? bosco52xxRom[romPos] : 0x88;
+					c->hp.x0 = (((c->pos & 1) ? (dta >> 4) : dta) & 0x0f) - 0x08;
+					boscoFilter2Step(&c->hp);
+					c->lp.x0 = c->hp.y0;
+					boscoFilter2Step(&c->lp);
+
+					out += (INT32)(c->lp.y0 * 0x0fff * 0.80);
+				}
+			}
+		}
+
+		// 54XX
+		{
+			struct Bosco54xx_Def *c = &bosco54xx;
+
+			for (INT32 i = 0; i < 3; i++)
+			{
+				// 4-bit DAC (4V), around a 2V reference, into the bandpass
+				c->filt[i].x0 = 4.0 / 15 * c->out[i] - 2;
+				boscoFilter2Step(&c->filt[i]);
+				// the op-amp powered @ 5V will clip at 0V & 3.5V (vRef 2V)
+				if (c->filt[i].y0 >  1.5) c->filt[i].y0 =  1.5;
+				if (c->filt[i].y0 < -2.0) c->filt[i].y0 = -2.0;
+
+				out += (INT32)(c->filt[i].y0 * (16384 / 2) * 0.80);
+			}
+		}
+
+		boscoSndBuf[boscoSndPos] = out;
+	}
+}
+
+static void boscoSoundSyncCPU(void)
+{
+	INT32 len = (nBurnSoundLen > 0) ? nBurnSoundLen : (boscoSndRate / 60);
+	INT32 cyc = ZetTotalCycles();
+	if (cyc < 0) cyc = 0;
+	boscoSoundSync((INT32)(((INT64)len * cyc) / BOSCO_CYCLES_PER_FRAME));
+}
+
+static void bosco52xxReset(void)
+{
+	bosco52xx.pbCycle = 0;
+	bosco52xx.start = bosco52xx.end = bosco52xx.length = bosco52xx.pos = 0;
+	boscoFilter2Reset(&bosco52xx.hp);
+	boscoFilter2Reset(&bosco52xx.lp);
+}
+
+static void bosco52xxWrite(UINT8 dta)
+{
+	dta &= 0x0f;
+
+	if (dta)
+	{
+		boscoSoundSyncCPU();
+
+		INT32 start = bosco52xxRom[dta - 1] + (bosco52xxRom[dta - 1 + 0x10] << 8);
+		INT32 end   = bosco52xxRom[dta]     + (bosco52xxRom[dta + 0x10] << 8);
+
+		if (end > BOSCO_52XX_ROM_SIZE) end = BOSCO_52XX_ROM_SIZE;
+		if (start >= end) return;
+
+		bosco52xx.start = start;
+		bosco52xx.end = end;
+		bosco52xx.length = (end - start) * 2;
+		bosco52xx.pos = 0;
+		bosco52xx.pbCycle = 0;
+	}
+}
+
+static void boscoSoundSyncMCU(void)
+{
+	INT32 len = (nBurnSoundLen > 0) ? nBurnSoundLen : (boscoSndRate / 60);
+	INT32 cyc = mb88xxTotalCycles();
+	if (cyc < 0) cyc = 0;
+	boscoSoundSync((INT32)(((INT64)len * cyc) / BOSCO_54XX_CYCLES_PER_FRAME));
+}
+
+static UINT8 bosco54xxReadK(void)
+{
+	return bosco54xx.latchedCmd >> 4;
+}
+
+static UINT8 bosco54xxReadR0(void)
+{
+	return bosco54xx.latchedCmd & 0x0f;
+}
+
+static void bosco54xxWriteO(UINT8 dta)
+{
+	boscoSoundSyncMCU();
+
+	// bit 4 (carry at the time of OUTO) selects the nibble
+	if (dta & 0x10)
+		bosco54xx.out[1] = dta & 0x0f;
+	else
+		bosco54xx.out[0] = dta & 0x0f;
+}
+
+static void bosco54xxWriteR1(UINT8 dta)
+{
+	boscoSoundSyncMCU();
+
+	bosco54xx.out[2] = dta & 0x0f;
+}
+
+static void bosco54xxWrite(UINT8 dta)
+{
+	bosco54xx.latchedCmd = dta;
+}
+
+static void bosco54xxSetIRQ(INT32 state)
+{
+	mb88xxSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static void bosco54xxReset(void)
+{
+	bosco54xx.latchedCmd = 0;
+	bosco54xx.irqTimer = 0;
+	memset(bosco54xx.out, 0, sizeof(bosco54xx.out));
+
+	for (INT32 i = 0; i < 3; i++) boscoFilter2Reset(&bosco54xx.filt[i]);
+
+	bosco54xxSetIRQ(0);
+	mb88xxReset();
+}
+
+static void bosco54xxInitFilters(double rate)
+{
+	double r_min = n54R4[0];
+	for (INT32 i = 0; i < 3; i++) if (n54R4[i] < r_min) r_min = n54R4[i];
+
+	for (INT32 i = 0; i < 3; i++)
+	{
+		double r_in = n54R1[i] + (1.0 / (1.0 / 4700 + 1.0 / 10000 + 1.0 / 22000 + 1.0 / 47000));
+		boscoFilterOpampMBandpassSetup(r_in, n54R2[i], n54R3[i], n54C1[i], n54C2[i], &bosco54xx.filt[i], rate);
+
+		double gain = r_min / n54R4[i];
+		bosco54xx.filt[i].b0 *= gain;
+		bosco54xx.filt[i].b1 *= gain;
+		bosco54xx.filt[i].b2 *= gain;
+	}
+}
+
+static const INT32 bosco50xxScore8x[16] = { 5, 10, 15, 20, 25, 30, 40, 50, 60, 70, 80, 90, 100, 200, 300, 500 };
+static const INT32 bosco50xxScoreBx[16] = { 10, 20, 30, 40, 50, 60, 80, 100, 120, 140, 160, 180, 200, 400, 600, 1000 };
+static const INT32 bosco50xxScoreEx[16] = { 15, 30, 45, 60, 75, 90, 120, 150, 180, 210, 240, 270, 300, 600, 900, 1500 };
+
+static void bosco50xxReset(INT32 chip)
+{
+	memset(&bosco50xx[chip], 0, sizeof(struct Bosco50xx_Def));
+}
+
+static void bosco50xxWrite(INT32 chip, UINT8 dta)
+{
+	struct Bosco50xx_Def *c = &bosco50xx[chip];
+
+	if (c->fetch)
+	{
+		INT32 value = ((dta >> 4) * 10) + (dta & 0x0f);	// BCD byte
+		INT32 *dest = NULL;
+
+		switch (c->fetchMode)
+		{
+			case 0x20: dest = &c->firstBonus;    break;
+			case 0x30: dest = &c->intervalBonus; break;
+			case 0x50: dest = &c->hiScore;       break;
+		}
+
+		if (dest)
+		{
+			switch (c->fetch)
+			{
+				case 3: *dest = value * 10000; break;
+				case 2: *dest += value * 100;  break;
+				case 1: *dest += value;        break;
+			}
+		}
+
+		c->fetch--;
+
+		c->nextBonus[0] = c->firstBonus;
+		c->nextBonus[1] = c->firstBonus;
+		return;
+	}
+
+	INT32 add = 0;
+
+	switch (dta & 0xf0)
+	{
+		case 0x00: break;	// nop
+
+		case 0x10:	// reset scores
+			c->score[0] = c->score[1] = 0;
+			c->nextBonus[0] = c->nextBonus[1] = c->firstBonus;
+			break;
+
+		case 0x20:
+		case 0x30:
+		case 0x50:
+			c->fetch = 3;
+			c->fetchMode = dta & 0xf0;
+			break;
+
+		case 0x40: break;	// ?
+
+		case 0x60:	// select player
+			c->player = (dta & 0x08) ? 1 : 0;
+			break;
+
+		case 0x70:	// increment (70) or decrement (7x) mode
+			c->decrement = (dta & 0x0f) ? 1 : 0;
+			break;
+
+		case 0x80: add = bosco50xxScore8x[dta & 0x0f];        break;
+		case 0x90: add = bosco50xxScore8x[dta & 0x0f] * 10;   break;
+		case 0xa0: add = bosco50xxScore8x[dta & 0x0f] * 100;  break;
+		case 0xb0: add = bosco50xxScoreBx[dta & 0x0f];        break;
+		case 0xc0: add = bosco50xxScoreBx[dta & 0x0f] * 10;   break;
+		case 0xd0: add = bosco50xxScoreBx[dta & 0x0f] * 100;  break;
+		case 0xe0: add = bosco50xxScoreEx[dta & 0x0f];        break;
+		case 0xf0: add = bosco50xxScoreEx[dta & 0x0f] * 10;   break;
+	}
+
+	if (add)
+	{
+		INT32 *score = &c->score[c->player];
+
+		if (c->decrement) {
+			*score -= add;
+			if (*score < 0) *score = 0;
+		} else {
+			*score += add;
+			if (*score > 9999999) *score = 9999999;
+		}
+	}
+}
+
+static UINT8 bosco50xxRead(INT32 chip, INT32 count)
+{
+	struct Bosco50xx_Def *c = &bosco50xx[chip];
+	INT32 score = c->score[c->player];
+
+	switch (count % 4)
+	{
+		default:
+		case 0:
+			{
+				INT32 flags = 0;
+				INT32 lo = (score / 1000000) % 10;
+
+				if (score >= c->hiScore)
+				{
+					c->hiScore = score;
+					flags |= 0x80;
+				}
+
+				INT32 *next = &c->nextBonus[c->player];
+
+				if (*next > 0 && score >= *next)
+				{
+					if (*next == c->firstBonus)
+					{
+						*next = c->intervalBonus;
+						flags |= 0x40;
+					}
+					else
+					{
+						*next += c->intervalBonus;
+						flags |= 0x20;
+					}
+
+					if (c->intervalBonus == 0) *next = 0; // no further bonus
+				}
+
+				return lo | flags;
+			}
+
+		case 1: return (((score / 100000) % 10) << 4) | ((score / 10000) % 10);
+		case 2: return (((score / 1000) % 10) << 4)   | ((score / 100) % 10);
+		case 3: return (((score / 10) % 10) << 4)     | (score % 10);
+	}
+}
+
+static void bosco06xxCtrlSet(INT32 chip, UINT8 dta)
+{
+	bosco06xxCtrl[chip] = dta;
+	bosco06xxCount[chip] = 0;
+
+	if ((dta & 0xe0) == 0)
+		bosco06xxNmiAcc[chip] = 0;
+
+	// chip selects go inactive when the clock is stopped / the 54XX is deselected
+	if (chip == 0 && ((dta & 0xe0) == 0 || (dta & 0x08) == 0))
+	{
+		bosco54xx.irqTimer = 0;
+		bosco54xxSetIRQ(0);
+	}
+}
+
+static UINT8 bosco06xxDataRead(INT32 chip)
+{
+	UINT8 ctrl = bosco06xxCtrl[chip];
+	UINT8 ret = 0xff;
+
+	if (~ctrl & 0x10) return 0xff; // not in read mode
+
+	INT32 count = bosco06xxCount[chip]++;
+
+	if (chip == 0)
+	{
+		switch (ctrl & 0x0f)
+		{
+			case 0x01: ret = namco51xxRead((UINT8)(count % 3), 0); break;
+			case 0x04: ret = bosco50xxRead(0, count);              break;
+		}
+	}
+	else
+	{
+		if ((ctrl & 0x0f) == 0x01) ret = bosco50xxRead(1, count);
+	}
+
+	return ret;
+}
+
+static void bosco06xxDataWrite(INT32 chip, UINT8 dta)
+{
+	UINT8 ctrl = bosco06xxCtrl[chip];
+
+	if (ctrl & 0x10) return; // not in write mode
+
+	bosco06xxCount[chip]++;
+
+	if (chip == 0)
+	{
+		if (ctrl & 0x01) namco51xxWrite(0, dta);
+		if (ctrl & 0x04) bosco50xxWrite(0, dta);
+		if (ctrl & 0x08) bosco54xxWrite(dta);
+	}
+	else
+	{
+		if (ctrl & 0x01) bosco50xxWrite(1, dta);
+		if (ctrl & 0x02) bosco52xxWrite(dta);
+	}
+}
+
+static UINT8 bosco06xx0DataRead(UINT16 offset)               { return bosco06xxDataRead(0); }
+static UINT8 bosco06xx0CtrlRead(UINT16 offset)               { return bosco06xxCtrl[0]; }
+static UINT8 bosco06xx1DataRead(UINT16 offset)               { return bosco06xxDataRead(1); }
+static UINT8 bosco06xx1CtrlRead(UINT16 offset)               { return bosco06xxCtrl[1]; }
+static void bosco06xx0DataWrite(UINT16 offset, UINT8 dta)    { bosco06xxDataWrite(0, dta); }
+static void bosco06xx0CtrlWrite(UINT16 offset, UINT8 dta)    { bosco06xxCtrlSet(0, dta); }
+static void bosco06xx1DataWrite(UINT16 offset, UINT8 dta)    { bosco06xxDataWrite(1, dta); }
+static void bosco06xx1CtrlWrite(UINT16 offset, UINT8 dta)    { bosco06xxCtrlSet(1, dta); }
+
+static void bosco06xxNmiUpdate(INT32 chip)
+{
+	UINT8 ctrl = bosco06xxCtrl[chip];
+
+	if ((ctrl & 0xe0) == 0) return;
+
+	INT32 divisor = 1 << ((ctrl & 0xe0) >> 5);
+
+	bosco06xxNmiAcc[chip] += bosco06xxClock[chip] / divisor;
+
+	if (bosco06xxNmiAcc[chip] >= (60 * BOSCO_INTERLEAVE))
+	{
+		bosco06xxNmiAcc[chip] -= (60 * BOSCO_INTERLEAVE);
+		if (bosco06xxNmiAcc[chip] >= (60 * BOSCO_INTERLEAVE)) bosco06xxNmiAcc[chip] = 0;
+		ZetNmi();
+
+		// the chip selects are asserted for half of the 06XX clock period
+		if (chip == 0 && (ctrl & 0x08))
+		{
+			INT32 halfPeriod = (60 * BOSCO_INTERLEAVE) / (2 * (bosco06xxClock[chip] / divisor));
+			bosco54xx.irqTimer = (halfPeriod > 0) ? halfPeriod : 1;
+			bosco54xxSetIRQ(1);
+		}
+	}
+}
+
+static void boscoMiscLatchWrite(UINT16 offset, UINT8 dta)
+{
+	INT32 bit = dta & 0x01;
+
+	switch (offset & 7)
+	{
+		case 0: // IRQ1
+			cpus.CPU[CPU1].fireIRQ = bit;
+			if (!bit) ZetSetIRQLine(CPU1, 0, CPU_IRQSTATUS_NONE);
+			break;
+
+		case 1: // IRQ2
+			cpus.CPU[CPU2].fireIRQ = bit;
+			if (!bit) ZetSetIRQLine(CPU2, 0, CPU_IRQSTATUS_NONE);
+			break;
+
+		case 2: // NMION
+			cpus.CPU[CPU3].fireIRQ = !bit;
+			break;
+
+		case 3: // RESET sub & sound cpus, plus the 5xXX chips on the CPU board
+			ZetSetRESETLine(CPU2, !bit);
+			ZetSetRESETLine(CPU3, !bit);
+			mb88xxSetRESETLine(!bit);	// 54XX
+			if (!bit)
+			{
+				namcoCustomReset();
+				namco51xxReset();
+				bosco50xxReset(0);
+				bosco54xx.latchedCmd = 0;
+			}
+			break;
+
+		default: // MOD 0-2 (unused)
+			break;
+	}
+}
+
+static void boscoDummyWrite(UINT16 offset, UINT8 dta)
+{
+}
+
+static void boscoRadarAttrWrite(UINT16 offset, UINT8 dta)
+{
+	boscoRadarAttr[offset & 0x0f] = dta;
+}
+
+static void boscoScrollXWrite(UINT16 offset, UINT8 dta)
+{
+	boscoScrollX = dta;
+}
+
+static void boscoScrollYWrite(UINT16 offset, UINT8 dta)
+{
+	boscoScrollY = dta;
+}
+
+static void boscoStarControlWrite(UINT16 offset, UINT8 dta)
+{
+	boscoStarControl = dta;
+}
+
+static void boscoStarClrWrite(UINT16 offset, UINT8 dta)
+{
+	boscoStarClr = 0; // any write turns on the starfield
+}
+
+static void boscoVideoLatchWrite(UINT16 offset, UINT8 dta)
+{
+	INT32 bit = offset & 7;
+
+	boscoVideoLatch = (boscoVideoLatch & ~(1 << bit)) | ((dta & 1) << bit);
+
+	switch (bit)
+	{
+		case 0: // flip screen (active low)
+			machine.flipScreen = (~dta) & 1;
+			break;
+
+		case 7: // reset of the 5xXX chips on the video board (active low)
+			if (!(dta & 1))
+			{
+				bosco50xxReset(1);
+				boscoSoundSyncCPU();
+				bosco52xxReset();
+			}
+			break;
+	}
+}
+
+/* --- starfield --- */
+
+static inline UINT16 boscoStarNextLFSR(UINT16 lfsr)
+{
+	// 16-bit fibonacci LFSR, taps at 16, 13, 11 and 6
+	UINT16 bit = ((lfsr >> 0) ^ (lfsr >> 3) ^ (lfsr >> 5) ^ (lfsr >> 10)) & 1;
+	return (lfsr >> 1) | (bit << 15);
+}
+
+// latch the 05XX inputs (done at the end of vblank)
+static void boscoStarLatch(void)
+{
+	INT32 speedX = boscoStarControl & 0x07;
+	INT32 speedY = (boscoStarControl >> 3) & 0x07;
+
+	boscoStarPreVis  = starPreVisLines[speedY] * 256 + starSpeedXOffset[speedX];
+	boscoStarPostVis = starPostVisLines[speedY] * 256;
+
+	boscoStarSetA = (boscoVideoLatch >> 4) & 1;
+	boscoStarSetB = ((boscoVideoLatch >> 5) & 1) | 2;
+
+	boscoStarEnable = !boscoStarClr;
+	if (!boscoStarEnable) boscoStarLFSR = STAR_LFSR_SEED;
+}
+
+static void boscoStarUpdate(void)
+{
+	boscoStarCount = 0;
+
+	if (!boscoStarEnable) return;
+
+	INT32 count = boscoStarPreVis;
+	do { boscoStarLFSR = boscoStarNextLFSR(boscoStarLFSR); } while (--count > 0);
+
+	for (INT32 y = 0; y < BOSCO_SCREEN_HEIGHT; y++)
+	{
+		for (INT32 x = 0; x < 256; x++)
+		{
+			UINT16 lfsr = boscoStarLFSR;
+
+			if ((lfsr & STAR_LFSR_HIT_MASK) == STAR_LFSR_HIT_VALUE)
+			{
+				INT32 set = ((lfsr >> 9) & 2) | ((lfsr >> 8) & 1);
+
+				if ((set == boscoStarSetA || set == boscoStarSetB) && x < 224 && boscoStarCount < BOSCO_STARS_MAX)
+				{
+					UINT8 colour;
+					colour  = (lfsr >> 5) & 0x07;
+					colour |= (lfsr << 3) & 0x18;
+					colour |= (lfsr << 2) & 0x20;
+					colour = (~colour) & 0x3f;
+
+					boscoStarList[boscoStarCount].x = x;
+					boscoStarList[boscoStarCount].y = y;
+					boscoStarList[boscoStarCount].colour = colour;
+					boscoStarCount++;
+				}
+			}
+
+			boscoStarLFSR = boscoStarNextLFSR(boscoStarLFSR);
+		}
+	}
+
+	count = boscoStarPostVis;
+	do { boscoStarLFSR = boscoStarNextLFSR(boscoStarLFSR); } while (--count > 0);
+}
+
+static void boscoCalcPalette(void)
+{
+	UINT32 core[32];
+
+	for (INT32 i = 0; i < 32; i ++)
+	{
+		INT32 r = Colour3Bit[(memory.PROM.palette[i] >> 0) & 0x07];
+		INT32 g = Colour3Bit[(memory.PROM.palette[i] >> 3) & 0x07];
+		INT32 b = Colour3Bit[(memory.PROM.palette[i] >> 5) & 0x06];
+
+		core[i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (INT32 i = 0; i < 0x100; i ++)
+	{
+		graphics.palette[BOSCO_PALETTE_OFFSET_CHARS  + i] = core[(memory.PROM.charLookup[i] & 0x0f) | 0x10];
+		graphics.palette[BOSCO_PALETTE_OFFSET_SPRITE + i] = core[ memory.PROM.charLookup[i] & 0x0f];
+	}
+
+	for (INT32 i = 0; i < 4; i ++)
+	{
+		graphics.palette[BOSCO_PALETTE_OFFSET_BULLETS + i] = core[31 - i];
+	}
+
+	for (INT32 i = 0; i < 64; i ++)
+	{
+		INT32 r = Colour2Bit[(i >> 0) & 0x03];
+		INT32 g = Colour2Bit[(i >> 2) & 0x03];
+		INT32 b = Colour2Bit[(i >> 4) & 0x03];
+
+		graphics.palette[BOSCO_PALETTE_OFFSET_STARS + i] = BurnHighCol(r, g, b, 0);
+	}
+
+	graphics.palette[BOSCO_PALETTE_BLACK] = BurnHighCol(0, 0, 0, 0);
+
+	BurnTransferClear(BOSCO_PALETTE_BLACK);
+}
+
+static void boscoGetClip(INT32 *bgMin, INT32 *bgMax, INT32 *fgMin, INT32 *fgMax)
+{
+	if (machine.flipScreen) {
+		*bgMin = 64;  *bgMax = 287;
+		*fgMin = 0;   *fgMax = 63;
+	} else {
+		*bgMin = 0;   *bgMax = 223;
+		*fgMin = 224; *fgMax = 287;
+	}
+}
+
+static void boscoRenderStars(void)
+{
+	INT32 bgMin, bgMax, fgMin, fgMax;
+	boscoGetClip(&bgMin, &bgMax, &fgMin, &fgMax);
+
+	for (INT32 i = 0; i < boscoStarCount; i++)
+	{
+		INT32 x = boscoStarList[i].x + (machine.flipScreen ? 64 : 0);
+		INT32 y = boscoStarList[i].y;
+
+		if (x < bgMin || x > bgMax) continue;
+
+		pTransDraw[y * nScreenWidth + x] = BOSCO_PALETTE_OFFSET_STARS + boscoStarList[i].colour;
+	}
+}
+
+static void boscoRenderSprites(void)
+{
+	INT32 bgMin, bgMax, fgMin, fgMax;
+	boscoGetClip(&bgMin, &bgMax, &fgMin, &fgMax);
+
+	UINT8 *spriteRam  = memory.RAM.video + 0x03d4;
+	UINT8 *spriteRam2 = memory.RAM.video + 0x0bd4;
+
+	for (INT32 offs = 0; offs < 0x0c; offs += 2)
+	{
+		INT32 sx     = spriteRam[offs + 1] - 2;
+		INT32 sy     = 240 - spriteRam2[offs] - 16;
+		INT32 flipx  = spriteRam[offs] & 1;
+		INT32 flipy  = spriteRam[offs] & 2;
+		INT32 colour = spriteRam2[offs + 1] & 0x3f;
+		INT32 code   = (spriteRam[offs] & 0xfc) >> 2;
+
+		if (machine.flipScreen) sx += 32 - 1;
+
+		UINT8 *gfx = graphics.sprites + (code * 16 * 16);
+		const UINT8 *lut = memory.PROM.charLookup + (colour * 4);
+
+		for (INT32 y = 0; y < 16; y++)
+		{
+			INT32 dy = sy + y;
+			if (dy < 0 || dy >= nScreenHeight) continue;
+
+			UINT8 *src = gfx + ((flipy ? (15 - y) : y) * 16);
+			UINT16 *dst = pTransDraw + dy * nScreenWidth;
+
+			for (INT32 x = 0; x < 16; x++)
+			{
+				INT32 dx = sx + x;
+				if (dx < bgMin || dx > bgMax) continue;
+
+				INT32 pen = src[flipx ? (15 - x) : x];
+				if ((lut[pen] & 0x0f) == 0x0f) continue; // transparent
+
+				dst[dx] = BOSCO_PALETTE_OFFSET_SPRITE + colour * 4 + pen;
+			}
+		}
+	}
+}
+
+static void boscoDrawTilemap(UINT8 *codeRam, UINT8 *attrRam, INT32 cols, INT32 scrollx, INT32 scrolly, INT32 minx, INT32 maxx)
+{
+	const INT32 wMask = (cols * 8) - 1;
+
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		// raster line in "hardware" coordinates (visible area starts at line 16)
+		INT32 ly = (machine.flipScreen ? (263 - (y + 16)) : (y + 16)) + scrolly;
+		ly &= 0xff;
+
+		UINT16 *dst = pTransDraw + y * nScreenWidth;
+
+		for (INT32 x = minx; x <= maxx; x++)
+		{
+			INT32 lx = ((machine.flipScreen ? (383 - x) : x) + scrollx) & wMask;
+
+			INT32 offs = (ly >> 3) * 32 + (lx >> 3);	// both tilemaps use 32 bytes per row
+			INT32 code = codeRam[offs];
+			INT32 attr = attrRam[offs];
+			INT32 colour = attr & 0x3f;
+			INT32 fx = ((attr >> 6) & 1) ^ 1;
+			INT32 fy = (attr >> 7) & 1;
+
+			INT32 px = lx & 7;
+			INT32 py = ly & 7;
+			if (fx) px ^= 7;
+			if (fy) py ^= 7;
+
+			INT32 pen = graphics.fgChars[(code * 64) + (py * 8) + px];
+			INT32 lutidx = colour * 4 + pen;
+
+			if ((memory.PROM.charLookup[lutidx] & 0x0f) == 0x0f) continue; // transparent
+
+			dst[x] = BOSCO_PALETTE_OFFSET_CHARS + lutidx;
+		}
+	}
+}
+
+static void boscoRenderBg(void)
+{
+	INT32 bgMin, bgMax, fgMin, fgMax;
+	boscoGetClip(&bgMin, &bgMax, &fgMin, &fgMax);
+
+	boscoDrawTilemap(memory.RAM.video + 0x400, memory.RAM.video + 0xc00, 32, boscoScrollX, boscoScrollY, bgMin, bgMax);
+}
+
+static void boscoRenderRadar(void)
+{
+	INT32 bgMin, bgMax, fgMin, fgMax;
+	boscoGetClip(&bgMin, &bgMax, &fgMin, &fgMax);
+
+	boscoDrawTilemap(memory.RAM.video + 0x000, memory.RAM.video + 0x800, 8, 0, 0, fgMin, fgMax);
+}
+
+static void boscoRenderBullets(void)
+{
+	UINT8 *radarX = memory.RAM.video + 0x03f0;
+	UINT8 *radarY = memory.RAM.video + 0x0bf0;
+	INT32 flip = machine.flipScreen;
+
+	{
+		for (INT32 offs = 4; offs < 0x10; offs++)
+		{
+			INT32 x = radarX[offs] + ((~boscoRadarAttr[offs] & 0x01) << 8) - 2;
+			INT32 y = 251 - radarY[offs] - 16;
+			INT32 code = ((boscoRadarAttr[offs] & 0x0e) >> 1) ^ 0x07;
+
+			if (flip) {
+				x -= 1;
+				y += 2;
+			}
+
+			UINT8 *gfx = boscoDots + code * 16;
+
+			for (INT32 py = 0; py < 4; py++)
+			{
+				INT32 dy = y + py;
+				if (dy < 0 || dy >= nScreenHeight) continue;
+
+				for (INT32 px = 0; px < 4; px++)
+				{
+					INT32 dx = x + px;
+					if (dx < 0 || dx >= nScreenWidth) continue;
+
+					// drawn flipped in both directions when the screen is not flipped
+					INT32 pen = gfx[(flip ? py : (3 - py)) * 4 + (flip ? px : (3 - px))];
+					if (pen & 4) continue; // transparent
+
+					pTransDraw[dy * nScreenWidth + dx] = BOSCO_PALETTE_OFFSET_BULLETS + pen;
+				}
+			}
+		}
+	}
+
+	// It looks like H offsets 221-223 are skipped over, moving the radar
+	// (including the bullets on it) 3 pixels to the left
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		UINT16 *line = pTransDraw + y * nScreenWidth;
+
+		if (flip)
+		{
+			memmove(line + 3, line, 64 * sizeof(UINT16));
+			line[0] = line[1] = line[2] = BOSCO_PALETTE_BLACK;
+		}
+		else
+		{
+			memmove(line + 221, line + 224, 64 * sizeof(UINT16));
+			line[285] = line[286] = line[287] = BOSCO_PALETTE_BLACK;
+		}
+	}
+}
+
+static INT32 boscoExtraInit(void)
+{
+	boscoSndBuf = (INT32 *)BurnMalloc(BOSCO_SND_BUF_SIZE * sizeof(INT32));
+	if (boscoSndBuf == NULL) return 1;
+	memset(boscoSndBuf, 0, BOSCO_SND_BUF_SIZE * sizeof(INT32));
+
+	boscoSndRate = (nBurnSoundRate > 0) ? nBurnSoundRate : 44100;
+
+	// 52XX
+	bosco52xxStep = BOSCO_52XX_PLAY_RATE / boscoSndRate;
+	boscoFilter2Setup(BOSCO_FILT_HIGHPASS,   80.0, 1.0 / 0.3, 1.00, &bosco52xx.hp, boscoSndRate);
+	boscoFilter2Setup(BOSCO_FILT_LOWPASS,  2400.0, 1.0 / 0.9, 0.25, &bosco52xx.lp, boscoSndRate);
+
+	// 54XX
+	bosco54xxInitFilters(boscoSndRate);
+
+	mb88xxInit(0, 8844, bosco54xxRom);
+	mb88xxSetReadWriteFunction(NULL, bosco54xxReadK, 'k', 0);
+	mb88xxSetReadWriteFunction(bosco54xxWriteO, NULL, 'o', 0);
+	mb88xxSetReadWriteFunction(NULL, bosco54xxReadR0, 'r', 0);
+	mb88xxSetReadWriteFunction(bosco54xxWriteR1, NULL, 'r', 1);
+
+	return 0;
+}
+
+static INT32 boscoReset(void)
+{
+	memset(memory.RAM.start, 0, memory.RAM.size);
+
+	boscoScrollX = boscoScrollY = 0;
+	boscoStarControl = 0;
+	boscoStarClr = 1;
+	boscoVideoLatch = 0;
+
+	boscoStarLFSR = STAR_LFSR_SEED;
+	boscoStarEnable = 0;
+	boscoStarSetA = boscoStarSetB = 0;
+	boscoStarPreVis = boscoStarPostVis = 1;
+	boscoStarCount = 0;
+
+	memset(bosco06xxCtrl, 0, sizeof(bosco06xxCtrl));
+	memset(bosco06xxNmiAcc, 0, sizeof(bosco06xxNmiAcc));
+	memset(bosco06xxCount, 0, sizeof(bosco06xxCount));
+
+	bosco50xxReset(0);
+	bosco50xxReset(1);
+	bosco52xxReset();
+	mb88xxSetRESETLine(0);
+	bosco54xxReset();
+
+	boscoSndPos = 0;
+
+	return DrvDoReset();
+}
+
+static INT32 boscoInitCommon(void)
+{
+	machine.game = NAMCO_BOSCO;
+	machine.numOfDips = BOSCO_NUM_OF_DIPSWITCHES;
+
+	machine.config = &boscoMachineConfig;
+
+	return namcoInitBoard();
+}
+
+static INT32 boscoInit(void)
+{
+	return boscoInitCommon();
+}
+
+static INT32 boscomdInit(void)
+{
+	return boscoInitCommon();
+}
+
+static INT32 boscoExit(void)
+{
+	BurnFree(boscoSndBuf);
+	boscoSndBuf = NULL;
+
+	mb88xxExit();
+
+	return DrvExit();
+}
+
+static INT32 boscoFrame(void)
+{
+	if (input.reset)
+	{
+		machine.config->reset();
+	}
+
+	DrvMakeInputs();
+
+	ZetNewFrame();
+	mb88xxNewFrame();
+
+	boscoStarLatch();
+	boscoStarUpdate();
+
+	boscoSndPos = 0;
+
+	const INT32 nInterleave = BOSCO_INTERLEAVE;
+	INT32 nCyclesTotal[3] = { BOSCO_CYCLES_PER_FRAME, BOSCO_CYCLES_PER_FRAME, BOSCO_CYCLES_PER_FRAME };
+	INT32 nCyclesDone[3] = { nCyclesExtra[0], nCyclesExtra[1], nCyclesExtra[2] };
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		ZetOpen(CPU1);
+		CPU_RUN(0, Zet);
+		bosco06xxNmiUpdate(0);
+		if (i == (nInterleave - 1) && cpus.CPU[CPU1].fireIRQ) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
+		ZetClose();
+
+		ZetOpen(CPU2);
+		CPU_RUN(1, Zet);
+		bosco06xxNmiUpdate(1);
+		if (i == (nInterleave - 1) && cpus.CPU[CPU2].fireIRQ) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
+		ZetClose();
+
+		ZetOpen(CPU3);
+		CPU_RUN(2, Zet);
+		// NMI on scanlines 64 and 192
+		if ((i == (64 * 3) || i == (192 * 3)) && cpus.CPU[CPU3].fireIRQ)
+		{
+			ZetNmi();
+		}
+		ZetClose();
+
+		// 54XX
+		mb88xxRun(((i + 1) * BOSCO_54XX_CYCLES_PER_FRAME / nInterleave) - mb88xxTotalCycles());
+		if (bosco54xx.irqTimer > 0 && --bosco54xx.irqTimer == 0)
+		{
+			bosco54xxSetIRQ(0);
+		}
+	}
+
+	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nCyclesExtra[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nCyclesExtra[2] = nCyclesDone[2] - nCyclesTotal[2];
+
+	if (pBurnSoundOut)
+	{
+		boscoSoundSync(nBurnSoundLen);
+
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
+
+		INT32 len = (nBurnSoundLen < BOSCO_SND_BUF_SIZE) ? nBurnSoundLen : BOSCO_SND_BUF_SIZE;
+		for (INT32 i = 0; i < len; i++)
+		{
+			INT32 l = pBurnSoundOut[i * 2 + 0] + boscoSndBuf[i];
+			INT32 r = pBurnSoundOut[i * 2 + 1] + boscoSndBuf[i];
+			pBurnSoundOut[i * 2 + 0] = BURN_SND_CLIP(l);
+			pBurnSoundOut[i * 2 + 1] = BURN_SND_CLIP(r);
+		}
+
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
+	else
+	{
+		boscoSoundSync(boscoSndRate / 60); // keep the HLE sound chips running
+	}
+
+	if (pBurnDraw)
+		BurnDrvRedraw();
+
+	return 0;
+}
+
+static INT32 boscoScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(boscoScrollX);
+		SCAN_VAR(boscoScrollY);
+		SCAN_VAR(boscoStarControl);
+		SCAN_VAR(boscoStarClr);
+		SCAN_VAR(boscoVideoLatch);
+
+		SCAN_VAR(boscoStarLFSR);
+		SCAN_VAR(boscoStarEnable);
+		SCAN_VAR(boscoStarSetA);
+		SCAN_VAR(boscoStarSetB);
+		SCAN_VAR(boscoStarPreVis);
+		SCAN_VAR(boscoStarPostVis);
+
+		SCAN_VAR(bosco06xxCtrl);
+		SCAN_VAR(bosco06xxNmiAcc);
+		SCAN_VAR(bosco06xxCount);
+
+		SCAN_VAR(bosco50xx);
+		SCAN_VAR(bosco52xx);
+		SCAN_VAR(bosco54xx);
+
+		mb88xxScan(nAction);
+	}
+
+	return DrvScan(nAction, pnMin);
+}
+
+struct BurnDriver BurnDrvBosco = {
+	"bosco", NULL, NULL, NULL, "1981",
+	"Bosconian - Star Destroyer (version 5)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, boscoRomInfo, boscoRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBosco3 = {
+	"bosco3", "bosco", NULL, NULL, "1981",
+	"Bosconian - Star Destroyer (version 3)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bosco3RomInfo, bosco3RomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBosco1 = {
+	"bosco1", "bosco", NULL, NULL, "1981",
+	"Bosconian - Star Destroyer (version 1, newer)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bosco1RomInfo, bosco1RomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBosco1o = {
+	"bosco1o", "bosco", NULL, NULL, "1981",
+	"Bosconian - Star Destroyer (version 1, older)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bosco1oRomInfo, bosco1oRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBoscomd = {
+	"boscomd", "bosco", NULL, NULL, "1981",
+	"Bosconian - Star Destroyer (Midway, new version)\0", NULL, "Namco (Midway license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, boscomdRomInfo, boscomdRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscomdDIPInfo,
+	boscomdInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBoscomdo = {
+	"boscomdo", "bosco", NULL, NULL, "1981",
+	"Bosconian - Star Destroyer (Midway, old version)\0", NULL, "Namco (Midway license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, boscomdoRomInfo, boscomdoRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscomdDIPInfo,
+	boscomdInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvSbosco = {
+	"sbosco", "bosco", NULL, NULL, "2026",
+	"Super Bosconian (Hack)\0", NULL, "zeroco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, sboscoRomInfo, sboscoRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
 };

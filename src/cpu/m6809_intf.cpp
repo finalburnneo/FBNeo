@@ -411,6 +411,16 @@ INT32 M6809Run(INT32 nCPU, INT32 nCycles)
 	return nRet;
 }
 
+void M6809EatCycles(INT32 cycles)
+{
+#if defined FBNEO_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809EatCycles called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809EatCycles called when no CPU open\n"));
+#endif
+
+	m6809_eat_cycles(cycles);
+}
+
 void M6809RunEnd()
 {
 #if defined FBNEO_DEBUG

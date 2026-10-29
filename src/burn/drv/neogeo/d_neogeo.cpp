@@ -12562,7 +12562,7 @@ struct BurnDriver BurnDrvPulstar = {
 };
 
 
-// Pulstar Aegis (Hack)
+// Pulstar Aegis (Hack, v1.0.0)
 // https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/pulstar
 static struct BurnRomInfo pulstaraeRomDesc[] = {
 	{ "089-p1ae.p1",  0x100000, 0xdcb02236, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
@@ -12590,7 +12590,7 @@ STD_ROM_FN(pulstarae)
 
 struct BurnDriver BurnDrvPulstarae = {
 	"pulstarae", "pulstar", "neogeo", NULL, "2026",
-	"Pulstar Aegis (Hack)\0", NULL, "Boomchil", "Neo Geo MVS",
+	"Pulstar Aegis (Hack, v1.0.0)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
 	NULL, pulstaraeRomInfo, pulstaraeRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -12745,7 +12745,7 @@ struct BurnDriver BurnDrvWjammers = {
 };
 
 
-// Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.2.0)
+// Windjammers / Flying Power Disc - Endless Breeze (Hack, v1.2.0)
 // https://github.com/Boomchil/neo-geo-romhacks/tree/main/public/patches/wjammers
 
 static struct BurnRomInfo wjammebRomDesc[] = {
@@ -12771,7 +12771,7 @@ STD_ROM_FN(wjammeb)
 
 struct BurnDriver BurnDrvWjammeb = {
 	"wjammeb", "wjammers", "neogeo", NULL, "2025-26",
-	"Windjammers / Flying Power Disc (Endless Breeze, Hack, v1.2.0)\0", NULL, "Boomchil", "Neo Geo MVS",
+	"Windjammers / Flying Power Disc - Endless Breeze (Hack, v1.2.0)\0", NULL, "Boomchil", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, wjammebRomInfo, wjammebRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -28294,7 +28294,7 @@ struct BurnDriver BurnDrvRobocopi = {
 	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, robocopiRomInfo, robocopiRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeouniDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
+	0x1000,	320, 224, 4, 3
 };
 
 
@@ -30444,7 +30444,7 @@ struct BurnDriver BurnDrvKarnovng = {
 // Maiya: Super Nature Girl (HB, v4)
 
 static struct BurnRomInfo maiyaRomDesc[] = {
-	{ "maiya-p1.p1",    0x080000, 0x5fe28a51, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "maiya-p1.p1",    0x080000, 0xecef6baa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "maiya-s1.s1",    0x020000, 0x5c7951e1, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -30635,6 +30635,35 @@ struct BurnDriver BurnDrvHangonng = {
 };
 
 
+// Shadow League Fighting (HB, v3)
+
+static struct BurnRomInfo shadowlfRomDesc[] = {
+	{ "shadowlf_p1.p1",    0x300000, 0x127535e0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "shadowlf_s1.s1",    0x020000, 0x636d9736, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "shadowlf_c1.c1",    0x800000, 0xac935b79, 3 | BRF_GRA },           //  2 Sprite data
+	{ "shadowlf_c2.c2",    0x800000, 0xd65c95ab, 3 | BRF_GRA },           //  3
+
+	{ "shadowlf_m1.m1",    0x020000, 0xceabdb57, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "shadowlf_v1.v1",    0x79c100, 0x63c1b4e6, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(shadowlf, shadowlf, neogeo)
+STD_ROM_FN(shadowlf)
+
+struct BurnDriver BurnDrvShadowlf = {
+	"shadowlf", NULL, "neogeo", NULL, "2026",
+	"Shadow League Fighting (HB, v3)\0", NULL, "Eagle Software", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, shadowlfRomInfo, shadowlfRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
+
 // Shinobi Neo Geo (HB, v1.1)
 // https://h0ffman.itch.io/shinobi-neogeo
 
@@ -30666,10 +30695,10 @@ struct BurnDriver BurnDrvShinobing = {
 };
 
 
-// Sky Lance (HB, RC1)
+// Sky Lance (HB, v2)
 
 static struct BurnRomInfo skylanceRomDesc[] = {
-	{ "skylance-p1.p1",    0x080000, 0x29e1968d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "skylance-p1.p1",    0x080000, 0xae68c9a1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "skylance-s1.s1",    0x020000, 0xbd69c9ff, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -30686,7 +30715,7 @@ STD_ROM_FN(skylance)
 
 struct BurnDriver BurnDrvSkylance = {
 	"skylance", NULL, "neogeo", NULL, "2026",
-	"Sky Lance (HB, RC1)\0", NULL, "Eagle Software", "Neo Geo MVS",
+	"Sky Lance (HB, v2)\0", NULL, "Eagle Software", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VERSHOOT, 0,
 	NULL, skylanceRomInfo, skylanceRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -30729,16 +30758,16 @@ struct BurnDriver BurnDrvSwsodan = {
 // https://nicoklem.itch.io/warrior-man
 
 static struct BurnRomInfo warriormanRomDesc[] = {
-	{ "warman-p1.p1",	0x080000,  0x7a91cc78, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+	{ "warman-p1.p1",	0x08cdb0,  0xfcf4dc87, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
 
-	{ "warman-s1.s1",	0x020000,  0x4c175fa4, 2 | BRF_GRA },           	//  1 Text layer tiles
+	{ "warman-s1.s1",	0x020000,  0xcf448b94, 2 | BRF_GRA },           	//  1 Text layer tiles
 
-	{ "warman-c1.c1",	0x400000,  0x7864d85f, 3 | BRF_GRA },           	//  2 Sprite data
-	{ "warman-c2.c2",	0x400000,  0xb7f686ec, 3 | BRF_GRA },           	//  3
+	{ "warman-c1.c1",	0x800000,  0x4fadbb5d, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "warman-c2.c2",	0x800000,  0x4c50ca6b, 3 | BRF_GRA },           	//  3
 
-	{ "warman-m1.m1",	0x020000,  0xa3e65a9c, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+	{ "warman-m1.m1",	0x020000,  0xb0cf3a68, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
 
-	{ "warman-v1.v1",	0x1000000, 0x3dccb4ad, 5 | BRF_SND },           	//  5 Sound data
+	{ "warman-v1.v1",	0x1000000, 0x8175e920, 5 | BRF_SND },           	//  5 Sound data
 };
 
 STDROMPICKEXT(warriorman, warriorman, neogeo)
@@ -30751,7 +30780,37 @@ struct BurnDriver BurnDrvWarriorman = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_ACTION | GBF_MISC, 0,
 	NULL, warriormanRomInfo, warriormanRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 304, 224, 4, 3
+	0x1000, 320, 224, 4, 3
+};
+
+
+// World Rally Championship - Neo Geo Conversion (HB)
+// https://www.patreon.com/Arkretro/posts/generador-de-172753153
+
+static struct BurnRomInfo wrallyngRomDesc[] = {
+	{ "wrallyng-p1.p1",	0x200000,  0x66ae3de4, 1 | BRF_ESS | BRF_PRG }, 	//  0 68K code
+
+	{ "wrallyng-s1.s1",	0x020000,  0x39913a0a, 2 | BRF_GRA },           	//  1 Text layer tiles
+
+	{ "wrallyng-c1.c1",	0x400000,  0xb11347c2, 3 | BRF_GRA },           	//  2 Sprite data
+	{ "wrallyng-c2.c2",	0x400000,  0x2bfcd5fc, 3 | BRF_GRA },           	//  3
+
+	{ "wrallyng-m1.m1",	0x010000,  0x8a3b1946, 4 | BRF_ESS | BRF_PRG }, 	//  4 Z80 code
+
+	{ "wrallyng-v1.v1",	0x400000, 0xedc105d0, 5 | BRF_SND },           	//  5 Sound data
+};
+
+STDROMPICKEXT(wrallyng, wrallyng, neogeo)
+STD_ROM_FN(wrallyng)
+
+struct BurnDriver BurnDrvWrallyng = {
+	"wrallyng", NULL, "neogeo", NULL, "2026",
+	"World Rally Championship - Neo Geo Conversion (HB)\0", NULL, "Arkretro", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_RACING, 0,
+	NULL, wrallyngRomInfo, wrallyngRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
 };
 
 

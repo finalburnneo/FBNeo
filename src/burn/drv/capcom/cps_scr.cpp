@@ -1,5 +1,8 @@
 #include "cps.h"
 
+Cps2ScrollCallback Cps2ScrollCallbackFunction = NULL;
+Cps2Scroll1Callback Cps2Scroll1CallbackFunction = NULL;
+
 // CPS Scroll (Background Layers)
 
 // Base = 0x4000 long tile map
@@ -82,8 +85,8 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 	INT32 nKnowBlank = -1; // The tile we know is blank
 	INT32 nXTile = nCpsScreenWidth>>3; // 8x8 tiles
 
-	// xmvsf3v3 wide screen: scroll1 columns 64-127 can come from the board's extra work RAM
-	const UINT8* pExt = CpsXmvScroll1Extension();
+	// A board may supply the upper half of the scroll1 tilemap.
+	const UINT8* pExt = Cps2Scroll1CallbackFunction ? Cps2Scroll1CallbackFunction() : NULL;
 
 	ix = (sx >> 3) + 1;
 	sx &= 7;
@@ -115,10 +118,10 @@ INT32 Cps2Scr1Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			t = pe ? ((pe[0] << 8) | pe[1]) : BURN_ENDIAN_SWAP_INT16(pst[0]);
 			t <<= 6;										// Get real tile address
 
-			t += nCpsGfxScroll[1];							// add on offset to scroll tiles
+			a = pe ? ((pe[2] << 8) | pe[3]) : BURN_ENDIAN_SWAP_INT16(pst[1]);
+			t = Cps2ScrollAddress(t, a, 1);
 
 			if (t != nKnowBlank) {							// Draw tile
-				a = pe ? ((pe[2] << 8) | pe[3]) : BURN_ENDIAN_SWAP_INT16(pst[1]);
 
 				CpstSetPal(0x20 | (a & 0x1F));
 
@@ -242,11 +245,10 @@ INT32 Cps2Scr3Draw(UINT8 *Base, INT32 sx, INT32 sy)
 			if(Xmcota && t>=0x5800)      t-=0x4000;
 	        else if(Ssf2t && t<0x5600)   t+=0x4000;
 			t <<= 9;										// Get real tile address
-			if (Cps2Turbo) t &= ~nCpsGfxScroll[3];			// buggy hack
- 			t += nCpsGfxScroll[3];							// add on offset to scroll tiles
+			a = BURN_ENDIAN_SWAP_INT16(pst[1]);
+			t = Cps2ScrollAddress(t, a, 3);
 
 			if (t != nKnowBlank) {							// Draw tile
-				a = BURN_ENDIAN_SWAP_INT16(pst[1]);
 
 				CpstSetPal(0x60 | (a & 0x1F));
 

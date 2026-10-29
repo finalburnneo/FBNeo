@@ -6,8 +6,8 @@ UINT uiDarkModeCode  = 1;
 
 bool uiOwnerDrawActive = FALSE;
 
-UINT uiBackGroundColor = GetSysColor(COLOR_WINDOW);
-UINT uiMenuItemColor   = GetSysColor(COLOR_WINDOW);
+UINT uiBackGroundColor = GetSysColor(COLOR_MENUBAR);
+UINT uiMenuItemColor   = GetSysColor(COLOR_MENU);
 UINT uiSelectedMenuItemColor = 0xe8c59f; 
 UINT uiTextFontColor = 0x000000;
 UINT nUiColorTheme = 0;
@@ -70,8 +70,8 @@ void UpdateUiColorMode(UINT uiColorMode)
 
 void ApplyLightMode()
 {
-	uiBackGroundColor = GetSysColor(COLOR_WINDOW);
-	uiMenuItemColor   = GetSysColor(COLOR_WINDOW);
+	uiBackGroundColor = GetSysColor(COLOR_MENUBAR);
+	uiMenuItemColor   = GetSysColor(COLOR_MENU);
 	uiTextFontColor = 0x000000;
 
 }

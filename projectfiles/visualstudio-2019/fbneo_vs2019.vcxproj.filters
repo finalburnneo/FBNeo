@@ -247,6 +247,9 @@
     <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2.cpp">
       <Filter>burn\drv\capcom</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\capcom\d_cps2_custom.cpp">
+      <Filter>burn\drv\capcom</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\capcom\fcrash_snd.cpp">
       <Filter>burn\drv\capcom</Filter>
     </ClCompile>
@@ -1417,6 +1420,9 @@
     <ClCompile Include="..\..\src\burner\win32\cona.cpp">
       <Filter>burner\win32</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burner\win32\d3d11shaderparams.cpp">
+      <Filter>burner\win32</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burner\win32\debugger.cpp">
       <Filter>burner\win32</Filter>
     </ClCompile>
@@ -1577,6 +1583,12 @@
       <Filter>interfaces\video\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\win32\vid_d3d.cpp">
+      <Filter>interfaces\video\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\win32\vid_d3d11.cpp">
+      <Filter>interfaces\video\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\intf\video\win32\vid_d3d11_shader.cpp">
       <Filter>interfaces\video\win32</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\intf\video\win32\vid_ddraw.cpp">

@@ -296,6 +296,7 @@ int ConfigAppLoad()
 		VAR(bVidDX9WinFullscreen);
 		VAR(bVidVSync);
 		VAR(bVidDWMSync);
+		VAR(bVidVRR);
 
 		VAR(bVidScanlines);
 		VAR(nVidScanIntensity);
@@ -310,6 +311,16 @@ int ConfigAppLoad()
 		VAR(nVidBlitterOpt[2]);
 		VAR(nVidBlitterOpt[3]);
 		VAR(nVidBlitterOpt[4]);
+		VAR(nVidBlitterOpt[5]);
+		STR(szVidD3D11Shader);
+		STR(szVidD3D11ShaderMRU[0]);
+		STR(szVidD3D11ShaderMRU[1]);
+		STR(szVidD3D11ShaderMRU[2]);
+		STR(szVidD3D11ShaderMRU[3]);
+		STR(szVidD3D11ShaderMRU[4]);
+		STR(szVidD3D11ShaderMRU[5]);
+		STR(szVidD3D11ShaderMRU[6]);
+		STR(szVidD3D11ShaderMRU[7]);
 
 		// DirectDraw blitter
 		VAR(bVidScanHalf);
@@ -366,6 +377,8 @@ int ConfigAppLoad()
 		VAR(nAudDSPModule[0]);
 		VAR(nAudSampleRate[1]);
 		VAR(nAudDSPModule[1]);
+		VAR(nAudSampleRate[2]);
+		VAR(nAudDSPModule[2]);
 
 		// Other
 		STR(szPlaceHolder);
@@ -537,6 +550,9 @@ int ConfigAppLoad()
 		VAR(nSocd[4]);
 		VAR(nSocd[5]);
 
+		// Emulator hotkeys
+		HotkeysConfigLoadLine(szLine);
+
 #undef DRV
 #undef PAT
 #undef STR
@@ -547,6 +563,8 @@ int ConfigAppLoad()
 	}
 
 	fclose(h);
+
+	HotkeysApply();
 
 	return 0;
 }
@@ -670,6 +688,8 @@ int ConfigAppSave()
 	VAR(bVidVSync);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise to DWM on Windows 7+, this fixes frame stuttering problems.\n"));
 	VAR(bVidDWMSync);
+	_ftprintf(h, _T("\n// If non-zero, use variable refresh rate (G-Sync/FreeSync) with the DX11 blitter on Windows 10+\n"));
+	VAR(bVidVRR);
 	_ftprintf(h, _T("\n// Transfer method:  0 = blit from system memory / use driver/DirectX texture management;\n"));
 	_ftprintf(h, _T("//                   1 = copy to a video memory surface, then use bltfast();\n"));
 	_ftprintf(h, _T("//                  -1 = autodetect for DirectDraw, equals 1 for Direct3D\n"));
@@ -688,6 +708,17 @@ int ConfigAppSave()
 	VAR(nVidBlitterOpt[2]);
 	VAR(nVidBlitterOpt[3]);
 	VAR(nVidBlitterOpt[4]);
+	VAR(nVidBlitterOpt[5]);
+	_ftprintf(h, _T("\n// Direct3D 11 blitter: shader / preset, and recently used shaders\n"));
+	STR(szVidD3D11Shader);
+	STR(szVidD3D11ShaderMRU[0]);
+	STR(szVidD3D11ShaderMRU[1]);
+	STR(szVidD3D11ShaderMRU[2]);
+	STR(szVidD3D11ShaderMRU[3]);
+	STR(szVidD3D11ShaderMRU[4]);
+	STR(szVidD3D11ShaderMRU[5]);
+	STR(szVidD3D11ShaderMRU[6]);
+	STR(szVidD3D11ShaderMRU[7]);
 	_ftprintf(h, _T("\n// If non-zero, attempt to auto-detect the monitor resolution and aspect ratio\n"));
 	VAR(bMonitorAutoCheck);
 	_ftprintf(h, _T("\n// If non-zero, force all games to use a 60Hz refresh rate\n"));
@@ -758,7 +789,7 @@ int ConfigAppSave()
 	VAR(nInputSelect);
 	_ftprintf(h, _T("\n"));
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
-	_ftprintf(h, _T("\n// The selected audio plugin\n"));
+	_ftprintf(h, _T("\n// The selected audio plugin (0 = DirectSound, 1 = XAudio2, 2 = WASAPI)\n"));
 	VAR(nAudSelect);
 	_ftprintf(h, _T("\n// Audio Volume\n"));
 	VAR(nAudVolume);
@@ -780,6 +811,12 @@ int ConfigAppSave()
 	VAR(nAudSampleRate[1]);
 	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter, 2 = reverb\n"));
 	VAR(nAudDSPModule[1]);
+	_ftprintf(h, _T("\n"));
+	_ftprintf(h, _T("// --- WASAPI plugin settings -------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// Sample rate\n"));
+	VAR(nAudSampleRate[2]);
+	_ftprintf(h, _T("\n// DSP module to use for sound enhancement: 0 = none, 1 = low-pass filter\n"));
+	VAR(nAudDSPModule[2]);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- UI ---------------------------------------------------------------------\n"));
@@ -1039,6 +1076,8 @@ int ConfigAppSave()
 	VAR(nSocd[3]);
 	VAR(nSocd[4]);
 	VAR(nSocd[5]);
+
+	HotkeysConfigSave(h);
 
 	_ftprintf(h, _T("\n\n\n"));
 

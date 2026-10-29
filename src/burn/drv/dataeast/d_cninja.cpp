@@ -36,6 +36,7 @@ static UINT8 *DrvSprBuf1;
 static UINT8 *DrvZ80RAM;
 
 static UINT32 *DrvPalette;
+static UINT16 *DrvTmpDraw[3]; // mutantf alpha temp. mixing
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch;
@@ -1057,6 +1058,10 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
+	for (INT32 i = 0; i < 3; i++) {
+		DrvTmpDraw[i] = (UINT16*)Next; Next += 512 * 256 * sizeof(UINT16);
+	}
+
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x008000;
@@ -1915,7 +1920,7 @@ static void cninjabl_draw_sprites()
 	}
 }
 
-static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gfxbank)
+static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gfxbank, UINT16 *dest)
 {
 	UINT16 *spriteptr = (UINT16*)ram;
 
@@ -1937,7 +1942,6 @@ static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gf
 	while (offs != end)
 	{
 		INT32 x, y, sprite, colour, fx, fy, w, h, sx, sy, x_mult, y_mult;
-		INT32 alpha = 0xff;
 
 		sprite = BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 3]);
 		if (!sprite)
@@ -1962,7 +1966,6 @@ static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gf
 
 		if (gfxbank == 4)
 		{
-			alpha = 0x80;
 			colour &= 0xf;
 		}
 
@@ -2000,8 +2003,7 @@ static void mutantf_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 colbank, INT32 gf
 		{
 			for (y = 0; y < h; y++)
 			{
-				// needs alpha blending... 
-				deco16_draw_prio_sprite(pTransDraw, gfx, sprite + y + h * x, (colour << 4) + colbank, sx + x_mult * (w-x), sy + y_mult * (h-y), fx, fy, 0);
+				deco16_draw_prio_sprite(dest, gfx, sprite + y + h * x, (colour << 4) + colbank, sx + x_mult * (w-x), sy + y_mult * (h-y), fx, fy, 0);
 			}
 		}
 		offs += inc;
@@ -2179,6 +2181,36 @@ static INT32 Robocop2Draw()
 }
 
 
+static inline UINT32 mutantf_alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+{
+	INT32 a = 256 - p;
+
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) / 256;
+}
+
+// mix a 16-bit (palette index) layer onto the 32bpp output, 0 = transparent
+static void mutantf_mix_layer(UINT16 *src, INT32 alpha)
+{
+	UINT8 *dst = pBurnDraw;
+
+	for (INT32 y = 0; y < nScreenHeight; y++, src += nScreenWidth, dst += nBurnPitch)
+	{
+		UINT32 *d = (UINT32*)dst;
+
+		for (INT32 x = 0; x < nScreenWidth; x++)
+		{
+			if (src[x] == 0) continue;
+
+			if (alpha == 0xff) {
+				d[x] = DrvPalette[src[x]];
+			} else {
+				d[x] = mutantf_alpha_blend(d[x], DrvPalette[src[x]], alpha);
+			}
+		}
+	}
+}
+
 static INT32 MutantfDraw()
 {
 //	if (DrvRecalc) {
@@ -2195,24 +2227,54 @@ static INT32 MutantfDraw()
 	if (nSpriteEnable &  2) deco16_draw_layer(1, pTransDraw, 0);
 	if (nSpriteEnable &  4) deco16_draw_layer(2, pTransDraw, 0);
 
+	if (nBurnBpp != 4)
+	{
+		// no alpha @ < 32bpp
+		if (deco16_priority & 1)
+		{
+			deco16_clear_prio_map();
+			if (nBurnLayer & 1) mutantf_draw_sprites(DrvSprBuf,  DrvGfxROM3, 0x100, 3, pTransDraw);
+			deco16_clear_prio_map();
+			if (nBurnLayer & 2) mutantf_draw_sprites(DrvSprBuf1, DrvGfxROM4, 0x700, 4, pTransDraw);
+		}
+		else
+		{
+			deco16_clear_prio_map();
+			if (nBurnLayer & 2) mutantf_draw_sprites(DrvSprBuf1, DrvGfxROM4, 0x700, 4, pTransDraw);
+			deco16_clear_prio_map();
+			if (nBurnLayer & 1) mutantf_draw_sprites(DrvSprBuf,  DrvGfxROM3, 0x100, 3, pTransDraw);
+		}
+
+		if (nSpriteEnable & 8) deco16_draw_layer(0, pTransDraw, 0);
+
+		BurnTransferCopy(DrvPalette);
+
+		return 0;
+	}
+
+	for (INT32 i = 0; i < 3; i++) memset(DrvTmpDraw[i], 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
+
+	deco16_clear_prio_map();
+	if (nBurnLayer & 1) mutantf_draw_sprites(DrvSprBuf,  DrvGfxROM3, 0x100, 3, DrvTmpDraw[0]);
+	deco16_clear_prio_map();
+	if (nBurnLayer & 2) mutantf_draw_sprites(DrvSprBuf1, DrvGfxROM4, 0x700, 4, DrvTmpDraw[1]);
+
+	if (nSpriteEnable & 8) deco16_draw_layer(0, DrvTmpDraw[2], 0);
+
+	BurnTransferCopy(DrvPalette);
+
 	if (deco16_priority & 1)
 	{
-		deco16_clear_prio_map();
-		mutantf_draw_sprites(DrvSprBuf,  DrvGfxROM3, 0x100, 3);
-		deco16_clear_prio_map();
-		mutantf_draw_sprites(DrvSprBuf1, DrvGfxROM4, 0x700, 4);
+		mutantf_mix_layer(DrvTmpDraw[0], 0xff);
+		mutantf_mix_layer(DrvTmpDraw[1], 0x80);
 	}
 	else
 	{
-		deco16_clear_prio_map();
-		mutantf_draw_sprites(DrvSprBuf1, DrvGfxROM4, 0x700, 4);
-		deco16_clear_prio_map();
-		mutantf_draw_sprites(DrvSprBuf,  DrvGfxROM3, 0x100, 3);
+		mutantf_mix_layer(DrvTmpDraw[1], 0x80);
+		mutantf_mix_layer(DrvTmpDraw[0], 0xff);
 	}
 
-	if (nSpriteEnable & 8) deco16_draw_layer(0, pTransDraw, 0); 
-
-	BurnTransferCopy(DrvPalette);
+	mutantf_mix_layer(DrvTmpDraw[2], 0xff);
 
 	return 0;
 }

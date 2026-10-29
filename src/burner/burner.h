@@ -45,6 +45,8 @@ typedef struct tagIMAGE {
  #include "burner_macos.h"
 #elif defined (BUILD_SDL) || defined (BUILD_SDL2)
  #include "burner_sdl.h"
+#elif defined (BUILD_HEADLESS)
+ #include "burner_headless.h"
 #elif defined (_XBOX) && !defined(__LIBRETRO__)
  #include "burner_xbox.h"
 #elif defined(__LIBRETRO__)
@@ -173,14 +175,6 @@ extern UINT8 macroSystemLuaHotkey9;
 // scrn.cpp
 extern void scrnSSUndo();
 extern bool bHasFocus;
-
-struct CurrentItemInfo 
-{
-	TCHAR sText[256];
-	UINT menuItemTypeFlag; 
-	UINT menuItemStateFlag;
-	bool itemHasCheckMark; 
-};
 
 // cong.cpp
 extern const INT32 nConfigMinVersion;					// Minimum version of application for which input files are valid

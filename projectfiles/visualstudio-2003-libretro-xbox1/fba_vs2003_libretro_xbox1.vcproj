@@ -364,6 +364,9 @@
 							RelativePath="..\..\src\burn\drv\capcom\d_cps2.cpp">
 						</File>
 						<File
+							RelativePath="..\..\src\burn\drv\capcom\d_cps2_custom.cpp">
+						</File>
+						<File
 							RelativePath="..\..\src\burn\drv\capcom\fcrash_snd.cpp">
 						</File>
 						<File

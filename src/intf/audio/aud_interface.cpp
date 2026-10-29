@@ -22,6 +22,8 @@ static UINT32 nAudActive = 0;
 	extern struct AudOut AudOutWASAPI;
 #elif defined (BUILD_MACOS)
     extern struct AudOut AudOutMacOS;
+#elif defined (BUILD_HEADLESS)
+	extern struct AudOut AudOutHeadless;
 #elif defined (BUILD_SDL) 
 	extern struct AudOut AudOutSDL;
 #elif defined (BUILD_SDL2)
@@ -47,6 +49,8 @@ static struct AudOut *pAudOut[]=
 	&AudOutWASAPI,
 #elif defined (BUILD_MACOS)
     &AudOutMacOS,
+#elif defined (BUILD_HEADLESS)
+	&AudOutHeadless,
 #elif defined (BUILD_SDL) 
 	&AudOutSDL,
 #elif defined (BUILD_SDL2)

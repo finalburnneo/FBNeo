@@ -24,3 +24,4 @@ nvram
 *.nvr
 config/*
 fbneo.dat
+fbneo_headless.dylib

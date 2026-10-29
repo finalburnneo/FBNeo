@@ -120,6 +120,9 @@ sdl: FORCE
 sdl2: FORCE
 	@$(MAKE) -s -f makefile.sdl2
 
+headless: FORCE
+	@$(MAKE) -s -f makefile.headless
+
 vc: FORCE
 	@$(MAKE) -s -f makefile.vc
 	

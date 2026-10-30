@@ -59,6 +59,7 @@ static UINT8 sound_busy;
 static UINT8 updportA_data;
 static UINT8 updportB_data;
 static INT32 es8712_enable;
+static INT32 es8712_irq;
 
 static INT32 sound_system = 0;	// 1 = Z80 + YM2610, 2 = uPD7810 + YM2413 + M6295, 3 = YMF278B, 4 = YM2413 + M6295, 5 = uPD7810 + YM2151 + M6295, 6 = es8712, M6295
 static UINT32 graphics_length;
@@ -1793,6 +1794,14 @@ static void update_irq_state()
 		for (INT32 i = 0; i < 8; i++)
 			SekSetIRQLine(i, irq_level[i] ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	}
+	else if (sound_system == 6)
+	{
+		// vmetal: es8712 is on level 3, sek has a single irq line so it must not be stomped by the video irq
+		if (es8712_irq)
+			SekSetIRQLine(3, CPU_IRQSTATUS_ACK);
+		else
+			SekSetIRQLine(irq_line, irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	}
 	else
 	{
 		SekSetIRQLine(irq_line, irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -3014,7 +3023,11 @@ static void __fastcall vmetal_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xfffff0) == 0x500000) {
-		es8712Write(0, (address/2) & 0x07, data);
+		if (address == 0x500000) {
+			es8712Reset(0); // even byte resets the chip (acks the irq), odd bytes are the registers
+		} else if (address & 1) {
+			es8712Write(0, (address/2) & 0x07, data);
+		}
 		return;
 	}
 
@@ -3024,8 +3037,9 @@ static void __fastcall vmetal_write_byte(UINT32 address, UINT8 data)
 static void vmetal_es8712_cb(INT32 state)
 {
 	if (es8712_enable) {
+		es8712_irq = state;
 		if (SekGetActive() == -1) return;
-		SekSetIRQLine(3, (state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+		update_irq_state();
 	}
 }
 
@@ -3034,8 +3048,9 @@ static void __fastcall vmetal_write_word(UINT32 address, UINT16 data)
 	if (address == 0x200000) {
 		es8712_enable = data & 0x40;
 
-		if (!es8712_enable) {
-			es8712Reset(0);
+		if (!es8712_enable && es8712_irq) {
+			es8712_irq = 0;
+			update_irq_state();
 		}
 
 		es8712SetBankBase(0, (data & 0x10) ? 0x100000 : 0);
@@ -3251,6 +3266,7 @@ static INT32 DrvDoReset()
 			es8712Reset(0);
 			MSM6295Reset(0);
 			es8712_enable = 0;
+			es8712_irq = 0;
 		}
 		break;
 	}
@@ -3860,7 +3876,7 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 	if (sound_system == 6)
 	{
 		es8712Init(0, DrvYMROMB, 16000, 0);
-		es8712SetBuffered(SekTotalCycles, main_cpu_cycles);
+		es8712SetBuffered(SekTotalCycles, main_cpu_hz);
 		es8712SetIRQ(vmetal_es8712_cb);
 		es8712SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -4637,6 +4653,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 				es8712Scan(nAction, pnMin);
 				MSM6295Scan(nAction, pnMin);
 				SCAN_VAR(es8712_enable);
+				SCAN_VAR(es8712_irq);
 			break;
 		}
 

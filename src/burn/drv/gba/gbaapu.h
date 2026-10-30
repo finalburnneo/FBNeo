@@ -640,7 +640,8 @@ static inline float gba_audio_bandlimited_square(gba_t* gba, INT32 ch, float pre
 	return y;
 }
 
-//Map a sound MMIO byte address to channel index 0..3, or -1 for global/WAVE RAM.
+//Map a sound MMIO byte address to channel index 0..3 (WAVE RAM maps to ch3);
+//return -1 for global (SOUNDCNT_*) registers.
 static inline INT32 gba_audio_channel_of(UINT32 addr)
 {
 	if (addr >= GBA_SOUND1CNT_L && addr < GBA_SOUND2CNT_L) return 0;
@@ -818,7 +819,7 @@ static inline UINT8 gba_audio_process_reg_write(gba_t* gba, UINT32 addr, UINT8 v
 		return value;
 	}
 
-	//Length registers: NR11/NR21/NR31/NR41 (top bit of NRx1 is duty for ch1/2).
+	//Length registers NR11/NR21/NR31/NR41 (top two bits of NRx1 = duty, ch1/2).
 	if (ch >= 0 && ch <= 3 && addr == gba_audio_ch_len_duty[ch]) {
 		if (ch == 2)
 			seq->length[ch] = 256 - SB_BFE(value, 0, 8);
@@ -996,7 +997,7 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 	apu->current_sim_time += delta_time;
 
 	//Frame sequencer runs at 512 Hz = one step per 32768 CPU cycles (audio_clock
-	//counts CPU cycles); the audio sample timer itself is 16 MHz / 4 = 4 MHz.
+	//counts CPU cycles); the APU nibble timer runs at CPU/4 ~ 4.19 MHz.
 	UINT32 prev_clock = apu->audio_clock;
 	apu->audio_clock += (UINT32)cycles;
 	UINT32 frame_ticks = (apu->audio_clock - (prev_clock & ~32767u)) >> 15;
@@ -1057,7 +1058,7 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 	//normalized to 0..1. FIFO output is not affected by NR50.
 	UINT8 nr50 = gba_io_read8(gba, GBA_SOUNDCNT_L + 0);
 	float inv7 = 1.0f / 7.0f;
-	float psg_master_left  = (float)(nr50 >> 4) * inv7;
+	float psg_master_left  = (float)((nr50 >> 4) & 0x07) * inv7;
 	float psg_master_right = (float)(nr50 & 0x07) * inv7;
 
 	//SOUNDCNT_L+1 (NR51): channel routing bits 0-3 to right, 4-7 to left.
@@ -1132,9 +1133,9 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 		fifo_sample[i] = (float)apu->fifo[i].data[apu->fifo[i].aud_ptr & 0x1f] * (1.0f / 128.0f);
 	}
 
-	//ch3 wave nibble period (CPU cycles per nibble) and dimensions, hoisted out of
-	//the inner loop. dim64/wav_len are sampled once per batch, so a mid-frame
-	//SOUND3CNT_L change takes effect from the next batch.
+	//ch3 wave nibble period (in CPU/4 nibble-timer ticks) and dimensions, hoisted
+	//out of the inner loop. dim64/wav_len are sampled once per batch, so a
+	//mid-frame SOUND3CNT_L change takes effect from the next batch.
 	INT32 wav_period = (2048 - seq->frequency[2]) << 1;
 	bool ch3_dim64 = SB_BFE(nr30, 5, 1) != 0;
 	UINT32 ch3_wav_len = ch3_dim64 ? 64u : 32u;
@@ -1277,8 +1278,8 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 			out_r = sr - bias;
 		}
 
-		//DC-blocking capacitor (high-pass ~20 Hz at 48 kHz) with a sanity guard that
-		//resets the state if it leaves a safe range (guards NaN / divergence).
+		//DC-blocking capacitor (one-pole high-pass, ~31 Hz at 48 kHz) with a sanity
+		//guard that resets the state if it leaves a safe range (guards NaN / divergence).
 		if (!(apu->capacitor_l < 2.0f && apu->capacitor_l > -2.0f))
 			apu->capacitor_l = 0.0f;
 		if (!(apu->capacitor_r < 2.0f && apu->capacitor_r > -2.0f))

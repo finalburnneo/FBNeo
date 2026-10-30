@@ -437,6 +437,10 @@ void RomDataStateBackup();
 void RomDataStateRestore();
 bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
 
+// bzip.cpp (rom scan acceleration)
+void BzipScanBegin();
+void BzipScanEnd();
+
 // cona.cpp
 struct SubDirInfo {
 	TCHAR   BaseDir[MAX_PATH];

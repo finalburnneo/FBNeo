@@ -1,4 +1,7 @@
 // Burner Zip module
+#include <string>
+#include <unordered_set>
+#include <unordered_map>
 #include "burner.h"
 
 INT32 nBzipError = 0;												// non-zero if there is a problem with the opened romset
@@ -14,9 +17,168 @@ struct SubDirsZip { TCHAR** pszZipName; UINT32 nCount; };		// Zip files in subdi
 static struct SubDirsZip _SubDirsZip;
 
 // ----------------------------------------------------------------------------
+// ROM scan acceleration (active only between BzipScanBegin() / BzipScanEnd())
+//
+// A full scan calls BzipOpen() once per driver (~30k). Each call probes every
+// rom path for every zip name (game, parent, board): ~21 paths * 2-4
+// GetFileAttributes() each, i.e. millions of filesystem calls per scan, and
+// parent/BIOS archives (neogeo, pgm, ...) get re-opened and re-parsed
+// hundreds of times. While scanning we instead:
+//  - enumerate each rom directory once and answer "does x.zip/x.7z exist"
+//    from memory, and
+//  - keep each archive's entry list after the first open.
+
+typedef std::basic_string<TCHAR> tstring;
+
+struct ScanListCacheEntry { struct ZipEntry* pList; INT32 nCount; };
+
+static std::unordered_set<tstring>*                    pScanIndexedDirs = NULL;	// lowercased dirs fully enumerated
+static std::unordered_set<tstring>*                    pScanArchives    = NULL;	// lowercased "dir + name" (no ext) of every .zip/.7z there
+static std::unordered_map<tstring, ScanListCacheEntry>* pScanListCache   = NULL;	// lowercased "dir + name" -> entry list
+static INT32 nScanListCacheEntries = 0;
+#define SCAN_LIST_CACHE_MAX_ENTRIES	(4 * 1024 * 1024)	// safety cap on cached zip entries
+static bool bListBorrowed = false;					// List points into pScanListCache, don't free it
+
+static tstring ScanKey(const TCHAR* psz)
+{
+	tstring k(psz);
+	if (!k.empty()) CharLowerBuff(&k[0], (DWORD)k.size());
+	return k;
+}
+
+static bool ScanHasExt(const TCHAR* pszName, const TCHAR* pszExt)
+{
+	size_t nName = _tcslen(pszName), nExt = _tcslen(pszExt);
+	return nName > nExt && _tcsicmp(pszName + nName - nExt, pszExt) == 0;
+}
+
+static void ScanIndexDir(const TCHAR* pszDir)
+{
+	if (pszDir == NULL) return;
+
+	size_t nLen = _tcslen(pszDir);
+	// only directories that lookups are built from ("dir/" + name); anything else falls back to probing
+	if (nLen && pszDir[nLen - 1] != _T('/') && pszDir[nLen - 1] != _T('\\')) return;
+	if (nLen + 2 > MAX_PATH) return;
+
+	tstring dir = ScanKey(pszDir);
+	if (pScanIndexedDirs->count(dir)) return;
+
+	TCHAR szPattern[MAX_PATH];
+	_stprintf(szPattern, _T("%s*"), pszDir);
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = FindFirstFileEx(szPattern, FindExInfoBasic, &fd, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		hFind = FindFirstFileEx(szPattern, FindExInfoStandard, &fd, FindExSearchNameMatch, NULL, 0);	// pre-Win7
+	}
+	if (hFind == INVALID_HANDLE_VALUE) {
+		DWORD dwErr = GetLastError();
+		if (dwErr == ERROR_FILE_NOT_FOUND || dwErr == ERROR_PATH_NOT_FOUND) {
+			pScanIndexedDirs->insert(dir);	// missing dir: nothing can exist in it
+		}
+		return;								// any other error: leave unindexed, lookups probe the disk
+	}
+
+	do {
+		bool bZip = ScanHasExt(fd.cFileName, _T(".zip"));
+#ifdef INCLUDE_7Z_SUPPORT
+		bool b7z  = !bZip && ScanHasExt(fd.cFileName, _T(".7z"));
+#else
+		bool b7z  = false;
+#endif
+		if (!bZip && !b7z) continue;
+
+		tstring name = ScanKey(fd.cFileName);
+		name.resize(name.size() - (bZip ? 4 : 3));
+		pScanArchives->insert(dir + name);
+	} while (FindNextFile(hFind, &fd));
+
+	FindClose(hFind);
+
+	pScanIndexedDirs->insert(dir);
+}
+
+// 1 = exists, 0 = doesn't, -1 = this directory isn't indexed
+static INT32 ScanIndexLookup(const TCHAR* szName)
+{
+	if (pScanIndexedDirs == NULL) return -1;
+
+	tstring key = ScanKey(szName);
+	size_t nSlash = key.find_last_of(_T("/\\"));
+	tstring dir = (nSlash == tstring::npos) ? tstring() : key.substr(0, nSlash + 1);
+
+	if (!pScanIndexedDirs->count(dir)) return -1;
+
+	return pScanArchives->count(key) ? 1 : 0;
+}
+
+static void ScanFreeList(struct ZipEntry* pList, INT32 nCount)
+{
+	if (pList == NULL) return;
+	for (INT32 i = 0; i < nCount; i++) {
+		if (pList[i].szName) free(pList[i].szName);
+	}
+	free(pList);
+}
+
+// Call from the scanning thread before its first BzipOpen()
+void BzipScanBegin()
+{
+	BzipScanEnd();
+
+	pScanIndexedDirs = new std::unordered_set<tstring>;
+	pScanArchives    = new std::unordered_set<tstring>;
+	pScanListCache   = new std::unordered_map<tstring, ScanListCacheEntry>;
+	nScanListCacheEntries = 0;
+
+	for (INT32 d = 0; d < DIRS_MAX; d++) {
+		ScanIndexDir(szAppRomPaths[d]);
+
+		if (nLoadMenuShowY & (1 << 26)) {	// SEARCHSUBDIRS
+			for (UINT32 n = 0; n < _SubDirInfo[d].nCount; n++) {
+				ScanIndexDir(_SubDirInfo[d].SubDirs[n]);
+			}
+		}
+	}
+	if (nQuickOpen > 0) {
+		ScanIndexDir(szAppQuickPath);
+	}
+}
+
+// Call once the scanning thread has finished
+void BzipScanEnd()
+{
+	if (bListBorrowed) {
+		List = NULL;
+		nListCount = 0;
+		bListBorrowed = false;
+	}
+
+	if (pScanListCache) {
+		for (auto& it : *pScanListCache) {
+			ScanFreeList(it.second.pList, it.second.nCount);
+		}
+		delete pScanListCache;
+		pScanListCache = NULL;
+	}
+	nScanListCacheEntries = 0;
+
+	delete pScanArchives;    pScanArchives    = NULL;
+	delete pScanIndexedDirs; pScanIndexedDirs = NULL;
+}
+
+// ----------------------------------------------------------------------------
 
 static void BzipListFree()
 {
+	if (bListBorrowed) {										// owned by the scan cache
+		List = NULL;
+		nListCount = 0;
+		bListBorrowed = false;
+		return;
+	}
+
 	if (List) {
 		for (INT32 i = 0; i < nListCount; i++) {
 			if (List[i].szName) {
@@ -94,6 +256,13 @@ static INT32 RomArchiveExists(TCHAR *szName)
 {
 	TCHAR szFileName[MAX_PATH];
 	INT32 ret = 0;
+
+	// unused szDrvName slots are "", which used to probe ".zip" / ".7z" in the cwd
+	if (szName == NULL || szName[0] == _T('\0')) return 0;
+
+	ret = ScanIndexLookup(szName);
+	if (ret >= 0) return ret;
+	ret = 0;
 
 	_stprintf(szFileName, _T("%s.zip"), szName);
 	ret = FileExists(szFileName);
@@ -622,10 +791,38 @@ INT32 BzipOpen(bool bootApp)
 			continue;
 		}
 
-		if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {		// Open the rom zip file
-			nCurrentZip = z;
+		bool bHaveList = false;
 
+		if (pScanListCache) {											// scanning: reuse lists of already-seen archives
+			tstring key = ScanKey(pszBzipName);
+			auto it = pScanListCache->find(key);
+			if (it == pScanListCache->end()) {
+				struct ZipEntry* pNew = NULL; INT32 nNew = 0;
+				if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {
+					if (ZipGetList(&pNew, &nNew) != 0) { pNew = NULL; nNew = 0; }
+				}
+				ZipClose();
+				if (nScanListCacheEntries + nNew <= SCAN_LIST_CACHE_MAX_ENTRIES) {
+					ScanListCacheEntry e = { pNew, nNew };				// failed opens are cached too (pList == NULL)
+					it = pScanListCache->insert(std::make_pair(key, e)).first;
+					nScanListCacheEntries += nNew;
+				} else if (pNew) {										// cache full: use it once, then BzipListFree() frees it
+					List = pNew; nListCount = nNew;
+					bHaveList = true;
+				}
+			}
+			if (!bHaveList && it != pScanListCache->end() && it->second.pList) {
+				List = it->second.pList; nListCount = it->second.nCount;
+				bListBorrowed = true;
+				bHaveList = true;
+			}
+		} else if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {	// Open the rom zip file
 			ZipGetList(&List, &nListCount);								// Get the list of entries
+			bHaveList = true;
+		}
+
+		if (bHaveList) {
+			nCurrentZip = z;
 
 			for (INT32 i = 0; i < nRomCount; i++) {
 				struct BurnRomInfo ri;

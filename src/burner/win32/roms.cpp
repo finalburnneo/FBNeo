@@ -687,6 +687,7 @@ static int QuitRomsScan()
 	ScanThreadId = 0;
 
 	BzipClose();
+	BzipScanEnd();
 
 	nBurnDrvActive = nOldSelect;
 	nOldSelect = 0;
@@ -701,16 +702,23 @@ static int QuitRomsScan()
 
 static unsigned __stdcall AnalyzingRoms(void*)
 {
+	HWND hProgress = GetDlgItem(hRomsDlg, IDC_WAIT_PROG);
+
+	BzipScanBegin();	// index the rom dirs once; freed by QuitRomsScan()
+
 	for (UINT32 n = 0; n < nScanCount; n++) {
 		UINT32 z = ScanList[n];
 		nBurnDrvActive = z;
 
 		// See if we need to abort
 		if (WaitForSingleObject(hEvent, 0) == WAIT_OBJECT_0) {
-			ExitThread(0);
+			return 0;
 		}
 
-		SendDlgItemMessage(hRomsDlg, IDC_WAIT_PROG, PBM_STEPIT, 0, 0);
+		// cross-thread SendMessage blocks on the UI thread: post, and not for every driver
+		if ((n & 0x3f) == 0) {
+			PostMessage(hProgress, PBM_SETPOS, (WPARAM)n, 0);
+		}
 
 		switch (BzipOpen(TRUE))	{
 			case 0:
@@ -725,6 +733,8 @@ static unsigned __stdcall AnalyzingRoms(void*)
 		GameAvScanned[z] = 1;
 		BzipClose();
 	}
+
+	PostMessage(hProgress, PBM_SETPOS, (WPARAM)nScanCount, 0);
 
 	avOk = true;
 

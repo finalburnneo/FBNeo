@@ -580,6 +580,7 @@ INT32 RomsDirCreate(HWND hParentWND);
 INT32 CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();
 INT32 WriteGameAvb();
+void MarkGameAvScanned(UINT32 nDrv);
 
 // support_paths.cpp
 extern INT32 nSupportDlgWidth;

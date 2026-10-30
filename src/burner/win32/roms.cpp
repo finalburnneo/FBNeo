@@ -461,120 +461,202 @@ INT32 RomsDirCreate(HWND hParentWND)
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //Check Romsets Dialog/////////////////////////////////////////////////////////////////////////////
 
+// super ROM scan database, v2  @  config/<exe>.roms.dat
+// super-caching function: on startup, only newly added drivers are scanned!
+//
+// per-line format:  <drivername> <status>
+//   status: '*' = all roms ok
+//           '+' = playable (but possible missing optional/useles roms)
+//           '-' = missing
+// example, "Ghosts'n Goblins", all roms ok:
+// gng *
+
+#define ROMDAT_HEADER	"FBNeo ROMs v2"
+
+static char*   GameAvScanned = NULL;	// 1 = gameAv[i] holds a real scan result
+static UINT32* ScanList      = NULL;	// drivers the scan thread will check
+static UINT32  nScanCount    = 0;		// number of entries in ScanList
+
+static void FreeScanArrays()
+{
+	if (GameAvScanned) { free(GameAvScanned); GameAvScanned = NULL; }
+	if (ScanList)      { free(ScanList);      ScanList      = NULL; }
+	nScanCount = 0;
+}
+
+static bool AllocScanArrays()
+{
+	FreeScanArrays();
+
+	GameAvScanned = (char*)malloc(nBurnDrvCount);
+	ScanList      = (UINT32*)malloc(nBurnDrvCount * sizeof(UINT32));
+
+	if (GameAvScanned == NULL || ScanList == NULL) {
+		FreeScanArrays();
+		return false;
+	}
+
+	memset(GameAvScanned, 0, nBurnDrvCount);
+
+	return true;
+}
+
+// one parsed line of the cache file
+struct RomDatEntry {
+	char   szName[64];
+	char   nStatus;
+};
+
+static int RomDatEntryCmp(const void* a, const void* b)
+{
+	return strcmp(((const RomDatEntry*)a)->szName, ((const RomDatEntry*)b)->szName);
+}
+
+static char StatusToChar(char nStatus)
+{
+	if (nStatus & 2) return '*';
+	if (nStatus & 1) return '+';
+	return '-';
+}
+
+static bool CharToStatus(char c, char* pnStatus)
+{
+	switch (c) {
+		case '*': *pnStatus = 3; return true;
+		case '+': *pnStatus = 1; return true;
+		case '-': *pnStatus = 0; return true;
+	}
+	return false;
+}
+
 INT32 WriteGameAvb()
 {
-	TCHAR szRomDat[MAX_PATH];
-	FILE* h;
-
-	CreateRomDatName(szRomDat);
-
-	if ((h = _tfopen(szRomDat, _T("wt"))) == NULL) {
+	if (gameAv == NULL || GameAvScanned == NULL) {
 		return 1;
 	}
 
-	_ftprintf(h, _T(APP_TITLE) _T(" v%.20s ROMs"), szAppBurnVer);	// identifier
-	_ftprintf(h, _T(" 0x%04X "), nBurnDrvCount);					// no of games
+	TCHAR szRomDat[MAX_PATH];
+	TCHAR szTmpDat[MAX_PATH + 8];
+	FILE* h;
 
-	for (unsigned int i = 0; i < nBurnDrvCount; i++) {
-		if (gameAv[i] & 2) {
-			_fputtc(_T('*'), h);
-		} else {
-			if (gameAv[i] & 1) {
-				_fputtc(_T('+'), h);
-			} else {
-				_fputtc(_T('-'), h);
-			}
-		}
+	CreateRomDatName(szRomDat);
+	_stprintf(szTmpDat, _T("%s.tmp"), szRomDat);
+
+	// write to a temp file and swap it in, so a crash mid-write can't leave a truncated cache
+	if ((h = _tfopen(szTmpDat, _T("wt"))) == NULL) {
+		return 1;
 	}
 
-	_ftprintf(h, _T(" END"));									// end marker
+	fprintf(h, "%s\n", ROMDAT_HEADER);
 
-	fclose(h);
+	UINT32 nOldDrvSel = nBurnDrvActive;
+	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+		if (!GameAvScanned[i]) continue;
+		nBurnDrvActive = i;
+		fprintf(h, "%s %c\n", BurnDrvGetTextA(DRV_NAME), StatusToChar(gameAv[i]));
+	}
+	nBurnDrvActive = nOldDrvSel;
+
+	fprintf(h, "END\n");
+
+	bool bOK = (ferror(h) == 0);
+	if (fclose(h) != 0) bOK = false;
+
+	if (!bOK || !MoveFileEx(szTmpDat, szRomDat, MOVEFILE_REPLACE_EXISTING)) {
+		DeleteFile(szTmpDat);
+		return 1;
+	}
 
 	return 0;
 }
 
-static int DoCheck(TCHAR* buffPos)
+// Mark a game as scanned (e.g. after a single-set rescan, gameinfo dialog)
+void MarkGameAvScanned(UINT32 nDrv)
 {
-	TCHAR label[256];
-
-	// Check identifier
-	memset(label, 0, sizeof(label));
-	_stprintf(label, _T(APP_TITLE) _T(" v%.20s ROMs"), szAppBurnVer);
-	if ((buffPos = LabelCheck(buffPos, label)) == NULL) {
-		return 1;
-	}
-
-	// Check no of supported games
-	memset(label, 0, sizeof(label));
-	memcpy(label, buffPos, 16);
-	buffPos += 8;
-	unsigned int n = _tcstol(label, NULL, 0);
-	if (n != nBurnDrvCount) {
-		return 1;
-	}
-
-	for (unsigned int i = 0; i < nBurnDrvCount; i++) {
-		if (*buffPos == _T('*')) {
-			gameAv[i] = 3;
-		} else {
-			if (*buffPos == _T('+')) {
-				gameAv[i] = 1;
-			} else {
-				if (*buffPos == _T('-')) {
-					gameAv[i] = 0;
-				} else {
-					return 1;
-				}
-			}
-		}
-
-		buffPos++;
-	}
-
-	memset(label, 0, sizeof(label));
-	_stprintf(label, _T(" END"));
-	if (LabelCheck(buffPos, label) == NULL) {
-		avOk = true;
-		return 0;
-	} else {
-		return 1;
+	if (GameAvScanned && nDrv < nBurnDrvCount) {
+		GameAvScanned[nDrv] = 1;
 	}
 }
 
-int CheckGameAvb()
+// Fill gameAv[] from the cache file. Drivers not found in it are added to ScanList. Returns the number of drivers to scan.
+static INT32 LoadGameAvb()
 {
+	RomDatEntry* pCache = NULL;
+	UINT32 nCacheCount = 0;
+	UINT32 nCacheAlloc = 0;
+
+	if (!AllocScanArrays()) {
+		return 0;
+	}
+
 	TCHAR szRomDat[MAX_PATH];
 	FILE* h;
-	int bOK;
-	int nBufferSize = nBurnDrvCount + 256;
-	TCHAR* buffer = (TCHAR*)malloc(nBufferSize * sizeof(TCHAR));
-	if (buffer == NULL) {
-		return 1;
-	}
 
-	memset(buffer, 0, nBufferSize * sizeof(TCHAR));
 	CreateRomDatName(szRomDat);
 
-	if ((h = _tfopen(szRomDat, _T("r"))) == NULL) {
-		if (buffer)
-		{
-			free(buffer);
-			buffer = NULL;
+	if ((h = _tfopen(szRomDat, _T("rt"))) != NULL) {
+		char szLine[512];
+
+		// an old-format (v1) or unknown file simply yields an empty cache -> full scan
+		if (fgets(szLine, sizeof(szLine), h) && strncmp(szLine, ROMDAT_HEADER, strlen(ROMDAT_HEADER)) == 0) {
+			while (fgets(szLine, sizeof(szLine), h)) {
+				RomDatEntry e;
+				char cStatus;
+
+				memset(&e, 0, sizeof(e));
+				if (sscanf(szLine, "%63s %c", e.szName, &cStatus) != 2 || !CharToStatus(cStatus, &e.nStatus)) {
+					continue;
+				}
+
+				if (nCacheCount == nCacheAlloc) {
+					UINT32 nNewAlloc = nCacheAlloc ? nCacheAlloc * 2 : 4096;
+					RomDatEntry* pNew = (RomDatEntry*)realloc(pCache, nNewAlloc * sizeof(RomDatEntry));
+					if (pNew == NULL) break; // out of memory: just use what we have now, or probably crash later.  who knows?
+					pCache = pNew;
+					nCacheAlloc = nNewAlloc;
+				}
+				pCache[nCacheCount++] = e;
+			}
 		}
-		return 1;
+
+		fclose(h);
 	}
 
-	_fgetts(buffer, nBufferSize, h);
-	fclose(h);
-
-	bOK = DoCheck(buffer);
-
-	if (buffer) {
-		free(buffer);
-		buffer = NULL;
+	// achieve linearity through qsort-ing
+	if (nCacheCount > 1) {
+		qsort(pCache, nCacheCount, sizeof(RomDatEntry), RomDatEntryCmp);
 	}
-	return bOK;
+
+	nScanCount = 0;
+
+	UINT32 nOldDrvSel = nBurnDrvActive;
+	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+		nBurnDrvActive = i;
+		RomDatEntry* pFound = NULL;
+		if (nCacheCount) {
+			RomDatEntry key;
+			memset(&key, 0, sizeof(key));
+			strncpy(key.szName, BurnDrvGetTextA(DRV_NAME), sizeof(key.szName) - 1);
+			pFound = (RomDatEntry*)bsearch(&key, pCache, nCacheCount, sizeof(RomDatEntry), RomDatEntryCmp);
+		}
+
+		if (pFound) {
+			gameAv[i] = pFound->nStatus;
+			GameAvScanned[i] = 1;
+		} else {
+			gameAv[i] = 0;
+			ScanList[nScanCount++] = i;
+		}
+	}
+	nBurnDrvActive = nOldDrvSel;
+
+	if (pCache) {
+		free(pCache);
+	}
+
+	avOk = (nScanCount == 0);
+
+	return (INT32)nScanCount;
 }
 
 static int QuitRomsScan()
@@ -591,7 +673,7 @@ static int QuitRomsScan()
 		// Wait for the thread to finish
 		if (WaitForSingleObject(hScanThread, 10000) != WAIT_OBJECT_0) {
 			// If the thread doesn't finish within 10 seconds, forcibly kill it
-			TerminateThread(hScanThread, 1);
+			TerminateThread(hScanThread, 1); // if we do this, it's probably going to crash later. oh well..
 		}
 
 		CloseHandle(hScanThread);
@@ -610,16 +692,17 @@ static int QuitRomsScan()
 	nOldSelect = 0;
 	bRescanRoms  = false;
 
-	if (avOk) {
-		WriteGameAvb();
-	}
+	nScanCount = 0;
+
+	WriteGameAvb();
 
 	return 1;
 }
 
 static unsigned __stdcall AnalyzingRoms(void*)
 {
-	for (unsigned int z = 0; z < nBurnDrvCount; z++) {
+	for (UINT32 n = 0; n < nScanCount; n++) {
+		UINT32 z = ScanList[n];
 		nBurnDrvActive = z;
 
 		// See if we need to abort
@@ -639,8 +722,9 @@ static unsigned __stdcall AnalyzingRoms(void*)
 			case 1:
 				gameAv[z] = 0;
 		}
+		GameAvScanned[z] = 1;
 		BzipClose();
-   }
+	}
 
 	avOk = true;
 
@@ -659,8 +743,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 		case WM_INITDIALOG: {
 			hRomsDlg = hDlg;
 			nOldSelect = nBurnDrvActive;
-			memset(gameAv, 0, nBurnDrvCount); // clear game list
-			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETRANGE, 0, MAKELPARAM(0, nBurnDrvCount));
+			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETRANGE, 0, MAKELPARAM(0, nScanCount));
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, (WPARAM)1, 0);
 
 			ShowWindow(GetDlgItem(hDlg, IDC_WAIT_LABEL_A), TRUE);
@@ -668,9 +751,10 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 			ShowWindow(GetDlgItem(hDlg, IDCANCEL), TRUE);
 
 			avOk = false;
-			hScanThread = (HANDLE)_beginthreadex(NULL, 0, AnalyzingRoms, NULL, 0, &ScanThreadId);
 
+			// create the abort event before the thread starts polling it
 			hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
+			hScanThread = (HANDLE)_beginthreadex(NULL, 0, AnalyzingRoms, NULL, 0, &ScanThreadId);
 
 			if (hParent == NULL) {
 #if 0
@@ -757,10 +841,24 @@ INT32 CreateROMInfo(HWND hParentWND)
 	}
 
 	if (gameAv) {
-		if (CheckGameAvb() || bRescanRoms) {
-			if ((bStarting && bSkipStartupCheck == false) || bRescanRoms) {
-				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
+		// always load: this also sets up the arrays WriteGameAvb() needs
+		INT32 nNeedScan = LoadGameAvb();
+
+		if (bRescanRoms && ScanList != NULL) {
+			// full rescan requested (menu, or rom paths changed): the files on disk
+			// may have changed, so cached results can't be trusted
+			for (UINT32 i = 0; i < nBurnDrvCount; i++) {
+				ScanList[i] = i;
 			}
+			nScanCount = nBurnDrvCount;
+			memset(gameAv, 0, nBurnDrvCount);
+			memset(GameAvScanned, 0, nBurnDrvCount);
+			avOk = false;
+			nNeedScan = nBurnDrvCount;
+		}
+
+		if (nNeedScan > 0 && ((bStarting && bSkipStartupCheck == false) || bRescanRoms)) {
+			FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
 		}
 	}
 
@@ -773,4 +871,6 @@ void FreeROMInfo()
 		free(gameAv);
 		gameAv = NULL;
 	}
+
+	FreeScanArrays();
 }

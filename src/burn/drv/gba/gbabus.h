@@ -322,7 +322,7 @@ static inline UINT32 arm7_read16(void* user_data, UINT32 address)
 	return value;
 }
 
-static inline UINT32 arm7_read32_seq(void* user_data, UINT32 address, bool seq)
+SB_ALWAYS_INLINE UINT32 arm7_read32_seq(void* user_data, UINT32 address, bool seq)
 {
 	// ROM/simple-RAM read fast path; covers sequential fetches, branch
 	// targets and LDM data loads. Callers handle GPIO/side effects.
@@ -338,7 +338,7 @@ static inline UINT32 arm7_read32_seq(void* user_data, UINT32 address, bool seq)
 	return gba_read32((gba_t*)user_data, address);
 }
 
-static inline UINT32 arm7_read16_seq(void* user_data, UINT32 address, bool seq)
+SB_ALWAYS_INLINE UINT32 arm7_read16_seq(void* user_data, UINT32 address, bool seq)
 {
 	// ROM/simple-RAM read fast path; see arm7_read32_seq.
 	gba_t* gba = (gba_t*)user_data;

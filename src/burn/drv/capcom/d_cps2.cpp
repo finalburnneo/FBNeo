@@ -17721,7 +17721,7 @@ static struct BurnRomInfo Ssf2tucRomDesc[] = {
 	{ "sfxuc.25m",		0x100000, 0x18164291, CPS2_GFX | BRF_GRA },
 	{ "sfxuc.27m",		0x100000, 0xe1262ce4, CPS2_GFX | BRF_GRA },
 
-	{ "sfx.01",			0x020000, 0x3cde3da7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sfxuc.01",		0x020000, 0x3cde3da7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "sfx.02",			0x020000, 0x0022633f, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "sfx.11m",		0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
@@ -17767,7 +17767,7 @@ static struct BurnRomInfo Ssf2xucjRomDesc[] = {
 	{ "sfxuc.25m",		0x100000, 0x18164291, CPS2_GFX | BRF_GRA },
 	{ "sfxuc.27m",		0x100000, 0xe1262ce4, CPS2_GFX | BRF_GRA },
 
-	{ "sfx.01",			0x020000, 0x3cde3da7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sfxuc.01",		0x020000, 0x3cde3da7, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "sfx.02",			0x020000, 0x0022633f, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "sfx.11m",		0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },

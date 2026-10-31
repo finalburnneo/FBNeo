@@ -67637,10 +67637,10 @@ struct BurnDriver BurnSpecZlalox = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Zoinho: No Jardim dos Tolos (Spanish) (48K) (HB)
+// Zoinho: No Jardim dos Tolos (Portuguese) (48K) (HB)
 
 static struct BurnRomInfo SpecZoinhoRomDesc[] = {
-	{ "Zoinho - No Jardim dos Tolos 48K (2021)(Bitnamic).tap", 29137, 0xa64d5e5a, BRF_ESS | BRF_PRG },
+	{ "Zoinho - No Jardim dos Tolos PT 48K (2021)(Bitnamic).tap", 29137, 0xa64d5e5a, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecZoinho, SpecZoinho, Spectrum)
@@ -67648,7 +67648,7 @@ STD_ROM_FN(SpecZoinho)
 
 struct BurnDriver BurnSpecZoinho = {
 	"spec_zoinho", "spec_zoinho25", "spec_spectrum", NULL, "2021",
-	"Zoinho: No Jardim dos Tolos (Spanish) (48K) (HB)\0", NULL, "Bitnamic", "ZX Spectrum",
+	"Zoinho: No Jardim dos Tolos (Portuguese) (48K) (HB)\0", NULL, "Bitnamic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ACTION | GBF_ADV, 0,
 	SpectrumGetZipName, SpecZoinhoRomInfo, SpecZoinhoRomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,

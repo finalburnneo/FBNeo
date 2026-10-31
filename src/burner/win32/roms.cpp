@@ -1,6 +1,5 @@
 #include "burner.h"
 #include <shlobj.h>
-#include <process.h>
 
 static HWND hTabControl = NULL;
 static HWND hParent     = NULL;
@@ -12,11 +11,12 @@ bool avOk    = false;
 
 bool bSkipStartupCheck = false;
 
-static UINT32 ScanThreadId = 0;
-static HANDLE hScanThread  = NULL;
 static INT32 nOldSelect    = 0;
 
-static HANDLE hEvent = NULL;
+#define SCAN_TIMER_ID		0x5ca1
+#define SCAN_SLICE_MS		50		// work per timer tick; input and paint are serviced between ticks
+static UINT32 nScanPos     = 0;
+static bool   bScanRunning = false;
 
 static const TCHAR szAppDefaultPaths[DIRS_MAX][MAX_PATH] = {
 	{ _T("roms/")			},
@@ -661,64 +661,36 @@ static INT32 LoadGameAvb()
 
 static int QuitRomsScan()
 {
-	DWORD dwExitCode;
-
-	GetExitCodeThread(hScanThread, &dwExitCode);
-
-	if (dwExitCode == STILL_ACTIVE) {
-
-		// Signal the scan thread to abort
-		SetEvent(hEvent);
-
-		// Wait for the thread to finish
-		if (WaitForSingleObject(hScanThread, 10000) != WAIT_OBJECT_0) {
-			// If the thread doesn't finish within 10 seconds, forcibly kill it
-			TerminateThread(hScanThread, 1); // if we do this, it's probably going to crash later. oh well..
-		}
-
-		CloseHandle(hScanThread);
+	if (hRomsDlg) {
+		KillTimer(hRomsDlg, SCAN_TIMER_ID);
 	}
 
-	CloseHandle(hEvent);
-
-	hEvent = NULL;
-
-	hScanThread = NULL;
-	ScanThreadId = 0;
-
-	BzipClose();
-	BzipScanEnd();
+	if (bScanRunning) {
+		BzipClose();
+		BzipScanEnd();
+		bScanRunning = false;
+	}
 
 	nBurnDrvActive = nOldSelect;
 	nOldSelect = 0;
 	bRescanRoms  = false;
 
 	nScanCount = 0;
+	nScanPos   = 0;
 
 	WriteGameAvb();
 
 	return 1;
 }
 
-static unsigned __stdcall AnalyzingRoms(void*)
+// Scan drivers for up to SCAN_SLICE_MS, then hand control back to the message loop
+static void ScanSlice()
 {
-	HWND hProgress = GetDlgItem(hRomsDlg, IDC_WAIT_PROG);
+	const DWORD dwStart = GetTickCount();
 
-	BzipScanBegin();	// index the rom dirs once; freed by QuitRomsScan()
-
-	for (UINT32 n = 0; n < nScanCount; n++) {
-		UINT32 z = ScanList[n];
+	while (nScanPos < nScanCount && (GetTickCount() - dwStart) < SCAN_SLICE_MS) {
+		UINT32 z = ScanList[nScanPos++];
 		nBurnDrvActive = z;
-
-		// See if we need to abort
-		if (WaitForSingleObject(hEvent, 0) == WAIT_OBJECT_0) {
-			return 0;
-		}
-
-		// cross-thread SendMessage blocks on the UI thread: post, and not for every driver
-		if ((n & 0x3f) == 0) {
-			PostMessage(hProgress, PBM_SETPOS, (WPARAM)n, 0);
-		}
 
 		switch (BzipOpen(TRUE))	{
 			case 0:
@@ -734,13 +706,15 @@ static unsigned __stdcall AnalyzingRoms(void*)
 		BzipClose();
 	}
 
-	PostMessage(hProgress, PBM_SETPOS, (WPARAM)nScanCount, 0);
+	nBurnDrvActive = nOldSelect;	// whatever runs between slices sees the user's selection
 
-	avOk = true;
+	SendDlgItemMessage(hRomsDlg, IDC_WAIT_PROG, PBM_SETPOS, (WPARAM)nScanPos, 0);
 
-	PostMessage(hRomsDlg, WM_CLOSE, 0, 0);
-
-	return 0;
+	if (nScanPos >= nScanCount) {
+		KillTimer(hRomsDlg, SCAN_TIMER_ID);
+		avOk = true;
+		PostMessage(hRomsDlg, WM_CLOSE, 0, 0);
+	}
 }
 
 //Add these two static variables
@@ -762,9 +736,12 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 
 			avOk = false;
 
-			// create the abort event before the thread starts polling it
-			hEvent = CreateEvent(NULL, TRUE, FALSE, NULL);
-			hScanThread = (HANDLE)_beginthreadex(NULL, 0, AnalyzingRoms, NULL, 0, &ScanThreadId);
+			nScanPos = 0;
+			BzipScanBegin();	// index the rom dirs once; freed by QuitRomsScan()
+			bScanRunning = true;
+
+			// WM_TIMER is the lowest-priority message, so Cancel, dragging and painting stay responsive
+			SetTimer(hDlg, SCAN_TIMER_ID, USER_TIMER_MINIMUM, NULL);
 
 			if (hParent == NULL) {
 #if 0
@@ -788,6 +765,13 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 				SetFocus(hDlg);		// Enable Esc=close
 			}
 
+			break;
+		}
+
+		case WM_TIMER: {
+			if (wParam == SCAN_TIMER_ID && bScanRunning) {
+				ScanSlice();
+			}
 			break;
 		}
 
@@ -827,6 +811,7 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 		}
 
 		case WM_CLOSE: {
+			if (hRomsDlg == NULL) break;	// already closing (Cancel raced the end-of-scan close)
 			QuitRomsScan();
 			EndDialog(hDlg, 0);
 			hRomsDlg = NULL;

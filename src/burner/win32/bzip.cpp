@@ -1,7 +1,4 @@
 // Burner Zip module
-#include <string>
-#include <unordered_set>
-#include <unordered_map>
 #include "burner.h"
 
 INT32 nBzipError = 0;												// non-zero if there is a problem with the opened romset
@@ -28,89 +25,33 @@ static struct SubDirsZip _SubDirsZip;
 //    from memory, and
 //  - keep each archive's entry list after the first open.
 
-typedef std::basic_string<TCHAR> tstring;
+// Small open-addressing hash table; keys are lowercased paths.
+struct ScanHashSlot { TCHAR* pszKey; UINT32 nHash; struct ZipEntry* pList; INT32 nCount; };
+struct ScanHash     { struct ScanHashSlot* pSlots; UINT32 nSize; UINT32 nUsed; };	// nSize: 0 or a power of 2
 
-struct ScanListCacheEntry { struct ZipEntry* pList; INT32 nCount; };
-
-static std::unordered_set<tstring>*                    pScanIndexedDirs = NULL;	// lowercased dirs fully enumerated
-static std::unordered_set<tstring>*                    pScanArchives    = NULL;	// lowercased "dir + name" (no ext) of every .zip/.7z there
-static std::unordered_map<tstring, ScanListCacheEntry>* pScanListCache   = NULL;	// lowercased "dir + name" -> entry list
-static INT32 nScanListCacheEntries = 0;
+static struct ScanHash ScanDirs     = { NULL, 0, 0 };	// dirs that were fully enumerated
+static struct ScanHash ScanArchives = { NULL, 0, 0 };	// "dir + name" (no ext) of every .zip/.7z in them
+static struct ScanHash ScanLists    = { NULL, 0, 0 };	// "dir + name" -> cached entry list
+static bool  bScanActive      = false;
+static INT32 nScanListEntries = 0;
 #define SCAN_LIST_CACHE_MAX_ENTRIES	(4 * 1024 * 1024)	// safety cap on cached zip entries
-static bool bListBorrowed = false;					// List points into pScanListCache, don't free it
+static bool  bListBorrowed    = false;				// List points into ScanLists, don't free it
 
-static tstring ScanKey(const TCHAR* psz)
+// lowercased copy of psz into szOut[MAX_PATH]; false if it doesn't fit
+static bool ScanKey(const TCHAR* psz, TCHAR* szOut)
 {
-	tstring k(psz);
-	if (!k.empty()) CharLowerBuff(&k[0], (DWORD)k.size());
-	return k;
+	size_t nLen = _tcslen(psz);
+	if (nLen >= MAX_PATH) return false;
+	memcpy(szOut, psz, (nLen + 1) * sizeof(TCHAR));
+	if (nLen) CharLowerBuff(szOut, (DWORD)nLen);
+	return true;
 }
 
-static bool ScanHasExt(const TCHAR* pszName, const TCHAR* pszExt)
+static UINT32 ScanHashString(const TCHAR* psz)
 {
-	size_t nName = _tcslen(pszName), nExt = _tcslen(pszExt);
-	return nName > nExt && _tcsicmp(pszName + nName - nExt, pszExt) == 0;
-}
-
-static void ScanIndexDir(const TCHAR* pszDir)
-{
-	if (pszDir == NULL) return;
-
-	size_t nLen = _tcslen(pszDir);
-	// only directories that lookups are built from ("dir/" + name); anything else falls back to probing
-	if (nLen && pszDir[nLen - 1] != _T('/') && pszDir[nLen - 1] != _T('\\')) return;
-	if (nLen + 2 > MAX_PATH) return;
-
-	tstring dir = ScanKey(pszDir);
-	if (pScanIndexedDirs->count(dir)) return;
-
-	TCHAR szPattern[MAX_PATH];
-	_stprintf(szPattern, _T("%s*"), pszDir);
-
-	WIN32_FIND_DATA fd;
-	HANDLE hFind = FindFirstFileEx(szPattern, FindExInfoBasic, &fd, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
-	if (hFind == INVALID_HANDLE_VALUE) {
-		hFind = FindFirstFileEx(szPattern, FindExInfoStandard, &fd, FindExSearchNameMatch, NULL, 0);	// pre-Win7
-	}
-	if (hFind == INVALID_HANDLE_VALUE) {
-		DWORD dwErr = GetLastError();
-		if (dwErr == ERROR_FILE_NOT_FOUND || dwErr == ERROR_PATH_NOT_FOUND) {
-			pScanIndexedDirs->insert(dir);	// missing dir: nothing can exist in it
-		}
-		return;								// any other error: leave unindexed, lookups probe the disk
-	}
-
-	do {
-		bool bZip = ScanHasExt(fd.cFileName, _T(".zip"));
-#ifdef INCLUDE_7Z_SUPPORT
-		bool b7z  = !bZip && ScanHasExt(fd.cFileName, _T(".7z"));
-#else
-		bool b7z  = false;
-#endif
-		if (!bZip && !b7z) continue;
-
-		tstring name = ScanKey(fd.cFileName);
-		name.resize(name.size() - (bZip ? 4 : 3));
-		pScanArchives->insert(dir + name);
-	} while (FindNextFile(hFind, &fd));
-
-	FindClose(hFind);
-
-	pScanIndexedDirs->insert(dir);
-}
-
-// 1 = exists, 0 = doesn't, -1 = this directory isn't indexed
-static INT32 ScanIndexLookup(const TCHAR* szName)
-{
-	if (pScanIndexedDirs == NULL) return -1;
-
-	tstring key = ScanKey(szName);
-	size_t nSlash = key.find_last_of(_T("/\\"));
-	tstring dir = (nSlash == tstring::npos) ? tstring() : key.substr(0, nSlash + 1);
-
-	if (!pScanIndexedDirs->count(dir)) return -1;
-
-	return pScanArchives->count(key) ? 1 : 0;
+	UINT32 h = 2166136261u;												// FNV-1a
+	while (*psz) { h ^= (UINT32)*psz++; h *= 16777619u; }
+	return h;
 }
 
 static void ScanFreeList(struct ZipEntry* pList, INT32 nCount)
@@ -122,15 +63,168 @@ static void ScanFreeList(struct ZipEntry* pList, INT32 nCount)
 	free(pList);
 }
 
+static struct ScanHashSlot* ScanHashFind(struct ScanHash* pHash, const TCHAR* pszKey)
+{
+	if (pHash->nSize == 0) return NULL;
+
+	UINT32 nHash = ScanHashString(pszKey);
+	UINT32 nMask = pHash->nSize - 1;
+
+	for (UINT32 i = nHash & nMask; pHash->pSlots[i].pszKey; i = (i + 1) & nMask) {
+		if (pHash->pSlots[i].nHash == nHash && _tcscmp(pHash->pSlots[i].pszKey, pszKey) == 0) {
+			return &pHash->pSlots[i];
+		}
+	}
+	return NULL;
+}
+
+static bool ScanHashGrow(struct ScanHash* pHash)
+{
+	UINT32 nNewSize = pHash->nSize ? pHash->nSize * 2 : 1024;
+	struct ScanHashSlot* pNew = (struct ScanHashSlot*)calloc(nNewSize, sizeof(struct ScanHashSlot));
+	if (pNew == NULL) return false;
+
+	for (UINT32 i = 0; i < pHash->nSize; i++) {
+		if (pHash->pSlots[i].pszKey == NULL) continue;
+		UINT32 j = pHash->pSlots[i].nHash & (nNewSize - 1);
+		while (pNew[j].pszKey) j = (j + 1) & (nNewSize - 1);
+		pNew[j] = pHash->pSlots[i];
+	}
+
+	free(pHash->pSlots);
+	pHash->pSlots = pNew;
+	pHash->nSize  = nNewSize;
+	return true;
+}
+
+// returns the slot for pszKey, adding it if needed; NULL if out of memory
+static struct ScanHashSlot* ScanHashInsert(struct ScanHash* pHash, const TCHAR* pszKey)
+{
+	struct ScanHashSlot* pSlot = ScanHashFind(pHash, pszKey);
+	if (pSlot) return pSlot;
+
+	if ((pHash->nUsed + 1) * 2 > pHash->nSize && !ScanHashGrow(pHash)) return NULL;	// keep load <= 50%
+
+	TCHAR* pszCopy = (TCHAR*)malloc((_tcslen(pszKey) + 1) * sizeof(TCHAR));
+	if (pszCopy == NULL) return NULL;
+	_tcscpy(pszCopy, pszKey);
+
+	UINT32 nHash = ScanHashString(pszKey);
+	UINT32 nMask = pHash->nSize - 1;
+	UINT32 i = nHash & nMask;
+	while (pHash->pSlots[i].pszKey) i = (i + 1) & nMask;
+
+	pSlot = &pHash->pSlots[i];
+	pSlot->pszKey = pszCopy;
+	pSlot->nHash  = nHash;
+	pSlot->pList  = NULL;
+	pSlot->nCount = 0;
+	pHash->nUsed++;
+
+	return pSlot;
+}
+
+static void ScanHashFree(struct ScanHash* pHash)
+{
+	for (UINT32 i = 0; i < pHash->nSize; i++) {
+		if (pHash->pSlots[i].pszKey) free(pHash->pSlots[i].pszKey);
+		ScanFreeList(pHash->pSlots[i].pList, pHash->pSlots[i].nCount);
+	}
+	free(pHash->pSlots);
+	pHash->pSlots = NULL;
+	pHash->nSize  = 0;
+	pHash->nUsed  = 0;
+}
+
+static bool ScanHasExt(const TCHAR* pszName, const TCHAR* pszExt)
+{
+	size_t nName = _tcslen(pszName), nExt = _tcslen(pszExt);
+	return nName > nExt && _tcsicmp(pszName + nName - nExt, pszExt) == 0;
+}
+
+static void ScanIndexDir(const TCHAR* pszDir)
+{
+	TCHAR szDir[MAX_PATH], szPattern[MAX_PATH], szKey[MAX_PATH];
+
+	if (pszDir == NULL) return;
+
+	size_t nLen = _tcslen(pszDir);
+	// only directories that lookups are built from ("dir/" + name); anything else falls back to probing
+	if (nLen && pszDir[nLen - 1] != _T('/') && pszDir[nLen - 1] != _T('\\')) return;
+	if (nLen + 2 > MAX_PATH) return;
+
+	ScanKey(pszDir, szDir);
+	if (ScanHashFind(&ScanDirs, szDir)) return;
+
+	_stprintf(szPattern, _T("%s*"), pszDir);
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = FindFirstFileEx(szPattern, FindExInfoBasic, &fd, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		hFind = FindFirstFileEx(szPattern, FindExInfoStandard, &fd, FindExSearchNameMatch, NULL, 0);	// pre-Win7
+	}
+	if (hFind == INVALID_HANDLE_VALUE) {
+		DWORD dwErr = GetLastError();
+		if (dwErr == ERROR_FILE_NOT_FOUND || dwErr == ERROR_PATH_NOT_FOUND) {
+			ScanHashInsert(&ScanDirs, szDir);		// missing dir: nothing can exist in it
+		}
+		return;										// any other error: leave unindexed, lookups probe the disk
+	}
+
+	bool bComplete = true;
+
+	do {
+		bool bZip = ScanHasExt(fd.cFileName, _T(".zip"));
+#ifdef INCLUDE_7Z_SUPPORT
+		bool b7z  = !bZip && ScanHasExt(fd.cFileName, _T(".7z"));
+#else
+		bool b7z  = false;
+#endif
+		if (!bZip && !b7z) continue;
+
+		size_t nName = _tcslen(fd.cFileName) - (bZip ? 4 : 3);
+		if (nLen + nName >= MAX_PATH) continue;	// too long to ever be looked up
+
+		memcpy(szKey, szDir, nLen * sizeof(TCHAR));
+		memcpy(szKey + nLen, fd.cFileName, nName * sizeof(TCHAR));
+		szKey[nLen + nName] = _T('\0');
+		CharLowerBuff(szKey + nLen, (DWORD)nName);
+
+		if (ScanHashInsert(&ScanArchives, szKey) == NULL) bComplete = false;
+	} while (FindNextFile(hFind, &fd));
+
+	FindClose(hFind);
+
+	if (bComplete) {								// an incomplete index would report false misses
+		ScanHashInsert(&ScanDirs, szDir);
+	}
+}
+
+// 1 = exists, 0 = doesn't, -1 = not covered by the index
+static INT32 ScanIndexLookup(const TCHAR* szName)
+{
+	TCHAR szKey[MAX_PATH], szDir[MAX_PATH];
+
+	if (!bScanActive) return -1;
+	if (!ScanKey(szName, szKey)) return -1;
+
+	const TCHAR* pSlashA = _tcsrchr(szKey, _T('/'));
+	const TCHAR* pSlashB = _tcsrchr(szKey, _T('\\'));
+	const TCHAR* pSlash  = (pSlashA > pSlashB) ? pSlashA : pSlashB;
+	size_t nDir = pSlash ? (size_t)(pSlash - szKey) + 1 : 0;
+
+	memcpy(szDir, szKey, nDir * sizeof(TCHAR));
+	szDir[nDir] = _T('\0');
+
+	if (ScanHashFind(&ScanDirs, szDir) == NULL) return -1;
+
+	return ScanHashFind(&ScanArchives, szKey) ? 1 : 0;
+}
+
 // Call from the scanning thread before its first BzipOpen()
 void BzipScanBegin()
 {
 	BzipScanEnd();
-
-	pScanIndexedDirs = new std::unordered_set<tstring>;
-	pScanArchives    = new std::unordered_set<tstring>;
-	pScanListCache   = new std::unordered_map<tstring, ScanListCacheEntry>;
-	nScanListCacheEntries = 0;
 
 	for (INT32 d = 0; d < DIRS_MAX; d++) {
 		ScanIndexDir(szAppRomPaths[d]);
@@ -144,6 +238,8 @@ void BzipScanBegin()
 	if (nQuickOpen > 0) {
 		ScanIndexDir(szAppQuickPath);
 	}
+
+	bScanActive = true;
 }
 
 // Call once the scanning thread has finished
@@ -155,17 +251,12 @@ void BzipScanEnd()
 		bListBorrowed = false;
 	}
 
-	if (pScanListCache) {
-		for (auto& it : *pScanListCache) {
-			ScanFreeList(it.second.pList, it.second.nCount);
-		}
-		delete pScanListCache;
-		pScanListCache = NULL;
-	}
-	nScanListCacheEntries = 0;
+	bScanActive = false;
 
-	delete pScanArchives;    pScanArchives    = NULL;
-	delete pScanIndexedDirs; pScanIndexedDirs = NULL;
+	ScanHashFree(&ScanLists);
+	ScanHashFree(&ScanArchives);
+	ScanHashFree(&ScanDirs);
+	nScanListEntries = 0;
 }
 
 // ----------------------------------------------------------------------------
@@ -793,26 +884,29 @@ INT32 BzipOpen(bool bootApp)
 
 		bool bHaveList = false;
 
-		if (pScanListCache) {											// scanning: reuse lists of already-seen archives
-			tstring key = ScanKey(pszBzipName);
-			auto it = pScanListCache->find(key);
-			if (it == pScanListCache->end()) {
+		if (bScanActive) {												// scanning: reuse lists of already-seen archives
+			TCHAR szKey[MAX_PATH];
+			bool bKey = ScanKey(pszBzipName, szKey);
+			struct ScanHashSlot* pSlot = bKey ? ScanHashFind(&ScanLists, szKey) : NULL;
+
+			if (pSlot == NULL) {
 				struct ZipEntry* pNew = NULL; INT32 nNew = 0;
 				if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {
 					if (ZipGetList(&pNew, &nNew) != 0) { pNew = NULL; nNew = 0; }
 				}
 				ZipClose();
-				if (nScanListCacheEntries + nNew <= SCAN_LIST_CACHE_MAX_ENTRIES) {
-					ScanListCacheEntry e = { pNew, nNew };				// failed opens are cached too (pList == NULL)
-					it = pScanListCache->insert(std::make_pair(key, e)).first;
-					nScanListCacheEntries += nNew;
-				} else if (pNew) {										// cache full: use it once, then BzipListFree() frees it
+
+				if (bKey && nScanListEntries + nNew <= SCAN_LIST_CACHE_MAX_ENTRIES && (pSlot = ScanHashInsert(&ScanLists, szKey)) != NULL) {
+					pSlot->pList  = pNew;								// failed opens are cached too (pList == NULL)
+					pSlot->nCount = nNew;
+					nScanListEntries += nNew;
+				} else if (pNew) {										// not cacheable: use it once, BzipListFree() frees it
 					List = pNew; nListCount = nNew;
 					bHaveList = true;
 				}
 			}
-			if (!bHaveList && it != pScanListCache->end() && it->second.pList) {
-				List = it->second.pList; nListCount = it->second.nCount;
+			if (!bHaveList && pSlot && pSlot->pList) {
+				List = pSlot->pList; nListCount = pSlot->nCount;
 				bListBorrowed = true;
 				bHaveList = true;
 			}

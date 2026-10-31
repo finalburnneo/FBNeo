@@ -493,36 +493,19 @@ static inline void arm7_process_interrupts(arm7_t* cpu)
 	}
 }
 
+// 16-entry condition lookup: bit i is 1 iff the condition passes with NZCV = i (N:bit3 Z:bit2 C:bit1 V:bit0).
+static const UINT16 arm7_cond_lut[16] = {
+	0xf0f0, 0x0f0f, 0xcccc, 0x3333, 0xff00, 0x00ff, 0xaaaa, 0x5555,
+	0x0c0c, 0xf3f3, 0xaa55, 0x55aa, 0x0a05, 0xf5fa, 0xffff, 0xffff
+};
+
 // Condition check against an already-loaded CPSR (the main loop reuses it).
 static inline bool arm7_check_cond_code_cpsr(UINT32 cpsr, UINT32 opcode)
 {
 	UINT32 cond_code = ARM7_BFE(opcode, 28, 4);
 	if (SB_LIKELY(cond_code == 0xe))
 		return true;
-
-	bool N = ARM7_BFE(cpsr, 31, 1);
-	bool Z = ARM7_BFE(cpsr, 30, 1);
-	bool C = ARM7_BFE(cpsr, 29, 1);
-	bool V = ARM7_BFE(cpsr, 28, 1);
-	switch (cond_code) {
-		case 0x0: return  Z;				//EQ: Equal
-		case 0x1: return !Z;				//NE: !Equal
-		case 0x2: return  C;				//CS: Unsigned >=
-		case 0x3: return !C;				//CC: Unsigned <
-		case 0x4: return  N;				//MI: Negative
-		case 0x5: return !N;				//PL: Positive or Zero
-		case 0x6: return  V;				//VS: Overflow
-		case 0x7: return !V;				//VC: No Overflow
-		case 0x8: return  C && !Z;			//HI: Unsigned >
-		case 0x9: return !C ||  Z;			//LS: Unsigned <=
-		case 0xA: return  N == V;			//GE: Signed >=
-		case 0xB: return  N != V;			//LT: Signed <  
-		case 0xC: return !Z && (N == V);	//GT: Signed >  
-		case 0xD: return  Z || (N != V);	//LE: Signed <= 
-		case 0xE: return true;
-		case 0xF: return true;
-	};
-	return false;
+	return (arm7_cond_lut[cond_code] >> ((cpsr >> 28) & 0xf)) & 1;
 }
 
 static inline bool arm7_check_cond_code(arm7_t* cpu, UINT32 opcode)
@@ -580,7 +563,7 @@ static inline void arm7_exec_instruction(arm7_t* cpu)
 	bool thumb    = SB_BFE(cpsr, 5, 1);
 	// No phased opcode pending in the common case: skip that switch entirely.
 	bool run_opcode = true;
-	if (SB_UNLIKELY(cpu->phased_op_id != ARM_PHASED_NONE))
+	if (cpu->phased_op_id != ARM_PHASED_NONE)
 		run_opcode = arm7_run_phased_opcode(cpu);
 	if (run_opcode) {
 		if (SB_UNLIKELY(cpu->wait_for_interrupt)) {
@@ -1423,8 +1406,8 @@ static inline void arm7t_add_sub(arm7_t* cpu, UINT32 opcode)
 	UINT32 b = I ? Rn_t : cpu->registers[Rn_t]; // ARM Rm (reg or imm3)
 	UINT32 Rd = Rd_t;
 	UINT32 r; UINT64 wide;
-	if (is_sub) { wide = (UINT64)a - b; r = (UINT32)wide; }
-	else        { wide = (UINT64)a + b; r = (UINT32)wide; }
+	if (SB_LIKELY(!is_sub)) { wide = (UINT64)a + b; r = (UINT32)wide; }
+	else                    { wide = (UINT64)a - b; r = (UINT32)wide; }
 	cpu->registers[Rd] = r;
 	cpu->registers[CPSR] = is_sub
 		? thumb_flags_arith_sub(cpu->registers[CPSR], a, b, r, wide)
@@ -1437,38 +1420,36 @@ static inline void arm7t_mov_cmp_add_sub_imm(arm7_t* cpu, UINT32 opcode)
 	UINT32 op = (opcode >> 11) & 0x3;
 	UINT32 Rd = (opcode >> 8) & 0x7;
 	UINT32 imm = opcode & 0xFF;
-	UINT32 a = cpu->registers[Rd];
-	UINT32 r;
 	UINT32 cpsr = cpu->registers[CPSR];
 	switch (op) {
-		case 0: { // MOVS
-			r = imm;
-			cpu->registers[Rd] = r;
+		case 0: { // MOVS - Rd is written, Rd is NOT read
 			// MOVS #imm with rot==0 (Thumb encoding is always rot=0):
 			// N/Z from immediate; C and V are UNCHANGED (barrel shifter carry
 			// is unspecified -> preserved per ARM7TDMI).
-			cpsr &= 0x3FFFFFFF;
-			cpsr |= ((r >> 31) & 1) << 31;
-			cpsr |= (r == 0 ? 1u : 0u) << 30;
-			cpu->registers[CPSR] = cpsr;
+			cpu->registers[Rd] = imm;
+			cpu->registers[CPSR] = (cpsr & 0x3FFFFFFFu) | (imm & 0x80000000u)
+				| (imm == 0 ? (1u << 30) : 0u);
 			return;
 		}
 		case 1: { // CMP (write flags only, no Rd)
+			UINT32 a = cpu->registers[Rd];
 			UINT64 wide = (UINT64)a - imm;
-			r = (UINT32)wide;
+			UINT32 r = (UINT32)wide;
 			cpu->registers[CPSR] = thumb_flags_arith_sub(cpsr, a, imm, r, wide);
 			return;
 		}
 		case 2: { // ADDS
+			UINT32 a = cpu->registers[Rd];
 			UINT64 wide = (UINT64)a + imm;
-			r = (UINT32)wide;
+			UINT32 r = (UINT32)wide;
 			cpu->registers[Rd] = r;
 			cpu->registers[CPSR] = thumb_flags_arith_add(cpsr, a, imm, r, wide);
 			return;
 		}
-		case 3: { // SUBS
+		default: { // SUBS
+			UINT32 a = cpu->registers[Rd];
 			UINT64 wide = (UINT64)a - imm;
-			r = (UINT32)wide;
+			UINT32 r = (UINT32)wide;
 			cpu->registers[Rd] = r;
 			cpu->registers[CPSR] = thumb_flags_arith_sub(cpsr, a, imm, r, wide);
 			return;
@@ -1510,10 +1491,17 @@ static inline void arm7t_alu_op(arm7_t* cpu, UINT32 opcode)
 
 	switch (op) {
 		case 0: { // AND Rd,Rd,Rs
-			a = cpu->registers[Rd]; b = cpu->registers[Rs];
+			b = cpu->registers[Rs]; a = cpu->registers[Rd];
 			r = a & b;
 			cpu->registers[Rd] = r;
 			cpu->registers[CPSR] = thumb_flags_logical(cpsr, r, -1);
+			return;
+		}
+		case 10: { // CMP Rd,Rs
+			a = cpu->registers[Rd]; b = cpu->registers[Rs];
+			UINT64 wide = (UINT64)a - b;
+			r = (UINT32)wide;
+			cpu->registers[CPSR] = thumb_flags_arith_sub(cpsr, a, b, r, wide);
 			return;
 		}
 		case 1: { // EOR Rd,Rd,Rs
@@ -1585,17 +1573,10 @@ static inline void arm7t_alu_op(arm7_t* cpu, UINT32 opcode)
 			return;
 		}
 		case 9: { // NEG Rd,Rs (Rd = 0 - Rs, RSB)
-			a = 0; b = cpu->registers[Rs];
+			b = cpu->registers[Rs]; a = 0;
 			UINT64 wide = (UINT64)a - b;
 			r = (UINT32)wide;
 			cpu->registers[Rd] = r;
-			cpu->registers[CPSR] = thumb_flags_arith_sub(cpsr, a, b, r, wide);
-			return;
-		}
-		case 10: { // CMP Rd,Rs
-			a = cpu->registers[Rd]; b = cpu->registers[Rs];
-			UINT64 wide = (UINT64)a - b;
-			r = (UINT32)wide;
 			cpu->registers[CPSR] = thumb_flags_arith_sub(cpsr, a, b, r, wide);
 			return;
 		}

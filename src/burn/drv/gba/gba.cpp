@@ -3,11 +3,6 @@
 
 // Forward declarations for cross-header calls within this single translation unit
 
-// gbaapu.h
-static inline void    gba_process_audio_writes(gba_t* gba);
-static inline UINT8   gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
-static inline void    gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
-
 // gbabus.h
 static inline void    gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
 static inline void    gba_recompute_mmio_mask_table(gba_t* gba);
@@ -42,6 +37,12 @@ static inline void    gba_ppu_refresh_status(gba_t* gba);
 #define GBA_SIO_TRANSFER_TICKS	(8 * 8)
 static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 
+// gbaapu.h
+static inline void    gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
+static inline UINT8   gba_audio_process_reg_write(gba_t* gba, UINT32 addr, UINT8 value);
+static inline void    gba_audio_apply_writes(gba_t* gba);
+static inline void    gba_audio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
+
 #include "gbagpio.h"
 #include "gbacart.h"
 #include "gbabus.h"
@@ -68,7 +69,7 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 	UINT32 cpsr = cpu->registers[CPSR];
 	bool thumb  = SB_BFE(cpsr, 5, 1);
 	bool run_opcode = true;
-	if (SB_UNLIKELY(cpu->phased_op_id != ARM_PHASED_NONE)) {
+	if (cpu->phased_op_id != ARM_PHASED_NONE) {
 		run_opcode = arm7_run_phased_opcode(cpu);
 	}
 	if (run_opcode) {
@@ -81,7 +82,7 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 		cpu->prefetch_opcode[0] = cpu->prefetch_opcode[1];
 		cpu->prefetch_opcode[1] = cpu->prefetch_opcode[2];
 		UINT32 pc;
-		if (thumb == false) {
+		if (SB_UNLIKELY(thumb == false)) {
 			pc = cpu->registers[PC] + 4;
 			cpu->registers[PC] = pc;
 			cpu->prefetch_pc = pc;
@@ -107,7 +108,7 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 	if (SB_UNLIKELY(cpu->phased_op_id))
 		return;
 	bool pc_match = SB_LIKELY(cpu->prefetch_pc == cpu->registers[PC]);
-	if (thumb == false) {
+	if (SB_UNLIKELY(thumb == false)) {
 		if (pc_match) {
 			cpu->prefetch_opcode[2] = arm7_read32_seq(gba, cpu->registers[PC] + 8, cpu->next_fetch_sequential);
 		} else {
@@ -772,8 +773,9 @@ void GbaCoreClearBatteryDirty(GbaCore *core)
 
 size_t GbaCoreStateSize()
 {
-	// gba_t plus the worker blob (zero-filled payload in single-thread builds).
-	return sizeof(gba_t) + ppu_worker_state_size();
+	// gba_t, the worker blob (zero-filled payload in single-thread builds),
+	// and the host audio output queue.
+	return sizeof(gba_t) + ppu_worker_state_size() + sizeof(sb_ring_buffer_t);
 }
 
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
@@ -783,7 +785,7 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	memcpy(data, &core->state, sizeof(gba_t));
 	UINT8 *state = (UINT8 *)data;
 	// pointer fields: nulls the pointer, not the pointee
-#define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, sizeof(((type *)0)->field))
+#define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, (size_t)sizeof(((type *)0)->field))
 	const size_t mem = offsetof(gba_t, mem);
 	const size_t cpu = offsetof(gba_t, cpu);
 	GBA_CLEAR_STATE_FIELD(gba_mem_t, mem, bios);
@@ -815,13 +817,15 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   dma_event.callback);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timing.head);
 #undef GBA_CLEAR_STATE_FIELD
-	// Append the worker blob (zero-filled in single-thread builds; see worker.h).
-	{
-		ppu_worker_t* wk = (ppu_worker_t*)&core->worker;
-		size_t wsz = ppu_worker_state_size();
-		if (wsz > 0)
-			ppu_worker_save_state(wk, (UINT8*)data + sizeof(gba_t));
-	}
+	// Append the worker blob (zero-filled in single-thread builds; see worker.h)
+	// and the host audio output queue.
+	// Reject a short buffer instead of writing past it.
+	const size_t blob = sizeof(gba_t) + ppu_worker_state_size();
+	if (size < blob + sizeof(sb_ring_buffer_t)) return 1;
+	ppu_worker_save_state((ppu_worker_t*)&core->worker, (UINT8*)data + sizeof(gba_t));
+	// The audio ring is cross-frame host state (samples the APU produced but the
+	// caller has not pulled yet); serialize it so a roundtrip stays bit-exact.
+	memcpy((UINT8*)data + blob, &core->host.audio_ring_buff, sizeof(sb_ring_buffer_t));
 	return 0;
 }
 
@@ -857,6 +861,11 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 			GbaCoreClearAudio(core);
 		}
 	}
+	// Restore the host audio output queue that pairs with the worker blob.
+	if (size >= sizeof(gba_t) + ppu_worker_state_size() + sizeof(sb_ring_buffer_t))
+		memcpy(&core->host.audio_ring_buff,
+		       (const UINT8*)data + sizeof(gba_t) + ppu_worker_state_size(),
+		       sizeof(sb_ring_buffer_t));
 	return 0;
 }
 
@@ -881,6 +890,7 @@ void gba_cpu_trigger_breakpoint(void* data)
 void gba_timing_init(gba_t* gba)
 {
 	gba->timing.head          = NULL;
+	gba->next_event_tick      = 0xFFFFFFFFu;
 	gba->timer_settle_clock   = gba->global_timer - 1;
 	gba->timer_event.next     = NULL;
 	gba->timer_event.when     = 0;
@@ -931,51 +941,22 @@ void gba_timing_rebind(gba_t* gba)
 	gba_update_interrupt_pending(gba);
 }
 
-// Fast-forward lead-in matching the per-cycle horizon; due events settle immediately
-static inline INT32 gba_timing_ff(gba_t* gba, INT32 ticks)
+// event-free span: no dispatch fires, so pipeline shifts settle in one batch
+static void gba_advance_event_free(gba_t* gba, INT32 ticks)
 {
-	INT32 ff = ticks;
-	if (gba->ppu_event.active) {
-		INT32 d = (INT32)(gba->ppu_event.when - gba->global_timer);
-		if (d < 0)
-			d = 0;
-		if (d < ff)
-			ff = d;
+	gba->global_timer += ticks;
+	if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
+		for (INT32 i = 0; i < ticks; ++i)
+			gba_tick_interrupts(gba);
 	}
-	if (gba->audio_event.active) {
-		INT32 d = (INT32)(gba->audio_event.when - gba->global_timer);
-		if (d < 0)
-			d = 0;
-		if (d < ff)
-			ff = d;
-	}
-	if (gba->dma_event.active) {
-		INT32 d = (INT32)(gba->dma_event.when - gba->global_timer);
-		if (d < 0)
-			d = 0;
-		if (d < ff)
-			ff = d;
-	}
-	if (gba->timer_event.active) {
-		INT32 d = (INT32)(gba->timer_event.when - gba->global_timer);
-		d = d <= 0 ? 0 : d + 1;
-		if (d < ff)
-			ff = d;
-	}
-	return ff;
 }
 
 // Advance the master clock by ticks, firing due events; per-cycle IF shifts precede events
-static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
+static void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 {
-	INT32 event_free = gba_timing_ff(gba, ticks);
+	INT32 event_free = gba_timing_horizon(gba);
 	if (ticks <= event_free) {
-		// event-free span: no dispatch, so shifts settle in one batch
-		gba->global_timer += ticks;
-		if (gba->active_if_pipe_stages) {
-			for (INT32 i = 0; i < ticks; ++i)
-				gba_tick_interrupts(gba);
-		}
+		gba_advance_event_free(gba, ticks);
 		return;
 	}
 	INT32 advanced   = 0;
@@ -1104,21 +1085,13 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worke
 				gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
 			}
 		}
-		// Inlined gba_advance fast path (event-free span). Everything the full
-		// routine does up to its first event dispatch is done here, so the common
-		// no-event case avoids a call; spans that contain an event fall through to
-		// gba_advance, which re-derives the same event_free and takes the slow path.
+		// cached event horizon; the timer latch is skipped on a shared tick
 		{
-			INT32 event_free = gba_timing_ff(gba, ticks);
-			if (SB_LIKELY(ticks <= event_free)) {
-				gba->global_timer += ticks;
-				if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
-					for (INT32 i = 0; i < ticks; ++i)
-						gba_tick_interrupts(gba);
-				}
-			} else {
+			INT32 event_free = gba_timing_horizon(gba);
+			if (SB_LIKELY(ticks <= event_free))
+				gba_advance_event_free(gba, ticks);
+			else
 				gba_advance(gba, emu, ticks);
-			}
 		}
 	}
 	// VBlank: publish worker framebuffer (scanline mode) or use scratch directly.

@@ -18,6 +18,7 @@ void BurnShiftReset();
 void BurnShiftSetFlipscreen(INT32 flip);
 void BurnShiftRender();
 void BurnShiftRenderDoubleSize();
+void BurnShiftRenderScaled(INT32 scale);
 void BurnShiftSetStatus(UINT32 status);
 void BurnShiftScreenSizeChanged();
 INT32 BurnShiftInputCheckToggle(UINT8 shiftinput);

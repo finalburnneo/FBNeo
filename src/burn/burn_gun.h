@@ -24,6 +24,7 @@ void BurnGunExit();
 void BurnGunScan();
 void BurnGunResolutionChanged();
 extern void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y);
+void BurnGunSetTargetScale(INT32 nScale); // draw the targets nScale times larger (a driver drawing at nScale x its resolution)
 extern void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y);
 void BurnGunDrawTargets(); // call this after BurnTransferCopy();
 INT32 BurnGunIsActive(); // is the gun system active?

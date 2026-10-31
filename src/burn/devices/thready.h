@@ -32,6 +32,8 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
+static inline void thready_sem_wait(sem_t *sem) { while (sem_wait(sem) != 0 && errno == EINTR) { } }
 #endif
 
 #ifndef THREADY
@@ -429,9 +431,9 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
-		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
 		INT32 our_event_rv = sem_init(&our_event, 0, 0);
 		INT32 wait_event_rv = sem_init(&wait_event, 0, 0);
+		INT32 our_thread_rv = (our_event_rv == 0 && wait_event_rv == 0) ? pthread_create(&our_thread, NULL, ThreadyProc, this) : -1;
 
 		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
@@ -487,7 +489,7 @@ struct threadystruct
 	}
 	void notify_wait() {
 		if (ok_to_wait) {
-			sem_wait(&wait_event);
+			thready_sem_wait(&wait_event);
 			ok_to_wait = 0;
 		}
 	}
@@ -495,16 +497,17 @@ struct threadystruct
 
 static threadystruct thready;
 
-static void *ThreadyProc(void*) {
+static void *ThreadyProc(void *param) {
+	threadystruct *t = (threadystruct*)param;
 	do {
-		sem_wait(&thready.our_event);
+		thready_sem_wait(&t->our_event);
 
-		if (thready.end_thread == 0) {
-			thready.our_callback();
-			sem_post(&thready.wait_event);
+		if (t->end_thread == 0) {
+			t->our_callback();
+			sem_post(&t->wait_event);
 		} else {
-			sem_post(&thready.wait_event);
-			thready.end_thread |= 0x100;
+			sem_post(&t->wait_event);
+			t->end_thread |= 0x100;
 			bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
 		}
@@ -532,6 +535,13 @@ struct threadystruct
 	char our_event_str[40];
 	char wait_event_str[40];
 
+	static sem_t *open_sem(const char *name) {
+		sem_unlink(name); // a possible leftover of the same name
+		sem_t *sem = sem_open(name, O_CREAT | O_EXCL, 0600, 0);
+		if (sem != SEM_FAILED) sem_unlink(name); // remove unneeded name
+		return sem;
+	}
+
 	void init(void (*thread_callback)()) {
 		thready_ok = 0;
 		ok_to_thread = 0;
@@ -540,13 +550,14 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
-		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
+		// keep names unique using PID and 'this' address
+		sprintf(our_event_str, "/fbt%x.%lx.o", (UINT32)getpid(), (unsigned long)(size_t)this);
+		sprintf(wait_event_str, "/fbt%x.%lx.w", (UINT32)getpid(), (unsigned long)(size_t)this);
 
-		sprintf(our_event_str, "/fbn_our_event%x", getpid());
-		sprintf(wait_event_str, "/fbn_wait_event%x", getpid());
+		INT32 our_event_rv = ((our_event = open_sem(our_event_str)) == SEM_FAILED) ? -1 : 0;
+		INT32 wait_event_rv = ((wait_event = open_sem(wait_event_str)) == SEM_FAILED) ? -1 : 0;
 
-		INT32 our_event_rv = ((our_event = sem_open(our_event_str, O_CREAT, 0644, 1)) == SEM_FAILED) ? -1 : 0;
-		INT32 wait_event_rv = ((wait_event = sem_open(wait_event_str, O_CREAT, 0644, 1)) == SEM_FAILED) ? -1 : 0;
+		INT32 our_thread_rv = (our_event_rv == 0 && wait_event_rv == 0) ? pthread_create(&our_thread, NULL, ThreadyProc, this) : -1;
 
 		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
@@ -568,9 +579,7 @@ struct threadystruct
 			pthread_join(our_thread, NULL);
 
 			sem_close(our_event);
-			sem_unlink(our_event_str);
 			sem_close(wait_event);
-			sem_unlink(wait_event_str);
 
 			thready_ok = 0;
 		}
@@ -606,7 +615,7 @@ struct threadystruct
 	}
 	void notify_wait() {
 		if (ok_to_wait) {
-			sem_wait(wait_event);
+			thready_sem_wait(wait_event);
 			ok_to_wait = 0;
 		}
 	}
@@ -614,16 +623,17 @@ struct threadystruct
 
 static threadystruct thready;
 
-static void *ThreadyProc(void*) {
+static void *ThreadyProc(void *param) {
+	threadystruct *t = (threadystruct*)param;
 	do {
-		sem_wait(thready.our_event);
+		thready_sem_wait(t->our_event);
 
-		if (thready.end_thread == 0) {
-			thready.our_callback();
-			sem_post(thready.wait_event);
+		if (t->end_thread == 0) {
+			t->our_callback();
+			sem_post(t->wait_event);
 		} else {
-			sem_post(thready.wait_event);
-			thready.end_thread |= 0x100;
+			sem_post(t->wait_event);
+			t->end_thread |= 0x100;
 			bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
 		}

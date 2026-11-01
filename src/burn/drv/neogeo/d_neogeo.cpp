@@ -16588,6 +16588,35 @@ struct BurnDriver BurnDrvCrswd2blp = {
 };
 
 
+// Crossed Swords 2 (Hack, Reconstructed Cartridge Music)
+
+static struct BurnRomInfo crswd2rcmRomDesc[] = {
+	{ "054-p1rcm.p1",	0x200000, 0x59160185, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "054-s1.s1",		0x020000, 0x22e02ddd, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "054-c1.c1",		0x400000, 0x8221b712, 3 | BRF_GRA },           //  2 Sprite data
+	{ "054-c2.c2",		0x400000, 0xd6c6183d, 3 | BRF_GRA },           //  3
+
+	{ "054-m1rcm.m1",	0x020000, 0x67815eda, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "054-v1rcm.v1",	0x200000, 0x45d86fa5, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(crswd2rcm, crswd2rcm, neogeo)
+STD_ROM_FN(crswd2rcm)
+
+struct BurnDriver BurnDrvCrswd2rcm = {
+	"crswd2rcm", "crswd2bl", "neogeo", NULL, "2026",
+	"Crossed Swords 2 (Hack, Reconstructed Cartridge Music)\0", NULL, "Neo-Alec", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SCRFIGHT, 0,
+	NULL, crswd2rcmRomInfo, crswd2rcmRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Idol Mahjong Final Romance 2 (Neo-Geo, bootleg of CD version)
 
 static struct BurnRomInfo froman2bRomDesc[] = {

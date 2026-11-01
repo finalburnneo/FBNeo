@@ -3549,6 +3549,16 @@ static bool YBoardFindLargerArt(const UINT64 *spritedata, INT32 bank, UINT16 add
 		YBoardLodCacheRom = System16Sprites2;
 	}
 
+	// A sprite that reads a single row of art is not looked up: one row is too
+	// little to tell a real larger copy from art that happens to match it, and
+	// some games draw a picture one row per sprite (G-LOC's carrier deck and
+	// the plane over it in the intro: hundreds of such sprites a frame), which
+	// made hundreds of searches (seconds for one frame) and drew wrong rows.
+	if (rowsread <= 1) {
+		art->levels = 0;
+		return false;
+	}
+
 	// the extra rows tried depend on the zoom, so it's part of the key (as zoom >> 9)
 	const INT32 zkey = zoom >> 9;
 	UINT32 h = (UINT32)bank * 0x9e3779b1u ^ (UINT32)addr * 0x85ebca6bu ^ (UINT32)(pitch & 0xff) * 0xc2b2ae35u ^ (UINT32)(rowsread * 2 + flip) * 0x27d4eb2fu ^ (UINT32)zkey * 0x165667b1u;

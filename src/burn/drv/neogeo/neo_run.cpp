@@ -4172,7 +4172,7 @@ static INT32 NeoInitCommon()
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "zedblade")) {
 		bRenderLineByLine = true;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "crswd2bl")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "crswd2bl") || !strcmp(BurnDrvGetTextA(DRV_PARENT), "crswd2bl")) {
 		bRenderLineByLine = true;
 	}
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "spinmast")) {

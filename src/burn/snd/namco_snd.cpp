@@ -561,6 +561,59 @@ void namco_15xx_write(INT32 offset, UINT8 data)
 	}
 }
 
+// Pole Position: 8 voices, 4 speakers (front l/r, rear l/r) mixed down to stereo
+void namco_polepos_write(INT32 offset, UINT8 data)
+{
+	offset &= 0x3f;
+
+	if (namco_soundregs[offset] == data)
+		return;
+
+	if (namco_buffered) UpdateStream(SyncInternal());
+
+	/* set the register */
+	namco_soundregs[offset] = data;
+
+	INT32 ch = (offset & 0x1f) / 4;
+
+	/* recompute the voice parameters */
+	namco_snd_sound_channel *voice = chip->channel_list + ch;
+	switch (offset & 0x23)
+	{
+		case 0x00:
+		case 0x01:
+			voice->frequency = namco_soundregs[ch * 4 + 0x01];
+			voice->frequency = voice->frequency * 256 + namco_soundregs[ch * 4 + 0x00];
+			break;
+
+		case 0x23:
+			voice->waveform_select = data & 7;
+			// fall through
+		case 0x02:
+		case 0x03:
+			voice->volume[0] = voice->volume[1] = 0;
+			// front speakers ?
+			voice->volume[0] += namco_soundregs[ch * 4 + 0x03] >> 4;
+			voice->volume[1] += namco_soundregs[ch * 4 + 0x03] & 0x0f;
+			// rear speakers ?
+			voice->volume[0] += namco_soundregs[ch * 4 + 0x23] >> 4;
+			voice->volume[1] += namco_soundregs[ch * 4 + 0x02] >> 4;
+
+			voice->volume[0] /= 2;
+			voice->volume[1] /= 2;
+
+			/* if 54XX or 52XX selected, silence this voice */
+			if (namco_soundregs[ch * 4 + 0x23] & 8)
+				voice->volume[0] = voice->volume[1] = 0;
+			break;
+	}
+}
+
+UINT8 namco_polepos_read(INT32 offset)
+{
+	return namco_soundregs[offset & 0x3f];
+}
+
 void namco_15xx_sharedram_write(INT32 offset, UINT8 data)
 {
 	offset &= 0x3ff;

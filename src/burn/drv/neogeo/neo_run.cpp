@@ -84,6 +84,13 @@ static INT32 NEO_RASTER_IRQ_TWEAK = 0; // spinmast prefers offset of 3 here.
 
 #define NEO_HREFRESH (15625.0)
 #define NEO_VREFRESH (NEO_HREFRESH / 264.0)
+
+// The watchdog is clocked from the same master clock as the 68K, so its timeout is a fixed
+// number of 68K cycles (~0.128s at 12MHz), independent of the CPU speed adjustment.
+// Games use it as a protection (busy loop expected to be interrupted by a watchdog reset,
+// flag written to SRAM 0xD00100 otherwise), a timeout scaled with the overclock defeats it.
+#define NEO_WATCHDOG_CYCLES ((INT32)(12000000.0 / NEO_VREFRESH) * 8)
+
 #define NEO_CDVREFRESH (6041957.0 / (264 * 384))
 
 // If defined, enable emulation of the watchdog timer (timing doesn't match real hardware 100%)
@@ -4840,12 +4847,6 @@ INT32 NeoFrame()
 		}
 	}
 
-	// note: Many neogeo games will be blocked on an anti-piracy screen or a black screen when the cpu is overclocked,
-	//       this is especially true for mslug games, one such case is mslug2 at both 0x200 and 0x400.
-	//       This seems directly related to SRAM writing, because getting the SRAM generated once at 0x100
-	//       and overclocking later works fine, meaning booting games with a forced overclock as it was done prior to
-	//       https://github.com/finalburnneo/FBNeo/commit/600088b8122d9977d3ae020dcd4101a3d5092a4d is not acceptable
-	//       (dozens of those mslug hacks wouldn't boot)
 	if (nPrevBurnCPUSpeedAdjust != nBurnCPUSpeedAdjust) {
 		bprintf(0, _T("\n---init cycles etc ---\n"));
 		// 68K CPU clock is 12MHz, modified by nBurnCPUSpeedAdjust
@@ -4882,7 +4883,7 @@ INT32 NeoFrame()
 #if defined EMULATE_WATCHDOG
 	// If the watchdog isn't reset every 8 frames, reset the system
 	// This can't be 100% accurate, as the 68000 instruction timings are not 100%
-	if ((nNeoSystemType & NEO_SYS_CART) && nNeoWatchdog > nCyclesTotal[0] * 8) {
+	if ((nNeoSystemType & NEO_SYS_CART) && nNeoWatchdog > NEO_WATCHDOG_CYCLES) {
 		if (bDisableNeoWatchdog == false) {
 #if 1 && defined FBNEO_DEBUG
 			SekOpen(0);

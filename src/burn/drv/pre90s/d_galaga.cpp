@@ -6005,7 +6005,9 @@ static void bosco54xxWrite(UINT8 dta)
 
 static void bosco54xxSetIRQ(INT32 state)
 {
+	mb88xxOpen(0);
 	mb88xxSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	mb88xxClose();
 }
 
 static void bosco54xxReset(void)
@@ -6017,7 +6019,10 @@ static void bosco54xxReset(void)
 	for (INT32 i = 0; i < 3; i++) boscoFilter2Reset(&bosco54xx.filt[i]);
 
 	bosco54xxSetIRQ(0);
+
+	mb88xxOpen(0);
 	mb88xxReset();
+	mb88xxClose();
 }
 
 static void bosco54xxInitFilters(double rate)
@@ -6297,7 +6302,9 @@ static void boscoMiscLatchWrite(UINT16 offset, UINT8 dta)
 		case 3: // RESET sub & sound cpus, plus the 5xXX chips on the CPU board
 			ZetSetRESETLine(CPU2, !bit);
 			ZetSetRESETLine(CPU3, !bit);
+			mb88xxOpen(0);
 			mb88xxSetRESETLine(!bit);	// 54XX
+			mb88xxClose();
 			if (!bit)
 			{
 				namcoCustomReset();
@@ -6670,10 +6677,12 @@ static INT32 boscoExtraInit(void)
 	bosco54xxInitFilters(boscoSndRate);
 
 	mb88xxInit(0, 8844, bosco54xxRom);
+	mb88xxOpen(0);
 	mb88xxSetReadWriteFunction(NULL, bosco54xxReadK, 'k', 0);
 	mb88xxSetReadWriteFunction(bosco54xxWriteO, NULL, 'o', 0);
 	mb88xxSetReadWriteFunction(NULL, bosco54xxReadR0, 'r', 0);
 	mb88xxSetReadWriteFunction(bosco54xxWriteR1, NULL, 'r', 1);
+	mb88xxClose();
 
 	return 0;
 }
@@ -6700,7 +6709,9 @@ static INT32 boscoReset(void)
 	bosco50xxReset(0);
 	bosco50xxReset(1);
 	bosco52xxReset();
+	mb88xxOpen(0);
 	mb88xxSetRESETLine(0);
+	mb88xxClose();
 	bosco54xxReset();
 
 	boscoSndPos = 0;
@@ -6787,7 +6798,9 @@ static INT32 boscoFrame(void)
 		ZetClose();
 
 		// 54XX
+		mb88xxOpen(0);
 		mb88xxRun(((i + 1) * BOSCO_54XX_CYCLES_PER_FRAME / nInterleave) - mb88xxTotalCycles());
+		mb88xxClose();
 		if (bosco54xx.irqTimer > 0 && --bosco54xx.irqTimer == 0)
 		{
 			bosco54xxSetIRQ(0);

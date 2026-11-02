@@ -4163,19 +4163,21 @@ static INT32 NeoInitCommon()
 	NEO_RASTER_IRQ_TWEAK = 0;
 
 	// These games rely on reading the line counter for synchronising raster effects
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "moshougi")) {
+	const static char * drv_name   = BurnDrvGetTextA(DRV_NAME);
+	const static char * drv_parent = BurnDrvGetTextA(DRV_PARENT);
+	if (!strcmp(drv_name, "moshougi")) {
 		bRenderLineByLine = true;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "neodrift")) {
+	if (!strcmp(drv_name, "neodrift")) {
 		bRenderLineByLine = true;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "zedblade")) {
+	if (!strcmp(drv_name, "zedblade")) {
 		bRenderLineByLine = true;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "crswd2bl") || !strcmp(BurnDrvGetTextA(DRV_PARENT), "crswd2bl")) {
+	if (!strcmp(drv_name, "crswd2bl") || (drv_parent && !strcmp(drv_parent, "crswd2bl"))) {
 		bRenderLineByLine = true;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "spinmast")) {
+	if (!strcmp(drv_name, "spinmast")) {
 		NEO_RASTER_IRQ_TWEAK = 3; // fix glitches along the bottom of screen in the water level.
 	}
 

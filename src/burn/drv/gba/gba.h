@@ -481,19 +481,16 @@ typedef struct {
 } gba_frame_sequencer_t;
 
 typedef struct {
-	struct {
-		INT8  data[64];
-		INT32 read_ptr;
-		INT32 write_ptr;
-		INT32 aud_ptr;		// Render-side read cursor, advances at sample rate
-		double fifo_cycles;	// CPU cycles accumulated toward the next FIFO pop
-	} fifo[2];
+		struct {
+			INT8  data[64];
+			INT32 read_ptr;
+			INT32 write_ptr;
+		} fifo[2];
 	double current_sim_time;
 	double current_sample_generated_time;
 	double wave_cycles;		// 4 MHz nibble-timer ticks accumulated toward the next wave nibble
 	UINT16 wave_sample_offset;	// Index of the last consumed nibble within wave_play[]
 	UINT8  curr_wave_sample;	// High/low nibble (0..15) currently being output
-	UINT8  curr_wave_data;		// Byte that curr_wave_sample was extracted from
 	float  capacitor_l;
 	float  capacitor_r;
 	gba_frame_sequencer_t sequencer;

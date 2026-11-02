@@ -687,8 +687,6 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 				if (SB_BFE(soundcnt_h, 11 + i * 4, 1)) {
 					gba->audio.fifo[i].read_ptr  = 0;
 					gba->audio.fifo[i].write_ptr = 0;
-					gba->audio.fifo[i].aud_ptr   = 0;
-					gba->audio.fifo[i].fifo_cycles = 0.0;
 					for (INT32 d = 0;d < 32;++d)
 						gba->audio.fifo[i].data[d] = 0;
 					word_data &= ~(1u << (27 + i * 4));

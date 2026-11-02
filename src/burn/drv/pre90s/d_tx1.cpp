@@ -139,6 +139,7 @@ static double snd_gain;		// custom sound output gain (tx1 only)
 static INT32 dc_last_in[2];
 static INT32 dc_last_out[2];
 
+// config stuff
 static double weights0[4];
 static double weights1[3];
 static double weights2[3];
@@ -5310,11 +5311,11 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		DrvJoy2[4] = BurnShiftInputCheckToggle(DrvJoy2[4]);
+		BurnShiftInputCheckToggle(DrvJoy2[4]);
 		gear_state = bBurnShiftStatus ^ 1;
 
 		BurnTrackballConfig(0, AXIS_NORMAL, AXIS_NORMAL);
-		BurnTrackballFrame(0, Analog[0], 0, 1, 5);
+		BurnTrackballFrame(0, Analog[0], 0, 0, 4);
 		BurnTrackballUDLR(0, 0, 0, DrvJoy2[2], DrvJoy2[3]);
 		BurnTrackballUpdate(0);
 
@@ -5400,8 +5401,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 		if (game_type != GAME_BUGGYBOYJR) ppi8255_scan();
+		BurnShiftScan(nAction);
 		BurnTrackballScan();
-
 		SCAN_VAR(math);
 		SCAN_VAR(sn74s516);
 		SCAN_VAR(vregs);

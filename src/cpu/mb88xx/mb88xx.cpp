@@ -536,6 +536,7 @@ static void update_pio( int cycles )
 		mb88->pending_interrupt = 0;
 
 		CYCLES(3); /* ? */
+		update_pio(3); // clock timer, serial
 	}
 }
 

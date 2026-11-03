@@ -64843,10 +64843,10 @@ struct BurnDriver BurnSpecTetrisce = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Tetris ZX (128K) (HB)
+// Tetris ZX (128K) (HB, v1.1)
 
 static struct BurnRomInfo SpecTetriszx128RomDesc[] = {
-	{ "Tetris ZX 128K (2026)(kirby2000).tap", 80844, 0xd2abaf42, BRF_ESS | BRF_PRG },
+	{ "Tetris ZX v1.1 128K (2026)(kirby2000).tap", 80839, 0x583c4c5c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTetriszx128, SpecTetriszx128, Spec128)
@@ -64854,7 +64854,7 @@ STD_ROM_FN(SpecTetriszx128)
 
 struct BurnDriver BurnSpecTetriszx128 = {
 	"spec_tetriszx128", NULL, "spec_spec128", NULL, "2026",
-	"Tetris ZX (128K) (HB)\0", NULL, "kirby2000", "ZX Spectrum",
+	"Tetris ZX (128K) (HB, v1.1)\0", NULL, "kirby2000", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecTetriszx128RomInfo, SpecTetriszx128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -64862,10 +64862,10 @@ struct BurnDriver BurnSpecTetriszx128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Tetris ZX (48K) (HB)
+// Tetris ZX (48K) (HB, v1.1)
 
 static struct BurnRomInfo SpecTetriszx48RomDesc[] = {
-	{ "Tetris ZX 48K (2026)(kirby2000).tap", 47997, 0x07247f8b, BRF_ESS | BRF_PRG },
+	{ "Tetris ZX v1.1 48K (2026)(kirby2000).tap", 47992, 0x113f7874, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTetriszx48, SpecTetriszx48, Spectrum)
@@ -64873,7 +64873,7 @@ STD_ROM_FN(SpecTetriszx48)
 
 struct BurnDriver BurnSpecTetriszx48 = {
 	"spec_tetriszx48", "spec_tetriszx128", "spec_spectrum", NULL, "2026",
-	"Tetris ZX (48K) (HB)\0", NULL, "kirby2000", "ZX Spectrum",
+	"Tetris ZX (48K) (HB, v1.1)\0", NULL, "kirby2000", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecTetriszx48RomInfo, SpecTetriszx48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,

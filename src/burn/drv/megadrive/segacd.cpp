@@ -3,6 +3,7 @@
 
 #include "burnint.h"
 #include "m68000_intf.h"
+#include "m68000_debug.h"
 #include "megadrive.h"
 #include "segacd.h"
 #include "cd_interface.h"
@@ -1510,12 +1511,12 @@ static void sub_wram_block(UINT32 address, INT32 write)
 	if (sub_wram_wait || SekGetActive() != 1) return;
 
 	for (INT32 i = 0; i < 16; i++)
-		wait_regs[i] = m68k_get_reg(NULL, (m68k_register_t)(M68K_REG_D0 + i));
-	wait_pc = m68k_get_reg(NULL, M68K_REG_PPC);
-	wait_sr = m68k_get_reg(NULL, M68K_REG_SR);
+		wait_regs[i] = SekDbgGetRegister((SekRegister)(SEK_REG_D0 + i));
+	wait_pc = SekDbgGetRegister(SEK_REG_PPC);
+	wait_sr = SekDbgGetRegister(SEK_REG_SR);
 
 	// undo the address register updates already done by the instruction
-	UINT32 ir = m68k_get_reg(NULL, M68K_REG_IR);
+	UINT32 ir = SekFetchWord(wait_pc);
 	if (ir >= 0x1000 && ir < 0x4000) { // move
 		static const INT32 move_size[4] = { 0, 1, 4, 2 };
 		INT32 size = move_size[(ir >> 12) & 3];
@@ -1533,12 +1534,15 @@ static void sub_wram_block(UINT32 address, INT32 write)
 	SekRunEnd();
 }
 
-static void sub_wram_replay()
+// returns 0 if the cpu core can't set the registers (the access is then simply dropped)
+static INT32 sub_wram_replay()
 {
-	m68k_set_reg(M68K_REG_SR, wait_sr);
+	// condition codes may be stale inside a handler (Cyclone), only the system byte is restored
+	if (!SekDbgSetRegister(SEK_REG_SR, (wait_sr & 0xff00) | (SekDbgGetRegister(SEK_REG_SR) & 0x00ff))) return 0;
 	for (INT32 i = 0; i < 16; i++)
-		m68k_set_reg((m68k_register_t)(M68K_REG_D0 + i), wait_regs[i]);
-	m68k_set_reg(M68K_REG_PC, wait_pc);
+		SekDbgSetRegister((SekRegister)(SEK_REG_D0 + i), wait_regs[i]);
+	SekDbgSetRegister(SEK_REG_PC, wait_pc);
+	return 1;
 }
 
 static UINT16 sub_read16(UINT32 a, INT32 upper, INT32 lower)
@@ -1936,8 +1940,7 @@ static void sub_run_cycles(INT32 cycles)
 			done = SekRun(cycles);
 			if (done <= 0) done = cycles;
 			if (sub_wram_wait == 1) {
-				sub_wram_replay();
-				sub_wram_wait = 2;
+				sub_wram_wait = sub_wram_replay() ? 2 : 0;
 			}
 		} else {
 			SekIdle(cycles);

@@ -132,6 +132,13 @@ static INT32 toc_lba[100];		// index 1
 static INT32 toc_start[100];	// index 0, the pregap belongs to the track
 static UINT8 toc_isdata[100];
 
+// disc tray, driven by the frontend (multi-disc games)
+#define TRAY_CLOSE_FRAMES	60
+static UINT8 tray_open = 0;
+static UINT8 tray_timer = 0;
+static UINT32 tray_changes = 0;	// not saved, follow the frontend
+static UINT8 tray_request = 0;
+
 // graphics asic (stamp rotation / scaling)
 struct scd_gpu {
 	UINT8 font_bg, font_fg;
@@ -344,13 +351,18 @@ static UINT32 wram_main_1m_index(UINT32 a)
 // -------------------------------------------------------------------------
 // table of contents
 
-static void toc_build()
+static void toc_clear()
 {
 	disc_present = 0;
 	toc_first = toc_last = toc_leadout = 0;
 	memset(toc_lba, 0, sizeof(toc_lba));
 	memset(toc_start, 0, sizeof(toc_start));
 	memset(toc_isdata, 0, sizeof(toc_isdata));
+}
+
+static void toc_build()
+{
+	toc_clear();
 
 	UINT8 *toc = CDEmuReadTOC(CDEmuTOC_FIRSTLAST);
 	if (toc == NULL) return;
@@ -908,6 +920,28 @@ static void cdd_seek(INT32 seek_status)
 	cdd_status_clear(2);
 }
 
+static void cdd_insert()
+{
+	if (!disc_present) {
+		cdd.io_status = CDD_NO_DISC;
+		return;
+	}
+
+	// start right before the pregap so that reading the toc completes quickly
+	cdd.io_status = CDD_READING_TOC;
+	cdd.io_sector = -151;
+	cdd.io_track = 0;
+}
+
+static void tray_close()
+{
+	tray_open = 0;
+	tray_timer = 0;
+	toc_build();
+	cdd_insert();
+	bprintf(0, _T("Sega CD: tray closed, %s\n"), disc_present ? _T("disc loaded") : _T("no disc"));
+}
+
 static void cdd_process()
 {
 	if (!cdd_valid()) {
@@ -1014,30 +1048,35 @@ static void cdd_process()
 				cdd_status_clear(2);
 			break;
 
+			case 0xc: // close tray
+				if (tray_open) tray_close();
+				if (!tray_open) cdd.io_status = disc_present ? CDD_STOPPED : CDD_NO_DISC; // stopped once, then the toc is read
+				cdd.status[1] = 0x0;
+				cdd_status_clear(2);
+			break;
+
+			case 0xd: // open tray
+				cdd.io_status = CDD_DOOR_OPENED;
+				cdd.io_sector = 0;
+				cdd.io_track = 0;
+				cdd.status[1] = 0x0;
+				cdd_status_clear(2);
+			break;
+
 			default:
 				cdd.io_status = CDD_COMMAND_ERROR;
 			break;
 		}
 	}
 
+	// nothing can be done while the tray is open
+	if (tray_open) cdd.io_status = CDD_DOOR_OPENED;
+
 	cdd.status[0] = cdd.io_status;
 	cdd_checksum();
 	cdd.status_pending = 1;
 
 	cdd_update_audio();
-}
-
-static void cdd_insert()
-{
-	if (!disc_present) {
-		cdd.io_status = CDD_NO_DISC;
-		return;
-	}
-
-	// start right before the pregap so that reading the toc completes quickly
-	cdd.io_status = CDD_READING_TOC;
-	cdd.io_sector = -151;
-	cdd.io_track = 0;
 }
 
 static void cdd_power()
@@ -1053,7 +1092,42 @@ static void cdd_power()
 	cdd.dac_attenuated = 0x4000;
 
 	cdd_insert();
+	if (tray_open) cdd.io_status = CDD_DOOR_OPENED;
 	cdd_checksum();
+}
+
+// the frontend swaps discs between frames, either in one go or through an open/close sequence.
+// the tray is motorized: the bios can close it by itself, even while the frontend keeps it open.
+static void scd_tray_update()
+{
+	INT32 request = CDEmuIsTrayOpen();
+	INT32 open = request && !tray_request;
+
+	tray_request = request;
+
+	if (tray_changes != CDEmuGetDiscChanges()) {
+		tray_changes = CDEmuGetDiscChanges();
+		open = 1;
+	}
+
+	if (open) {
+		if (!tray_open) {
+			if (cdd.audio_playing) CDEmuStop();
+			cdd.audio_playing = 0;
+			toc_clear();
+			cdd.io_status = CDD_DOOR_OPENED;
+			cdd.io_sector = 0;
+			cdd.io_track = 0;
+			tray_open = 1;
+			bprintf(0, _T("Sega CD: tray opened\n"));
+		}
+		tray_timer = TRAY_CLOSE_FRAMES;
+		return;
+	}
+
+	if (tray_open && !request && --tray_timer == 0) {
+		tray_close();
+	}
 }
 
 // -------------------------------------------------------------------------
@@ -2052,6 +2126,8 @@ void SegaCDRunSub(INT32 main_cycles)
 
 void SegaCDNewFrame()
 {
+	scd_tray_update();
+
 	SekNewFrame();
 
 	SekOpen(0);
@@ -2244,6 +2320,10 @@ INT32 SegaCDInit(UINT8 *bios)
 	BackupRam = Next; Next += 0x2000;
 
 	bram_format();
+	tray_open = tray_timer = 0;
+	tray_request = CDEmuIsTrayOpen();
+	tray_changes = CDEmuGetDiscChanges();
+	CDEmuSetTraySupported(1);
 	toc_build();
 
 	if (!disc_present) {
@@ -2316,6 +2396,7 @@ void SegaCDReset()
 void SegaCDExit()
 {
 	if (cdd.audio_playing) CDEmuStop();
+	CDEmuSetTraySupported(0);
 
 	pcm_stream.exit();
 
@@ -2363,6 +2444,8 @@ INT32 SegaCDScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(timer_counter);
 		SCAN_VAR(cdc);
 		SCAN_VAR(cdd);
+		SCAN_VAR(tray_open);
+		SCAN_VAR(tray_timer);
 		SCAN_VAR(gpu);
 		SCAN_VAR(pcm_ch);
 		SCAN_VAR(pcm_enable);
@@ -2374,6 +2457,8 @@ INT32 SegaCDScan(INT32 nAction, INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			pcm_fifo_read = pcm_fifo_count = 0;
 			irq_dirty = 1;
+			if (tray_open && disc_present) toc_clear();
+			if (!tray_open && !disc_present) toc_build();
 			wram_fetch_rebuild();
 			main_fetch_state = sub_fetch_state = -1; // mapped again at the next frame
 		}

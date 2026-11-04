@@ -25,6 +25,11 @@ static struct CDEmuDo* pCDEmuDo[] =
 TCHAR CDEmuImage[MAX_PATH] = _T("");
 UINT8 CDEmuImageTOCSHA1[MAX_PATH] = { 0, };
 
+static INT32 bCDEmuTraySupported = 0;
+static INT32 bCDEmuTrayOpen = 0;
+static INT32 bCDEmuChanging = 0;
+static UINT32 nCDEmuDiscChanges = 0;
+
 
 // ----------------------------------------------------------------------------
 
@@ -53,6 +58,11 @@ INT32 CDEmuInit()
 	}
 
 	CDEmuStatus = idle;
+
+	if (!bCDEmuChanging) {
+		bCDEmuTraySupported = 0;
+		bCDEmuTrayOpen = 0;
+	}
 
 	if ((nRet = pCDEmuDo[nCDEmuSelect]->CDEmuInit()) == 0) {
 		bCDEmuOkay = true;
@@ -149,6 +159,63 @@ INT32 CDEmuScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	return pCDEmuDo[nCDEmuSelect]->CDEmuScan(nAction, pnMin);
+}
+
+// ----------------------------------------------------------------------------
+// disc swapping
+
+void CDEmuSetTraySupported(INT32 bSupported)
+{
+	bCDEmuTraySupported = bSupported ? 1 : 0;
+}
+
+INT32 CDEmuIsTraySupported()
+{
+	return bCDEmuTraySupported;
+}
+
+// replaces the image, the previous one is opened again on failure
+INT32 CDEmuChangeImage(const TCHAR* pszImage)
+{
+	TCHAR szPrevious[MAX_PATH];
+
+	if (pszImage == NULL || _tcslen(pszImage) >= MAX_PATH) {
+		return 1;
+	}
+
+	_tcscpy(szPrevious, CDEmuImage);
+
+	bCDEmuChanging = 1;
+	CDEmuExit();
+	_tcscpy(CDEmuImage, pszImage);
+
+	if (CDEmuInit()) {
+		_tcscpy(CDEmuImage, szPrevious);
+		CDEmuInit();
+		bCDEmuChanging = 0;
+		return 1;
+	}
+	bCDEmuChanging = 0;
+
+	nCDEmuDiscChanges++;
+
+	return 0;
+}
+
+// the tray stays open until closed again, a change without opening it is seen as a quick open/close by the driver
+void CDEmuSetTrayOpen(INT32 bOpen)
+{
+	bCDEmuTrayOpen = bOpen ? 1 : 0;
+}
+
+INT32 CDEmuIsTrayOpen()
+{
+	return bCDEmuTrayOpen;
+}
+
+UINT32 CDEmuGetDiscChanges()
+{
+	return nCDEmuDiscChanges;
 }
 
 InterfaceInfo* CDEmuGetInfo()

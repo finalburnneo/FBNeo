@@ -10,6 +10,11 @@
 
 static NGCDGAME* pNeoGame;
 
+// nvram name kept across disc changes, the backup memory belongs to the session
+static TCHAR szCDInfoNVRAMKeep[CDLIST_TEXT_SIZE + 8];
+static INT32 nCDInfoNVRAMKeepType = 0;
+static INT32 bCDInfoChangingDisc = 0;
+
 static void CopyText(TCHAR* pszDest, UINT32 nDest, const TCHAR* pszSource)
 {
 	if (!pszDest || !nDest)
@@ -689,6 +694,10 @@ INT32 SegaCDInfo_Init()
 {
 	SegaCDInfo_Exit();
 
+	if (!bCDInfoChangingDisc) {
+		szCDInfoNVRAMKeep[0] = 0;
+	}
+
 	if (!IsSegaCD() || !CDEmuImage[0]) {
 		return 0;
 	}
@@ -804,6 +813,10 @@ TCHAR *CDInfo_GamePrefix()
 // name of the nvram file, shared by the discs of a multi-disc game
 TCHAR *CDInfo_NVRAMPrefix()
 {
+	if (szCDInfoNVRAMKeep[0] && nCDInfoNVRAMKeepType == CDGameType()) {
+		return szCDInfoNVRAMKeep;
+	}
+
 #ifdef BUILD_MEGADRIVE
 	if (CDGameType() == CDGAME_SEGACD && nSegaCdInfoValid && szSegaCdNVRAM[0]) {
 		static TCHAR buffer[CDLIST_TEXT_SIZE + 8];
@@ -815,3 +828,82 @@ TCHAR *CDInfo_NVRAMPrefix()
 	return CDInfo_GamePrefix();
 }
 
+// ----------------------------------------------------------------------------
+// multi-disc games: discs of the same game share a group name (the nvram group for sega cd)
+
+// group of an image, for the cd system of the running driver
+INT32 CDInfo_ImageDiscGroup(const TCHAR* pszPath, TCHAR* pszGroup, UINT32 nGroupLen, TCHAR* pszTitle, UINT32 nTitleLen)
+{
+	if (pszGroup && nGroupLen) pszGroup[0] = 0;
+	if (pszTitle && nTitleLen) pszTitle[0] = 0;
+
+	if (!pszPath || !pszPath[0])
+		return 0;
+
+	INT32 nFound = 0;
+
+#ifdef BUILD_MEGADRIVE
+	if (CDGameType() == CDGAME_SEGACD) {
+		CDImage* pImage = CDImageOpen(pszPath);
+		if (!pImage)
+			return 0;
+
+		UINT8 sha1s[41] = { 0, };
+		if (!CDImageGetTOCSha1(pImage, sha1s)) {
+			UINT8 sector[2448] = { 0 };
+			INT32 nSize = 0;
+			const CDImageTrack* pTrack = FindDataTrack(pImage);
+			TCHAR cRegion = (pTrack && ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 0x200) ? SegaCDSecurityRegion(sector) : _T('U');
+			const sega_cd_game* pGame = FindSegaCDGame(_AtoT((char*)sha1s), cRegion);
+			if (pGame && pGame->nvram) {
+				if (pszGroup) CopyText(pszGroup, nGroupLen, pGame->nvram);
+				if (pszTitle) CopyText(pszTitle, nTitleLen, pGame->name);
+				nFound = 1;
+			}
+		}
+		CDImageClose(pImage);
+	}
+#endif
+
+	return nFound;
+}
+
+// group of the running disc, NULL when it isn't part of a multi-disc game
+const TCHAR* CDInfo_DiscGroup()
+{
+#ifdef BUILD_MEGADRIVE
+	if (CDGameType() == CDGAME_SEGACD && nSegaCdInfoValid && szSegaCdNVRAM[0]) {
+		return szSegaCdNVRAM;
+	}
+#endif
+
+	return NULL;
+}
+
+// puts another disc in the drive, the driver sees the tray being opened and closed.
+// the game info follows the new disc, the nvram file stays the one of the session.
+INT32 CDInfo_ChangeDisc(const TCHAR* pszPath)
+{
+	if (!CDEmuIsTraySupported())
+		return 1;
+
+	TCHAR szKeep[CDLIST_TEXT_SIZE + 8];
+	CopyText(szKeep, CDLIST_TEXT_SIZE + 8, CDInfo_NVRAMPrefix());
+	INT32 nType = CDGameType();
+
+	if (CDEmuChangeImage(pszPath))
+		return 1;
+
+	bCDInfoChangingDisc = 1;
+	switch (nType) {
+		case CDGAME_NEOGEO:	NeoCDInfo_Init(); break;
+		case CDGAME_PCE:	PceCDInfo_Init(); break;
+		case CDGAME_SEGACD:	SegaCDInfo_Init(); break;
+	}
+	bCDInfoChangingDisc = 0;
+
+	CopyText(szCDInfoNVRAMKeep, CDLIST_TEXT_SIZE + 8, szKeep);
+	nCDInfoNVRAMKeepType = nType;
+
+	return 0;
+}

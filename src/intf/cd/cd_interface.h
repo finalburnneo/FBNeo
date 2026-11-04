@@ -24,6 +24,15 @@ INT32 CDEmuGetCurrentLBA();
 INT32 CDEmuGetSoundBuffer(INT16* buffer, INT32 samples);
 INT32 CDEmuScan(INT32 nAction, INT32 *pnMin);
 
+// disc swapping (multi-disc games), drivers poll the tray state and the change counter once per frame
+// and tell the frontend they do with CDEmuSetTraySupported() (after CDEmuInit)
+void CDEmuSetTraySupported(INT32 bSupported);
+INT32 CDEmuIsTraySupported();
+INT32 CDEmuChangeImage(const TCHAR* pszImage);
+void CDEmuSetTrayOpen(INT32 bOpen);
+INT32 CDEmuIsTrayOpen();
+UINT32 CDEmuGetDiscChanges();
+
 static inline CDEmuStatusValue CDEmuGetStatus()
 {
 	extern CDEmuStatusValue CDEmuStatus;

@@ -39,6 +39,11 @@ TCHAR *CDInfo_GamePrefix();
 TCHAR *CDInfo_NVRAMPrefix();
 TCHAR* CDInfo_Text(INT32 nText);
 
+// multi-disc games, for the cd system of the running driver
+INT32 CDInfo_ImageDiscGroup(const TCHAR* pszPath, TCHAR* pszGroup, UINT32 nGroupLen, TCHAR* pszTitle, UINT32 nTitleLen);
+const TCHAR* CDInfo_DiscGroup();
+INT32 CDInfo_ChangeDisc(const TCHAR* pszPath);
+
 enum CDListPlatform {
 	CDLIST_PLATFORM_UNKNOWN = 0,
 	CDLIST_PLATFORM_NEOCD,

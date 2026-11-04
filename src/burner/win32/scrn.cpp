@@ -52,6 +52,208 @@ void NeoCDInfo_SetTitle()
 #endif
 
 
+// ----------------------------------------------------------------------------
+// disc change (multi-disc games), for every cd system whose driver handles the tray
+
+#define CD_CHANGE_DISC_MAX	32
+
+static TCHAR szCDChangePath[CD_CHANGE_DISC_MAX][MAX_PATH];
+static TCHAR szCDChangeTitle[CD_CHANGE_DISC_MAX][CDLIST_TEXT_SIZE];
+static INT32 nCDChangeCount = 0;
+
+// discs of the group in a folder, returns the number of cd images seen
+static INT32 CDChangeScanDir(const TCHAR* pszDir, const TCHAR* pszGroup)
+{
+	static const TCHAR* pszPattern[] = { _T("*.cue"), _T("*.ccd"), _T("*.chd") };
+	INT32 nImages = 0;
+
+	for (INT32 i = 0; i < 3; i++) {
+		TCHAR szFind[MAX_PATH];
+		_sntprintf(szFind, MAX_PATH, _T("%s\\%s"), pszDir, pszPattern[i]);
+		szFind[MAX_PATH - 1] = _T('\0');
+
+		WIN32_FIND_DATA fd;
+		HANDLE hFind = FindFirstFile(szFind, &fd);
+		if (hFind == INVALID_HANDLE_VALUE) {
+			continue;
+		}
+
+		do {
+			if (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) {
+				continue;
+			}
+			nImages++;
+			if (nCDChangeCount >= CD_CHANGE_DISC_MAX) {
+				continue;
+			}
+
+			TCHAR szPath[MAX_PATH];
+			TCHAR szGroup[CDLIST_TEXT_SIZE];
+			_sntprintf(szPath, MAX_PATH, _T("%s\\%s"), pszDir, fd.cFileName);
+			szPath[MAX_PATH - 1] = _T('\0');
+
+			if (CDInfo_ImageDiscGroup(szPath, szGroup, CDLIST_TEXT_SIZE, szCDChangeTitle[nCDChangeCount], CDLIST_TEXT_SIZE) && !_tcsicmp(szGroup, pszGroup)) {
+				_tcscpy(szCDChangePath[nCDChangeCount++], szPath);
+			}
+		} while (FindNextFile(hFind, &fd));
+
+		FindClose(hFind);
+	}
+
+	return nImages;
+}
+
+// the folder of the running disc, and its sibling folders when each disc has its own folder (cue/bin sets)
+static void CDChangeFindDiscs(const TCHAR* pszGroup)
+{
+	TCHAR szDir[MAX_PATH];
+
+	nCDChangeCount = 0;
+
+	_tcscpy(szDir, CDEmuImage);
+	for (TCHAR* p = szDir; *p; p++) {
+		if (*p == _T('/')) *p = _T('\\');
+	}
+	TCHAR* pszSep = _tcsrchr(szDir, _T('\\'));
+	if (pszSep == NULL) {
+		_tcscpy(szDir, _T("."));
+	} else {
+		*pszSep = _T('\0');
+	}
+
+	if (CDChangeScanDir(szDir, pszGroup) > 2) {
+		return;
+	}
+
+	TCHAR szParent[MAX_PATH];
+	_tcscpy(szParent, szDir);
+	pszSep = _tcsrchr(szParent, _T('\\'));
+	if (pszSep == NULL) {
+		return;
+	}
+	*pszSep = _T('\0');
+	const TCHAR* pszCurrent = pszSep + 1;
+
+	TCHAR szFind[MAX_PATH];
+	_sntprintf(szFind, MAX_PATH, _T("%s\\*"), szParent);
+	szFind[MAX_PATH - 1] = _T('\0');
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = FindFirstFile(szFind, &fd);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		return;
+	}
+
+	do {
+		if (!(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) || !_tcscmp(fd.cFileName, _T(".")) || !_tcscmp(fd.cFileName, _T("..")) || !_tcsicmp(fd.cFileName, pszCurrent)) {
+			continue;
+		}
+
+		TCHAR szSub[MAX_PATH];
+		_sntprintf(szSub, MAX_PATH, _T("%s\\%s"), szParent, fd.cFileName);
+		szSub[MAX_PATH - 1] = _T('\0');
+		CDChangeScanDir(szSub, pszGroup);
+	} while (nCDChangeCount < CD_CHANGE_DISC_MAX && FindNextFile(hFind, &fd));
+
+	FindClose(hFind);
+}
+
+static void CDChangeDisc(const TCHAR* pszPath)
+{
+	if (CDInfo_ChangeDisc(pszPath)) {
+		FBAPopupAddText(PUF_TEXT_DEFAULT, FBALoadStringEx(hAppInst, IDS_CD_CHANGE_ERROR, true), pszPath);
+		FBAPopupDisplay(PUF_TYPE_ERROR);
+		return;
+	}
+
+	ScrnTitle();
+}
+
+static void CDChangeOtherImage()
+{
+	TCHAR szFilter[100] = { 0 };
+	_stprintf(szFilter, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_FILTER, true));
+	static const TCHAR szPattern[] = _T(" (*.cue,*.ccd,*.chd)\0*.cue;*.ccd;*.chd\0");
+	memcpy(szFilter + _tcslen(szFilter), szPattern, sizeof(szPattern));
+	TCHAR szTitle[100] = { 0 };
+	_stprintf(szTitle, _T("%s"), FBALoadStringEx(hAppInst, IDS_CD_SELECT_IMAGE_TITLE, true));
+
+	TCHAR szDir[MAX_PATH];
+	_tcscpy(szDir, CDEmuImage);
+	for (TCHAR* p = szDir; *p; p++) {
+		if (*p == _T('/')) *p = _T('\\');
+	}
+	TCHAR* pszSep = _tcsrchr(szDir, _T('\\'));
+	if (pszSep) {
+		*pszSep = _T('\0');
+	}
+
+	TCHAR szFile[MAX_PATH] = { 0 };
+	memset(&ofn, 0, sizeof(ofn));
+	ofn.lStructSize = sizeof(ofn);
+	ofn.hwndOwner = hScrnWnd;
+	ofn.lpstrFile = szFile;
+	ofn.nMaxFile = MAX_PATH;
+	ofn.lpstrTitle = szTitle;
+	ofn.lpstrFilter = szFilter;
+	ofn.lpstrInitialDir = pszSep ? szDir : NULL;
+	ofn.Flags = OFN_NOCHANGEDIR | OFN_HIDEREADONLY | OFN_FILEMUSTEXIST;
+	ofn.lpstrDefExt = _T("cue");
+
+	if (GetOpenFileName(&ofn)) {
+		CDChangeDisc(szFile);
+	}
+}
+
+// lists the other discs of the game when it has several, any image can be inserted
+static void CDChangeDiscMenu()
+{
+	TCHAR szGroup[CDLIST_TEXT_SIZE] = { 0 };
+	if (CDInfo_DiscGroup()) {
+		_tcsncpy(szGroup, CDInfo_DiscGroup(), CDLIST_TEXT_SIZE - 1);
+		CDChangeFindDiscs(szGroup);
+	} else {
+		nCDChangeCount = 0;
+	}
+
+	if (nCDChangeCount == 0) {
+		CDChangeOtherImage();
+		return;
+	}
+
+	TCHAR szCurrent[MAX_PATH];
+	_tcscpy(szCurrent, CDEmuImage);
+	for (TCHAR* p = szCurrent; *p; p++) {
+		if (*p == _T('/')) *p = _T('\\');
+	}
+
+	HMENU hPopup = CreatePopupMenu();
+	for (INT32 i = 0; i < nCDChangeCount; i++) {
+		TCHAR szItem[CDLIST_TEXT_SIZE + MAX_PATH + 2];
+		const TCHAR* pszFile = _tcsrchr(szCDChangePath[i], _T('\\'));
+		_sntprintf(szItem, _countof(szItem), _T("%s\t%s"), szCDChangeTitle[i], pszFile ? pszFile + 1 : szCDChangePath[i]);
+		szItem[_countof(szItem) - 1] = _T('\0');
+		UINT nFlags = MF_STRING;
+		if (!_tcsicmp(szCDChangePath[i], szCurrent)) {
+			nFlags |= MF_CHECKED | MF_GRAYED;
+		}
+		AppendMenu(hPopup, nFlags, i + 1, szItem);
+	}
+	AppendMenu(hPopup, MF_SEPARATOR, 0, NULL);
+	AppendMenu(hPopup, MF_STRING, CD_CHANGE_DISC_MAX + 1, FBALoadStringEx(hAppInst, IDS_CD_CHANGE_OTHER, true));
+
+	POINT pt;
+	GetCursorPos(&pt);
+	INT32 nSelect = TrackPopupMenu(hPopup, TPM_RETURNCMD | TPM_NONOTIFY | TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON, pt.x, pt.y, 0, hScrnWnd, NULL);
+	DestroyMenu(hPopup);
+
+	if (nSelect >= 1 && nSelect <= nCDChangeCount) {
+		CDChangeDisc(szCDChangePath[nSelect - 1]);
+	} else if (nSelect == CD_CHANGE_DISC_MAX + 1) {
+		CDChangeOtherImage();
+	}
+}
+
 int OnMenuSelect(HWND, HMENU, int, HMENU, UINT);
 int OnInitMenuPopup(HWND, HMENU, UINT, BOOL);
 int OnUnInitMenuPopup(HWND, HMENU, UINT, BOOL);
@@ -1938,6 +2140,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 		}
+
+		case MENU_CD_CHANGE_DISC:
+			if (bDrvOkay && CDEmuIsTraySupported() && !is_netgame_or_recording()) {
+				AudBlankSound();
+				CDChangeDiscMenu();
+			}
+			break;
 
 		case MENU_CDIMAGE: {
 			nCDEmuSelect = 0;

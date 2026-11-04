@@ -4806,7 +4806,7 @@ struct BurnDriver BurnDrvmd_castlilljte = {
 };
 
 // Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)
-// MegaSD MD+ patch, the cd audio comes from the chd (hdd folder of md_castlill)
+// MegaSD MD+ patch, the cd audio comes from the chd
 static struct BurnRomInfo md_castlillmdpRomDesc[] = {
 	{ "MD+ Castle Of Illusion (Grant Kirkhope Arranged).md", 0x100000, 0x39601b88, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };

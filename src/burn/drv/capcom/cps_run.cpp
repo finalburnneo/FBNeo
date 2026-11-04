@@ -26,14 +26,24 @@ static const INT32 nFirstLine = 0x10;							// The first scanline of the display
 
 INT32 nCpsCyclesExtra;
 
+// Emulated frames start at the beginning of vblank (line 240), like the hardware/MAME
+// frame boundary: inputs latched by the frontend are seen by the vblank irq right away,
+// and the picture is drawn when vblank begins. Line 0 is reached nCpsLine0Cycles into the frame.
+static INT32 nCpsLine0Cycles = 0;
+
+INT32 CpsCurrentScanline()
+{
+	INT32 nLine = SekCurrentScanline() + nFirstLine + 224;
+	if (nLine >= nCpsNumScanlines) nLine -= nCpsNumScanlines;
+	return nLine;
+}
+
 INT32 CpsDrawSpritesInReverse = 0;
 
 INT32 nIrqLine50, nIrqLine52;
 
 INT32 nCpsNumScanlines = 262;
 INT32 Cps1VBlankIRQLine = 2;
-
-INT32 Cps1DrawAtVblank = 0;
 
 CpsRunInitCallback CpsRunInitCallbackFunction = NULL;
 CpsRunInitCallback CpsRunExitCallbackFunction = NULL;
@@ -221,8 +231,6 @@ INT32 CpsRunExit()
 	Cps2DisableQSnd = 0;
 	CpsBootlegEEPROM = 0;
 
-	Cps1DrawAtVblank = 0;
-
 	return 0;
 }
 
@@ -258,7 +266,7 @@ static void ScheduleIRQ()
 
 	if (nLine < nCpsNumScanlines) {
 		nIrqLine = nLine;
-		nIrqCycles = (nLine * nCpsCycles / nCpsNumScanlines) + 1;
+		nIrqCycles = nCpsLine0Cycles + (nLine * nCpsCycles / nCpsNumScanlines) + 1;
 	} else {
 		nIrqCycles = nCpsCycles + 1;
 	}
@@ -315,7 +323,7 @@ static void DoIRQ()
 
 INT32 Cps1Frame()
 {
-	INT32 nDisplayEnd, nNext, i;
+	INT32 nNext, i;
 
 	if (CpsReset) {
 		DrvReset();
@@ -330,7 +338,7 @@ INT32 Cps1Frame()
 			PsndNewFrame();
 		}
 	}
-	
+
 	nCpsCycles = (INT32)((INT64)nCPS68KClockspeed * nBurnCPUSpeedAdjust >> 8);
 
 	CpsRwGetInp();												// Update the input port values
@@ -339,55 +347,42 @@ INT32 Cps1Frame()
 		CpsRunFrameStartCallbackFunction();
 	}
 
-	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / nCpsNumScanlines;	// Account for VBlank
-
 	SekOpen(0);
 
 	SekIdle(nCpsCyclesExtra);
 	nCpsCyclesExtra = 0;
 
-	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines));					// run 68K for the first few lines
-
-	CpsObjGet();											// Get objects
+	SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO);		// VBlank: the frame starts at line 240
 
 	for (i = 0; i < 4; i++) {
-		nNext = ((i + 1) * nCpsCycles) >> 2;					// find out next cycle count to run to
-		
+		nNext = ((i + 1) * nCpsCycles) >> 2;
+
 		if (i == 2 && CpsRunFrameMiddleCallbackFunction) {
 			CpsRunFrameMiddleCallbackFunction();
 		}
 
-		if (SekTotalCycles() < nDisplayEnd && nNext > nDisplayEnd) {
-
-			SekRun(nNext - nDisplayEnd);						// run 68K
-
-			memcpy(CpsSaveReg[0], CpsReg, 0x100);				// Registers correct now
-
-			SekSetIRQLine(Cps1VBlankIRQLine, CPU_IRQSTATUS_AUTO);				// Trigger VBlank interrupt
-
-			if (Cps1DrawAtVblank && pBurnDraw) {
-				CpsDraw();										// Draw frame
-			}
-		}
-
-		SekRun(nNext - SekTotalCycles());						// run 68K
+		SekRun(nNext - SekTotalCycles());
 	}
 
-	if (pBurnDraw && !Cps1DrawAtVblank) {
-		CpsDraw();												// Draw frame
+	// Next vblank: latch the registers and the sprite list (drawn next frame, as the hardware
+	// does with its sprite buffer; bootleg sprites are drawn right away), then draw the frame
+	memcpy(CpsSaveReg[0], CpsReg, 0x100);
+	CpsObjGet();
+	if (pBurnDraw) {
+		CpsDraw();
 	}
 
 	if (Cps1Qs == 1) {
 		QsndEndFrame();
 	} else {
 		if (!Cps1DisablePSnd) {
-			PsndSyncZ80(nCpsZ80Cycles); // sync z80
-			PsndEndFrame();             // end frame (BurnTimer: z80)
-			PsmUpdateEnd();             // render msm6295, ym2151
+			PsndSyncZ80(nCpsZ80Cycles);
+			PsndEndFrame();
+			PsmUpdateEnd();
 			ZetClose();
 		}
 	}
-	
+
 	if (CpsRunFrameEndCallbackFunction) {
 		CpsRunFrameEndCallbackFunction();
 	}
@@ -444,6 +439,16 @@ INT32 Cps2Frame()
 	
 	nDisplayEnd = nCpsCycles * (nFirstLine + 224) / nCpsNumScanlines;	// Account for VBlank
 
+	nCpsLine0Cycles = nCpsCycles - nDisplayEnd;
+
+	SekIdle(nCpsCyclesExtra);
+	nCpsCyclesExtra = 0;
+
+	// The frame starts at vblank (line 240)
+	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+	LatchCpsFrg();										// Latch the f-regs
+	SekRun(nCpsLine0Cycles - SekTotalCycles());
+
 	nInterrupt = 0;
 	for (i = 0; i < MAX_RASTER + 2; i++) {
 		nRasterline[i] = 0;
@@ -466,14 +471,11 @@ INT32 Cps2Frame()
 	}
 	ScheduleIRQ();
 
-	SekIdle(nCpsCyclesExtra);
-	nCpsCyclesExtra = 0;
-
-	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines) {
-		SekRun(nIrqCycles);
+	nNext = nCpsLine0Cycles + nCpsCycles * nFirstLine / nCpsNumScanlines;
+	if (nIrqCycles < nNext) {
+		SekRun(nIrqCycles - SekTotalCycles());
 		DoIRQ();
 	}
-	nNext = nCpsCycles * nFirstLine / nCpsNumScanlines;
 	if (SekTotalCycles() < nNext) {
 		SekRun(nNext - SekTotalCycles());
 	}
@@ -488,7 +490,7 @@ INT32 Cps2Frame()
 	}
 
 	for (i = 0; i < 3; i++) {
-		nNext = ((i + 1) * nDisplayEnd) / 3;			// find out next cycle count to run to
+		nNext = nCpsLine0Cycles + ((i + 1) * nDisplayEnd) / 3;	// find out next cycle count to run to
 
 		while (nNext > nIrqCycles && nInterrupt < MAX_RASTER) {
 			SekRun(nIrqCycles - SekTotalCycles());
@@ -496,20 +498,12 @@ INT32 Cps2Frame()
 		}
 		SekRun(nNext - SekTotalCycles());				// run cpu
 	}
-	
-	CpsObjGet();										// Get objects
 
-//	nCpsCyclesSegment[0] = (nCpsCycles * nVBlank) / nCpsNumScanlines;
-//	nDone += SekRun(nCpsCyclesSegment[0] - nDone);
-
-	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);				// VBlank
+	// Next vblank: latch the sprites (drawn next frame) and draw the frame just displayed
+	CpsObjGet();
 	if (pBurnDraw) {
 		CpsDraw();
 	}
-
-	LatchCpsFrg();										// Latch the f-regs
-
-	SekRun(nCpsCycles - SekTotalCycles());
 
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;
 

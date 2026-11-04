@@ -241,7 +241,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 			// The linecounters seem to return the line at which the last IRQ triggered by this counter is scheduled minus the current line
 			if ((ia & 0x0FE) == 0x50) {
 				if ((ia & 1) == 0) {
-					nRasterLine = nIrqLine50 - SekCurrentScanline();
+					nRasterLine = nIrqLine50 - CpsCurrentScanline();
 					return nRasterLine >> 8;
 				} else {
 					return nRasterLine & 0xFF;
@@ -249,7 +249,7 @@ static UINT8 CpsReadPort(const UINT32 ia)
 			}
 			if ((ia & 0x0FE) == 0x52) {
 				if ((ia & 1) == 0) {
-					nRasterLine = nIrqLine52 - SekCurrentScanline();
+					nRasterLine = nIrqLine52 - CpsCurrentScanline();
 					return nRasterLine >> 8;
 				} else {
 					return nRasterLine & 0xFF;

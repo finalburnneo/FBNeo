@@ -18584,8 +18584,6 @@ static INT32 KnightshInit()
 
 static INT32 Cps1RasterInit()
 {
-	Cps1DrawAtVblank = 1;
-
 	return DrvInit();
 }
 
@@ -22191,8 +22189,6 @@ static INT32 StriderjrInit()
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 
 		CpsLoadStars(CpsStar, 2);
-
-		Cps1DrawAtVblank = 1;
 	}
 
 	return nRet;
@@ -22216,7 +22212,6 @@ static INT32 StriderjexInit()
 	if (!nRet) {
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 		CpsLoadStars(CpsStar, nCps68KByteswapRomNum + nCps68KNoByteswapRomNum);
-		Cps1DrawAtVblank = 1;
 	}
 	return nRet;
 }
@@ -23319,7 +23314,6 @@ static INT32 WofsgzbScenarioPatch()
 static INT32 WofsgzbInit()
 {
 	Wofsgzb = 1;
-	Cps1DrawAtVblank = 1;
 //	CpsBootlegEEPROM = 1;
 
 	Cps1Qs = Cps1QSDip & 1;
@@ -29361,7 +29355,6 @@ STD_ROM_FN(kod1v3)
 static INT32 KodInit()
 {
 	szGameName = "kod";
-	Cps1DrawAtVblank = 1;
 
 	return TwelveMhzInit();
 }

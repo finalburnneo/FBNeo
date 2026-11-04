@@ -128,6 +128,9 @@ INT32 CpsObjInit()
 
 	nFrameCount = 2;			// CPS2 sprites lagged by 1 frame and double buffered
 								// CPS1 sprites lagged by 1 frame
+	if (Cps1ObjGetCallbackFunction) {
+		nFrameCount = 1;		// bootleg sprite hardware has no buffer
+	}
 
 	nObjMemLen = ((nMax << 3) + nCpsObjExtraLen) * nFrameCount;
 	ObjMem = (UINT8*)BurnMalloc(nObjMemLen);

@@ -36,6 +36,7 @@ static inline bool IsCDGame()
 }
 
 TCHAR *CDInfo_GamePrefix();
+TCHAR *CDInfo_NVRAMPrefix();
 TCHAR* CDInfo_Text(INT32 nText);
 
 enum CDListPlatform {

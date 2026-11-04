@@ -776,12 +776,24 @@ static void cdc_power()
 // -------------------------------------------------------------------------
 // CDD
 
+static UINT8 audio_resumed = 0;
+
 static void cdd_update_audio()
 {
 	INT32 want = (cdd.io_status == CDD_PLAYING) && track_is_audio(cdd.io_track);
 
 	if (want) {
+		INT32 start = 0;
 		if (!cdd.audio_playing || (CDEmuGetStatus() != playing && cdd.audio_track != cdd.io_track)) {
+			start = 1;
+			audio_resumed = 0;
+		} else if (CDEmuGetStatus() != playing && !audio_resumed) {
+			// the cd backend stops at the end of its own track, which can be before the drive's (pregap)
+			start = 1;
+			audio_resumed = 1;
+		}
+
+		if (start) {
 			INT32 aba = cdd.io_sector + 150;
 			if (aba < 0) aba = 0;
 			CDEmuPlay(dec2bcd(aba / (75 * 60)), dec2bcd((aba / 75) % 60), dec2bcd(aba % 75));

@@ -8,7 +8,7 @@ TCHAR szNeoCDCoverDir[MAX_PATH]   = _T("support/cdcovers/");
 TCHAR szNeoCDPreviewDir[MAX_PATH] = _T("support/cdpreviews/");
 TCHAR szNeoCDGamesDir[MAX_PATH]   = _T("cdiso/");
 
-#if defined(BUILD_NEOGEO) || defined(BUILD_PCE)
+#if defined(BUILD_NEOGEO) || defined(BUILD_PCE) || defined(BUILD_MEGADRIVE)
 
 struct PNGRESOLUTION { INT32 nWidth; INT32 nHeight; };
 
@@ -243,7 +243,7 @@ static void LoadEntryPreview(const CDLibraryEntry* pEntry, INT32 nSide, void** p
 	const TCHAR* pszName = GetPreviewName(pEntry);
 	TCHAR szPath[MAX_PATH];
 	TCHAR tszName[MAX_PATH];
-	_stprintf(tszName, _T("%s%s"), (pEntry->nPlatform == CDLIST_PLATFORM_PCECD) ? _T("pcecd_") : _T("ngcd_"), pszName);
+	_stprintf(tszName, _T("%s%s"), (pEntry->nPlatform == CDLIST_PLATFORM_PCECD) ? _T("pcecd_") : ((pEntry->nPlatform == CDLIST_PLATFORM_SEGACD) ? _T("segacd_") : _T("ngcd_")), pszName);
 
 	if (!nSide) {
 		BuildPreviewPath(szPath, MAX_PATH, szNeoCDCoverDir, tszName);
@@ -308,6 +308,8 @@ static const TCHAR* PlatformText(INT32 nPlatform)
 		return _T("Neo Geo CD");
 	if (nPlatform == CDLIST_PLATFORM_PCECD)
 		return _T("PCE CD");
+	if (nPlatform == CDLIST_PLATFORM_SEGACD)
+		return _T("Sega CD");
 
 	return _T("Unknown");
 }
@@ -606,6 +608,20 @@ static void ShowZoom(INT32 nSide)
 	nZoomPngSize = 0;
 }
 
+static INT32 PlatformAvailable(INT32 nPlatform)
+{
+#ifdef BUILD_NEOGEO
+	if (nPlatform == CDLIST_PLATFORM_NEOCD) return 1;
+#endif
+#ifdef BUILD_PCE
+	if (nPlatform == CDLIST_PLATFORM_PCECD) return 1;
+#endif
+#ifdef BUILD_MEGADRIVE
+	if (nPlatform == CDLIST_PLATFORM_SEGACD) return 1;
+#endif
+	return 0;
+}
+
 static bool SelectForPlay()
 {
 	const CDLibraryEntry* pEntry = GetLibraryEntry(nSelectedItem);
@@ -613,19 +629,19 @@ static bool SelectForPlay()
 		MessageBox(hNeoCDWnd, _T("Select a CD image first."), _T(APP_TITLE), MB_OK | MB_ICONWARNING);
 		return false;
 	}
-#if !defined(BUILD_NEOGEO)
-	if (pEntry->nPlatform != CDLIST_PLATFORM_PCECD) {
-#elif !defined(BUILD_PCE)
-	if (pEntry->nPlatform != CDLIST_PLATFORM_NEOCD) {
-#else
-	if (pEntry->nPlatform != CDLIST_PLATFORM_NEOCD && pEntry->nPlatform != CDLIST_PLATFORM_PCECD) {
-#endif
+	if (!PlatformAvailable(pEntry->nPlatform)) {
 		MessageBox(hNeoCDWnd, _T("The required CD driver is unavailable in this build."), _T(APP_TITLE), MB_OK | MB_ICONERROR);
 		return false;
 	}
 #ifdef BUILD_NEOGEO
 	if (pEntry->nPlatform == CDLIST_PLATFORM_NEOCD && BurnDrvGetIndex((char*)"neocdz") < 0) {
 		MessageBox(hNeoCDWnd, _T("The Neo Geo CD driver is unavailable."), _T(APP_TITLE), MB_OK | MB_ICONERROR);
+		return false;
+	}
+#endif
+#ifdef BUILD_MEGADRIVE
+	if (pEntry->nPlatform == CDLIST_PLATFORM_SEGACD && BurnDrvGetIndex((char*)"md_segacd") < 0) {
+		MessageBox(hNeoCDWnd, _T("The Sega CD driver is unavailable."), _T(APP_TITLE), MB_OK | MB_ICONERROR);
 		return false;
 	}
 #endif
@@ -709,6 +725,9 @@ static INT_PTR CALLBACK NeoCDList_WndProc(HWND hDlg, UINT nMessage, WPARAM wPara
 #endif
 #ifdef BUILD_PCE
 			if (nPlatform == CDLIST_PLATFORM_PCECD) BurnerLoadDriver(_T("pce_scdsys"));
+#endif
+#ifdef BUILD_MEGADRIVE
+			if (nPlatform == CDLIST_PLATFORM_SEGACD) BurnerLoadDriver(_T("md_segacd"));
 #endif
 			return TRUE;
 		}

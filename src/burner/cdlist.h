@@ -11,7 +11,8 @@
 enum {
 	CDGAME_NONE = 0,								// not a CD game
 	CDGAME_NEOGEO,									// Neo Geo CD
-	CDGAME_PCE										// PC Engine CD
+	CDGAME_PCE,										// PC Engine CD
+	CDGAME_SEGACD									// Sega CD / Mega-CD
 };
 
 static inline INT32 CDGameType()
@@ -22,6 +23,9 @@ static inline INT32 CDGameType()
 	}
 	if (nHardware == HARDWARE_PCENGINE_PCE_CD) {
 		return CDGAME_PCE;
+	}
+	if (nHardware == HARDWARE_SEGA_MEGACD) {
+		return CDGAME_SEGACD;
 	}
 	return CDGAME_NONE;
 }
@@ -38,7 +42,8 @@ enum CDListPlatform {
 	CDLIST_PLATFORM_UNKNOWN = 0,
 	CDLIST_PLATFORM_NEOCD,
 	CDLIST_PLATFORM_PCECD,
-	CDLIST_PLATFORM_PCFX
+	CDLIST_PLATFORM_PCFX,
+	CDLIST_PLATFORM_SEGACD
 };
 
 enum CDListSource {

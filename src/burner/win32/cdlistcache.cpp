@@ -247,6 +247,10 @@ static INT32 CDLibraryPlatformEnabled(INT32 nPlatform)
 	if (nPlatform == CDLIST_PLATFORM_PCECD)
 		return 1;
 #endif
+#ifdef BUILD_MEGADRIVE
+	if (nPlatform == CDLIST_PLATFORM_SEGACD)
+		return 1;
+#endif
 	return 0;
 }
 

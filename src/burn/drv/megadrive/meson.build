@@ -7,6 +7,7 @@
 group_desc = 'Sega Mega Drive drivers'
 group_srcs = [
     'megadrive.cpp',
+    'segacd.cpp',
     'stm95.cpp',
 ]
 drivers = {

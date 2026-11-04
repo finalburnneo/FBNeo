@@ -1756,6 +1756,18 @@ static UINT8* cdimgReadTOC(INT32 track)
 		return TOCEntry;
 	}
 
+	if (track & CDEmuTOC_TRACKEND) {
+		track = bcd(track & 0xff);
+		if (track >= cdimgTOC->FirstTrack && track <= cdimgTOC->LastTrack) {
+			TOCEntry[0] = cdimgTOC->TrackData[track - 1].EndAddress[1];
+			TOCEntry[1] = cdimgTOC->TrackData[track - 1].EndAddress[2];
+			TOCEntry[2] = cdimgTOC->TrackData[track - 1].EndAddress[3];
+			TOCEntry[3] = cdimgTOC->TrackData[track - 1].Control >> 4;
+		}
+
+		return TOCEntry;
+	}
+
 	track = bcd(track);
 	if (track >= cdimgTOC->FirstTrack && track <= cdimgTOC->LastTrack) {
 		TOCEntry[0] = cdimgTOC->TrackData[track - 1].Address[1];

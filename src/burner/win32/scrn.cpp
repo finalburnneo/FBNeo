@@ -1,6 +1,7 @@
 // Screen Window
 #include "burner.h"
 #include "pcecdlist.h"
+#include "segacdlist.h"
 #include <process.h>
 #include <shlobj.h>
 
@@ -16,6 +17,17 @@ static void SetPCECDTitle()
 {
 	TCHAR szText[1024] = _T("");
 	TCHAR* pszTitle = PceCDInfo_Text(DRV_FULLNAME);
+	_sntprintf(szText, _countof(szText), _T(APP_TITLE) _T(" v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle ? pszTitle : FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
+	szText[_countof(szText) - 1] = _T('\0');
+	SetWindowText(hScrnWnd, szText);
+}
+#endif
+
+#ifdef BUILD_MEGADRIVE
+static void SetSegaCDTitle()
+{
+	TCHAR szText[1024] = _T("");
+	TCHAR* pszTitle = SegaCDInfo_Text(DRV_FULLNAME);
 	_sntprintf(szText, _countof(szText), _T(APP_TITLE) _T(" v%.20s") _T(SEPERATOR_1) _T("%s") _T(SEPERATOR_1) _T("%s"), szAppBurnVer, BurnDrvGetText(DRV_FULLNAME), pszTitle ? pszTitle : FBALoadStringEx(hAppInst, IDS_UNIDENTIFIED_CD, true));
 	szText[_countof(szText) - 1] = _T('\0');
 	SetWindowText(hScrnWnd, szText);
@@ -1100,6 +1112,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "neogeo",		{ HARDWARE_SNK_NEOGEO, HARDWARE_SNK_MVS, HARDWARE_SNK_DEDICATED_PCB, 0 } },
 	{ "neogeocd",	{ HARDWARE_SNK_NEOCD, 0 } },
 	{ "pcecd",		{ HARDWARE_PCENGINE_PCE_CD, 0 } },
+	{ "segacd",		{ HARDWARE_SEGA_MEGACD, 0 } },
 	{ "arcade",		{ ~0, 0 } }, // default, if not found above
 	{ "\0", { 0 } } // end
 };
@@ -1607,6 +1620,9 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 					break;
 				case CDLIST_PLATFORM_PCECD:
 					pszDrvName = _T("pce_scdsys");
+					break;
+				case CDLIST_PLATFORM_SEGACD:
+					pszDrvName = _T("md_segacd");
 					break;
 				default:
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_CD_IMAGE_IDENTIFY), pszSelect);
@@ -4724,6 +4740,12 @@ int ScrnTitle()
 #ifdef BUILD_PCE
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCE_CD) {
 			SetPCECDTitle();
+			return 0;
+		}
+#endif
+#ifdef BUILD_MEGADRIVE
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD) {
+			SetSegaCDTitle();
 			return 0;
 		}
 #endif

@@ -746,6 +746,7 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SEGA_GAME_GEAR							(HARDWARE_PREFIX_SEGA_GAME_GEAR)
 
 #define HARDWARE_SEGA_MEGADRIVE							(HARDWARE_PREFIX_SEGA_MEGADRIVE)
+#define HARDWARE_SEGA_MEGACD							(HARDWARE_PREFIX_SEGA_MEGADRIVE | 0x00010000)
 
 #define HARDWARE_SEGA_SG1000                            (HARDWARE_PREFIX_SEGA_SG1000)
 #define HARDWARE_SEGA_SG1000_RAMEXP_A                   (0x1000)

@@ -483,6 +483,47 @@ INT32 MegadriveGetZipName(char** pszName, UINT32 i)
 	return 0;
 }
 
+// Sega CD / Mega-CD system (bios), the disc image is selected separately
+
+static struct BurnDIPInfo SegaCDDIPList[] = {
+	DIP_OFFSET(0x19)
+	{0x00,	0xff, 0xff, 0x00,  NULL                     },
+	{0x01,	0xff, 0xff, 0x03,  NULL                     },
+
+	{0,		0xfd, 0,       4, "Bios"                     },
+	{0x00,	0x01, 0x03, 0x00, "Auto (disc region)"       },
+	{0x00,	0x01, 0x03, 0x01, "Sega CD (USA, v1.10)"     },
+	{0x00,	0x01, 0x03, 0x02, "Mega-CD (Europe, v1.00)"  },
+	{0x00,	0x01, 0x03, 0x03, "Mega-CD (Japan, v1.00P)"  },
+
+	{0,		0xfe, 0,       4, "32-Col Mode Draw"         },
+	{0x01,	0x01, 0x03, 0x00, "No Change"                },
+	{0x01,	0x01, 0x03, 0x01, "Center"                   },
+	{0x01,	0x01, 0x03, 0x02, "Inner Zoom"               },
+	{0x01,	0x01, 0x03, 0x03, "Resize Screen/Window"     },
+};
+
+STDDIPINFO(SegaCD)
+
+static struct BurnRomInfo md_segacdRomDesc[] = {
+	{ "Sega CD BIOS (USA, v1.10).bin",      0x020000, 0xc6d10268, BRF_PRG | BRF_ESS },
+	{ "Mega-CD BIOS (Europe, v1.00).bin",   0x020000, 0x529ac15a, BRF_PRG | BRF_ESS | BRF_OPT },
+	{ "Mega-CD BIOS (Japan, v1.00P).bin",   0x020000, 0x9d2da8f2, BRF_PRG | BRF_ESS | BRF_OPT },
+};
+
+STD_ROM_PICK(md_segacd)
+STD_ROM_FN(md_segacd)
+
+struct BurnDriver BurnDrvmd_segacd = {
+	"md_segacd", NULL, NULL, NULL, "1992",
+	"Sega CD / Mega-CD System\0", "System - media selected separately", "Sega", "Sega CD / Mega-CD",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGACD, GBF_BIOS, 0,
+	MegadriveGetZipName, md_segacdRomInfo, md_segacdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, SegaCDDIPInfo,
+	MegadriveInitSegaCD, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // 16 Ton (Japan, SegaNet)
 static struct BurnRomInfo md_16tonRomDesc[] = {
 	{ "16 Ton (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0x537f04b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

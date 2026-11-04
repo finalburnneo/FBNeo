@@ -5,7 +5,8 @@
 // CD emulation module
 
 enum CDEmuStatusValue { idle = 0, reading, playing, paused, seeking, fastforward, fastreverse };
-enum CDEmuReadTOCFlags { CDEmuTOC_FIRSTLAST = 0x1000, CDEmuTOC_LASTMSF, CDEmuTOC_FIRSTINDEX, CDEmuTOC_ENDOFDISC };
+// CDEmuTOC_TRACKEND is or'ed with a bcd track number: msf where the track ends (start of the next track's pregap)
+enum CDEmuReadTOCFlags { CDEmuTOC_FIRSTLAST = 0x1000, CDEmuTOC_LASTMSF, CDEmuTOC_FIRSTINDEX, CDEmuTOC_ENDOFDISC, CDEmuTOC_TRACKEND = 0x2000 };
 
 extern TCHAR CDEmuImage[MAX_PATH];
 extern UINT8 CDEmuImageTOCSHA1[MAX_PATH];

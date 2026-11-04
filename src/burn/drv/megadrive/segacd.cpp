@@ -21,6 +21,7 @@ INT32 (*SegaCDMainCycles)() = NULL;
 static UINT8 *AllMemScd = NULL;
 static UINT8 *PrgRam;		// 512KiB, Sek byte order (directly mapped on the sub cpu)
 static UINT16 *WordRam;		// 256KiB
+static UINT16 *WramFetch;	// opcode fetch copy of the word ram owned by a cpu, linear and in Sek byte order
 static UINT16 *CdcRam;		// 16KiB
 static UINT8 *PcmRam;		// 64KiB
 static UINT8 *BackupRam;	// 8KiB
@@ -241,6 +242,74 @@ static inline void prg_write(UINT32 a, UINT16 d, INT32 upper, INT32 lower)
 	if (lower) PrgRam[(a | 1) ^ 1] = d & 0xff;
 }
 
+// Cyclone can only run code from directly mapped memory: word ram (2M: all of it, 1M: the main cpu
+// bank, de-interleaved) is copied in WramFetch, mapped for opcode fetches only while the cpu owns it.
+// Reads and writes keep going through the handlers.
+static inline void wram_fetch_update(UINT32 idx)
+{
+	idx &= 0x1ffff;
+	if (wram_mode == 0) {
+		WramFetch[idx] = BURN_ENDIAN_SWAP_INT16(WordRam[idx]);
+	} else if ((idx & 1) == wram_select) {
+		WramFetch[idx >> 1] = BURN_ENDIAN_SWAP_INT16(WordRam[idx]);
+	}
+}
+
+static void wram_fetch_rebuild()
+{
+	if (wram_mode == 0) {
+		for (INT32 i = 0; i < 0x20000; i++)
+			WramFetch[i] = BURN_ENDIAN_SWAP_INT16(WordRam[i]);
+	} else {
+		for (INT32 i = 0; i < 0x10000; i++)
+			WramFetch[i] = BURN_ENDIAN_SWAP_INT16(WordRam[(i << 1) | wram_select]);
+	}
+}
+
+static INT32 main_fetch_state = -1;
+static INT32 sub_fetch_state = -1;
+
+// cpu #0 must be open
+static void main_fetch_map()
+{
+	INT32 state = (wram_mode << 0) | (wram_switch << 1) | (sub_request << 2) | (pram_bank << 3);
+	if (state == main_fetch_state) return;
+	main_fetch_state = state;
+
+	for (INT32 i = 0; i < 8; i++) { // mirrors every 256KB
+		UINT32 w = 0x200000 + i * 0x40000;
+		if (wram_mode) {
+			SekMapMemory((UINT8*)WramFetch, w, w + 0x1ffff, MAP_FETCH);
+			SekMapHandler(5, w + 0x20000, w + 0x3ffff, MAP_FETCH); // cell-mapped views
+		} else if (wram_switch == 0) {
+			SekMapMemory((UINT8*)WramFetch, w, w + 0x3ffff, MAP_FETCH);
+		} else {
+			SekMapHandler(5, w, w + 0x3ffff, MAP_FETCH);
+		}
+
+		UINT32 p = 0x020000 + i * 0x40000;
+		if (sub_request) {
+			SekMapMemory(PrgRam + (pram_bank << 17), p, p + 0x1ffff, MAP_FETCH);
+		} else {
+			SekMapHandler(5, p, p + 0x1ffff, MAP_FETCH);
+		}
+	}
+}
+
+// cpu #1 must be open
+static void sub_fetch_map()
+{
+	INT32 state = (wram_mode == 0 && wram_switch == 1);
+	if (state == sub_fetch_state) return;
+	sub_fetch_state = state;
+
+	if (state) {
+		SekMapMemory((UINT8*)WramFetch, 0x080000, 0x0bffff, MAP_FETCH);
+	} else {
+		SekMapHandler(0, 0x080000, 0x0bffff, MAP_FETCH);
+	}
+}
+
 static inline void wram_write(UINT32 idx, UINT16 d, INT32 upper, INT32 lower)
 {
 	UINT16 *p = &WordRam[idx & 0x1ffff];
@@ -251,6 +320,7 @@ static inline void wram_write(UINT32 idx, UINT16 d, INT32 upper, INT32 lower)
 	} else if (lower) {
 		*p = (*p & 0xff00) | (d & 0x00ff);
 	}
+	wram_fetch_update(idx);
 }
 
 // 1Mbit mode, main cpu side: 0x220000-0x23ffff are cell-mapped views of the bank
@@ -455,6 +525,7 @@ static void cdc_transfer_dma()
 		case 7:
 			if (wram_mode == 0) {
 				WordRam[(cdc.tr_address >> 1) & 0x1ffff] = data;
+				wram_fetch_update(cdc.tr_address >> 1);
 			} else {
 				sub_write16(0x0c0000 | (cdc.tr_address & 0x1fffe), data, 1, 1);
 			}
@@ -1016,6 +1087,7 @@ static inline void gpu_write(UINT32 address, UINT8 data)
 	INT32 shift = 12 - ((address & 3) << 2);
 	UINT16 *p = &WordRam[address >> 2];
 	*p = (*p & ~(0xf << shift)) | ((data & 0xf) << shift);
+	wram_fetch_update(address >> 2);
 }
 
 static void gpu_render(UINT32 address, INT32 width)
@@ -1375,11 +1447,14 @@ static void sub_io_write(UINT32 a, UINT16 d, INT32 upper, INT32 lower)
 
 		case 0xff8002: { // 8-bit register, writes go to the low byte
 			UINT8 v = d & 0xff;
+			UINT8 old_layout = (wram_mode << 1) | (wram_mode & wram_select);
 			if (wram_select != (v & 1)) wram_switch_request = 0;
 			wram_select = v & 1;
 			wram_mode = (v >> 2) & 1;
 			wram_priority = (v >> 3) & 3;
 			if (wram_select) wram_switch = 0;
+			if (old_layout != ((wram_mode << 1) | (wram_mode & wram_select))) wram_fetch_rebuild();
+			sub_fetch_map();
 		}
 		return;
 
@@ -1637,6 +1712,7 @@ static void sub_write16(UINT32 a, UINT16 d, INT32 upper, INT32 lower)
 		}
 
 		WordRam[idx] = (w & ~(0xff << ofs)) | (hi << (4 + ofs)) | (lo << ofs);
+		wram_fetch_update(idx);
 		return;
 	}
 
@@ -1872,25 +1948,31 @@ static void main_io_write(UINT32 a, UINT16 d, INT32 upper, INT32 lower)
 static void __fastcall main_cart_write_byte(UINT32, UINT8) { }
 static void __fastcall main_cart_write_word(UINT32, UINT16) { }
 
+// the sub cpu may have changed the word ram owner while catching up
 static UINT8 __fastcall main_io_read_byte(UINT32 a)
 {
 	UINT16 d = main_io_read(a & ~1);
+	main_fetch_map();
 	return (a & 1) ? (d & 0xff) : (d >> 8);
 }
 
 static UINT16 __fastcall main_io_read_word(UINT32 a)
 {
-	return main_io_read(a);
+	UINT16 d = main_io_read(a);
+	main_fetch_map();
+	return d;
 }
 
 static void __fastcall main_io_write_byte(UINT32 a, UINT8 d)
 {
 	main_io_write(a & ~1, (d << 8) | d, !(a & 1), a & 1);
+	main_fetch_map();
 }
 
 static void __fastcall main_io_write_word(UINT32 a, UINT16 d)
 {
 	main_io_write(a, d, 1, 1);
+	main_fetch_map();
 }
 
 // -------------------------------------------------------------------------
@@ -1924,6 +2006,7 @@ static void sub_run_cycles(INT32 cycles)
 {
 	while (cycles > 0) {
 		if (irq_dirty) sub_irq_update();
+		sub_fetch_map();
 
 		INT32 runnable = sub_run && !sub_halt;
 		if (runnable && sub_reset_pending) {
@@ -1964,13 +2047,19 @@ void SegaCDRunSub(INT32 main_cycles)
 	sub_run_cycles(target - SekTotalCycles());
 	SekClose();
 	SekOpen(0);
+	main_fetch_map();
 }
 
 void SegaCDNewFrame()
 {
 	SekNewFrame();
 
+	SekOpen(0);
+	main_fetch_map();
+	SekClose();
+
 	SekOpen(1);
+	sub_fetch_map();
 	SekIdle(sub_carry);
 	sub_cycles_frame = SekTotalCycles();
 	SekClose();
@@ -2141,7 +2230,7 @@ INT32 SegaCDInit(UINT8 *bios)
 {
 	BiosRom = bios;
 
-	INT32 nLen = 0x80000 + 0x40000 + 0x4000 + 0x10000 + 0x2000;
+	INT32 nLen = 0x80000 + 0x40000 + 0x40000 + 0x4000 + 0x10000 + 0x2000;
 	AllMemScd = (UINT8*)BurnMalloc(nLen);
 	if (AllMemScd == NULL) return 1;
 	memset(AllMemScd, 0, nLen);
@@ -2149,6 +2238,7 @@ INT32 SegaCDInit(UINT8 *bios)
 	UINT8 *Next = AllMemScd;
 	PrgRam    = Next; Next += 0x80000;
 	WordRam   = (UINT16*)Next; Next += 0x40000;
+	WramFetch = (UINT16*)Next; Next += 0x40000;
 	CdcRam    = (UINT16*)Next; Next += 0x4000;
 	PcmRam    = Next; Next += 0x10000;
 	BackupRam = Next; Next += 0x2000;
@@ -2210,6 +2300,9 @@ INT32 SegaCDInit(UINT8 *bios)
 void SegaCDReset()
 {
 	scd_power(1);
+
+	wram_fetch_rebuild();
+	main_fetch_state = sub_fetch_state = -1;
 
 	SekOpen(1);
 	SekReset();
@@ -2281,6 +2374,8 @@ INT32 SegaCDScan(INT32 nAction, INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			pcm_fifo_read = pcm_fifo_count = 0;
 			irq_dirty = 1;
+			wram_fetch_rebuild();
+			main_fetch_state = sub_fetch_state = -1; // mapped again at the next frame
 		}
 	}
 

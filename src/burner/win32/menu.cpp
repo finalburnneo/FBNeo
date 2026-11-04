@@ -1373,6 +1373,8 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_AUTOFRAMESKIP, !bAlwaysDrawFrames ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_RUNAHEAD, bRunAhead ? MF_CHECKED : MF_UNCHECKED);
 
+	CheckMenuItem(hMenu, MENU_INPUT_RUMBLE, bInputRumble ? MF_CHECKED : MF_UNCHECKED);
+
 	var = nInputSelect + MENU_INP_PLUGIN_1;
 	CheckMenuRadioItem(hMenu, MENU_INP_PLUGIN_1, MENU_INP_PLUGIN_8, var, MF_BYCOMMAND);
 

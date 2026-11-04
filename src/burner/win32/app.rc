@@ -1367,6 +1367,7 @@ BEGIN
     	    MENUITEM "XInput",	MENU_INP_PLUGIN_2
     	END
 		MENUITEM "Re-Detect Controllers",			MENU_INPUT_REDETECT
+		MENUITEM "Enable Rumble (XInput)",			MENU_INPUT_RUMBLE
 		MENUITEM SEPARATOR
     	POPUP "&Auto-Fire Rate"
     	BEGIN

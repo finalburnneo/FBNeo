@@ -907,6 +907,7 @@
 #define MENU_INPUT_ALL_DEFAULT				10792
 
 #define MENU_INPUT_REDETECT                 10800
+#define MENU_INPUT_RUMBLE                   10801
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

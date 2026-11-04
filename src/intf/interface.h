@@ -43,11 +43,16 @@ struct InputInOut {
 	// Get plugin info
 	INT32   (*GetPluginSettings)(InterfaceInfo* pInfo);
 	const TCHAR* szModuleName;
+	// Optional: set the rumble motors of a joystick (0..0xffff), nJoy = -1 for all joysticks
+	// Leave out (NULL) if the plugin has no rumble support
+	INT32   (*SetRumble)(INT32 nJoy, INT32 nStrong, INT32 nWeak);
 };
 
 INT32 InputInit();
 INT32 InputExit();
 INT32 InputSelect(UINT32 nPlugIn);
+INT32 InputSetRumble(INT32 nPlayer, INT32 nStrong, INT32 nWeak);
+void InputStopRumble();
 INT32 InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround);
 INT32 InputMake(bool bCopy);
 INT32 InputFind(const INT32 nFlags);
@@ -60,6 +65,7 @@ std::vector<const InputInOut *> InputGetInterfaces();  // this & include @ top i
 
 extern bool bInputOkay;
 extern UINT32 nInputSelect;
+extern bool bInputRumble; // user-interface setting for rumble
 
 // CD emulation module
 

@@ -2080,6 +2080,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_INPUT_RUMBLE:
+			bInputRumble = !bInputRumble;
+			if (!bInputRumble) {
+				InputStopRumble();
+			}
+			break;
+
 		case MENU_INP_PLUGIN_1:
 			InputSelect(0);
 			POST_INITIALISE_MESSAGE;

@@ -315,6 +315,7 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue); /
 static UINT8 __fastcall MegadriveReadByte(UINT32 address);
 
 #include "paprium.h"
+#include "megasd.h"
 
 static void MegadriveCheckHardware()
 {
@@ -1675,6 +1676,10 @@ static INT32 MegadriveResetDo()
 
 	if (SegaCDMode) {
 		SegaCDReset();
+	}
+
+	if (megasdmode) {
+		megasd_reset();
 	}
 
 	ZetOpen(0);
@@ -4009,6 +4014,7 @@ INT32 MegadriveInit()
 	} else {
 		MegadriveSetupSRAM();
 		SetupCustomCartridgeMappers();
+		if (megasd_init()) return 1;
 	}
 
 	if (MegadriveCallback) MegadriveCallback();
@@ -4066,6 +4072,8 @@ INT32 MegadriveExit()
 	if (SegaCDMode) {
 		SegaCDExit();
 	}
+
+	megasd_exit();
 
 	if (has_gun != 0) {
 		BurnGunExit();
@@ -5852,6 +5860,10 @@ INT32 MegadriveFrame()
 		SegaCDSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	if (megasdmode) {
+		megasd_sound_update(pBurnSoundOut, nBurnSoundLen);
+	}
+
 	SekClose();
 	ZetClose();
 
@@ -5928,6 +5940,10 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 
 	if (SegaCDMode) {
 		SegaCDScan(nAction, pnMin);
+	}
+
+	if (megasdmode) {
+		megasd_scan(nAction, pnMin);
 	}
 
 	if (nAction & ACB_WRITE && (BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SSF2) {

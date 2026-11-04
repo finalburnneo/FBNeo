@@ -4805,6 +4805,32 @@ struct BurnDriver BurnDrvmd_castlilljte = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)
+// MegaSD MD+ patch, the cd audio comes from the chd (hdd folder of md_castlill)
+static struct BurnRomInfo md_castlillmdpRomDesc[] = {
+	{ "MD+ Castle Of Illusion (Grant Kirkhope Arranged).md", 0x100000, 0x39601b88, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_castlillmdp)
+STD_ROM_FN(md_castlillmdp)
+
+static struct BurnHDDInfo md_castlillmdpHDDDesc[] = {
+	{ "md_castlillmdp", "63cbf9c46268f7ffaf494e0f3d939949263b5eb1" }
+};
+
+STD_HDD_PICK(md_castlillmdp)
+STD_HDD_FN(md_castlillmdp)
+
+struct BurnDriver BurnDrvmd_castlillmdp = {
+	"md_castlillmdp", "md_castlill", NULL, NULL, "2021",
+	"Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)\0", NULL, "Sega", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_castlillmdpRomInfo, md_castlillmdpRomName, md_castlillmdpHDDInfo, md_castlillmdpHDDName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Castlevania - The New Generation (Euro)
 static struct BurnRomInfo md_cvaniaRomDesc[] = {
 	{ "Castlevania - The New Generation (Euro)(1994)(Konami).bin", 0x100000, 0x4dd4e4a5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

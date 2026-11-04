@@ -144,6 +144,19 @@ static void LoadDiff(BurnHDD* pDisk)
 	fclose(fp);
 }
 
+INT32 BurnHDDGetPath(INT32 nIndex, const TCHAR* pszExt, TCHAR* pszPath)
+{
+	char* szName = NULL;
+	if (BurnDrvGetHDDName(&szName, nIndex, 0) || szName == NULL) return 1;
+
+	FILE* fp = OpenInDir(BurnDrvGetText(DRV_NAME), szName, pszExt, pszPath);
+	if (fp == NULL) fp = OpenInDir(BurnDrvGetText(DRV_PARENT), szName, pszExt, pszPath);
+	if (fp == NULL) return 1;
+
+	fclose(fp);
+	return 0;
+}
+
 BurnHDD* BurnHDDOpen(INT32 nIndex)
 {
 	char* szName = NULL;

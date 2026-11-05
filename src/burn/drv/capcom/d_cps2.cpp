@@ -15927,6 +15927,49 @@ struct BurnDriver BurnDrvCpsMvscdhc = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Marvel Vs. Capcom: Clash of Super Heroes (Hack, Heroes Reborn V0.3)
+
+static struct BurnRomInfo MvschrRomDesc[] = {
+	{ "mvchr.03a",     0x080000, 0x283c6b7a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvchr.04a",     0x080000, 0x28153025, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvchr.05a",     0x080000, 0xe20ca6b8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvchr.06a",     0x080000, 0xe44b6038, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvchr.07",      0x080000, 0xbdf522ad, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.08",        0x080000, 0xbc002fcd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvc.09",        0x080000, 0xc67b26df, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvchr.10",      0x080000, 0x2dad85e9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mvchr.13m",     0x400000, 0xe760e5ce, CPS2_GFX | BRF_GRA },
+	{ "mvchr.15m",     0x400000, 0x578b47eb, CPS2_GFX | BRF_GRA },
+	{ "mvchr.17m",     0x400000, 0x11f1426f, CPS2_GFX | BRF_GRA },
+	{ "mvchr.19m",     0x400000, 0x8252314f, CPS2_GFX | BRF_GRA },
+	{ "mvc.14m",       0x400000, 0x7f1df4e4, CPS2_GFX | BRF_GRA },
+	{ "mvc.16m",       0x400000, 0x90bd3203, CPS2_GFX | BRF_GRA },
+	{ "mvc.18m",       0x400000, 0x67aaf727, CPS2_GFX | BRF_GRA },
+	{ "mvc.20m",       0x400000, 0x8b0bade8, CPS2_GFX | BRF_GRA },
+
+	{ "mvc.01",        0x020000, 0x41629e95, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvc.02",        0x020000, 0x963abf6b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
+	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+
+	{ "mvsc.key",      0x000014, 0x7e101e09, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mvschr)
+STD_ROM_FN(Mvschr)
+
+struct BurnDriver BurnDrvCpsMvschr = {
+	"mvschr", "mvsc", NULL, NULL, "2026",
+	"Marvel Vs. Capcom: Clash of Super Heroes (Hack, Heroes Reborn V0.3)\0", NULL, "hack (N41)", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MvschrRomInfo, MvschrRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // X-Men Vs. Street Fighter (Easy Moves, Hack)
 // Modified by Blackheart
 // 20090422

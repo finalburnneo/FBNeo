@@ -19411,10 +19411,6 @@ void __fastcall GanbareTimeKeeperWriteWord(UINT32 a, UINT16 d)
 static void GanabareTimeKeeperTick()
 {
 	if ((GetCurrentFrame() % 60) == 0) TimeKeeperTick(); // refresh is 59.61
-	
-	SekOpen(0);
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	SekClose();
 }
 
 static INT32 GanbareScanCallback(INT32 nAction, INT32*)
@@ -19431,6 +19427,8 @@ static INT32 GanbareInit()
 	
 	INT32 nRet = DrvInit();
 	if (nRet) return nRet;
+
+	bCpsRasterCounters = 1;					// irq4 comes from the CPS-B-21 raster counters
 	
 	SekOpen(0);
 	SekMapHandler(1, 0xff0000, 0xffffff, MAP_RAM);

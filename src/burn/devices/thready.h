@@ -134,6 +134,10 @@ struct threadystruct
 		ok_to_thread = value;
 	}
 
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok && ok_to_thread && startup_frame <= 0;
+	}
 	void notify() {
 		if (startup_frame > 0) {
 			// run in synchronous mode for startup_frame frames
@@ -342,6 +346,11 @@ public:
 	}
 
 	// Notify the worker thread to execute the callback
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok.load(std::memory_order_acquire) && ok_to_thread.load(std::memory_order_acquire) && our_event && startup_frame <= 0;
+	}
+
 	void notify() {
 		if (startup_frame > 0) {
 			startup_frame--;
@@ -492,6 +501,10 @@ struct threadystruct
 		ok_to_thread = value;
 	}
 
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok && ok_to_thread && startup_frame <= 0;
+	}
 	void notify() {
 		if (startup_frame > 0) {
 			// run in synchronous mode for startup_frame frames
@@ -620,6 +633,10 @@ struct threadystruct
 		ok_to_thread = value;
 	}
 
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok && ok_to_thread && startup_frame <= 0;
+	}
 	void notify() {
 		if (startup_frame > 0) {
 			// run in synchronous mode for startup_frame frames
@@ -695,6 +712,9 @@ struct threadystruct
 			bprintf(0, _T("Thready: we can't thread on this platform yet.\n"));
 	}
 
+	INT32 is_threaded() {
+		return 0;
+	}
 	void notify() {
 		// fallback to single-threaded mode
 		our_callback();

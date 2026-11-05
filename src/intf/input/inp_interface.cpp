@@ -224,6 +224,25 @@ INT32 InputSelect(UINT32 nPlugIn)
 // ---------------------------------------------------------------------------
 // Rumble
 
+// Which player (1-based) an input belongs to, 0 if none.
+// nIdent only carries the player when szInfo is "pN ..."; inputs like "mouse x-axis"
+// (light guns, trackballs, ...) only have it in the name ("P1 Gun X"), so check that too.
+static UINT32 InputGetPlayer(struct GameInp* pgi, UINT32 i)
+{
+	UINT32 nPlayer = (pgi->nIdent >> 28) & 0x0f;
+
+	if (nPlayer == 0) {
+		struct BurnInputInfo bii;
+		memset(&bii, 0, sizeof(bii));
+
+		if (BurnDrvGetInputInfo(&bii, i) == 0 && bii.szName && bii.szName[0] == 'P' && bii.szName[1] >= '1' && bii.szName[1] <= '8') {
+			nPlayer = bii.szName[1] - '0';
+		}
+	}
+
+	return nPlayer;
+}
+
 // Find which joystick a player (0-based) is using, from the current input mapping.
 // Coin / start inputs are ignored. Returns -1 if the player isn't on a joystick.
 static INT32 InputPlayerToJoy(INT32 nPlayer)
@@ -236,10 +255,20 @@ static INT32 InputPlayerToJoy(INT32 nPlayer)
 	}
 
 	for (i = 0, pgi = GameInp; i < nGameInpCount; i++, pgi++) {
-		if (((pgi->nIdent >> 28) & 0x0f) != (UINT32)(nPlayer + 1)) {
-			continue;
+		switch (pgi->nInput) {							// only input types that can be on a joystick
+			case GIT_SWITCH:
+			case GIT_JOYSLIDER:
+			case GIT_JOYAXIS_FULL:
+			case GIT_JOYAXIS_NEG:
+			case GIT_JOYAXIS_POS:
+				break;
+			default:
+				continue;
 		}
 		if (pgi->nIdent & (GK_COIN | GK_START)) {
+			continue;
+		}
+		if (InputGetPlayer(pgi, i) != (UINT32)(nPlayer + 1)) {
 			continue;
 		}
 

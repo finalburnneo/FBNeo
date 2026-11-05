@@ -2419,6 +2419,8 @@ static INT32 OpwolfDoReset()
 	MSM5205ResetWrite(0, 1);
 	MSM5205ResetWrite(1, 1);
 
+	BurnRecoilReset();
+
 	nCyclesExtra[0] = nCyclesExtra[1] = nCyclesExtra[2] = nCyclesExtra[3] = 0;
 
 	return 0;
@@ -2725,6 +2727,7 @@ static void __fastcall Opwolf68KWriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x380000: {
 			PC090OJSpriteCtrl = (d & 0xe0) >> 5;
+			BurnRecoilLine(0, d & 3);	// MOTOR1/MOTOR2 -> Uzi recoil piston
 			return;
 		}
 
@@ -2834,6 +2837,7 @@ static void __fastcall Opwolfb68KWriteWord(UINT32 a, UINT16 d)
 	switch (a) {
 		case 0x380000: {
 			PC090OJSpriteCtrl = (d & 0xe0) >> 5;
+			BurnRecoilLine(0, d & 3);	// MOTOR1/MOTOR2 -> Uzi recoil piston
 			return;
 		}
 
@@ -4608,6 +4612,7 @@ static INT32 OpwolfInit()
 
 	// Reset the driver
 	TaitoResetFunction = OpwolfDoReset;
+	BurnRecoilInit(1, RECOIL_MACHINEGUN);
 	TaitoResetFunction();
 
 	return 0;
@@ -4728,6 +4733,7 @@ static INT32 OpwolfbInit()
 
 	// Reset the driver
 	TaitoResetFunction = OpwolfDoReset;
+	BurnRecoilInit(1, RECOIL_MACHINEGUN);
 	TaitoResetFunction();
 
 	return 0;
@@ -5238,6 +5244,8 @@ static INT32 TaitoMiscExit()
 
 	OpWolfGunXOffset = 0;
 	OpWolfGunYOffset = 0;
+
+	BurnRecoilExit();
 
 	DariusADPCMCommand = 0;
 	DariusNmiEnable = 0;
@@ -5839,6 +5847,8 @@ static INT32 TaitoMiscFrame()
 
 	if (pBurnDraw) BurnDrvRedraw();
 
+	BurnRecoilUpdate();
+
 	return 0;
 }
 
@@ -6010,6 +6020,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
 
 		if (bUseGuns) BurnGunScan();
+		BurnRecoilScan(nAction);
 		if (bUseShifter) BurnShiftScan(nAction);
 
 		SCAN_VAR(TaitoCpuACtrl);

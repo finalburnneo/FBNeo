@@ -802,3 +802,234 @@ void BurnGunDrawTargets()
 		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
 	}
 }
+
+
+// Gun recoil
+
+#define RECOIL_MAX_PLAYERS	4
+
+struct RecoilStep { UINT16 nStrong; UINT16 nWeak; };
+
+struct RecoilProfileDef {
+	const RecoilStep* pEnv;
+	INT32 nLen;				// frames
+	INT32 nAutoRate;		// while the recoil line is held: frames between shots (0 = one shot per edge)
+	INT32 nMinRetrigger;	// a new shot can't restart the envelope before this many frames (it's queued)
+};
+
+static const RecoilStep RecoilEnvHandgun[] = {
+	{ 0xffff, 0xffff }, { 0xb000, 0x6000 }, { 0x5000, 0x1800 }, { 0x1800, 0x0000 }
+};
+static const RecoilStep RecoilEnvMagnum[] = {
+	{ 0xffff, 0xffff }, { 0xffff, 0xc000 }, { 0xb000, 0x4000 }, { 0x7000, 0x1000 }, { 0x3800, 0x0000 }, { 0x1400, 0x0000 }
+};
+static const RecoilStep RecoilEnvShotgun[] = {
+	{ 0xffff, 0xffff }, { 0xffff, 0xffff }, { 0xffff, 0xa000 }, { 0xe000, 0x5000 }, { 0xb000, 0x2400 },
+	{ 0x8800, 0x0c00 }, { 0x6000, 0x0000 }, { 0x4000, 0x0000 }, { 0x2400, 0x0000 }, { 0x1000, 0x0000 }
+};
+static const RecoilStep RecoilEnvRifle[] = {
+	{ 0xffff, 0xffff }, { 0xd000, 0x7000 }, { 0x8000, 0x2000 }, { 0x4400, 0x0000 }, { 0x1800, 0x0000 }
+};
+static const RecoilStep RecoilEnvMachinegun[] = {
+	{ 0xe000, 0xffff }, { 0x9000, 0x7000 }, { 0x5000, 0x2000 }
+};
+static const RecoilStep RecoilEnvLaser[] = {
+	{ 0x4000, 0xffff }, { 0x2000, 0xc000 }, { 0x0800, 0x8000 }, { 0x0000, 0x4000 }, { 0x0000, 0x1800 }
+};
+static const RecoilStep RecoilEnvRocket[] = {
+	{ 0xffff, 0x8000 }, { 0xffff, 0x4000 }, { 0xffff, 0x2000 }, { 0xe000, 0x1000 }, { 0xc000, 0x0000 }, { 0xa000, 0x0000 },
+	{ 0x8000, 0x0000 }, { 0x6000, 0x0000 }, { 0x4800, 0x0000 }, { 0x3000, 0x0000 }, { 0x1c00, 0x0000 }, { 0x0c00, 0x0000 }
+};
+
+#define RECOIL_ENV(x)	x, (INT32)(sizeof(x) / sizeof(x[0]))
+
+static const RecoilProfileDef RecoilProfiles[RECOIL_PROFILE_COUNT] = {
+	{ RECOIL_ENV(RecoilEnvHandgun),    0, 2 },	// RECOIL_HANDGUN
+	{ RECOIL_ENV(RecoilEnvMagnum),     0, 3 },	// RECOIL_MAGNUM
+	{ RECOIL_ENV(RecoilEnvShotgun),    0, 4 },	// RECOIL_SHOTGUN
+	{ RECOIL_ENV(RecoilEnvRifle),      0, 2 },	// RECOIL_RIFLE
+	{ RECOIL_ENV(RecoilEnvMachinegun), 3, 3 },	// RECOIL_MACHINEGUN
+	{ RECOIL_ENV(RecoilEnvLaser),      0, 2 },	// RECOIL_LASER
+	{ RECOIL_ENV(RecoilEnvRocket),     0, 6 },	// RECOIL_ROCKET
+};
+
+struct RecoilVoice {
+	INT32 nProfile;			// -1 = idle
+	INT32 nPos;				// frame position in the envelope
+	INT32 nScale;			// per-shot strength variation, 0..0x10000
+};
+
+struct RecoilPlayer {
+	INT32 nProfile;			// this player's gun
+	INT32 nLine;			// current state of the recoil output line
+	INT32 nHeld;			// frames the line has been held
+	INT32 nPending;			// queued shot: profile + 1, 0 = none
+	RecoilVoice Voice[2];	// current shot + the tail of the previous one (they're mixed)
+};
+
+static RecoilPlayer RecoilState[RECOIL_MAX_PLAYERS];
+static INT32 nRecoilNumPlayers = 0;
+static UINT32 nRecoilRand = 0;	// deterministic (save-stated) variation
+static bool bRecoilInitted = false;
+
+static INT32 RecoilValidPlayer(INT32 nPlayer)
+{
+	return bRecoilInitted && nPlayer >= 0 && nPlayer < nRecoilNumPlayers;
+}
+
+static INT32 RecoilValidProfile(INT32 nProfile)
+{
+	return nProfile >= 0 && nProfile < RECOIL_PROFILE_COUNT;
+}
+
+void BurnRecoilReset()
+{
+	if (!bRecoilInitted) return;
+
+	for (INT32 i = 0; i < RECOIL_MAX_PLAYERS; i++) {
+		RecoilState[i].nLine = 0;
+		RecoilState[i].nHeld = 0;
+		RecoilState[i].nPending = 0;
+		RecoilState[i].Voice[0].nProfile = RecoilState[i].Voice[1].nProfile = -1;
+		RecoilState[i].Voice[0].nPos = RecoilState[i].Voice[1].nPos = 0;
+	}
+	nRecoilRand = 0x2545f491;
+}
+
+void BurnRecoilInit(INT32 nNumPlayers, INT32 nDefaultProfile)
+{
+	if (nNumPlayers > RECOIL_MAX_PLAYERS) nNumPlayers = RECOIL_MAX_PLAYERS;
+	if (nNumPlayers < 1) nNumPlayers = 1;
+	if (!RecoilValidProfile(nDefaultProfile)) nDefaultProfile = RECOIL_HANDGUN;
+
+	memset(RecoilState, 0, sizeof(RecoilState));
+	nRecoilNumPlayers = nNumPlayers;
+	bRecoilInitted = true;
+
+	for (INT32 i = 0; i < RECOIL_MAX_PLAYERS; i++) {
+		RecoilState[i].nProfile = nDefaultProfile;
+	}
+
+	BurnRecoilReset();
+}
+
+void BurnRecoilSetProfile(INT32 nPlayer, INT32 nProfile)
+{
+	if (!RecoilValidPlayer(nPlayer) || !RecoilValidProfile(nProfile)) return;
+
+	RecoilState[nPlayer].nProfile = nProfile;
+}
+
+void BurnRecoilExit()
+{
+	if (!bRecoilInitted) return;
+
+	for (INT32 i = 0; i < nRecoilNumPlayers; i++) {
+		BurnRumble(i, 0, 0);
+	}
+
+	memset(RecoilState, 0, sizeof(RecoilState));
+	nRecoilNumPlayers = 0;
+	bRecoilInitted = false;
+}
+
+void BurnRecoilScan(INT32 nAction)
+{
+	if (!bRecoilInitted) return;
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(RecoilState);
+		SCAN_VAR(nRecoilRand);
+	}
+}
+
+void BurnRecoilFireEx(INT32 nPlayer, INT32 nProfile)
+{
+	if (!RecoilValidPlayer(nPlayer) || !RecoilValidProfile(nProfile)) return;
+
+	RecoilState[nPlayer].nPending = nProfile + 1;	// max. one queued shot
+}
+
+void BurnRecoilFire(INT32 nPlayer)
+{
+	if (!RecoilValidPlayer(nPlayer)) return;
+
+	BurnRecoilFireEx(nPlayer, RecoilState[nPlayer].nProfile);
+}
+
+void BurnRecoilLine(INT32 nPlayer, INT32 nState)
+{
+	if (!RecoilValidPlayer(nPlayer)) return;
+
+	RecoilPlayer* p = &RecoilState[nPlayer];
+	nState = nState ? 1 : 0;
+
+	if (nState && !p->nLine) {			// rising edge: fire (caught even if the pulse is shorter than a frame)
+		BurnRecoilFire(nPlayer);
+		p->nHeld = 0;
+	}
+
+	p->nLine = nState;
+}
+
+static void RecoilStartShot(RecoilPlayer* p, INT32 nProfile)
+{
+	p->Voice[1] = p->Voice[0];			// the previous shot keeps decaying underneath
+
+	nRecoilRand = nRecoilRand * 1103515245 + 12345;
+	p->Voice[0].nProfile = nProfile;
+	p->Voice[0].nPos = 0;
+	p->Voice[0].nScale = 0xe800 + ((nRecoilRand >> 16) % 0x1801);	// ~91% .. 100%
+}
+
+void BurnRecoilUpdate()
+{
+	if (!bRecoilInitted) return;
+
+	for (INT32 i = 0; i < nRecoilNumPlayers; i++) {
+		RecoilPlayer* p = &RecoilState[i];
+		const RecoilProfileDef* pDef = &RecoilProfiles[p->nProfile];
+
+		// automatic fire while the line is held (machine guns)
+		if (p->nLine) {
+			if (p->nHeld > 0 && pDef->nAutoRate && (p->nHeld % pDef->nAutoRate) == 0) {
+				p->nPending = p->nProfile + 1;
+			}
+			p->nHeld++;
+		} else {
+			p->nHeld = 0;
+		}
+
+		// start a queued shot, once the current one has had its minimum time
+		if (p->nPending) {
+			RecoilVoice* v = &p->Voice[0];
+			if (v->nProfile < 0 || v->nPos >= RecoilProfiles[v->nProfile].nMinRetrigger) {
+				RecoilStartShot(p, p->nPending - 1);
+				p->nPending = 0;
+			}
+		}
+
+		// mix the voices (max) and advance them
+		INT32 nStrong = 0, nWeak = 0;
+
+		for (INT32 j = 0; j < 2; j++) {
+			RecoilVoice* v = &p->Voice[j];
+			if (v->nProfile < 0) continue;
+
+			const RecoilProfileDef* pVoiceDef = &RecoilProfiles[v->nProfile];
+			if (v->nPos >= pVoiceDef->nLen) {
+				v->nProfile = -1;
+				continue;
+			}
+
+			INT32 s = (INT32)(((UINT32)pVoiceDef->pEnv[v->nPos].nStrong * (UINT32)v->nScale) >> 16);
+			INT32 w = (INT32)(((UINT32)pVoiceDef->pEnv[v->nPos].nWeak * (UINT32)v->nScale) >> 16);
+			if (s > nStrong) nStrong = s;
+			if (w > nWeak) nWeak = w;
+
+			v->nPos++;
+		}
+
+		BurnRumble(i, nStrong, nWeak);
+	}
+}

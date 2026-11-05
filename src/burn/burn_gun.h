@@ -95,3 +95,43 @@ void BurnTrackballSetResetDefault(INT32 nDefault); // default is 0
 
 #define BurnTrackballExit BurnGunExit
 #define BurnTrackballScan BurnGunScan
+
+// ---------------------------------------------------------------------------
+// Gun recoil (force feedback through BurnRumble)
+//
+// Usage:
+//   Init:   BurnRecoilInit(2, RECOIL_MACHINEGUN);     (players 0..3, default profile for all)
+//           BurnRecoilSetProfile(1, RECOIL_SHOTGUN);   (optional, per player)
+//   Reset:  BurnRecoilReset();
+//   Fire:   BurnRecoilLine(player, state)   - feed a recoil solenoid / piston output line from
+//                                             the hardware, at write time. A shot fires on the
+//                                             rising edge, and machine guns keep cycling at the
+//                                             profile's rate while the line is held.
+//           BurnRecoilFire(player)          - fire one shot of the player's profile
+//           BurnRecoilFireEx(player, prof)  - fire one shot of a given profile (grenade, etc)
+//   Frame:  BurnRecoilUpdate();             - once per frame, at the end of the frame function
+//   Scan:   BurnRecoilScan(nAction);        - in the driver's scan function
+//   Exit:   BurnRecoilExit();
+// All functions are safe to call when BurnRecoilInit() wasn't called (they do nothing),
+// so shared driver code can call Update / Scan / Reset / Exit unconditionally.
+
+enum BurnRecoilProfile {
+	RECOIL_HANDGUN = 0,		// 9mm pistol: sharp, short snap
+	RECOIL_MAGNUM,			// heavy revolver: big kick, short tail
+	RECOIL_SHOTGUN,			// huge shove, long rolling tail
+	RECOIL_RIFLE,			// crisp crack with a medium thump
+	RECOIL_MACHINEGUN,		// Uzi / SMG / MG: short punches, cycles ~20 shots/sec while held
+	RECOIL_LASER,			// sci-fi blaster: high-frequency zap, little thump
+	RECOIL_ROCKET,			// rocket / grenade launcher: heavy launch thump and long rumble
+	RECOIL_PROFILE_COUNT
+};
+
+void BurnRecoilInit(INT32 nNumPlayers, INT32 nDefaultProfile);
+void BurnRecoilSetProfile(INT32 nPlayer, INT32 nProfile);
+void BurnRecoilExit();
+void BurnRecoilReset();
+void BurnRecoilScan(INT32 nAction);
+void BurnRecoilLine(INT32 nPlayer, INT32 nState);
+void BurnRecoilFire(INT32 nPlayer);
+void BurnRecoilFireEx(INT32 nPlayer, INT32 nProfile);
+void BurnRecoilUpdate();

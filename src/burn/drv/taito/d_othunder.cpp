@@ -265,6 +265,8 @@ static INT32 OthunderDoReset()
 {
 	TaitoDoReset();
 
+	BurnRecoilReset();
+
 	return 0;
 }
 
@@ -288,6 +290,8 @@ static void OthunderInputBypassWrite(INT32 Offset, UINT16 Data)
 	switch (Offset) {
 		case 0x03: {
 			EEPROMWrite(Data & 0x20, Data & 0x10, Data & 0x40);
+			BurnRecoilLine(0, Data & 0x01);		// SOL-1 gun solenoid
+			BurnRecoilLine(1, Data & 0x02);		// SOL-2 gun solenoid
 			return;
 		}
 
@@ -655,6 +659,7 @@ static INT32 OthunderInit()
 	TaitoFlipScreenX = 1;
 
 	BurnGunInit(2, true);
+	BurnRecoilInit(2, RECOIL_MACHINEGUN);
 
 	// Reset the driver
 	OthunderDoReset();
@@ -664,6 +669,7 @@ static INT32 OthunderInit()
 
 static INT32 OthunderExit()
 {
+	BurnRecoilExit();
 	TaitoExit();
 
 	return 0;
@@ -926,6 +932,8 @@ static INT32 OthunderFrame()
 
 	if (pBurnDraw) BurnDrvRedraw();
 
+	BurnRecoilUpdate();
+
 	return 0;
 }
 
@@ -954,6 +962,7 @@ static INT32 OthunderScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2610Scan(nAction, pnMin);
 
 		BurnGunScan();
+		BurnRecoilScan(nAction);
 
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(ad_irq_cyc);

@@ -1628,3 +1628,101 @@ struct BurnDriver BurnDrvCpsVhunt2s03 = {
 	VampireArrangeInit, Cps2PlusExit, Cps2Frame, CpsRedraw, Cps2PlusScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+// Street Fighter Alpha / Zero 3 Upper backport
+static INT32 UpperBackportInit()
+{
+	return Cps2PlusInit(25);
+}
+
+static struct BurnRomInfo Sfa3upRomDesc[] = {
+	{ "sz3upu.03c", 0x80000, 0x7915c758, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upu.04c", 0x80000, 0x5f1f6a5f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3up.05c", 0x80000, 0xe88579d0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3up.06c", 0x80000, 0x72ea9db2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3up.07c", 0x80000, 0x1c11e502, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upu.08c", 0x80000, 0xfcdd63d4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upu.09c", 0x80000, 0x9c05a8db, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upu.10b", 0x80000, 0x7e55f9dd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upu.prg", 0x400000, 0x49f89c7d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upu.13m", 0x400000, 0x61becdec, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.15m", 0x400000, 0xaf681c33, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.17m", 0x400000, 0x0c285d90, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.19m", 0x400000, 0xc7668d4f, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.14m", 0x400000, 0x8b0ff042, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.16m", 0x400000, 0x45b9ef07, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.18m", 0x400000, 0x96efde1e, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.20m", 0x400000, 0xfa4ba5de, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c9", 0x400000, 0x29f889bf, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c10", 0x400000, 0x677c42d4, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c11", 0x400000, 0x54908458, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c12", 0x400000, 0xf112bbe0, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c13", 0x400000, 0xce032f1b, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c14", 0x400000, 0x02441263, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c15", 0x400000, 0x5d4a533b, CPS2_GFX | BRF_GRA },
+	{ "sz3upu.c16", 0x400000, 0xd908a66e, CPS2_GFX | BRF_GRA },
+	{ "sz3up.01", 0x20000, 0x66064fde, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3up.02", 0x20000, 0x92270c80, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3up.z80", 0x40000, 0x08785e94, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.11m", 0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m", 0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	{ "sz3up.q3", 0x1800000, 0x3338dcbc, CPS2_QSND | BRF_SND },
+	{ "sfz3j.key", 0x14, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
+};
+STD_ROM_PICK(Sfa3up)
+STD_ROM_FN(Sfa3up)
+struct BurnDriver BurnDrvCpsSfa3up = {
+	"sfa3up", "sfa3", NULL, NULL, "2026",
+	"Street Fighter Alpha 3 Upper (Hack, USA RC1)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfa3upRomInfo, Sfa3upRomName, NULL, NULL, NULL, NULL, Cps2CustomInputInfo, NULL,
+	UpperBackportInit, Cps2PlusExit, Cps2Frame, CpsRedraw, Cps2PlusScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+static struct BurnRomInfo Sfz3upRomDesc[] = {
+	{ "sz3upj.03c", 0x80000, 0xfcd838fd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upj.04c", 0x80000, 0x34a998eb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3up.05c", 0x80000, 0xe88579d0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3up.06c", 0x80000, 0x72ea9db2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3up.07c", 0x80000, 0x1c11e502, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upj.08c", 0x80000, 0xafac9595, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upj.09c", 0x80000, 0x3631fa4e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upj.10b", 0x80000, 0xdcf1f0a1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upj.prg", 0x400000, 0x724978c8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz3upj.13m", 0x400000, 0x007da368, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.15m", 0x400000, 0xdbcb4662, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.17m", 0x400000, 0xc0a990d3, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.19m", 0x400000, 0xd099bd8e, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.14m", 0x400000, 0xc8290ab1, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.16m", 0x400000, 0xae1172ca, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.18m", 0x400000, 0x35dcf0a0, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.20m", 0x400000, 0xa7a364e4, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c9", 0x400000, 0xf3026e14, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c10", 0x400000, 0x775f7fab, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c11", 0x400000, 0x2645a852, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c12", 0x400000, 0xe93fa063, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c13", 0x400000, 0xae1cd7b3, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c14", 0x400000, 0xb42a03bf, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c15", 0x400000, 0x0339e89c, CPS2_GFX | BRF_GRA },
+	{ "sz3upj.c16", 0x400000, 0x03c0ac9c, CPS2_GFX | BRF_GRA },
+	{ "sz3up.01", 0x20000, 0x66064fde, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3up.02", 0x20000, 0x92270c80, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3up.z80", 0x40000, 0x08785e94, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sz3.11m", 0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
+	{ "sz3.12m", 0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	{ "sz3up.q3", 0x1800000, 0x3338dcbc, CPS2_QSND | BRF_SND },
+	{ "sfz3j.key", 0x14, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
+};
+STD_ROM_PICK(Sfz3up)
+STD_ROM_FN(Sfz3up)
+struct BurnDriver BurnDrvCpsSfz3up = {
+	"sfz3up", "sfa3", NULL, NULL, "2026",
+	"Street Fighter Zero 3 Upper (Hack, Japan RC1)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Sfz3upRomInfo, Sfz3upRomName, NULL, NULL, NULL, NULL, Cps2CustomInputInfo, NULL,
+	UpperBackportInit, Cps2PlusExit, Cps2Frame, CpsRedraw, Cps2PlusScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};

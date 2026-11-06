@@ -16879,7 +16879,7 @@ static struct BurnRomInfo MshvsfexjRomDesc[] = {
 	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
 	{ "mvs.20m",		0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
 
-	{ "mvsex.01",			0x020000, 0x4712c830, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvsex.01",		0x020000, 0x4712c830, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "mvs.02",			0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "mvs.11m",		0x400000, 0x86219770, CPS2_QSND | BRF_SND },

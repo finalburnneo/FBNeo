@@ -498,9 +498,7 @@ static const UINT16 arm7_cond_lut[16] = {
 	0xf0f0, 0x0f0f, 0xcccc, 0x3333, 0xff00, 0x00ff, 0xaaaa, 0x5555,
 	0x0c0c, 0xf3f3, 0xaa55, 0x55aa, 0x0a05, 0xf5fa, 0xffff, 0xffff
 };
-
-// Condition check against an already-loaded CPSR (the main loop reuses it).
-static inline bool arm7_check_cond_code_cpsr(UINT32 cpsr, UINT32 opcode)
+SB_ALWAYS_INLINE bool arm7_check_cond_code_cpsr(UINT32 cpsr, UINT32 opcode)
 {
 	UINT32 cond_code = ARM7_BFE(opcode, 28, 4);
 	if (SB_LIKELY(cond_code == 0xe))

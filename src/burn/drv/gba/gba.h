@@ -91,7 +91,7 @@ static inline UINT32 sb_ring_buffer_size(sb_ring_buffer_t* buff)
 		buff->write_ptr -= SB_AUDIO_RING_BUFFER_SIZE;
 		buff->read_ptr  -= SB_AUDIO_RING_BUFFER_SIZE;
 	}
-	return (buff->write_ptr - buff->read_ptr) % SB_AUDIO_RING_BUFFER_SIZE;
+	return (buff->write_ptr - buff->read_ptr) & (SB_AUDIO_RING_BUFFER_SIZE - 1);
 }
 
 typedef struct {
@@ -261,7 +261,7 @@ typedef struct {
 #define GBA_LCD_W							240
 #define GBA_LCD_H							160
 #define GBA_SWAPCHAIN_SIZE					4
-#define GBA_AUDIO_DMA_ACTIVATE_THRESHOLD	12
+#define GBA_AUDIO_DMA_ACTIVATE_THRESHOLD	16
 
 // Interrupt sources
 #define GBA_INT_LCD_VBLANK		0
@@ -476,21 +476,24 @@ typedef struct {
 	bool   use_length[4];
 	bool   active[4];
 	bool   powered[4];
-	float  chan_t[4];
+	UINT32 ch_phase[4];   //All four channels use 1.31 fixed-point phase; carry = one cycle tick.
+	UINT32 ch_step[4];    //Per-sample phase increment in 1.31 fixed point.
 	UINT16 lfsr4;
 } gba_frame_sequencer_t;
 
 typedef struct {
 		struct {
-			INT8  data[64];
+			INT8  data[32];
 			INT32 read_ptr;
 			INT32 write_ptr;
+			INT8  latch;   //Sample currently being output (consumed on timer overflow).
 		} fifo[2];
 	double current_sim_time;
 	double current_sample_generated_time;
-	double wave_cycles;		// 4 MHz nibble-timer ticks accumulated toward the next wave nibble
-	UINT16 wave_sample_offset;	// Index of the last consumed nibble within wave_play[]
-	UINT8  curr_wave_sample;	// High/low nibble (0..15) currently being output
+	UINT32 wave_phase;    //ch3 waveform cursor in 1.31 fixed point; carry = one nibble.
+	UINT32 wave_step_u32; //Per-sample nibble advance for ch3 in 1.31 fixed point.
+	UINT16 wave_nibble_offset;
+	UINT8  wave_nibble;   //Current nibble (0..15) being output by ch3.
 	float  capacitor_l;
 	float  capacitor_r;
 	gba_frame_sequencer_t sequencer;
@@ -499,16 +502,17 @@ typedef struct {
 	//playing, while this holds the bank selected by SOUND3CNT_L bit6.
 	UINT8  wave_play[16];
 	UINT8  wave_play_bank;
-	//BLEP residual buffers for square channels 1/2; blep_idx is the ring head.
+	//BLEP residual buffers for square channels 0/1; blep_idx is the ring head.
 	float  blep_buf[2][64];
 	UINT8  blep_idx[2];
+	//One-pole LPF state per channel.
+	float  lpf_l, lpf_r;
 } gba_audio_t;
 
 typedef struct {
 	INT32 ticks_till_transfer_done;
 	bool  last_active;
 } gba_sio_t;
-
 
 typedef struct {
 	UINT16 dac;

@@ -59,9 +59,209 @@ void gba_cpu_trigger_breakpoint(void* data);
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);
 void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worker_t* worker);
 
-// Fast variant of gbacpu.h's arm7_exec_instruction: the tail prefetch reads call
-// arm7_read{32,16}_seq directly (static inline here, after gbabus.h) instead of
-// going through cpu->read*_seq.
+// Fast exec path: same semantics as gbacpu.h equivalents, but all prefetches
+// call arm7_read{32,16}_seq directly (visible here after gbabus.h) instead of
+// through the cpu->read*_seq function pointer set by gba_ptrs_init.
+static inline void arm7_fill_pipeline_fast(arm7_t* cpu, gba_t* gba)
+{
+	if (arm7_get_thumb_bit(cpu)) {
+		cpu->registers[PC] &= ~1;
+		cpu->prefetch_opcode[cpu->phase] = arm7_read16_seq(gba, cpu->registers[PC] + 2 * cpu->phase, cpu->phase != 0);
+	} else {
+		cpu->registers[PC] &= ~3;
+		cpu->prefetch_opcode[cpu->phase] = arm7_read32_seq(gba, cpu->registers[PC] + 4 * cpu->phase, cpu->phase != 0);
+	}
+	++cpu->phase;
+	if (cpu->phase != 2)
+		return;
+	cpu->phase        = 0;
+	cpu->phased_op_id = 0;
+	cpu->prefetch_pc  = cpu->registers[PC];
+	cpu->next_fetch_sequential = true;
+}
+
+// Fast ARM load/store and block-transfer handlers: bus accesses go through
+// the inline arm7_read/write helpers (visible after gbabus.h) instead of
+// cpu->read*/write* function pointers; SDT/BDT dominate BIOS decompression.
+static inline void arm7_single_word_transfer_fast(arm7_t* cpu, gba_t* gba, UINT32 opcode)
+{
+	bool I   = ARM7_BFE(opcode, 25, 1);
+	bool P   = ARM7_BFE(opcode, 24, 1);
+	bool U   = ARM7_BFE(opcode, 23, 1);
+	bool B   = ARM7_BFE(opcode, 22, 1);
+	bool W   = ARM7_BFE(opcode, 21, 1);
+	bool L   = ARM7_BFE(opcode, 20, 1);
+	INT32 Rn = ARM7_BFE(opcode, 16, 4);
+	INT32 carry;
+	INT32 offset = I == 0 ? ARM7_BFE(opcode, 0, 12) :
+	arm7_load_shift_reg(cpu, opcode, &carry);
+
+	UINT64 Rd = ARM7_BFE(opcode, 12, 4);
+	UINT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
+	INT32 increment = U ? offset : -offset;
+
+	if (P)
+		addr += increment;
+
+	if (L == 0) {
+		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, 8);
+		if (B == 1)
+			arm7_write8(gba, addr, (UINT8)data);
+		else
+			arm7_write32(gba, addr, data);
+	}
+
+	UINT32 write_back_addr = addr;
+	if (!P) {
+		write_back_addr += increment;
+		W = true;
+	}
+	if (W)
+		arm7_reg_write(cpu, Rn, write_back_addr);
+
+	if (L == 1) {
+		UINT32 data = B ? arm7_read8(gba, addr) : arm7_rotr(arm7_read32(gba, addr), (addr & 0x3) * 8);
+		arm7_reg_write(cpu, Rd, data);
+		cpu->i_cycles += 1;
+	}
+}
+
+SB_ALWAYS_INLINE void arm7_block_transfer_decoded_fast(arm7_t* cpu, gba_t* gba,
+	INT32 P, INT32 U, INT32 S, INT32 W, INT32 L, INT32 Rn, UINT32 reglist)
+{
+	if (cpu->phase == 0) {
+		INT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
+		INT32 increment = U ? 4 : -4;
+		INT32 num_regs  = 0;
+		for (INT32 i = 0; i < 16; ++i)
+			if (ARM7_BFE(reglist, i, 1) == 1)
+				num_regs += 1;
+		INT32 base_addr = addr;
+		if (reglist == 0) {
+			reglist  = 1 << 15;
+			num_regs = 16;
+		}
+		if (!U)
+			base_addr += (num_regs)*increment;
+		addr = base_addr;
+		if (U)
+			base_addr += (num_regs)*increment;
+		cpu->block.base_addr = base_addr;
+
+		if (!(P ^ U))
+			addr += 4;
+		cpu->block.cycle     = 0;
+		cpu->block.addr      = addr;
+		cpu->block.r15_off   = arm7_get_thumb_bit(cpu) ? 4 : 8;
+		cpu->block.last_bank = -1;
+	}
+	bool user_bank_transfer;
+	if (SB_UNLIKELY(cpu->phase != 0)) {
+		user_bank_transfer = cpu->block.fwd_user_bank;
+	} else {
+		user_bank_transfer = S && (!L || !SB_BFE(reglist, 15, 1));
+		cpu->block.fwd_user_bank = user_bank_transfer;
+		cpu->block.fwd_s    = (UINT32)S;
+		cpu->block.fwd_w    = (UINT32)W;
+		cpu->block.fwd_l    = (UINT32)L;
+		cpu->block.fwd_rn   = (UINT32)Rn;
+		cpu->block.fwd_list = reglist;
+		cpu->block.fwd_resume = (0xeu << 28) | (4u << 25)
+			| ((UINT32)P << 24) | ((UINT32)U << 23) | ((UINT32)S << 22)
+			| ((UINT32)W << 21) | ((UINT32)L << 20) | ((UINT32)Rn << 16) | reglist;
+	}
+
+	for (INT32 i = cpu->phase; i < 16; ++i) {
+		if (ARM7_BFE(reglist, i, 1) == 0)
+			continue;
+
+		INT32 reg_index = user_bank_transfer ? i : arm7_reg_index(cpu, i);
+		INT32 a = cpu->block.addr;
+		if ((a & 0xfe000000) != 0x0e000000)
+			a &= ~3;
+		if (!L)
+			arm7_write32(gba, a, cpu->registers[reg_index] + (i == 15 ? cpu->block.r15_off : 0));
+
+		if (++cpu->block.cycle == 1 && W) {
+			arm7_reg_write(cpu, Rn, cpu->block.base_addr);
+		}
+
+		if (L) {
+			INT32 bank = ARM7_BFE(a, 24, 8);
+			cpu->registers[reg_index] = arm7_read32_seq(gba, a, bank == cpu->block.last_bank);
+			cpu->block.last_bank = bank;
+		}
+
+		cpu->block.addr += 4;
+
+		if (L && S && i == 15) {
+			cpu->registers[CPSR] = arm7_reg_read(cpu, SPSR);
+		}
+		cpu->phased_op_id   = ARM_PHASED_BLOCK_TRANSFER;
+		cpu->phased_opcode  = cpu->block.fwd_resume;
+		cpu->phase = i + 1;
+		return;
+	}
+	if (L)
+		cpu->i_cycles += 1;
+	cpu->phase = 0;
+	cpu->phased_op_id = 0;
+}
+
+static inline void arm7_block_transfer_fast(arm7_t* cpu, gba_t* gba, UINT32 opcode)
+{
+	INT32 P       = ARM7_BFE(opcode, 24,  1);
+	INT32 U       = ARM7_BFE(opcode, 23,  1);
+	INT32 S       = ARM7_BFE(opcode, 22,  1);
+	INT32 w       = ARM7_BFE(opcode, 21,  1);
+	INT32 L       = ARM7_BFE(opcode, 20,  1);
+	INT32 Rn      = ARM7_BFE(opcode, 16,  4);
+	INT32 reglist = ARM7_BFE(opcode,  0, 16);
+	arm7_block_transfer_decoded_fast(cpu, gba, P, U, S, w, L, Rn, (UINT32)reglist);
+}
+
+static inline void arm7_block_transfer_resume_fast(arm7_t* cpu, gba_t* gba)
+{
+	UINT32 resume = cpu->block.fwd_resume;
+	arm7_block_transfer_decoded_fast(cpu, gba,
+		0, 0,
+		(INT32)((resume >> 22) & 1), (INT32)((resume >> 21) & 1),
+		(INT32)((resume >> 20) & 1), (INT32)((resume >> 16) & 0xf),
+		resume & 0xffff);
+}
+
+// Route ARM SDT (top3=2, or top3=3 with bit4=0) and BDT (top3=4) to the
+// fast handlers; everything else falls back to the shared lookup table.
+static inline bool arm7_dispatch_opcode_fast(arm7_t* cpu, gba_t* gba, UINT32 opcode)
+{
+	UINT32 top3 = (opcode >> 25) & 0x7;
+	if (SB_LIKELY(top3 == 2 || (top3 == 3 && !(opcode & 0x10)))) {
+		arm7_single_word_transfer_fast(cpu, gba, opcode);
+		return true;
+	}
+	if (SB_LIKELY(top3 == 4)) {
+		arm7_block_transfer_fast(cpu, gba, opcode);
+		return true;
+	}
+	return false;
+}
+
+static inline bool arm7_run_phased_opcode_fast(arm7_t* cpu, gba_t* gba)
+{
+	switch (cpu->phased_op_id) {
+		case ARM_PHASED_FILL_PIPE:
+			arm7_fill_pipeline_fast(cpu, gba);
+			break;
+		case ARM_PHASED_BLOCK_TRANSFER:
+			arm7_block_transfer_resume_fast(cpu, gba);
+			break;
+		default:
+			cpu->phased_op_id = 0;
+			return true;
+	}
+	return false;
+}
+
 static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 {
 	gba_t* gba = (gba_t*)cpu->user_data;
@@ -70,7 +270,7 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 	bool thumb  = SB_BFE(cpsr, 5, 1);
 	bool run_opcode = true;
 	if (cpu->phased_op_id != ARM_PHASED_NONE) {
-		run_opcode = arm7_run_phased_opcode(cpu);
+		run_opcode = arm7_run_phased_opcode_fast(cpu, gba);
 	}
 	if (run_opcode) {
 		if (SB_UNLIKELY(cpu->wait_for_interrupt)) {
@@ -87,8 +287,10 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 			cpu->registers[PC] = pc;
 			cpu->prefetch_pc = pc;
 			if (SB_LIKELY(arm7_check_cond_code_cpsr(cpsr, opcode))) {
-				UINT32 key = ((opcode >> 4) & 0xf) | ((opcode >> 16) & 0xff0);
-				arm7_lookup_table[key](cpu, opcode);
+				if (!arm7_dispatch_opcode_fast(cpu, gba, opcode)) {
+					UINT32 key = ((opcode >> 4) & 0xf) | ((opcode >> 16) & 0xff0);
+					arm7_lookup_table[key](cpu, opcode);
+				}
 			}
 		} else {
 			pc = cpu->registers[PC] + 2;
@@ -698,8 +900,8 @@ INT32 GbaCoreRenderAudio(GbaCore *core, INT16 *stereo, INT32 frames)
 	INT32 available = GbaCoreSourceFramesAvailable(core);
 	INT32 produced  = available < frames ? available : frames;
 	for (INT32 i = 0; i < produced; i++) {
-		UINT32 left  = ring->read_ptr++ % SB_AUDIO_RING_BUFFER_SIZE;
-		UINT32 right = ring->read_ptr++ % SB_AUDIO_RING_BUFFER_SIZE;
+		UINT32 left  = ring->read_ptr++ & (SB_AUDIO_RING_BUFFER_SIZE - 1);
+		UINT32 right = ring->read_ptr++ & (SB_AUDIO_RING_BUFFER_SIZE - 1);
 		if (stereo != NULL) {
 			stereo[i * 2 + 0] = ring->data[left];
 			stereo[i * 2 + 1] = ring->data[right];

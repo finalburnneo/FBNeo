@@ -324,33 +324,12 @@ static inline UINT32 arm7_read16(void* user_data, UINT32 address)
 
 SB_ALWAYS_INLINE UINT32 arm7_read32_seq(void* user_data, UINT32 address, bool seq)
 {
-	// ROM/simple-RAM read fast path; covers sequential fetches, branch
-	// targets and LDM data loads. Callers handle GPIO/side effects.
-	gba_t* gba = (gba_t*)user_data;
-	UINT32 word;
-	if (SB_LIKELY(gba_rom_fast_path_word(gba, address, true, &word)
-			|| gba_simple_ram_fast_path_word(gba, address, &word))) {
-		gba_compute_access_cycles(gba, address, seq ? 2 : 3);
-		gba->mem.openbus_word = word;
-		return gba->mem.openbus_word;
-	}
 	gba_compute_access_cycles((gba_t*)user_data, address, seq ? 2 : 3);
 	return gba_read32((gba_t*)user_data, address);
 }
 
 SB_ALWAYS_INLINE UINT32 arm7_read16_seq(void* user_data, UINT32 address, bool seq)
 {
-	// ROM/simple-RAM read fast path; see arm7_read32_seq.
-	gba_t* gba = (gba_t*)user_data;
-	UINT32 word;
-	bool is_rom = gba_rom_fast_path_word(gba, address, true, &word);
-	if (SB_LIKELY(is_rom || gba_simple_ram_fast_path_word(gba, address, &word))) {
-		gba_compute_access_cycles(gba, address, seq ? 0 : 1);
-		UINT16 res16 = (UINT16)(word >> GUEST_HALF_SHIFT(address));
-		// ROM mirrors the halfword on the bus; RAM leaves the whole word
-		gba->mem.openbus_word = is_rom ? ((UINT32)res16 * 0x10001u) : word;
-		return (UINT32)res16;
-	}
 	gba_compute_access_cycles((gba_t*)user_data, address, seq ? 0 : 1);
 	return gba_read16((gba_t*)user_data, address);
 }
@@ -679,20 +658,21 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba_update_interrupt_pending(gba);
 		return true;
 	} else if (address_u32 == GBA_SOUNDCNT_L) {
-		//High half of a 32-bit (or unaligned 16-bit) write targets SOUNDCNT_H:
-		//honor the FIFO reset W1 bits (bit11 for FIFO A, bit15 for FIFO B).
-		if (word_mask & 0xffff0000) {
-			UINT16 soundcnt_h = word_data >> 16;
-			for (INT32 i = 0;i < 2;++i) {
-				if (SB_BFE(soundcnt_h, 11 + i * 4, 1)) {
-					gba->audio.fifo[i].read_ptr  = 0;
-					gba->audio.fifo[i].write_ptr = 0;
-					for (INT32 d = 0;d < 32;++d)
-						gba->audio.fifo[i].data[d] = 0;
-					word_data &= ~(1u << (27 + i * 4));
-				}
+		//FIFO reset bits are W1C: bit11 for FIFO A (low word of SOUNDCNT_H),
+		//bit15 for FIFO B (high byte of SOUNDCNT_H).
+		for (INT32 i = 0; i < 2; ++i) {
+			UINT32 reset_bit = 1u << (11 + i * 4);
+			if ((word_mask >> 16) & reset_bit & (word_data >> 16)) {
+				gba->audio.fifo[i].read_ptr  = 0;
+				gba->audio.fifo[i].write_ptr = 0;
+				gba->audio.fifo[i].latch     = 0;
+				word_data &= ~(reset_bit << 16);
 			}
 		}
+		//Merge and store both halves; FIFO reset bits are cleared above.
+		UINT32 old = gba_io_read32(gba, GBA_SOUNDCNT_L);
+		gba_io_store32(gba, GBA_SOUNDCNT_L, (old & ~word_mask) | (word_data & word_mask));
+		return true;
 	} else if (address_u32 == GBA_TM0CNT_L || address_u32 == GBA_TM1CNT_L || address_u32 == GBA_TM2CNT_L || address_u32 == GBA_TM3CNT_L) {
 		gba_compute_timers(gba);
 		INT32 timer_off = (address_u32 - GBA_TM0CNT_L) / 4;
@@ -779,8 +759,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba_audio_apply_writes(gba);
 		return true;
 	} else if (address_u32 >= GBA_WAVE_RAM && address_u32 < GBA_WAVE_RAM + 16) {
-		//Wave RAM bytes are stored by the byte write itself (it relocates them
-		//while ch3 plays); storing again here would corrupt the sample pointer.
+		//Wave RAM: the byte write already relocates samples, no extra store needed.
 		for (INT32 i = 0;i < 4;++i) {
 			if (word_mask & (0xffu << (i * 8))) {
 				(void)gba_audio_process_reg_write(gba, address_u32 + i, SB_BFE(word_data, (i * 8), 8));

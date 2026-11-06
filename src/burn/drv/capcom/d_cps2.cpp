@@ -18108,3 +18108,40 @@ struct BurnDriver BurnDrvCpsUsf2j = {
 	Usf2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+
+static struct BurnRomInfo Hsf2reRomDesc[] = {
+	{ "hs2re.03c",      0x080000, 0xc773cb30, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2re.04b",      0x080000, 0x008c3478, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.05",       0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.06",       0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.07",       0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.08",       0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.09",       0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2re.10",       0x080000, 0x49529980, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "hs2re.13m" ,      0x800000, 0x448c3ede, CPS2_GFX | BRF_GRA },
+	{ "hs2re.15m",       0x800000, 0x642e11ec, CPS2_GFX | BRF_GRA },
+	{ "hs2re.17m",       0x800000, 0x0aeb0c24, CPS2_GFX | BRF_GRA },
+	{ "hs2re.19m",       0x800000, 0x180c1a31, CPS2_GFX | BRF_GRA },
+
+	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+
+	{ "hsf2j.key",     0x000014, 0x19455a93, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Hsf2re)
+STD_ROM_FN(Hsf2re)
+
+struct BurnDriver BurnDrvCpsHsf2re = {
+	"hsf2re", "hsf2", NULL, NULL, "2026",
+	"Hyper Street Fighter II: The Anniversary Edition (English Restoration, 2026-11-05)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Hsf2reRomInfo, Hsf2reRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};

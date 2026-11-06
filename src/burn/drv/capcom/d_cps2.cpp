@@ -12741,6 +12741,48 @@ struct BurnDriver BurnDrvCpsXmcotabh = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// X-Men vs Street Fighter PLUS (Europe 961004, v1.0, Hack)
+
+static struct BurnRomInfo XmvsfplusRomDesc[] = {
+	{ "xvsplus.03f",	0x080000, 0x5ad5cbcc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsplus.04f",	0x080000, 0x8f54364f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsplus.05a",	0x080000, 0x37043f19, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.06a",	0x080000, 0xe8e2c75c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.07",	0x080000, 0x08f0abed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsplus.08",	0x080000, 0x755bc53a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsplus.09",	0x080000, 0x1e356679, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "xvsplus.13m",	0x400000, 0x4cc93228, CPS2_GFX | BRF_GRA },
+	{ "xvsplus.15m",	0x400000, 0x64681ae8, CPS2_GFX | BRF_GRA },
+	{ "xvsplus.17m",	0x400000, 0x2693a030, CPS2_GFX | BRF_GRA },
+	{ "xvsplus.19m",	0x400000, 0x1754a1bf, CPS2_GFX | BRF_GRA },
+	{ "xvs.14m",	0x400000, 0xbcac2e41, CPS2_GFX | BRF_GRA },
+	{ "xvs.16m",	0x400000, 0xea04a272, CPS2_GFX | BRF_GRA },
+	{ "xvs.18m",	0x400000, 0xb0def86a, CPS2_GFX | BRF_GRA },
+	{ "xvs.20m",	0x400000, 0x4b40ff9f, CPS2_GFX | BRF_GRA },
+
+	{ "xvsplus.01",	0x020000, 0xdfcaf174, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xvs.02",	0x020000, 0x101bdee9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xvs.11m",	0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
+	{ "xvs.12m",	0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+
+	{ "xmvsf.key",	0x000014, 0xd5c07311, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Xmvsfplus)
+STD_ROM_FN(Xmvsfplus)
+
+struct BurnDriver BurnDrvCpsXmvsfplus = {
+	"xmvsfplus", "xmvsf", NULL, NULL, "2026",
+	"X-Men vs Street Fighter PLUS (Europe 961004, v1.0, Hack)\0", NULL, "rob2d", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, XmvsfplusRomInfo, XmvsfplusRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsXmvsf = {
 	"xmvsf", NULL, NULL, NULL, "1996",
 	"X-Men Vs. Street Fighter (Europe 961004)\0", NULL, "Capcom", "CPS2",

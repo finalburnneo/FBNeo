@@ -437,6 +437,10 @@ void RomDataStateBackup();
 void RomDataStateRestore();
 bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
 
+// bzip.cpp (rom scan acceleration)
+void BzipScanBegin();
+void BzipScanEnd();
+
 // cona.cpp
 struct SubDirInfo {
 	TCHAR   BaseDir[MAX_PATH];
@@ -580,6 +584,7 @@ INT32 RomsDirCreate(HWND hParentWND);
 INT32 CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();
 INT32 WriteGameAvb();
+void MarkGameAvScanned(UINT32 nDrv);
 
 // support_paths.cpp
 extern INT32 nSupportDlgWidth;

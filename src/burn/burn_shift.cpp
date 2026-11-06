@@ -17,6 +17,7 @@ static INT32 shift_alpha_level_grey;
 static INT32 shift_alpha_level2_grey;
 static INT32 shift_color;
 static INT32 shift_size;
+static INT32 shift_margin = 1; // gap to the screen edge (and between gears), in pixels
 static INT32 shift_position0;
 static INT32 shift_position;
 static INT32 shift_xpos;
@@ -144,29 +145,29 @@ static void set_shift_draw_position()
 		screen_vertical = 1;
 
 		shift_xadv = 0;
-		shift_yadv = shift_size + 1;
+		shift_yadv = shift_size + shift_margin;
 
 		switch (shift_position & 3)
 		{
 			case SHIFT_POSITION_TOP_LEFT:
-				shift_xpos = (nScreenWidth - 1) - shift_size;
-				shift_ypos = 1;
+				shift_xpos = (nScreenWidth - shift_margin) - shift_size;
+				shift_ypos = shift_margin;
 			break;
 
 			case SHIFT_POSITION_BOTTOM_RIGHT:
-				shift_xpos = 1;
-				shift_ypos = (nScreenHeight - 1) - (shift_yadv * 1);
+				shift_xpos = shift_margin;
+				shift_ypos = (nScreenHeight - shift_margin) - (shift_yadv * 1);
 			break;
 
 			case SHIFT_POSITION_BOTTOM_LEFT:
-				shift_xpos = 1;
-				shift_ypos = 1;
+				shift_xpos = shift_margin;
+				shift_ypos = shift_margin;
 			break;
 
 			case SHIFT_POSITION_TOP_RIGHT:
 			default:
-				shift_xpos = (nScreenWidth  - 1) - shift_size;
-				shift_ypos = (nScreenHeight - 1) - (shift_yadv * 1);
+				shift_xpos = (nScreenWidth  - shift_margin) - shift_size;
+				shift_ypos = (nScreenHeight - shift_margin) - (shift_yadv * 1);
 			break;
 		}
 	} else {
@@ -174,31 +175,31 @@ static void set_shift_draw_position()
 
 		screen_vertical = 0;
 
-		shift_xadv = shift_size + 1;
+		shift_xadv = shift_size + shift_margin;
 		shift_yadv = 0;
 
 		switch (shift_position & 3)
 		{
 			case SHIFT_POSITION_BOTTOM_LEFT:
-				shift_xpos = 1;
-				shift_ypos = (nScreenHeight - 1) - shift_size;
+				shift_xpos = shift_margin;
+				shift_ypos = (nScreenHeight - shift_margin) - shift_size;
 //				shift_ypos;
 			break;
 
 			case SHIFT_POSITION_TOP_RIGHT:
-				shift_xpos = (nScreenWidth - 1) - (shift_xadv * 1);
-				shift_ypos = 1;
+				shift_xpos = (nScreenWidth - shift_margin) - (shift_xadv * 1);
+				shift_ypos = shift_margin;
 			break;
 
 			case SHIFT_POSITION_TOP_LEFT:
-				shift_xpos = 1;
-				shift_ypos = 1;
+				shift_xpos = shift_margin;
+				shift_ypos = shift_margin;
 			break;
 
 			case SHIFT_POSITION_BOTTOM_RIGHT:
 			default:
-				shift_xpos = (nScreenWidth  - 1) - (shift_xadv * 1);
-				shift_ypos = (nScreenHeight - 1) - shift_size;
+				shift_xpos = (nScreenWidth  - shift_margin) - (shift_xadv * 1);
+				shift_ypos = (nScreenHeight - shift_margin) - shift_size;
 			break;
 		}
 	}
@@ -245,6 +246,7 @@ void BurnShiftInit(INT32 position, INT32 color, INT32 transparency)
 	colortab[1] = shift_color = color;
 
 	shift_size = 8;
+	shift_margin = 1;
 	shift_position0 = position;
 
 	shift_alpha_level = (255 * transparency) / 100;
@@ -325,6 +327,7 @@ void BurnShiftExit()
 	shift_alpha_level2_grey = 0;
 	shift_color = 0;
 	shift_size = 0;
+	shift_margin = 1;
 	shift_position = 0;
 	shift_position0 = 0;
 
@@ -445,6 +448,64 @@ void BurnShiftRenderDoubleSize()
 		xpos += shift_xadv;
 		ypos += shift_yadv;
 	}
+	if (lhtimer > 0) lhtimer--;
+}
+
+// Like BurnShiftRender(), but every pixel of the 8x8 gear is drawn as a
+// scale x scale block, and the gap to the screen edge is scaled too. For
+// drivers that render above the original resolution (scale = 2, 4, ...).
+void BurnShiftRenderScaled(INT32 scale)
+{
+#if defined FBNEO_DEBUG
+	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftRenderScaled called without init\n"));
+#endif
+
+	if (!BurnShiftEnabled) return;
+
+	if (scale < 1) scale = 1;
+
+	if (shift_size != 8 * scale || shift_margin != scale) { // re-init the position for this size
+		shift_size = 8 * scale;
+		shift_margin = scale;
+		set_shift_draw_position();
+	}
+
+	INT32 xpos = shift_xpos;
+	INT32 ypos = shift_ypos;
+	INT32 color = BurnHighCol((shift_color >> 16) & 0xff, (shift_color >> 8) & 0xff, (shift_color >> 0) & 0xff, 0);
+
+	if (xpos < 0 || xpos > (nScreenWidth - shift_size)) return;
+	if (ypos < 0 || ypos > (nScreenHeight - shift_size)) return;
+
+	for (INT32 y = 0; y < shift_size; y++)
+	{
+		UINT8 *ptr = pBurnDraw + (((ypos + y) * nScreenWidth) + xpos) * nBurnBpp;
+
+		for (INT32 x = 0; x < shift_size; x++) {
+			const UINT8 gear = BurnGearRender[((y / scale) * 8) + (x / scale)];
+			if (gear)
+			{
+				if (nBurnBpp >= 4)
+				{
+					*((UINT32*)ptr) = alpha_blend32(*((UINT32*)ptr), gear);
+				}
+				else if (nBurnBpp == 3)
+				{
+					UINT32 t = alpha_blend32((ptr[2] << 16) | (ptr[1] << 8) | ptr[0], gear);
+
+					ptr[2] = t >> 16;
+					ptr[1] = t >> 8;
+					ptr[0] = t >> 0;
+				}
+				else if (nBurnBpp == 2 && gear == 1) // alpha blend not supported for 16-bit
+				{
+					*((UINT16*)ptr) =  color;
+				}
+			}
+			ptr += nBurnBpp;
+		}
+	}
+
 	if (lhtimer > 0) lhtimer--;
 }
 

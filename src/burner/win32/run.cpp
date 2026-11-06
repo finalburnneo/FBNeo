@@ -27,7 +27,7 @@ static bool bAppDoFasttoggled = 0;
 static bool bAppDoRewind = 0;
 
 static int nFastSpeed = 6;
-static void DisplayFPSInit(); // forward
+static void DisplayFPSInit(bool display); // forward
 
 // in FFWD, the avi-writer still needs to write all frames (skipped or not)
 #define FFWD_GHOST_FRAME 0x8000
@@ -85,10 +85,10 @@ static void CheckSystemMacros() // These are the Pause / FFWD macros added to th
 		int bPrevAppDoFast = bAppDoFast;
 		if (macroSystemFFWD) {
 			bAppDoFast = 1; prevFFWD = 1;
-			if (!bPrevAppDoFast) DisplayFPSInit(); // resync fps display
+			if (!bPrevAppDoFast) DisplayFPSInit(true); // resync fps display
 		} else if (prevFFWD) {
 			bAppDoFast = 0; prevFFWD = 0;
-			if (bPrevAppDoFast) DisplayFPSInit(); // resync fps display
+			if (bPrevAppDoFast) DisplayFPSInit(true); // resync fps display
 		}
 
 		// Frame
@@ -175,8 +175,22 @@ static int GetInput(bool bCopy)
 static LARGE_INTEGER qpcFreq, qpcLast;
 static UINT32 nLastEmu;
 
-static void DisplayFPSInit()
+static void PrintFPS(double fps)
 {
+	if (bShowFPS && bDrvOkay) {
+		TCHAR s[32];
+		_sntprintf(s, 32, _T("%2.2lf"), fps);
+		VidSNewShortMsg(s, 0xDFDFFF, 480, 0);
+	}
+}
+
+static void DisplayFPSInit(bool display)
+{
+	if (display) {
+		const double fps = (nBurnFPS / 100);
+		PrintFPS(fps);
+	}
+
 	nDoFPS = 0;
 	QueryPerformanceFrequency(&qpcFreq);
 	QueryPerformanceCounter(&qpcLast);
@@ -192,9 +206,7 @@ static void DisplayFPS()
 
 	double fps = (nFramesEmulated - nLastEmu) / dt;
 
-	TCHAR s[32];
-	_sntprintf(s, 32, _T("%2.2lf"), fps);
-	VidSNewShortMsg(s, 0xDFDFFF, 480, 0);
+	PrintFPS(fps);
 
 	qpcLast = now;
 	nLastEmu = nFramesEmulated;
@@ -223,7 +235,7 @@ static void DisplayFPSCheckState()
 	if (timer > 0) {
 		// it takes a few frames to stabilize...
 		timer--;
-		DisplayFPSInit();
+		DisplayFPSInit(true);
 	}
 }
 
@@ -583,7 +595,7 @@ int RunReset()
 	nPaceNext = 0;
 
 	// Reset FPS display
-	DisplayFPSInit();
+	DisplayFPSInit(false);
 
 	if (!bAudPlaying) {
 		// run without sound
@@ -724,7 +736,7 @@ static void RunHandleHotkey(INT32 nAction, MSG* pMsg)
 			}
 
 			if (bOldAppDoFast != bAppDoFast) {
-				DisplayFPSInit(); // resync fps display
+				DisplayFPSInit(true); // resync fps display
 			}
 			break;
 		}
@@ -738,7 +750,7 @@ static void RunHandleHotkey(INT32 nAction, MSG* pMsg)
 		case HOTKEY_ACT_TOGGLE_FPS: {
 			bShowFPS = !bShowFPS;
 			if (bShowFPS) {
-				DisplayFPSInit();
+				DisplayFPSInit(true);
 			} else {
 				VidSKillShortMsg();
 			}
@@ -949,7 +961,7 @@ int RunMessageLoop()
 								bAppDoFast = 0;
 							bAppDoFasttoggled = 0;
 							if (bOldAppDoFast != bAppDoFast) {
-								DisplayFPSInit(); // resync fps display
+								DisplayFPSInit(true); // resync fps display
 							}
 						}
 					}

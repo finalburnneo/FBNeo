@@ -704,6 +704,7 @@ rm %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\snd\timeplt_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\d_megadrive.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\megadrive.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\megadrive\segacd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\dcs2k.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\d_kinst.cpp" />

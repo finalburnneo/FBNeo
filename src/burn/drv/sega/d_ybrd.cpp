@@ -23,6 +23,7 @@ static struct BurnInputInfo Gforce2InputList[] = {
 	{"Reset"             , BIT_DIGITAL   , &System16Reset         , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , System16Dip + 0        , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , System16Dip + 1        , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , System16Dip + 2        , "dip"       },
 };
 
 STDINPUTINFO(Gforce2)
@@ -44,6 +45,7 @@ static struct BurnInputInfo GlocInputList[] = {
 	{"Reset"             , BIT_DIGITAL   , &System16Reset         , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , System16Dip + 0        , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , System16Dip + 1        , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , System16Dip + 2        , "dip"       },
 };
 
 STDINPUTINFO(Gloc)
@@ -65,6 +67,7 @@ static struct BurnInputInfo Glocr360InputList[] = {
 	{"Reset"             , BIT_DIGITAL   , &System16Reset         , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , System16Dip + 0        , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , System16Dip + 1        , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , System16Dip + 2        , "dip"       },
 };
 
 STDINPUTINFO(Glocr360)
@@ -108,6 +111,7 @@ static struct BurnInputInfo RchaseInputList[] = {
 	{"Reset"             , BIT_DIGITAL   , &System16Reset         , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , System16Dip + 0        , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , System16Dip + 1        , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH , System16Dip + 2        , "dip"       },
 };
 
 STDINPUTINFO(Rchase)
@@ -190,11 +194,20 @@ Dip Defs
 	{dipval, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"                  },			\
 	{dipval, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"                  },
 
+// Higher internal resolution (hi-res renderer in sys16_gfx.cpp), read by
+// YBoardSetResolution() when the game starts: bits 1-2 of DIP 3
+#define YBOARD_RESOLUTION(dipval)								\
+	{0   , 0xfe, 0   , 3   , "Game Resolution"                    },			\
+	{dipval, 0x01, 0x06, 0x00, "Original (320x224)"                 },			\
+	{dipval, 0x01, 0x06, 0x02, "2x (640x448)"                       },			\
+	{dipval, 0x01, 0x06, 0x04, "4x (1280x896)"                      },
+
 static struct BurnDIPInfo Gforce2DIPList[]=
 {
 	// Default Values
 	{0x0c, 0xff, 0xff, 0x7e, NULL                                 },
 	{0x0d, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0e, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
@@ -225,6 +238,9 @@ static struct BurnDIPInfo Gforce2DIPList[]=
 
 	// Dip 2
 	YBOARD_COINAGE(0x0d)
+
+	// Dip 3
+	YBOARD_RESOLUTION(0x0e)
 };
 
 STDDIPINFO(Gforce2)
@@ -234,6 +250,7 @@ static struct BurnDIPInfo GlocDIPList[]=
 	// Default Values
 	{0x0c, 0xff, 0xff, 0x6b, NULL                                 },
 	{0x0d, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0e, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
@@ -263,6 +280,9 @@ static struct BurnDIPInfo GlocDIPList[]=
 
 	// Dip 2
 	YBOARD_COINAGE(0x0d)
+
+	// Dip 3
+	YBOARD_RESOLUTION(0x0e)
 };
 
 STDDIPINFO(Gloc)
@@ -272,6 +292,7 @@ static struct BurnDIPInfo Glocr360DIPList[]=
 	// Default Values
 	{0x0c, 0xff, 0xff, 0xf3, NULL                                 },
 	{0x0d, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0e, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 3   , "Game Type"                          },
@@ -316,6 +337,9 @@ static struct BurnDIPInfo Glocr360DIPList[]=
 	{0x0d, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"                  },
 	{0x0d, 0x01, 0xf0, 0x80, "1 Coin  8 Credits"                  },
 	{0x0d, 0x01, 0xf0, 0x00, "Free Play (if coin A too) or 1C/1C" },
+
+	// Dip 3
+	YBOARD_RESOLUTION(0x0e)
 };
 
 STDDIPINFO(Glocr360)
@@ -359,6 +383,12 @@ static struct BurnDIPInfo PdriftDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Steering Fix"               		  },
 	{0x0c, 0x01, 0x01, 0x00, "No"                                 },
 	{0x0c, 0x01, 0x01, 0x01, "Yes"                                },
+
+	YBOARD_RESOLUTION(0x0c)
+
+	{0   , 0xfe, 0   , 2   , "Enable Female Voices"               },
+	{0x0c, 0x01, 0x08, 0x00, "No"                                 },
+	{0x0c, 0x01, 0x08, 0x08, "Yes"                                },
 };
 
 STDDIPINFO(Pdrift)
@@ -400,6 +430,12 @@ static struct BurnDIPInfo PdrifteDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Steering Fix"               		  },
 	{0x0c, 0x01, 0x01, 0x00, "No"                                 },
 	{0x0c, 0x01, 0x01, 0x01, "Yes"                                },
+
+	YBOARD_RESOLUTION(0x0c)
+
+	{0   , 0xfe, 0   , 2   , "Enable Female Voices"               },
+	{0x0c, 0x01, 0x08, 0x00, "No"                                 },
+	{0x0c, 0x01, 0x08, 0x08, "Yes"                                },
 };
 
 STDDIPINFO(Pdrifte)
@@ -441,6 +477,12 @@ static struct BurnDIPInfo PdriftjDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Steering Fix"               		  },
 	{0x0c, 0x01, 0x01, 0x00, "No"                                 },
 	{0x0c, 0x01, 0x01, 0x01, "Yes"                                },
+
+	YBOARD_RESOLUTION(0x0c)
+
+	{0   , 0xfe, 0   , 2   , "Enable Female Voices"               },
+	{0x0c, 0x01, 0x08, 0x00, "No"                                 },
+	{0x0c, 0x01, 0x08, 0x08, "Yes"                                },
 };
 
 STDDIPINFO(Pdriftj)
@@ -450,6 +492,7 @@ static struct BurnDIPInfo RchaseDIPList[]=
 	// Default Values
 	{0x0d, 0xff, 0xff, 0x63, NULL                                 },
 	{0x0e, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0f, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Credits"                            },
@@ -502,6 +545,9 @@ static struct BurnDIPInfo RchaseDIPList[]=
 	{0x0e, 0x01, 0xe0, 0x40, "6 gives 1 more"                     },
 	{0x0e, 0x01, 0xe0, 0x20, "7 gives 1 more"                     },
 	{0x0e, 0x01, 0xe0, 0x00, "Error"                              },
+
+	// Dip 3
+	YBOARD_RESOLUTION(0x0f)
 };
 
 STDDIPINFO(Rchase)
@@ -511,6 +557,7 @@ static struct BurnDIPInfo StrkfgtrDIPList[]=
 	// Default Values
 	{0x0c, 0xff, 0xff, 0x5b, NULL                                 },
 	{0x0d, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0e, 0xff, 0xff, 0x00, NULL                                 },
 
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
@@ -540,6 +587,9 @@ static struct BurnDIPInfo StrkfgtrDIPList[]=
 
 	// Dip 2
 	YBOARD_COINAGE(0x0d)
+
+	// Dip 3
+	YBOARD_RESOLUTION(0x0e)
 };
 
 STDDIPINFO(Strkfgtr)
@@ -2018,6 +2068,60 @@ void __fastcall YBoardWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
+// Sound commands: the main CPU writes one byte to 0x082001 for each sound it wants played
+// (the same number the sound test shows). Every command goes through here before it reaches
+// the sound board. Modify the commands to female voices if the current driver is female.
+
+// Power Drift: check the player's driver, 0-11 (the order of the selection screen),
+// as the game keeps it in shared RAM at 0x0ce310 (word). Value is present in attract
+// mode too. Return true if driver is female (7 = Lucy, 8 = Emily).
+static bool PdriftDriverIsFemale()
+{
+	INT32 driver = BURN_ENDIAN_SWAP_INT16(((UINT16*)System16Ram)[0xe310 / 2]);
+	return driver == 7 || driver == 8;
+}
+
+// Play an extra sound command alongside the one the game sent: put it straight into the sound
+// CPU's command queue (8 bytes at Z80 0xf800, 0x80 = empty), into the first empty slot, as the
+// sound CPU's own NMI handler (0x0066) does with the latch byte. If the queue is full the extra
+// command is dropped, like a command sent to a full queue on the real board.
+static void YBoardSoundAddCommand(UINT8 cmd)
+{
+	for (INT32 i = 0; i < 8; i++) {
+		if (System16Z80Ram[i] == 0x80) {
+			System16Z80Ram[i] = cmd;
+			return;
+		}
+	}
+}
+
+static UINT8 YBoardSoundCommand(UINT8 cmd)
+{
+	UINT8 played = cmd;
+
+	// Enable Female Voices - Power Drift only, dip switch dependent
+	if (strncmp(BurnDrvGetTextA(DRV_NAME), "pdrift", 6) == 0 && (System16Dip[2] & 0x08)) {
+		static UINT8 prev_cmd = 0;
+		if (cmd < 0x40) return cmd; // Engine sounds, pass through
+		if (cmd == 0x80) return cmd; // Not a sound but interferes with analysis, pass through
+
+		if (PdriftDriverIsFemale()) {
+			if (cmd == 0xc3) played = 0xbd; // male "later sucker" -> female "later sucker"
+			if (cmd == 0xbf) played = 0xbe; // male "eat dirt bozo" -> female "all right!"
+			if (cmd == 0xc0) played = 0xb7; // male "haha" -> female "haha"
+			if (cmd == 0xbc) played = 0xaf; // male "oh!" -> female "ouch!" - but see below
+
+			// The game never sends "oh!" (0xbc) for a female driver; for a male driver it often
+			// comes with sound effects 0x89+0x87. So add the female equivalent to that case.
+			if ((prev_cmd == 0x89 && cmd == 0x87) ||
+				(prev_cmd == 0x87 && cmd == 0x89)) YBoardSoundAddCommand(0xaf);
+		}
+		prev_cmd = cmd;
+	}
+
+	return played;
+}
+
 void __fastcall YBoardWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x100000 && a <= 0x10001f) {
@@ -2032,7 +2136,7 @@ void __fastcall YBoardWriteByte(UINT32 a, UINT8 d)
 
 	switch (a) {
 		case 0x082001: {
-			System16SoundLatch = d & 0xff;
+			System16SoundLatch = YBoardSoundCommand(d & 0xff);
 			ZetNmi(0);
 			return;
 		}
@@ -2290,8 +2394,28 @@ static UINT8 RchaseProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
+// The "Game Resolution" DIP is read only here, when the game starts. The
+// output size is fixed for the whole session, so a change needs a game reload.
+// Called by every Y-Board game's Init before System16Init(), which sizes the
+// buffers by System16ResScale.
+static void YBoardSetResolution()
+{
+	switch ((System16Dip[2] & 0x06) >> 1) {
+		case 1:  System16ResScale = 2; break;
+		case 2:  System16ResScale = 4; break;
+		default: System16ResScale = 1; break;
+	}
+
+	if (System16ResScale > 1) {
+		// restored to 320x224 automatically by BurnDrvExit()
+		BurnDrvSetVisibleSize(320 * System16ResScale, 224 * System16ResScale);
+	}
+}
+
 static INT32 Gforce2Init()
 {
+	YBoardSetResolution();
+
 	System16ProcessAnalogControlsDo = Gforce2ProcessAnalogControls;
 
 	System16PCMDataSizePreAllocate = 0x180000;
@@ -2317,6 +2441,8 @@ static INT32 Gforce2Init()
 
 static INT32 GlocInit()
 {
+	YBoardSetResolution();
+
 	System16ProcessAnalogControlsDo = GlocProcessAnalogControls;
 
 	return System16Init();
@@ -2324,6 +2450,8 @@ static INT32 GlocInit()
 
 static INT32 Glocr360Init()
 {
+	YBoardSetResolution();
+
 	System16ProcessAnalogControlsDo = Glocr360ProcessAnalogControls;
 
 	return System16Init();
@@ -2331,6 +2459,8 @@ static INT32 Glocr360Init()
 
 static INT32 PdriftInit()
 {
+	YBoardSetResolution();
+
 	Pdrift_analog_adder = Pdrift_analog_target = 0x80;
 
 	System16ProcessAnalogControlsDo = PdriftProcessAnalogControls;
@@ -2360,6 +2490,8 @@ static INT32 PdriftInit()
 
 static INT32 PdriftjInit()
 {
+	YBoardSetResolution();
+
 	Pdrift_analog_adder = Pdrift_analog_target = 0x80;
 
 	System16ProcessAnalogControlsDo = PdriftProcessAnalogControls;
@@ -2386,7 +2518,11 @@ static INT32 PdriftjInit()
 
 static INT32 RchaseInit()
 {
+	// (the guns keep working in native 320x224 coordinates: their targets
+	// aren't drawn, and the game draws its own crosshairs)
 	BurnGunInit(2, false);
+
+	YBoardSetResolution();
 
 	System16ProcessAnalogControlsDo = RchaseProcessAnalogControls;
 

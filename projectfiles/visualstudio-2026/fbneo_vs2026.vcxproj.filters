@@ -952,6 +952,9 @@
     <ClCompile Include="..\..\src\burn\drv\megadrive\megadrive.cpp">
       <Filter>burn\drv\megadrive</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\megadrive\segacd.cpp">
+      <Filter>burn\drv\megadrive</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp">
       <Filter>burn\drv\megadrive</Filter>
     </ClCompile>

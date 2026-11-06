@@ -1,5 +1,16 @@
 // Burner Zip module
 #include "burner.h"
+#include "burn_hdd.h"
+
+// same search as BurnHDDOpen(): <hdd path><romset>/ then <hdd path><parent>/
+static bool BzipHDDPresent()
+{
+	char* szName = NULL;
+	if (BurnDrvGetHDDName(&szName, 0, 0) || szName == NULL) return true;
+
+	TCHAR szPath[MAX_PATH];
+	return !BurnHDDGetPath(0, _T(".chd"), szPath) || !BurnHDDGetPath(0, _T(".img"), szPath);
+}
 
 INT32 nBzipError = 0;												// non-zero if there is a problem with the opened romset
 
@@ -14,9 +25,262 @@ struct SubDirsZip { TCHAR** pszZipName; UINT32 nCount; };		// Zip files in subdi
 static struct SubDirsZip _SubDirsZip;
 
 // ----------------------------------------------------------------------------
+// ROM scan acceleration (active only between BzipScanBegin() / BzipScanEnd())
+//
+// A full scan calls BzipOpen() once per driver (~30k). Each call probes every
+// rom path for every zip name (game, parent, board): ~21 paths * 2-4
+// GetFileAttributes() each, i.e. millions of filesystem calls per scan, and
+// parent/BIOS archives (neogeo, pgm, ...) get re-opened and re-parsed
+// hundreds of times. While scanning we instead:
+//  - enumerate each rom directory once and answer "does x.zip/x.7z exist"
+//    from memory, and
+//  - keep each archive's entry list after the first open.
+
+// Small open-addressing hash table; keys are lowercased paths.
+struct ScanHashSlot { TCHAR* pszKey; UINT32 nHash; struct ZipEntry* pList; INT32 nCount; };
+struct ScanHash     { struct ScanHashSlot* pSlots; UINT32 nSize; UINT32 nUsed; };	// nSize: 0 or a power of 2
+
+static struct ScanHash ScanDirs     = { NULL, 0, 0 };	// dirs that were fully enumerated
+static struct ScanHash ScanArchives = { NULL, 0, 0 };	// "dir + name" (no ext) of every .zip/.7z in them
+static struct ScanHash ScanLists    = { NULL, 0, 0 };	// "dir + name" -> cached entry list
+static bool  bScanActive      = false;
+static INT32 nScanListEntries = 0;
+#define SCAN_LIST_CACHE_MAX_ENTRIES	(4 * 1024 * 1024)	// safety cap on cached zip entries
+static bool  bListBorrowed    = false;				// List points into ScanLists, don't free it
+
+// lowercased copy of psz into szOut[MAX_PATH]; false if it doesn't fit
+static bool ScanKey(const TCHAR* psz, TCHAR* szOut)
+{
+	size_t nLen = _tcslen(psz);
+	if (nLen >= MAX_PATH) return false;
+	memcpy(szOut, psz, (nLen + 1) * sizeof(TCHAR));
+	if (nLen) CharLowerBuff(szOut, (DWORD)nLen);
+	return true;
+}
+
+static UINT32 ScanHashString(const TCHAR* psz)
+{
+	UINT32 h = 2166136261u;												// FNV-1a
+	while (*psz) { h ^= (UINT32)*psz++; h *= 16777619u; }
+	return h;
+}
+
+static void ScanFreeList(struct ZipEntry* pList, INT32 nCount)
+{
+	if (pList == NULL) return;
+	for (INT32 i = 0; i < nCount; i++) {
+		if (pList[i].szName) free(pList[i].szName);
+	}
+	free(pList);
+}
+
+static struct ScanHashSlot* ScanHashFind(struct ScanHash* pHash, const TCHAR* pszKey)
+{
+	if (pHash->nSize == 0) return NULL;
+
+	UINT32 nHash = ScanHashString(pszKey);
+	UINT32 nMask = pHash->nSize - 1;
+
+	for (UINT32 i = nHash & nMask; pHash->pSlots[i].pszKey; i = (i + 1) & nMask) {
+		if (pHash->pSlots[i].nHash == nHash && _tcscmp(pHash->pSlots[i].pszKey, pszKey) == 0) {
+			return &pHash->pSlots[i];
+		}
+	}
+	return NULL;
+}
+
+static bool ScanHashGrow(struct ScanHash* pHash)
+{
+	UINT32 nNewSize = pHash->nSize ? pHash->nSize * 2 : 1024;
+	struct ScanHashSlot* pNew = (struct ScanHashSlot*)calloc(nNewSize, sizeof(struct ScanHashSlot));
+	if (pNew == NULL) return false;
+
+	for (UINT32 i = 0; i < pHash->nSize; i++) {
+		if (pHash->pSlots[i].pszKey == NULL) continue;
+		UINT32 j = pHash->pSlots[i].nHash & (nNewSize - 1);
+		while (pNew[j].pszKey) j = (j + 1) & (nNewSize - 1);
+		pNew[j] = pHash->pSlots[i];
+	}
+
+	free(pHash->pSlots);
+	pHash->pSlots = pNew;
+	pHash->nSize  = nNewSize;
+	return true;
+}
+
+// returns the slot for pszKey, adding it if needed; NULL if out of memory
+static struct ScanHashSlot* ScanHashInsert(struct ScanHash* pHash, const TCHAR* pszKey)
+{
+	struct ScanHashSlot* pSlot = ScanHashFind(pHash, pszKey);
+	if (pSlot) return pSlot;
+
+	if ((pHash->nUsed + 1) * 2 > pHash->nSize && !ScanHashGrow(pHash)) return NULL;	// keep load <= 50%
+
+	TCHAR* pszCopy = (TCHAR*)malloc((_tcslen(pszKey) + 1) * sizeof(TCHAR));
+	if (pszCopy == NULL) return NULL;
+	_tcscpy(pszCopy, pszKey);
+
+	UINT32 nHash = ScanHashString(pszKey);
+	UINT32 nMask = pHash->nSize - 1;
+	UINT32 i = nHash & nMask;
+	while (pHash->pSlots[i].pszKey) i = (i + 1) & nMask;
+
+	pSlot = &pHash->pSlots[i];
+	pSlot->pszKey = pszCopy;
+	pSlot->nHash  = nHash;
+	pSlot->pList  = NULL;
+	pSlot->nCount = 0;
+	pHash->nUsed++;
+
+	return pSlot;
+}
+
+static void ScanHashFree(struct ScanHash* pHash)
+{
+	for (UINT32 i = 0; i < pHash->nSize; i++) {
+		if (pHash->pSlots[i].pszKey) free(pHash->pSlots[i].pszKey);
+		ScanFreeList(pHash->pSlots[i].pList, pHash->pSlots[i].nCount);
+	}
+	free(pHash->pSlots);
+	pHash->pSlots = NULL;
+	pHash->nSize  = 0;
+	pHash->nUsed  = 0;
+}
+
+static bool ScanHasExt(const TCHAR* pszName, const TCHAR* pszExt)
+{
+	size_t nName = _tcslen(pszName), nExt = _tcslen(pszExt);
+	return nName > nExt && _tcsicmp(pszName + nName - nExt, pszExt) == 0;
+}
+
+static void ScanIndexDir(const TCHAR* pszDir)
+{
+	TCHAR szDir[MAX_PATH], szPattern[MAX_PATH], szKey[MAX_PATH];
+
+	if (pszDir == NULL) return;
+
+	size_t nLen = _tcslen(pszDir);
+	// only directories that lookups are built from ("dir/" + name); anything else falls back to probing
+	if (nLen && pszDir[nLen - 1] != _T('/') && pszDir[nLen - 1] != _T('\\')) return;
+	if (nLen + 2 > MAX_PATH) return;
+
+	ScanKey(pszDir, szDir);
+	if (ScanHashFind(&ScanDirs, szDir)) return;
+
+	_stprintf(szPattern, _T("%s*"), pszDir);
+
+	WIN32_FIND_DATA fd;
+	HANDLE hFind = FindFirstFileEx(szPattern, FindExInfoBasic, &fd, FindExSearchNameMatch, NULL, FIND_FIRST_EX_LARGE_FETCH);
+	if (hFind == INVALID_HANDLE_VALUE) {
+		hFind = FindFirstFileEx(szPattern, FindExInfoStandard, &fd, FindExSearchNameMatch, NULL, 0);	// pre-Win7
+	}
+	if (hFind == INVALID_HANDLE_VALUE) {
+		DWORD dwErr = GetLastError();
+		if (dwErr == ERROR_FILE_NOT_FOUND || dwErr == ERROR_PATH_NOT_FOUND) {
+			ScanHashInsert(&ScanDirs, szDir);		// missing dir: nothing can exist in it
+		}
+		return;										// any other error: leave unindexed, lookups probe the disk
+	}
+
+	bool bComplete = true;
+
+	do {
+		bool bZip = ScanHasExt(fd.cFileName, _T(".zip"));
+#ifdef INCLUDE_7Z_SUPPORT
+		bool b7z  = !bZip && ScanHasExt(fd.cFileName, _T(".7z"));
+#else
+		bool b7z  = false;
+#endif
+		if (!bZip && !b7z) continue;
+
+		size_t nName = _tcslen(fd.cFileName) - (bZip ? 4 : 3);
+		if (nLen + nName >= MAX_PATH) continue;	// too long to ever be looked up
+
+		memcpy(szKey, szDir, nLen * sizeof(TCHAR));
+		memcpy(szKey + nLen, fd.cFileName, nName * sizeof(TCHAR));
+		szKey[nLen + nName] = _T('\0');
+		CharLowerBuff(szKey + nLen, (DWORD)nName);
+
+		if (ScanHashInsert(&ScanArchives, szKey) == NULL) bComplete = false;
+	} while (FindNextFile(hFind, &fd));
+
+	FindClose(hFind);
+
+	if (bComplete) {								// an incomplete index would report false misses
+		ScanHashInsert(&ScanDirs, szDir);
+	}
+}
+
+// 1 = exists, 0 = doesn't, -1 = not covered by the index
+static INT32 ScanIndexLookup(const TCHAR* szName)
+{
+	TCHAR szKey[MAX_PATH], szDir[MAX_PATH];
+
+	if (!bScanActive) return -1;
+	if (!ScanKey(szName, szKey)) return -1;
+
+	const TCHAR* pSlashA = _tcsrchr(szKey, _T('/'));
+	const TCHAR* pSlashB = _tcsrchr(szKey, _T('\\'));
+	const TCHAR* pSlash  = (pSlashA > pSlashB) ? pSlashA : pSlashB;
+	size_t nDir = pSlash ? (size_t)(pSlash - szKey) + 1 : 0;
+
+	memcpy(szDir, szKey, nDir * sizeof(TCHAR));
+	szDir[nDir] = _T('\0');
+
+	if (ScanHashFind(&ScanDirs, szDir) == NULL) return -1;
+
+	return ScanHashFind(&ScanArchives, szKey) ? 1 : 0;
+}
+
+// Call from the scanning thread before its first BzipOpen()
+void BzipScanBegin()
+{
+	BzipScanEnd();
+
+	for (INT32 d = 0; d < DIRS_MAX; d++) {
+		ScanIndexDir(szAppRomPaths[d]);
+
+		if (nLoadMenuShowY & (1 << 26)) {	// SEARCHSUBDIRS
+			for (UINT32 n = 0; n < _SubDirInfo[d].nCount; n++) {
+				ScanIndexDir(_SubDirInfo[d].SubDirs[n]);
+			}
+		}
+	}
+	if (nQuickOpen > 0) {
+		ScanIndexDir(szAppQuickPath);
+	}
+
+	bScanActive = true;
+}
+
+// Call once the scanning thread has finished
+void BzipScanEnd()
+{
+	if (bListBorrowed) {
+		List = NULL;
+		nListCount = 0;
+		bListBorrowed = false;
+	}
+
+	bScanActive = false;
+
+	ScanHashFree(&ScanLists);
+	ScanHashFree(&ScanArchives);
+	ScanHashFree(&ScanDirs);
+	nScanListEntries = 0;
+}
+
+// ----------------------------------------------------------------------------
 
 static void BzipListFree()
 {
+	if (bListBorrowed) {										// owned by the scan cache
+		List = NULL;
+		nListCount = 0;
+		bListBorrowed = false;
+		return;
+	}
+
 	if (List) {
 		for (INT32 i = 0; i < nListCount; i++) {
 			if (List[i].szName) {
@@ -94,6 +358,13 @@ static INT32 RomArchiveExists(TCHAR *szName)
 {
 	TCHAR szFileName[MAX_PATH];
 	INT32 ret = 0;
+
+	// unused szDrvName slots are "", which used to probe ".zip" / ".7z" in the cwd
+	if (szName == NULL || szName[0] == _T('\0')) return 0;
+
+	ret = ScanIndexLookup(szName);
+	if (ret >= 0) return ret;
+	ret = 0;
 
 	_stprintf(szFileName, _T("%s.zip"), szName);
 	ret = FileExists(szFileName);
@@ -622,10 +893,41 @@ INT32 BzipOpen(bool bootApp)
 			continue;
 		}
 
-		if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {		// Open the rom zip file
-			nCurrentZip = z;
+		bool bHaveList = false;
 
+		if (bScanActive) {												// scanning: reuse lists of already-seen archives
+			TCHAR szKey[MAX_PATH];
+			bool bKey = ScanKey(pszBzipName, szKey);
+			struct ScanHashSlot* pSlot = bKey ? ScanHashFind(&ScanLists, szKey) : NULL;
+
+			if (pSlot == NULL) {
+				struct ZipEntry* pNew = NULL; INT32 nNew = 0;
+				if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {
+					if (ZipGetList(&pNew, &nNew) != 0) { pNew = NULL; nNew = 0; }
+				}
+				ZipClose();
+
+				if (bKey && nScanListEntries + nNew <= SCAN_LIST_CACHE_MAX_ENTRIES && (pSlot = ScanHashInsert(&ScanLists, szKey)) != NULL) {
+					pSlot->pList  = pNew;								// failed opens are cached too (pList == NULL)
+					pSlot->nCount = nNew;
+					nScanListEntries += nNew;
+				} else if (pNew) {										// not cacheable: use it once, BzipListFree() frees it
+					List = pNew; nListCount = nNew;
+					bHaveList = true;
+				}
+			}
+			if (!bHaveList && pSlot && pSlot->pList) {
+				List = pSlot->pList; nListCount = pSlot->nCount;
+				bListBorrowed = true;
+				bHaveList = true;
+			}
+		} else if (ZipOpen(TCHARToANSI(pszBzipName, NULL, 0)) == 0) {	// Open the rom zip file
 			ZipGetList(&List, &nListCount);								// Get the list of entries
+			bHaveList = true;
+		}
+
+		if (bHaveList) {
+			nCurrentZip = z;
 
 			for (INT32 i = 0; i < nRomCount; i++) {
 				struct BurnRomInfo ri;
@@ -755,58 +1057,18 @@ INT32 BzipOpen(bool bootApp)
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NODATA));
 		}
 
-		// check for hard drive images (assumed max one per game)
-		char *szHDDNameTmp = NULL;
-		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
+		if (!BzipHDDPresent()) {
+			FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOHDDDATA));
 
-		if (szHDDNameTmp) {
-			char *szHddFolderName = NULL;
-
-			if (BurnDrvGetTextA(DRV_PARENT)) {
-				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
-			} else {
-				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
-			}
-
-			char szHDDPath[MAX_PATH];
-			sprintf(szHDDPath, "%s%s/%s.chd", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
-
-			FILE *test = fopen(szHDDPath, "rb");
-			if (test) {
-				fclose(test);
-			} else {
-				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("\n"));
-				FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_LOAD_NOHDDDATA));
-
-				nBzipError = 1;
-			}
+			nBzipError = 1;
 		}
 
 		BurnExtLoadRom = BzipBurnLoadRom;								// Okay to call our function to load each rom
 
 	} else {
-		// check for hard drive images (assumed max one per game)
-		char *szHDDNameTmp = NULL;
-		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
-
-		if (szHDDNameTmp) {
-			char *szHddFolderName = NULL;
-
-			if (BurnDrvGetTextA(DRV_PARENT)) {
-				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
-			} else {
-				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
-			}
-
-			char szHDDPath[MAX_PATH];
-			sprintf(szHDDPath, "%s%s/%s.chd", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
-
-			FILE *test = fopen(szHDDPath, "rb");
-			if (test) {
-				fclose(test);
-			} else {
-				return 1;
-			}
+		if (!BzipHDDPresent()) {
+			return 1;
 		}
 
 		return CheckRomsBoot();

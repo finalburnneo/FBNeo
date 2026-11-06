@@ -16,6 +16,7 @@ static INT32 SciSpriteFrame;
 static INT32 TaitoZINT6timer = 0;
 static INT32 bUseShifter = 0;
 static INT32 bUseGun = 0;
+static INT32 nRumbleBit = -1;		// CPU-A control bit driving the vibration motor (-1 = none)
 
 static double TaitoZYM2610RouteMasterVol;
 static UINT8 routes[4];
@@ -5272,6 +5273,8 @@ static INT32 ContcircInit()
 static INT32 DblaxleInit()
 {
 	INT32 nLen;
+
+	nRumbleBit = 2;		// CPU-A control bit 2: steering wheel vibration (MAME: dblaxle genout 2)
 	
 	TaitoCharModulo = 0x400;
 	TaitoCharNumPlanes = 4;
@@ -5878,6 +5881,7 @@ static INT32 TaitoZExit()
 	//if (bUseGun)
 	//	BurnGunExit(); // exit's in TaitoExit() above!
 	bUseGun = 0;
+	nRumbleBit = -1;
 
 	if (bUseShifter)
 		BurnShiftExit();
@@ -6916,6 +6920,12 @@ static INT32 TaitoZFrame()
 	}
 
 	if (pBurnDraw) BurnDrvRedraw();
+
+	if (nRumbleBit >= 0) {
+		// Wheel shaker: mostly the big low-frequency motor
+		INT32 bOn = (TaitoCpuACtrl >> nRumbleBit) & 1;
+		BurnRumble(0, bOn ? 0xc000 : 0, bOn ? 0x4000 : 0);
+	}
 
 	return 0;
 }

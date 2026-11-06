@@ -129,6 +129,14 @@ UINT32 System16BackupRamSize = 0;
 UINT32 System16BackupRam2Size = 0;
 
 bool System16HasGears = false;
+
+// Render scale for the high resolution mode (1 = original 320x224).
+// Set by the driver before System16Init() and fixed until the game exits.
+INT32 System16ResScale = 1;
+// Lightgun coordinates per native pixel: the driver sets it to System16ResScale
+// when its guns work in the larger screen's coordinates (BurnGunInit() after
+// the screen size is set), so relative moves are scaled to match.
+INT32 System16GunScale = 1;
 INT32 s16a_update_after_vblank = 0;
 
 UINT8 System16VideoControl;
@@ -248,11 +256,23 @@ inline static void PdriftMakeInputs()
 	Pdrift_analog_target = ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x20, 0xe0);
 }
 
+extern bool bBurnGunPositionalMode;
+
+static INT16 System16GunMove(INT16 v)
+{
+	if (System16GunScale <= 1 || bBurnGunPositionalMode) return v;
+
+	INT32 m = v * System16GunScale;
+	if (m > 0x7fff) m = 0x7fff;
+	if (m < -0x8000) m = -0x8000;
+	return (INT16)m;
+}
+
 static void System16GunMakeInputs()
 {
-	if (nBurnGunNumPlayers) BurnGunMakeInputs(0, (INT16)System16AnalogPort0, (INT16)System16AnalogPort1);
-	if (nBurnGunNumPlayers >= 2) BurnGunMakeInputs(1, (INT16)System16AnalogPort2, (INT16)System16AnalogPort3);
-	if (nBurnGunNumPlayers >= 3) BurnGunMakeInputs(2, (INT16)System16AnalogPort4, (INT16)System16AnalogPort5);
+	if (nBurnGunNumPlayers) BurnGunMakeInputs(0, System16GunMove(System16AnalogPort0), System16GunMove(System16AnalogPort1));
+	if (nBurnGunNumPlayers >= 2) BurnGunMakeInputs(1, System16GunMove(System16AnalogPort2), System16GunMove(System16AnalogPort3));
+	if (nBurnGunNumPlayers >= 3) BurnGunMakeInputs(2, System16GunMove(System16AnalogPort4), System16GunMove(System16AnalogPort5));
 }
 
 /*====================================================
@@ -1133,9 +1153,9 @@ static INT32 System16MemIndex()
 	
 	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (0x42 * sizeof(UINT32));//(((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
 	
-	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)); }
+	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)) * System16ResScale * System16ResScale; }
 	
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) { System16PriorityMap = Next; Next += 320 * 224; }
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) { System16PriorityMap = Next; Next += 320 * 224 * System16ResScale * System16ResScale; }
 	
 	MemEnd = Next;
 
@@ -2780,6 +2800,9 @@ INT32 System16Exit()
 
 	if (System16HasGears) BurnShiftExit();
 	System16HasGears = false;
+	System16GfxThreadsExit();
+	System16ResScale = 1;
+	System16GunScale = 1;
 
  	System16RoadControl = 0;
  	System16RoadColorOffset1 = 0;

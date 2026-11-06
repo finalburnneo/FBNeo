@@ -13,7 +13,7 @@
 #include "samples.h"
 
 // Maximum number of beam-synchronized interrupts to check
-#define MAX_RASTER 10
+#define MAX_RASTER 224
 
 extern UINT32 CpsMProt[4];									// Mprot changes
 extern UINT32 CpsBID[3];										// Board ID changes
@@ -226,15 +226,17 @@ extern UINT8 CpsReset;
 extern INT32 nCpsCyclesExtra;
 extern UINT8 Cpi01A, Cpi01C, Cpi01E;
 extern UINT8 fFakeDip;
-extern INT32 nIrqLine50, nIrqLine52;								// The scanlines at which the interrupts are triggered
 extern INT32 nCpsNumScanlines;
 extern INT32 Cps1VBlankIRQLine;
 extern INT32 CpsDrawSpritesInReverse;
-extern INT32 Cps1DrawAtVblank;
 INT32 CpsRunInit();
 INT32 CpsRunExit();
 INT32 Cps1Frame();
 INT32 Cps2Frame();
+extern INT32 bCpsRasterCounters;
+UINT16 CpsRasterRead(INT32 nReg);
+void CpsRasterWrite(INT32 nReg, UINT16 d);
+void CpsRasterScan();
 typedef INT32 (*CpsRunInitCallback)();
 extern CpsRunInitCallback CpsRunInitCallbackFunction;
 typedef INT32 (*CpsRunExitCallback)();

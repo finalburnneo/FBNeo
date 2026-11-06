@@ -7,6 +7,10 @@
 //   joystick 0-3 : XInput user slots 1-4 (fixed, hot-pluggable)
 //   joystick 4+  : remaining (non-XInput) DirectInput game controllers
 //
+// Rumble: drivers refresh the motor state every emulated frame (BurnRumble()).
+// A watchdog timer turns a pad's motors off when it hasn't been refreshed for
+// XI_RUMBLE_TIMEOUT ms, so pausing, menus, modal dialogs etc. never leave a pad buzzing.
+//
 // XInput devices are filtered out of the DirectInput enumeration so the same
 // physical pad doesn't show up twice.
 //
@@ -42,14 +46,19 @@
 #define XI_DEADZONE			0x4000		// same as the DirectInput plugin
 #define XI_RETRY_FRAMES		120			// how often to re-probe an empty slot (XInputGetState on an empty slot is slow)
 #define XI_DINPUT_OFFSET	(XI_MAX_PADS << 8)
+#define XI_RUMBLE_TIMEOUT	250			// ms without a refresh before the motors are stopped
+#define XI_RUMBLE_TICK		50			// watchdog interval, ms
 
 extern struct InputInOut InputInOutDInput;
 extern bool (*pDInputGamepadFilter)(const GUID* pGuidProduct);
 
 typedef DWORD (WINAPI* XInputGetStateFn)(DWORD, XINPUT_STATE*);
+typedef DWORD (WINAPI* XInputSetStateFn)(DWORD, XINPUT_VIBRATION*);
 
 static HMODULE hXInputDLL = NULL;
 static XInputGetStateFn pXInputGetState = NULL;
+static XInputSetStateFn pXInputSetState = NULL;
+static UINT_PTR nRumbleTimer = 0;
 
 // XInputGetStateEx writes a slightly larger struct (one trailing reserved DWORD)
 struct xiStateBuffer {
@@ -63,6 +72,9 @@ struct xiPadData {
 	int retryCountdown;
 	unsigned char readStatus;			// 0 = not read this frame, 1 = read OK, 2 = read failed
 	int axisBaseline[XI_MAX_AXIS];
+	WORD rumbleStrong;					// motor values last sent to the pad
+	WORD rumbleWeak;
+	DWORD rumbleLastRefresh;			// GetTickCount() of the last driver refresh
 };
 
 static xiPadData xiPads[XI_MAX_PADS];
@@ -164,6 +176,7 @@ static int xiLoadLibrary()
 				pXInputGetState = (XInputGetStateFn)GetProcAddress(hXInputDLL, "XInputGetState");
 			}
 			if (pXInputGetState) {
+				pXInputSetState = (XInputSetStateFn)GetProcAddress(hXInputDLL, "XInputSetState");
 				return 0;
 			}
 			FreeLibrary(hXInputDLL);
@@ -172,6 +185,7 @@ static int xiLoadLibrary()
 	}
 
 	pXInputGetState = NULL;
+	pXInputSetState = NULL;
 
 	return 1;
 }
@@ -183,6 +197,7 @@ static void xiFreeLibrary()
 		hXInputDLL = NULL;
 	}
 	pXInputGetState = NULL;
+	pXInputSetState = NULL;
 }
 
 // Read one XInput pad (once per frame)
@@ -206,6 +221,7 @@ static int xiReadPad(int i)
 
 	if (pXInputGetState(i, &pad->buf.state) != ERROR_SUCCESS) {
 		memset(&pad->buf, 0, sizeof(pad->buf));
+		pad->rumbleStrong = pad->rumbleWeak = 0;	// a reconnected pad starts with its motors off
 		pad->connected = false;
 		pad->retryCountdown = XI_RETRY_FRAMES;
 		return 1;
@@ -327,10 +343,64 @@ static int xiFind(bool createBaseline)
 }
 
 // ---------------------------------------------------------------------------
+// Rumble
+
+static void xiSendRumble(int i, WORD nStrong, WORD nWeak)
+{
+	xiPadData* pad = &xiPads[i];
+
+	if (pad->rumbleStrong == nStrong && pad->rumbleWeak == nWeak) {
+		return;
+	}
+	if (pXInputSetState == NULL) {
+		return;
+	}
+
+	XINPUT_VIBRATION vib;
+	vib.wLeftMotorSpeed  = nStrong;		// left = low-frequency (strong) motor
+	vib.wRightMotorSpeed = nWeak;		// right = high-frequency (weak) motor
+
+	if (pXInputSetState(i, &vib) == ERROR_SUCCESS) {
+		pad->rumbleStrong = nStrong;
+		pad->rumbleWeak = nWeak;
+	} else {
+		pad->rumbleStrong = pad->rumbleWeak = 0;
+	}
+}
+
+static void xiStopAllRumble()
+{
+	for (int i = 0; i < XI_MAX_PADS; i++) {
+		if (xiPads[i].rumbleStrong || xiPads[i].rumbleWeak) {
+			xiSendRumble(i, 0, 0);
+		}
+	}
+}
+
+// Watchdog: thread timer, so it also runs inside modal dialog / menu message loops
+static VOID CALLBACK xiRumbleTimerProc(HWND, UINT, UINT_PTR, DWORD)
+{
+	DWORD nNow = GetTickCount();
+
+	for (int i = 0; i < XI_MAX_PADS; i++) {
+		xiPadData* pad = &xiPads[i];
+		if ((pad->rumbleStrong || pad->rumbleWeak) && (nNow - pad->rumbleLastRefresh) > XI_RUMBLE_TIMEOUT) {
+			xiSendRumble(i, 0, 0);
+		}
+	}
+}
+
+// ---------------------------------------------------------------------------
 // InputInOut interface
 
 static int XInputExit()
 {
+	if (nRumbleTimer) {
+		KillTimer(NULL, nRumbleTimer);
+		nRumbleTimer = 0;
+	}
+	xiStopAllRumble();
+
 	pDInputGamepadFilter = NULL;
 	InputInOutDInput.Exit();
 
@@ -356,6 +426,10 @@ static int XInputInit()
 		xiPads[i].retryCountdown = 0;		// probe every slot right away
 		xiReadPad(i);
 		xiPads[i].readStatus = 0;
+	}
+
+	if (pXInputSetState) {
+		nRumbleTimer = SetTimer(NULL, 0, XI_RUMBLE_TICK, xiRumbleTimerProc);
 	}
 
 	return nRet;
@@ -432,6 +506,25 @@ static int XInputFind(bool createBaseline)
 	return nDInput;									// mouse or nothing
 }
 
+static int XInputSetRumble(int nJoy, int nStrong, int nWeak)
+{
+	if (nJoy < 0) {
+		xiStopAllRumble();
+		return 0;
+	}
+	if (nJoy >= XI_MAX_PADS) {						// DirectInput pad: no rumble support
+		return 1;
+	}
+	if (!xiPads[nJoy].connected) {
+		return 1;
+	}
+
+	xiPads[nJoy].rumbleLastRefresh = GetTickCount();
+	xiSendRumble(nJoy, (WORD)nStrong, (WORD)nWeak);
+
+	return 0;
+}
+
 static int XInputGetControlName(int nCode, wchar_t* pszDeviceName, wchar_t* pszControlName)
 {
 	if ((nCode & 0xC000) != 0x4000) {
@@ -482,4 +575,4 @@ static int XInputGetControlName(int nCode, wchar_t* pszDeviceName, wchar_t* pszC
 	return 0;
 }
 
-struct InputInOut InputInOutXInput = { XInputInit, XInputExit, XInputSetCooperativeLevel, XInputNewFrame, XInputReadSwitch, XInputReadJoyAxis, XInputReadMouseAxis, XInputFind, XInputGetControlName, NULL, _T("XInput + DirectInput8 input") };
+struct InputInOut InputInOutXInput = { XInputInit, XInputExit, XInputSetCooperativeLevel, XInputNewFrame, XInputReadSwitch, XInputReadJoyAxis, XInputReadMouseAxis, XInputFind, XInputGetControlName, NULL, _T("XInput + DirectInput8 input"), XInputSetRumble };

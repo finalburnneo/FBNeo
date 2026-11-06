@@ -141,6 +141,11 @@ extern INT32 (__cdecl *BurnExtProgressUpdateCallback)(double dProgress, const TC
 // Application-defined catridge initialisation function
 extern INT32 (__cdecl *BurnExtCartridgeSetupCallback)(BurnCartrigeCommand nCommand);
 
+// Application-defined rumble (force feedback) function
+//  nPlayer: 0-based player number, or -1 for "all players" (used to stop everything)
+//  nStrong / nWeak: motor strength, 0 (off) .. 0xffff (full) - strong = low-frequency motor, weak = high-frequency motor
+extern INT32 (__cdecl *BurnExtRumbleCallback)(INT32 nPlayer, INT32 nStrong, INT32 nWeak);
+
 // Application-defined colour conversion function
 extern UINT32 (__cdecl *BurnHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 
@@ -368,6 +373,8 @@ extern INT32 bRunAhead;				// "Run Ahead" lag-reduction technique UI option (on/
 
 extern INT32 bBurnRunAheadFrame;	// for drivers, hiscore, etc, to recognize that this is the "runahead frame"
 									// for instance, you wouldn't want to apply hi-score data on a "runahead frame"
+
+void BurnRumble(INT32 nPlayer, INT32 nStrong, INT32 nWeak); // Rumble / force feedback for drivers.
 
 extern INT32 nBurnSoundRate;		// Samplerate of sound
 extern INT32 nBurnSoundLen;			// Length in samples per frame
@@ -739,6 +746,7 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SEGA_GAME_GEAR							(HARDWARE_PREFIX_SEGA_GAME_GEAR)
 
 #define HARDWARE_SEGA_MEGADRIVE							(HARDWARE_PREFIX_SEGA_MEGADRIVE)
+#define HARDWARE_SEGA_MEGACD							(HARDWARE_PREFIX_SEGA_MEGADRIVE | 0x00010000)
 
 #define HARDWARE_SEGA_SG1000                            (HARDWARE_PREFIX_SEGA_SG1000)
 #define HARDWARE_SEGA_SG1000_RAMEXP_A                   (0x1000)

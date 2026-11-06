@@ -1373,6 +1373,8 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_AUTOFRAMESKIP, !bAlwaysDrawFrames ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_RUNAHEAD, bRunAhead ? MF_CHECKED : MF_UNCHECKED);
 
+	CheckMenuItem(hMenu, MENU_INPUT_RUMBLE, bInputRumble ? MF_CHECKED : MF_UNCHECKED);
+
 	var = nInputSelect + MENU_INP_PLUGIN_1;
 	CheckMenuRadioItem(hMenu, MENU_INP_PLUGIN_1, MENU_INP_PLUGIN_8, var, MF_BYCOMMAND);
 
@@ -1804,6 +1806,7 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_USEBLEND,			MF_GRAYED   | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_CDIMAGE,				MF_GRAYED   | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_CD_CHANGE_DISC,		(CDEmuIsTraySupported() ? MF_ENABLED : MF_GRAYED) | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1,		MF_GRAYED   | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		MF_GRAYED   | MF_BYCOMMAND);
@@ -2125,6 +2128,7 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_GRAYED | MF_BYCOMMAND);
 #endif
 		EnableMenuItem(hMenu, MENU_CDIMAGE,				MF_ENABLED | MF_BYCOMMAND);
+		EnableMenuItem(hMenu, MENU_CD_CHANGE_DISC,		MF_GRAYED  | MF_BYCOMMAND);
 
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_1, 		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_AUD_PLUGIN_2,		 MF_ENABLED  | MF_BYCOMMAND);

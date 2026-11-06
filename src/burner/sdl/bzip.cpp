@@ -1,5 +1,16 @@
 // Burner Zip module
 #include "burner.h"
+#include "burn_hdd.h"
+
+// same search as BurnHDDOpen(): <hdd path><romset>/ then <hdd path><parent>/
+static bool BzipHDDPresent()
+{
+	char* szName = NULL;
+	if (BurnDrvGetHDDName(&szName, 0, 0) || szName == NULL) return true;
+
+	TCHAR szPath[MAX_PATH];
+	return !BurnHDDGetPath(0, _T(".chd"), szPath) || !BurnHDDGetPath(0, _T(".img"), szPath);
+}
 
 int nBzipError = 0;                                                             // non-zero if there is a problem with the opened romset
 
@@ -711,72 +722,18 @@ int BzipOpen(bool bootApp)
 			BzipText.Add(_T("Data is BAD.\n"));
 		}
 
-		// check for hard drive images (assumed max one per game)
-		char* szHDDNameTmp = NULL;
-		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
+		if (!BzipHDDPresent()) {
+			BzipText.Add(_T("HDD image is missing!.\n"));
 
-		if (szHDDNameTmp)
-		{
-			char* szHddFolderName = NULL;
-
-			if (BurnDrvGetTextA(DRV_PARENT))
-			{
-				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
-			}
-			else
-			{
-				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
-			}
-
-			char szHDDPath[MAX_PATH];
-			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
-
-			FILE* test = fopen(szHDDPath, "rb");
-			if (test)
-			{
-				fclose(test);
-			}
-			else
-			{
-				BzipText.Add(_T("HDD image is missing!.\n"));
-
-				nBzipError = 1;
-			}
+			nBzipError = 1;
 		}
 
 		BurnExtLoadRom = BzipBurnLoadRom;                                                                         // Okay to call our function to load each rom
 	}
 	else
 	{
-		// check for hard drive images (assumed max one per game)
-		char* szHDDNameTmp = NULL;
-		BurnDrvGetHDDName(&szHDDNameTmp, 0, 0);
-
-		if (szHDDNameTmp)
-		{
-			char* szHddFolderName = NULL;
-
-			if (BurnDrvGetTextA(DRV_PARENT))
-			{
-				szHddFolderName = BurnDrvGetTextA(DRV_PARENT);
-			}
-			else
-			{
-				szHddFolderName = BurnDrvGetTextA(DRV_NAME);
-			}
-
-			char szHDDPath[MAX_PATH];
-			sprintf(szHDDPath, "%s%s/%s", _TtoA(szAppHDDPath), szHddFolderName, szHDDNameTmp);
-
-			FILE* test = fopen(szHDDPath, "rb");
-			if (test)
-			{
-				fclose(test);
-			}
-			else
-			{
-				return 1;
-			}
+		if (!BzipHDDPresent()) {
+			return 1;
 		}
 
 		return CheckRomsBoot();

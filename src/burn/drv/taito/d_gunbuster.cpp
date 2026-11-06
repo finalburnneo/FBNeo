@@ -95,6 +95,13 @@ static UINT8 __fastcall gunbuster_read_byte(UINT32 address)
 
 static void __fastcall gunbuster_write_long(UINT32 address, UINT32 data)
 {
+	if (address == 0x380000) {
+		// motor control: bit 24 = p1 gun recoil, bit 16 = p2 gun recoil, bit 18 = hit lamp
+		BurnRecoilLine(0, data & (1 << 24));
+		BurnRecoilLine(1, data & (1 << 16));
+		return;
+	}
+
 	bprintf (0, _T("WL: %5.5x, %8.8x\n"), address, data);
 }
 
@@ -108,7 +115,9 @@ static void __fastcall gunbuster_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x380000:
-			// motor control (not used in FBA)
+			// motor control, upper word: bit 8 = p1 gun recoil, bit 0 = p2 gun recoil
+			BurnRecoilLine(0, data & 0x0100);
+			BurnRecoilLine(1, data & 0x0001);
 		return;
 	}
 
@@ -169,6 +178,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	}
 
 	gun_interrupt_timer = -1;
+
+	BurnRecoilReset();
 
 	HiscoreReset();
 
@@ -316,6 +327,7 @@ static INT32 DrvInit()
 	TaitoF3ES5506RomSize = 0x800000;
 
 	BurnGunInit(2, true);
+	BurnRecoilInit(2, RECOIL_HANDGUN);
 
 	DrvDoReset(1);
 
@@ -332,6 +344,7 @@ static INT32 DrvExit()
 	EEPROMExit();
 
 	BurnGunExit();
+	BurnRecoilExit();
 
 	BurnFree(TaitoMem);
 
@@ -577,6 +590,8 @@ static INT32 DrvFrame()
 		BurnDrvRedraw();
 	}
 
+	BurnRecoilUpdate();
+
 	return 0;
 }
 
@@ -605,6 +620,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		EEPROMScan(nAction, pnMin);
 
 		BurnGunScan();
+		BurnRecoilScan(nAction);
 
 		SCAN_VAR(gun_interrupt_timer);
 	}

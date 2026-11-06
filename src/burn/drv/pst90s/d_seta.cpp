@@ -9287,7 +9287,7 @@ STD_ROM_FN(msgundam)
 
 static INT32 msgundamInit()
 {
-	refresh_rate = 5666; // 56.66 hz
+	refresh_rate = 5744; // 57.44 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -9429,6 +9429,8 @@ STD_ROM_FN(kamenrid)
 
 static INT32 kamenridInit()
 {
+	refresh_rate = 5744; // 57.44 hz - https://github.com/finalburnneo/FBNeo/issues/2854
+
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -10876,6 +10878,8 @@ STD_ROM_FN(krzybowl)
 
 static INT32 krzybowlInit()
 {
+	refresh_rate = 5875; // 58.75 hz - https://github.com/finalburnneo/FBNeo/issues/2854
+
 	DrvSetVideoOffsets(0, 0, 0, 0);
 	DrvSetColorOffsets(0, 0, 0);
 	trackball_mode = 1;

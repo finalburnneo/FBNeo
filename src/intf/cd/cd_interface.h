@@ -5,7 +5,8 @@
 // CD emulation module
 
 enum CDEmuStatusValue { idle = 0, reading, playing, paused, seeking, fastforward, fastreverse };
-enum CDEmuReadTOCFlags { CDEmuTOC_FIRSTLAST = 0x1000, CDEmuTOC_LASTMSF, CDEmuTOC_FIRSTINDEX, CDEmuTOC_ENDOFDISC };
+// CDEmuTOC_TRACKEND is or'ed with a bcd track number: msf where the track ends (start of the next track's pregap)
+enum CDEmuReadTOCFlags { CDEmuTOC_FIRSTLAST = 0x1000, CDEmuTOC_LASTMSF, CDEmuTOC_FIRSTINDEX, CDEmuTOC_ENDOFDISC, CDEmuTOC_TRACKEND = 0x2000 };
 
 extern TCHAR CDEmuImage[MAX_PATH];
 extern UINT8 CDEmuImageTOCSHA1[MAX_PATH];
@@ -22,6 +23,15 @@ INT32 CDEmuSetVolume(double dVolume);
 INT32 CDEmuGetCurrentLBA();
 INT32 CDEmuGetSoundBuffer(INT16* buffer, INT32 samples);
 INT32 CDEmuScan(INT32 nAction, INT32 *pnMin);
+
+// disc swapping (multi-disc games), drivers poll the tray state and the change counter once per frame
+// and tell the frontend they do with CDEmuSetTraySupported() (after CDEmuInit)
+void CDEmuSetTraySupported(INT32 bSupported);
+INT32 CDEmuIsTraySupported();
+INT32 CDEmuChangeImage(const TCHAR* pszImage);
+void CDEmuSetTrayOpen(INT32 bOpen);
+INT32 CDEmuIsTrayOpen();
+UINT32 CDEmuGetDiscChanges();
 
 static inline CDEmuStatusValue CDEmuGetStatus()
 {

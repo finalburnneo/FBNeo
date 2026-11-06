@@ -1742,6 +1742,87 @@ struct BurnDriver BurnDrvMakknight = {
 	256, 224, 4, 3
 };
 
+static struct BurnRomInfo GngprincessRomDesc[] = {
+	{ "mm_c_princess_04", 0x04000, 0x3b6d9dcf, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "mm_c_princess_03", 0x08000, 0x134db50c, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "mm_c_princess_05", 0x08000, 0xd7e126e2, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	{ "gg2.bin",           0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+
+	{ "gg1princess.bin",   0x04000, 0x7935494f, 3 | BRF_GRA },           //  4	Characters
+
+	{ "gg11.bin",          0x04000, 0xddd56fa9, 4 | BRF_GRA },           //  5	Tiles
+	{ "gg10.bin",          0x04000, 0x7302529d, 4 | BRF_GRA },           //  6
+	{ "gg9.bin",           0x04000, 0x20035bda, 4 | BRF_GRA },           //  7
+	{ "gg8.bin",           0x04000, 0xf12ba271, 4 | BRF_GRA },           //  8
+	{ "gg7.bin",           0x04000, 0xe525207d, 4 | BRF_GRA },           //  9
+	{ "gg6.bin",           0x04000, 0x2d77e9b2, 4 | BRF_GRA },           // 10
+
+	{ "gg17princess.bin",  0x04000, 0xe2043162, 5 | BRF_GRA },           // 11	Sprites
+	{ "gg16princess.bin",  0x04000, 0x1ad1d899, 5 | BRF_GRA },           // 12
+	{ "gg15princess.bin",  0x04000, 0x439d6e7b, 5 | BRF_GRA },           // 13
+	{ "gg14princess.bin",  0x04000, 0x19847a61, 5 | BRF_GRA },           // 14
+	{ "gg13princess.bin",  0x04000, 0x05e0c809, 5 | BRF_GRA },           // 15
+	{ "gg12princess.bin",  0x04000, 0x28fe68a2, 5 | BRF_GRA },           // 16
+
+	{ "tbp24s10.14k",      0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, // 17	PROMs
+	{ "63s141.2e",         0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT }, // 18
+	{ "gg-pal10l8.bin",    0x0002c, 0x87f1b7e0, 0 | BRF_GRA | BRF_OPT }, // 19	PLD
+};
+
+STD_ROM_PICK(Gngprincess)
+STD_ROM_FN(Gngprincess)
+
+struct BurnDriver BurnDrvGngprincess = {
+	"gngprincess", "gng", NULL, NULL, "2026",
+	"Ghosts'n Goblins - Princess Prin Prin Edition (World? 1)\0", NULL, "GoodLuckTrying", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, GngprincessRomInfo, GngprincessRomName, NULL, NULL, NULL, NULL, GngInputInfo, GngDIPInfo,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+static struct BurnRomInfo MakprincessRomDesc[] = {
+	{ "10nprincess.rom",   0x04000, 0x49dc2d12, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
+	{ "8nprincess.rom",    0x08000, 0xff005be0, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "12nprincess.rom",   0x08000, 0x7c2064ca, 1 | BRF_ESS | BRF_PRG }, //  2
+
+	{ "gg2.bin",           0x08000, 0x615f5b6f, 2 | BRF_ESS | BRF_PRG }, //  3	Z80 Program
+
+	{ "gg1princess.bin",   0x04000, 0x7935494f, 3 | BRF_GRA },           //  4	Characters
+
+	{ "gg11.bin",          0x04000, 0xddd56fa9, 4 | BRF_GRA },           //  5	Tiles
+	{ "gg10.bin",          0x04000, 0x7302529d, 4 | BRF_GRA },           //  6
+	{ "gg9.bin",           0x04000, 0x20035bda, 4 | BRF_GRA },           //  7
+	{ "gg8.bin",           0x04000, 0xf12ba271, 4 | BRF_GRA },           //  8
+	{ "gg7.bin",           0x04000, 0xe525207d, 4 | BRF_GRA },           //  9
+	{ "gg6.bin",           0x04000, 0x2d77e9b2, 4 | BRF_GRA },           // 10
+
+	{ "gng13princess.n4",  0x04000, 0x07c9138a, 5 | BRF_GRA },           // 11	Sprites
+	{ "gg16princess.bin",  0x04000, 0x1ad1d899, 5 | BRF_GRA },           // 12
+	{ "gg15princess.bin",  0x04000, 0x439d6e7b, 5 | BRF_GRA },           // 13
+	{ "gng16princess.l4",  0x04000, 0x3cc87995, 5 | BRF_GRA },           // 14
+	{ "gg13princess.bin",  0x04000, 0x05e0c809, 5 | BRF_GRA },           // 15
+	{ "gg12princess.bin",  0x04000, 0x28fe68a2, 5 | BRF_GRA },           // 16
+
+	{ "tbp24s10.14k",      0x00100, 0x0eaf5158, 0 | BRF_GRA | BRF_OPT }, // 17	PROMs
+	{ "63s141.2e",         0x00100, 0x4a1285a4, 0 | BRF_GRA | BRF_OPT }, // 18
+};
+
+STD_ROM_PICK(Makprincess)
+STD_ROM_FN(Makprincess)
+
+struct BurnDriver BurnDrvMakprincess = {
+	"makprincess", "gng", NULL, NULL, "2026",
+	"Makaimura - Princess Prin Prin Edition\0", NULL, "GoodLuckTrying", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_RUNGUN, 0,
+	NULL, MakprincessRomInfo, MakprincessRomName, NULL, NULL, NULL, NULL, GngInputInfo, MakaimurDIPInfo,
+	GngInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
 static struct BurnRomInfo DiamrunRomDesc[] = {
 	{ "d3o",           0x04000, 0xba4bf9f1, 1 | BRF_ESS | BRF_PRG }, //  0	M6809 Program Code
 	{ "d3",            0x08000, 0xf436d6fa, 1 | BRF_ESS | BRF_PRG }, //	 1

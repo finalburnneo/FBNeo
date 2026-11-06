@@ -33,4 +33,8 @@ INT32 BurnHDDWrite(BurnHDD* pDisk, UINT32 nLba, UINT32 nCount, const void* pSrc)
 // Forgets every write (back to the pristine image) and deletes the diff file.
 void BurnHDDDiscardWrites(BurnHDD* pDisk);
 
+// Path of disk nIndex for drivers using another image module (cd images), searched like BurnHDDOpen.
+// pszPath must hold MAX_PATH characters. Returns 0 when the file exists.
+INT32 BurnHDDGetPath(INT32 nIndex, const TCHAR* pszExt, TCHAR* pszPath);
+
 #endif

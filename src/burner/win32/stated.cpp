@@ -26,9 +26,23 @@ static void MakeOfn(TCHAR* pszFilter)
 int StatedAuto(int bSave)
 {
 	static TCHAR szName[MAX_PATH] = _T("");
+	static TCHAR szNVName[MAX_PATH] = _T("");
 	int nRet;
 
 	_stprintf(szName, _T("%s%s.fs"), szAppEEPROMPath, IsCDGame() ? CDInfo_GamePrefix() : BurnDrvGetText(DRV_NAME));
+	_stprintf(szNVName, _T("%s%s.fs"), szAppEEPROMPath, IsCDGame() ? CDInfo_NVRAMPrefix() : BurnDrvGetText(DRV_NAME));
+
+	if (_tcscmp(szName, szNVName)) {
+		// multi-disc game: the nvram is shared by all its discs, the full state stays per disc
+		if (bSave == 0) {
+			if (bDrvSaveAll) BurnStateLoad(szName, 1, NULL);
+			nRet = BurnStateLoad(szNVName, 0, NULL);	// latest nvram, over the one of the full state
+		} else {
+			nRet = BurnStateSave(szNVName, 0);
+			if (bDrvSaveAll) BurnStateSave(szName, 1);
+		}
+		return nRet;
+	}
 
 	if (bSave == 0) {
 		nRet = BurnStateLoad(szName, bDrvSaveAll, NULL);		// Load ram

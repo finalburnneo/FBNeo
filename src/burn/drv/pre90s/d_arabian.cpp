@@ -274,13 +274,20 @@ static void __fastcall arabian_videoram_w(UINT16 offset, UINT8 data)
 	}
 }
 
-static void sync_mcu()
+static void sync_mcu_opened()
 {
 	INT32 cyc = ((INT64)ZetTotalCycles(0) * (2000000 / 6) / 3000000) - mb88xxTotalCycles();
 
 	if (cyc > 0) {
 		mb88xxRun(cyc);
 	}
+}
+
+static void sync_mcu()
+{
+	mb88xxOpen(0);
+	sync_mcu_opened();
+	mb88xxClose();
 }
 
 static void __fastcall arabian_write(UINT16 address, UINT8 data)
@@ -401,9 +408,11 @@ static void ay8910_porta_w(UINT32, UINT32 data)
 
 static void ay8910_portb_w(UINT32, UINT32 data)
 {
-	sync_mcu();
+	mb88xxOpen(0);
+	sync_mcu_opened();
 	mb88xxSetRESETLine(~data & 0x10);
 	mb88xxSetIRQLine(0, (data & 0x20) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
+	mb88xxClose();
 }
 
 static INT32 DrvDoReset()
@@ -414,7 +423,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	mb88xxOpen(0);
 	mb88xxReset();
+	mb88xxClose();
 
 	AY8910Reset(0);
 
@@ -552,6 +563,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	mb88xxInit(0, 8841, DrvMCUROM);
+	mb88xxOpen(0);
 	mb88xxSetReadWriteFunction(mcu_port_r0_write, mcu_port_r0_read, 'r', 0);
 	mb88xxSetReadWriteFunction(mcu_port_r1_write, mcu_port_r1_read, 'r', 1);
 	mb88xxSetReadWriteFunction(mcu_port_r2_write, mcu_port_r2_read, 'r', 2);
@@ -559,6 +571,7 @@ static INT32 DrvInit()
 	mb88xxSetReadWriteFunction(NULL, mcu_port_k_read, 'k', 0);
 	mb88xxSetReadWriteFunction(mcu_port_o_write, NULL, 'o', 0);
 	mb88xxSetReadWriteFunction(mcu_port_p_write, NULL, 'p', 0);
+	mb88xxClose();
 
 	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, NULL, NULL, ay8910_porta_w, ay8910_portb_w);

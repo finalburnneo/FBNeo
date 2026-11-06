@@ -48668,18 +48668,18 @@ struct BurnDriver BurnDrvsnes_Jpark2redux = {
 	512, 448, 4, 3
 };
 
-// Jurl (HB, v0.5a)
+// Jurl (HB, v0.6a)
 // https://tonsomo.itch.io/jurl-super-nintendofamicom-edition
 static struct BurnRomInfo snes_JurlRomDesc[] = {
-	{ "Jurl v0.5a (2025)(Tonsomo Entertainment).sfc", 262144, 0xeccff965, BRF_ESS | BRF_PRG },
+	{ "Jurl v0.6a (2025-26)(Tonsomo Entertainment).sfc", 262144, 0xd38977f9, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Jurl)
 STD_ROM_FN(snes_Jurl)
 
 struct BurnDriver BurnDrvsnes_Jurl = {
-	"snes_jurl", NULL, NULL, NULL, "2025",
-	"Jurl (HB, v0.5a)\0", NULL, "Tonsomo Entertainment", "SNES / Super Famicom",
+	"snes_jurl", NULL, NULL, NULL, "2025-26",
+	"Jurl (HB, v0.6a)\0", NULL, "Tonsomo Entertainment", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION, 0,
 	SNESGetZipName, snes_JurlRomInfo, snes_JurlRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -51046,10 +51046,10 @@ struct BurnDriver BurnDrvsnes_Sfalpha2lff = {
 	512, 448, 4, 3
 };
 
-// Supaplex (HB, v0.2)
+// Supaplex (HB, v0.4)
 // https://ludufre.com/ports/
 static struct BurnRomInfo snes_SupaplexRomDesc[] = {
-	{ "Supaplex v0.2 (2026)(ludufre).sfc", 4194304, 0x146e59dc, BRF_ESS | BRF_PRG },
+	{ "Supaplex v0.4 (2026)(ludufre).sfc", 4194304, 0x53ac956d, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Supaplex)
@@ -51057,7 +51057,7 @@ STD_ROM_FN(snes_Supaplex)
 
 struct BurnDriver BurnDrvsnes_Supaplex = {
 	"snes_supaplex", NULL, NULL, NULL, "2026",
-	"Supaplex (HB, v0.2)\0", "SA-1 enhancement CPU", "ludufre", "SNES / Super Famicom",
+	"Supaplex (HB, v0.4)\0", "SA-1 enhancement CPU", "ludufre", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SNES, GBF_ACTION | GBF_MAZE, 0,
 	SNESGetZipName, snes_SupaplexRomInfo, snes_SupaplexRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,

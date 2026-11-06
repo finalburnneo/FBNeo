@@ -354,16 +354,58 @@ int BuildTemplateDlgTemplateEx(const DLGTEMPLATEEX* pTemplate, LPTSTR lpszName, 
 	return nControls;
 }
 
+// Menu template nesting tracker
+
+#define MENU_MAX_DEPTH 32
+
+struct MenuNesting {
+	bool bOwnerIsLast[MENU_MAX_DEPTH];	// MF_END flag of the popup that owns each open level
+	int nDepth;							// number of open sub-levels (0 = top level)
+	bool bDone;							// top level has been closed
+
+	MenuNesting() : nDepth(0), bDone(false) { }
+
+	// Process one entry, returns the number of sub-levels it closed
+	int Step(WORD wOption)
+	{
+		if (wOption & MF_POPUP) {
+			if (nDepth < MENU_MAX_DEPTH) {
+				bOwnerIsLast[nDepth] = (wOption & MF_END) != 0;
+			}
+			nDepth++;
+			return 0;
+		}
+
+		if (!(wOption & MF_END)) {
+			return 0;
+		}
+
+		int nClosed = 0;
+		for (;;) {
+			if (nDepth == 0) {							// top level closed, menu done
+				bDone = true;
+				break;
+			}
+			nDepth--;
+			nClosed++;
+			if (nDepth < MENU_MAX_DEPTH && !bOwnerIsLast[nDepth]) {
+				break;									// owner popup has siblings after it
+			}
+		}
+		return nClosed;
+	}
+};
+
 int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FILE* fp)
 {
 	wchar_t wszBuffer[5120];
 	TCHAR szIndent[] = _T("                ");
 
 	char* pTemplateDataIn = (char*)pTemplate + sizeof(MENUITEMTEMPLATEHEADER);
-	bool bLastPopup = false, bLastItem = false;
-	int nIndent = 0;
-	int bracketcnt = 0; // popup menu counter (BEGIN...END)
+	MenuNesting Nesting;
 	int i = 0;
+
+#define MENU_INDENT(n) (szIndent + (8 - ((n) < 0 ? 0 : ((n) > 8 ? 8 : (n)))) * 2)
 
 	if (fp) {
 		if (IS_INTRESOURCE(lpszName)) {
@@ -385,69 +427,56 @@ int BuildTemplateMenuTemplate(const MENUTEMPLATE* pTemplate, LPTSTR lpszName, FI
 		wchar_t pszTitle[1024] = L"";
 		WORD wOption = ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption;
 		WORD wID = 0;
+		int nIndent = Nesting.nDepth;
 		int l;
 
-		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP) {
-			bLastPopup = false;
-			bLastItem = false;
-			bracketcnt++;
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
-				bLastPopup = true;
-				bracketcnt--;
-			}
+		if (wOption & MF_POPUP) {
 			pTemplateDataIn += sizeof(WORD);
 		} else {
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
-				bLastItem = true;
-				bracketcnt--;
-			}
 			wID = ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtID;
 			pTemplateDataIn += sizeof(WORD) * 2;
 		}
+
+		int nClosed = Nesting.Step(wOption);
 
 		for (l = 0; l < 1023 && ((wchar_t*)pTemplateDataIn)[l] && ((wchar_t*)pTemplateDataIn)[l] != _T('\t'); l++) { }
 
 		wcsncpy(pszTitle, (wchar_t*)pTemplateDataIn, l);
 
 		if (fp) {
-			if (wcslen((wchar_t*)pTemplateDataIn)) {
+			// Popups always open a bracket (even untitled), separators are skipped
+			if ((wOption & MF_POPUP) || wcslen((wchar_t*)pTemplateDataIn)) {
 				EscapeString(wszBuffer, pszTitle, 5120);
-				_ftprintf(fp, _T("%s        //-- \"%ls\"\n"), szIndent + (8 - nIndent) * 2, wszBuffer);
-				_ftprintf(fp, _T("%s"), szIndent + (8 - nIndent) * 2);
+				_ftprintf(fp, _T("%s        //-- \"%ls\"\n"), MENU_INDENT(nIndent), wszBuffer);
+				_ftprintf(fp, _T("%s"), MENU_INDENT(nIndent));
 				if (wOption & MF_POPUP) {
 					_ftprintf(fp, _T("  popup %4i \"\" {\n"), i);
-					nIndent++;
 				} else {
 					_ftprintf(fp, _T("  %5i %4i \"\"\n"), wID, i);
 				}
 			}
 
-			if ((wOption & MF_END) && !(wOption & MF_POPUP)) {
+			// Close every sub-level this entry ended
+			while (nClosed--) {
 				nIndent--;
-				if (nIndent < 0) {
-					nIndent = 0;
-				}
-				if (nIndent > 8) {
-					nIndent = 8;
-				}
-
-				if (fp) {
-					_ftprintf(fp, _T("%s  }\n"), szIndent + (8 - nIndent) * 2);
-				}
+				_ftprintf(fp, _T("%s  }\n"), MENU_INDENT(nIndent));
 			}
 		}
 		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
 
-	} while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
+	} while (!Nesting.bDone && ++i < 1024);
 
 	if (fp) {
-		while (nIndent) {
-			nIndent--;
-			_ftprintf(fp, _T("%s  }\n"), szIndent + (8 - nIndent) * 2);
+		// Malformed template: close whatever is still open
+		while (Nesting.nDepth > 0) {
+			Nesting.nDepth--;
+			_ftprintf(fp, _T("%s  }\n"), MENU_INDENT(Nesting.nDepth));
 		}
 
 		_ftprintf(fp, _T("}\n\n"));
 	}
+
+#undef MENU_INDENT
 
 	return i;
 }
@@ -931,31 +960,21 @@ void ParseMenuTemplate(const MENUTEMPLATE* pTemplate)
 #endif
 
 	int i = 0;
-	int bracketcnt = 0; // popup menu counter (BEGIN...END)
-	bool bLastPopup = false, bLastItem = false;
+	MenuNesting Nesting;
 	do {
-		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP) {
-			bLastPopup = false;
-			bLastItem = false;
-			bracketcnt++;
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
-				bLastPopup = true;
-				bracketcnt--;
-			}
+		WORD wOption = ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption;
+		if (wOption & MF_POPUP) {
 			dprintf(_T("   popup %03i "), i);
 			pTemplateDataIn += sizeof(WORD);
 		} else {
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
-				bLastItem = true;
-				bracketcnt--;
-			}
 			dprintf(_T("   item %03i ID is %05i "), i, ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtID);
 			pTemplateDataIn += sizeof(WORD) * 2;
 		}
+		Nesting.Step(wOption);
 
 		dprintf(_T("\"%ls\".\n"), ((wchar_t*)pTemplateDataIn));
 		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
-	} while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
+	} while (!Nesting.bDone && ++i < 1024);
 }
 #endif
 
@@ -971,7 +990,7 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 	dprintf(_T("Translating menu template:\n"));
 #endif
 
-	pTemplateDataOut = (char*)malloc(sizeof(MENUITEMTEMPLATEHEADER));
+	pTemplateDataOut = (char*)malloc(sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->offset);
 	memcpy(pTemplateDataOut, (char*)pTemplate, sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->offset);
 	pTemplateDataInSync = pTemplateDataIn;
 	pTemplateDataOutSync = pTemplateDataOut + sizeof(MENUITEMTEMPLATEHEADER) + ((MENUITEMTEMPLATEHEADER*)pTemplate)->offset;
@@ -996,26 +1015,17 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 #endif
 
 	int i = 0;
-	int bracketcnt = 0; // popup menu counter (BEGIN...END)
-	bool bLastPopup = false, bLastItem = false;
+	MenuNesting Nesting;
 	do {
-		if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_POPUP) {
-			bLastPopup = false;
-			bLastItem = false;
-			bracketcnt++;
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
-				bLastPopup = true;
-				bracketcnt--;
-			}
+		WORD wOption = ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption;
+		Nesting.Step(wOption);
+
+		if (wOption & MF_POPUP) {
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("   popup %03i "), i);
 #endif
 			pTemplateDataIn += sizeof(WORD);
 		} else {
-			if (((MENUITEMTEMPLATE*)pTemplateDataIn)->mtOption & MF_END) {
-				bLastItem = true;
-				bracketcnt--;
-			}
 #ifdef PRINT_TRANSLATION_INFO
 			dprintf(_T("   item %03i ID is %05i "), i, ((MENUITEMTEMPLATE*)pTemplateDataIn)->mtID);
 #endif
@@ -1042,7 +1052,7 @@ MENUTEMPLATE* TranslateMenuTemplate(const MENUTEMPLATE* pTemplate, const Localis
 
 		pTemplateDataIn += wcslen((wchar_t*)pTemplateDataIn) * sizeof(wchar_t) + sizeof(wchar_t);
 		pTemplateDataInSync = pTemplateDataIn;
-	} while (i++ < 1024 && (!(bLastPopup && bLastItem) || bracketcnt > 0));
+	} while (!Nesting.bDone && ++i < 1024);
 
 	CATCH_UP;
 

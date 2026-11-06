@@ -943,6 +943,10 @@ extern "C" INT32 BurnDrvExit()
 	}
 #endif
 
+	if (BurnExtRumbleCallback) {
+		BurnExtRumbleCallback(-1, 0, 0);	// all motors off
+	}
+
 	HiscoreExit(); // must come before CheatExit() (uses cheat cpu-registry)
 	CheatExit();
 	CheatSearchExit();
@@ -984,6 +988,22 @@ extern "C" INT32 BurnDrvExit()
 	BurnRestoreSizeAspect_Internal();
 
 	return nRet;
+}
+
+INT32 (__cdecl* BurnExtRumbleCallback)(INT32 nPlayer, INT32 nStrong, INT32 nWeak) = NULL;
+
+void BurnRumble(INT32 nPlayer, INT32 nStrong, INT32 nWeak)
+{
+	if (BurnExtRumbleCallback == NULL || bBurnRunAheadFrame) {	// runahead frames are thrown away
+		return;
+	}
+
+	if (nStrong < 0) nStrong = 0;
+	if (nStrong > 0xffff) nStrong = 0xffff;
+	if (nWeak < 0) nWeak = 0;
+	if (nWeak > 0xffff) nWeak = 0xffff;
+
+	BurnExtRumbleCallback(nPlayer, nStrong, nWeak);
 }
 
 INT32 (__cdecl* BurnExtCartridgeSetupCallback)(BurnCartrigeCommand nCommand) = NULL;

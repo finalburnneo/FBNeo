@@ -17,6 +17,9 @@ void namco_15xx_sharedram_write(INT32 offset, UINT8 data);
 UINT8 namco_15xx_sharedram_read(INT32 offset);
 void namco_15xx_sound_enable(INT32 value);
 
+void namco_polepos_write(INT32 offset, UINT8 data);
+UINT8 namco_polepos_read(INT32 offset);
+
 #define BURN_SND_NAMCOSND_ROUTE_1		0
 #define BURN_SND_NAMCOSND_ROUTE_2		1
 

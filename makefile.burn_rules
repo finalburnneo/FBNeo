@@ -3,7 +3,7 @@ alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom bur
 			burn/drv/pgm burn/drv/pgm2 burn/drv/psikyo burn/drv/sega burn/drv/sg1000 burn/drv/sms burn/drv/msx burn/drv/spectrum burn/drv/taito \
 			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/arm9 cpu/e132xs cpu/f8 cpu/h6280 cpu/hd6309 cpu/hmcs40 cpu/i386 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/i8085 cpu/adsp2100 cpu/konami cpu/m377 cpu/mips3 cpu/m68k \
 			cpu/mb88xx cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/tlcs900 cpu/sh2 cpu/sh4 cpu/t11 cpu/tms32010 cpu/tms34 cpu/upd7725 cpu/upd7810 \
-			cpu/v60 cpu/xa cpu/z80 cpu/z180 \
+			cpu/v60 cpu/xa cpu/z80 cpu/z180 cpu/z8000 \
 			dep/libs/dr_libs dep/libs/stb_vorbis dep/libs/r8brain dep/libs/r8brain/fft dep/libs/libchdr dep/libs/libchdr/include dep/libs/lzma dep/libs/lzma/include dep/libs/zstd
 
 drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_atarisy1.o d_atarisy2.o d_badlands.o d_batman.o d_blstroid.o d_eprom.o d_gauntlet.o d_klax.o d_marblmd2.o d_missile.o d_offtwall.o d_rampart.o \
@@ -77,7 +77,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atarig1.o d_atarisy1.o d_atarisy2.o d_badl
 			d_qbert.o d_quizo.o d_r2dtank.o d_rallyx.o d_redclash.o d_renegade.o d_quantum.o d_route16.o d_rpunch.o d_safarir.o d_sauro.o d_scregg.o d_seicross.o d_senjyo.o d_sf.o d_shangkid.o d_shisen.o \
 			d_sidearms.o d_skyarmy.o d_skyfox.o d_skykid.o d_snk.o d_snk6502.o d_snk68.o d_solomon.o d_sonson.o d_spacefb.o d_spbactn.o d_spdodgeb.o d_speedbal.o d_splndrbt.o d_sprcros2.o \
 			d_srumbler.o d_ssozumo.o d_sstrangr.o d_starwars.o d_stfight.o d_stuntair.o d_sub.o d_suna8.o d_tagteam.o d_tankbatt.o d_tankbust.o d_tattack.o d_taxidriv.o d_tail2nose.o d_tbowl.o d_tceptor.o \
-			d_tecmo.o d_tehkanwc.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_thief.o d_tiamc1.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_tsamurai.o d_tubep.o d_usgames.o \
+			d_tecmo.o d_tehkanwc.o d_tempest.o d_terracre.o d_thedeep.o d_thepit.o d_thief.o d_tiamc1.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_tsamurai.o d_tubep.o d_tx1.o d_usgames.o \
 			d_vampire.o d_vastar.o d_vball.o d_vicdual.o d_vulgus.o d_wallc.o d_warpwarp.o d_warpsped.o d_wc90.o d_wc90b.o d_williams.o d_wink.o d_wiping.o d_wiz.o d_wwfsstar.o \
 			d_xain.o d_xxmissio.o d_xyonix.o d_zaccaria.o d_zodiack.o d_zwackery.o \
 			\
@@ -125,7 +125,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			z180_intf.o  \
 			\
 			arm.o arm7.o arm9.o e132xs.o h6280.o hd6309.o hmcs40.o i386.o i8039.o m37710.o mcs48.o mcs51.o i8085.o konami.o m6502.o m6800.o m6805.o m6809.o mb88xx.o nec.o pic16c5x.o s2650.o sh2.o sh4.o t11.o tms32010.o tlcs90.o tlcs900.o \
-			upd7725.o upd7810.o v25.o v60.o xa.o xa_ops.o z80.o z80daisy.o z80ctc.o z80pio.o z180.o \
+			upd7725.o upd7810.o v25.o v60.o xa.o xa_ops.o z80.o z80daisy.o z80ctc.o z80pio.o z180.o z8000.o \
 			\
 			mips3.o \
 			\
@@ -160,7 +160,7 @@ depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o 
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \
 			\
-			megadrive.o stm95.o \
+			megadrive.o segacd.o stm95.o \
 			\
 			pce.o pce_cd.o \
 			\

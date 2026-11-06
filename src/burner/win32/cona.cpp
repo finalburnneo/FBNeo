@@ -366,6 +366,7 @@ int ConfigAppLoad()
 
 		// Input
 		VAR(nInputSelect);
+		VAR(bInputRumble);
 
 		// Sound
 		VAR(nAudSelect);
@@ -787,6 +788,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- Input ------------------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// The selected input plugin (0 = DirectInput, 1 = XInput + DirectInput)\n"));
 	VAR(nInputSelect);
+	_ftprintf(h, _T("\n// If non-zero, allow games to use gamepad rumble (XInput plugin only)\n"));
+	VAR(bInputRumble);
 	_ftprintf(h, _T("\n"));
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));
 	_ftprintf(h, _T("\n// The selected audio plugin (0 = DirectSound, 1 = XAudio2, 2 = WASAPI)\n"));

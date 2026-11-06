@@ -18584,8 +18584,6 @@ static INT32 KnightshInit()
 
 static INT32 Cps1RasterInit()
 {
-	Cps1DrawAtVblank = 1;
-
 	return DrvInit();
 }
 
@@ -19413,10 +19411,6 @@ void __fastcall GanbareTimeKeeperWriteWord(UINT32 a, UINT16 d)
 static void GanabareTimeKeeperTick()
 {
 	if ((GetCurrentFrame() % 60) == 0) TimeKeeperTick(); // refresh is 59.61
-	
-	SekOpen(0);
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	SekClose();
 }
 
 static INT32 GanbareScanCallback(INT32 nAction, INT32*)
@@ -19433,6 +19427,8 @@ static INT32 GanbareInit()
 	
 	INT32 nRet = DrvInit();
 	if (nRet) return nRet;
+
+	bCpsRasterCounters = 1;					// irq4 comes from the CPS-B-21 raster counters
 	
 	SekOpen(0);
 	SekMapHandler(1, 0xff0000, 0xffffff, MAP_RAM);
@@ -22191,8 +22187,6 @@ static INT32 StriderjrInit()
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 
 		CpsLoadStars(CpsStar, 2);
-
-		Cps1DrawAtVblank = 1;
 	}
 
 	return nRet;
@@ -22216,7 +22210,6 @@ static INT32 StriderjexInit()
 	if (!nRet) {
 		CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
 		CpsLoadStars(CpsStar, nCps68KByteswapRomNum + nCps68KNoByteswapRomNum);
-		Cps1DrawAtVblank = 1;
 	}
 	return nRet;
 }
@@ -23319,7 +23312,6 @@ static INT32 WofsgzbScenarioPatch()
 static INT32 WofsgzbInit()
 {
 	Wofsgzb = 1;
-	Cps1DrawAtVblank = 1;
 //	CpsBootlegEEPROM = 1;
 
 	Cps1Qs = Cps1QSDip & 1;
@@ -29361,7 +29353,6 @@ STD_ROM_FN(kod1v3)
 static INT32 KodInit()
 {
 	szGameName = "kod";
-	Cps1DrawAtVblank = 1;
 
 	return TwelveMhzInit();
 }

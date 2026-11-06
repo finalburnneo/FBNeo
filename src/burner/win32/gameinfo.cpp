@@ -1246,6 +1246,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				}
 			}
 			BzipClose();
+			MarkGameAvScanned(nGiDriverSelected);
 			WriteGameAvb();
 			return 0;
 		}

@@ -2059,6 +2059,9 @@
     <ClCompile Include="..\..\src\burn\snd\timeplt_snd.cpp">
       <Filter>burn\snd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\megadrive\segacd.cpp">
+      <Filter>burn\drv\megadrive</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\megadrive\stm95.cpp">
       <Filter>burn\drv\megadrive</Filter>
     </ClCompile>

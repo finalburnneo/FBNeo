@@ -1451,6 +1451,10 @@ static void RebuildEverything()
 	SendMessage(hSelList, WM_SETREDRAW, (WPARAM)FALSE,(LPARAM)TVI_ROOT);	// disable redraw
 	SendMessage(hSelList, TVM_DELETEITEM, 0, (LPARAM)TVI_ROOT);				// Destory all nodes
 	SelListMake();
+
+	HTREEITEM hTvRoot = TreeView_GetRoot(hSelList); // start @ the top of the list! -dink
+	if (hTvRoot) TreeView_SelectSetFirstVisible(hSelList, hTvRoot);
+
 	SendMessage(hSelList, WM_SETREDRAW, (WPARAM)TRUE, (LPARAM)TVI_ROOT);	// enable redraw
 
 	// Clear the things in our Info-box
@@ -2052,7 +2056,7 @@ void LoadDrvIcons()
 
 		// By hardwares
 		if (bIconsByHardwares) {
-			if ((nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
+			if ((nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE || (nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD) {
 				hDrvIcon[nDrvIndex] = pIconsCache[nDrvCount + ICON_MEGADRIVE];	continue;
 			}
 			else

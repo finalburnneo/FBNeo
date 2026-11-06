@@ -177,6 +177,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		if ((((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCE_CD)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
@@ -198,7 +199,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			continue;
 		}
 
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && (bType == DAT_MEGADRIVE_ONLY)) {
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGACD) && (bType == DAT_MEGADRIVE_ONLY)) {
 			continue;
 		}
 
@@ -345,6 +346,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		remove_driver_leader(HARDWARE_SEGA_MEGADRIVE, 3, 1)
+		remove_driver_leader(HARDWARE_SEGA_MEGACD, 3, 1)
 		remove_driver_leader(HARDWARE_PCENGINE_TG16, 3, 1)
 		remove_driver_leader(HARDWARE_COLECO, 3, 1)
 		remove_driver_leader(HARDWARE_SEGA_SG1000, 5, 1)
@@ -696,6 +698,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		if ((((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCE_CD)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
@@ -717,7 +720,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			continue;
 		}
 
-		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && (bType == DAT_MEGADRIVE_ONLY)) {
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGADRIVE) && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SEGA_MEGACD) && (bType == DAT_MEGADRIVE_ONLY)) {
 			continue;
 		}
 
@@ -797,6 +800,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 #endif
 
 		remove_driver_leader(HARDWARE_SEGA_MEGADRIVE, 3, 0)
+		remove_driver_leader(HARDWARE_SEGA_MEGACD, 3, 0)
 		remove_driver_leader(HARDWARE_PCENGINE_TG16, 3, 0)
 		remove_driver_leader(HARDWARE_COLECO, 3, 0)
 		remove_driver_leader(HARDWARE_SEGA_SG1000, 5, 0)

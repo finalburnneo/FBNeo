@@ -3,7 +3,7 @@
 #include <io.h>
 
 #define CDLIBRARY_SCHEMA_VERSION   (1)
-#define CDLIBRARY_IDENTIFY_VERSION (1)
+#define CDLIBRARY_IDENTIFY_VERSION (2)
 #define CDLIBRARY_MAX_ENTRIES      (100000)
 #define CDLIBRARY_MAX_STAMPS       (CDIMAGE_MAX_SOURCE_FILES)
 #define CDLIBRARY_MAX_PAYLOAD      (64 * 1024 * 1024)
@@ -245,6 +245,10 @@ static INT32 CDLibraryPlatformEnabled(INT32 nPlatform)
 #endif
 #ifdef BUILD_PCE
 	if (nPlatform == CDLIST_PLATFORM_PCECD)
+		return 1;
+#endif
+#ifdef BUILD_MEGADRIVE
+	if (nPlatform == CDLIST_PLATFORM_SEGACD)
 		return 1;
 #endif
 	return 0;

@@ -32,12 +32,29 @@
 #include <pthread.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <errno.h>
+static inline void thready_sem_wait(sem_t *sem) { while (sem_wait(sem) != 0 && errno == EINTR) { } }
 #endif
 
 #ifndef THREADY
 // system not windows and without pthreads
 #define THREADY THREADY_0THREAD
 #endif
+
+// number of logical processors, for code that wants to spread work over several threads
+static inline INT32 thready_cpu_count()
+{
+#if (THREADY == THREADY_WINDOWS) || (THREADY == THREADY_WINDOWSVC)
+	SYSTEM_INFO info;
+	GetSystemInfo(&info);
+	return (info.dwNumberOfProcessors > 0) ? (INT32)info.dwNumberOfProcessors : 1;
+#elif (THREADY == THREADY_PTHREAD) || (THREADY == THREADY_PTHREADAPL)
+	long n = sysconf(_SC_NPROCESSORS_ONLN);
+	return (n > 0) ? (INT32)n : 1;
+#else
+	return 1;
+#endif
+}
 
 #if (THREADY == THREADY_WINDOWS)
 static long unsigned int __stdcall ThreadyProc(void*);
@@ -76,7 +93,7 @@ struct threadystruct
 
 		our_event = CreateEvent(NULL, FALSE, FALSE, NULL);
 		wait_event = CreateEvent(NULL, FALSE, FALSE, NULL);
-		our_thread = CreateThread(NULL, 0, ThreadyProc, NULL, 0, &our_threadid);
+		our_thread = CreateThread(NULL, 0, ThreadyProc, this, 0, &our_threadid);
 
 #if 0
 		SetThreadIdealProcessor(our_thread, thready_proc);
@@ -117,6 +134,10 @@ struct threadystruct
 		ok_to_thread = value;
 	}
 
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok && ok_to_thread && startup_frame <= 0;
+	}
 	void notify() {
 		if (startup_frame > 0) {
 			// run in synchronous mode for startup_frame frames
@@ -140,26 +161,29 @@ struct threadystruct
 	}
 };
 
+#ifndef THREADY_NO_GLOBAL
 static threadystruct thready;
+#endif
 
-static long unsigned int __stdcall ThreadyProc(void*) {
+static long unsigned int __stdcall ThreadyProc(void *param) {
+	threadystruct *t = (threadystruct*)param;
 	do {
-		DWORD dwWaitResult = WaitForSingleObject(thready.our_event, INFINITE);
+		DWORD dwWaitResult = WaitForSingleObject(t->our_event, INFINITE);
 
-		if (dwWaitResult == WAIT_OBJECT_0 && thready.end_thread == 0) {
+		if (dwWaitResult == WAIT_OBJECT_0 && t->end_thread == 0) {
 #if THREADY_CHECK_CB_TIME
 			time_t begin_time = clock();
 #endif
-			thready.our_callback();
+			t->our_callback();
 #if THREADY_CHECK_CB_TIME
 			time_t end_time = clock();
 			double duration = (double)(end_time - begin_time) / CLOCKS_PER_SEC;
 			bprintf(0, _T("thready: callback took %2.3f seconds\n"), duration);
 #endif
-			SetEvent(thready.wait_event);
+			SetEvent(t->wait_event);
 		} else {
-			SetEvent(thready.wait_event);
-			thready.end_thread |= 0x100;
+			SetEvent(t->wait_event);
+			t->end_thread |= 0x100;
 			//bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
 		}
@@ -322,6 +346,11 @@ public:
 	}
 
 	// Notify the worker thread to execute the callback
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok.load(std::memory_order_acquire) && ok_to_thread.load(std::memory_order_acquire) && our_event && startup_frame <= 0;
+	}
+
 	void notify() {
 		if (startup_frame > 0) {
 			startup_frame--;
@@ -362,7 +391,9 @@ public:
 };
 
 // Global singleton instance
+#ifndef THREADY_NO_GLOBAL
 static threadystruct thready;
+#endif
 
 // Main worker thread procedure
 static long unsigned int __stdcall ThreadyProc(void* param) {
@@ -429,9 +460,9 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
-		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
 		INT32 our_event_rv = sem_init(&our_event, 0, 0);
 		INT32 wait_event_rv = sem_init(&wait_event, 0, 0);
+		INT32 our_thread_rv = (our_event_rv == 0 && wait_event_rv == 0) ? pthread_create(&our_thread, NULL, ThreadyProc, this) : -1;
 
 		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
@@ -470,6 +501,10 @@ struct threadystruct
 		ok_to_thread = value;
 	}
 
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok && ok_to_thread && startup_frame <= 0;
+	}
 	void notify() {
 		if (startup_frame > 0) {
 			// run in synchronous mode for startup_frame frames
@@ -487,24 +522,27 @@ struct threadystruct
 	}
 	void notify_wait() {
 		if (ok_to_wait) {
-			sem_wait(&wait_event);
+			thready_sem_wait(&wait_event);
 			ok_to_wait = 0;
 		}
 	}
 };
 
+#ifndef THREADY_NO_GLOBAL
 static threadystruct thready;
+#endif
 
-static void *ThreadyProc(void*) {
+static void *ThreadyProc(void *param) {
+	threadystruct *t = (threadystruct*)param;
 	do {
-		sem_wait(&thready.our_event);
+		thready_sem_wait(&t->our_event);
 
-		if (thready.end_thread == 0) {
-			thready.our_callback();
-			sem_post(&thready.wait_event);
+		if (t->end_thread == 0) {
+			t->our_callback();
+			sem_post(&t->wait_event);
 		} else {
-			sem_post(&thready.wait_event);
-			thready.end_thread |= 0x100;
+			sem_post(&t->wait_event);
+			t->end_thread |= 0x100;
 			bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
 		}
@@ -532,6 +570,13 @@ struct threadystruct
 	char our_event_str[40];
 	char wait_event_str[40];
 
+	static sem_t *open_sem(const char *name) {
+		sem_unlink(name); // a possible leftover of the same name
+		sem_t *sem = sem_open(name, O_CREAT | O_EXCL, 0600, 0);
+		if (sem != SEM_FAILED) sem_unlink(name); // remove unneeded name
+		return sem;
+	}
+
 	void init(void (*thread_callback)()) {
 		thready_ok = 0;
 		ok_to_thread = 0;
@@ -540,13 +585,14 @@ struct threadystruct
 
 		our_callback = thread_callback;
 
-		INT32 our_thread_rv = pthread_create(&our_thread, NULL, ThreadyProc, NULL);
+		// keep names unique using PID and 'this' address
+		sprintf(our_event_str, "/fbt%x.%lx.o", (UINT32)getpid(), (unsigned long)(size_t)this);
+		sprintf(wait_event_str, "/fbt%x.%lx.w", (UINT32)getpid(), (unsigned long)(size_t)this);
 
-		sprintf(our_event_str, "/fbn_our_event%x", getpid());
-		sprintf(wait_event_str, "/fbn_wait_event%x", getpid());
+		INT32 our_event_rv = ((our_event = open_sem(our_event_str)) == SEM_FAILED) ? -1 : 0;
+		INT32 wait_event_rv = ((wait_event = open_sem(wait_event_str)) == SEM_FAILED) ? -1 : 0;
 
-		INT32 our_event_rv = ((our_event = sem_open(our_event_str, O_CREAT, 0644, 1)) == SEM_FAILED) ? -1 : 0;
-		INT32 wait_event_rv = ((wait_event = sem_open(wait_event_str, O_CREAT, 0644, 1)) == SEM_FAILED) ? -1 : 0;
+		INT32 our_thread_rv = (our_event_rv == 0 && wait_event_rv == 0) ? pthread_create(&our_thread, NULL, ThreadyProc, this) : -1;
 
 		if (our_thread_rv == 0 && wait_event_rv == 0 && our_event_rv == 0) {
 			bprintf(0, _T("Thready: we're gonna git 'r dun!\n"));
@@ -568,9 +614,7 @@ struct threadystruct
 			pthread_join(our_thread, NULL);
 
 			sem_close(our_event);
-			sem_unlink(our_event_str);
 			sem_close(wait_event);
-			sem_unlink(wait_event_str);
 
 			thready_ok = 0;
 		}
@@ -589,6 +633,10 @@ struct threadystruct
 		ok_to_thread = value;
 	}
 
+	// notify() really runs the callback on the thread (else it runs it straight away)
+	INT32 is_threaded() {
+		return thready_ok && ok_to_thread && startup_frame <= 0;
+	}
 	void notify() {
 		if (startup_frame > 0) {
 			// run in synchronous mode for startup_frame frames
@@ -606,24 +654,27 @@ struct threadystruct
 	}
 	void notify_wait() {
 		if (ok_to_wait) {
-			sem_wait(wait_event);
+			thready_sem_wait(wait_event);
 			ok_to_wait = 0;
 		}
 	}
 };
 
+#ifndef THREADY_NO_GLOBAL
 static threadystruct thready;
+#endif
 
-static void *ThreadyProc(void*) {
+static void *ThreadyProc(void *param) {
+	threadystruct *t = (threadystruct*)param;
 	do {
-		sem_wait(thready.our_event);
+		thready_sem_wait(t->our_event);
 
-		if (thready.end_thread == 0) {
-			thready.our_callback();
-			sem_post(thready.wait_event);
+		if (t->end_thread == 0) {
+			t->our_callback();
+			sem_post(t->wait_event);
 		} else {
-			sem_post(thready.wait_event);
-			thready.end_thread |= 0x100;
+			sem_post(t->wait_event);
+			t->end_thread |= 0x100;
 			bprintf(0, _T("Thready: thread-event thread ending..\n"));
 			return 0;
 		}
@@ -661,6 +712,9 @@ struct threadystruct
 			bprintf(0, _T("Thready: we can't thread on this platform yet.\n"));
 	}
 
+	INT32 is_threaded() {
+		return 0;
+	}
 	void notify() {
 		// fallback to single-threaded mode
 		our_callback();
@@ -669,5 +723,7 @@ struct threadystruct
 	}
 };
 
+#ifndef THREADY_NO_GLOBAL
 static threadystruct thready;
+#endif
 #endif // THREADY_0THREAD

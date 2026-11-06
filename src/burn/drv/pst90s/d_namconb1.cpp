@@ -723,6 +723,14 @@ static void mcu_write_port(UINT32 address, UINT8 data)
 		case M37710_PORT6:
 			port6_data = data;
 		return;
+
+		case M37710_PORT7:
+			// ptblank, gunbullet: gun recoil
+			// p2: bit 0
+			// p1: bit 1
+			BurnRecoilLine(0, data & 2);
+			BurnRecoilLine(1, data & 1);
+		return;
 	}
 }
 
@@ -772,6 +780,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M377Close();
 
 	c352_reset();
+
+	if (has_gun) {
+		BurnRecoilReset();
+	}
 
 	pos_irq_level = 0;
 	unk_irq_level = 0;
@@ -1129,6 +1141,7 @@ static INT32 PtblankInit()
 {
 	has_gun = 1;
 	BurnGunInit(2, true);
+	BurnRecoilInit(2, RECOIL_HANDGUN);
 
 	// no protection key
 
@@ -1299,6 +1312,7 @@ static INT32 DrvExit()
 
 	if (has_gun) {
 		BurnGunExit();
+		BurnRecoilExit();
 	}
 
 	has_gun = 0;
@@ -1850,6 +1864,7 @@ static INT32 DrvFrame()
 			cancel_opposing(&DrvInputs[2]);
 			cancel_opposing(&DrvInputs[3]);
 		}
+		BurnRecoilUpdate();
 	}
 
 	INT32 mult = 4;
@@ -1958,7 +1973,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(last_rand);
 
 		service.Scan();
-		if (has_gun) BurnGunScan();
+		if (has_gun) {
+			BurnGunScan();
+			BurnRecoilScan(nAction);
+		}
 
 		BurnRandomScan(nAction);
 

@@ -829,6 +829,7 @@
 #define MENU_TRIPLESIZESCREEN_VERTICAL		10708
 #define MENU_QUADSIZESCREEN_VERTICAL		10709
 #define MENU_CDIMAGE                    	10710
+#define MENU_CD_CHANGE_DISC					10743
 #define MENU_START_NEOGEO_MVS				10711
 #define MENU_START_NEOGEO_CD				10712
 #define MENU_LOAD_NEOCD						10713
@@ -907,6 +908,7 @@
 #define MENU_INPUT_ALL_DEFAULT				10792
 
 #define MENU_INPUT_REDETECT                 10800
+#define MENU_INPUT_RUMBLE                   10801
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

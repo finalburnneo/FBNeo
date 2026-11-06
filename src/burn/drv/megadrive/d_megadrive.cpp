@@ -483,6 +483,47 @@ INT32 MegadriveGetZipName(char** pszName, UINT32 i)
 	return 0;
 }
 
+// Sega CD / Mega-CD system (bios), the disc image is selected separately
+
+static struct BurnDIPInfo SegaCDDIPList[] = {
+	DIP_OFFSET(0x19)
+	{0x00,	0xff, 0xff, 0x00,  NULL                     },
+	{0x01,	0xff, 0xff, 0x03,  NULL                     },
+
+	{0,		0xfd, 0,       4, "Bios"                     },
+	{0x00,	0x01, 0x03, 0x00, "Auto (disc region)"       },
+	{0x00,	0x01, 0x03, 0x01, "Sega CD (USA, v1.10)"     },
+	{0x00,	0x01, 0x03, 0x02, "Mega-CD (Europe, v1.00)"  },
+	{0x00,	0x01, 0x03, 0x03, "Mega-CD (Japan, v1.00P)"  },
+
+	{0,		0xfe, 0,       4, "32-Col Mode Draw"         },
+	{0x01,	0x01, 0x03, 0x00, "No Change"                },
+	{0x01,	0x01, 0x03, 0x01, "Center"                   },
+	{0x01,	0x01, 0x03, 0x02, "Inner Zoom"               },
+	{0x01,	0x01, 0x03, 0x03, "Resize Screen/Window"     },
+};
+
+STDDIPINFO(SegaCD)
+
+static struct BurnRomInfo md_segacdRomDesc[] = {
+	{ "Sega CD BIOS (USA, v1.10).bin",      0x020000, 0xc6d10268, BRF_PRG | BRF_ESS },
+	{ "Mega-CD BIOS (Europe, v1.00).bin",   0x020000, 0x529ac15a, BRF_PRG | BRF_ESS | BRF_OPT },
+	{ "Mega-CD BIOS (Japan, v1.00P).bin",   0x020000, 0x9d2da8f2, BRF_PRG | BRF_ESS | BRF_OPT },
+};
+
+STD_ROM_PICK(md_segacd)
+STD_ROM_FN(md_segacd)
+
+struct BurnDriver BurnDrvmd_segacd = {
+	"md_segacd", NULL, NULL, NULL, "1992",
+	"Sega CD / Mega-CD System\0", "System - media selected separately", "Sega", "Sega CD / Mega-CD",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGACD, GBF_BIOS, 0,
+	MegadriveGetZipName, md_segacdRomInfo, md_segacdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, SegaCDDIPInfo,
+	MegadriveInitSegaCD, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // 16 Ton (Japan, SegaNet)
 static struct BurnRomInfo md_16tonRomDesc[] = {
 	{ "16 Ton (Japan, SegaNet)(1991)(Sega).bin", 0x040000, 0x537f04b6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -4760,6 +4801,32 @@ struct BurnDriver BurnDrvmd_castlilljte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_castlilljteRomInfo, md_castlilljteRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)
+// MegaSD MD+ patch, the cd audio comes from the chd
+static struct BurnRomInfo md_castlillmdpRomDesc[] = {
+	{ "MD+ Castle Of Illusion (Grant Kirkhope Arranged).md", 0x100000, 0x39601b88, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_castlillmdp)
+STD_ROM_FN(md_castlillmdp)
+
+static struct BurnHDDInfo md_castlillmdpHDDDesc[] = {
+	{ "md_castlillmdp", "63cbf9c46268f7ffaf494e0f3d939949263b5eb1" }
+};
+
+STD_HDD_PICK(md_castlillmdp)
+STD_HDD_FN(md_castlillmdp)
+
+struct BurnDriver BurnDrvmd_castlillmdp = {
+	"md_castlillmdp", "md_castlill", NULL, NULL, "2021",
+	"Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)\0", NULL, "Sega", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_castlillmdpRomInfo, md_castlillmdpRomName, md_castlillmdpHDDInfo, md_castlillmdpHDDName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -38677,10 +38744,10 @@ struct BurnDriver BurnDrvmd_bioblade = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Black Tiger (HB, v1.9.3)
+// Black Tiger (HB, v1.9.6)
 // https://rester159.itch.io/black-tiger-md
 static struct BurnRomInfo md_blacktigerRomDesc[] = {
-	{ "Black Tiger v1.9.3 (2026)(rester159).bin", 4194304, 0xe5debe42, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Black Tiger v1.9.6 (2026)(rester159).bin", 4194304, 0xae0d7433, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_blacktiger)
@@ -38688,7 +38755,7 @@ STD_ROM_FN(md_blacktiger)
 
 struct BurnDriver BurnDrvmd_blacktiger = {
 	"md_blacktiger", NULL, NULL, NULL, "2026",
-	"Black Tiger (HB, v1.9.3)\0", NULL, "rester159", "Genesis / Mega Drive",
+	"Black Tiger (HB, v1.9.6)\0", NULL, "rester159", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_blacktigerRomInfo, md_blacktigerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -39888,6 +39955,63 @@ struct BurnDriver BurnDrvmd_doroppu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_doroppuRomInfo, md_doroppuRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Double Dragon Zeebo (English) (HB, v4)
+// https://carachapadu.itch.io/double-dragon-zeebo-md
+static struct BurnRomInfo md_ddragonzeRomDesc[] = {
+	{ "Double Dragon Zeebo EN v4 (2025-26)(carachapadu).bin", 4194304, 0x96e394c3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ddragonze)
+STD_ROM_FN(md_ddragonze)
+
+struct BurnDriver BurnDrvmd_ddragonze = {
+	"md_ddragonze", NULL, NULL, NULL, "2025-26",
+	"Double Dragon Zeebo (English) (HB, v4)\0", NULL, "carachapadu", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_ddragonzeRomInfo, md_ddragonzeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Double Dragon Zeebo (Portuguese) (HB, v4)
+// https://carachapadu.itch.io/double-dragon-zeebo-md
+static struct BurnRomInfo md_ddragonzpRomDesc[] = {
+	{ "Double Dragon Zeebo PT v4 (2025-26)(carachapadu).bin", 4194304, 0x395215fb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ddragonzp)
+STD_ROM_FN(md_ddragonzp)
+
+struct BurnDriver BurnDrvmd_ddragonzp = {
+	"md_ddragonzp", "md_ddragonze", NULL, NULL, "2025-26",
+	"Double Dragon Zeebo (Portuguese) (HB, v4)\0", NULL, "carachapadu", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_ddragonzpRomInfo, md_ddragonzpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Double Dragon Zeebo (Spanish) (HB, v4)
+// https://carachapadu.itch.io/double-dragon-zeebo-md
+static struct BurnRomInfo md_ddragonzsRomDesc[] = {
+	{ "Double Dragon Zeebo ES v4 (2025-26)(carachapadu).bin", 4194304, 0xb6618f60, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ddragonzs)
+STD_ROM_FN(md_ddragonzs)
+
+struct BurnDriver BurnDrvmd_ddragonzs = {
+	"md_ddragonzs", "md_ddragonze", NULL, NULL, "2025-26",
+	"Double Dragon Zeebo (Spanish) (HB, v4)\0", NULL, "carachapadu", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_ddragonzsRomInfo, md_ddragonzsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -41684,10 +41808,10 @@ struct BurnDriver BurnDrvmd_cperils = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Commando (HB, v0.82b)
+// Mega Commando (HB, v0.83b)
 // https://mxretrodev.itch.io/mega-commando
 static struct BurnRomInfo md_mcommandoRomDesc[] = {
-	{ "Mega Commando v0.82b (2026)(MXRetroDev).bin", 3276800, 0x4aa12954, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Commando v0.83b (2026)(MXRetroDev).bin", 3276800, 0xcfd5b395, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_mcommando)
@@ -41695,7 +41819,7 @@ STD_ROM_FN(md_mcommando)
 
 struct BurnDriver BurnDrvmd_mcommando = {
 	"md_mcommando", NULL, NULL, NULL, "2026",
-	"Mega Commando (HB, v0.82b)\0", NULL, "MXRetroDev", "Genesis / Mega Drive",
+	"Mega Commando (HB, v0.83b)\0", NULL, "MXRetroDev", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_mcommandoRomInfo, md_mcommandoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41813,10 +41937,10 @@ struct BurnDriver BurnDrvmd_mindtris = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mega Pang (HB, v0.3 Beta)
+// Mega Pang (HB, v0.4 Beta)
 // https://rcampeador.itch.io/megapang
 static struct BurnRomInfo md_megapangRomDesc[] = {
-	{ "Mega Pang v0.3 Beta (2025-26)(RCampeador).bin", 1572864, 0xedc09063, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Mega Pang v0.4 Beta (2025-26)(RCampeador).bin", 2490368, 0xa983b48a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_megapang)
@@ -41824,7 +41948,7 @@ STD_ROM_FN(md_megapang)
 
 struct BurnDriver BurnDrvmd_megapang = {
 	"md_megapang", NULL, NULL, NULL, "2025-26",
-	"Mega Pang (HB, v0.3 Beta)\0", NULL, "RCampeador", "Genesis / Mega Drive",
+	"Mega Pang (HB, v0.4 Beta)\0", NULL, "RCampeador", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_megapangRomInfo, md_megapangRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -43861,10 +43985,10 @@ struct BurnDriver BurnDrvmd_shaolincarcara2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shinobi (HB, v1.1)
+// Shinobi (HB, v1.2.1)
 // https://mlouvet.itch.io/shinobi-megadrive
 static struct BurnRomInfo md_shinobiRomDesc[] = {
-	{ "Shinobi v1.1 (2026)(Oldschool Is Beautiful).bin", 4194304, 0xe8989d45, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Shinobi v1.2.1 (2026)(Oldschool Is Beautiful).bin", 4194304, 0x010364e5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_shinobi)
@@ -43872,7 +43996,7 @@ STD_ROM_FN(md_shinobi)
 
 struct BurnDriver BurnDrvmd_shinobi = {
 	"md_shinobi", NULL, NULL, NULL, "2026",
-	"Shinobi (HB, v1.1)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
+	"Shinobi (HB, v1.2.1)\0", NULL, "Oldschool Is Beautiful", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_shinobiRomInfo, md_shinobiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -44619,10 +44743,10 @@ struct BurnDriver BurnDrvmd_threestooges = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tiger Road (hombreimaginario) (HB, 2026-10-26)
+// Tiger Road (hombreimaginario) (HB, 2026-10-29i)
 // https://hombreimaginario.itch.io/tiger-road-md
 static struct BurnRomInfo md_tigeroadRomDesc[] = {
-	{ "Tiger Road 2026-10-26 (2026)(hombreimaginario).bin", 2490368, 0x98decaf0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "Tiger Road 2026-10-29i (2026)(hombreimaginario).bin", 2490368, 0x1c68844f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_tigeroad)
@@ -44630,7 +44754,7 @@ STD_ROM_FN(md_tigeroad)
 
 struct BurnDriver BurnDrvmd_tigeroad = {
 	"md_tigeroad", NULL, NULL, NULL, "2026",
-	"Tiger Road (hombreimaginario) (HB, 2026-10-26)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
+	"Tiger Road (hombreimaginario) (HB, 2026-10-29i)\0", NULL, "hombreimaginario", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	MegadriveGetZipName, md_tigeroadRomInfo, md_tigeroadRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,

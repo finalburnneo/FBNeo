@@ -433,6 +433,7 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(nCpsCyclesExtra);
 		SCAN_VAR(nCpsObjectBank);
+		CpsRasterScan();
 
 		if (Cps1OverrideLayers) {
 			SCAN_VAR(nCps1Layers);

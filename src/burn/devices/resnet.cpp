@@ -540,7 +540,8 @@ INT32 compute_res_net(INT32 inputs, INT32 channel, const res_net_info &di)
 
 	if ( (di.options & RES_NET_VIN_MASK)==RES_NET_VIN_TTL_OUT)
 	{
-		if (v / rTotal > vOH)
+		// rTotal is 0 when all inputs are high: avoid 0/0, which -ffast-math can evaluate as true
+		if (rTotal > 0.0 && v / rTotal > vOH)
 			OpenCol = 1;
 	}
 

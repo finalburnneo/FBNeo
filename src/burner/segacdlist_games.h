@@ -285,8 +285,6 @@ static sega_cd_game segacd_games[] = {
 	{ _T("3ae3b71f321029a1085a489fa175cdab19d0f7da"), _T("Novastorm (Europe) (Demo)"), _T("novastmd"), _T("1994"), _T("Psygnosis ~ Sony Electronic Publishing"), NULL, NULL },
 	{ _T("1f7845e5b4be11243ad0512ea53760142e2fa302"), _T("Novastorm (USA)"), _T("novastmu"), _T("1994"), _T("Psygnosis"), NULL, _T("U") },
 	{ _T("3b2a1f2a4220ace48f5ec8a052f2bd07dc7b578a"), _T("Panic! (USA) (RE)"), _T("panic"), _T("1994"), _T("Data East"), NULL, NULL },
-	{ _T("7cc38e237f4ca4f65dcf3a7d1789dfeb206508d8"), _T("Pier Solar and the Great Architects Enhanced Soundtrack Disc (USA)"), _T("psgaesd"), _T("2010"), _T("WaterMelon"), NULL, NULL },
-	{ _T("23a036e0bebf1a816286430701de9d1926c300c4"), _T("Pier Solar and the Great Architects: The Definitive Original Soundtrack (Europe) (Disc 4) (Enhanced Soundtrack Disc)"), _T("piersolarandthege"), _T(""), _T(""), NULL, NULL },
 	{ _T("3e61fe0b115323d87648d1ec8e359f702d14f9a7"), _T("Pitfall: The Mayan Adventure (Europe)"), _T("pitfall"), _T("1994"), _T("Activision"), NULL, NULL },
 	{ _T("3198da79d87714acf0b449e6b330729ec3176794"), _T("Pitfall: The Mayan Adventure (Europe) (Demo)"), _T("pitfalld"), _T("1994"), _T("Activision"), NULL, NULL },
 	{ _T("3ad99f62597b6ea0bfd838330f67ee39c9cd7632"), _T("Pitfall: The Mayan Adventure (USA)"), _T("pitfallu"), _T("1995"), _T("Activision"), NULL, NULL },

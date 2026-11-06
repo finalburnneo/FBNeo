@@ -304,6 +304,9 @@ static UINT8 Hardware;
 static UINT8 bNoDebug = 0;
 static INT32 bForce3Button = 0;
 INT32 psolarmode = 0; // pier solar
+static INT32 SegaCDCart = 0; // cartridge boot with the mega cd at 0x400000 (mode 1): 2 pier solar
+static INT32 SegaCDCartDisc = 0; // hdd index of the disc
+static UINT8 *SegaCDCartBios = NULL;
 static INT32 TeamPlayerMode = 0;
 static INT32 FourWayPlayMode = 0;
 
@@ -319,7 +322,7 @@ static UINT8 __fastcall MegadriveReadByte(UINT32 address);
 
 static void MegadriveCheckHardware()
 {
-	if (SegaCDMode) {
+	if (SegaCDMode && !SegaCDCart) {
 		Hardware = SegaCDGetHardware();
 		bprintf(PRINT_IMPORTANT, _T("Emulating %s Mega CD / Sega CD\n"), ((Hardware & 0xc0) == 0xc0) ? _T("Europe PAL") : ((Hardware & 0x80) ? _T("USA NTSC") : _T("Japan NTSC")));
 		return;
@@ -413,6 +416,8 @@ static void MegadriveCheckHardware()
 		// CD-ROM
 		Hardware |= MegadriveDIP[0] & 0x20;
 	}
+
+	if (SegaCDCart) Hardware &= ~0x20; // mega cd attached
 
 	if ((Hardware & 0xc0) == 0xc0) {
 		bprintf(PRINT_IMPORTANT, _T("Emulating Europe PAL Machine\n"));
@@ -784,7 +789,7 @@ static void DmaSlow(INT32 len)
 	if ((source & 0xe00000) == 0xe00000) { // RAM
 		pd    = (UINT16 *)(Ram68K + (source & 0xfffe));
 		pdend = (UINT16 *)(Ram68K + 0x10000);
-	} else if (SegaCDMode && source < 0x400000) { // Sega CD: bios, prg-ram window, word ram
+	} else if (SegaCDMode && (source & 0xc00000) == (SegaCDCart ? 0x400000 : 0)) { // Sega CD: bios, prg-ram window, word ram
 		fromrom = 1;
 		source &= ~1;
 		// dma from word ram responds with a one-access delay
@@ -1796,6 +1801,7 @@ static INT32 MegadriveResetDo()
 	z80CyclesReset();
 
 	md_eeprom_stm95_reset();
+	if (SegaCDCart == 2) md_eeprom_stm95_map_banks();
 	{
 		RamIO[1] = RamIO[2] = RamIO[3] = 0xff; // picodrive
 
@@ -3890,6 +3896,18 @@ INT32 MegadriveInitPaprium()
 
 INT32 MegadriveInitPsolar()
 {
+	// enhanced soundtrack disc selected and present: cartridge boot with the mega cd (mode 1)
+	INT32 disc = (MegadriveDIP[1] >> 4) & 3;
+	if (disc) {
+		TCHAR path[MAX_PATH];
+		if (BurnHDDGetPath(disc - 1, _T(".chd"), path) == 0) {
+			SegaCDCart = 2;
+			SegaCDCartDisc = disc - 1;
+			return MegadriveInitSegaCD();
+		}
+		bprintf(PRINT_ERROR, _T("Pier Solar: the selected disc is missing, running without the Mega CD\n"));
+	}
+
 	psolarmode = 1;
 
 	INT32 rc = MegadriveInit();
@@ -3933,8 +3951,16 @@ INT32 MegadriveInit()
 
 	memset(RomMain, MegadriveUnmappedRom, MAX_CARTRIDGE_SIZE);
 
-	if (SegaCDMode) {
-		if (SegaCDLoadBios(RomMain)) return 1;
+	if (SegaCDCart) {
+		// the cd image is the hdd, the bios (roms 0x80+) follows the console region
+		if (hddcd_open(SegaCDCartDisc)) return 1;
+		MegadriveLoadRoms(0);
+		if (MegadriveLoadRoms(1)) return 1;
+		MegadriveCheckHardware();
+		SegaCDCartBios = (UINT8*)BurnMalloc(0x20000);
+		if (SegaCDLoadBios(SegaCDCartBios, 0x80, ((Hardware & 0xc0) == 0xc0) ? 1 : ((Hardware & 0x80) ? 0 : 2))) return 1;
+	} else if (SegaCDMode) {
+		if (SegaCDLoadBios(RomMain, 0, -1)) return 1;
 		RomNum = 1;
 		RomSize = 0x20000;
 	} else {
@@ -4010,7 +4036,8 @@ INT32 MegadriveInit()
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	if (SegaCDMode) {
-		if (SegaCDInit(RomMain)) return 1;
+		if (SegaCDInit(SegaCDCart ? SegaCDCartBios : RomMain, SegaCDCart)) return 1;
+		if (SegaCDCart == 2) md_eeprom_stm95_init_scd(RomMain);
 	} else {
 		MegadriveSetupSRAM();
 		SetupCustomCartridgeMappers();
@@ -4074,6 +4101,8 @@ INT32 MegadriveExit()
 	}
 
 	megasd_exit();
+	hddcd_close();
+	BurnFree(SegaCDCartBios);
 
 	if (has_gun != 0) {
 		BurnGunExit();
@@ -4110,6 +4139,8 @@ INT32 MegadriveExit()
 
 	psolarmode = 0;
 	colocodxmode = 0;
+	SegaCDCart = 0;
+	SegaCDCartDisc = 0;
 
 	return 0;
 }
@@ -5933,7 +5964,7 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		i2c_scan(nAction, pnMin);
 	}
 
-	if (psolarmode) // pier solar
+	if (psolarmode || SegaCDCart == 2) // pier solar
 	{
 		md_eeprom_stm95_scan(nAction);
 	}

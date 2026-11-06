@@ -671,7 +671,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 
 				if (szHDDName == NULL) continue;
 
-				fprintf(fDat, "\t\t<disk name=\"%s\" sha1=\"%s\" />\n", szHDDName, hddi.szSha1);
+				fprintf(fDat, "\t\t<disk name=\"%s\" sha1=\"%s\"%s />\n", szHDDName, hddi.szSha1, (hddi.nFlags & BRF_OPT) ? " optional=\"yes\"" : "");
 			}
 		}
 

@@ -191,6 +191,7 @@ struct BurnSampleInfo {
 struct BurnHDDInfo {
 	char *szName;
 	char *szSha1;
+	UINT32 nFlags;	// BRF_OPT: optional disk
 };
 
 // ---------------------------------------------------------------------------

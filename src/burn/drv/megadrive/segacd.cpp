@@ -26,6 +26,7 @@ static UINT16 *CdcRam;		// 16KiB
 static UINT8 *PcmRam;		// 64KiB
 static UINT8 *BackupRam;	// 8KiB
 static UINT8 *BiosRom;
+static UINT32 scd_base = 0;	// main cpu address of the mega cd area: 0 (cd boot), 0x400000 (cartridge boot, mode 1)
 
 static INT32 scd_bios_index = 0;
 static INT32 main_clock = MAIN_NTSC;
@@ -284,7 +285,7 @@ static void main_fetch_map()
 	main_fetch_state = state;
 
 	for (INT32 i = 0; i < 8; i++) { // mirrors every 256KB
-		UINT32 w = 0x200000 + i * 0x40000;
+		UINT32 w = scd_base + 0x200000 + i * 0x40000;
 		if (wram_mode) {
 			SekMapMemory((UINT8*)WramFetch, w, w + 0x1ffff, MAP_FETCH);
 			SekMapHandler(5, w + 0x20000, w + 0x3ffff, MAP_FETCH); // cell-mapped views
@@ -294,7 +295,7 @@ static void main_fetch_map()
 			SekMapHandler(5, w, w + 0x3ffff, MAP_FETCH);
 		}
 
-		UINT32 p = 0x020000 + i * 0x40000;
+		UINT32 p = scd_base + 0x020000 + i * 0x40000;
 		if (sub_request) {
 			SekMapMemory(PrgRam + (pram_bank << 17), p, p + 0x1ffff, MAP_FETCH);
 		} else {
@@ -2202,10 +2203,10 @@ static INT32 scd_detect_region()
 	return 0;
 }
 
-INT32 SegaCDLoadBios(UINT8 *dest)
+INT32 SegaCDLoadBios(UINT8 *dest, INT32 base, INT32 region)
 {
 	INT32 select = MegadriveDIP[0] & 0x03;
-	INT32 wanted = (select) ? (select - 1) : scd_detect_region();
+	INT32 wanted = (region >= 0) ? region : ((select) ? (select - 1) : scd_detect_region());
 	INT32 loaded = -1;
 
 	for (INT32 n = 0; n < 4 && loaded < 0; n++) {
@@ -2214,10 +2215,10 @@ INT32 SegaCDLoadBios(UINT8 *dest)
 
 		struct BurnRomInfo ri;
 		ri.nLen = 0;
-		BurnDrvGetRomInfo(&ri, idx);
+		BurnDrvGetRomInfo(&ri, base + idx);
 		if (ri.nLen != 0x20000) continue;
 
-		if (BurnLoadRom(dest, idx, 1) == 0) loaded = idx;
+		if (BurnLoadRom(dest, base + idx, 1) == 0) loaded = idx;
 	}
 
 	if (loaded < 0) {
@@ -2304,9 +2305,10 @@ static void bram_format()
 	memcpy(BackupRam + 0x2000 - 0x40, format, 0x40);
 }
 
-INT32 SegaCDInit(UINT8 *bios)
+INT32 SegaCDInit(UINT8 *bios, INT32 mode1)
 {
 	BiosRom = bios;
+	scd_base = mode1 ? 0x400000 : 0;
 
 	INT32 nLen = 0x80000 + 0x40000 + 0x40000 + 0x4000 + 0x10000 + 0x2000;
 	AllMemScd = (UINT8*)BurnMalloc(nLen);
@@ -2332,15 +2334,17 @@ INT32 SegaCDInit(UINT8 *bios)
 		bprintf(PRINT_IMPORTANT, _T("Sega CD: no disc\n"));
 	}
 
-	// main cpu: bios, prg-ram window and word ram in the 0x000000-0x3fffff expansion area
+	// main cpu: bios, prg-ram window and word ram in the expansion area (0x000000-0x3fffff, 0x400000-0x7fffff in mode 1)
 	SekOpen(0);
-	SekMapHandler(5, 0x000000, 0x3fffff, MAP_RAM);
+	SekMapHandler(5, scd_base, scd_base + 0x3fffff, MAP_RAM);
 	for (INT32 i = 0; i < 0x200000; i += 0x40000) {
-		SekMapMemory(BiosRom, i, i + 0x1ffff, MAP_ROM);
+		SekMapMemory(BiosRom, scd_base + i, scd_base + i + 0x1ffff, MAP_ROM);
 	}
-	SekMapHandler(5, 0x000000, 0x0003ff, MAP_READ); // level 4 vector redirection at 0x70
+	if (scd_base == 0) {
+		SekMapHandler(5, 0x000000, 0x0003ff, MAP_READ); // level 4 vector redirection at 0x70
+		SekMapHandler(7, 0x400000, 0x7fffff, MAP_WRITE);
+	}
 	SekMapHandler(6, 0xa12000, 0xa123ff, MAP_RAM);
-	SekMapHandler(7, 0x400000, 0x7fffff, MAP_WRITE);
 
 	SekSetReadByteHandler (5, main_read_byte);
 	SekSetReadWordHandler (5, main_read_word);
@@ -2407,6 +2411,7 @@ void SegaCDExit()
 
 	disc_present = 0;
 	scd_bios_index = 0;
+	scd_base = 0;
 	SegaCDMode = 0;
 }
 

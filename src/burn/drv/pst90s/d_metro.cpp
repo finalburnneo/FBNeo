@@ -68,6 +68,7 @@ static INT32 irq_line = 1;
 static INT32 blitter_bit = 0;
 static INT32 main_cpu_cycles = 12000000 / 60;
 static INT32 main_cpu_hz = 12000000;
+static double refresh_rate = 58.0;
 static INT32 ymf278bint = 0;
 static INT32 has_zoom = 0;
 
@@ -3364,6 +3365,15 @@ static void blzntrnd_zoomchip_draw()
 	if (nBurnLayer & 1) K053936Draw(0, (UINT16*)DrvK053936CRAM, (UINT16*)DrvK053936LRAM, (1 << 24) | (0xff << 16) | (1 << 8) | 0);
 }
 
+// htotal/vtotal: crtc totals the game programs into the i4220 at boot (26.666 MHz / 4 dot clock)
+static void i4220_set_crtc_timing(INT32 htotal, INT32 vtotal)
+{
+	refresh_rate = (26666000.0 / 4.0) / ((htotal + 2) * (vtotal + 3));
+	main_cpu_cycles = (INT32)((double)main_cpu_hz / refresh_rate);
+
+	BurnSetRefreshRate(refresh_rate);
+}
+
 static INT32 blzntrndInit()
 {
 	graphics_length = 0x1800000;
@@ -3447,6 +3457,8 @@ static INT32 blzntrndInit()
 	i4x00_set_offsets(0, 0, 0);
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
 	i4x00_set_blazing();
+
+	i4220_set_crtc_timing(422, 267);
 
 	vblank_bit = 0;
 	irq_line = 1;
@@ -3576,6 +3588,8 @@ static INT32 gstrik2Init()
 
 	i4x00_set_extrachip_callback(gstrik2_zoomchip_draw);
 	i4x00_set_offsets(8,8,8);
+
+	i4220_set_crtc_timing(426, 267);
 
 	vblank_bit = 0;
 	irq_line = 1;
@@ -3996,12 +4010,24 @@ static void dharmaRomCallback()
 
 static INT32 dharmaInit()
 {
-	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2 | 0x10/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2 | 0x10/*udp*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
+	return nRet;
 }
 
 static INT32 dharmajInit()
 {
-	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, dharmaMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
+	return nRet;
 }
 
 static void pururunMapCallback()
@@ -4018,7 +4044,13 @@ static INT32 pururunInit()
 	main_cpu_cycles = (INT32)((double)12000000 / 58.2328);
 	main_cpu_hz = 12000000;
 
-	return common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
+	return nRet;
 }
 
 static void karatourMapCallback()
@@ -4054,6 +4086,8 @@ static INT32 kokushiInit()
 			SekWriteWord(0x800000 + i, rand());
 		}
 		SekClose();
+
+		i4220_set_crtc_timing(430, 267);
 	}
 
 	return nRet;
@@ -4077,6 +4111,10 @@ static INT32 daitoridInit()
 
 	i4x00_set_offsets(-2, -2, -2);
 
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
 	return nRet;
 }
 
@@ -4088,6 +4126,10 @@ static INT32 puzzliaInit()
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
 
 	i4x00_set_offsets(-2, -2, -2);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
 
 	return nRet;
 }
@@ -4103,7 +4145,13 @@ static void toride2gMapCallback()
 
 static INT32 toride2gInit()
 {
-	return common_type1_init(4200, 0x200000, 2, toride2gMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, toride2gMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
+	return nRet;
 }
 
 static void msgogoMapCallback()
@@ -4133,6 +4181,10 @@ static INT32 msgogoInit()
 	irq_line = 1;
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 1;
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
 
 	return nRet;
 }
@@ -4166,6 +4218,10 @@ static INT32 balcubeInit()
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 8;
 
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
 	return nRet;
 }
 
@@ -4189,6 +4245,10 @@ static INT32 bangballInit()
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 1;
 	bangballmode = 1;
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
 
 	return nRet;
 }
@@ -4221,6 +4281,10 @@ static INT32 batlbublInit()
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 1;
 
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267);
+	}
+
 	return nRet;
 }
 
@@ -4235,7 +4299,13 @@ static void vmetalMapCallback()
 
 static INT32 vmetalInit()
 {
-	return common_type1_init(4200, 0x800000, 5, vmetalMapCallback, NULL, 6);
+	INT32 nRet = common_type1_init(4200, 0x800000, 5, vmetalMapCallback, NULL, 6);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(422, 267);
+	}
+
+	return nRet;
 }
 
 static INT32 DrvExit()
@@ -4293,6 +4363,7 @@ static INT32 DrvExit()
 	has_zoom = 0;
 	main_cpu_cycles = 12000000 / 60;
 	main_cpu_hz = 12000000;
+	refresh_rate = 58.0;
 	ymf278bint = 0;
 	bangballmode = 0;
 
@@ -4322,7 +4393,7 @@ static INT32 Z80Frame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000 / 58 };
+	INT32 nCyclesTotal[2] = { (INT32)(16000000 / refresh_rate), (INT32)(8000000 / refresh_rate) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -4787,7 +4858,7 @@ static struct BurnRomInfo gstrik2jRomDesc[] = {
 STD_ROM_PICK(gstrik2j)
 STD_ROM_FN(gstrik2j)
 
-struct BurnDriverD BurnDrvGstrik2j = {
+struct BurnDriver BurnDrvGstrik2j = {
 	"gstrik2j", "gstrik2", NULL, NULL, "1996",
 	"Grand Striker 2 (Japan)\0", NULL, "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

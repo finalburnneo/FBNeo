@@ -31,6 +31,7 @@ static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
 static INT32 nExtraCycles[2];
+static double refresh_rate = 60.0;
 
 static struct BurnInputInfo HyprduelInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -480,6 +481,14 @@ static INT32 MemIndex()
 	return 0;
 }
 
+// htotal/vtotal: crtc totals the game programs into the i4220 at boot (26.666 MHz / 4 dot clock)
+static void i4220_set_crtc_timing(INT32 htotal, INT32 vtotal)
+{
+	refresh_rate = (26666000.0 / 4.0) / ((htotal + 2) * (vtotal + 3));
+
+	BurnSetRefreshRate(refresh_rate);
+}
+
 static INT32 HyprduelInit()
 {
 	BurnAllocMemIndex();
@@ -541,6 +550,8 @@ static INT32 HyprduelInit()
 	SekClose();
 
 	int_num = 0x02;
+
+	i4220_set_crtc_timing(422, 258);
 
 	BurnYM2151InitBuffered(4000000, 1, NULL, 0);
 	BurnTimerAttachSek(10000000);
@@ -612,6 +623,8 @@ static INT32 MagerrorInit()
 
 	int_num = 0x01;
 
+	i4220_set_crtc_timing(422, 258);
+
 	BurnYM2413Init(3579545);
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
@@ -643,6 +656,7 @@ static INT32 DrvExit()
 
 	MSM6295ROM = NULL;
 	game_select = 0;
+	refresh_rate = 60.0;
 
 	return 0;
 }
@@ -682,7 +696,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256 * 2;
-	INT32 nCyclesTotal[2] = { 10000000 / 60, 10000000 / 60 };
+	INT32 nCyclesTotal[2] = { (INT32)(10000000 / refresh_rate), (INT32)(10000000 / refresh_rate) };
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	i4x00_draw_begin();

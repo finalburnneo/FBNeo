@@ -1,5 +1,4 @@
 // FB Neo Sega CD / Mega CD add-on
-// Ported from the ares Mega CD core (ISC license)
 
 #include "burnint.h"
 #include "m68000_intf.h"

@@ -76,7 +76,7 @@ static INT32 twineagle = 0;
 static INT32 daiohc = 0; // lazy fix - disable writes to alternate scroll write offsets
 static INT32 usclssic = 0;
 static INT32 oisipuzl_hack = 0; // 32px sprite offset
-static INT32 refresh_rate = 6000;
+static double refresh_rate = 60.0;
 
 static INT32 seta_samples_bank = 0;
 static INT32 usclssic_port_select = 0;
@@ -7306,7 +7306,7 @@ static void usclssicSetColorTable()
 
 static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 spr_buffer, INT32 gfxtype0, INT32 gfxtype1, INT32 gfxtype2)
 {
-	BurnSetRefreshRate((1.00 * refresh_rate)/100);
+	BurnSetRefreshRate(refresh_rate);
 
 	if (pRomLoadCallback) {
 		pRomLoadCallback(0);
@@ -7431,7 +7431,7 @@ static INT32 DrvExit()
 	twineagle = 0;
 	daiohc = 0;
 	watchdog_enable = 0;
-	refresh_rate = 6000;
+	refresh_rate = 60.0;
 	game_rotates = 0;
 	clear_opposites = 0;
 	has_2203 = 0;
@@ -7929,7 +7929,7 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 static void Drv68kmsgundam()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesTotal[1] = { (INT32)(cpuspeed / refresh_rate) };
 	INT32 nCyclesDone[1]  = { 0 };
 
 	SekOpen(0);
@@ -7955,7 +7955,7 @@ static void Drv68kmsgundam()
 static void Drv68kNoSubFrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesTotal[1] = { (INT32)(cpuspeed / refresh_rate) };
 	INT32 nCyclesDone[1]  = { 0 };
 
 	SekOpen(0);
@@ -7987,7 +7987,7 @@ static INT32 DrvFrameMsgundam()
 static void Drv68k_Calibr50_FrameCallback()
 {
 	INT32 nInterleave = 262;
-	INT32 nCyclesTotal[2] = { (8000000 * 100) / refresh_rate, (2000000 * 100) / refresh_rate}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
+	INT32 nCyclesTotal[2] = { (INT32)(8000000 / refresh_rate), (INT32)(2000000 / refresh_rate)}; //(INT32)(cpuspeed / refresh_rate), (INT32)((cpuspeed/4) / refresh_rate)};
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	SekOpen(0);
@@ -8028,7 +8028,7 @@ static void Drv68k_Calibr50_FrameCallback()
 static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesTotal[1] = { (INT32)(cpuspeed / refresh_rate) };
 	INT32 nCyclesDone[1]  = { 0 };
 
 	SekOpen(0);
@@ -8057,7 +8057,7 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 static void Drv68k_Twineagl_FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
+	INT32 nCyclesTotal[2] = { (INT32)(cpuspeed / refresh_rate), (INT32)(2000000 / refresh_rate) };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -8082,7 +8082,7 @@ static void Drv68k_Twineagl_FrameCallback()
 static void Drv68k_Downtown_FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
+	INT32 nCyclesTotal[2] = { (INT32)(cpuspeed / refresh_rate), (INT32)(2000000 / refresh_rate) };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -8107,7 +8107,7 @@ static void Drv68k_Downtown_FrameCallback()
 static void Drv68k_Tndrcade_FrameCallback()
 {
 	INT32 nInterleave = 16;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
+	INT32 nCyclesTotal[2] = { (INT32)(cpuspeed / refresh_rate), (INT32)(2000000 / refresh_rate) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekNewFrame();
@@ -8164,7 +8164,7 @@ static INT32 DrvTndrcadeFrame()
 static void Drv68kNoSubM6295FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesTotal[1] = { (INT32)(cpuspeed / refresh_rate) };
 	INT32 nCyclesDone[1]  = { 0 };
 
 	SekOpen(0);
@@ -8191,7 +8191,7 @@ static INT32 DrvM6295Frame()
 static void Drv68kZ80M6295FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (4000000 * 100) / refresh_rate };
+	INT32 nCyclesTotal[2] = { (INT32)(cpuspeed / refresh_rate), (INT32)(4000000 / refresh_rate) };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	SekOpen(0);
@@ -8222,7 +8222,7 @@ static INT32 DrvZ80M6295Frame()
 static void Drv68kZ80YM3438FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (4000000 * 100) / refresh_rate };
+	INT32 nCyclesTotal[2] = { (INT32)(cpuspeed / refresh_rate), (INT32)(4000000 / refresh_rate) };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	ZetNewFrame();
@@ -8258,7 +8258,7 @@ static void CrazyfghtFrameCallback()
 	SekNewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesTotal[1] = { (INT32)(cpuspeed / refresh_rate) };
 
 	SekOpen(0);
 
@@ -8769,6 +8769,7 @@ STD_ROM_FN(daioh)
 
 static INT32 daiohInit()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	DrvSetVideoOffsets(0, 0, -1, -1);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -8877,6 +8878,7 @@ STD_ROM_FN(daiohp)
 
 static INT32 daiohpInit()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	DrvSetVideoOffsets(1, 1, -1, -1);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -8947,6 +8949,7 @@ STD_ROM_FN(daiohp2)
 
 static INT32 daiohp2Init()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	DrvSetVideoOffsets(1, 1, -1, -1);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -9059,6 +9062,7 @@ STD_ROM_FN(rezon)
 
 static INT32 rezonInit()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -9243,6 +9247,7 @@ STD_ROM_FN(zingzip)
 
 static INT32 zingzipInit()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	DrvSetVideoOffsets(0, 0, -1, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -9287,7 +9292,7 @@ STD_ROM_FN(msgundam)
 
 static INT32 msgundamInit()
 {
-	refresh_rate = 5744; // 57.44 hz - https://github.com/finalburnneo/FBNeo/issues/2854
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
@@ -9429,7 +9434,7 @@ STD_ROM_FN(kamenrid)
 
 static INT32 kamenridInit()
 {
-	refresh_rate = 5744; // 57.44 hz - https://github.com/finalburnneo/FBNeo/issues/2854
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 
 	DrvSetVideoOffsets(0, 0, -2, -2);
 	DrvSetColorOffsets(0, 0x400, 0x200);
@@ -10878,7 +10883,7 @@ STD_ROM_FN(krzybowl)
 
 static INT32 krzybowlInit()
 {
-	refresh_rate = 5875; // 58.75 hz - https://github.com/finalburnneo/FBNeo/issues/2854
+	refresh_rate = (14318181.0 / 2) / (448 * 272); // 58.7504 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 
 	DrvSetVideoOffsets(0, 0, 0, 0);
 	DrvSetColorOffsets(0, 0, 0);
@@ -11056,7 +11061,7 @@ STD_ROM_FN(downtown)
 
 static INT32 downtownInit()
 {
-	refresh_rate = 5742; // 57.42 hz
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	DrvSetVideoOffsets(0, 0, -1, 0);
 	DrvSetColorOffsets(0, 0, 0);
 
@@ -11287,6 +11292,7 @@ STD_ROM_FN(arbalest)
 
 static INT32 arbalestInit()
 {
+	refresh_rate = 8000000.0 / (512 * 264); // 59.1848 hz
 	INT32 rc = 0;
 	DrvSetVideoOffsets(0, 1, -2, -1);
 	DrvSetColorOffsets(0, 0, 0);
@@ -11369,6 +11375,7 @@ static void metafox_protection_install()
 
 static INT32 metafoxInit()
 {
+	refresh_rate = 8000000.0 / (512 * 264); // 59.1848 hz
 	DrvSetVideoOffsets(0, 0, 16, -19);
 	DrvSetColorOffsets(0, 0, 0);
 
@@ -11455,6 +11462,7 @@ STD_ROM_FN(twineagl)
 
 static INT32 twineaglInit()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	twineagle = 1;
 
 	DrvSetVideoOffsets(0, 0, 0, -3);
@@ -11514,7 +11522,7 @@ STD_ROM_FN(usclssic)
 
 static INT32 usclssicInit()
 {
-	refresh_rate = 5745; // 57.45 hz - https://github.com/finalburnneo/FBNeo/issues/2854
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0x200, 0);
 	DrvSetVideoOffsets(1, 2, 0, -1);
@@ -11568,7 +11576,7 @@ STD_ROM_FN(calibr50)
 
 static INT32 calibr50Init()
 {
-	refresh_rate = 5742; // 57.42 hz
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0, 0);
 	DrvSetVideoOffsets(-1, 2, -3, -2);
@@ -11618,6 +11626,7 @@ STD_ROM_FN(crazyfgt)
 
 static INT32 crazyfgtInit()
 {
+	refresh_rate = 8000000.0 / (512 * 264); // 59.1848 hz
 	DrvSetColorOffsets(0, 0xa00, 0x200);
 	DrvSetVideoOffsets(8, 0, 6, 0);
 

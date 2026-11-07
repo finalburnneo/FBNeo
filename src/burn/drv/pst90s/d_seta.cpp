@@ -11514,6 +11514,7 @@ STD_ROM_FN(usclssic)
 
 static INT32 usclssicInit()
 {
+	refresh_rate = 5745; // 57.45 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0x200, 0);
 	DrvSetVideoOffsets(1, 2, 0, -1);

@@ -57,6 +57,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvInputs[4];
 static UINT8 DrvDips[2];
+static UINT8 DrvFakeDip;
 
 // per-game constants
 enum { CCLIMBER=0, SILVLAND, CKONG, CKONGB, YAMATO, GUZZLER, TANGRAMQ, AU, CANNONB, TOPROLLR, BAGMANF };
@@ -91,6 +92,7 @@ static struct BurnInputInfo CclimberInputList[] = {
 	{"Reset", 			BIT_DIGITAL, 	&DrvReset  , 	"reset"    },
 	{"Dip A", 			BIT_DIPSWITCH,	DrvDips + 0, 	"dip"      },
 	{"Dip B", 			BIT_DIPSWITCH,	DrvDips + 1, 	"dip"      },
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Cclimber)
@@ -109,6 +111,7 @@ static struct BurnInputInfo RpatrolInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Rpatrol)
@@ -132,6 +135,7 @@ static struct BurnInputInfo CkongInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Ckong)
@@ -156,6 +160,7 @@ static struct BurnInputInfo GuzzlerInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Guzzler)
@@ -182,6 +187,7 @@ static struct BurnInputInfo YamatoInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Yamato)
@@ -206,6 +212,7 @@ static struct BurnInputInfo SwimmerInputList[] = {
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Swimmer)
@@ -228,6 +235,7 @@ static struct BurnInputInfo TangramqInputList[] = {
 	{"Reset", 			BIT_DIGITAL, 	&DrvReset, 		"reset"		},
 	{"Dip A", 			BIT_DIPSWITCH,	DrvDips + 0, 	"dip"		},
 	{"Dip B", 			BIT_DIPSWITCH,	DrvDips + 1, 	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Tangramq)
@@ -275,6 +283,7 @@ static struct BurnInputInfo CannonbInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Cannonb)
@@ -298,9 +307,16 @@ static struct BurnInputInfo ToprollrInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Fake Dip",		BIT_DIPSWITCH,	&DrvFakeDip,	"dip"		},
 };
 
 STDINPUTINFO(Toprollr)
+
+#define COCKTAIL_DIP(n)															\
+	{n,    0xff, 0xff, 0x01, NULL							},	\
+	{0   , 0xfe, 0   ,    2, "Cocktail P2 Screen"			},	\
+	{n,    0x01, 0x01, 0x00, "Flipped (Original)"			},	\
+	{n,    0x01, 0x01, 0x01, "Unflipped"					},
 
 static struct BurnDIPInfo CclimberDIPList[]=
 {
@@ -332,6 +348,8 @@ static struct BurnDIPInfo CclimberDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x16, 0x01, 0x10, 0x10, "Upright"		},
 	{0x16, 0x01, 0x10, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x17)
 };
 
 STDDIPINFO(Cclimber)
@@ -370,6 +388,8 @@ static struct BurnDIPInfo CclimberjDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x16, 0x01, 0x10, 0x10, "Upright"		},
 	{0x16, 0x01, 0x10, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x17)
 };
 
 STDDIPINFO(Cclimberj)
@@ -405,6 +425,8 @@ static struct BurnDIPInfo RpatrolDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Memory Test"		},
 	{0x0a, 0x01, 0x80, 0x00, "Retry on Error"		},
 	{0x0a, 0x01, 0x80, 0x80, "Stop on Error"		},
+
+	COCKTAIL_DIP(0x0b)
 };
 
 STDDIPINFO(Rpatrol)
@@ -438,6 +460,8 @@ static struct BurnDIPInfo CkongDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x10)
 };
 
 STDDIPINFO(Ckong)
@@ -471,6 +495,8 @@ static struct BurnDIPInfo CkongbDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x10)
 };
 
 STDDIPINFO(Ckongb)
@@ -504,9 +530,48 @@ static struct BurnDIPInfo Ckongb2DIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x10)
 };
 
 STDDIPINFO(Ckongb2)
+
+static struct BurnDIPInfo BagmanfDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0xfe, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0f, 0x01, 0x03, 0x03, "2"		},
+	{0x0f, 0x01, 0x03, 0x02, "3"		},
+	{0x0f, 0x01, 0x03, 0x01, "4"		},
+	{0x0f, 0x01, 0x03, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"		},
+	{0x0f, 0x01, 0x04, 0x00, "2C/1C 1C/1C 1C/3C 1C/7C"		},
+	{0x0f, 0x01, 0x04, 0x04, "1C/1C 1C/2C 1C/6C 1C/14C"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x0f, 0x01, 0x18, 0x18, "Easy"		},
+	{0x0f, 0x01, 0x18, 0x10, "Medium"		},
+	{0x0f, 0x01, 0x18, 0x08, "Hard"		},
+	{0x0f, 0x01, 0x18, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Language"		},
+	{0x0f, 0x01, 0x20, 0x20, "English"		},
+	{0x0f, 0x01, 0x20, 0x00, "French"		},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x0f, 0x01, 0x40, 0x40, "30000"		},
+	{0x0f, 0x01, 0x40, 0x00, "40000"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
+	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x10)
+};
+
+STDDIPINFO(Bagmanf)
 
 static struct BurnDIPInfo GuzzlerDIPList[]=
 {
@@ -550,6 +615,8 @@ static struct BurnDIPInfo GuzzlerDIPList[]=
 	{0x10, 0x01, 0xc0, 0x40, "Medium"		},
 	{0x10, 0x01, 0xc0, 0x80, "Hard"		},
 	{0x10, 0x01, 0xc0, 0xc0, "Hardest"		},
+
+	COCKTAIL_DIP(0x11)
 };
 
 STDDIPINFO(Guzzler)
@@ -585,6 +652,8 @@ static struct BurnDIPInfo YamatoDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x11, 0x01, 0x80, 0x80, "Upright"		},
 	{0x11, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x12)
 };
 
 STDDIPINFO(Yamato)
@@ -631,6 +700,8 @@ static struct BurnDIPInfo SwimmerDIPList[]=
 	{0x10, 0x01, 0xc0, 0x40, "Hard"		},
 	{0x10, 0x01, 0xc0, 0x80, "Harder"		},
 	{0x10, 0x01, 0xc0, 0xc0, "Hardest"		},
+
+	COCKTAIL_DIP(0x11)
 };
 
 STDDIPINFO(Swimmer)
@@ -671,6 +742,8 @@ static struct BurnDIPInfo TangramqDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Infinite Lives"	},
 	{0x0c, 0x01, 0x10, 0x10, "Off"		},
 	{0x0c, 0x01, 0x10, 0x00, "On"		},
+
+	COCKTAIL_DIP(0x0d)
 };
 
 STDDIPINFO(Tangramq)
@@ -731,6 +804,8 @@ static struct BurnDIPInfo CannonbDIPList[]=
 	{0x0f, 0x01, 0x18, 0x08, "4"		},
 	{0x0f, 0x01, 0x18, 0x10, "5"		},
 	{0x0f, 0x01, 0x18, 0x18, "6"		},
+
+	COCKTAIL_DIP(0x10)
 };
 
 STDDIPINFO(Cannonb)
@@ -766,6 +841,8 @@ static struct BurnDIPInfo ToprollrDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x0f, 0x01, 0x80, 0x80, "Upright"		},
 	{0x0f, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	COCKTAIL_DIP(0x10)
 };
 
 STDDIPINFO(Toprollr)
@@ -857,6 +934,31 @@ static void bankswitch(INT32 offset, INT32 data)
 
 static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 {
+	if (game_select == BAGMANF) {
+		// colorram at 9800-9bff, overlaid by spriteram (9800-981f) and big sprite control (98dc-98df)
+		if (address >= 0x9800 && address <= 0x9bff) {
+			INT32 offset = address & 0x3ff;
+			if (offset < 0x20) {
+				DrvSprRAM[0x80 + offset] = data;
+			} else if (offset >= 0xdc && offset <= 0xdf) {
+				DrvSprRAM[offset] = data;
+			} else {
+				DrvColRAM[offset] = data;
+			}
+			return;
+		}
+
+		if (address >= 0xffe0) {
+			DrvSprRAM[address & 0x1f] = data; // column scroll
+			return;
+		}
+
+		if (address >= 0x8800 && address <= 0x88ff) {
+			DrvBGSprRAM[address & 0xff] = data;
+			return;
+		}
+	}
+
 	if (address >= 0x9c00 && address <= 0x9fff) {
 		INT32 offset = (address - 0x9c00) & 0x0fdf;
 		DrvColRAM[offset] = data;
@@ -876,13 +978,11 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa001:
-			if (game_select == CANNONB) flipscreen[0] = flipscreen[1] = data & 1;
 		case 0xa002:
-			if (game_select != CANNONB)
-			{
-				// Note: coctail can't be unflipped without breaking other games :(
-				// Note2: find a better way..
-				flipscreen[address & 1] = data & 1;
+			if (game_select == CANNONB) {
+				if (address == 0xa001) flipscreen[0] = flipscreen[1] = data & 1;
+			} else {
+				flipscreen[address - 0xa001] = data & 1;
 			}
 		return;
 
@@ -893,7 +993,6 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 					swimmer_sidebg = data;
 					break;
 				case CKONGB:
-				case BAGMANF:
 					interrupt_enable = data;
 					break;
 				case YAMATO:
@@ -953,6 +1052,30 @@ static UINT8 __fastcall cclimber_read(UINT16 address)
 {
 	switch (game_select)
 	{
+		case BAGMANF:
+			if (address >= 0x9801 && address <= 0x9bff) {
+				INT32 offset = address & 0x3ff;
+				if (offset < 0x20) return DrvSprRAM[0x80 + offset];
+				if (offset >= 0xdc && offset <= 0xdf) return DrvSprRAM[offset];
+				return DrvColRAM[offset];
+			}
+			if (address >= 0x8801 && address <= 0x88ff) return DrvBGSprRAM[address & 0xff];
+			if (address >= 0xffe0) return DrvSprRAM[address & 0x1f];
+
+			switch (address)
+			{
+				case 0x8000:
+					return DrvInputs[0];
+				case 0x8800:
+					return DrvInputs[1];
+				case 0x9800:
+					return DrvInputs[2];
+				case 0xa000:
+					return 0x3f; // protection PAL?
+				case 0xb000:
+					return DrvDips[0];
+			}
+			return 0;
 		case AU:
 		case GUZZLER:
 			switch (address)
@@ -1614,6 +1737,13 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvSprRAM,		    0x9800, 0x9bff, MAP_RAM); // 9800 - 981f colscroll, 9880 989f sprram, 98dc - 98df bigspritecontrol
 	ZetMapMemory(DrvColRAM,		    0x9c00, 0x9fff, MAP_READ); // special write in handler
 
+	if (game_select == BAGMANF) {
+		ZetUnmapMemory(0x8000, 0x83ff, MAP_RAM);
+		ZetUnmapMemory(0x8800, 0x88ff, MAP_RAM);
+		ZetUnmapMemory(0x9800, 0x9bff, MAP_RAM);
+		ZetMapMemory(DrvZ80RAM1,		0x9c00, 0x9fff, MAP_RAM);
+	}
+
 	if (game_select == TOPROLLR) {
 		ZetMapMemory(DrvBgVidRAM,		    0x8c00, 0x8fff, MAP_RAM);
 		ZetMapMemory(DrvBgColRAM,		    0x9400, 0x97ff, MAP_RAM);
@@ -1698,59 +1828,50 @@ static INT32 DrvExit()
 
 static void cclimber_draw_bigsprite()
 {
-	UINT8 x = 136 - DrvSprRAM[bigsprite_index + 3];
-	UINT8 y = 128 - DrvSprRAM[bigsprite_index + 2];
-	INT32 flipx = (DrvSprRAM[bigsprite_index + 1] & 0x10) >> 4;
-	INT32 flipy = (DrvSprRAM[bigsprite_index + 1] & 0x20) >> 5;
+	UINT8 *ctrl = DrvSprRAM + bigsprite_index;
 	INT32 bits = ((game_select == GUZZLER) || (game_select == AU)) ? 3 : 2;
 	INT32 palindex = (game_select == GUZZLER) ? 0x100 : ((game_select == AU) ? 0 : 0x40);
 
-	if (flipscreen[0] && !(game_select == CKONG || game_select == CKONGB || game_select == TANGRAMQ)) { // flipx
-		flipx = !flipx;
+	UINT8 x = ctrl[3] - 8;
+	UINT8 y = ctrl[2];
+	INT32 flipx, flipy, code_hi;
+
+	if (game_select == TOPROLLR) {
+		if (flipscreen[0]) x = 0x80 - x;
+		flipx = flipscreen[0];
+		flipy = flipscreen[1];
+		code_hi = (ctrl[1] & 0x18) << 5;
+	} else {
+		// the screen flip x bit doesn't reach the big sprite, the game compensates with its own flip bit
+		INT32 bigflipx = (ctrl[1] & 0x10) >> 4;
+		INT32 bigflipy = (ctrl[1] & 0x20) >> 5;
+		if (bigflipx) x = 0x80 - x;
+		if (bigflipy) y = 0x80 - y;
+		flipx = bigflipx;
+		flipy = bigflipy ^ flipscreen[1];
+		code_hi = (ctrl[1] & 0x08) << 5;
 	}
 
-	if (flipscreen[1]) { // flipy
-		y = 128 - y;
-		flipy = !flipy;
-	}
+	INT32 color = ctrl[1] & 0x07;
 
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
+	// only the lower right quarter of the 32x32 map is visible, it mirrors a 16x16 tile ram
+	for (INT32 offs = 0; offs < 0x100; offs++)
 	{
-		if ((offs & 0x210) != 0x210) continue; // everything else is transparent, apparently
+		INT32 code = code_hi | DrvBGSprRAM[offs];
 
-		INT32 ofst = ((offs & 0x1e0) >> 1) | (offs & 0x0f);
+		INT32 sx = (0x80 + (offs & 0x0f) * 8 - x) & 0xff;
+		INT32 sy = (0x80 + (offs >> 4) * 8 - y) & 0xff;
 
-		INT32 sx = ofst % 0x10;
-		INT32 sy = ofst / 0x10;
-		if (flipx) sx = 15 - sx;
-		if (flipy) sy = 15 - sy;
+		if (flipy) sy = 248 - sy;
+		sy -= 16;
 
-		sx = (x+8*sx) & 0xff;
-		sy = (y+8*sy) & 0xff;
+		for (INT32 wrap = 0; wrap < 2; wrap++)
+		{
+			INT32 px = sx - wrap * 256;
+			if (flipx) px = 248 - px;
 
-		sy -= 16; //offsets
-
-		INT32 code =  ((DrvSprRAM[bigsprite_index + 1] & 0x18) << 5) | DrvBGSprRAM[ofst];
-		INT32 color = DrvSprRAM[bigsprite_index + 1] & 0x07;
-
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palindex, DrvGfxROM2);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx-256, sy, color, bits, 0, palindex, DrvGfxROM2);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, bits, 0, palindex, DrvGfxROM2);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx-256, sy, color, bits, 0, palindex, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, bits, 0, palindex, DrvGfxROM2);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx-256, sy, color, bits, 0, palindex, DrvGfxROM2);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, bits, 0, palindex, DrvGfxROM2);
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx-256, sy, color, bits, 0, palindex, DrvGfxROM2);
-			}
+			Draw8x8MaskTile(pTransDraw, code, px, sy, flipx, flipy, color, bits, 0, palindex, DrvGfxROM2);
 		}
-
 	}
 }
 
@@ -1761,27 +1882,24 @@ static void draw_playfield(INT32)
 	for (INT32 offs = 0; offs < 0x400; offs++)
 	{
 		INT32 sx = (offs & 0x1f) << 3;
-		INT32 sy = (offs >> 5) << 3;
-
-		sy -= DrvSprRAM[sx >> 3]; // col scroll
-		if (game_select == CKONG || game_select == CKONGB || game_select == TANGRAMQ) sy += 16; else sy -= 16; //offsets
-		if (sy < -7) sy += 256;
-		if (sx < -7) sx += 256;
+		INT32 sy = (((offs >> 5) << 3) - DrvSprRAM[offs & 0x1f]) & 0xff; // col scroll
 
 		INT32 flipy = (DrvColRAM[offs] & 0x80) >> 7;
 		INT32 flipx = (DrvColRAM[offs] & 0x40) >> 6;
 
 		INT32 tile_offs = offs ^ (flipy << 5);
-		
-		if (flipscreen[0]) { // flipx
+
+		if (flipscreen[0]) {
 			sx = 248 - sx;
 			flipx ^= 1;
 		}
 
-		if (flipscreen[1]) { // flipy
+		if (flipscreen[1]) {
 			sy = 248 - sy;
 			flipy ^= 1;
 		}
+
+		sy -= 16;
 
 		INT32 code = DrvVidRAM[tile_offs];
 		INT32 color = DrvColRAM[tile_offs] & 0x0f;
@@ -1792,8 +1910,6 @@ static void draw_playfield(INT32)
 		} else {
 			code  |= ((DrvColRAM[tile_offs] & 0x10) << 5) + ((DrvColRAM[tile_offs] & 0x20) << 3);
 		}
-
-		if (sx > nScreenWidth || sy > nScreenHeight) continue;
 
 		Draw8x8MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, bits, 0, 0, DrvGfxROM0);
 	}
@@ -1823,12 +1939,13 @@ static void draw_sprites()
 	INT32 bits = (game_select == GUZZLER || game_select == AU) ? 3 : 2;
 	INT32 start = (game_select == TOPROLLR) ? 0x15c : 0x09c;
 
+	// x + 1 (242 - x when flipped) is confirmed on cclimber / ckong pcbs
+	INT32 xadj = (game_select == GUZZLER || game_select == AU || game_select == YAMATO || game_select == TOPROLLR) ? 0 : 1;
+
 	for (INT32 offs = start; offs >= 0x80; offs -= 4)
 	{
-		INT32 x = DrvSprRAM[offs + 3];
+		INT32 x = DrvSprRAM[offs + 3] + xadj;
 		INT32 y = 240 - DrvSprRAM[offs + 2];
-
-		if (game_select == CKONG || game_select == CKONGB || game_select == TANGRAMQ) y += 16; else y -= 16; //offsets
 
 		INT32 code =  DrvSprRAM[offs + 0] & 0x3f;
 		INT32 color = DrvSprRAM[offs + 1] & 0x0f;
@@ -1843,20 +1960,29 @@ static void draw_sprites()
 		INT32 flipx = DrvSprRAM[offs + 0] & 0x40;
 		INT32 flipy = DrvSprRAM[offs + 0] & 0x80;
 
-		if (flipscreen[0] & 1)
+		if (flipscreen[0])
 		{
-			x = 240 - x;
+			x = 240 + 2 * xadj - x;
 			flipx = !flipx;
 		}
 
-		if (flipscreen[1] & 1)
+		if (flipscreen[1])
 		{
 			y = 240 - y;
 			flipy = !flipy;
 		}
 
-		Draw16x16MaskTile(pTransDraw, code, x, y, flipx, flipy, color, bits, 0, 0, DrvGfxROM1);
+		Draw16x16MaskTile(pTransDraw, code, x, y - 16, flipx, flipy, color, bits, 0, 0, DrvGfxROM1);
 	}
+}
+
+static void cocktail_unflip()
+{
+	if ((DrvFakeDip & 1) == 0) return;
+
+	INT32 upright = (game_select == CKONG || game_select == CKONGB || game_select == TANGRAMQ) ? 1 : 0;
+
+	BurnTransferFlip(flipscreen[0] != upright, flipscreen[1] != upright);
 }
 
 #define SWIMMER_SIDE_BG_PEN (0x120)
@@ -1870,7 +1996,7 @@ static void swimmer_draw_backdrop() // background effects for swimmer/guzzler
 	if (swimmer_sidebg & 1) {
 		for (INT32 y = 0; y < nScreenHeight; y++)
 			for (INT32 x = 0; x < nScreenWidth; x++) {
-				if (flipscreen[0] & 1) {
+				if (flipscreen[0]) {
 					if (x <= 0xff - SWIMMER_BG_SPLIT) {
 						pTransDraw[(y*nScreenWidth) + x] = SWIMMER_SIDE_BG_PEN;
 					} else {
@@ -1922,16 +2048,24 @@ static void toprollr_draw_backdrop()
 {
 	for (INT32 offs = 64; offs < 32 * 30; offs++)
 	{
-		INT32 sx = ((offs & 0x1f) * 8) - DrvBgVidRAM[0];
-		INT32 sy = ((offs >> 5) * 8) - 16;
-		
-		if (sx < -7) sx += 256;
-	
+		INT32 sx = (((offs & 0x1f) * 8) - DrvBgVidRAM[0]) & 0xff;
+		INT32 sy = (offs >> 5) * 8;
+		INT32 flipx = flipscreen[0] ? 0 : 1;
+		INT32 flipy = flipscreen[1] ? 1 : 0;
+
+		if (flipscreen[1]) sy = 248 - sy;
+		sy -= 16;
+
 		INT32 code = ((DrvBgColRAM[offs] & 0x40) << 2) | DrvBgVidRAM[offs];
 		INT32 color = DrvBgColRAM[offs] & 0xf;
-		
-		Draw8x8Tile(pTransDraw, code, sx, sy, 1, 0, color, 2, 0x60, DrvGfxROM3);
-		if (sx < 0) Draw8x8Tile(pTransDraw, code, sx + 256, sy, 1, 0, color, 2, 0x60, DrvGfxROM3);
+
+		for (INT32 wrap = 0; wrap < 2; wrap++)
+		{
+			INT32 px = sx - wrap * 256;
+			if (flipscreen[0]) px = 248 - px;
+
+			Draw8x8Tile(pTransDraw, code, px, sy, flipx, flipy, color, 2, 0x60, DrvGfxROM3);
+		}
 	}
 }
 
@@ -1954,12 +2088,16 @@ static INT32 ToprollrDraw()
 		if (nBurnLayer & 4) draw_sprites();
 	}
 
+	INT32 left = flipscreen[0] ? 24 : 32;
+
 	for (INT32 y = 0; y < 224; y++) {
-		memset (pTransDraw + y * nScreenWidth, 0, 32*2);
-		memset (pTransDraw + y * nScreenWidth + (nScreenWidth - 24), 0, 24*2);
+		memset (pTransDraw + y * nScreenWidth, 0, left*2);
+		memset (pTransDraw + y * nScreenWidth + (nScreenWidth - (56 - left)), 0, (56 - left)*2);
 	}
 
 	if (nBurnLayer & 1) draw_playfield(1);
+
+	cocktail_unflip();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2000,6 +2138,8 @@ static INT32 DrvDraw()
 		if (nBurnLayer & 2) cclimber_draw_bigsprite();
 	}
 
+	cocktail_unflip();
+
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -2019,7 +2159,7 @@ static INT32 DrvFrame()
 
 		CompileInput(DrvJoys, (void*)DrvInputs, 4, 8, JoyInit);
 
-		if (game_select == CKONG || game_select == CKONGB) {
+		if (game_select == CKONG || game_select == CKONGB || game_select == BAGMANF) {
 			DrvInputs[2] = ~DrvInputs[2];
 		}
 
@@ -4087,30 +4227,38 @@ static struct BurnRomInfo bagmanfRomDesc[] = {
 	{ "05.l5.bin",		0x1000, 0x4f0088ab, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "2732 05 pos dboard.bin",	0x1000, 0x91570033, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "10.n11.bin",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  6 Sprites & Tiles
-	{ "09.l11.bin",		0x1000, 0x060b044c, 2 | BRF_GRA },           //  7
-	{ "12.k11.bin",		0x1000, 0x4a0a6b55, 2 | BRF_GRA },           //  8
-	{ "11.h11.bin",		0x1000, 0x8043bc1a, 2 | BRF_GRA },           //  9
+	{ "12.k11.bin",		0x1000, 0x4a0a6b55, 2 | BRF_GRA },           //  6 Sprites & Tiles
+	{ "11.h11.bin",		0x1000, 0x8043bc1a, 2 | BRF_GRA },           //  7
+	{ "10.n11.bin",		0x1000, 0xc680ef04, 2 | BRF_GRA },           //  8
+	{ "09.l11.bin",		0x1000, 0x060b044c, 2 | BRF_GRA },           //  9
 
-	{ "v6",				0x0020, 0xb3fc1505, 6 | BRF_GRA },           // 10 Color PROMs
-	{ "u6",				0x0020, 0x26aada9e, 6 | BRF_GRA },           // 11
+	{ "u6",				0x0020, 0x26aada9e, 6 | BRF_GRA },           // 10 Color PROMs
+	{ "v6",				0x0020, 0xb3fc1505, 6 | BRF_GRA },           // 11
 	{ "t6",				0x0020, 0x676b3166, 6 | BRF_GRA },           // 12
 
 	{ "daughterboard.prom",	0x0020, 0xc58a4f6a, 0 | BRF_OPT },           // 13 proms2
 
-	{ "2732 07 pos dboard.bin",	0x1000, 0x2e0057ff, 7 | BRF_SND },           // 14 Speech data
-	{ "2732 08 pos dboard.bin",	0x1000, 0xb2120edd, 7 | BRF_SND },           // 15
+	// TMS5110 speech, not emulated
+	{ "2732 07 pos dboard.bin",	0x1000, 0x2e0057ff, 0 | BRF_SND | BRF_OPT }, // 14 Speech data
+	{ "2732 08 pos dboard.bin",	0x1000, 0xb2120edd, 0 | BRF_SND | BRF_OPT }, // 15
 };
 
 STD_ROM_PICK(bagmanf)
 STD_ROM_FN(bagmanf)
 
-struct BurnDriverD BurnDrvBagmanf = {
+static INT32 bagmanfInit()
+{
+	game_select = BAGMANF;
+
+	return DrvInit();
+}
+
+struct BurnDriver BurnDrvBagmanf = {
 	"bagmanf", "bagman", NULL, NULL, "1982",
-	"Le Bagnard (bootleg on Crazy Kong hardware)\0", NULL, "bootleg", "Miscellaneous",
+	"Le Bagnard (bootleg on Crazy Kong hardware)\0", "No speech", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, bagmanfRomInfo, bagmanfRomName, NULL, NULL, NULL, NULL, ToprollrInputInfo, ToprollrDIPInfo, //BagmanfInputInfo, BagmanfDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
-	256, 224, 4, 3
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, bagmanfRomInfo, bagmanfRomName, NULL, NULL, NULL, NULL, CkongInputInfo, BagmanfDIPInfo,
+	bagmanfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
 };

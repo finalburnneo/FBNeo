@@ -6,7 +6,7 @@
 //	sound - the adpcm format is still a guess (oki-like, clamped to 14 bits + high-pass), a pcb
 //	 recording cuts the intro's first chord when the next notes start (no key off is written)
 //	sound - meaning of the loop command's high byte and offset word (0x7f7f 0xnn07 offset)
-//	zoom accuracy, raster effects (mame to-do, nothing found in the irq handlers)
+//	zoom accuracy
 
 // notes:
 //	graphics banking for the main cpu is only used to test the rom checksums
@@ -19,6 +19,7 @@
 //	- tilemap reg 0 bit 0x0800 is the layer enable, 0x400406 the background color (flashes)
 //	- 8bpp tiles with bit 31 set are translucent, weight in 0x400405 (fades)
 //	- i5000 output rate comes from sound register 0x46 (47962 hz)
+//	- line scroll table in palette ram at 0x4a3c00 (mame's "raster effects" to-do, left side of rex's stage)
 //
 //	possible mame over-flow bugs
 //	- blitter tilemap select can select 7, only has 4 tilemaps
@@ -671,9 +672,14 @@ static void drawtilemap(INT32 whichtilemap) // line zoom
 		update_tilemap[whichtilemap] = 0;
 	}
 
+	// line scroll: when bit 0 of reg 5 is set, the game puts a table of per-line x offsets
+	// (12.4, one word per line) in the unused part of palette ram at 0x4a3c00
+	UINT16 *linescroll = (BURN_ENDIAN_SWAP_INT32(tilemapregs[whichtilemap][5]) & 1) ? (UINT16*)(DrvPalRAM + 0x3c00) : NULL;
+
 	for (INT32 sy = 0; sy < nScreenHeight; sy++, starty+=incyy)
 	{
 		UINT32 cx = startx;
+		if (linescroll) cx += (INT16)BURN_ENDIAN_SWAP_INT16(linescroll[sy]) << 12;
 		UINT16 *line = src + ((starty >> 16) & hmask) * width;
 
 		for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, dst++, trans++)

@@ -6,7 +6,6 @@
 //	sound - the adpcm format is still a guess (oki-like, clamped to 14 bits + high-pass), a pcb
 //	 recording cuts the intro's first chord when the next notes start (no key off is written)
 //	sound - meaning of the loop command's high byte and offset word (0x7f7f 0xnn07 offset)
-//	zoom accuracy
 
 // notes:
 //	graphics banking for the main cpu is only used to test the rom checksums
@@ -20,6 +19,7 @@
 //	- 8bpp tiles with bit 31 set are translucent, weight in 0x400405 (fades)
 //	- i5000 output rate comes from sound register 0x46 (47962 hz)
 //	- line scroll table in palette ram at 0x4a3c00 (mame's "raster effects" to-do, left side of rex's stage)
+//	- sprite window regs 0/1 are the window center: sprites stay on the floor when zoomed out
 //
 //	possible mame over-flow bugs
 //	- blitter tilemap select can select 7, only has 4 tilemaps
@@ -578,13 +578,13 @@ static void DrvPaletteUpdate()
 
 static void clearspritebitmap()
 {
-	INT32 starty = (BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])&0x00000fff) - 200;
-	INT32 startx =((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[0])&0x0fff0000)>>16) - 200;
-	INT32 amountx = 650;
-	INT32 amounty = 600;
+	INT32 starty = (BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])&0x00000fff) - 260;
+	INT32 startx =((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[0])&0x0fff0000)>>16) - 260;
+	INT32 amountx = 760;
+	INT32 amounty = 720;
 
 	if (startx < 0) { amountx += startx; startx = 0; }
-	if ((startx+amountx)>=0x1000) amountx-=(0x1000-(startx+amountx));
+	if ((startx+amountx)>=0x1000) amountx = 0x1000 - startx;
 
 	for (INT32 y=0; y<amounty;y++)
 	{
@@ -614,10 +614,13 @@ static void draw_sprites()
 
 static void draw_sprite_bitmap()
 {
-	INT32 startx = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[0])>>16)&0x00000fff) - (((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])>>16)&0x000001ff)>>1);
-	INT32 starty = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])&0x0fff)) - (((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])>>16)&0x000001ff)>>1);
 	UINT32 xsize = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[2])>>16)) + 0x80;
 	UINT32 ysize = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[3])>>16)) + 0x80;
+
+	// regs 0 and 1 are the center of the window (the game writes camera + width / 2),
+	// the constants keep the unzoomed position unchanged
+	INT32 startx = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[0])>>16)&0x00000fff) - (xsize >> 8) + 32;
+	INT32 starty = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])&0x0fff)) - (ysize >> 8) - 16;
 	UINT32 xstep = ((320*128)<<16) / xsize;
 	UINT32 ystep = ((224*128)<<16) / ysize;
 

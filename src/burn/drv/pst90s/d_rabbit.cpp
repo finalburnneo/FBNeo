@@ -3,11 +3,22 @@
 
 // to do:
 //	sound - add volume adjust, etc
+//	sound - the adpcm format is still a guess (oki-like, clamped to 14 bits + high-pass), a pcb
+//	 recording cuts the intro's first chord when the next notes start (no key off is written)
+//	sound - meaning of the loop command's high byte and offset word (0x7f7f 0xnn07 offset)
+//	zoom accuracy, raster effects (mame to-do, nothing found in the irq handlers)
 
 // notes:
 //	graphics banking for the main cpu is only used to test the rom checksums
 //	-this adds complexity and is not worth the time investment
 //  -banking in first 512k of graphics0 to keep the logger happy on reads
+//
+//	checked against https://www.youtube.com/watch?v=yuFMygrRW-U:
+//	- refresh rate from the crtc values written at 0x400800, the intro music stays in sync
+//	- the sprite list is displayed one frame late (end of round flashes)
+//	- tilemap reg 0 bit 0x0800 is the layer enable, 0x400406 the background color (flashes)
+//	- 8bpp tiles with bit 31 set are translucent, weight in 0x400405 (fades)
+//	- i5000 output rate comes from sound register 0x46 (47962 hz)
 //
 //	possible mame over-flow bugs
 //	- blitter tilemap select can select 7, only has 4 tilemaps
@@ -31,14 +42,21 @@ static UINT8 *Drv68KRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvVidRAM[4];
 static UINT8 *DrvSprRAM;
+static UINT8 *DrvSprBuf;
 
 static UINT32 *DrvPalette;
+static UINT16 *DrvTransTile; // translucent tile pixel per screen pixel, 0xffff = none
 static UINT8 DrvRecalc;
 
 static UINT32 *tilemapregs[4];
 static UINT32 *spriteregs;
+static UINT32 *spriteregs_buf;
 static UINT32 *blitterregs;
+static UINT16 *videoregs;
 static INT32 blitter_irq;
+
+// crtc values programmed at 0x400800 at boot: htotal 0x1a9, vtotal 0x10e (last dot / last line), matches a pcb recording
+static const double refresh_rate = (40000000.0 / 6.0) / ((0x1a9 + 1) * (0x10e + 1));
 
 static INT32 update_tilemap[4];
 
@@ -164,6 +182,12 @@ static void blitter_write()
 
 static void __fastcall rabbit_write_long(UINT32 address, UINT32 data)
 {
+	if (address >= 0x400400 && address <= 0x400410) {
+		videoregs[(address - 0x400400) / 2 + 0] = data >> 16;
+		videoregs[(address - 0x400400) / 2 + 1] = data & 0xffff;
+		return;
+	}
+
 	data = (data << 16) | (data >> 16);
 
 	if ((address & 0xffffe0) == 0x400200) {
@@ -195,6 +219,11 @@ static void __fastcall rabbit_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xfffffc) == 0x400300) {
 		// rombank_w
+		return;
+	}
+
+	if (address >= 0x400400 && address <= 0x400413) {
+		videoregs[(address - 0x400400) / 2] = data;
 		return;
 	}
 
@@ -334,7 +363,7 @@ static void __fastcall rabbit_paletteram_write_byte(UINT32 address, UINT8 data)
 		code >>= size * 2;												\
 		if (cmask) color &= 0x3f;										\
 	}																	\
-	TILE_SET_INFO((depth * 2) + size, code, color, TILE_FLIPXY(flip))
+	TILE_SET_INFO((depth * 2) + size + ((depth && cmask) ? 3 : 0), code, color, TILE_FLIPXY(flip))
 
 static tilemap_callback( layer0 )
 {
@@ -398,6 +427,7 @@ static INT32 MemIndex()
 	DrvEEPROM		= Next; Next += 0x0000080;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x04001 * sizeof(UINT32);
+	DrvTransTile	= (UINT16*)Next; Next += 320 * 224 * sizeof(UINT16);
 
 	AllRam			= Next;
 
@@ -408,6 +438,7 @@ static INT32 MemIndex()
 	DrvVidRAM[2]	= Next; Next += 0x020000; // ""
 	DrvVidRAM[3]	= Next; Next += 0x020000; // ""
 	DrvSprRAM		= Next; Next += 0x004000;
+	DrvSprBuf		= Next; Next += 0x004000;
 
 	tilemapregs[0]	= (UINT32*)Next; Next += 0x000008 * sizeof(UINT32);
 	tilemapregs[1]	= (UINT32*)Next; Next += 0x000008 * sizeof(UINT32);
@@ -416,6 +447,8 @@ static INT32 MemIndex()
 
 	blitterregs		= (UINT32*)Next; Next += 0x000004 * sizeof(UINT32);
 	spriteregs		= (UINT32*)Next; Next += 0x000008 * sizeof(UINT32);
+	spriteregs_buf	= (UINT32*)Next; Next += 0x000008 * sizeof(UINT32);
+	videoregs		= (UINT16*)Next; Next += 0x00000a * sizeof(UINT16);
 
 	RamEnd			= Next;
 
@@ -490,6 +523,8 @@ static INT32 DrvInit()
 
 	EEPROMInit(&eeprom_interface_93C46);
 
+	BurnSetRefreshRate(refresh_rate);
+
 	i5000sndInit(DrvSndROM, 40000000, 0x400000);
 
 	GenericTilesInit();
@@ -502,6 +537,8 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(2, DrvGfxROM[1], 8,  8,  8, 0x0600000, 0x6000, 0x0f); // color offset | 0x4000 (masked in bitmap copy)
 	GenericTilemapSetGfx(3, DrvGfxROM[1], 8, 16, 16, 0x0600000, 0x6000, 0x0f); // color offset | 0x4000 (masked in bitmap copy)
 	GenericTilemapSetGfx(4, DrvGfxROM[2], 4, 16, 16, 0x2000000, 0x0000, 0xff); // sprites
+	GenericTilemapSetGfx(5, DrvGfxROM[1], 8,  8,  8, 0x0600000, 0xe000, 0x0f); // translucent 8bpp tiles (| 0x8000)
+	GenericTilemapSetGfx(6, DrvGfxROM[1], 8, 16, 16, 0x0600000, 0xe000, 0x0f);
 	GenericTilemapUseDirtyTiles(0);
 	GenericTilemapUseDirtyTiles(1);
 	GenericTilemapUseDirtyTiles(2);
@@ -536,14 +573,12 @@ static void DrvPaletteUpdate()
 	for (INT32 i = 0; i < 0x10000; i+=4) {
 		DrvPalette[i/4] = BurnHighCol(DrvPalRAM[i+3],DrvPalRAM[i+0],DrvPalRAM[i+2],0);
 	}
-	
-	DrvPalette[0x4000] = 0; // black
 }
 
 static void clearspritebitmap()
 {
-	INT32 starty = (BURN_ENDIAN_SWAP_INT32(spriteregs[1])&0x00000fff) - 200;
-	INT32 startx =((BURN_ENDIAN_SWAP_INT32(spriteregs[0])&0x0fff0000)>>16) - 200;
+	INT32 starty = (BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])&0x00000fff) - 200;
+	INT32 startx =((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[0])&0x0fff0000)>>16) - 200;
 	INT32 amountx = 650;
 	INT32 amounty = 600;
 
@@ -559,9 +594,9 @@ static void clearspritebitmap()
 
 static void draw_sprites()
 {
-	UINT16 *ram = (UINT16*)DrvSprRAM;
+	UINT16 *ram = (UINT16*)DrvSprBuf;
 	
-	for (INT32 offs = (((BURN_ENDIAN_SWAP_INT32(spriteregs[5]) & 0x0fff) - 1) * 4); offs >= 0; offs -= 4)
+	for (INT32 offs = (((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[5]) & 0x0fff) - 1) * 4); offs >= 0; offs -= 4)
 	{
 		INT32 sy    = BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x0fff;
 		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x0fff;
@@ -578,10 +613,10 @@ static void draw_sprites()
 
 static void draw_sprite_bitmap()
 {
-	INT32 startx = ((BURN_ENDIAN_SWAP_INT32(spriteregs[0])>>16)&0x00000fff) - (((BURN_ENDIAN_SWAP_INT32(spriteregs[1])>>16)&0x000001ff)>>1);
-	INT32 starty = ((BURN_ENDIAN_SWAP_INT32(spriteregs[1])&0x0fff)) - (((BURN_ENDIAN_SWAP_INT32(spriteregs[1])>>16)&0x000001ff)>>1);
-	UINT32 xsize = ((BURN_ENDIAN_SWAP_INT32(spriteregs[2])>>16)) + 0x80;
-	UINT32 ysize = ((BURN_ENDIAN_SWAP_INT32(spriteregs[3])>>16)) + 0x80;
+	INT32 startx = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[0])>>16)&0x00000fff) - (((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])>>16)&0x000001ff)>>1);
+	INT32 starty = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])&0x0fff)) - (((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[1])>>16)&0x000001ff)>>1);
+	UINT32 xsize = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[2])>>16)) + 0x80;
+	UINT32 ysize = ((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[3])>>16)) + 0x80;
 	UINT32 xstep = ((320*128)<<16) / xsize;
 	UINT32 ystep = ((224*128)<<16) / ysize;
 
@@ -600,8 +635,10 @@ static void draw_sprite_bitmap()
 				UINT16 pixdata = srcline[(startx+(x>>7))&0xfff];
 				//if (pixdata) { fprintf(fp, "pixdata: 0x%x \n", pixdata); fflush(fp); }
 				if (pixdata)
-					if (xdrawpos < (UINT32)nScreenWidth)
+					if (xdrawpos < (UINT32)nScreenWidth) {
 						dstline[xdrawpos] = pixdata;
+						DrvTransTile[ydrawpos * nScreenWidth + xdrawpos] = 0xffff;
+					}
 			}
 		}
 	}
@@ -612,6 +649,7 @@ static void drawtilemap(INT32 whichtilemap) // line zoom
 	if ((nBurnLayer & (1 << whichtilemap)) == 0) return;
 
 	UINT16 *dst = pTransDraw;
+	UINT16 *trans = DrvTransTile;
 
 	INT32 minx, maxx, miny, maxy;
 	BurnBitmapGetClipDims(whichtilemap + 1, &minx, &maxx, &miny, &maxy);
@@ -638,13 +676,18 @@ static void drawtilemap(INT32 whichtilemap) // line zoom
 		UINT32 cx = startx;
 		UINT16 *line = src + ((starty >> 16) & hmask) * width;
 
-		for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, dst++)
+		for (INT32 x = 0; x < nScreenWidth; x++, cx+=incxx, dst++, trans++)
 		{
 			INT32 pxl = line[(cx >> 16) & wmask];
 
 			if ((pxl & 0x40ff) != 0x40ff) {
 				if ((pxl & 0x400f) != 0x000f) {
-					*dst = pxl & 0x3fff;
+					if (pxl & 0x8000) {
+						*trans = pxl & 0x3fff; // blended over what is beneath at the end
+					} else {
+						*dst = pxl & 0x3fff;
+						*trans = 0xffff;
+					}
 				}
 			}
 		}
@@ -658,14 +701,19 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	BurnTransferClear(0x4000);
+	// background color (xGRB, same format as the palette), used for the screen flashes
+	DrvPalette[0x4000] = BurnHighCol(videoregs[4] >> 8, videoregs[3] & 0xff, videoregs[4] & 0xff, 0);
 
+	BurnTransferClear(0x4000);
+	memset(DrvTransTile, 0xff, nScreenWidth * nScreenHeight * sizeof(UINT16));
+
+	// bit 0x0800 is the layer enable, the game clears it on the background layers for the screen flashes
 	for (UINT32 prilevel = 0xf00; prilevel > 0; prilevel-=0x100)
 	{
-		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[3][0]) & 0x0f00)) drawtilemap(3);
-		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[2][0]) & 0x0f00)) drawtilemap(2);
-		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[1][0]) & 0x0f00)) drawtilemap(1);
-		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[0][0]) & 0x0f00)) drawtilemap(0);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[3][0]) & 0x0f00) && (prilevel & 0x800)) drawtilemap(3);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[2][0]) & 0x0f00) && (prilevel & 0x800)) drawtilemap(2);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[1][0]) & 0x0f00) && (prilevel & 0x800)) drawtilemap(1);
+		if (prilevel == (BURN_ENDIAN_SWAP_INT32(tilemapregs[0][0]) & 0x0f00) && (prilevel & 0x800)) drawtilemap(0);
 
 		if ((prilevel == 0x0900) && (nSpriteEnable & 1))
 		{
@@ -675,7 +723,33 @@ static INT32 DrvDraw()
 		}
 	}
 
+	// 8bpp tiles with bit 31 set are translucent (the fades): tile * (15 - w) / 15 + beneath * w / 15
+	INT32 weight = (videoregs[2] >> 4) & 0x0f;
+
+	if (nBurnBpp != 4) {
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+			if (DrvTransTile[i] != 0xffff && weight < 8) pTransDraw[i] = DrvTransTile[i];
+		}
+	}
+
 	BurnTransferCopy(DrvPalette);
+
+	if (nBurnBpp == 4) {
+		for (INT32 y = 0; y < nScreenHeight; y++) {
+			UINT32 *dst = (UINT32*)(pBurnDraw + y * nBurnPitch);
+			UINT16 *trans = DrvTransTile + y * nScreenWidth;
+
+			for (INT32 x = 0; x < nScreenWidth; x++) {
+				if (trans[x] == 0xffff) continue;
+
+				UINT32 t = DrvPalette[trans[x]], d = dst[x];
+				INT32 r = (((t >> 16) & 0xff) * (15 - weight) + ((d >> 16) & 0xff) * weight) / 15;
+				INT32 g = (((t >>  8) & 0xff) * (15 - weight) + ((d >>  8) & 0xff) * weight) / 15;
+				INT32 b = (((t >>  0) & 0xff) * (15 - weight) + ((d >>  0) & 0xff) * weight) / 15;
+				dst[x] = (r << 16) | (g << 8) | b;
+			}
+		}
+	}
 
 	return 0;
 }
@@ -695,7 +769,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 32;
-	INT32 nCyclesTotal[1] = { (INT32)((INT64)24000000 * nBurnCPUSpeedAdjust / (0x0100 * 60)) };
+	INT32 nCyclesTotal[1] = { (INT32)((24000000.0 / refresh_rate) * nBurnCPUSpeedAdjust / 0x0100) };
 	INT32 nCyclesDone[1] = { 0 };
 
 	SekOpen(0);
@@ -717,6 +791,10 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
+
+	// sprites are displayed one frame late (needed for the end of round flashes)
+	memcpy(DrvSprBuf, DrvSprRAM, 0x4000);
+	memcpy(spriteregs_buf, spriteregs, 0x8 * sizeof(UINT32));
 
 	return 0;
 }

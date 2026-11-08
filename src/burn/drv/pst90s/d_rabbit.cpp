@@ -8,9 +8,7 @@
 //	sound - meaning of the loop command's high byte and offset word (0x7f7f 0xnn07 offset)
 
 // notes:
-//	graphics banking for the main cpu is only used to test the rom checksums
-//	-this adds complexity and is not worth the time investment
-//  -banking in first 512k of graphics0 to keep the logger happy on reads
+//	the rom readback window (0x440000, bank at 0x400302) is only used by the memory test
 //
 //	checked against https://www.youtube.com/watch?v=yuFMygrRW-U:
 //	- refresh rate from the crtc values written at 0x400800, the intro music stays in sync
@@ -20,11 +18,6 @@
 //	- i5000 output rate comes from sound register 0x46 (47962 hz)
 //	- line scroll table in palette ram at 0x4a3c00 (mame's "raster effects" to-do, left side of rex's stage)
 //	- sprite window regs 0/1 are the window center: sprites stay on the floor when zoomed out
-//
-//	possible mame over-flow bugs
-//	- blitter tilemap select can select 7, only has 4 tilemaps
-//	- blitter column select can be 0xff, later masks to 0x7f
-//	- sprite start offset can be 0xfff*2 for sprites (32-bit), this is 1ffe*4 (0x7ff8) ram is only 0x4000
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -38,6 +31,7 @@ static UINT8 *MemEnd;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvGfxROM[10];
 static UINT8 *DrvSndROM;
+static UINT8 *DrvSndROMFile; // sound rom including its 0x18 byte header (summed by the memory test)
 static UINT8 *DrvEEPROM;
 static UINT8 *Drv68KRAM;
 static UINT8 *DrvPalRAM;
@@ -55,6 +49,7 @@ static UINT32 *spriteregs_buf;
 static UINT32 *blitterregs;
 static UINT16 *videoregs;
 static INT32 blitter_irq;
+static UINT16 rombank;
 
 // crtc values programmed at 0x400800 at boot: htotal 0x1a9, vtotal 0x10e (last dot / last line), matches a pcb recording
 static const double refresh_rate = (40000000.0 / 6.0) / ((0x1a9 + 1) * (0x10e + 1));
@@ -102,7 +97,7 @@ static void blitter_write()
 	UINT32 reg2 = (blitterregs[2]<<16)|(blitterregs[2]>>16);
 
 	INT32 blt_source = (reg0&0x000fffff) >>  0;
-	INT32 blt_column = (reg1&0x00ff0000) >> 16; // should this be 0x7f?
+	INT32 blt_column = (reg1&0x007f0000) >> 16;
 	INT32 blt_line  =  (reg1&0x000000ff) >>  0;
 	INT32 blt_tilemp = (reg2&0x00006000) >> 13; // MAME has e...
 	INT32 blt_oddflg = (reg2&0x00000001) >>  0;
@@ -171,7 +166,7 @@ static void blitter_write()
 			break;
 
 			case 0x03: // next line
-				blt_column = (reg1&0x00ff0000)>>16;
+				blt_column = (reg1&0x007f0000)>>16;
 				blt_oddflg+=128;
 				break;
 				
@@ -218,8 +213,8 @@ static void __fastcall rabbit_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xfffffc) == 0x400300) {
-		// rombank_w
+	if (address == 0x400302) {
+		rombank = data & 0x3ff;
 		return;
 	}
 
@@ -264,7 +259,7 @@ static UINT32 __fastcall rabbit_read_long(UINT32 address)
 
 static UINT16 __fastcall rabbit_read_word(UINT32 address)
 {
-	if (address == 0x400012) return BurnRandom();
+	if (address == 0x400012) return 0; // bit 7: blitter busy (blits are instantaneous here)
 
 	if ((address & 0xffff00) == 0x400900) return i5000sndRead((address / 2) & 0x7f);
 
@@ -280,6 +275,64 @@ static UINT8 __fastcall rabbit_read_byte(UINT32 address)
 //	bprintf (0, _T("RB: %5.5x\n"), address);
 
 	return 0;
+}
+
+// rom readback window at 0x440000-0x47ffff, only used by the memory test. The bank written to 0x400302
+// selects a rom and a 256kb step; the expected checksums fix which rom is in which lane:
+//	000-01f jfv1 (high word) / jfv0 (low word), 080-09f jfv3 / jfv2, 020-03f sound rom (both words),
+//	100-107 jbg0 (32-bit), 180-18f jbg1 (a byte in each word's low half), 200-20f jbg2 (high half)
+static inline UINT8 jfv_byte(INT32 rom, UINT32 offs)
+{
+	UINT32 i = (((offs >> 1) * 8) + (rom * 2) + (offs & 1)) & 0xffffff;
+	return (DrvGfxROM[2][i * 2 + 1] << 4) | DrvGfxROM[2][i * 2 + 0]; // undo the nibble expansion
+}
+
+static UINT16 rombank_read_word(UINT32 address)
+{
+	UINT32 offs = address & 0x3ffff;
+	UINT32 dword = ((rombank & 0x1f) << 16) | (offs >> 2);
+	INT32 high = (offs & 2) ? 0 : 1;
+
+	switch (rombank >> 7)
+	{
+		case 2: { // jbg0
+			UINT32 a = ((rombank & 7) << 18) | (offs & 0x3fffe);
+			return (DrvGfxROM[1][a] << 8) | DrvGfxROM[1][a + 1];
+		}
+
+		case 3: // jbg1
+		case 4: { // jbg2
+			UINT32 a = ((((rombank & 0xf) << 16) | (offs >> 2)) * 2 + (high ^ 1)) & 0x1fffff;
+			UINT8 d = DrvGfxROM[1][((rombank >> 7) - 2) * 0x200000 + a];
+			return ((rombank >> 7) == 3) ? d : (d << 8);
+		}
+
+		case 0:
+			if (rombank & 0x20) { // sound rom
+				UINT32 a = (dword * 2) & 0x3fffff;
+				return (DrvSndROMFile[a] << 8) | DrvSndROMFile[a + 1];
+			}
+		// fall through
+		default: { // jfv0-3
+			INT32 rom = (((rombank >> 7) == 1) ? 2 : 0) + high;
+			return (jfv_byte(rom, dword * 2) << 8) | jfv_byte(rom, dword * 2 + 1);
+		}
+	}
+}
+
+static UINT32 __fastcall rabbit_rombank_read_long(UINT32 address)
+{
+	return (rombank_read_word(address) << 16) | rombank_read_word(address + 2);
+}
+
+static UINT16 __fastcall rabbit_rombank_read_word(UINT32 address)
+{
+	return rombank_read_word(address);
+}
+
+static UINT8 __fastcall rabbit_rombank_read_byte(UINT32 address)
+{
+	return rombank_read_word(address) >> ((~address & 1) * 8);
 }
 
 static void __fastcall rabbit_videoram_write_long(UINT32 address, UINT32 data)
@@ -394,7 +447,6 @@ static INT32 DrvDoReset()
 
 	i5000sndReset();
 
-	BurnRandomSetSeed(0xb00b1e5);
 
 	EEPROMReset();
 	if (EEPROMAvailable() == 0) {
@@ -402,6 +454,7 @@ static INT32 DrvDoReset()
 	}
 
 	blitter_irq = 0;
+	rombank = 0;
 	for (INT32 i = 0; i < 4; i++) {
 		GenericTilemapAllTilesDirty(i);
 		update_tilemap[i] = 1;
@@ -480,6 +533,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM[1] + 0x400000, k++, 1)) return 1;
 
 		if (BurnLoadRom(DrvSndROM + 0x000000, k++, 1)) return 1;
+		DrvSndROMFile = DrvSndROM;
 		DrvSndROM += 0x18; // skip header
 		
 		if (BurnLoadRom(DrvEEPROM + 0x000000, k++, 1)) return 1;
@@ -496,7 +550,6 @@ static INT32 DrvInit()
 	SekInit(0, 0x68ec020);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,			0x000000, 0x1fffff, MAP_ROM);
-	SekMapMemory(DrvGfxROM[0],		0x440000, 0x47ffff, MAP_ROM); // bank graphics (don't bother)
 	SekMapMemory(DrvVidRAM[0],		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvVidRAM[1],		0x484000, 0x487fff, MAP_RAM);
 	SekMapMemory(DrvVidRAM[2],		0x488000, 0x48bfff, MAP_RAM);
@@ -515,6 +568,11 @@ static INT32 DrvInit()
 	SekSetWriteLongHandler(1,		rabbit_videoram_write_long);
 	SekSetWriteWordHandler(1,		rabbit_videoram_write_word);
 	SekSetWriteByteHandler(1,		rabbit_videoram_write_byte);
+
+	SekMapHandler(3,				0x440000, 0x47ffff, MAP_READ);
+	SekSetReadLongHandler(3,		rabbit_rombank_read_long);
+	SekSetReadWordHandler(3,		rabbit_rombank_read_word);
+	SekSetReadByteHandler(3,		rabbit_rombank_read_byte);
 
 	SekMapHandler(2,				0x4a0000, 0x4affff, MAP_WRITE);
 	SekSetWriteLongHandler(2,		rabbit_paletteram_write_long);
@@ -597,7 +655,10 @@ static void draw_sprites()
 {
 	UINT16 *ram = (UINT16*)DrvSprBuf;
 	
-	for (INT32 offs = (((BURN_ENDIAN_SWAP_INT32(spriteregs_buf[5]) & 0x0fff) - 1) * 4); offs >= 0; offs -= 4)
+	INT32 count = BURN_ENDIAN_SWAP_INT32(spriteregs_buf[5]) & 0x0fff;
+	if (count > 0x800) count = 0x800; // sprite ram holds 0x800 entries
+
+	for (INT32 offs = ((count - 1) * 4); offs >= 0; offs -= 4)
 	{
 		INT32 sy    = BURN_ENDIAN_SWAP_INT16(ram[offs + 0]) & 0x0fff;
 		INT32 sx    = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]) & 0x0fff;
@@ -826,11 +887,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		BurnRandomScan(nAction);
 
 		i5000sndScan(nAction, pnMin);
 
 		SCAN_VAR(blitter_irq);
+		SCAN_VAR(rombank);
 	}
 
 	if (nAction & ACB_WRITE) {

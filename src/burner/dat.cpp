@@ -128,6 +128,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	if (bType == DAT_NGP_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Neo Geo Pocket Games</name>\n");
 	if (bType == DAT_CHANNELF_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Fairchild Channel F Games</name>\n");
 	if (bType == DAT_ASTROHOME_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Astrocade Home Computer Games</name>\n");
+	if (bType == DAT_ATARI2600_ONLY) fprintf(fDat, "\t\t<name>" APP_TITLE " - Atari 2600 Games</name>\n");
 	
 	if (bType == DAT_ARCADE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Arcade Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_MEGADRIVE_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Megadrive Games</description>\n"), szAppBurnVer);
@@ -148,6 +149,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 	if (bType == DAT_NGP_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Neo Geo Pocket Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_CHANNELF_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Fairchild Channel F Games</description>\n"), szAppBurnVer);
 	if (bType == DAT_ASTROHOME_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Astrocade Home Computer Games</description>\n"), szAppBurnVer);
+	if (bType == DAT_ATARI2600_ONLY) _ftprintf(fDat, _T("\t\t<description>") _T(APP_TITLE) _T(" v%s") _T(" Atari 2600 Games</description>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<category>Standard DatFile</category>\n");
 	_ftprintf(fDat, _T("\t\t<version>%s</version>\n"), szAppBurnVer);
 	fprintf(fDat, "\t\t<author>" APP_TITLE "</author>\n");
@@ -195,6 +197,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_ASTROHOME)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_ATARI2600)
 			) && (bType == DAT_ARCADE_ONLY)) {
 			continue;
 		}
@@ -264,6 +267,9 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_ASTROHOME) && (bType == DAT_ASTROHOME_ONLY)) {
+			continue;
+		}
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_ATARI2600) && (bType == DAT_ATARI2600_ONLY)) {
 			continue;
 		}
 
@@ -364,6 +370,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		remove_driver_leader(HARDWARE_SNK_NGP, 4, 1)
 		remove_driver_leader(HARDWARE_CHANNELF, 4, 1)
 		remove_driver_leader(HARDWARE_ASTROHOME, 6, 1)
+		remove_driver_leader(HARDWARE_ATARI2600, 4, 1)
 
 		// Report problems
 		if (nParentSelect==-1U)
@@ -716,6 +723,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NGP)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CHANNELF)
 			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_ASTROHOME)
+			|| ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_ATARI2600)
 			) && (bType == DAT_ARCADE_ONLY)) {
 			continue;
 		}
@@ -787,6 +795,9 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_ASTROHOME) && (bType == DAT_ASTROHOME_ONLY)) {
 			continue;
 		}
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_ATARI2600) && (bType == DAT_ATARI2600_ONLY)) {
+			continue;
+		}
 
 		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) != HARDWARE_SNK_NEOGEO) && (bType == DAT_NEOGEO_ONLY)) {
 			continue;
@@ -818,6 +829,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		remove_driver_leader(HARDWARE_SNK_NGP, 4, 0)
 		remove_driver_leader(HARDWARE_CHANNELF, 4, 0)
 		remove_driver_leader(HARDWARE_ASTROHOME, 6, 0)
+		remove_driver_leader(HARDWARE_ATARI2600, 4, 0)
 
 		fprintf(fDat, "\t<game isbios=\"yes\" name=\"%s\" sourcefile=\"%s\">\n", sgName, sfName);
 		char szGameDecoration[255];

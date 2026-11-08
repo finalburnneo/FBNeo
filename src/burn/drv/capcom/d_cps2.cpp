@@ -16815,17 +16815,17 @@ struct BurnDriver BurnDrvCpsVamprest = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC5)
-// 2026-11-03
+// Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC6)
+// 2026-11-07
 static struct BurnRomInfo MshvsfexRomDesc[] = {
-	{ "mvsex.03i",		0x080000, 0x31c6df3d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.04i",		0x080000, 0xcb721ddb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.05h",		0x080000, 0x626f8eab, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.03i",		0x080000, 0x943102b0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.04i",		0x080000, 0xd9196f9c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.05h",		0x080000, 0x5334b038, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvsex.06a",		0x080000, 0x444fb179, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvsex.07b",		0x080000, 0xe9cbc426, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvsex.09b",		0x080000, 0x2be6f5e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.10b",		0x080000, 0xd0128c04, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.10b",		0x080000, 0xbad46d8a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "mvsex.13m",		0x400000, 0x5a0765f2, CPS2_GFX | BRF_GRA },
 	{ "mvsex.15m",		0x400000, 0xca4700c6, CPS2_GFX | BRF_GRA },
@@ -16850,7 +16850,7 @@ STD_ROM_FN(Mshvsfex)
 
 struct BurnDriver BurnDrvCpsMshvsfex = {
 	"mshvsfex", "mshvsf", NULL, NULL, "2026",
-	"Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC5)\0", NULL, "Strygo", "CPS2",
+	"Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC6)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, MshvsfexRomInfo, MshvsfexRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
@@ -16858,22 +16858,22 @@ struct BurnDriver BurnDrvCpsMshvsfex = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC5)
-// 2026-11-03
+// Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC6)
+// 2026-11-07
 static struct BurnRomInfo MshvsfexjRomDesc[] = {
-	{ "mvsexj.03i",		0x080000, 0x862fef6a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.04i",		0x080000, 0xcb721ddb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.05h",		0x080000, 0x626f8eab, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsexj.03i",		0x080000, 0x8e50ee75, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.04i",		0x080000, 0xd9196f9c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.05h",		0x080000, 0xef82fbee, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvsex.06a",		0x080000, 0x444fb179, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvsex.07b",		0x080000, 0xe9cbc426, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mvsex.09b",		0x080000, 0x2be6f5e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.10b",		0x080000, 0xd0128c04, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.10b",		0x080000, 0xbad46d8a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "mvsex.13m",		0x400000, 0x5a0765f2, CPS2_GFX | BRF_GRA },
-	{ "mvsex.15m",		0x400000, 0xca4700c6, CPS2_GFX | BRF_GRA },
-	{ "mvsex.17m",		0x400000, 0x20979aee, CPS2_GFX | BRF_GRA },
-	{ "mvsex.19m",		0x400000, 0xa4e6969f, CPS2_GFX | BRF_GRA },
+	{ "mvsex.13m",		0x400000, 0x2d9e887e, CPS2_GFX | BRF_GRA },
+	{ "mvsex.15m",		0x400000, 0xd65f6ecb, CPS2_GFX | BRF_GRA },
+	{ "mvsex.17m",		0x400000, 0xb2cbd772, CPS2_GFX | BRF_GRA },
+	{ "mvsex.19m",		0x400000, 0x690674ec, CPS2_GFX | BRF_GRA },
 	{ "mvs.14m",		0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
 	{ "mvs.16m",		0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
 	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
@@ -16893,7 +16893,7 @@ STD_ROM_FN(Mshvsfexj)
 
 struct BurnDriver BurnDrvCpsMshvsfexj = {
 	"mshvsfexj", "mshvsf", NULL, NULL, "2026",
-	"Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC5)\0", NULL, "Strygo", "CPS2",
+	"Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC6)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, MshvsfexjRomInfo, MshvsfexjRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,

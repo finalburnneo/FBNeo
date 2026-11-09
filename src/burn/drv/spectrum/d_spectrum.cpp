@@ -51164,7 +51164,7 @@ struct BurnDriver BurnSpecLiminal = {
 // Linaje (English) - Part 1 (48K) (HB)
 
 static struct BurnRomInfo SpecLinajen1RomDesc[] = {
-	{ "Linaje EN - Part 1 48K (2026)(Furillo Productions).tap", 39704, 0xac382c4f, BRF_ESS | BRF_PRG },
+	{ "Linaje EN - Part 1 48K (2026)(Furillo Productions).tap", 39704, 0x8ab2dc3e, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecLinajen1, SpecLinajen1, Spectrum)
@@ -51190,10 +51190,10 @@ STDROMPICKEXT(SpecLinajen2, SpecLinajen2, Spectrum)
 STD_ROM_FN(SpecLinajen2)
 
 struct BurnDriver BurnSpecLinajen2 = {
-	"spec_linajen2", NULL, "spec_spectrum", NULL, "2026",
-	"Linaje (English) - Part 2 (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	"spec_linajen2", "spec_linajen1", "spec_spectrum", NULL, "2026",
+	"Linaje (English) - Part 2 (48K) (HB)\0", "Password: alii venient", "Furillo Productions", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecLinajen2RomInfo, SpecLinajen2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -51228,10 +51228,10 @@ STDROMPICKEXT(SpecLinajes2, SpecLinajes2, Spectrum)
 STD_ROM_FN(SpecLinajes2)
 
 struct BurnDriver BurnSpecLinajes2 = {
-	"spec_linajes2", NULL, "spec_spectrum", NULL, "2026",
-	"Linaje (Spanish) - Parte 2 (48K) (HB)\0", NULL, "Furillo Productions", "ZX Spectrum",
+	"spec_linajes2", "spec_linajes1", "spec_spectrum", NULL, "2026",
+	"Linaje (Spanish) - Parte 2 (48K) (HB)\0", "Password: alii venient", "Furillo Productions", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SPECTRUM, GBF_ADV, 0,
 	SpectrumGetZipName, SpecLinajes2RomInfo, SpecLinajes2RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecIntf2DIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
@@ -65526,10 +65526,10 @@ struct BurnDriver BurnSpecTetrisgb = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Tetris ZX (128K) (HB, v1.1)
+// Tetris ZX (128K) (HB, v1.1.0)
 
 static struct BurnRomInfo SpecTetriszx128RomDesc[] = {
-	{ "Tetris ZX v1.1 128K (2026)(kirby2000).tap", 80839, 0x583c4c5c, BRF_ESS | BRF_PRG },
+	{ "Tetris ZX v1.1.0 128K (2026)(kirby2000).tap", 80839, 0x583c4c5c, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTetriszx128, SpecTetriszx128, Spec128)
@@ -65537,7 +65537,7 @@ STD_ROM_FN(SpecTetriszx128)
 
 struct BurnDriver BurnSpecTetriszx128 = {
 	"spec_tetriszx128", NULL, "spec_spec128", NULL, "2026",
-	"Tetris ZX (128K) (HB, v1.1)\0", NULL, "kirby2000", "ZX Spectrum",
+	"Tetris ZX (128K) (HB, v1.1.0)\0", "AY Sound supported", "kirby2000", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecTetriszx128RomInfo, SpecTetriszx128RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -65545,10 +65545,10 @@ struct BurnDriver BurnSpecTetriszx128 = {
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };
 
-// Tetris ZX (48K) (HB, v1.1)
+// Tetris ZX (48K) (HB, v1.1.0)
 
 static struct BurnRomInfo SpecTetriszx48RomDesc[] = {
-	{ "Tetris ZX v1.1 48K (2026)(kirby2000).tap", 47992, 0x113f7874, BRF_ESS | BRF_PRG },
+	{ "Tetris ZX v1.1.0 48K (2026)(kirby2000).tap", 47992, 0x113f7874, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(SpecTetriszx48, SpecTetriszx48, Spectrum)
@@ -65556,10 +65556,29 @@ STD_ROM_FN(SpecTetriszx48)
 
 struct BurnDriver BurnSpecTetriszx48 = {
 	"spec_tetriszx48", "spec_tetriszx128", "spec_spectrum", NULL, "2026",
-	"Tetris ZX (48K) (HB, v1.1)\0", NULL, "kirby2000", "ZX Spectrum",
+	"Tetris ZX (48K) (HB, v1.1.0)\0", NULL, "kirby2000", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
 	SpectrumGetZipName, SpecTetriszx48RomInfo, SpecTetriszx48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
+	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
+	&SpecRecalc, 0x10, 288, 224, 4, 3
+};
+
+// Tetris ZX Mono (48K) (HB, v1.1.0)
+
+static struct BurnRomInfo SpecTetriszxm48RomDesc[] = {
+	{ "Tetris ZX Mono v1.1.0 48K (2026)(kirby2000).tap", 47992, 0x78c4740b, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(SpecTetriszxm48, SpecTetriszxm48, Spectrum)
+STD_ROM_FN(SpecTetriszxm48)
+
+struct BurnDriver BurnSpecTetriszxm48 = {
+	"spec_tetriszxm48", "spec_tetriszx128", "spec_spectrum", NULL, "2026",
+	"Tetris ZX Mono (48K) (HB, v1.1.0)\0", NULL, "kirby2000", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARDWARE_SPECTRUM, GBF_PUZZLE, 0,
+	SpectrumGetZipName, SpecTetriszxm48RomInfo, SpecTetriszxm48RomName, NULL, NULL, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	SpecInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 288, 224, 4, 3
 };

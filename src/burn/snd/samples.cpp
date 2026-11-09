@@ -53,6 +53,9 @@ struct sample_format
 	double gain[2];
 	double gain_target[2]; // ramp gain up or down to gain_target (see BurnSampleSetRouteFade())
 	INT32 output_dir[2];
+	UINT32 loop_start; // frame (at nBurnSoundRate) a looping sample restarts from, 0 = beginning
+	UINT32 src_rate;   // sample rate of the file before resampling (for sample-exact loop points)
+	struct sample_stream *stream; // decoded on the fly (NOSTOREF .mp3/.flac), NULL = all in data
 };
 
 static struct sample_format *samples		= NULL; // store samples
@@ -201,6 +204,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 	}
 
 	sample_ptr->length = converted_len;
+	sample_ptr->src_rate = sample_rate;
 	sample_ptr->playing = 0;
 	sample_ptr->position = 0;
 }
@@ -316,6 +320,7 @@ static void make_raw_flac(UINT8* src, UINT32 len)
 
 	sample_ptr->data     = (UINT8*)pcmData;
 	sample_ptr->length   = (UINT32)convertedFrameCount;
+	sample_ptr->src_rate = sample_rate;
 	sample_ptr->playing  = 0;
 	sample_ptr->position = 0;
 
@@ -457,6 +462,7 @@ static void make_raw_mp3(UINT8* src, UINT32 len)
 	// Store to sample_ptr
 	sample_ptr->data     = (UINT8*)pcmData;
 	sample_ptr->length   = (UINT32)convertedFrameCount;	// Key: store frames not samples
+	sample_ptr->src_rate = sample_rate;
 	sample_ptr->playing  = 0;
 	sample_ptr->position = 0;
 
@@ -466,6 +472,326 @@ static void make_raw_mp3(UINT8* src, UINT32 len)
 #endif
 
 // for stream-sync
+// ---------------------------------------------------------------------------
+// Streaming: load-on-demand (SAMPLE_NOSTOREF) .mp3 and .flac samples are decoded on the fly.
+// Only the compressed file is kept in memory, plus a small window decoded at the file's rate
+// and a small window resampled to nBurnSoundRate.  Random access (BurnSampleSetPosition(),
+// loop points, state loads) seeks the decoder.
+//
+// mp3 seeking: dr_mp3's seek table lands a few thousand frames off (0.7.4), and its exact
+// seek decodes from the start.  So as it plays, the decoder's state is saved every few seconds
+// and at the loop point; a seek restores the nearest one before it and decodes forward from there.
+
+#define STREAM_SRC_FRAMES	4096	// decoded window, frames at the file's rate
+#define STREAM_OUT_FRAMES	2048	// resampled window, frames at nBurnSoundRate
+#define STREAM_MAX_CHANNELS	8
+#define STREAM_CHECKPOINT_SECS	5		// mp3: decoder state saved every this many seconds
+
+#ifdef INCLUDE_FLACMP3_SUPPORT
+
+enum { STREAM_MP3 = 1, STREAM_FLAC = 2 };
+
+struct stream_checkpoint {
+	UINT64 pos;					// frame (at the file's rate) the decoder state is at
+	drmp3 state;
+};
+
+struct sample_stream {
+	INT32 type;
+	UINT8 *file;				// the compressed file (malloc'd, owned - the decoder reads from it)
+	drmp3 mp3;
+	stream_checkpoint *cp;		// sorted by pos
+	UINT32 cp_count, cp_cap;
+	UINT64 cp_interval;			// frames between checkpoints
+	UINT64 loop_src;			// loop point at the file's rate (0 = none), gets a checkpoint of its own
+	drflac *flac;
+	UINT32 channels;
+	UINT32 src_rate;
+	UINT64 src_frames;			// length, frames at the file's rate
+	UINT64 dec_pos;				// the next frame the decoder will give
+	INT16 *tmp;					// decoder output, all channels
+
+	INT16 src[STREAM_SRC_FRAMES * 2];	// stereo, at the file's rate
+	UINT64 src_start;
+	UINT32 src_len;
+
+	INT16 out[STREAM_OUT_FRAMES * 2];	// stereo, at nBurnSoundRate
+	UINT32 out_start;
+	UINT32 out_len;
+};
+
+static const INT16 stream_silence[2] = { 0, 0 };
+
+static void stream_close(sample_stream *st)
+{
+	if (st == NULL) return;
+
+	if (st->type == STREAM_MP3) drmp3_uninit(&st->mp3);
+	if (st->flac) drflac_close(st->flac);
+	free(st->cp);
+	free(st->tmp);
+	free(st->file);
+	free(st);
+}
+
+// mp3 checkpoints
+static stream_checkpoint *stream_cp_find(sample_stream *st, UINT64 pos, INT32 bExact)	// last one <= pos
+{
+	stream_checkpoint *best = NULL;
+	for (UINT32 i = 0; i < st->cp_count && st->cp[i].pos <= pos; i++) best = &st->cp[i];
+
+	return (bExact && best && best->pos != pos) ? NULL : best;
+}
+
+static void stream_cp_save(sample_stream *st)
+{
+	if (st->dec_pos == 0 || stream_cp_find(st, st->dec_pos, 1)) return;
+
+	if (st->cp_count == st->cp_cap) {
+		UINT32 cap = st->cp_cap ? st->cp_cap * 2 : 16;
+		stream_checkpoint *cp = (stream_checkpoint*)realloc(st->cp, cap * sizeof(stream_checkpoint));
+		if (cp == NULL) return;
+		st->cp = cp;
+		st->cp_cap = cap;
+	}
+
+	UINT32 i = st->cp_count;
+	while (i > 0 && st->cp[i - 1].pos > st->dec_pos) {
+		st->cp[i] = st->cp[i - 1];
+		i--;
+	}
+	st->cp[i].pos = st->dec_pos;
+	memcpy(&st->cp[i].state, &st->mp3, sizeof(drmp3));	// (memory decoders keep no buffers of their own)
+	st->cp_count++;
+}
+
+static UINT64 stream_cp_next(sample_stream *st)		// next frame a checkpoint goes at
+{
+	UINT64 next = (st->dec_pos / st->cp_interval + 1) * st->cp_interval;
+	if (st->loop_src > st->dec_pos && st->loop_src < next) next = st->loop_src;
+
+	return next;
+}
+
+// decode up to "frames" frames into dst (stereo, or NULL to skip), returns the number decoded
+static UINT32 stream_decode(sample_stream *st, UINT32 frames, INT16 *dst)
+{
+	const UINT32 ch = st->channels;
+	UINT32 total = 0;
+
+	while (frames > 0) {
+		UINT32 n = frames;
+		UINT64 next = 0;
+
+		if (st->type == STREAM_MP3) {
+			next = stream_cp_next(st);
+			if (st->dec_pos + n > next) n = (UINT32)(next - st->dec_pos);	// stop there, to save the state
+		}
+
+		UINT64 got = 0;
+		if (st->type == STREAM_MP3)  got = drmp3_read_pcm_frames_s16(&st->mp3, n, st->tmp);
+		if (st->type == STREAM_FLAC) got = drflac_read_pcm_frames_s16(st->flac, n, st->tmp);
+
+		if (dst) {
+			for (UINT64 i = 0; i < got; i++, dst += 2) {
+				dst[0] = st->tmp[i * ch];
+				dst[1] = st->tmp[i * ch + ((ch > 1) ? 1 : 0)];	// mono: both sides
+			}
+		}
+
+		st->dec_pos += got;
+		total += (UINT32)got;
+		frames -= (UINT32)got;
+
+		if (st->type == STREAM_MP3 && st->dec_pos == next) stream_cp_save(st);
+
+		if (got < n) break;					// end of file / error
+	}
+
+	return total;
+}
+
+static void stream_seek(sample_stream *st, UINT64 frame)
+{
+	if (st->type == STREAM_FLAC) {
+		drflac_seek_to_pcm_frame(st->flac, frame);			// exact, and quick
+		st->dec_pos = frame;
+		return;
+	}
+
+	// mp3: from the nearest saved state before "frame" (or from where it is, if that's nearer)
+	if (!(st->dec_pos <= frame && (frame - st->dec_pos) < st->cp_interval)) {
+		stream_checkpoint *cp = stream_cp_find(st, frame, 0);
+		if (cp && !(st->dec_pos <= frame && st->dec_pos >= cp->pos)) {
+			memcpy(&st->mp3, &cp->state, sizeof(drmp3));
+			st->dec_pos = cp->pos;
+		} else if (st->dec_pos > frame) {
+			drmp3_seek_to_pcm_frame(&st->mp3, 0);			// (exact)
+			st->dec_pos = 0;
+		}
+	}
+
+	while (st->dec_pos < frame) {
+		UINT64 n = frame - st->dec_pos;
+		if (n > STREAM_SRC_FRAMES) n = STREAM_SRC_FRAMES;
+		if (stream_decode(st, (UINT32)n, NULL) == 0) break;
+	}
+}
+
+// decode a new source window, starting at frame i
+static void stream_src_fill(sample_stream *st, UINT64 i)
+{
+	UINT32 keep = 0;
+
+	if (st->src_len && i == st->src_start + st->src_len && st->dec_pos == i) {
+		// carrying on: keep the last frame, interpolation needs it at the window edge
+		st->src[0] = st->src[(st->src_len - 1) * 2 + 0];
+		st->src[1] = st->src[(st->src_len - 1) * 2 + 1];
+		keep = 1;
+	} else if (st->dec_pos != i) {
+		stream_seek(st, i);
+	}
+
+	const UINT64 start = st->dec_pos;
+	const UINT32 got = stream_decode(st, STREAM_SRC_FRAMES - keep, st->src + keep * 2);
+
+	st->src_start = start - keep;
+	st->src_len = keep + got;
+}
+
+static inline const INT16 *stream_src_frame(sample_stream *st, UINT64 i)
+{
+	if (i >= st->src_frames) i = st->src_frames - 1;
+
+	if (i < st->src_start || i >= st->src_start + st->src_len) {
+		stream_src_fill(st, i);
+		if (i >= st->src_start + st->src_len) return stream_silence;	// decoder error
+	}
+
+	return &st->src[(i - st->src_start) * 2];
+}
+
+// resample a new output window, starting at frame "frame" (at nBurnSoundRate)
+static void stream_out_fill(sample_format *s, UINT32 frame)
+{
+	sample_stream *st = s->stream;
+	const bool native = (st->src_rate == (UINT32)nBurnSoundRate);
+	const double step = (double)st->src_rate / nBurnSoundRate;
+	UINT32 n;
+
+	st->loop_src = (s->loop && s->loop_start < s->length) ? (UINT64)(s->loop_start * step) : 0;
+
+	for (n = 0; n < STREAM_OUT_FRAMES && frame + n < s->length; n++) {
+		INT16 *out = &st->out[n * 2];
+
+		if (native) {
+			const INT16 *f = stream_src_frame(st, frame + n);
+			out[0] = f[0];
+			out[1] = f[1];
+			continue;
+		}
+
+		// linear interpolation, like the whole-file converters
+		const double src_pos = (frame + n) * step;
+		const UINT64 i0 = (UINT64)src_pos;
+		const double frac = src_pos - (double)i0;
+
+		const INT16 *f = stream_src_frame(st, i0);
+		const INT32 l0 = f[0], r0 = f[1];		// (the next fetch can move the window)
+		f = stream_src_frame(st, i0 + 1);
+
+		out[0] = (INT16)(l0 + (f[0] - l0) * frac);
+		out[1] = (INT16)(r0 + (f[1] - r0) * frac);
+	}
+
+	st->out_start = frame;
+	st->out_len = n;
+}
+
+static inline const INT16 *sample_stream_frame(sample_format *s, UINT32 frame)
+{
+	sample_stream *st = s->stream;
+
+	if (frame < st->out_start || frame >= st->out_start + st->out_len) {
+		stream_out_fill(s, frame);
+		if (st->out_len == 0) return stream_silence;
+	}
+
+	return &st->out[(frame - st->out_start) * 2];
+}
+
+// open "file" for streaming into sample_ptr, takes ownership of file (malloc'd) on success
+static INT32 make_stream(UINT8 *file, UINT32 len, INT32 type)
+{
+	sample_stream *st = (sample_stream*)calloc(1, sizeof(sample_stream));
+	if (st == NULL) return 0;
+
+	st->type = type;
+
+	if (type == STREAM_MP3) {
+		if (!drmp3_init_memory(&st->mp3, file, len, NULL)) {
+			free(st);
+			return 0;
+		}
+		st->channels = st->mp3.channels;
+		st->src_rate = st->mp3.sampleRate;
+		st->src_frames = drmp3_get_pcm_frame_count(&st->mp3);	// (from the Xing/Info tag, or a quick scan of the frame headers)
+		st->cp_interval = (UINT64)st->src_rate * STREAM_CHECKPOINT_SECS;
+	}
+
+	if (type == STREAM_FLAC) {
+		st->flac = drflac_open_memory(file, len, NULL);
+		if (st->flac == NULL) {
+			free(st);
+			return 0;
+		}
+		st->channels = st->flac->channels;
+		st->src_rate = st->flac->sampleRate;
+		st->src_frames = st->flac->totalPCMFrameCount;
+	}
+
+	if (st->channels == 0 || st->channels > STREAM_MAX_CHANNELS || st->src_rate == 0 || st->src_frames == 0 ||
+		(st->tmp = (INT16*)malloc(STREAM_SRC_FRAMES * st->channels * sizeof(INT16))) == NULL)
+	{
+		st->file = NULL;	// not ours yet
+		stream_close(st);
+		return 0;
+	}
+
+	st->file = file;
+	if (type == STREAM_MP3) drmp3_seek_to_pcm_frame(&st->mp3, 0);
+	if (type == STREAM_FLAC) drflac_seek_to_pcm_frame(st->flac, 0);
+	st->dec_pos = 0;
+
+	sample_ptr->stream   = st;
+	sample_ptr->data     = (UINT8*)st->out;		// non-NULL = loaded
+	sample_ptr->length   = (UINT32)((double)st->src_frames * nBurnSoundRate / st->src_rate + 0.5);
+	sample_ptr->src_rate = st->src_rate;
+	sample_ptr->playing  = 0;
+	sample_ptr->position = 0;
+
+	bprintf(0, _T("Streaming %s: %d frames (%dHz -> %dHz)\n"), (type == STREAM_MP3) ? _T("MP3") : _T("FLAC"),
+		sample_ptr->length, st->src_rate, nBurnSoundRate);
+
+	return 1;
+}
+
+#endif // INCLUDE_FLACMP3_SUPPORT
+
+static void sample_free_data(sample_format *s)
+{
+#ifdef INCLUDE_FLACMP3_SUPPORT
+	if (s->stream) {
+		stream_close(s->stream);
+		s->stream = NULL;
+		s->data = NULL;
+		return;
+	}
+#endif
+
+	BurnFree(s->data);
+}
+
 static INT32 samples_buffered = 0;
 static INT32 (*pCPUTotalCycles)() = NULL;
 static UINT32 nDACCPUMHZ = 0;
@@ -817,6 +1143,148 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 
+// ---------------------------------------------------------------------------
+// Sample source: by default the driver's own sample list + support/samples/<samplename>.zip,
+// or an external list set with BurnSampleSetSource() (used by burn_ost.cpp for OST packs)
+
+static const BurnSampleSource *pSampleSource = NULL;
+static char szSampleArchive[MAX_PATH * 2];	// zip/7z path without extension ("" = none)
+static char szSampleFolder[MAX_PATH * 2];	// folder for loose files, with trailing slash ("" = none)
+static INT32 bSampleArchiveOk = 0;
+
+void BurnSampleSetSource(const BurnSampleSource *pSrc)
+{
+	pSampleSource = pSrc;
+}
+
+static INT32 SampleSourceFlags(INT32 i)
+{
+	if (pSampleSource) {
+		return (i < pSampleSource->nCount) ? pSampleSource->GetFlags(i) : 0;
+	}
+
+	struct BurnSampleInfo si;
+	BurnDrvGetSampleInfo(&si, i);
+	return si.nFlags;
+}
+
+static const char *SampleSourceName(INT32 i)
+{
+	if (pSampleSource) {
+		return pSampleSource->GetName(i);
+	}
+
+	char *szName = NULL;
+	BurnDrvGetSampleName(&szName, i, 0);
+	return szName;
+}
+
+static void SampleSourcePaths()
+{
+	szSampleArchive[0] = szSampleFolder[0] = 0;
+
+	if (pSampleSource) {
+		if (pSampleSource->szArchive) snprintf(szSampleArchive, sizeof(szSampleArchive), "%s", pSampleSource->szArchive);
+		if (pSampleSource->szFolder)  snprintf(szSampleFolder,  sizeof(szSampleFolder),  "%s", pSampleSource->szFolder);
+	} else {
+		snprintf(szSampleArchive, sizeof(szSampleArchive), "%s%s", _TtoA(SAMPLE_DIRECTORY), BurnDrvGetTextA(DRV_SAMPLENAME));
+	}
+
+	// test to see if the archive exists (saves opening it for every sample when it doesn't)
+	bSampleArchiveOk = 0;
+	if (szSampleArchive[0]) {
+		static const char *arc_ext[] = { ".zip", ".7z" };
+		for (INT32 e = 0; e < 2 && !bSampleArchiveOk; e++) {
+			char path[MAX_PATH * 2 + 4];
+			snprintf(path, sizeof(path), "%s%s", szSampleArchive, arc_ext[e]);
+			FILE *test = fopen(path, "rb");
+			if (test) {
+				bSampleArchiveOk = 1;
+				fclose(test);
+			}
+		}
+	}
+}
+
+static void *SampleLoadLooseFile(const char *path, INT32 *pnLen) // malloc()'d, like ZipLoadOneFile
+{
+	*pnLen = 0;
+	FILE *fp = fopen(path, "rb");
+	if (fp == NULL) return NULL;
+
+	fseek(fp, 0, SEEK_END);
+	long len = ftell(fp);
+	fseek(fp, 0, SEEK_SET);
+
+	void *data = (len > 0) ? malloc(len) : NULL;
+	if (data && fread(data, 1, len, fp) == (size_t)len) {
+		*pnLen = (INT32)len;
+	} else {
+		free(data);
+		data = NULL;
+	}
+	fclose(fp);
+
+	return data;
+}
+
+// find + decode sample i into samples[i]: archive first, then loose file; .wav, then .flac, then .mp3
+static INT32 SampleLoadInto(INT32 i)
+{
+	static const char *ext[] = { ".wav",
+#ifdef INCLUDE_FLACMP3_SUPPORT
+		".flac", ".mp3"
+#endif
+	};
+
+	const char *szName = SampleSourceName(i);
+	if (szName == NULL || szName[0] == 0) return 0;
+
+	sample_ptr = &samples[i];
+
+	for (UINT32 e = 0; e < sizeof(ext) / sizeof(ext[0]); e++) {
+		char szFile[1024];
+		snprintf(szFile, sizeof(szFile), "%s%s", szName, ext[e]);
+
+		void *destination = NULL;
+		INT32 length = 0;
+
+		if (bSampleArchiveOk) {
+			ZipLoadOneFile(szSampleArchive, szFile, &destination, &length);
+		}
+		if (length == 0 && szSampleFolder[0]) {
+			char path[MAX_PATH * 2 + 1024];
+			snprintf(path, sizeof(path), "%s%s", szSampleFolder, szFile);
+			destination = SampleLoadLooseFile(path, &length);
+		}
+
+		if (length) {
+			bprintf(0, _T("Loading \"%S\" @ %d: "), szFile, i);
+#ifdef INCLUDE_FLACMP3_SUPPORT
+			// load-on-demand mp3/flac: decode while playing, instead of all of it now
+			if (e > 0 && (sample_ptr->flags & SAMPLE_NOSTOREF)) {
+				if (make_stream((UINT8*)destination, length, (e == 1) ? STREAM_FLAC : STREAM_MP3)) {
+					return 1;	// the stream owns "destination" now
+				}
+				bprintf(0, _T("can't stream, decoding all of it: "));
+			}
+#endif
+			switch (e) {
+				case 0: make_raw((UINT8*)destination, length); break;
+#ifdef INCLUDE_FLACMP3_SUPPORT
+				case 1: make_raw_flac((UINT8*)destination, length); break;
+				case 2: make_raw_mp3((UINT8*)destination, length); break;
+#endif
+			}
+			free(destination); // ZipLoadOneFile & SampleLoadLooseFile use malloc()
+			return (sample_ptr->data != NULL);
+		}
+	}
+
+	bprintf(0, _T("Loading \"%S\" @ %d: sample missing!\n"), szName, i);
+	return 0;
+}
+
 void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 {
 	bAddToStream = bAdd & ~0x8000;
@@ -832,50 +1300,21 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		return;
 	}
 
-	INT32 length;
-	char path[256*2];
-	char setname[128];
-	void *destination = NULL;
-	char szTempPath[MAX_PATH];
-	sprintf(szTempPath, "%s", _TtoA(SAMPLE_DIRECTORY));
-
-	// test to see if file exists
-	INT32 nEnableSamples = 0;
-
-	if (BurnDrvGetTextA(DRV_SAMPLENAME) == NULL) { // called with no samples
+	if (pSampleSource == NULL && BurnDrvGetTextA(DRV_SAMPLENAME) == NULL) { // called with no samples
 		nTotalSamples = 0;
 		return;
 	}
 
-	strcpy(setname, BurnDrvGetTextA(DRV_SAMPLENAME));
-	sprintf(path, "%s%s.zip", szTempPath, setname);
-	
-	FILE *test = fopen(path, "rb");
-	if (test) 
-	{
-		nEnableSamples = 1;
-		fclose(test);
-	}
-	
-#ifdef INCLUDE_7Z_SUPPORT
-	sprintf(path, "%s%s.7z", szTempPath, setname);
-	
-	test = fopen(path, "rb");
-	if (test)
-	{	
-		nEnableSamples = 1;
-		fclose(test);
-	}
-#endif
+	SampleSourcePaths();
 
 	soundbuf = (INT16*)BurnMalloc(0x1000 * 2 * 2); // mixing buffer
 
-	struct BurnSampleInfo si;
-	INT32 nSampleOffset = -1;
-	do {
-		BurnDrvGetSampleInfo(&si, ++nSampleOffset);
-		if (si.nFlags) nTotalSamples++;
-	} while (si.nFlags);
+	if (pSampleSource) {
+		nTotalSamples = pSampleSource->nCount;
+	} else {
+		INT32 nSampleOffset = -1;
+		while (SampleSourceFlags(++nSampleOffset)) nTotalSamples++;
+	}
 
 	samples = (sample_format*)BurnMalloc(sizeof(sample_format) * nTotalSamples);
 	memset (samples, 0, sizeof(sample_format) * nTotalSamples);
@@ -886,19 +1325,10 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnUpdateProgress(1.0 / nTotalSamples, NULL, 0);
 
-		BurnDrvGetSampleInfo(&si, i);
-		char *szSampleNameTmp = NULL;
-		BurnDrvGetSampleName(&szSampleNameTmp, i, 0);
+		INT32 nFlags = SampleSourceFlags(i);
+		if (nFlags == 0) break;
 
 		sample_ptr = &samples[i];
-		
-		// append .wav to filename
-		char szSampleName[1024];
-		memset(&szSampleName, 0, sizeof(szSampleName));
-		strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5);			// leave space for ".wav" + null, just incase!
-		strcat(&szSampleName[0], ".wav");
-
-		if (si.nFlags == 0) break;
 
 		// set defaults before NOSTORE check!
 		sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1] = 1.00;
@@ -911,67 +1341,16 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->playback_rate = 100;
 
-		if (si.nFlags & SAMPLE_NOSTOREF || bForceNostore) {
-			sample_ptr->flags = si.nFlags | (bForceNostore ? SAMPLE_NOSTOREF : 0);
+		if (nFlags & SAMPLE_NOSTOREF || bForceNostore) {
+			sample_ptr->flags = nFlags | (bForceNostore ? SAMPLE_NOSTOREF : 0);
 			sample_ptr->data = NULL;
 			continue;
 		}
 
-		sprintf (path, "%s%s", szTempPath, setname);
+		sample_ptr->flags = nFlags;
 
-		destination = NULL;
-		length = 0;
-
-		if (nEnableSamples) {
-			ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-		}
-
-		if (length) {
-			sample_ptr->flags = si.nFlags;
-			bprintf(0, _T("Loading \"%S\" @ %d: "), szSampleName, i);
-			make_raw((UINT8*)destination, length);
-			free(destination);			// ZipLoadOneFile uses malloc()
-		} else {
-#ifdef INCLUDE_FLACMP3_SUPPORT
-			// append .flac to filename
-			memset(&szSampleName, 0, sizeof(szSampleName));
-			strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 6);		// leave space for ".flac" + null, just incase!
-			strcat(&szSampleName[0], ".flac");
-
-			destination = NULL;
-			length = 0;
-
-			ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-
-			if (length) {
-				sample_ptr->flags = si.nFlags;
-				bprintf(0, _T("Loading FLAC \"%S\" @ %d: "), szSampleName, i);
-				make_raw_flac((UINT8*)destination, length);
-				free(destination);		// ZipLoadOneFile uses malloc()
-			} else {
-				// append .mp3 to filename
-				memset(&szSampleName, 0, sizeof(szSampleName));
-				strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5);	// leave space for ".mp3" + null, just incase!
-				strcat(&szSampleName[0], ".mp3");
-
-				destination = NULL;
-				length = 0;
-
-				ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-
-				if (length) {
-					sample_ptr->flags = si.nFlags;
-					bprintf(0, _T("Loading MP3 \"%S\" @ %d: "), szSampleName, i);
-					make_raw_mp3((UINT8*)destination, length);
-					free(destination);	// ZipLoadOneFile uses malloc()
-				} else {
-					sample_ptr->flags = SAMPLE_IGNORE;
-				}
-			}
-#else
-				bprintf(0, _T("Loading \"%S\" @ %d: sample missing!"), szSampleName, i);
-				sample_ptr->flags = SAMPLE_IGNORE;
-#endif
+		if (SampleLoadInto(i) == 0) {
+			sample_ptr->flags = SAMPLE_IGNORE;
 		}
 	}
 }
@@ -983,13 +1362,13 @@ void BurnSampleInitOne(INT32 sample)
 	}
 
 	{
+		// free the other load-on-demand samples, except ones still playing (so music can crossfade/overlap)
 		struct sample_format *clr_ptr = &samples[0];
 
 		int i = 0;
 		while (i < nTotalSamples) {
-			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTOREF)) {
-				BurnFree(clr_ptr->data);
-				clr_ptr->playing = 0;
+			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTOREF) && clr_ptr->playing == 0) {
+				sample_free_data(clr_ptr);
 				clr_ptr->playback_rate = 100;
 				clr_ptr->data = NULL;
 			}
@@ -998,79 +1377,49 @@ void BurnSampleInitOne(INT32 sample)
 		}
 	}
 
+	sample_ptr = &samples[sample];
+
 	if ((sample_ptr->flags & SAMPLE_NOSTOREF) == 0) {
 		return;
 	}
-
-	INT32 length;
-	char path[256*2];
-	char setname[128];
-	void *destination = NULL;
-	char szTempPath[MAX_PATH];
-	sprintf(szTempPath, "%s", _TtoA(SAMPLE_DIRECTORY));
-	strcpy(setname, BurnDrvGetTextA(DRV_SAMPLENAME));
-
-	struct BurnSampleInfo si;
-	BurnDrvGetSampleInfo(&si, sample);
-	char *szSampleNameTmp = NULL;
-	BurnDrvGetSampleName(&szSampleNameTmp, sample, 0);
-
-	sample_ptr = &samples[sample];
-
-	// append .wav to filename
-	char szSampleName[1024];
-	memset(&szSampleName, 0, sizeof(szSampleName));
-	strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5);			// leave space for ".wav" + null, just incase!
-	strcat(&szSampleName[0], ".wav");
 
 	if (sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
 		return;
 	}
 
-	sprintf (path, "%s%s", szTempPath, setname);
+	// the decoders reset playing/position, keep them so a reload mid-play
+	// (state load, resume after being freed) continues where it was
+	const UINT8 playing = sample_ptr->playing;
+	const UINT64 position = sample_ptr->position;
 
-	destination = NULL;
-	length = 0;
-	ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
+	SampleLoadInto(sample);
 
-	if (length) {
-		make_raw((UINT8*)destination, length);
-	}
-#ifdef INCLUDE_FLACMP3_SUPPORT
-	else {
-		// append .flac to filename
-		memset(&szSampleName, 0, sizeof(szSampleName));
-		strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 6);		// leave space for ".flac" + null, just incase!
-		strcat(&szSampleName[0], ".flac");
+	sample_ptr = &samples[sample];
+	sample_ptr->playing = playing;
+	sample_ptr->position = position;
+}
 
-		sprintf(path, "%s%s", szTempPath, setname);
+UINT32 BurnSampleGetLength(INT32 sample)
+{
+	if (sample >= nTotalSamples) return 0;
 
-		destination = NULL;
-		length = 0;
-		ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
+	return samples[sample].length;
+}
 
-		if (length) {
-			make_raw_flac((UINT8*)destination, length);
-		} else {
-			// append .mp3 to filename
-			memset(&szSampleName, 0, sizeof(szSampleName));
-			strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5);	// leave space for ".mp3" + null, just incase!
-			strcat(&szSampleName[0], ".mp3");
+UINT32 BurnSampleGetSourceRate(INT32 sample)
+{
+	if (sample >= nTotalSamples) return 0;
 
-			sprintf(path, "%s%s", szTempPath, setname);
+	return samples[sample].src_rate;
+}
 
-			destination = NULL;
-			length = 0;
-			ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
+void BurnSampleSetLoopStart(INT32 sample, UINT32 frame)
+{
+	if (sample >= nTotalSamples) return;
 
-			if (length) {
-				make_raw_mp3((UINT8*)destination, length);
-			}
-		}
-	}
-#endif
+	BurnSampleSync();
 
-	free(destination); // ZipLoadOneFile uses malloc()
+	samples[sample].loop_start = frame;
 }
 
 // round ##.###### to ##.##
@@ -1155,7 +1504,7 @@ void BurnSampleExit()
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];
 		if (sample_ptr)
-			BurnFree (sample_ptr->data);
+			sample_free_data(sample_ptr);
 	}
 
 	if (samples) {
@@ -1172,6 +1521,7 @@ void BurnSampleExit()
     }
 
 	sample_ptr = NULL;
+	pSampleSource = NULL;
 	nTotalSamples = 0;
 	bAddToStream = 0;
 	bBurnSampleTrimSampleEnd = 0;
@@ -1256,18 +1606,24 @@ static void BurnSampleRender_INT(UINT32 pLen)
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
 		sample_ptr = &samples[i];
-		if (sample_ptr->playing == 0 || sample_ptr->length == 0) {
+		if (sample_ptr->playing == 0) {
 			sample_ptr->latch = 0; // clear latch (for now!)
 			continue;
 		}
 
 		if (sample_ptr->data == NULL) {
 			if (sample_ptr->flags & SAMPLE_NOSTOREF) {
-				BurnSampleInitOne(i);
+				BurnSampleInitOne(i); // (re)load on demand, ie. after a state load
+				sample_ptr = &samples[i];
 			} else {
 				// something went wrong here :)
 				continue;
 			}
+		}
+
+		if (sample_ptr->length == 0 || sample_ptr->data == NULL) {
+			sample_ptr->latch = 0;
+			continue;
 		}
 
 		INT32 playlen = pLen;
@@ -1281,6 +1637,13 @@ static void BurnSampleRender_INT(UINT32 pLen)
 
 		for (INT32 j = 0; j < playlen; j++, dst+=2) {
 			INT32 nLeftSample = 0, nRightSample = 0;
+
+			if (sample_ptr->loop && (pos / 0x10000) >= sample_ptr->length) {
+				// wrap to the loop point (0 = beginning, same as before), keeping the fractional overshoot
+				const UINT32 loop_start = (sample_ptr->loop_start < sample_ptr->length) ? sample_ptr->loop_start : 0;
+				pos -= (UINT64)(sample_ptr->length - loop_start) * 0x10000;
+			}
+
 			const UINT32 current_pos = (pos / 0x10000);
 			const UINT32 position = current_pos * 2;
 
@@ -1294,18 +1657,24 @@ static void BurnSampleRender_INT(UINT32 pLen)
 				}
 			}
 
+#ifdef INCLUDE_FLACMP3_SUPPORT
+			const INT16 *frame = (sample_ptr->stream) ? sample_stream_frame(sample_ptr, current_pos) : &dat[position % length];
+#else
+			const INT16 *frame = &dat[position % length];
+#endif
+
 			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(dat[(position) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
+				nLeftSample += (INT32)(frame[0] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
 			}
 			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(dat[(position) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
+				nRightSample += (INT32)(frame[0] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_1]);
 			}
 
 			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
+				nLeftSample += (INT32)(frame[1] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
 			}
 			if ((sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(dat[(position + 1) % length] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
+				nRightSample += (INT32)(frame[1] * sample_ptr->gain[BURN_SND_SAMPLE_ROUTE_2]);
 			}
 
 			dst[0] = BURN_SND_CLIP(dst[0] + nLeftSample);

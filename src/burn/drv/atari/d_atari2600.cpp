@@ -41,6 +41,10 @@ static UINT32 cart_size;
 #define A26_W				160
 #define A26_NTSC_H			228
 #define A26_PAL_H			270
+// first line shown: like a TV, a fixed band of lines after VSYNC.  Standard
+// games (NTSC: 192 lines from line 40, PAL: 228 from line 48) end up centred.
+#define A26_NTSC_Y			22
+#define A26_PAL_Y			27
 #define A26_SCALE			2		// output is pixel-doubled (both axes)
 #define A26_CARTRAM_SIZE	0x8000	// 3E carts can have 32k
 
@@ -142,8 +146,6 @@ static INT32 aud_pos;
 // frame handling
 static INT32 frame_done;
 static INT32 fb_cur, fb_disp;
-static INT32 frame_vb_off, frame_vb_on, frame_vsync_start, frame_last_content;
-static INT32 ystart, ystart_cand, ystart_cnt, ystart_locked, ystart_frames, ystart_top, ystart_bottom;
 
 static UINT16 cx_table[64];
 
@@ -469,7 +471,7 @@ static void obj_tick(INT32 i)
 	}
 }
 
-static void frame_end(INT32 by_vsync)
+static void frame_end()
 {
 	UINT8 *fb = DrvFrameBuf + fb_cur * (A26_MAXLINES * A26_W);
 
@@ -477,70 +479,6 @@ static void frame_end(INT32 by_vsync)
 	if (tia_line < A26_MAXLINES - 1) {
 		memset(fb + (tia_line + 1) * A26_W, 0, (A26_MAXLINES - 1 - tia_line) * A26_W);
 	}
-
-	// work out where the picture is, so that we can centre it.  Only
-	// properly synced frames count (not the odd-length ones a game makes
-	// while starting up), and anything above the first lines a TV would
-	// show is treated as off-screen, even if the game draws there.
-	{
-		const INT32 lines = tia_line;
-		const INT32 synced = by_vsync && frame_vsync_start && (lines >= 240 && lines <= 340);
-		const INT32 tv_top = is_pal ? 20 : 16;
-
-		// top: where VBLANK went off; a game that never uses VBLANK
-		// draws from the top of the frame
-		INT32 top = (frame_vb_off >= 0) ? frame_vb_off : 0;
-		INT32 bottom = (frame_vb_off >= 0 && frame_vb_on > frame_vb_off) ? frame_vb_on : lines;
-		if (top < tv_top) top = tv_top;
-
-		// games that never turn VBLANK back on just draw black overscan:
-		// the picture ends at the last line that has anything on it
-		if (frame_last_content >= top && frame_last_content + 1 < bottom) {
-			bottom = frame_last_content + 1;
-		}
-
-		if (synced && top <= 100 && (bottom - top) >= 100 && !ystart_locked) {
-			// games that flicker draw different things on alternate frames,
-			// so measure the union of what the measured frames showed
-			if (ystart_top < 0 || top < ystart_top) ystart_top = top;
-			if (bottom > ystart_bottom) ystart_bottom = bottom;
-
-			// anchor the window to the top of the picture, with the margin a
-			// standard game gets (NTSC: 192 lines from line 40, PAL: 228
-			// from line 48) - a picture that's too tall for that is centred
-			const INT32 h = is_pal ? A26_PAL_H : A26_NTSC_H;
-			const INT32 margin = is_pal ? ((A26_PAL_H - 228) / 2) : ((A26_NTSC_H - 192) / 2);
-			INT32 cand;
-			if ((ystart_bottom - ystart_top) <= h - margin) {
-				cand = ystart_top - margin;
-			} else {
-				cand = ((ystart_top + ystart_bottom) / 2) - (h / 2);
-			}
-			if (cand < 0) cand = 0;
-			if (cand > A26_MAXLINES - h) cand = A26_MAXLINES - h;
-
-			// measure over the first few frames, then lock the window
-			// there, so it doesn't jump around later on.
-			if (!ystart_locked) {
-				ystart = cand;	// use it straight away, no visible jump later
-				if (cand == ystart_cand) {
-					if (++ystart_cnt >= 3) ystart_locked = 1;
-				} else {
-					ystart_cand = cand;
-					ystart_cnt = 1;
-				}
-			}
-		}
-	}
-
-	if (!ystart_locked && ++ystart_frames >= 300) {
-		ystart_locked = 1;	// no sane VBLANK seen: keep the default
-	}
-
-	frame_vb_off = -1;
-	frame_vb_on = -1;
-	frame_vsync_start = by_vsync;
-	frame_last_content = -1;
 
 	fb_disp = fb_cur;
 	fb_cur ^= 1;
@@ -700,7 +638,6 @@ static void tia_step()
 			}
 
 			*dst = (tia_vblank & 2) ? 0 : (col >> 1);
-			if (*dst) frame_last_content = tia_line;
 
 			// visible area: every object counter is clocked (HMOVE pulses are absorbed)
 			for (INT32 i = 0; i < 5; i++) obj_tick(i);
@@ -720,7 +657,7 @@ static void tia_step()
 	if (++tia_hpos >= 228) {
 		tia_hpos = 0;
 		if (++tia_line >= 380) {
-			frame_end(0);	// game isn't generating VSYNC (yet)
+			frame_end();	// game isn't generating VSYNC (yet)
 		}
 	}
 }
@@ -797,17 +734,6 @@ static void tia_reset()
 	frame_done = 0;
 	fb_cur = 0;
 	fb_disp = 1;
-	frame_vb_off = -1;
-	frame_vb_on = -1;
-	frame_vsync_start = 0;
-	frame_last_content = -1;
-	ystart_cand = -1;
-	ystart_cnt = 0;
-	ystart_locked = 0;
-	ystart_frames = 0;
-	ystart_top = -1;
-	ystart_bottom = -1;
-	ystart = is_pal ? 27 : 22;
 
 	memset(DrvFrameBuf, 0, 2 * A26_MAXLINES * A26_W);
 }
@@ -845,19 +771,12 @@ static void tia_write(UINT16 address, UINT8 data)
 	{
 		case 0x00: // VSYNC
 			if ((data & 2) && !(tia_vsync & 2) && tia_line >= 100) {
-				frame_end(1);
+				frame_end();
 			}
 			tia_vsync = data;
 		return;
 
 		case 0x01: // VBLANK
-			if ((data & 2) && !(tia_vblank & 2)) {
-				// only counts once the picture has started
-				if (frame_vb_off >= 0) frame_vb_on = tia_line;
-			}
-			if (!(data & 2) && (tia_vblank & 2)) {
-				if (frame_vb_off < 0) frame_vb_off = tia_line;
-			}
 			if (data & 0x80) {
 				paddle_dumped = 1;
 			} else if (paddle_dumped) {
@@ -1671,7 +1590,7 @@ static INT32 DrvDraw()
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
-		const INT32 sy = ystart + y / scale;
+		const INT32 sy = (is_pal ? A26_PAL_Y : A26_NTSC_Y) + y / scale;
 		UINT16 *dst = pTransDraw + y * nScreenWidth;
 
 		if (sy < 0 || sy >= A26_MAXLINES) {
@@ -1885,17 +1804,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tia_aud);
 		SCAN_VAR(fb_cur);
 		SCAN_VAR(fb_disp);
-		SCAN_VAR(frame_vb_off);
-		SCAN_VAR(frame_vb_on);
-		SCAN_VAR(frame_vsync_start);
-		SCAN_VAR(frame_last_content);
-		SCAN_VAR(ystart);
-		SCAN_VAR(ystart_cand);
-		SCAN_VAR(ystart_cnt);
-		SCAN_VAR(ystart_locked);
-		SCAN_VAR(ystart_frames);
-		SCAN_VAR(ystart_top);
-		SCAN_VAR(ystart_bottom);
 
 		SCAN_VAR(riot_swcha_out);
 		SCAN_VAR(riot_swacnt);

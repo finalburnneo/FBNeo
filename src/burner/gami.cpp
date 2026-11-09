@@ -2190,6 +2190,7 @@ tIniStruct gamehw_cfg[] = {
 	{_T("Sinclair Spectrum hardware"),	_T("config/presets/spectrum.ini"),	false,	{ HARDWARE_SPECTRUM, 0 },			"\t\t\t<item list=\"spectrum_cass\" name=\""},
 	{_T("Fairchild Channel F hardware"),_T("config/presets/channelf.ini"),	true,	{ HARDWARE_CHANNELF, 0 },			"\t\t\t<item list=\"channelf\" name=\""		},
 	{_T("Bally Astrocade hardware"),	_T("config/presets/astrocade.ini"),	true,	{ HARDWARE_ASTROHOME, 0 },			"\t\t\t<item list=\"astrocade\" name=\""	},
+	{_T("Atari 2600 hardware"),			_T("config/presets/atari2600.ini"),	true,	{ HARDWARE_ATARI2600, 0 },			"\t\t\t<item list=\"atari_2600\" name=\""	},
 	{_T("\0"), _T("\0"), false, { 0 }, "" } // END of list
 };
 

@@ -977,7 +977,7 @@ static void DmaFill(INT32 data)
 	RamVReg->rendstatus |= PDRAW_DIRTY_SPRITES;
 }
 
-static void CommandChange()
+static void CommandChange(INT32 can_dma)
 {
 	//struct MegadrivePicoVideo *pvid=&Pico.video;
 	UINT32 cmd = RamVReg->command;
@@ -998,7 +998,7 @@ static void CommandChange()
 	//dprintf("addr set: %04x", addr);
 
 	// Check for dma:
-	if (cmd & 0x80) {
+	if ((cmd & 0x80) && can_dma) {
 		// Command DMA
 		if ((RamVReg->reg[1] & 0x10) == 0) return; // DMA not enabled
 
@@ -1211,7 +1211,8 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 	switch (sekAddress & 0x1c) {
 	case 0x00:	// data
 		if (RamVReg->pending) {
-			CommandChange();
+			// only the first half of a command was written: dma is only started by the second half
+			CommandChange(0);
 			RamVReg->pending = 0;
 		}
 		if ((RamVReg->command & 0x80) && (RamVReg->reg[1]&0x10) && (RamVReg->reg[0x17]>>6)==2) {
@@ -1275,7 +1276,7 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 			RamVReg->command &= 0xffff0000;
 			RamVReg->command |= wordValue;
 			RamVReg->pending = 0;
-			CommandChange();
+			CommandChange(1);
 		} else {
 			if((wordValue & 0xc000) == 0x8000) {
 				INT32 num = (wordValue >> 8) & 0x1f;

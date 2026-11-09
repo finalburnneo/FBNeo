@@ -37,6 +37,16 @@ void BurnSampleChannelSetPlaybackRate(INT32 channel, INT32 rate);
 void BurnSampleReset();
 
 void BurnSampleInit(INT32 bAdd);
+
+// External sample list (instead of the driver's sample list), set before BurnSampleInit()
+struct BurnSampleSource {
+	INT32 nCount;							// number of samples
+	INT32 (*GetFlags)(INT32 i);				// SAMPLE_* flags of sample i
+	const char *(*GetName)(INT32 i);		// file name of sample i
+	const char *szArchive;					// zip/7z path without extension (NULL = none)
+	const char *szFolder;					// folder for loose files, with trailing slash (NULL = none)
+};
+void BurnSampleSetSource(const BurnSampleSource *pSrc);
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir);
 
 // BurnSampleSetRouteFade() fades up/down to volume to eliminate clicks/pops

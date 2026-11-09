@@ -44,6 +44,14 @@ void Sh2SetIRQLine(const int line, const int state);
 unsigned int Sh2GetPC(int n);
 void Sh2StopRun();
 void Sh2SetVBR(unsigned int i);
+void Sh2SetGBR(unsigned int i);
+
+// external dma requests (DREQ0/1), for channels set to external request (CHCR.AR = 0)
+void Sh2SetDreq(int i, int channel, int state); // level
+void Sh2PulseDreq(int i, int channel);          // single transfer
+
+// wires the serial interfaces of cpu 0 and 1 together (32x)
+void Sh2SetSciLink(int link);
 
 void Sh2BurnUntilInt(int);
 

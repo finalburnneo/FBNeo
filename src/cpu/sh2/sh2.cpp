@@ -105,11 +105,6 @@ typedef struct
 	UINT32 	timer_base;
 	INT32   timer_active;
 	
-//	emu_timer *dma_timer[2];
-	UINT32 	dma_timer_cycles[2];
-	UINT32 	dma_timer_base[2];
-	INT32   dma_timer_active[2];
-
 //	int     is_slave, cpu_number;
 	
 	UINT32	cycle_counts; // used internally for timers / sh2_GetTotalCycles()
@@ -183,10 +178,20 @@ typedef struct
 	
 	unsigned char * opbase;
 	int suspend;
+
+	// external dma requests (DREQ0/1)
+	int dreq[2];
+	int dreq_pulse[2];
+	UINT32 wdt_csr, wdt_cnt, wdt_base, wdt_next;
+
+	// serial interface status / receive data (only with Sh2SetSciLink())
+	UINT8 sci_ssr, sci_rdr;
 } SH2EXT;
 
 static SH2EXT * pSh2Ext;
 static SH2EXT * Sh2Ext = NULL;
+static int nSh2Count = 0;
+static int sci_link = 0; // the serial interfaces of cpu 0 and 1 are wired together (32x)
 
 static INT32 core_idle(INT32 cycles)
 {
@@ -478,6 +483,7 @@ void Sh2Exit()
 		Sh2Ext = NULL;
 	}
 	pSh2Ext = NULL;
+	nSh2Count = 0;
 	
 	DebugCPU_SH2Initted = 0;
 
@@ -508,6 +514,8 @@ int Sh2Init(int nCount)
 		return 1;
 	}
 	memset(Sh2Ext, 0, sizeof(SH2EXT) * nCount);
+	nSh2Count = nCount;
+	sci_link = 0;
 
 	// init default memory handler
 	for (int i=0; i<nCount; i++) {
@@ -548,6 +556,15 @@ void Sh2Open(const int i)
 
 	pSh2Ext = Sh2Ext + i;
 	sh2 = & (pSh2Ext->sh2);
+
+#if FAST_OP_FETCH
+	// readop_pr is shared by all cpus, rebuild it for the selected one
+	if (nSh2Count > 1) {
+		UINT32 fpc = (sh2->delay ? sh2->delay : sh2->pc) & AM;
+		readop_pr = pSh2Ext->MemMap[ (fpc >> SH2_SHIFT) + SH2_WADD * 2 ];
+		pSh2Ext->opbase = readop_pr - (fpc & ~SH2_PAGEM);
+	}
+#endif
 }
 
 void Sh2Close()
@@ -572,7 +589,7 @@ int Sh2GetActive()
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2GetActive called without init\n"));
 #endif
 
-	return 0;
+	return (pSh2Ext) ? (int)(pSh2Ext - Sh2Ext) : 0;
 }
 
 void Sh2Reset(unsigned int pc, unsigned r15)
@@ -596,6 +613,9 @@ void Sh2Reset(unsigned int pc, unsigned r15)
 	change_pc(sh2->pc & AM);
 
 	sh2->internal_irq_level = -1;
+
+	pSh2Ext->sci_ssr = 0x84; // TDRE, TEND
+	pSh2Ext->sci_rdr = 0;
 }
 
 //----------------------------------------------------------------
@@ -2908,7 +2928,7 @@ static void sh2_recalc_irq(void)
 		level = (sh2->m[0x38] >> 8) & 15;
 		if(level > irq) {
 			irq = level;
-			vector = (sh2->m[0x68] >> 24) & 0x7f;
+			vector = sh2->m[0x68] & 0x7f; // VCRDMA0: vector in bits 6-0
 		}
 	}
 
@@ -2916,14 +2936,82 @@ static void sh2_recalc_irq(void)
 		level = (sh2->m[0x38] >> 8) & 15;
 		if(level > irq) {
 			irq = level;
-			vector = (sh2->m[0x6a] >> 24) & 0x7f;
+			vector = sh2->m[0x6a] & 0x7f; // VCRDMA1
 		}
 	}
 
 
+	// watchdog interval timer
+	if ((pSh2Ext->wdt_csr & 0xc0) == 0x80) {
+		level = (sh2->m[0x38] >> 4) & 15;
+		if(level > irq) {
+			irq = level;
+			vector = (sh2->m[0x39] >> 24) & 0x7f;
+		}
+	}
+
+	// serial interface: receive full, transmit empty, transmit end
+	if (sci_link) {
+		UINT32 scr = (sh2->m[0] >> 8) & pSh2Ext->sci_ssr;
+		level = (sh2->m[0x18] >> 28) & 15;
+		if (level > irq && (scr & 0xc4)) {
+			irq = level;
+			if (scr & 0x40)
+				vector = sh2->m[0x18] & 0x7f;			// VCRA: SRXV
+			else if (scr & 0x80)
+				vector = (sh2->m[0x19] >> 24) & 0x7f;	// VCRB: STXV
+			else
+				vector = (sh2->m[0x19] >> 16) & 0x7f;	// VCRB: STEV
+		}
+	}
+
 	sh2->internal_irq_level = irq;
 	sh2->internal_irq_vector = vector;
 	sh2->test_irq = 1;
+}
+
+// transmit the byte in TDR to the other cpu, if its receiver is enabled
+static void sh2_sci_transmit()
+{
+	int other = (pSh2Ext - Sh2Ext) ^ 1;
+	if (other >= nSh2Count) return;
+
+	SH2EXT *ext = Sh2Ext + other;
+	if (~ext->sh2.m[0] & 0x1000) return; // RE
+
+	ext->sci_rdr = sh2->m[0] & 0xff;
+	ext->sci_ssr |= (ext->sci_ssr & 0x40) ? 0x20 : 0x40; // RDRF, or ORER when not read yet
+	pSh2Ext->sci_ssr |= 0x80; // TDRE
+	sh2_recalc_irq();
+
+	SH2EXT *cur = pSh2Ext;
+	pSh2Ext = ext;
+	sh2 = &ext->sh2;
+	sh2_recalc_irq();
+	pSh2Ext = cur;
+	sh2 = &cur->sh2;
+}
+
+static void sh2_wdt_sync()
+{
+	static const UINT32 wdt_div[8] = { 2, 64, 128, 256, 512, 1024, 4096, 8192 };
+	UINT32 now = sh2_GetTotalCycles();
+
+	if (~pSh2Ext->wdt_csr & 0x20) {
+		pSh2Ext->wdt_base = now;
+		return;
+	}
+
+	UINT32 div = wdt_div[pSh2Ext->wdt_csr & 7];
+	UINT32 ticks = (now - pSh2Ext->wdt_base) / div;
+	pSh2Ext->wdt_base += ticks * div;
+
+	if (pSh2Ext->wdt_cnt + ticks > 0xff) {
+		pSh2Ext->wdt_csr |= 0x80;
+		sh2_recalc_irq();
+	}
+	pSh2Ext->wdt_cnt = (pSh2Ext->wdt_cnt + ticks) & 0xff;
+	pSh2Ext->wdt_next = pSh2Ext->wdt_base + (0x100 - pSh2Ext->wdt_cnt) * div;
 }
 
 static void sh2_timer_callback()
@@ -2957,143 +3045,50 @@ static void sh2_timer_callback()
 
 static void sh2_dmac_callback(int dma)
 {
-//	cpuintrf_push_context(cpunum);
-
-//	LOG(("SH2.%d: DMA %d complete\n", cpunum, dma));
-	//bprintf(0, _T("SH2: DMA %d complete at %d\n"), dma, sh2_GetTotalCycles());
-
 	sh2->m[0x63+4*dma] |= 2;
-	sh2->dma_timer_active[dma] = 0;
 	sh2_recalc_irq();
-	
-//	cpuintrf_pop_context();
 }
 
-static void sh2_dmac_check(int dma)
+// one unit transfer, used by the dreq mode (auto request: every step, external request: per DREQ)
+static void sh2_dmac_unit(int dma)
 {
-	if(sh2->m[0x63+4*dma] & sh2->m[0x6c] & 1)
+	UINT32 chcr = sh2->m[0x63+4*dma];
+	UINT32 src = sh2->m[0x60+4*dma];
+	UINT32 dst = sh2->m[0x61+4*dma];
+	INT32 ts = (chcr >> 10) & 3;
+	INT32 sm = (chcr >> 12) & 3;
+	INT32 dm = (chcr >> 14) & 3;
+
+	switch (ts)
 	{
-		if(!sh2->dma_timer_active[dma] && !(sh2->m[0x63+4*dma] & 2))
-		{
-			int incs, incd, size;
-			UINT32 src, dst, count;
-			incd = (sh2->m[0x63+4*dma] >> 14) & 3;
-			incs = (sh2->m[0x63+4*dma] >> 12) & 3;
-			size = (sh2->m[0x63+4*dma] >> 10) & 3;
-			if(incd == 3 || incs == 3)
-			{
-//				logerror("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n", incd, incs, size, sh2->m[0x63+4*dma]);
-				//bprintf(0, _T("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n"), incd, incs, size, sh2->m[0x63+4*dma]);
-				return;
-			}
-			src   = sh2->m[0x60+4*dma];
-			dst   = sh2->m[0x61+4*dma];
-			count = sh2->m[0x62+4*dma];
-			if(!count)
-				count = 0x1000000;
-
-//			LOG(("SH2: DMA %d start %x, %x, %x, %04x, %d, %d, %d\n", dma, src, dst, count, sh2->m[0x63+4*dma], incs, incd, size));
-			//bprintf(1, _T("DMA %d start %08x, %08x, %x, %04x, %d, %d, %d : %d cys from %d\n"), dma, src, dst, count, sh2->m[0x63+4*dma], incs, incd, size, 2*count+1, Sh2GetTotalCycles());
-
-			sh2->dma_timer_active[dma] = 1;
-			//timer_adjust(sh2->dma_timer[dma], ATTOTIME_IN_CYCLES(2*count+1, sh2->cpu_number), (sh2->cpu_number<<1)|dma, attotime_zero);
-			sh2->dma_timer_cycles[dma] = 2 * count + 1;
-			sh2->dma_timer_base[dma] = sh2_GetTotalCycles();
-			
-			src &= AM;
-			dst &= AM;
-
-			switch(size)
-			{
-			case 0:
-				for(;count > 0; count --)
-				{
-					if(incs == 2)
-						src --;
-					if(incd == 2)
-						dst --;
-					//program_write_byte_32be(dst, program_read_byte_32be(src));
-					WB(dst, RB(src));
-					if(incs == 1)
-						src ++;
-					if(incd == 1)
-						dst ++;
-				}
-				break;
-			case 1:
-				src &= ~1;
-				dst &= ~1;
-				for(;count > 0; count --)
-				{
-					if(incs == 2)
-						src -= 2;
-					if(incd == 2)
-						dst -= 2;
-					//program_write_word_32be(dst, program_read_word_32be(src));
-					WW(dst, RW(src));
-					if(incs == 1)
-						src += 2;
-					if(incd == 1)
-						dst += 2;
-				}
-				break;
-			case 2:
-				src &= ~3;
-				dst &= ~3;
-				for(;count > 0; count --)
-				{
-					if(incs == 2)
-						src -= 4;
-					if(incd == 2)
-						dst -= 4;
-						
-					//program_write_dword_32be(dst, program_read_dword_32be(src));
-					WL(dst, RL(src));
-					
-					if(incs == 1)
-						src += 4;
-					if(incd == 1)
-						dst += 4;
-
-				}
-				break;
-			case 3:
-				src &= ~3;
-				dst &= ~3;
-				count &= ~3;
-				for(;count > 0; count -= 4)
-				{
-					if(incd == 2)
-						dst -= 16;
-					WL(dst, RL(src));
-					WL(dst+4, RL(src+4));
-					WL(dst+8, RL(src+8));
-					WL(dst+12, RL(src+12));
-					//program_write_dword_32be(dst, program_read_dword_32be(src));
-					//program_write_dword_32be(dst+4, program_read_dword_32be(src+4));
-					//program_write_dword_32be(dst+8, program_read_dword_32be(src+8));
-					//program_write_dword_32be(dst+12, program_read_dword_32be(src+12));
-					src += 16;
-					if(incd == 1)
-						dst += 16;
-				}
-				break;
-			}
-		}
+		case 0: WB(dst & AM, RB(src & AM)); break;
+		case 1: WW(dst & AM, RW(src & AM)); break;
+		case 2: WL(dst & AM, RL(src & AM)); break;
+		case 3:
+			WL((dst +  0) & AM, RL((src +  0) & AM));
+			WL((dst +  4) & AM, RL((src +  4) & AM));
+			WL((dst +  8) & AM, RL((src +  8) & AM));
+			WL((dst + 12) & AM, RL((src + 12) & AM));
+			src += 16;
+			sh2->m[0x62+4*dma] = (sh2->m[0x62+4*dma] - 3) & 0xffffff;
+			break;
 	}
-	else
-	{
-		if(sh2->dma_timer_active[dma])
-		{
-//			logerror("SH2: DMA %d cancelled in-flight", dma);
-			//bprintf(0, _T("SH2: DMA %d cancelled in-flight"), dma);
-			//timer_adjust(sh2->dma_timer[dma], attotime_never, 0, attotime_zero);
-			sh2->dma_timer_active[dma] = 0;
 
-		}
+	static const UINT32 ssize[4] = { 1, 2, 4, 0 };
+	static const UINT32 dsize[4] = { 1, 2, 4, 16 };
+	if (sm == 1) src += ssize[ts];
+	if (sm == 2) src -= ssize[ts];
+	if (dm == 1) dst += dsize[ts];
+	if (dm == 2) dst -= dsize[ts];
+
+	sh2->m[0x60+4*dma] = src;
+	sh2->m[0x61+4*dma] = dst;
+	sh2->m[0x62+4*dma] = (sh2->m[0x62+4*dma] - 1) & 0xffffff;
+
+	if (sh2->m[0x62+4*dma] == 0) {
+		sh2_dmac_callback(dma); // sets TE, raises the irq if enabled
 	}
 }
-
 
 static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 {
@@ -3105,6 +3100,24 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 
 	switch( offset )
 	{
+		// Serial interface
+	case 0x00: // SMR, BRR, SCR, TDR
+		if (sci_link && (~mem_mask & 0x0000ff00)) {
+			if ((old & 0x2000) && (~sh2->m[0] & 0x2000)) pSh2Ext->sci_ssr |= 0x80; // TE cleared: TDRE set
+			sh2_recalc_irq();
+		}
+		break;
+
+	case 0x01: // SSR, RDR
+		if (sci_link && (~mem_mask & 0xff000000)) {
+			UINT8 ssr = pSh2Ext->sci_ssr;
+			UINT8 d = data >> 24;
+			pSh2Ext->sci_ssr = (ssr & 0x06) | (d & 0x01) | (ssr & d & 0xf8); // flags can only be cleared
+			if ((ssr & 0x80) && (~pSh2Ext->sci_ssr & 0x80)) sh2_sci_transmit();
+			sh2_recalc_irq();
+		}
+		break;
+
 		// Timers
 	case 0x04: // TIER, FTCSR, FRC
 		if((mem_mask & 0x00ffffff) != 0xffffff)
@@ -3142,6 +3155,20 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 
 		// Watchdog
 	case 0x20: // WTCNT, RSTCSR
+		if ((mem_mask & 0xffff0000) == 0) { // word writes with a key
+			UINT32 w = (data >> 16) & 0xffff;
+			sh2_wdt_sync();
+			if ((w >> 8) == 0xa5) {
+				pSh2Ext->wdt_csr = (pSh2Ext->wdt_csr & w & 0x80) | (w & 0x67) | 0x18; // OVF can only be cleared
+				pSh2Ext->wdt_base = sh2_GetTotalCycles();
+				sh2_wdt_sync();
+				sh2_recalc_irq();
+			} else if ((w >> 8) == 0x5a) {
+				pSh2Ext->wdt_cnt = w & 0xff;
+				pSh2Ext->wdt_base = sh2_GetTotalCycles();
+				sh2_wdt_sync();
+			}
+		}
 		break;
 
 		// Standby and cache
@@ -3225,7 +3252,6 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x63: // CHCR0
 		sh2->m[0x63] = (sh2->m[0x63] & ~2) | (old & sh2->m[0x63] & 2);
-		sh2_dmac_check(0);
 		break;
 	case 0x64: // SAR1
 	case 0x65: // DAR1
@@ -3235,7 +3261,6 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x67: // CHCR1
 		sh2->m[0x67] = (sh2->m[0x67] & ~2) | (old & sh2->m[0x67] & 2);
-		sh2_dmac_check(1);
 		break;
 	case 0x68: // VCRDMA0
 	case 0x6a: // VCRDMA1
@@ -3243,8 +3268,6 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x6c: // DMAOR
 		sh2->m[0x6c] = (sh2->m[0x6c] & ~6) | (old & sh2->m[0x6c] & 6);
-		sh2_dmac_check(0);
-		sh2_dmac_check(1);
 		break;
 
 		// Bus controller
@@ -3270,6 +3293,10 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 	
 	switch( offset )
 	{
+	case 0x01: // SSR, RDR
+		if (sci_link) return (pSh2Ext->sci_ssr << 24) | (pSh2Ext->sci_rdr << 16) | (sh2->m[1] & 0xffff);
+		break;
+
 	case 0x04: // TIER, FTCSR, FRC
 		sh2_timer_resync();
 		return (sh2->m[4] & 0xffff0000) | sh2->frc;
@@ -3295,11 +3322,28 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 
 	case 0x46: // dvdnth mirror
 		return sh2->m[0x44];
+
+	case 0x20: // WTCSR, WTCNT, RSTCSR
+		sh2_wdt_sync();
+		return (pSh2Ext->wdt_csr << 24) | (pSh2Ext->wdt_cnt << 16) | 0x1f;
 	}
 	return sh2->m[offset];
 }
 
 // -------------------------------------------------------
+
+static inline int sh2_is_branch(UINT16 op)
+{
+	switch (op & 0xf000) {
+		case 0x0000: return (op & 0xf0df) == 0x0003 || (op & 0xffdf) == 0x000b; // bsrf, braf, rts, rte
+		case 0x4000: return (op & 0xf0df) == 0x400b;                           // jsr, jmp
+		case 0x8000: return (op & 0xf900) == 0x8900;                           // bt, bf, bt/s, bf/s
+		case 0xa000:
+		case 0xb000: return 1;                                                  // bra, bsr
+		case 0xc000: return (op & 0xff00) == 0xc300;                           // trapa
+	}
+	return 0;
+}
 
 int Sh2Run(int cycles)
 {
@@ -3322,10 +3366,12 @@ int Sh2Run(int cycles)
 		if (pSh2Ext->suspend == 0) {
 			UINT16 opcode;
 
+			int in_slot = 0;
 			if (sh2->delay) {
 				opcode = cpu_readop16(sh2->delay & AM);
 				change_pc(sh2->pc & AM);
 				sh2->delay = 0;
+				in_slot = 1;
 			} else {
 				opcode = cpu_readop16(sh2->pc & AM);
 				sh2->pc += 2;
@@ -3333,6 +3379,16 @@ int Sh2Run(int cycles)
 
 			sh2->ppc = sh2->pc;
 
+			if (in_slot && sh2_is_branch(opcode)) {
+				// the delayed branch target is saved, the handler returns there
+				sh2->r[15] -= 4;
+				WL(sh2->r[15], sh2->sr);
+				sh2->r[15] -= 4;
+				WL(sh2->r[15], sh2->pc);
+				sh2->pc = RL(sh2->vbr + 6 * 4);
+				change_pc(sh2->pc & AM);
+			}
+			else
 			switch (opcode & ( 15 << 12))
 			{
 				case  0<<12: op0000(opcode); break;
@@ -3360,6 +3416,22 @@ int Sh2Run(int cycles)
 			sh2->test_irq = 0;
 		}
 
+		if ((pSh2Ext->wdt_csr & 0x20) && (INT32)(sh2_GetTotalCycles() - pSh2Ext->wdt_next) >= 0) {
+			sh2_wdt_sync();
+		}
+
+		// dma: one unit per step (auto request) or per external request
+		if ((sh2->m[0x6c] & 7) == 1) {
+			for (INT32 c = 0; c < 2; c++) {
+				UINT32 chcr = sh2->m[0x63+4*c];
+				if ((chcr & 3) == 1 && ((chcr & 0x200) || pSh2Ext->dreq[c] || pSh2Ext->dreq_pulse[c])) { // DE, !TE, AR or DREQ
+					pSh2Ext->dreq_pulse[c] = 0;
+					sh2_dmac_unit(c);
+					break;
+				}
+			}
+		}
+
 		sh2->sh2_total_cycles++;
 		sh2->sh2_icount -= sh2->sh2_eat_cycles;
 		
@@ -3368,14 +3440,6 @@ int Sh2Run(int cycles)
 		{
 			unsigned int cy = sh2_GetTotalCycles();
 
-
-			if (sh2->dma_timer_active[0])
-				if ((cy - sh2->dma_timer_base[0]) >= sh2->dma_timer_cycles[0])
-					sh2_dmac_callback(0);
-
-			if (sh2->dma_timer_active[1])
-				if ((cy - sh2->dma_timer_base[1]) >= sh2->dma_timer_cycles[1])
-					sh2_dmac_callback(1);
 
 			if ( sh2->timer_active )
 				if ((cy - sh2->timer_base) >= sh2->timer_cycles)
@@ -3450,6 +3514,26 @@ unsigned int Sh2GetPC(int)
 #endif
 
 	return (sh2->delay) ? (sh2->delay & AM) : (sh2->pc & AM);
+}
+
+void Sh2SetDreq(int i, int channel, int state)
+{
+	Sh2Ext[i].dreq[channel] = state;
+}
+
+void Sh2PulseDreq(int i, int channel)
+{
+	Sh2Ext[i].dreq_pulse[channel] = 1;
+}
+
+void Sh2SetSciLink(int link)
+{
+	sci_link = link;
+}
+
+void Sh2SetGBR(unsigned int i)
+{
+	sh2->gbr = i;
 }
 
 void Sh2SetVBR(unsigned int i)
@@ -3552,7 +3636,7 @@ int Sh2Scan(int nAction)
 	if (nAction & ACB_DRIVER_DATA) {
 		char szText[] = "SH2 #0";
 
-		for (int i = 0; i < 1 /*nCPUCount*/; i++) {
+		for (int i = 0; i < nSh2Count; i++) {
 			struct BurnArea ba;
 
 			szText[5] = '0' + i;
@@ -3564,6 +3648,15 @@ int Sh2Scan(int nAction)
 			BurnAcb(&ba);
 
 			SCAN_VAR (Sh2Ext[i].suspend);
+
+			SCAN_VAR (Sh2Ext[i].dreq);
+			SCAN_VAR (Sh2Ext[i].dreq_pulse);
+			SCAN_VAR (Sh2Ext[i].wdt_csr);
+			SCAN_VAR (Sh2Ext[i].wdt_cnt);
+			SCAN_VAR (Sh2Ext[i].wdt_base);
+			SCAN_VAR (Sh2Ext[i].wdt_next);
+			SCAN_VAR (Sh2Ext[i].sci_ssr);
+			SCAN_VAR (Sh2Ext[i].sci_rdr);
 
 #if FAST_OP_FETCH
 			if (nAction & ACB_WRITE) {

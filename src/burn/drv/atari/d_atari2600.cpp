@@ -508,6 +508,13 @@ static void tia_gfx_apply()
 		case 0x1d: tia_enam[0] = data; break;
 		case 0x1e: tia_enam[1] = data; break;
 		case 0x1f: tia_enabl_new = data; break;
+
+		case 0x20: tia_hm[OP0] = data >> 4; break;
+		case 0x21: tia_hm[OP1] = data >> 4; break;
+		case 0x22: tia_hm[OM0] = data >> 4; break;
+		case 0x23: tia_hm[OM1] = data >> 4; break;
+		case 0x24: tia_hm[OBL] = data >> 4; break;
+		case 0x2b: memset(tia_hm, 0, sizeof(tia_hm)); break;
 	}
 
 	tia_gfx_reg = 0;
@@ -838,11 +845,19 @@ static void tia_write(UINT16 address, UINT8 data)
 			tia_gfx_clk = tia_clk + 1;
 		return;
 
-		case 0x20: tia_hm[OP0] = data >> 4; return;
-		case 0x21: tia_hm[OP1] = data >> 4; return;
-		case 0x22: tia_hm[OM0] = data >> 4; return;
-		case 0x23: tia_hm[OM1] = data >> 4; return;
-		case 0x24: tia_hm[OBL] = data >> 4; return;
+		case 0x20: // HMP0
+		case 0x21: // HMP1
+		case 0x22: // HMM0
+		case 0x23: // HMM1
+		case 0x24: // HMBL
+		case 0x2b: // HMCLR
+			// like GRPx: reaches the HMOVE comparators one clock later, so a
+			// write landing on the last comparison doesn't count for it yet
+			// (Donkey Kong Junior), one 3 clocks earlier does (Cosmic Ark)
+			tia_gfx_reg = address & 0x3f;
+			tia_gfx_data = data;
+			tia_gfx_clk = tia_clk + 1;
+		return;
 
 		case 0x25: tia_vdelp[0] = data & 1; return;
 		case 0x26: tia_vdelp[1] = data & 1; return;
@@ -871,9 +886,6 @@ static void tia_write(UINT16 address, UINT8 data)
 			for (INT32 i = 0; i < 5; i++) tia_obj[i].moving = 1;
 		return;
 
-		case 0x2b: // HMCLR
-			memset(tia_hm, 0, sizeof(tia_hm));
-		return;
 
 		case 0x2c: // CXCLR
 			tia_collision = 0;

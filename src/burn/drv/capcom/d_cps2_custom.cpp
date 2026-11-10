@@ -126,8 +126,9 @@ static INT32 Cps2PlusScroll(INT32 nAddress, INT32 nAttributes, INT32 nLayer)
 
 static UINT32 Cps2PlusObjectOffset(UINT32 a)
 {
-	// A15 and the bank register choose physical RAM; A13 and A14 mirror its entries.
-	return (((a >> 15) ^ nCpsObjectBank) & 1) * 0x8000 + (a & 0x1fff);
+	// Keep CPU writes at 0x708000 in the selected bank; CpsObjGet displays the other bank.
+	// A13 and A14 mirror the object entries.
+	return ((((a >> 15) ^ nCpsObjectBank) ^ 1) & 1) * 0x8000 + (a & 0x1fff);
 }
 
 static UINT8 __fastcall Cps2PlusObjectReadByte(UINT32 a)

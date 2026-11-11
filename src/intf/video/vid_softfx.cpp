@@ -221,7 +221,7 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 		case FILTER_HQ3X:
 		case FILTER_HQ4X:
 			if (nDepth == 15 || nDepth == 16) {
-				return 32;
+				return nDepth;
 			}
 			break;
 

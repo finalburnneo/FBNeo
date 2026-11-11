@@ -1981,7 +1981,6 @@ static struct BurnInputInfo TdpgalInputList[] =
 	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 fire 1" },
 
 	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
-	{"Service"           , BIT_DIGITAL   , GalInputPort0 + 7, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
 	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },

@@ -709,3 +709,44 @@ struct BurnDriver BurnDrvSonsonj = {
 	SonsonjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 240, 4, 3
 };
+
+
+// Another Sonson (Zeroco)
+
+static struct BurnRomInfo asonsonRomDesc[] = {
+	{ "ass.01e",	0x4000, 0x9779c180, 1 | BRF_PRG | BRF_ESS }, //  0 Main m6809
+	{ "ass.02e",	0x4000, 0x42b15fd0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ass.03e",	0x4000, 0xe71dc323, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "ss_6.c11",	0x2000, 0x1135c48a, 2 | BRF_PRG | BRF_ESS }, //  3 Sound m6809
+
+	{ "ss_7.b6",	0x2000, 0x990890b1, 3 | BRF_GRA },           //  4 Characters
+	{ "ss_8.b5",	0x2000, 0x9388ff82, 3 | BRF_GRA },           //  5
+
+	{ "ss_9.m5",	0x2000, 0x8cb1cacf, 4 | BRF_GRA },           //  6 Sprites
+	{ "ss_10.m6",	0x2000, 0xf802815e, 4 | BRF_GRA },           //  7
+	{ "ss_11.m3",	0x2000, 0x4dbad88a, 4 | BRF_GRA },           //  8
+	{ "ss_12.m4",	0x2000, 0xaa05e687, 4 | BRF_GRA },           //  9
+	{ "ss_13.m1",	0x2000, 0x66119bfa, 4 | BRF_GRA },           // 10
+	{ "ss_14.m2",	0x2000, 0xe14ef54e, 4 | BRF_GRA },           // 11
+
+	{ "ssb4.b2",	0x0020, 0xc8eaf234, 5 | BRF_GRA },           // 12 Color Proms
+	{ "ssb5.b1",	0x0020, 0x0e434add, 5 | BRF_GRA },           // 13
+	{ "ssb2.c4",	0x0100, 0xc53321c6, 5 | BRF_GRA },           // 14
+	{ "ssb3.h7",	0x0100, 0x7d2c324a, 5 | BRF_GRA },           // 15
+
+	{ "ssb1.k11",	0x0100, 0xa04b0cfe, 0 | BRF_OPT },           // 16 Timing Prom
+};
+
+STD_ROM_PICK(asonson)
+STD_ROM_FN(asonson)
+
+struct BurnDriver BurnDrvAsonson = {
+	"asonson", "sonson", NULL, NULL, "2026",
+	"Another Sonson (Zeroco)\0", NULL, "Zeroco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	NULL, asonsonRomInfo, asonsonRomName, NULL, NULL, NULL, NULL, SonsonInputInfo, SonsonDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	240, 240, 4, 3
+};

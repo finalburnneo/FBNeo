@@ -1745,20 +1745,20 @@ BEGIN
                 MENUITEM "AdvanceMAME Scale3x\t(16/32-bit only)",       MENU_SOFTFX_SOFT_SCALE3X
 				MENUITEM "2xPM LQ\t(15/16-bit only)",					MENU_SOFTFX_SOFT_2XPM_LQ
 				MENUITEM "2xPM HQ\t(15/16-bit only)",					MENU_SOFTFX_SOFT_2XPM_HQ
-                MENUITEM "Eagle Graphics\t(16-bit only)",               MENU_SOFTFX_SOFT_EAGLE
+                MENUITEM "Eagle Graphics\t(15/16/32-bit only)",               MENU_SOFTFX_SOFT_EAGLE
                 MENUITEM "Super Eagle\t(15/16-bit only)",               MENU_SOFTFX_SOFT_SUPEREAGLE
                 MENUITEM "2xSaI\t(15/16-bit only)",                     MENU_SOFTFX_SOFT_2XSAI
                 MENUITEM "Super 2xSaI\t(15/16-bit only)",	       		MENU_SOFTFX_SOFT_SUPER2XSAI
                 MENUITEM "Super Eagle (VBA)\t(15/16/32-bit only)",      MENU_SOFTFX_SOFT_SUPEREAGLE_VBA
                 MENUITEM "2xSaI (VBA)\t(15/16/32-bit only)",            MENU_SOFTFX_SOFT_2XSAI_VBA
                 MENUITEM "Super 2xSaI (VBA)\t(15/16/32-bit only)",      MENU_SOFTFX_SOFT_SUPER2XSAI_VBA
-                MENUITEM "SuperScale\t(15/16-bit only)",				MENU_SOFTFX_SOFT_SUPERSCALE
-                MENUITEM "SuperScale (75% Scanlines)\t(15/16-bit only)",MENU_SOFTFX_SOFT_SUPERSCALE75
-                MENUITEM "hq2x filter\t(32-bit only)",                  MENU_SOFTFX_SOFT_HQ2X
-                MENUITEM "hq3x filter\t(32-bit only)",                  MENU_SOFTFX_SOFT_HQ3X
-                MENUITEM "hq4x filter\t(32-bit only)",                  MENU_SOFTFX_SOFT_HQ4X
+                MENUITEM "SuperScale\t(15/16/32-bit only)",				MENU_SOFTFX_SOFT_SUPERSCALE
+                MENUITEM "SuperScale (75% Scanlines)\t(15/16/32-bit only)",MENU_SOFTFX_SOFT_SUPERSCALE75
+                MENUITEM "hq2x filter\t(15/16/32-bit only)",                  MENU_SOFTFX_SOFT_HQ2X
+                MENUITEM "hq3x filter\t(15/16/32-bit only)",                  MENU_SOFTFX_SOFT_HQ3X
+                MENUITEM "hq4x filter\t(15/16/32-bit only)",                  MENU_SOFTFX_SOFT_HQ4X
                 MENUITEM "hq2xS (VBA) filter\t(16/32-bit only)",        MENU_SOFTFX_SOFT_HQ2XS_VBA
-                MENUITEM "hq3xS (VBA) filter\t(16/32-bit only)",        MENU_SOFTFX_SOFT_HQ3XS_VBA, GRAYED
+                MENUITEM "hq3xS (VBA) filter\t(15/16/32-bit only)",     MENU_SOFTFX_SOFT_HQ3XS_VBA
                 MENUITEM "hq2xS (SNES9X) Filter\t(16-bit only)",		MENU_SOFTFX_SOFT_HQ2XS_SNES9X
 				MENUITEM "hq3xS (SNEX9X) Filter\t(16-bit only)",		MENU_SOFTFX_SOFT_HQ3XS_SNES9X
 				MENUITEM "hq2xBold Filter\t(16-bit only)",				MENU_SOFTFX_SOFT_HQ2XBOLD
@@ -1873,7 +1873,7 @@ BEGIN
 			MENUITEM "hq3x Filter",								MENU_DX9_ALT_SOFT_HQ3X
 			MENUITEM "hq4x Filter",								MENU_DX9_ALT_SOFT_HQ4X
 			MENUITEM "hq2xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ2XS_VBA
-			MENUITEM "hq3xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ3XS_VBA, GRAYED
+			MENUITEM "hq3xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ3XS_VBA
 			MENUITEM "hq2xS (SNES9X) Filter",					MENU_DX9_ALT_SOFT_HQ2XS_SNES9X
 			MENUITEM "hq3xS (SNEX9X) Filter",					MENU_DX9_ALT_SOFT_HQ3XS_SNES9X
 			MENUITEM "hq2xBold Filter",							MENU_DX9_ALT_SOFT_HQ2XBOLD
@@ -1944,7 +1944,7 @@ BEGIN
 			MENUITEM "hq3x Filter",								MENU_DX9_ALT_SOFT_HQ3X
 			MENUITEM "hq4x Filter",								MENU_DX9_ALT_SOFT_HQ4X
 			MENUITEM "hq2xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ2XS_VBA
-			MENUITEM "hq3xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ3XS_VBA, GRAYED
+			MENUITEM "hq3xS (VBA) Filter",						MENU_DX9_ALT_SOFT_HQ3XS_VBA
 			MENUITEM "hq2xS (SNES9X) Filter",					MENU_DX9_ALT_SOFT_HQ2XS_SNES9X
 			MENUITEM "hq3xS (SNEX9X) Filter",					MENU_DX9_ALT_SOFT_HQ3XS_SNES9X
 			MENUITEM "hq2xBold Filter",							MENU_DX9_ALT_SOFT_HQ2XBOLD

@@ -48,19 +48,26 @@ void hq3xS(unsigned char * pIn,  unsigned int srcPitch,
 
 	for (j=0; j<Yres; j++)
 	{
+		// clamp reads to the image
+		const int up   = (j > 0)        ? -(int)srcPitch : 0;
+		const int down = (j < Yres - 1) ?  (int)srcPitch : 0;
+
 		for (i=0; i<Xres; i++)
 		{
-			c[2] = *((PIXELTYPE*)(pIn - srcPitch));
-			c[5] = *((PIXELTYPE*)(pIn        ));
-			c[8] = *((PIXELTYPE*)(pIn + srcPitch));
+			const int left  = (i > 0)        ? -SIZE_PIXEL : 0;
+			const int right = (i < Xres - 1) ?  SIZE_PIXEL : 0;
 
-			c[1] = *((PIXELTYPE*)(pIn - srcPitch - SIZE_PIXEL));
-			c[4] = *((PIXELTYPE*)(pIn        - SIZE_PIXEL));
-			c[7] = *((PIXELTYPE*)(pIn + srcPitch - SIZE_PIXEL));
+			c[2] = *((PIXELTYPE*)(pIn + up           ));
+			c[5] = *((PIXELTYPE*)(pIn                ));
+			c[8] = *((PIXELTYPE*)(pIn + down         ));
 
-			c[3] = *((PIXELTYPE*)(pIn - srcPitch + SIZE_PIXEL));
-			c[6] = *((PIXELTYPE*)(pIn        + SIZE_PIXEL));
-			c[9] = *((PIXELTYPE*)(pIn + srcPitch + SIZE_PIXEL));
+			c[1] = *((PIXELTYPE*)(pIn + up   + left  ));
+			c[4] = *((PIXELTYPE*)(pIn        + left  ));
+			c[7] = *((PIXELTYPE*)(pIn + down + left  ));
+
+			c[3] = *((PIXELTYPE*)(pIn + up   + right ));
+			c[6] = *((PIXELTYPE*)(pIn        + right ));
+			c[9] = *((PIXELTYPE*)(pIn + down + right ));
 
 
 			int pattern = 0;
@@ -149,7 +156,6 @@ void hq3xS32(unsigned char * pIn,  unsigned int srcPitch,
 			int Xres, int Yres)
 {
 	int i, j;
-	unsigned int line;
 	PIXELTYPE c[10];
 
 	// +----+----+----+
@@ -165,42 +171,26 @@ void hq3xS32(unsigned char * pIn,  unsigned int srcPitch,
 
 	for (j=0; j<Yres; j++)
 	{
-		if ( (j>0) && (j<Yres-1) )
-			line = srcPitch;
-		else
-			line = 0;
+		// clamp reads to the image
+		const int up   = (j > 0)        ? -(int)srcPitch : 0;
+		const int down = (j < Yres - 1) ?  (int)srcPitch : 0;
 
 		for (i=0; i<Xres; i++)
 		{
-			c[2] = *((PIXELTYPE*)(pIn - line));
-			c[5] = *((PIXELTYPE*)(pIn        ));
-			c[8] = *((PIXELTYPE*)(pIn + line));
+			const int left  = (i > 0)        ? -SIZE_PIXEL : 0;
+			const int right = (i < Xres - 1) ?  SIZE_PIXEL : 0;
 
-			if (i>0)
-			{
-				c[1] = *((PIXELTYPE*)(pIn - line - SIZE_PIXEL));
-				c[4] = *((PIXELTYPE*)(pIn        - SIZE_PIXEL));
-				c[7] = *((PIXELTYPE*)(pIn + line - SIZE_PIXEL));
-			}
-			else
-			{
-				c[1] = c[2];
-				c[4] = c[5];
-				c[7] = c[8];
-			}
+			c[2] = *((PIXELTYPE*)(pIn + up           ));
+			c[5] = *((PIXELTYPE*)(pIn                ));
+			c[8] = *((PIXELTYPE*)(pIn + down         ));
 
-			if (i<Xres-1)
-			{
-				c[3] = *((PIXELTYPE*)(pIn - line + SIZE_PIXEL));
-				c[6] = *((PIXELTYPE*)(pIn        + SIZE_PIXEL));
-				c[9] = *((PIXELTYPE*)(pIn + line + SIZE_PIXEL));
-			}
-			else
-			{
-				c[3] = c[2];
-				c[6] = c[5];
-				c[9] = c[8];
-			}
+			c[1] = *((PIXELTYPE*)(pIn + up   + left  ));
+			c[4] = *((PIXELTYPE*)(pIn        + left  ));
+			c[7] = *((PIXELTYPE*)(pIn + down + left  ));
+
+			c[3] = *((PIXELTYPE*)(pIn + up   + right ));
+			c[6] = *((PIXELTYPE*)(pIn        + right ));
+			c[9] = *((PIXELTYPE*)(pIn + down + right ));
 
 			int pattern = 0;
 

@@ -25,10 +25,8 @@ void _2xpm_hq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long 
 extern void hq2xS_init(unsigned bits_per_pixel);
 extern void hq2xS(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
 extern void hq2xS32(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
-#if defined BUILD_X86_ASM
 extern void hq3xS(unsigned char*,unsigned int,unsigned char*,unsigned char*,unsigned int,int,int);
 extern void hq3xS32(unsigned char*,unsigned int,unsigned char*,unsigned char*,unsigned int,int,int);
-#endif
 
 extern int Init_2xSaI(unsigned int BitFormat, unsigned int systemColorDepth);
 extern void _2xSaI32(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
@@ -82,7 +80,7 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("hq3x Filter"),					3, 0       },
 	{ _T("hq4x Filter"),					4, 0       },
 	{ _T("hq2xS (VBA) Filter"),				2, 0       },
-	{ _T("hq3xS (VBA) Filter"),				3, FXF_MMX },
+	{ _T("hq3xS (VBA) Filter"),				3, 0       },
 	{ _T("hq2xS (SNES9X) Filter"),			2, FXF_MMX },
 	{ _T("hq3xS (SNEX9X) Filter"),			3, FXF_MMX },
 	{ _T("hq2xBold Filter"),				2, FXF_MMX },
@@ -152,7 +150,7 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 			}
 			break;
 		case FILTER_HQ3XS_VBA:
-			if (nDepth == 16) {
+			if (nDepth == 15 || nDepth == 16 || nDepth == 32) {
 				return nDepth;
 			}
 			break;
@@ -662,7 +660,6 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			superscale2x(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, nVidImageDepth, true);
 			break;
 		}
-#if defined BUILD_X86_ASM
 		case FILTER_2XPM_LQ: {
 			_2xpm_lq(ps, pd, (unsigned long)nSoftFXImagePitch, (unsigned long)nPitch, (unsigned long)nSoftFXImageWidth, (unsigned long)nSoftFXImageHeight, nVidImageDepth);
 			break;			
@@ -671,7 +668,6 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			_2xpm_hq(ps, pd, (unsigned long)nSoftFXImagePitch, (unsigned long)nPitch, (unsigned long)nSoftFXImageWidth, (unsigned long)nSoftFXImageHeight, nVidImageDepth);
 			break;			
 		}
-#endif
 		case FILTER_HQ2XS_VBA: {                                                                                      // hq2xS filter (16/32BPP only)
 			if (nVidImageDepth == 16) {
 				hq2xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
@@ -680,15 +676,13 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			}
 			break;
 		}
-		case FILTER_HQ3XS_VBA: {                                                                                      // hq3xS filter (16/32BPP only)
-#if defined BUILD_X86_ASM
-			if (nVidImageDepth == 16) {
-				hq3xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
-			} else if (nVidImageDepth == 32) {
+		case FILTER_HQ3XS_VBA: {									// hq3xS filter (15/16/32BPP)
+			if (nVidImageDepth == 32) {
 				hq3xS32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			} else {
+				hq3xS(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
 			}
 			break;
-#endif
 		}
 		case FILTER_HQ2XS_SNES9X: {
 			RenderHQ2XS(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight, 0);

@@ -86,7 +86,7 @@ endif
 autobj += $(depobj)
 
 ifdef	BUILD_X86_ASM
-autobj += eagle_fm.o hq2x32.o hq3x32.o hq4x32.o superscale.o
+autobj += eagle_fm.o superscale.o
 endif
 
 # End, platform stuff

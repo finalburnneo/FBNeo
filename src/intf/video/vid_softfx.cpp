@@ -40,6 +40,11 @@ extern void _2xSaI16(unsigned char*, unsigned int, unsigned char*, unsigned int,
 extern void Super2xSaI16(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
 extern void SuperEagle16(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
 
+extern void hqx_init(int nDepth);
+extern void hq2x(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
+extern void hq3x(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
+extern void hq4x(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
+
 extern void InitLUTs();
 extern void RenderHQ2XS(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int type);
 extern void RenderHQ3XS(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int type);
@@ -57,24 +62,7 @@ void ddt3x(unsigned char * src,  unsigned int srcPitch, unsigned char * dest, un
 extern "C" void __cdecl superscale_line(UINT16 *src0, UINT16 *src1, UINT16 *src2, UINT16 *dst, UINT32 width, UINT64 *mask);
 extern "C" void __cdecl  superscale_line_75(UINT16 *src0, UINT16 *src1, UINT16 *src2, UINT16 *dst, UINT32 width, UINT64 *mask);
 
-#ifdef __ELF__
- #define LUT16to32 _LUT16to32
- #define RGBtoYUV _RGBtoYUV
- #define hq2x_32 _hq2x_32
- #define hq3x_32 _hq3x_32
- #define hq4x_32 _hq4x_32
-#endif
-
 extern "C" void __cdecl _eagle_mmx16(unsigned long* lb, unsigned long* lb2, short width, unsigned long* screen_address1, unsigned long* screen_address2);
-
-extern "C" {
-	void __cdecl hq2x_32(unsigned char*, unsigned char*, DWORD, DWORD, DWORD);
-	void __cdecl hq3x_32(unsigned char*, unsigned char*, DWORD, DWORD, DWORD);
-	void __cdecl hq4x_32(unsigned char*, unsigned char*, DWORD, DWORD, DWORD);
-
-	unsigned int LUT16to32[65536];
-	unsigned int RGBtoYUV[65536];
-}
 #endif
 
 #define FXF_MMX		(unsigned int)(1 << 31)
@@ -94,9 +82,9 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("Super 2xSaI (VBA)"),				2, 0       },
 	{ _T("SuperScale"),						2, FXF_MMX },
 	{ _T("SuperScale (75% Scanlines)"),		2, FXF_MMX },
-	{ _T("hq2x Filter"),					2, FXF_MMX },
-	{ _T("hq3x Filter"),					3, FXF_MMX },
-	{ _T("hq4x Filter"),					4, FXF_MMX },
+	{ _T("hq2x Filter"),					2, 0       },
+	{ _T("hq3x Filter"),					3, 0       },
+	{ _T("hq4x Filter"),					4, 0       },
 	{ _T("hq2xS (VBA) Filter"),				2, 0       },
 	{ _T("hq3xS (VBA) Filter"),				3, FXF_MMX },
 	{ _T("hq2xS (SNES9X) Filter"),			2, FXF_MMX },
@@ -218,7 +206,7 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 		case FILTER_HQ2X:
 		case FILTER_HQ3X:
 		case FILTER_HQ4X:
-			if (nDepth == 15 || nDepth == 16) {
+			if (nDepth == 15 || nDepth == 16 || nDepth == 32) {
 				return nDepth;
 			}
 			break;
@@ -296,49 +284,9 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 		}
 	}
 
-#if defined BUILD_X86_ASM
 	if (nSoftFXBlitter >= FILTER_HQ2X && nSoftFXBlitter <= FILTER_HQ4X) {
-		int i, j, k, r, g, b, Y, u, v;
-
-		if (nVidImageDepth == 15) {
-			for (i = 0; i < 32768; i++) {
-				LUT16to32[i] = ((i & 0x7C00) << 9) + ((i & 0x03E0) << 6) + ((i & 0x001F) << 3);
-			}
-
-			for (i = 0; i < 32; i++) {
-				for (j = 0; j < 32; j++) {
-					for (k = 0; k < 32; k++) {
-						r = i << 3;
-						g = j << 3;
-						b = k << 3;
-						Y = (r + g + b) >> 2;
-						u = 128 + ((r - b) >> 2);
-						v = 128 + ((-r + 2 * g - b) >> 3);
-						RGBtoYUV[(i << 10) + (j << 5) + k] = (Y << 16) + (u << 8) + v;
-					}
-				}
-			}
-		} else {
-			for (i = 0; i < 65536; i++) {
-				LUT16to32[i] = ((i & 0xF800) << 8) + ((i & 0x07E0) << 5) + ((i & 0x001F) << 3);
-			}
-
-			for (i = 0; i < 32; i++) {
-				for (j = 0; j < 64; j++) {
-					for (k = 0; k < 32; k++) {
-						r = i << 3;
-						g = j << 2;
-						b = k << 3;
-						Y =	(r + g + b) >> 2;
-						u = 128 + ((r - b) >> 2);
-						v = 128 + ((-r + 2 * g - b) >> 3);
-						RGBtoYUV[(i << 11) + (j << 5) + k] = (Y << 16) + (u << 8) + v;
-					}
-				}
-			}
-		}
+		hqx_init(nVidImageDepth);
 	}
-#endif
 	
 	if (nSoftFXBlitter >= FILTER_HQ2XS_VBA && nSoftFXBlitter <= FILTER_HQ3XS_VBA) {
                 hq2xS_init(nVidImageDepth);
@@ -663,6 +611,18 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 
 			break;
 		}
+		case FILTER_HQ2X: {											// hq2x filter (15/16/32BPP)
+			hq2x(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			break;
+		}
+		case FILTER_HQ3X: {											// hq3x filter (15/16/32BPP)
+			hq3x(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			break;
+		}
+		case FILTER_HQ4X: {											// hq4x filter (15/16/32BPP)
+			hq4x(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			break;
+		}
 		case FILTER_SUPEREAGLE:											// Super Eagle blitter (15/16BPP only)
 		case FILTER_SUPEREAGLE_VBA: {									// Super Eagle blitter (15/16/32BPP only)
 			if (nVidImageDepth == 32) {
@@ -782,18 +742,6 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 				emms;
 			}
 #endif
-			break;
-		}
-		case FILTER_HQ2X: {											// hq2x filter (16BPP -> 32BPP)
-			hq2x_32(ps, pd, nSoftFXImageWidth, nSoftFXImageHeight, nPitch);
-			break;
-		}
-		case FILTER_HQ3X: {											// hq3x filter (16BPP -> 32BPP)
-			hq3x_32(ps, pd, nSoftFXImageWidth, nSoftFXImageHeight, nPitch);
-			break;
-		}
-		case FILTER_HQ4X: {											// hq4x filter (16BPP -> 32BPP)
-			hq4x_32(ps, pd, nSoftFXImageWidth, nSoftFXImageHeight, nPitch);
 			break;
 		}
 #endif

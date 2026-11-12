@@ -35,6 +35,11 @@ extern void _2xSaI32(unsigned char*, unsigned int, unsigned char*, unsigned char
 extern void Super2xSaI32(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
 extern void SuperEagle32(unsigned char*, unsigned int, unsigned char*, unsigned char*, unsigned int, int, int);
 
+extern void Init_2xSaI16(int nDepth);
+extern void _2xSaI16(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
+extern void Super2xSaI16(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
+extern void SuperEagle16(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int);
+
 extern void InitLUTs();
 extern void RenderHQ2XS(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int type);
 extern void RenderHQ3XS(unsigned char*, unsigned int, unsigned char*, unsigned int, int, int, int type);
@@ -62,11 +67,6 @@ extern "C" void __cdecl  superscale_line_75(UINT16 *src0, UINT16 *src1, UINT16 *
 
 extern "C" void __cdecl _eagle_mmx16(unsigned long* lb, unsigned long* lb2, short width, unsigned long* screen_address1, unsigned long* screen_address2);
 
-extern "C" void __cdecl _2xSaISuperEagleLine(uint8* srcPtr, uint8* deltaPtr, uint32 srcPitch, uint32 width, uint8* dstPtr, uint32 dstPitch, uint16 dstBlah);
-extern "C" void __cdecl _2xSaILine(uint8* srcPtr, uint8* deltaPtr, uint32 srcPitch, uint32 width, uint8* dstPtr, uint32 dstPitch, uint16 dstBlah);
-extern "C" void __cdecl _2xSaISuper2xSaILine(uint8* srcPtr, uint8* deltaPtr, uint32 srcPitch, uint32 width, uint8* dstPtr, uint32 dstPitch, uint16 dstBlah);
-extern "C" void __cdecl Init_2xSaIMMX(uint32 BitFormat);
-
 extern "C" {
 	void __cdecl hq2x_32(unsigned char*, unsigned char*, DWORD, DWORD, DWORD);
 	void __cdecl hq3x_32(unsigned char*, unsigned char*, DWORD, DWORD, DWORD);
@@ -86,12 +86,12 @@ static struct { TCHAR* pszName; int nZoom; unsigned int nFlags; } SoftFXInfo[] =
 	{ _T("2xPM LQ"),						2, 0	   },
 	{ _T("2xPM HQ"),						2, 0	   },
 	{ _T("Eagle Graphics"),					2, FXF_MMX },
-	{ _T("SuperEagle"),						2, FXF_MMX },
-	{ _T("2xSaI"),							2, FXF_MMX },
-	{ _T("Super 2xSaI"),					2, FXF_MMX },
-	{ _T("SuperEagle (VBA)"),				2, FXF_MMX },
-	{ _T("2xSaI (VBA)"),					2, FXF_MMX },
-	{ _T("Super 2xSaI (VBA)"),				2, FXF_MMX },
+	{ _T("SuperEagle"),						2, 0       },
+	{ _T("2xSaI"),							2, 0       },
+	{ _T("Super 2xSaI"),					2, 0       },
+	{ _T("SuperEagle (VBA)"),				2, 0       },
+	{ _T("2xSaI (VBA)"),					2, 0       },
+	{ _T("Super 2xSaI (VBA)"),				2, 0       },
 	{ _T("SuperScale"),						2, FXF_MMX },
 	{ _T("SuperScale (75% Scanlines)"),		2, FXF_MMX },
 	{ _T("hq2x Filter"),					2, FXF_MMX },
@@ -124,8 +124,6 @@ static unsigned char* pSoftFXImage = NULL;
 static int nSoftFXImageWidth = 0;
 static int nSoftFXImageHeight = 0;
 static int nSoftFXImagePitch = 0;
-
-static unsigned char* pSoftFXXBuffer = NULL;
 
 static int nSoftFXRotate = 0;
 static int nSoftFXBlitter = 0;
@@ -239,11 +237,6 @@ int VidSoftFXCheckDepth(int nEffect, int nDepth)
 
 void VidSoftFXExit()
 {
-	if (pSoftFXXBuffer) {
-		free(pSoftFXXBuffer);
-		pSoftFXXBuffer = NULL;
-	}
-
 	if (nSoftFXRotate) {
 		free(pSoftFXImage);
 		pSoftFXImage = NULL;
@@ -295,45 +288,12 @@ int VidSoftFXInit(int nBlitter, int nRotate)
 	}
 	nSoftFXImagePitch = nSoftFXImageWidth * nVidImageBPP;
 
-	if (nSoftFXBlitter >= FILTER_SUPEREAGLE && nSoftFXBlitter <= FILTER_SUPER_2XSAI) {		// Initialize the 2xSaI engine
-		pSoftFXXBuffer = (unsigned char*)malloc((nSoftFXImageHeight + 2) * nSoftFXImagePitch);
-		if (pSoftFXXBuffer == NULL) {
-			VidSoftFXExit();
-			return 1;
-		}
-
-		memset(pSoftFXXBuffer, 0, (nSoftFXImageHeight + 2) * nSoftFXImagePitch);
-
-#if defined BUILD_X86_ASM
-		if (nVidImageDepth == 15) {
-			Init_2xSaIMMX(555);
+	if (nSoftFXBlitter >= FILTER_SUPEREAGLE && nSoftFXBlitter <= FILTER_SUPER_2XSAI_VBA) {	// Initialize the 2xSaI engine
+		if (nVidImageDepth == 32) {
+			Init_2xSaI(565, 32);
 		} else {
-			Init_2xSaIMMX(565);
+			Init_2xSaI16(nVidImageDepth);
 		}
-#endif
-	}
-	
-	if (nSoftFXBlitter >= FILTER_SUPEREAGLE_VBA && nSoftFXBlitter <= FILTER_SUPER_2XSAI_VBA) {
-		int nMemLen = (nSoftFXImageHeight + /*2*/4) * nSoftFXImagePitch;
-		pSoftFXXBuffer = (unsigned char*)malloc(nMemLen);
-		if (pSoftFXXBuffer == NULL) {
-			VidSoftFXExit();
-			return 1;
-		}
-
-		memset(pSoftFXXBuffer, 0, nMemLen);
-
-#if defined BUILD_X86_ASM
-		if (nVidImageDepth == 15) {
-			Init_2xSaIMMX(555);
-		}
-		else if (nVidImageDepth == 16) {
-			Init_2xSaIMMX(565);
-		}
-		else {
-			Init_2xSaI(565, 32); // 32 bit
-		}
-#endif
 	}
 
 #if defined BUILD_X86_ASM
@@ -703,6 +663,33 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 
 			break;
 		}
+		case FILTER_SUPEREAGLE:											// Super Eagle blitter (15/16BPP only)
+		case FILTER_SUPEREAGLE_VBA: {									// Super Eagle blitter (15/16/32BPP only)
+			if (nVidImageDepth == 32) {
+				SuperEagle32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			} else {
+				SuperEagle16(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			}
+			break;
+		}
+		case FILTER_2XSAI:												// 2xSaI blitter (15/16BPP only)
+		case FILTER_2XSAI_VBA: {										// 2xSaI blitter (15/16/32BPP only)
+			if (nVidImageDepth == 32) {
+				_2xSaI32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			} else {
+				_2xSaI16(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			}
+			break;
+		}
+		case FILTER_SUPER_2XSAI:										// Super 2xSaI blitter (15/16BPP only)
+		case FILTER_SUPER_2XSAI_VBA: {									// Super 2xSaI blitter (15/16/32BPP only)
+			if (nVidImageDepth == 32) {
+				Super2xSaI32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			} else {
+				Super2xSaI16(ps, nSoftFXImagePitch, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
+			}
+			break;
+		}
 #if defined BUILD_X86_ASM
 		case FILTER_2XPM_LQ: {
 			_2xpm_lq(ps, pd, (unsigned long)nSoftFXImagePitch, (unsigned long)nPitch, (unsigned long)nSoftFXImageWidth, (unsigned long)nSoftFXImageHeight, nVidImageDepth);
@@ -731,72 +718,6 @@ void VidSoftFXApplyEffect(unsigned char* ps, unsigned char* pd, int nPitch)
 			}
 #endif
 
-			break;
-		}
-		case FILTER_SUPEREAGLE: {											// Super Eagle blitter (15/16BPP only)
-			unsigned char* px = pSoftFXXBuffer + nSoftFXImagePitch;
-			_2xSaISuperEagleLine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-			pd += nPitch;
-			for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch, px += nSoftFXImagePitch) {
-				_2xSaISuperEagleLine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-			}
-			break;
-		}
-		case FILTER_2XSAI: {											// 2xSaI blitter (15/16BPP only)
-			unsigned char* px = pSoftFXXBuffer + nSoftFXImagePitch;
-			_2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-			pd += nPitch;
-			for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch, px += nSoftFXImagePitch) {
-				_2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-			}
-			break;
-		}
-		case FILTER_SUPER_2XSAI: {											// Super 2xSaI blitter (15/16BPP only)
-			unsigned char* px = pSoftFXXBuffer + nSoftFXImagePitch;
-			_2xSaISuper2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-			pd += nPitch;
-			for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch, px += nSoftFXImagePitch) {
-				_2xSaISuper2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-			}
-			break;
-		}
-		case FILTER_SUPEREAGLE_VBA: {	// Super Eagle blitter (15/16/32BPP only)
-			if (nVidImageDepth == 32) {
-				SuperEagle32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
-			} else {
-				unsigned char* px = pSoftFXXBuffer + nSoftFXImagePitch;
-				_2xSaISuperEagleLine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-				pd += nPitch;
-				for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch, px += nSoftFXImagePitch) {
-					_2xSaISuperEagleLine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-				}
-			}
-			break;
-		}
-		case FILTER_2XSAI_VBA: {	// 2xSaI blitter (15/16/32BPP only)
-			if (nVidImageDepth == 32) {
-				_2xSaI32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
-			} else {
-				unsigned char* px = pSoftFXXBuffer + nSoftFXImagePitch;
-				_2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-				pd += nPitch;
-				for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch, px += nSoftFXImagePitch) {
-					_2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-				}
-			}
-			break;
-		}
-		case FILTER_SUPER_2XSAI_VBA: {	// Super 2xSaI blitter (15/16/32BPP only)
-			if (nVidImageDepth == 32) {
-				Super2xSaI32(ps, nSoftFXImagePitch, NULL, pd, nPitch, nSoftFXImageWidth, nSoftFXImageHeight);
-			} else {
-				unsigned char* px = pSoftFXXBuffer + nSoftFXImagePitch;
-				_2xSaISuper2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-				pd += nPitch;
-				for (int y = 0; y < nSoftFXImageHeight; y++, pd += (nPitch << 1), ps += nSoftFXImagePitch, px += nSoftFXImagePitch) {
-					_2xSaISuper2xSaILine(ps, px, nSoftFXImagePitch, nSoftFXImageWidth - 1, pd, nPitch, 0);
-				}
-			}
 			break;
 		}
 		case FILTER_SUPERSCALE: {

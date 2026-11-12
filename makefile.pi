@@ -64,7 +64,7 @@ depobj += cdlist.o \
 		interface.o lowpass2.o  vid_interface.o vid_softfx.o \
 		vid_support.o \
 		\
-		2xpm.o 2xsai.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
+		2xpm.o 2xsai.o 2xsai16.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
 		\
 		inp_pi.o aud_sdl.o support_paths.o \
 		ips_manager.o scrn.o config.o \
@@ -88,7 +88,7 @@ endif
 autobj += $(depobj)
 
 ifdef BUILD_X86_ASM
-autobj += eagle_fm.o 2xsaimmx.o hq2x32.o hq3x32.o hq4x32.o superscale.o
+autobj += eagle_fm.o hq2x32.o hq3x32.o hq4x32.o superscale.o
 endif
 # End platform-specific
 

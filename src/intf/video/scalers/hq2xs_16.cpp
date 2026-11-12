@@ -340,27 +340,30 @@ void RenderHQ2XS(unsigned char *src, unsigned int srcpitch, unsigned char *dst, 
 	uint32 pattern;
 	int l, y;
 
-	while (height--)
+	if (width <= 0 || height <= 0) return;
+
+	for (int row = 0; row < height; row++)
 	{
-		sp--;
+		// clamp reads to the image (used to read outside it on all four sides)
+		const uint16 *rU = (row > 0)          ? sp - src1line : sp;
+		const uint16 *rC = sp;
+		const uint16 *rD = (row < height - 1) ? sp + src1line : sp;
 
-		w1 = *(sp - src1line);
-		w4 = *(sp);
-		w7 = *(sp + src1line);
+		w1 = rU[0];
+		w4 = rC[0];
+		w7 = rD[0];
 
-		sp++;
+		w2 = rU[0];
+		w5 = rC[0];
+		w8 = rD[0];
 
-		w2 = *(sp - src1line);
-		w5 = *(sp);
-		w8 = *(sp + src1line);
-
-		for (l = width; l; l--)
+		for (l = 0; l < width; l++)
 		{
-			sp++;
+			const int xr = (l + 1 < width) ? l + 1 : width - 1;
 
-			w3 = *(sp - src1line);
-			w6 = *(sp);
-			w9 = *(sp + src1line);
+			w3 = rU[xr];
+			w6 = rC[xr];
+			w9 = rD[xr];
 
 			pattern = 0;
 
@@ -422,7 +425,7 @@ void RenderHQ2XS(unsigned char *src, unsigned int srcpitch, unsigned char *dst, 
 		}
 
 		dp += ((dst1line - width) << 1);
-		sp +=  (src1line - width);
+		sp += src1line;
 	}
 }
 
@@ -677,27 +680,30 @@ void RenderHQ3XS(unsigned char *src, unsigned int srcpitch, unsigned char *dst, 
 	uint32 pattern;
 	int l, y;
 
-	while (height--)
+	if (width <= 0 || height <= 0) return;
+
+	for (int row = 0; row < height; row++)
 	{
-		sp--;
+		// clamp reads to the image (used to read outside it on all four sides)
+		const uint16 *rU = (row > 0)          ? sp - src1line : sp;
+		const uint16 *rC = sp;
+		const uint16 *rD = (row < height - 1) ? sp + src1line : sp;
 
-		w1 = *(sp - src1line);
-		w4 = *(sp);
-		w7 = *(sp + src1line);
+		w1 = rU[0];
+		w4 = rC[0];
+		w7 = rD[0];
 
-		sp++;
+		w2 = rU[0];
+		w5 = rC[0];
+		w8 = rD[0];
 
-		w2 = *(sp - src1line);
-		w5 = *(sp);
-		w8 = *(sp + src1line);
-
-		for (l = width; l; l--)
+		for (l = 0; l < width; l++)
 		{
-			sp++;
+			const int xr = (l + 1 < width) ? l + 1 : width - 1;
 
-			w3 = *(sp - src1line);
-			w6 = *(sp);
-			w9 = *(sp + src1line);
+			w3 = rU[xr];
+			w6 = rC[xr];
+			w9 = rD[xr];
 
 			pattern = 0;
 
@@ -759,6 +765,6 @@ void RenderHQ3XS(unsigned char *src, unsigned int srcpitch, unsigned char *dst, 
 		}
 
 		dp += ((dst1line - width) * 3);
-		sp +=  (src1line - width);
+		sp += src1line;
 	}
 }

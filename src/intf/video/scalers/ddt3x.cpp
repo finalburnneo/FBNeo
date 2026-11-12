@@ -21,22 +21,20 @@
 
 #include <stdlib.h>
 
-extern "C"
-{
-    static unsigned char initialized = 0;
-//	unsigned int	RGBtoYUV[65536];
-//    static unsigned int tbl_5_to_8[32]={0, 8, 16, 25, 33, 41, 49,  58, 66, 74, 82, 90, 99, 107, 115, 123, 132, 140, 148, 156, 165, 173, 181, 189,  197, 206, 214, 222, 230, 239, 247, 255};
-//    static unsigned int tbl_6_to_8[64]={0, 4, 8, 12, 16, 20, 24,  28, 32, 36, 40, 45, 49, 53, 57, 61, 65, 69, 73, 77, 81, 85, 89, 93, 97, 101,  105, 109, 113, 117, 121, 125, 130, 134, 138, 142, 146, 150, 154, 158, 162, 166,  170, 174, 178, 182, 186, 190, 194, 198, 202, 206, 210, 215, 219, 223, 227, 231,  235, 239, 243, 247, 251, 255};
-}
+// Changes:
+//  - The first line read the line two below as its "below" neighbour (a byte
+//    pitch was added to a pixel pointer), which read outside the image when
+//    the height was 2 or less.
+//  - Sizes and pitches were held in 16-bit variables.
+//  - 15-bit images are supported (was 16-bit only).
 
-unsigned short int ddt_red_blue_mask;
-unsigned short int ddt_green_mask;
+// The blend spreads a pixel's channels out into a 32-bit value
+// (green in the top half, red and blue in the bottom half) so that all three
+// can be blended at once
+#define RGB_MASK565 0x07E0F81F
+#define RGB_MASK555 0x03E07C1F
 
-#define RED_BLUE_MASK565   0xF81F
-#define RED_MASK565   0xF800
-#define GREEN_MASK565 0x07E0
-
-#define RGB_MASK 0x07E0F81F
+static unsigned int RGB_MASK = RGB_MASK565;
 
 
 #define ALPHA_BLEND_X_W(dst, src, alpha) \
@@ -88,37 +86,33 @@ unsigned short int ddt_green_mask;
 }\
 
         
+// nDepth: 15 or 16
 void ddt3x(unsigned char * src,  unsigned int srcPitch,
 			unsigned char * dest, unsigned int dstPitch,
-			int Xres, int Yres)
+			int Xres, int Yres, int nDepth)
 {	
-	unsigned short int x, y;
+	unsigned int x, y;
 	unsigned short int PA, PB, PC, PD, PE, PF, PG, PH, PI;
-	register unsigned short int *sa1, *sa2, *sa3; // sa = start_address
-	unsigned short int nl, nl_src; // nl = new_line
-    unsigned short int nl1;	
+	unsigned short int *sa1, *sa2, *sa3; // sa = start_address
+	unsigned int nl, nl_src; // nl = new_line
+	unsigned int nl1;
 	unsigned short int *E;  // E = dst_pixel
-	unsigned short int src_width = (unsigned short int)Xres; 
-	unsigned short int src_height = (unsigned short int)Yres;
-	unsigned short int dst_width = src_width * 3;
-//	unsigned short int dst_height = src_height * 3;
-	unsigned short int complete_line_src, complete_line_dst;
-	unsigned short int src_pitch = (unsigned short int)srcPitch;
+	unsigned int src_width = (unsigned int)Xres;
+	unsigned int src_height = (unsigned int)Yres;
+	unsigned int dst_width = src_width * 3;
+	unsigned int complete_line_src, complete_line_dst;
+	unsigned int src_pitch = srcPitch;
 	unsigned char pprev;
     unsigned int ad, bc;
     unsigned int td, ts;
 
-    if (!initialized)
-    {
-       ddt_red_blue_mask   = RED_BLUE_MASK565;
-       ddt_green_mask = GREEN_MASK565;
-       
-       initialized = 1;
-    }
+	if (Xres <= 0 || Yres <= 0) return;
+
+	RGB_MASK = (nDepth == 15) ? RGB_MASK555 : RGB_MASK565;
 	
 	nl_src = src_pitch >> 1;
-	nl = (unsigned short int)dstPitch >> 1;
-	nl1= (unsigned short int)dstPitch;
+	nl = dstPitch >> 1;
+	nl1= dstPitch;
 
 	// fixed by Steve Snake
 	complete_line_src = (src_pitch>>1) - src_width;
@@ -126,7 +120,7 @@ void ddt3x(unsigned char * src,  unsigned int srcPitch,
 	
 	sa2 = (unsigned short int *)(src - 4);
     sa1 = sa2;
-	sa3 = sa2 + src_pitch;
+	sa3 = (src_height > 1) ? sa2 + nl_src : sa2;	// (was "+ src_pitch": bytes, not pixels)
 	
 	E = (unsigned short int *)(dest);	
 	
@@ -148,11 +142,13 @@ void ddt3x(unsigned char * src,  unsigned int srcPitch,
 			PD = sa2[pprev];			
 			PG = sa3[pprev];
 			
-    		PC = sa1[3];
-			PF = sa2[3];
-			PI = sa3[3];
-				
-            if (!x)				
+            if (x)
+            {
+    			PC = sa1[3];
+				PF = sa2[3];
+				PI = sa3[3];
+            }
+            else	// right edge (used to read one pixel past the line first)
             {
    				PC = sa1[2];
    				PF = sa2[2];

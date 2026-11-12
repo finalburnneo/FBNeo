@@ -13,7 +13,7 @@
 
 enum {
 	CART_2K = 0, CART_4K, CART_F8, CART_F6, CART_F4, CART_FA, CART_FE, CART_E0,
-	CART_E7, CART_3F, CART_3E, CART_CV, CART_UA, CART_DPC, CART_F0
+	CART_E7, CART_3F, CART_3E, CART_CV, CART_UA, CART_DPC, CART_F0, CART_DPCP, CART_CDF
 };
 
 enum { CTRL_JOY = 0, CTRL_PADDLE };
@@ -505,6 +505,10 @@ static void tia_gfx_apply()
 			tia_enabl_old = tia_enabl_new;
 		break;
 
+		case 0x0d: tia_pf[0] = data; break;
+		case 0x0e: tia_pf[1] = data; break;
+		case 0x0f: tia_pf[2] = data; break;
+
 		case 0x1d: tia_enam[0] = data; break;
 		case 0x1e: tia_enam[1] = data; break;
 		case 0x1f: tia_enabl_new = data; break;
@@ -815,9 +819,16 @@ static void tia_write(UINT16 address, UINT8 data)
 		case 0x0a: tia_ctrlpf = data; return;
 		case 0x0b: tia_refp[0] = data; return;
 		case 0x0c: tia_refp[1] = data; return;
-		case 0x0d: tia_pf[0] = data; return;
-		case 0x0e: tia_pf[1] = data; return;
-		case 0x0f: tia_pf[2] = data; return;
+		case 0x0d: // PF0
+		case 0x0e: // PF1
+		case 0x0f: // PF2
+			// the playfield sees writes two clocks later: one landing on the
+			// first clock of a playfield pixel doesn't change that pixel yet
+			// (Jutland Skies' title)
+			tia_gfx_reg = address & 0x3f;
+			tia_gfx_data = data;
+			tia_gfx_clk = tia_clk + 2;
+		return;
 
 		case 0x10: obj_reset(OP0); return;
 		case 0x11: obj_reset(OP1); return;
@@ -1138,6 +1149,1034 @@ static void dpc_write(INT32 offset, UINT8 data)
 	}
 }
 
+// Harmony / Melody ARM cartridges (DPC+, CDF, CDFJ)
+//
+// The cart has an LPC2103 (ARM7TDMI): 32k flash at $00000000 holding the ARM
+// driver, the game's own Thumb code and the 6507 banks, plus 8k of SRAM at
+// $40000000 which holds the display data the 6507 reads through the data
+// fetchers / data streams.  The ARM driver is emulated natively, the game's
+// own Thumb code (CALLFUNCTION / CALLFN 254 or 255) is interpreted, and runs
+// in zero 6507 time.
+//
+// Info: the DPC+ and CDFJ programmer's guides by Darrell Spice Jr. and
+// Fred Quimby; ARM7TDMI Technical Reference Manual (Thumb instruction set).
+
+#define HARM_RAM_SIZE		0x2000
+
+static UINT8 *harm_ram;			// = DrvCartRAM
+
+// ---- Thumb interpreter ----
+static UINT32 thumb_r[16];
+static UINT32 thumb_n, thumb_z, thumb_c, thumb_v;	// flags, 0 or 1
+static UINT32 thumb_exit;		// the LR the driver called the game's code with
+static UINT32 thumb_cb[4];		// driver callback entry points (CDF), 0 = none
+static UINT64 thumb_icount;		// for the T1TC timer
+static INT32 thumb_trace = 0;		// log problems with the game's ARM code
+
+
+static UINT32 thumb_read(UINT32 a, INT32 size)
+{
+	const UINT8 *p = NULL;
+
+	if (a < cart_size) {
+		p = DrvCartROM + a;
+		if (a + size > cart_size) return 0;
+	} else if ((a & 0xfff00000) == 0x40000000) {
+		a &= 0xfffff;
+		if (a + size > HARM_RAM_SIZE) return 0;
+		p = harm_ram + a;
+	} else {
+		if (a == 0xe0008008) return (UINT32)thumb_icount;	// T1TC
+		return 0;
+	}
+
+	switch (size) {
+		case 1: return p[0];
+		case 2: return p[0] | (p[1] << 8);
+	}
+	return p[0] | (p[1] << 8) | (p[2] << 16) | ((UINT32)p[3] << 24);
+}
+
+static void thumb_write(UINT32 a, UINT32 d, INT32 size)
+{
+	if ((a & 0xfff00000) != 0x40000000) return;	// flash, peripherals: ignored
+	a &= 0xfffff;
+	if (a + size > HARM_RAM_SIZE) return;
+
+	UINT8 *p = harm_ram + a;
+	p[0] = d;
+	if (size > 1) p[1] = d >> 8;
+	if (size > 2) { p[2] = d >> 16; p[3] = d >> 24; }
+}
+
+static inline UINT32 thumb_read32(UINT32 a)
+{
+	// unaligned word loads rotate on the ARM7
+	const UINT32 d = thumb_read(a & ~3, 4);
+	const INT32 rot = (a & 3) * 8;
+	return rot ? ((d >> rot) | (d << (32 - rot))) : d;
+}
+
+static inline void thumb_nz(UINT32 r) { thumb_n = r >> 31; thumb_z = (r == 0); }
+
+static inline UINT32 thumb_add(UINT32 a, UINT32 b, UINT32 cin)
+{
+	const UINT64 r64 = (UINT64)a + b + cin;
+	const UINT32 r = (UINT32)r64;
+	thumb_nz(r);
+	thumb_c = (UINT32)(r64 >> 32);
+	thumb_v = ((a ^ r) & (b ^ r)) >> 31;
+	return r;
+}
+
+static inline UINT32 thumb_sub(UINT32 a, UINT32 b) { return thumb_add(a, ~b, 1); }
+
+static UINT32 thumb_shift(INT32 type, UINT32 v, UINT32 n)	// register specified amounts
+{
+	n &= 0xff;
+	if (n == 0) return v;
+
+	switch (type)
+	{
+		case 0:	// lsl
+			if (n < 32) { thumb_c = (v >> (32 - n)) & 1; return v << n; }
+			thumb_c = (n == 32) ? (v & 1) : 0;
+			return 0;
+
+		case 1:	// lsr
+			if (n < 32) { thumb_c = (v >> (n - 1)) & 1; return v >> n; }
+			thumb_c = (n == 32) ? (v >> 31) : 0;
+			return 0;
+
+		case 2:	// asr
+			if (n < 32) { thumb_c = (v >> (n - 1)) & 1; return (UINT32)((INT32)v >> n); }
+			thumb_c = v >> 31;
+			return (UINT32)((INT32)v >> 31);
+
+		case 3:	// ror
+			n &= 31;
+			if (n) v = (v >> n) | (v << (32 - n));
+			thumb_c = v >> 31;
+			return v;
+	}
+	return v;
+}
+
+static UINT32 harm_callback(INT32 func, UINT32 a, UINT32 b);
+
+// returns 0 when the game's code returned to the driver
+static INT32 thumb_branch_x(UINT32 target)
+{
+	if (target & 1) {
+		thumb_r[15] = target & ~1;
+		return 1;
+	}
+
+	// switch to ARM state: a driver function, or the return to the driver
+	for (INT32 i = 0; i < 4; i++) {
+		if (thumb_cb[i] && target == thumb_cb[i]) {
+			const UINT32 res = harm_callback(i, thumb_r[2], thumb_r[3]);
+			if (i == 2) thumb_r[2] = res;
+			return thumb_branch_x(thumb_r[14] | 1);	// the driver returns with "orr r4, lr, #1; bx r4"
+		}
+	}
+
+	if (thumb_trace && target != thumb_exit) {
+		bprintf(0, _T("a2600: thumb: unhandled branch to arm code at %x\n"), target);
+	}
+
+	return 0;
+}
+
+static void thumb_run(UINT32 entry, UINT32 lr, UINT32 sp)
+{
+	memset(thumb_r, 0, sizeof(thumb_r));
+	thumb_n = thumb_z = thumb_c = thumb_v = 0;
+	thumb_r[13] = sp;
+	thumb_r[14] = lr;
+	thumb_r[15] = entry;
+	thumb_exit = lr;
+
+	UINT32 *r = thumb_r;
+
+	for (INT32 count = 0; count < 20000000; count++)
+	{
+		const UINT32 pc = r[15];
+		const UINT32 op = thumb_read(pc, 2);
+		const UINT32 pcr = pc + 4;	// pc as read by instructions
+		r[15] = pc + 2;
+		thumb_icount++;
+
+		const INT32 rd = op & 7;
+		const INT32 rs = (op >> 3) & 7;
+
+		switch (op >> 11)
+		{
+			case 0x00:	// lsl #
+			case 0x01:	// lsr #
+			case 0x02:	// asr #
+			{
+				const INT32 type = op >> 11;
+				UINT32 n = (op >> 6) & 0x1f;
+				UINT32 v = r[rs];
+				if (n == 0) {
+					if (type == 0) { r[rd] = v; thumb_nz(v); break; }
+					n = 32;
+				}
+				r[rd] = thumb_shift(type, v, n);
+				thumb_nz(r[rd]);
+			}
+			break;
+
+			case 0x03:	// add / sub, register or 3 bit immediate
+			{
+				const UINT32 b = (op & 0x400) ? ((op >> 6) & 7) : r[(op >> 6) & 7];
+				r[rd] = (op & 0x200) ? thumb_sub(r[rs], b) : thumb_add(r[rs], b, 0);
+			}
+			break;
+
+			case 0x04:	// mov #
+				r[(op >> 8) & 7] = op & 0xff;
+				thumb_nz(op & 0xff);
+			break;
+
+			case 0x05:	// cmp #
+				thumb_sub(r[(op >> 8) & 7], op & 0xff);
+			break;
+
+			case 0x06:	// add #
+				r[(op >> 8) & 7] = thumb_add(r[(op >> 8) & 7], op & 0xff, 0);
+			break;
+
+			case 0x07:	// sub #
+				r[(op >> 8) & 7] = thumb_sub(r[(op >> 8) & 7], op & 0xff);
+			break;
+
+			case 0x08:
+				if ((op & 0x400) == 0)	// alu operations
+				{
+					const UINT32 a = r[rd], b = r[rs];
+					switch ((op >> 6) & 0xf)
+					{
+						case 0x0: r[rd] = a & b; thumb_nz(r[rd]); break;			// and
+						case 0x1: r[rd] = a ^ b; thumb_nz(r[rd]); break;			// eor
+						case 0x2: r[rd] = thumb_shift(0, a, b); thumb_nz(r[rd]); break;	// lsl
+						case 0x3: r[rd] = thumb_shift(1, a, b); thumb_nz(r[rd]); break;	// lsr
+						case 0x4: r[rd] = thumb_shift(2, a, b); thumb_nz(r[rd]); break;	// asr
+						case 0x5: r[rd] = thumb_add(a, b, thumb_c); break;			// adc
+						case 0x6: r[rd] = thumb_add(a, ~b, thumb_c); break;			// sbc
+						case 0x7: r[rd] = thumb_shift(3, a, b); thumb_nz(r[rd]); break;	// ror
+						case 0x8: thumb_nz(a & b); break;							// tst
+						case 0x9: r[rd] = thumb_sub(0, b); break;					// neg
+						case 0xa: thumb_sub(a, b); break;							// cmp
+						case 0xb: thumb_add(a, b, 0); break;						// cmn
+						case 0xc: r[rd] = a | b; thumb_nz(r[rd]); break;			// orr
+						case 0xd: r[rd] = a * b; thumb_nz(r[rd]); break;			// mul
+						case 0xe: r[rd] = a & ~b; thumb_nz(r[rd]); break;			// bic
+						case 0xf: r[rd] = ~b; thumb_nz(r[rd]); break;				// mvn
+					}
+				}
+				else	// hi register operations, bx
+				{
+					const INT32 hd = rd | ((op >> 4) & 8);
+					const INT32 hs = (op >> 3) & 0xf;
+					const UINT32 b = (hs == 15) ? pcr : r[hs];
+					const UINT32 a = (hd == 15) ? pcr : r[hd];
+
+					switch ((op >> 8) & 3)
+					{
+						case 0:	// add
+							if (hd == 15) r[15] = (a + b) & ~1;
+							else r[hd] = a + b;
+						break;
+
+						case 1:	// cmp
+							thumb_sub(a, b);
+						break;
+
+						case 2:	// mov
+							if (hd == 15) r[15] = b & ~1;
+							else r[hd] = b;
+						break;
+
+						case 3:	// bx, blx
+							if (op & 0x80) r[14] = (pc + 2) | 1;
+							if (!thumb_branch_x(b)) return;
+						break;
+					}
+				}
+			break;
+
+			case 0x09:	// ldr rd, [pc, #]
+				r[(op >> 8) & 7] = thumb_read32((pcr & ~3) + ((op & 0xff) << 2));
+			break;
+
+			case 0x0a:
+			case 0x0b:	// load / store with register offset
+			{
+				const UINT32 addr = r[rs] + r[(op >> 6) & 7];
+				switch ((op >> 9) & 7)
+				{
+					case 0: thumb_write(addr & ~3, r[rd], 4); break;					// str
+					case 1: thumb_write(addr & ~1, r[rd], 2); break;					// strh
+					case 2: thumb_write(addr, r[rd], 1); break;							// strb
+					case 3: r[rd] = (INT8)thumb_read(addr, 1); break;					// ldsb
+					case 4: r[rd] = thumb_read32(addr); break;							// ldr
+					case 5: r[rd] = thumb_read(addr & ~1, 2); break;					// ldrh
+					case 6: r[rd] = thumb_read(addr, 1); break;							// ldrb
+					case 7: r[rd] = (INT16)thumb_read(addr & ~1, 2); break;				// ldsh
+				}
+			}
+			break;
+
+			case 0x0c:	// str rd, [rb, #]
+				thumb_write((r[rs] + ((op >> 4) & 0x7c)) & ~3, r[rd], 4);
+			break;
+
+			case 0x0d:	// ldr rd, [rb, #]
+				r[rd] = thumb_read32(r[rs] + ((op >> 4) & 0x7c));
+			break;
+
+			case 0x0e:	// strb
+				thumb_write(r[rs] + ((op >> 6) & 0x1f), r[rd], 1);
+			break;
+
+			case 0x0f:	// ldrb
+				r[rd] = thumb_read(r[rs] + ((op >> 6) & 0x1f), 1);
+			break;
+
+			case 0x10:	// strh
+				thumb_write((r[rs] + ((op >> 5) & 0x3e)) & ~1, r[rd], 2);
+			break;
+
+			case 0x11:	// ldrh
+				r[rd] = thumb_read((r[rs] + ((op >> 5) & 0x3e)) & ~1, 2);
+			break;
+
+			case 0x12:	// str rd, [sp, #]
+				thumb_write((r[13] + ((op & 0xff) << 2)) & ~3, r[(op >> 8) & 7], 4);
+			break;
+
+			case 0x13:	// ldr rd, [sp, #]
+				r[(op >> 8) & 7] = thumb_read32(r[13] + ((op & 0xff) << 2));
+			break;
+
+			case 0x14:	// add rd, pc, #
+				r[(op >> 8) & 7] = (pcr & ~3) + ((op & 0xff) << 2);
+			break;
+
+			case 0x15:	// add rd, sp, #
+				r[(op >> 8) & 7] = r[13] + ((op & 0xff) << 2);
+			break;
+
+			case 0x16:
+			case 0x17:
+				if ((op & 0x0f00) == 0x0000) {	// add / sub sp, #
+					if (op & 0x80) r[13] -= (op & 0x7f) << 2;
+					else r[13] += (op & 0x7f) << 2;
+				}
+				else if ((op & 0x0600) == 0x0400) {	// push / pop
+					if (op & 0x0800) {	// pop
+						UINT32 sp = r[13];
+						for (INT32 i = 0; i < 8; i++) {
+							if (op & (1 << i)) { r[i] = thumb_read(sp, 4); sp += 4; }
+						}
+						if (op & 0x100) {
+							const UINT32 t = thumb_read(sp, 4); sp += 4;
+							r[13] = sp;
+							if (!thumb_branch_x(t | 1)) return;	// v4T: pop pc stays in thumb state
+						}
+						r[13] = sp;
+					} else {	// push
+						INT32 n = (op & 0x100) ? 1 : 0;
+						for (INT32 i = 0; i < 8; i++) if (op & (1 << i)) n++;
+						UINT32 sp = r[13] - n * 4;
+						r[13] = sp;
+						for (INT32 i = 0; i < 8; i++) {
+							if (op & (1 << i)) { thumb_write(sp, r[i], 4); sp += 4; }
+						}
+						if (op & 0x100) thumb_write(sp, r[14], 4);
+					}
+				}
+				else {
+					if (thumb_trace) bprintf(0, _T("a2600: thumb: undefined %04x at %x\n"), op, pc);
+					return;
+				}
+			break;
+
+			case 0x18:	// stmia rb!, {rlist}
+			{
+				const INT32 rb = (op >> 8) & 7;
+				UINT32 addr = r[rb] & ~3;
+				for (INT32 i = 0; i < 8; i++) {
+					if (op & (1 << i)) { thumb_write(addr, r[i], 4); addr += 4; }
+				}
+				r[rb] = addr;
+			}
+			break;
+
+			case 0x19:	// ldmia rb!, {rlist}
+			{
+				const INT32 rb = (op >> 8) & 7;
+				UINT32 addr = r[rb] & ~3;
+				for (INT32 i = 0; i < 8; i++) {
+					if (op & (1 << i)) { r[i] = thumb_read(addr, 4); addr += 4; }
+				}
+				if (!(op & (1 << rb))) r[rb] = addr;
+			}
+			break;
+
+			case 0x1a:
+			case 0x1b:	// conditional branch, swi
+			{
+				INT32 take = 0;
+				switch ((op >> 8) & 0xf)
+				{
+					case 0x0: take = thumb_z; break;
+					case 0x1: take = !thumb_z; break;
+					case 0x2: take = thumb_c; break;
+					case 0x3: take = !thumb_c; break;
+					case 0x4: take = thumb_n; break;
+					case 0x5: take = !thumb_n; break;
+					case 0x6: take = thumb_v; break;
+					case 0x7: take = !thumb_v; break;
+					case 0x8: take = thumb_c && !thumb_z; break;
+					case 0x9: take = !thumb_c || thumb_z; break;
+					case 0xa: take = (thumb_n == thumb_v); break;
+					case 0xb: take = (thumb_n != thumb_v); break;
+					case 0xc: take = !thumb_z && (thumb_n == thumb_v); break;
+					case 0xd: take = thumb_z || (thumb_n != thumb_v); break;
+					default:
+						if (thumb_trace) bprintf(0, _T("a2600: thumb: swi/undefined %04x at %x\n"), op, pc);
+						return;
+				}
+				if (take) r[15] = pcr + ((INT32)(INT8)(op & 0xff) << 1);
+			}
+			break;
+
+			case 0x1c:	// b
+				r[15] = pcr + (((INT32)(op << 21)) >> 20);
+			break;
+
+			case 0x1e:	// bl, high part
+				r[14] = pcr + (((INT32)(op << 21)) >> 9);
+			break;
+
+			case 0x1f:	// bl, low part
+			{
+				const UINT32 t = r[14] + ((op & 0x7ff) << 1);
+				r[14] = (pc + 2) | 1;
+				r[15] = t & ~1;
+			}
+			break;
+
+			default:	// 0x1d: blx suffix (v5 only)
+				if (thumb_trace) bprintf(0, _T("a2600: thumb: undefined %04x at %x\n"), op, pc);
+			return;
+		}
+	}
+
+	bprintf(0, _T("a2600: thumb: the game's arm code did not return\n"));
+}
+
+// ---- state shared by DPC+ and CDF ----
+static UINT8 *harm_prog;			// 6507 banks
+static UINT8 *harm_disp;			// display data (in harm_ram)
+static UINT32 harm_mus_cnt[3];
+static UINT32 harm_mus_freq[3];
+static UINT64 harm_mus_last;		// cpu cycle of the last music update
+static UINT64 harm_mus_frac;
+static INT32 harm_lda_imm;			// DPC+: last ROM byte read was $a9
+static UINT32 harm_lda_addr;		// CDF: address of the LDA # operand, 0 = none
+static UINT64 harm_lda_cyc;			// CDF: cpu cycle the LDA # opcode was read
+
+static void harm_update_music()
+{
+	const UINT64 now = cpu_now();
+	const INT32 clock = is_pal ? pal_cpu_clock : ntsc_cpu_clock;
+
+	if (now <= harm_mus_last) return;
+
+	// 20kHz oscillator
+	const UINT64 acc = (now - harm_mus_last) * 20000 + harm_mus_frac;
+	harm_mus_last = now;
+	const UINT32 clocks = (UINT32)(acc / clock);
+	harm_mus_frac = acc % clock;
+
+	for (INT32 i = 0; i < 3; i++) {
+		harm_mus_cnt[i] += harm_mus_freq[i] * clocks;
+	}
+}
+
+// ---- DPC+ ----
+// 32k: 3k ARM driver, 6 x 4k 6507 banks, 4k display data, 1k frequency table.
+// RAM: 3k for the driver / game's C variables, then 4k display + 1k frequency.
+static UINT16 dpcp_cnt[8];			// data fetcher pointers (12 bit)
+static UINT32 dpcp_frac[8];			// fractional pointers (12.8)
+static UINT8 dpcp_finc[8];
+static UINT8 dpcp_top[8], dpcp_bot[8];
+static UINT8 dpcp_fastfetch;
+static UINT8 dpcp_param[8];
+static INT32 dpcp_param_ptr;
+static UINT32 dpcp_rand;
+static UINT8 dpcp_wave[3];
+static UINT32 dpcp_fraclow_mask;	// what a DFxFRACLOW write keeps
+
+// md5 of the 3k ARM driver, to tell the DPC+ driver versions apart
+static void harm_md5(const UINT8 *msg, UINT32 len, UINT8 *out)
+{
+	static const UINT32 k[64] = {
+		0xd76aa478, 0xe8c7b756, 0x242070db, 0xc1bdceee, 0xf57c0faf, 0x4787c62a, 0xa8304613, 0xfd469501,
+		0x698098d8, 0x8b44f7af, 0xffff5bb1, 0x895cd7be, 0x6b901122, 0xfd987193, 0xa679438e, 0x49b40821,
+		0xf61e2562, 0xc040b340, 0x265e5a51, 0xe9b6c7aa, 0xd62f105d, 0x02441453, 0xd8a1e681, 0xe7d3fbc8,
+		0x21e1cde6, 0xc33707d6, 0xf4d50d87, 0x455a14ed, 0xa9e3e905, 0xfcefa3f8, 0x676f02d9, 0x8d2a4c8a,
+		0xfffa3942, 0x8771f681, 0x6d9d6122, 0xfde5380c, 0xa4beea44, 0x4bdecfa9, 0xf6bb4b60, 0xbebfbc70,
+		0x289b7ec6, 0xeaa127fa, 0xd4ef3085, 0x04881d05, 0xd9d4d039, 0xe6db99e5, 0x1fa27cf8, 0xc4ac5665,
+		0xf4292244, 0x432aff97, 0xab9423a7, 0xfc93a039, 0x655b59c3, 0x8f0ccc92, 0xffeff47d, 0x85845dd1,
+		0x6fa87e4f, 0xfe2ce6e0, 0xa3014314, 0x4e0811a1, 0xf7537e82, 0xbd3af235, 0x2ad7d2bb, 0xeb86d391 };
+	static const UINT8 r[64] = {
+		7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 7, 12, 17, 22, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20, 5, 9, 14, 20,
+		4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 4, 11, 16, 23, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21, 6, 10, 15, 21 };
+
+	UINT32 h[4] = { 0x67452301, 0xefcdab89, 0x98badcfe, 0x10325476 };
+	const UINT32 total = ((len + 8) / 64 + 1) * 64;
+
+	for (UINT32 off = 0; off < total; off += 64)
+	{
+		UINT32 w[16];
+		for (INT32 i = 0; i < 64; i++) {	// message, 0x80, zeroes, bit length
+			const UINT32 pos = off + i;
+			UINT8 b = 0;
+			if (pos < len) b = msg[pos];
+			else if (pos == len) b = 0x80;
+			else if (pos >= total - 8) b = (UINT8)(((UINT64)len * 8) >> ((pos - (total - 8)) * 8));
+			if ((i & 3) == 0) w[i >> 2] = 0;
+			w[i >> 2] |= b << ((i & 3) * 8);
+		}
+
+		UINT32 a = h[0], b = h[1], c = h[2], d = h[3];
+		for (INT32 i = 0; i < 64; i++) {
+			UINT32 f, g;
+			if (i < 16)      { f = (b & c) | (~b & d); g = i; }
+			else if (i < 32) { f = (d & b) | (~d & c); g = (5 * i + 1) & 15; }
+			else if (i < 48) { f = b ^ c ^ d;          g = (3 * i + 5) & 15; }
+			else             { f = c ^ (b | ~d);       g = (7 * i) & 15; }
+			const UINT32 t = d;
+			d = c; c = b;
+			const UINT32 x = a + f + k[i] + w[g];
+			b = b + ((x << r[i]) | (x >> (32 - r[i])));
+			a = t;
+		}
+		h[0] += a; h[1] += b; h[2] += c; h[3] += d;
+	}
+
+	for (INT32 i = 0; i < 16; i++) out[i] = h[i >> 2] >> ((i & 3) * 8);
+}
+
+static void dpcp_reset()
+{
+	harm_prog = DrvCartROM + 0x0c00;
+	harm_disp = harm_ram + 0x0c00;
+	memcpy(harm_disp, DrvCartROM + 0x6c00, 0x1400);	// display data + frequency table
+
+	memset(dpcp_cnt, 0, sizeof(dpcp_cnt));
+	memset(dpcp_frac, 0, sizeof(dpcp_frac));
+	memset(dpcp_finc, 0, sizeof(dpcp_finc));
+	memset(dpcp_top, 0, sizeof(dpcp_top));
+	memset(dpcp_bot, 0, sizeof(dpcp_bot));
+	memset(dpcp_param, 0, sizeof(dpcp_param));
+	memset(dpcp_wave, 0, sizeof(dpcp_wave));
+	dpcp_fastfetch = 0;
+	dpcp_param_ptr = 0;
+	dpcp_rand = 0x2b435044;	// "DPC+"
+
+	// two of the known driver versions ("stable") clear the fraction on a
+	// DFxFRACLOW write, the others ("jitter") keep it
+	static const UINT8 stable[2][16] = {
+		{ 0x5f, 0x80, 0xb5, 0xa5, 0xad, 0xbe, 0x48, 0x3a, 0xdd, 0xc3, 0xf6, 0xe6, 0xf1, 0xb4, 0x72, 0xf8 },
+		{ 0x8d, 0xd7, 0x3b, 0x44, 0xfd, 0x11, 0xc4, 0x88, 0x32, 0x6c, 0xe5, 0x07, 0xcb, 0xeb, 0x19, 0xd1 } };
+	UINT8 md5[16];
+	harm_md5(DrvCartROM, 0x0c00, md5);
+	dpcp_fraclow_mask = 0x0f00ff;
+	if (!memcmp(md5, stable[0], 16) || !memcmp(md5, stable[1], 16)) dpcp_fraclow_mask = 0x0f0000;
+}
+
+static void dpcp_callfunction(UINT8 data)
+{
+	switch (data)
+	{
+		case 0:	// parameter pointer reset
+			dpcp_param_ptr = 0;
+		break;
+
+		case 1:	// copy rom to a fetcher (source is an offset from the start of the 6507 banks)
+		{
+			const UINT32 src = (dpcp_param[1] << 8) | dpcp_param[0];
+			for (INT32 i = 0; i < dpcp_param[3]; i++) {
+				harm_disp[(dpcp_cnt[dpcp_param[2] & 7] + i) & 0xfff] = harm_prog[(src + i) % (cart_size - 0x0c00)];
+			}
+			dpcp_param_ptr = 0;
+		}
+		break;
+
+		case 2:	// fill a fetcher with a value
+			for (INT32 i = 0; i < dpcp_param[3]; i++) {
+				harm_disp[(dpcp_cnt[dpcp_param[2] & 7] + i) & 0xfff] = dpcp_param[0];
+			}
+			dpcp_param_ptr = 0;
+		break;
+
+		case 254:
+		case 255:	// run the game's ARM code
+			thumb_run(0x0c08, 0x0c00, 0x40001ffc);
+		break;
+	}
+}
+
+static UINT8 dpcp_read_reg(INT32 off)
+{
+	const INT32 idx = off & 7;
+	const UINT8 flag = (((dpcp_top[idx] - (dpcp_cnt[idx] & 0xff)) & 0xff) > ((dpcp_top[idx] - dpcp_bot[idx]) & 0xff)) ? 0xff : 0;
+	UINT8 data = 0;
+
+	switch (off >> 3)
+	{
+		case 0:
+			switch (idx)
+			{
+				case 0:	// RANDOM0NEXT
+					dpcp_rand = ((dpcp_rand & (1 << 10)) ? 0x10adab1e : 0) ^ ((dpcp_rand >> 11) | (dpcp_rand << 21));
+					data = dpcp_rand;
+				break;
+
+				case 1:	// RANDOM0PRIOR
+					if (dpcp_rand & (1u << 31)) {
+						const UINT32 t = dpcp_rand ^ 0x10adab1e;
+						dpcp_rand = (t << 11) | (t >> 21);
+					} else {
+						dpcp_rand = (dpcp_rand << 11) | (dpcp_rand >> 21);
+					}
+					data = dpcp_rand;
+				break;
+
+				case 2: data = dpcp_rand >> 8; break;
+				case 3: data = dpcp_rand >> 16; break;
+				case 4: data = dpcp_rand >> 24; break;
+
+				case 5:	// AMPLITUDE
+					harm_update_music();
+					data = harm_disp[((dpcp_wave[0] << 5) + (harm_mus_cnt[0] >> 27)) & 0xfff]
+						 + harm_disp[((dpcp_wave[1] << 5) + (harm_mus_cnt[1] >> 27)) & 0xfff]
+						 + harm_disp[((dpcp_wave[2] << 5) + (harm_mus_cnt[2] >> 27)) & 0xfff];
+				break;
+			}
+		break;
+
+		case 1:	// DFxDATA
+			data = harm_disp[dpcp_cnt[idx]];
+			dpcp_cnt[idx] = (dpcp_cnt[idx] + 1) & 0xfff;
+		break;
+
+		case 2:	// DFxDATAW
+			data = harm_disp[dpcp_cnt[idx]] & flag;
+			dpcp_cnt[idx] = (dpcp_cnt[idx] + 1) & 0xfff;
+		break;
+
+		case 3:	// DFxFRACDATA
+			data = harm_disp[dpcp_frac[idx] >> 8];
+			dpcp_frac[idx] = (dpcp_frac[idx] + dpcp_finc[idx]) & 0x0fffff;
+		break;
+
+		case 4:	// DFxFLAG
+			if (idx < 4) data = flag;
+		break;
+	}
+
+	return data;
+}
+
+static UINT8 dpcp_read(INT32 off)
+{
+	UINT8 data = harm_prog[(cart_bank << 12) + off];
+
+	if (dpcp_fastfetch && harm_lda_imm && data < 0x28) {
+		// LDA #<register: the operand is replaced with the register's value
+		harm_lda_imm = 0;
+		return dpcp_read_reg(data);
+	}
+	harm_lda_imm = 0;
+
+	if (off < 0x28) return dpcp_read_reg(off);
+
+	if (off >= 0xff6 && off <= 0xffb) cart_bank = off - 0xff6;
+
+	if (dpcp_fastfetch) harm_lda_imm = (data == 0xa9);
+
+	return data;
+}
+
+static void dpcp_write(INT32 off, UINT8 data)
+{
+	if (off >= 0xff6 && off <= 0xffb) {
+		cart_bank = off - 0xff6;
+		return;
+	}
+
+	if (off < 0x28 || off >= 0x80) return;
+
+	const INT32 idx = off & 7;
+
+	switch ((off - 0x28) >> 3)
+	{
+		case 0x0:	// DFxFRACLOW
+			dpcp_frac[idx] = (dpcp_frac[idx] & dpcp_fraclow_mask) | (data << 8);
+		break;
+
+		case 0x1:	// DFxFRACHI
+			dpcp_frac[idx] = ((data & 0x0f) << 16) | (dpcp_frac[idx] & 0x00ffff);
+		break;
+
+		case 0x2:	// DFxFRACINC
+			dpcp_finc[idx] = data;
+			dpcp_frac[idx] &= 0x0fff00;
+		break;
+
+		case 0x3: dpcp_top[idx] = data; break;	// DFxTOP
+		case 0x4: dpcp_bot[idx] = data; break;	// DFxBOT
+
+		case 0x5:	// DFxLOW
+			dpcp_cnt[idx] = (dpcp_cnt[idx] & 0x0f00) | data;
+		break;
+
+		case 0x6:
+			switch (idx)
+			{
+				case 0: dpcp_fastfetch = (data == 0); break;	// FASTFETCH
+				case 1:	// PARAMETER
+					if (dpcp_param_ptr < 8) dpcp_param[dpcp_param_ptr++] = data;
+				break;
+				case 2: dpcp_callfunction(data); break;			// CALLFUNCTION
+				case 5:
+				case 6:
+				case 7:	// WAVEFORMx
+					harm_update_music();
+					dpcp_wave[idx - 5] = data & 0x7f;
+				break;
+			}
+		break;
+
+		case 0x7:	// DFxPUSH
+			dpcp_cnt[idx] = (dpcp_cnt[idx] - 1) & 0x0fff;
+			harm_disp[dpcp_cnt[idx]] = data;
+		break;
+
+		case 0x8:	// DFxHI
+			dpcp_cnt[idx] = ((data & 0x0f) << 8) | (dpcp_cnt[idx] & 0x00ff);
+		break;
+
+		case 0x9:
+			switch (idx)
+			{
+				case 0: dpcp_rand = 0x2b435044; break;	// RRESET
+				case 1: dpcp_rand = (dpcp_rand & 0xffffff00) | data; break;
+				case 2: dpcp_rand = (dpcp_rand & 0xffff00ff) | (data << 8); break;
+				case 3: dpcp_rand = (dpcp_rand & 0xff00ffff) | (data << 16); break;
+				case 4: dpcp_rand = (dpcp_rand & 0x00ffffff) | ((UINT32)data << 24); break;
+				case 5:
+				case 6:
+				case 7:	// NOTEx
+				{
+					const UINT8 *f = harm_disp + 0x1000 + (data << 2);
+					harm_update_music();
+					harm_mus_freq[idx - 5] = f[0] | (f[1] << 8) | (f[2] << 16) | ((UINT32)f[3] << 24);
+				}
+				break;
+			}
+		break;
+
+		case 0xa:	// DFxWRITE
+			harm_disp[dpcp_cnt[idx]] = data;
+			dpcp_cnt[idx] = (dpcp_cnt[idx] + 1) & 0x0fff;
+		break;
+	}
+}
+
+// ---- CDF (CDF0, CDF1, CDFJ) ----
+// 32k: 2k ARM driver, 2k+ of the game's ARM code, 7 x 4k 6507 banks (the
+// first one(s) usually hold more ARM code).  RAM: 2k copy of the driver, which
+// also holds the data stream pointers and increments, then 6k display data.
+enum { CDF_0 = 0, CDF_1, CDF_J };
+
+static INT32 cdf_sub;
+static UINT32 cdf_ds_base, cdf_inc_base, cdf_wave_base;
+static INT32 cdf_amp_stream;		// fast fetch registers are 0 - cdf_amp_stream
+static INT32 cdf_jmp_mask;			// JMP $0000 (and $0001 for CDFJ) = FASTJMP
+static UINT8 cdf_mode;
+static UINT8 cdf_wavesize[3];
+static INT32 cdf_jmp_active;
+static UINT32 cdf_jmp_addr;
+static INT32 cdf_jmp_stream;
+
+#define CDF_COMMSTREAM	0x20
+#define CDF_JMPSTREAM	0x21
+
+static inline UINT32 harm_ram32(UINT32 a)
+{
+	a &= HARM_RAM_SIZE - 4;
+	return harm_ram[a] | (harm_ram[a + 1] << 8) | (harm_ram[a + 2] << 16) | ((UINT32)harm_ram[a + 3] << 24);
+}
+
+static inline void harm_ram32_w(UINT32 a, UINT32 d)
+{
+	a &= HARM_RAM_SIZE - 4;
+	harm_ram[a] = d; harm_ram[a + 1] = d >> 8; harm_ram[a + 2] = d >> 16; harm_ram[a + 3] = d >> 24;
+}
+
+static UINT32 harm_callback(INT32 func, UINT32 a, UINT32 b)
+{
+	a %= 3;
+
+	switch (func)
+	{
+		case 0:	// set note
+			harm_update_music();
+			harm_mus_freq[a] = b;
+		break;
+
+		case 1:	// reset wave
+			harm_update_music();
+			harm_mus_cnt[a] = 0;
+		break;
+
+		case 2:	// get wave pointer
+			harm_update_music();
+			return harm_mus_cnt[a];
+
+		case 3:	// set wave size
+			cdf_wavesize[a] = b;
+		break;
+	}
+
+	return 0;
+}
+
+// the driver's functions the game's code calls (set note, reset wave, get
+// wave pointer, set wave size) are listed in a table at the end of the driver
+static void cdf_find_callbacks()
+{
+	for (INT32 i = 0; i < 4; i++) {
+		const UINT8 *p = DrvCartROM + 0x7e8 + i * 4;
+		const UINT32 a = p[0] | (p[1] << 8) | (p[2] << 16) | ((UINT32)p[3] << 24);
+		thumb_cb[i] = (a < 0x800 && !(a & 3)) ? a : 0;
+	}
+}
+
+static void cdf_reset()
+{
+	cdf_sub = CDF_J;
+	for (UINT32 i = 0; i + 4 <= cart_size; i++) {
+		if (memcmp(DrvCartROM + i, "CDF", 3) == 0) {
+			if (DrvCartROM[i + 3] == 'J') { cdf_sub = CDF_J; break; }
+			if (DrvCartROM[i + 3] == 0) { cdf_sub = CDF_0; break; }
+			if (DrvCartROM[i + 3] == 1) { cdf_sub = CDF_1; break; }
+		}
+	}
+
+	harm_prog = DrvCartROM + 0x1000;
+	harm_disp = harm_ram + 0x0800;
+	memcpy(harm_ram, DrvCartROM, 0x800);	// the driver runs from RAM
+
+	switch (cdf_sub)
+	{
+		case CDF_0:
+			cdf_ds_base = 0x06e0; cdf_inc_base = 0x0768; cdf_wave_base = 0x07f0;
+			cdf_amp_stream = 0x22; cdf_jmp_mask = 0xff;
+		break;
+
+		case CDF_1:
+			cdf_ds_base = 0x00a0; cdf_inc_base = 0x0128; cdf_wave_base = 0x01b0;
+			cdf_amp_stream = 0x22; cdf_jmp_mask = 0xff;
+		break;
+
+		case CDF_J:
+			cdf_ds_base = 0x0098; cdf_inc_base = 0x0124; cdf_wave_base = 0x01b0;
+			cdf_amp_stream = 0x23; cdf_jmp_mask = 0xfe;
+		break;
+	}
+
+	cdf_mode = 0xff;
+	cdf_wavesize[0] = cdf_wavesize[1] = cdf_wavesize[2] = 27;
+	cdf_jmp_active = 0;
+	cdf_jmp_addr = 0;
+	cdf_jmp_stream = CDF_JMPSTREAM;
+	cdf_find_callbacks();
+}
+
+static UINT8 cdf_stream_read(INT32 idx, INT32 inc_one)
+{
+	const UINT32 a = cdf_ds_base + idx * 4;
+	const UINT32 ptr = harm_ram32(a);
+	const UINT32 inc = inc_one ? 0x100 : harm_ram32(cdf_inc_base + idx * 4);
+	const UINT8 data = harm_disp[ptr >> 20];	// 12.20 fixed point, 4k
+	harm_ram32_w(a, ptr + (inc << 12));
+	return data;
+}
+
+static UINT8 cdf_amplitude()
+{
+	harm_update_music();
+
+	if ((cdf_mode & 0xf0) == 0) {	// digital audio: packed 4 bit samples
+		const UINT32 a = harm_ram32(cdf_wave_base) + (harm_mus_cnt[0] >> 21);
+		UINT8 d = 0;
+		if (a < cart_size) d = DrvCartROM[a];
+		else if (a >= 0x40000000 && a < 0x40000000 + HARM_RAM_SIZE) d = harm_ram[a - 0x40000000];
+		if ((harm_mus_cnt[0] & (1 << 20)) == 0) d >>= 4;
+		return d & 0x0f;
+	}
+
+	UINT32 sum = 0;
+	for (INT32 i = 0; i < 3; i++) {
+		UINT32 w = harm_ram32(cdf_wave_base + i * 4) - 0x40000800;
+		if (w >= 0x1000) w &= 0xfff;
+		const INT32 shift = (cdf_wavesize[i] > 31) ? 31 : cdf_wavesize[i];
+		sum += harm_disp[(w + (harm_mus_cnt[i] >> shift)) % 0x1800];
+	}
+	return sum;
+}
+
+static UINT8 cdf_read(INT32 off)
+{
+	const INT32 fastfetch = (cdf_mode & 0x0f) == 0;
+	const UINT8 data = harm_prog[(cart_bank << 12) + off];
+
+	if (cdf_jmp_active && cdf_jmp_addr == (UINT32)off) {	// operand of JMP FASTJMP
+		cdf_jmp_active--;
+		cdf_jmp_addr++;
+		return cdf_stream_read(cdf_jmp_stream, 1);
+	}
+
+	if (fastfetch && data == 0x4c && off < 0xffd &&
+		(harm_prog[(cart_bank << 12) + off + 1] & cdf_jmp_mask) == 0 && harm_prog[(cart_bank << 12) + off + 2] == 0)
+	{
+		cdf_jmp_active = 2;
+		cdf_jmp_addr = off + 1;
+		cdf_jmp_stream = CDF_JMPSTREAM + harm_prog[(cart_bank << 12) + off + 1];
+		return data;
+	}
+	cdf_jmp_addr = 0;
+
+	if (harm_lda_addr == (UINT32)off && cpu_now() == harm_lda_cyc + 1) {	// operand right after the opcode
+		harm_lda_addr = 0;
+		if (data < cdf_amp_stream) return cdf_stream_read(data, 0);
+		if (data == cdf_amp_stream) return cdf_amplitude();
+	}
+	harm_lda_addr = 0;
+
+	if (off >= 0xff4 && off <= 0xffb) cart_bank = (off == 0xff4) ? 6 : (off - 0xff5);
+
+	if (fastfetch && data == 0xa9) {	// LDA #
+		harm_lda_addr = off + 1;
+		harm_lda_cyc = cpu_now();
+	}
+
+	return data;
+}
+
+static void cdf_write(INT32 off, UINT8 data)
+{
+	switch (off)
+	{
+		case 0xff0:	// DSWRITE
+		{
+			const UINT32 a = cdf_ds_base + CDF_COMMSTREAM * 4;
+			const UINT32 ptr = harm_ram32(a);
+			harm_disp[ptr >> 20] = data;
+			harm_ram32_w(a, ptr + 0x100000);
+		}
+		break;
+
+		case 0xff1:	// DSPTR
+		{
+			const UINT32 a = cdf_ds_base + CDF_COMMSTREAM * 4;
+			UINT32 ptr = harm_ram32(a);
+			ptr = ((ptr << 8) & 0xf0000000) | (data << 20);
+			harm_ram32_w(a, ptr);
+		}
+		break;
+
+		case 0xff2:	// SETMODE
+			cdf_mode = data;
+		break;
+
+		case 0xff3:	// CALLFN
+			if (data >= 254) thumb_run(0x0808, 0x0800, 0x40001ffc);
+		break;
+
+		default:
+			if (off >= 0xff4 && off <= 0xffb) cart_bank = (off == 0xff4) ? 6 : (off - 0xff5);
+		break;
+	}
+}
+
+static void harm_reset()
+{
+	harm_ram = DrvCartRAM;
+	memset(harm_ram, 0, HARM_RAM_SIZE);
+
+	memset(harm_mus_cnt, 0, sizeof(harm_mus_cnt));
+	memset(harm_mus_freq, 0, sizeof(harm_mus_freq));
+	harm_mus_last = 0;
+	harm_mus_frac = 0;
+	harm_lda_imm = 0;
+	harm_lda_addr = 0;
+	harm_lda_cyc = 0;
+	thumb_icount = 0;
+
+	if (cart_type == CART_DPCP) {
+		memset(thumb_cb, 0, sizeof(thumb_cb));
+		dpcp_reset();
+		cart_bank = 5;
+	} else {
+		cdf_reset();
+		cart_bank = 6;
+	}
+}
+
+static INT32 harm_scan()
+{
+	SCAN_VAR(harm_mus_cnt);
+	SCAN_VAR(harm_mus_freq);
+	SCAN_VAR(harm_mus_last);
+	SCAN_VAR(harm_mus_frac);
+	SCAN_VAR(harm_lda_imm);
+	SCAN_VAR(harm_lda_addr);
+	SCAN_VAR(harm_lda_cyc);
+	SCAN_VAR(thumb_icount);
+
+	if (cart_type == CART_DPCP) {
+		SCAN_VAR(dpcp_cnt);
+		SCAN_VAR(dpcp_frac);
+		SCAN_VAR(dpcp_finc);
+		SCAN_VAR(dpcp_top);
+		SCAN_VAR(dpcp_bot);
+		SCAN_VAR(dpcp_fastfetch);
+		SCAN_VAR(dpcp_param);
+		SCAN_VAR(dpcp_param_ptr);
+		SCAN_VAR(dpcp_rand);
+		SCAN_VAR(dpcp_wave);
+		SCAN_VAR(dpcp_fraclow_mask);
+	} else {
+		SCAN_VAR(cdf_mode);
+		SCAN_VAR(cdf_wavesize);
+		SCAN_VAR(cdf_jmp_active);
+		SCAN_VAR(cdf_jmp_addr);
+		SCAN_VAR(cdf_jmp_stream);
+	}
+
+	return 0;
+}
+
 static void cart_reset()
 {
 	switch (cart_type)
@@ -1166,6 +2205,8 @@ static void cart_reset()
 	dpc_latch62 = dpc_latch64 = 0;
 	dpc_last = 0;
 	dpc_frac = 0;
+
+	if (cart_type == CART_DPCP || cart_type == CART_CDF) harm_reset();
 }
 
 static inline void cart_hotspot(INT32 off)
@@ -1275,6 +2316,12 @@ static UINT8 cart_read(UINT16 address)
 			if (off < 0x40) return dpc_read(off);
 			cart_hotspot(off);
 			return DrvCartROM[(cart_bank << 12) + off];
+
+		case CART_DPCP:
+			return dpcp_read(off);
+
+		case CART_CDF:
+			return cdf_read(off);
 	}
 
 	return 0xff;
@@ -1337,6 +2384,14 @@ static void cart_write(UINT16 address, UINT8 data)
 				return;
 			}
 			cart_hotspot(off);
+		return;
+
+		case CART_DPCP:
+			dpcp_write(off, data);
+		return;
+
+		case CART_CDF:
+			cdf_write(off, data);
 		return;
 	}
 }
@@ -1850,6 +2905,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(dpc_last);
 			SCAN_VAR(dpc_frac);
 		}
+
+		if (cart_type == CART_DPCP || cart_type == CART_CDF) {
+			harm_scan();
+		}
 	}
 
 	return 0;
@@ -1891,9 +2950,13 @@ static INT32 A26Init_3F() { cart_type = CART_3F; return DrvInit(); }
 static INT32 A26Init_4K() { cart_type = CART_4K; return DrvInit(); }
 static INT32 A26Init_4K_PAD() { cart_type = CART_4K; ctrl_type = CTRL_PADDLE; return DrvInit(); }
 static INT32 A26Init_4K_PAL() { cart_type = CART_4K; is_pal = 1; return DrvInit(); }
+static INT32 A26Init_CDF() { cart_type = CART_CDF; return DrvInit(); }
 static INT32 A26Init_DPC() { cart_type = CART_DPC; return DrvInit(); }
+static INT32 A26Init_DPCPLUS() { cart_type = CART_DPCP; return DrvInit(); }
 static INT32 A26Init_E0() { cart_type = CART_E0; return DrvInit(); }
 static INT32 A26Init_E7() { cart_type = CART_E7; return DrvInit(); }
+static INT32 A26Init_F4() { cart_type = CART_F4; return DrvInit(); }
+static INT32 A26Init_F4_SC() { cart_type = CART_F4; cart_superchip = 1; return DrvInit(); }
 static INT32 A26Init_F6() { cart_type = CART_F6; return DrvInit(); }
 static INT32 A26Init_F6_SC() { cart_type = CART_F6; cart_superchip = 1; return DrvInit(); }
 static INT32 A26Init_F8() { cart_type = CART_F8; return DrvInit(); }
@@ -10494,3 +11557,390 @@ struct BurnDriver BurnDrva26_zaxxon = {
 	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
 };
+
+
+// -------------------------------
+// Aftermarket/Hack/Homebrew Games
+// -------------------------------
+
+
+// Aardvark (HB)
+
+static struct BurnRomInfo a26_aardvarkRomDesc[] = {
+	{ "Aardvark (2019)(Oscar Toledo G.).bin", 32768, 0x3a6ca45b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_aardvark)
+STD_ROM_FN(a26_aardvark)
+
+struct BurnDriver BurnDrva26_aardvark = {
+	"a26_aardvark", NULL, NULL, NULL, "2019",
+	"Aardvark (HB)\0", "32K + Superchip RAM (128 bytes)", "Oscar Toledo G.", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION | GBF_MAZE, 0,
+	A2600GetZipName, a26_aardvarkRomInfo, a26_aardvarkRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4_SC, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Conquest of Mars (HB)
+
+static struct BurnRomInfo a26_conqmarsRomDesc[] = {
+	{ "Conquest of Mars (2006)(Champ Games).bin", 16384, 0xbace5a14, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_conqmars)
+STD_ROM_FN(a26_conqmars)
+
+struct BurnDriver BurnDrva26_conqmars = {
+	"a26_conqmars", NULL, NULL, NULL, "2006",
+	"Conquest of Mars (HB)\0", NULL, "Champ Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
+	A2600GetZipName, a26_conqmarsRomInfo, a26_conqmarsRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Donkey Kong VCS (HB)
+
+static struct BurnRomInfo a26_dkongvcsRomDesc[] = {
+	{ "Donkey Kong VCS (2017)(Andreas Dietrich).bin", 32768, 0x6c87f24e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_dkongvcs)
+STD_ROM_FN(a26_dkongvcs)
+
+struct BurnDriver BurnDrva26_dkongvcs = {
+	"a26_dkongvcs", NULL, NULL, NULL, "2017",
+	"Donkey Kong VCS (HB)\0", "32K + Superchip RAM (128 bytes)", "Andreas Dietrich", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_dkongvcsRomInfo, a26_dkongvcsRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4_SC, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Draconian (HB)
+
+static struct BurnRomInfo a26_draconianRomDesc[] = {
+	{ "Draconian (2017)(SpiceWare).bin", 32768, 0xd104b3d9, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_draconian)
+STD_ROM_FN(a26_draconian)
+
+struct BurnDriver BurnDrva26_draconian = {
+	"a26_draconian", NULL, NULL, NULL, "2017",
+	"Draconian (HB)\0", "CDF coprocessor", "SpiceWare", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_MULTISHOOT, 0,
+	A2600GetZipName, a26_draconianRomInfo, a26_draconianRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Drone Attack (HB)
+
+static struct BurnRomInfo a26_droneRomDesc[] = {
+	{ "Drone Attack (2025)(Artefacto Games).bin", 8192, 0x1790e5d6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_drone)
+STD_ROM_FN(a26_drone)
+
+struct BurnDriver BurnDrva26_drone = {
+	"a26_drone", "a26_dronedx", NULL, NULL, "2025",
+	"Drone Attack (HB)\0", NULL, "Artefacto Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_HORSHOOT, 0,
+	A2600GetZipName, a26_droneRomInfo, a26_droneRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Drone Attack DX (HB)
+
+static struct BurnRomInfo a26_dronedxRomDesc[] = {
+	{ "Drone Attack DX (2025)(Artefacto Games).bin", 16384, 0x32ba4d8c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_dronedx)
+STD_ROM_FN(a26_dronedx)
+
+struct BurnDriver BurnDrva26_dronedx = {
+	"a26_dronedx", NULL, NULL, NULL, "2025",
+	"Drone Attack DX (HB)\0", NULL, "Artefacto Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_HORSHOOT, 0,
+	A2600GetZipName, a26_dronedxRomInfo, a26_dronedxRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Galagon (HB)
+
+static struct BurnRomInfo a26_galagonRomDesc[] = {
+	{ "Galagon (2019)(Champ Games).bin", 32768, 0x31d4975f, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_galagon)
+STD_ROM_FN(a26_galagon)
+
+struct BurnDriver BurnDrva26_galagon = {
+	"a26_galagon", NULL, NULL, NULL, "2019",
+	"Galagon (HB)\0", "CDF coprocessor", "Champ Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
+	A2600GetZipName, a26_galagonRomInfo, a26_galagonRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// I Ran (HB)
+
+static struct BurnRomInfo a26_iranRomDesc[] = {
+	{ "I Ran (2020)(VHZC).bin", 16384, 0xbcdc3f73, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_iran)
+STD_ROM_FN(a26_iran)
+
+struct BurnDriver BurnDrva26_iran = {
+	"a26_iran", NULL, NULL, NULL, "2020",
+	"I Ran (HB)\0", NULL, "VHZC Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_iranRomInfo, a26_iranRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Juno First (HB)
+
+static struct BurnRomInfo a26_junofirstRomDesc[] = {
+	{ "Juno First (2009)(Chris Walton).bin", 32768, 0x30baa209, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_junofirst)
+STD_ROM_FN(a26_junofirst)
+
+struct BurnDriver BurnDrva26_junofirst = {
+	"a26_junofirst", NULL, NULL, NULL, "2009",
+	"Juno First (HB)\0", NULL, "Chris Walton", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
+	A2600GetZipName, a26_junofirstRomInfo, a26_junofirstRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Jutland Skies (HB)
+
+static struct BurnRomInfo a26_jutskiesRomDesc[] = {
+	{ "Jutland Skies (2023)(KiKi).bin", 32768, 0xb4f01093, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_jutskies)
+STD_ROM_FN(a26_jutskies)
+
+struct BurnDriver BurnDrva26_jutskies = {
+	"a26_jutskies", NULL, NULL, NULL, "2023",
+	"Jutland Skies (HB)\0", "Enhanced DPC coprocessor", "KiKi", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_SHOOT, 0,
+	A2600GetZipName, a26_jutskiesRomInfo, a26_jutskiesRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_DPCPLUS, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Knight Guy (HB)
+
+static struct BurnRomInfo a26_knightguyRomDesc[] = {
+	{ "Knight Guy (2018)(VHZC Games).bin", 16384, 0x2f04be66, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_knightguy)
+STD_ROM_FN(a26_knightguy)
+
+struct BurnDriver BurnDrva26_knightguy = {
+	"a26_knightguy", NULL, NULL, NULL, "2018",
+	"Knight Guy (HB)\0", NULL, "VHZC Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_knightguyRomInfo, a26_knightguyRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Knight Guy: Castle Days (HB)
+
+static struct BurnRomInfo a26_knightguy2RomDesc[] = {
+	{ "Knight Guy - Castle Days (2021)(VHZC Games).bin", 32768, 0x87333357, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_knightguy2)
+STD_ROM_FN(a26_knightguy2)
+
+struct BurnDriver BurnDrva26_knightguy2 = {
+	"a26_knightguy2", NULL, NULL, NULL, "2021",
+	"Knight Guy: Castle Days (HB)\0", NULL, "VHZC Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_knightguy2RomInfo, a26_knightguy2RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Lady Bug Arcade (HB)
+
+static struct BurnRomInfo a26_ladybugarcRomDesc[] = {
+	{ "Lady Bug Arcade (2021)(Champ Games).bin", 32768, 0x59a3ed32, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_ladybugarc)
+STD_ROM_FN(a26_ladybugarc)
+
+struct BurnDriver BurnDrva26_ladybugarc = {
+	"a26_ladybugarc", NULL, NULL, NULL, "2021",
+	"Lady Bug Arcade (HB)\0", "CDF coprocessor", "Champ Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_ACTION | GBF_MAZE, 0,
+	A2600GetZipName, a26_ladybugarcRomInfo, a26_ladybugarcRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Medieval Mayhem (HB)
+
+static struct BurnRomInfo a26_medmayhemRomDesc[] = {
+	{ "Medieval Mayhem (2006)(SpiceWare).bin", 32768, 0xb5344ce4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_medmayhem)
+STD_ROM_FN(a26_medmayhem)
+
+struct BurnDriver BurnDrva26_medmayhem = {
+	"a26_medmayhem", NULL, NULL, NULL, "2006",
+	"Medieval Mayhem (HB)\0", NULL, "SpiceWare", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 4, HARDWARE_ATARI2600, GBF_BALLPADDLE, 0,
+	A2600GetZipName, a26_medmayhemRomInfo, a26_medmayhemRomName, NULL, NULL, NULL, NULL, A2600PaddleInputInfo, A2600PaddleDIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Oozy the Goo: Slime Quest (HB)
+
+static struct BurnRomInfo a26_oozysqRomDesc[] = {
+	{ "Oozy the Goo - Slime Quest (2022)(VHZC Games).bin", 32768, 0xdd56e194, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_oozysq)
+STD_ROM_FN(a26_oozysq)
+
+struct BurnDriver BurnDrva26_oozysq = {
+	"a26_oozysq", NULL, NULL, NULL, "2022",
+	"Oozy the Goo: Slime Quest (HB)\0", NULL, "VHZC Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_oozysqRomInfo, a26_oozysqRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// RobotWar 2684 (HB)
+
+static struct BurnRomInfo a26_rw2684RomDesc[] = {
+	{ "RobotWar 2684 (2021)(Champ Games).bin", 32768, 0x039bf799, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_rw2684)
+STD_ROM_FN(a26_rw2684)
+
+struct BurnDriver BurnDrva26_rw2684 = {
+	"a26_rw2684", NULL, NULL, NULL, "2021",
+	"RobotWar 2684 (HB)\0", "CDF coprocessor", "Champ Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_MULTISHOOT, 0,
+	A2600GetZipName, a26_rw2684RomInfo, a26_rw2684RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Tony Montezuma's Gold (HB)
+
+static struct BurnRomInfo a26_tonymgRomDesc[] = {
+	{ "Tony Montezuma's Gold (2025)(Monochrome Productions).bin", 32768, 0xbb2dc54c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_tonymg)
+STD_ROM_FN(a26_tonymg)
+
+struct BurnDriver BurnDrva26_tonymg = {
+	"a26_tonymg", NULL, NULL, NULL, "2025",
+	"Tony Montezuma's Gold (HB)\0", "CDF coprocessor", "Monochrome Productions", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_tonymgRomInfo, a26_tonymgRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Tower of Rubble (HB, v1.1)
+
+static struct BurnRomInfo a26_towrubbleRomDesc[] = {
+	{ "Tower of Rubble v1.1 (2018)(DionoiD).bin", 8192, 0x45082a89, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_towrubble)
+STD_ROM_FN(a26_towrubble)
+
+struct BurnDriver BurnDrva26_towrubble = {
+	"a26_towrubble", NULL, NULL, NULL, "2018",
+	"Tower of Rubble (HB, v1.1)\0", NULL, "DionoiD", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_towrubbleRomInfo, a26_towrubbleRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Wizard of Wor Arcade (HB)
+
+static struct BurnRomInfo a26_wowarcRomDesc[] = {
+	{ "Wizard of Wor Arcade (2019)(Champ Games).bin", 32768, 0x11bc3a97, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_wowarc)
+STD_ROM_FN(a26_wowarc)
+
+struct BurnDriver BurnDrva26_wowarc = {
+	"a26_wowarc", NULL, NULL, NULL, "2019",
+	"Wizard of Wor Arcade (HB)\0", "CDF coprocessor", "Champ Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_ACTION | GBF_MAZE, 0,
+	A2600GetZipName, a26_wowarcRomInfo, a26_wowarcRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+
+// Zoo Keeper (HB)
+
+static struct BurnRomInfo a26_zookeepRomDesc[] = {
+	{ "Zoo Keeper (2020)(Champ Games).bin", 32768, 0x8ce0b8f4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_zookeep)
+STD_ROM_FN(a26_zookeep)
+
+struct BurnDriver BurnDrva26_zookeep = {
+	"a26_zookeep", NULL, NULL, NULL, "2020",
+	"Zoo Keeper (HB)\0", "CDF coprocessor", "Champ Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_zookeepRomInfo, a26_zookeepRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_CDF, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_W * A26_SCALE, A26_NTSC_H * A26_SCALE, 4, 3
+};
+

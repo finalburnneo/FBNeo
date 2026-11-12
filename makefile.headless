@@ -93,9 +93,6 @@ endif
 
 autobj += $(depobj)
 
-ifdef	BUILD_X86_ASM
-autobj += eagle_fm.o superscale.o
-endif
 
 # End, platform stuff
 

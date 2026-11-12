@@ -25,7 +25,7 @@ depobj	+= 	about.o bzip.o choose_monitor.o cona.o d3d11shaderparams.o debugger.o
 			aud_dsp.o aud_interface.o cd_interface.o cd_chd.o inp_interface.o interface.o lowpass2.o prf_interface.o vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
-			2xpm.o 2xsai.o 2xsai16.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o hqx.o hq2x.o hq3x.o hq4x.o hq3xs.o hq_shared32.o xbr.o xbr32.o \
+			2xpm.o 2xsai.o 2xsai16.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o hqx.o hq2x.o hq3x.o hq4x.o eagle.o superscale.o hq3xs.o hq_shared32.o xbr.o xbr32.o \
 			\
 			aud_dsound3.o aud_xaudio2.o aud_wasapi.o cd_img.o ddraw_core.o dinput_core.o directx9_core.o dsound_core.o \
 			inp_dinput.o inp_xinput.o prf_performance_counter.o vid_d3d.o vid_d3d11.o vid_d3d11_shader.o vid_ddraw.o vid_ddrawfx.o vid_effect.o vid_directx9.o vid_directx_support.o
@@ -43,6 +43,3 @@ endif
 			
 autobj += $(depobj)
 
-ifdef	BUILD_X86_ASM
-autobj += eagle_fm.o superscale.o
-endif

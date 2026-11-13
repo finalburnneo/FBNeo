@@ -531,5 +531,5 @@ const z8002_cpu::Z8000_init z8002_cpu::table[] = {
 	{ 0xfd80, 0xfdff,  1, 1,  11, &z8002_cpu::ZF_dddd_1dsp7 },
 	{ 0xfe80, 0xfeff,  1, 1,  11, &z8002_cpu::ZF_dddd_1dsp7 },
 	{ 0xff80, 0xffff,  1, 1,  11, &z8002_cpu::ZF_dddd_1dsp7 },
-	{ 0,      0,       0, 0,   0, nullptr },
+	{ 0,      0,       0, 0,   0, NULL },
 };

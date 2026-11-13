@@ -18,7 +18,7 @@ static const UINT32 gba_audio_ch_freq_lo[4] = {
 static const UINT32 gba_audio_ch_freq_hi[4] = {
 	GBA_SOUND1CNT_X + 1, GBA_SOUND2CNT_H + 1, GBA_SOUND3CNT_X + 1, GBA_SOUND4CNT_H + 1,
 };
-static const UINT32 gba_audio_ch_vol_env[4] = {
+static const UINT32 gba_audio_ch_volume_env[4] = {
 	GBA_SOUND1CNT_H + 1, GBA_SOUND2CNT_L + 1, GBA_SOUND3CNT_H + 1, GBA_SOUND4CNT_L + 1,
 };
 static const UINT32 gba_audio_ch_len_duty[4] = {
@@ -52,7 +52,7 @@ static const UINT32 gba_audio_reset_regs[] = {
 
 //ch1/2 duty rise thresholds (NR11/NR21 bits 6-7) in 1.31 fixed point.
 //High time = [thr, 2^32); falling edge at phase 0.
-static const UINT32 gba_audio_duty_rise_thr[4] = {
+static const UINT32 gba_audio_duty_rise_threshold[4] = {
 	0xE0000000u, 0xC0000000u, 0x80000000u, 0x40000000u
 };
 
@@ -60,19 +60,19 @@ static const UINT32 gba_audio_duty_rise_thr[4] = {
 static const float gba_audio_psg_scale[4] = { 0.0625f, 0.125f, 0.25f, 0.0f };
 
 //NR50 envelope volume 0..7 -> [0,1].
-static const float gba_audio_master_vol_step = 1.0f / 7.0f;
+static const float gba_audio_master_volume_step = 1.0f / 7.0f;
 
 //DMA FIFO push: 32-byte ring; overflow drops new samples.
-SB_ALWAYS_INLINE void gba_audio_fifo_push(gba_t* gba, INT32 fifo_idx, INT8 sample)
+SB_ALWAYS_INLINE void gba_audio_fifo_push(gba_t* gba, INT32 fifo_index, INT8 sample)
 {
-	INT32 fifo_count = (gba->audio.fifo[fifo_idx].write_ptr - gba->audio.fifo[fifo_idx].read_ptr) & 0x1f;
+	INT32 fifo_count = (gba->audio.fifo[fifo_index].write_ptr - gba->audio.fifo[fifo_index].read_ptr) & 0x1f;
 	if (fifo_count < 32) {
-		gba->audio.fifo[fifo_idx].data[gba->audio.fifo[fifo_idx].write_ptr & 0x1f] = sample;
-		gba->audio.fifo[fifo_idx].write_ptr = (gba->audio.fifo[fifo_idx].write_ptr + 1) & 0x1f;
+		gba->audio.fifo[fifo_index].data[gba->audio.fifo[fifo_index].write_ptr & 0x1f] = sample;
+		gba->audio.fifo[fifo_index].write_ptr = (gba->audio.fifo[fifo_index].write_ptr + 1) & 0x1f;
 	}
 }
 
-//BLEP residual for square edges: NZ=32, oversample=128, ring 64.
+//Band-limited step table for square edges: 32 taps, 128x oversample, ring 64.
 #define GBA_BLEP_KERNEL_LEN          32
 #define GBA_BLEP_OVERSAMPLE  128
 #define GBA_BLEP_RING_LEN     64
@@ -592,10 +592,10 @@ static const float gba_audio_blep_table[4097] = {
     0.00000001f, 0.00000000f, 0.00000000f, 0.00000000f, 0.00000000f, 0.00000000f, 0.00000000f, 0.00000000f,
 };
 
-//Add a BLEP edge correction at fractional position edge_frac with step edge_amp.
-SB_ALWAYS_INLINE void gba_audio_blep_add(gba_t* gba, INT32 ch, float edge_frac, float edge_amp)
+//Add a BLEP edge correction at the given fractional position and step amplitude.
+SB_ALWAYS_INLINE void gba_audio_blep_add(gba_t* gba, INT32 ch, float edge_fraction, float edge_amplitude)
 {
-	float first_tap_pos = ((float)GBA_BLEP_KERNEL_LEN * 0.5f - edge_frac) * (float)GBA_BLEP_OVERSAMPLE;
+	float first_tap_pos = ((float)GBA_BLEP_KERNEL_LEN * 0.5f - edge_fraction) * (float)GBA_BLEP_OVERSAMPLE;
 	INT32 ring_pos = gba->audio.blep_idx[ch];
 	for (INT32 i = 0; i < GBA_BLEP_KERNEL_LEN; ++i) {
 		float table_pos = first_tap_pos + i * (float)GBA_BLEP_OVERSAMPLE;
@@ -606,7 +606,7 @@ SB_ALWAYS_INLINE void gba_audio_blep_add(gba_t* gba, INT32 ch, float edge_frac, 
 		INT32 table_lo = (INT32)table_pos;
 		float frac_weight = table_pos - (float)table_lo;
 		float tap_value = gba_audio_blep_table[table_lo] + (gba_audio_blep_table[table_lo + 1] - gba_audio_blep_table[table_lo]) * frac_weight;
-		gba->audio.blep_buf[ch][ring_pos] += tap_value * edge_amp;
+		gba->audio.blep_buf[ch][ring_pos] += tap_value * edge_amplitude;
 		ring_pos = (ring_pos + 1) & (GBA_BLEP_RING_LEN - 1);
 	}
 }
@@ -622,24 +622,24 @@ SB_ALWAYS_INLINE float gba_audio_blep_step(gba_t* gba, INT32 ch)
 
 //Square wave in [-1,1] using 1.31 fixed-point phase; BLEP for low steps, box-average for high steps.
 SB_ALWAYS_INLINE float gba_audio_square_sample(gba_t* gba, INT32 ch,
-	UINT32 prev_phase, UINT32 phase, UINT32 duty_rise_thr, UINT32 phase_step)
+	UINT32 prev_phase, UINT32 phase, UINT32 duty_rise_threshold, UINT32 phase_step)
 {
 	if (SB_UNLIKELY(phase_step >= 0x80000000u)) {
 		UINT32 seg_pos   = prev_phase;
 		UINT32 range_end = prev_phase + phase_step;
 		UINT64 high_span = 0;
 		for (;;) {
-			bool is_high = (seg_pos >= duty_rise_thr);
+			bool is_high = (seg_pos >= duty_rise_threshold);
 			UINT32 span_to_wrap = 0u - seg_pos;
 			bool   crosses_wrap  = (span_to_wrap < (range_end - seg_pos));
 			UINT32 span_to_duty;
 			bool   crosses_duty;
-			if (seg_pos < duty_rise_thr) {
-				span_to_duty = duty_rise_thr - seg_pos;
-				crosses_duty  = crosses_wrap ? ((0u - duty_rise_thr) < (range_end - seg_pos - span_to_wrap))
+			if (seg_pos < duty_rise_threshold) {
+				span_to_duty = duty_rise_threshold - seg_pos;
+				crosses_duty  = crosses_wrap ? ((0u - duty_rise_threshold) < (range_end - seg_pos - span_to_wrap))
 				                     : (span_to_duty < (range_end - seg_pos));
 			} else {
-				span_to_duty = span_to_wrap + duty_rise_thr;
+				span_to_duty = span_to_wrap + duty_rise_threshold;
 				crosses_duty  = crosses_wrap && (span_to_duty < (range_end - seg_pos));
 			}
 			UINT32 seg_stop;
@@ -662,14 +662,14 @@ SB_ALWAYS_INLINE float gba_audio_square_sample(gba_t* gba, INT32 ch,
 		return out_sample;
 	}
 
-	float out_sample = (phase < duty_rise_thr) ? -1.0f : 1.0f;
+	float out_sample = (phase < duty_rise_threshold) ? -1.0f : 1.0f;
 	if (prev_phase > phase) {
-		float edge_frac = (float)(0u - prev_phase) / (float)phase_step;
-		gba_audio_blep_add(gba, ch, edge_frac, -2.0f);
+		float edge_fraction = (float)(0u - prev_phase) / (float)phase_step;
+		gba_audio_blep_add(gba, ch, edge_fraction, -2.0f);
 	}
-	if (prev_phase < duty_rise_thr && phase >= duty_rise_thr) {
-		float edge_frac = (float)(duty_rise_thr - prev_phase) / (float)phase_step;
-		gba_audio_blep_add(gba, ch, edge_frac, +2.0f);
+	if (prev_phase < duty_rise_threshold && phase >= duty_rise_threshold) {
+		float edge_fraction = (float)(duty_rise_threshold - prev_phase) / (float)phase_step;
+		gba_audio_blep_add(gba, ch, edge_fraction, +2.0f);
 	}
 	out_sample += gba_audio_blep_step(gba, ch);
 	return out_sample;
@@ -685,16 +685,16 @@ SB_ALWAYS_INLINE float gba_audio_apply_bias(float sample, float bias, float bias
 }
 
 //One-pole DC-blocking high-pass.
-SB_ALWAYS_INLINE float gba_audio_dc_block(float input, float* cap_state, float coeff)
+SB_ALWAYS_INLINE float gba_audio_dc_block(float input, float* cap_state, float coefficient)
 {
 	if (SB_UNLIKELY(!(*cap_state < 2.0f && *cap_state > -2.0f)))
 		*cap_state = 0.0f;
 	float out = input - *cap_state;
-	*cap_state += out * coeff;
+	*cap_state += out * coefficient;
 	return out;
 }
 
-//One-pole RC low-pass on the mixed output; matches the frontend low-pass DSP.
+//One-pole RC low-pass on the mixed output.
 //GBA_AUDIO_LPF_FC sets the cutoff (Hz); alpha fits the two output sample rates.
 #ifndef GBA_AUDIO_LPF_FC
 	#define GBA_AUDIO_LPF_FC 8000
@@ -708,10 +708,10 @@ static const float gba_audio_lpf_alpha[2] = {
 };
 #undef GBA_AUDIO_LPF_W
 
-SB_ALWAYS_INLINE float gba_audio_lowpass(float in, float alpha, float* z)
+SB_ALWAYS_INLINE float gba_audio_lowpass(float input, float alpha, float* state)
 {
-	*z += alpha * (in - *z);
-	return *z;
+	*state += alpha * (input - *state);
+	return *state;
 }
 
 //Map MMIO byte addr -> ch 0..3, -1 for global.
@@ -726,9 +726,9 @@ static inline INT32 gba_audio_channel_from_addr(UINT32 addr)
 }
 
 //10-bit frequency from NRx3/NRx4 bytes.
-static inline INT32 gba_audio_freq_from_bytes(UINT8 freq_lo, UINT8 freq_hi)
+static inline INT32 gba_audio_freq_from_bytes(UINT8 freq_low, UINT8 freq_high)
 {
-	return freq_lo | ((INT32)(SB_BFE(freq_hi, 0, 3)) << 8u);
+	return freq_low | ((INT32)(SB_BFE(freq_high, 0, 3)) << 8u);
 }
 
 //Swap the CPU-visible WAVE_RAM window with wave_play.
@@ -760,15 +760,12 @@ static inline void gba_audio_sweep_step(gba_frame_sequencer_t* seq)
 	if (new_frequency > 2047) {
 		seq->active[0] = false;
 		new_frequency = 2047;
-	} else if (new_frequency < 0) {
-		new_frequency = 0;
 	}
 	if (seq->sweep_shift) {
 		seq->frequency[0] = new_frequency;
 		new_frequency = gba_audio_sweep_next_freq(seq);
 		if (new_frequency > 2047) {
 			seq->active[0] = false;
-			new_frequency = 2047;
 		}
 	}
 }
@@ -893,15 +890,15 @@ static inline UINT8 gba_audio_process_reg_write(gba_t* gba, UINT32 addr, UINT8 v
 
 	//Envelope NR12/NR22/NR42 (ch3 has none; NR32 handled in tick).
 	//GBA zombie envelope quirk: same direction keeps current volume; reverse resets to 0.
-	if ((ch == 0 || ch == 1 || ch == 3) && addr == gba_audio_ch_vol_env[ch]) {
+	if ((ch == 0 || ch == 1 || ch == 3) && addr == gba_audio_ch_volume_env[ch]) {
 		bool power = SB_BFE(value, 3, 5) != 0;
 		seq->powered[ch] = power;
 		seq->active[ch] &= power;
-		INT32 old_dir = seq->env_direction[ch];
-		INT32 new_dir = SB_BFE(value, 3, 1) ? 1 : -1;
-		seq->env_direction[ch] = new_dir;
+		INT32 old_direction = seq->env_direction[ch];
+		INT32 new_direction = SB_BFE(value, 3, 1) ? 1 : -1;
+		seq->env_direction[ch] = new_direction;
 		seq->env_period[ch]    = SB_BFE(value, 0, 3);
-		if (seq->env_period[ch] == 0 && new_dir != old_dir)
+		if (seq->env_period[ch] == 0 && new_direction != old_direction)
 			seq->volume[ch] = 0;
 		return value;
 	}
@@ -910,9 +907,9 @@ static inline UINT8 gba_audio_process_reg_write(gba_t* gba, UINT32 addr, UINT8 v
 	if (ch >= 0 && ch <= 2 &&
 	    (addr == gba_audio_ch_freq_lo[ch] || addr == gba_audio_ch_freq_hi[ch])) {
 		gba_io_store8(gba, addr, value);
-		UINT8 freq_lo = gba_io_read8(gba, gba_audio_ch_freq_lo[ch]);
-		UINT8 freq_hi = gba_io_read8(gba, gba_audio_ch_freq_hi[ch]);
-		seq->frequency[ch] = gba_audio_freq_from_bytes(freq_lo, freq_hi);
+		UINT8 freq_low = gba_io_read8(gba, gba_audio_ch_freq_lo[ch]);
+		UINT8 freq_high = gba_io_read8(gba, gba_audio_ch_freq_hi[ch]);
+		seq->frequency[ch] = gba_audio_freq_from_bytes(freq_low, freq_high);
 		return value;
 	}
 
@@ -950,17 +947,17 @@ static inline void gba_audio_apply_writes(gba_t* gba)
 
 		for (INT32 i = 0; i < 4; ++i) {
 			bool prev_use_length = seq->use_length[i];
-			UINT8 freq_hi = gba_io_read8(gba, gba_audio_ch_freq_hi[i]);
-			seq->use_length[i] = SB_BFE(freq_hi, 6, 1) != 0;
-			UINT8 vol_env = gba_io_read8(gba, gba_audio_ch_vol_env[i]);
+			UINT8 freq_high = gba_io_read8(gba, gba_audio_ch_freq_hi[i]);
+			seq->use_length[i] = SB_BFE(freq_high, 6, 1) != 0;
+			UINT8 vol_env = gba_io_read8(gba, gba_audio_ch_volume_env[i]);
 
 			if (i == 2) {
 				bool power = SB_BFE(gba_io_read8(gba, GBA_SOUND3CNT_L), 7, 1) != 0;
 				seq->powered[i] = power;
 			}
 			if (i != 0) {
-				UINT8 freq_lo = gba_io_read8(gba, gba_audio_ch_freq_lo[i]);
-				seq->frequency[i] = gba_audio_freq_from_bytes(freq_lo, freq_hi);
+				UINT8 freq_low = gba_io_read8(gba, gba_audio_ch_freq_lo[i]);
+				seq->frequency[i] = gba_audio_freq_from_bytes(freq_low, freq_high);
 			}
 			if (i == 2) {
 				seq->env_direction[i] = 0;
@@ -970,10 +967,10 @@ static inline void gba_audio_apply_writes(gba_t* gba)
 				seq->env_period[i]    = SB_BFE(vol_env, 0, 3);
 			}
 
-			bool triggered = SB_BFE(freq_hi, 7, 1) != 0;
+			bool triggered = SB_BFE(freq_high, 7, 1) != 0;
 			if (triggered) {
-				UINT8 freq_lo     = gba_io_read8(gba, gba_audio_ch_freq_lo[i]);
-				seq->frequency[i] = gba_audio_freq_from_bytes(freq_lo, freq_hi);
+				UINT8 freq_low     = gba_io_read8(gba, gba_audio_ch_freq_lo[i]);
+				seq->frequency[i] = gba_audio_freq_from_bytes(freq_low, freq_high);
 				seq->volume[i]    = SB_BFE(vol_env, 4, 4);
 				seq->env_overflow[i] = false;
 
@@ -1000,7 +997,7 @@ static inline void gba_audio_apply_writes(gba_t* gba)
 					seq->sweep_subtracted = false;
 					seq->sweep_enable     = (seq->sweep_period > 0) || (seq->sweep_shift > 0);
 					seq->sweep_timer      = seq->sweep_period ? seq->sweep_period : 8;
-					//Initial sweep overflow check.
+					//Initial sweep overflow check; also latches the subtraction sweep flag.
 					if (seq->sweep_shift && gba_audio_sweep_next_freq(seq) > 2047) {
 						seq->active[0] = false;
 					}
@@ -1022,7 +1019,7 @@ static inline void gba_audio_apply_writes(gba_t* gba)
 			}
 
 			//Trigger (bit7) is W1: clear on write-back.
-			gba_io_store8(gba, gba_audio_ch_freq_hi[i], freq_hi & 0x7f);
+			gba_io_store8(gba, gba_audio_ch_freq_hi[i], freq_high & 0x7f);
 		}
 	}
 
@@ -1072,9 +1069,9 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 
 	//ch1/2 duty from NR11/NR21 top 2 bits; threshold in 1.31 fixed point.
 	UINT8 nr11 = gba_io_read8(gba, GBA_SOUND1CNT_H + 0);
-	UINT32 duty_sq0 = gba_audio_duty_rise_thr[SB_BFE(nr11, 6, 2)];
+	UINT32 duty_sq0 = gba_audio_duty_rise_threshold[SB_BFE(nr11, 6, 2)];
 	UINT8 nr21 = gba_io_read8(gba, GBA_SOUND2CNT_L + 0);
-	UINT32 duty_sq1 = gba_audio_duty_rise_thr[SB_BFE(nr21, 6, 2)];
+	UINT32 duty_sq1 = gba_audio_duty_rise_threshold[SB_BFE(nr21, 6, 2)];
 
 	//ch3 level: NR32 bits 5-6 (0 = mute); bit7 forces 75% output.
 	UINT8 nr30 = gba_io_read8(gba, GBA_SOUND3CNT_L);
@@ -1098,8 +1095,8 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 
 	//NR50: PSG master L/R (bits 4-6 / 0-2) in [0,1]. FIFO ignores NR50.
 	UINT8 nr50 = gba_io_read8(gba, GBA_SOUNDCNT_L + 0);
-	float psg_master_left  = (float)((nr50 >> 4) & 0x07) * gba_audio_master_vol_step;
-	float psg_master_right = (float)(nr50 & 0x07) * gba_audio_master_vol_step;
+	float psg_master_left  = (float)((nr50 >> 4) & 0x07) * gba_audio_master_volume_step;
+	float psg_master_right = (float)(nr50 & 0x07) * gba_audio_master_volume_step;
 
 	//NR51: routing bits ch0-3 -> right (0-3), left (4-7).
 	UINT8 nr51 = gba_io_read8(gba, GBA_SOUNDCNT_L + 1);
@@ -1113,13 +1110,13 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 	//SOUNDCNT_H: PSG master scale, FIFO gain/route, FIFO timer reset bits (W1C).
 	UINT16 soundcnt_h = gba_io_read16(gba, GBA_SOUNDCNT_H);
 	{
-		float psg_vol = gba_audio_psg_scale[SB_BFE(soundcnt_h, 0, 2)];
+		float psg_volume = gba_audio_psg_scale[SB_BFE(soundcnt_h, 0, 2)];
 
-		float right_vol = psg_master_right * psg_vol;
-		float left_vol = psg_master_left  * psg_vol;
+		float right_volume = psg_master_right * psg_volume;
+		float left_volume = psg_master_left  * psg_volume;
 		for (INT32 i = 0; i < 4; ++i) {
-			gain_r[i] *= right_vol;
-			gain_l[i] *= left_vol;
+			gain_r[i] *= right_volume;
+			gain_l[i] *= left_volume;
 		}
 		//FIFO A/B gains and routing.
 		for (INT32 i = 0; i < 2; ++i) {
@@ -1133,28 +1130,28 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 	//NR50 already folded into gain_l[]/gain_r[] for PSG; FIFO at unity gain.
 
 	//Channel frequencies; all four channels use 1.31 fixed-point steps.
-	double inv_sample_rate = 1.0 / (double)emu->audio_sample_rate;
+	double inverse_sample_rate = 1.0 / (double)emu->audio_sample_rate;
 	double freq_sq0 = 131072.0 / (double)(2048 - seq->frequency[0]);
 	double freq_sq1 = 131072.0 / (double)(2048 - seq->frequency[1]);
 	double freq_noise = 524288.0 / (double)noise_div / (double)(1u << (noise_shift + 1));
-	seq->ch_step[0] = (UINT32)(freq_sq0 * inv_sample_rate * 4294967296.0 + 0.5);
-	seq->ch_step[1] = (UINT32)(freq_sq1 * inv_sample_rate * 4294967296.0 + 0.5);
+	seq->ch_step[0] = (UINT32)(freq_sq0 * inverse_sample_rate * 4294967296.0 + 0.5);
+	seq->ch_step[1] = (UINT32)(freq_sq1 * inverse_sample_rate * 4294967296.0 + 0.5);
 	//ch3 nibble rate = CPU/4 / period, period = (2048-freq)<<1 cycles.
 	{
 		double freq_wave = 0.25 * GBA_CPU_HZ / (double)((2048 - seq->frequency[2]) << 1);
-		apu->wave_step_u32 = (UINT32)(freq_wave * inv_sample_rate * 4294967296.0 + 0.5);
+		apu->wave_step_u32 = (UINT32)(freq_wave * inverse_sample_rate * 4294967296.0 + 0.5);
 	}
-	seq->ch_step[3] = (UINT32)(freq_noise * inv_sample_rate * 4294967296.0 + 0.5);
+	seq->ch_step[3] = (UINT32)(freq_noise * inverse_sample_rate * 4294967296.0 + 0.5);
 
 	const UINT16 noise_coeff = noise_short ? 0x4040u : 0x4000u;
 	bool noise_audible = seq->active[3] && seq->volume[3] != 0
 		&& (gain_l[3] != 0.0f || gain_r[3] != 0.0f);
-	float chan_vol[4];
+	float chan_volume[4];
 	for (INT32 i = 0; i < 4; ++i) {
 		if (i == 2)
-			chan_vol[i] = seq->active[i] ? wave_scale : 0.0f;
+			chan_volume[i] = seq->active[i] ? wave_scale : 0.0f;
 		else
-			chan_vol[i] = seq->active[i] ? gba_audio_volume_norm[seq->volume[i]] : 0.0f;
+			chan_volume[i] = seq->active[i] ? gba_audio_volume_norm[seq->volume[i]] : 0.0f;
 	}
 
 	//FIFO samples from latch (updated by timer overflow in gba_compute_timers).
@@ -1166,7 +1163,7 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 	bool wave_len64 = SB_BFE(nr30, 5, 1) != 0;
 	UINT32 wave_len = wave_len64 ? 64u : 32u;
 	INT32 wave_mid = 8 >> wave_shift;
-	bool wave_on = (chan_vol[2] != 0.0f);
+	bool wave_on = (chan_volume[2] != 0.0f);
 
 	float bias = (float)(gba_io_read16(gba, GBA_SOUNDBIAS) & 0x3ff) / 512.0f;
 	const float bias_max = 1023.0f / 512.0f;
@@ -1185,24 +1182,15 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 		seq->ch_phase[0] += seq->ch_step[0];
 		seq->ch_phase[1] += seq->ch_step[1];
 
-		//Advance ch3 nibble cursor and box-average (always runs, even when muted).
-		float wave_acc = 0.0f;
-		UINT64 wave_span = 0;
-		UINT32 wave_pos = apu->wave_phase;
+		//Advance ch3 nibble cursor; use fast paths when muted or no wrap this sample.
+		UINT32 wave_pos  = apu->wave_phase;
 		UINT32 wave_step = apu->wave_step_u32;
-		INT32 cur_nibble = (INT32)(apu->wave_nibble >> wave_shift);
-		UINT32 wave_left = wave_step;
-		while (wave_left > 0) {
-			UINT32 adv_to_wrap = 0u - wave_pos;
-			UINT32 advance = (wave_left < adv_to_wrap) ? wave_left : adv_to_wrap;
-			if (advance == 0 && wave_pos == 0) advance = wave_left;
-			if (wave_on) {
-				wave_acc += (float)cur_nibble * (float)advance;
-				wave_span += advance;
-			}
-			wave_pos    += advance;
-			wave_left -= advance;
-			if (wave_pos == 0 && wave_left > 0) {
+		INT32  cur_nibble = (INT32)(apu->wave_nibble >> wave_shift);
+		UINT32 wave_next = wave_pos + wave_step;
+		INT32 wave_sample;
+		if (SB_LIKELY(!wave_on)) {
+			//Muted: no averaging; only advance cursor, advance LFSR on wrap.
+			if (SB_UNLIKELY(wave_next < wave_pos && wave_next != 0)) {
 				apu->wave_nibble_offset++;
 				UINT32 nibble_index = apu->wave_nibble_offset & (wave_len - 1u);
 				UINT32 byte_index = nibble_index >> 1;
@@ -1210,64 +1198,103 @@ static inline void gba_audio_tick(gba_t* gba, sb_emu_state_t* emu, double delta_
 					? gba_io_read8(gba, GBA_WAVE_RAM + (byte_index - 16))
 					: apu->wave_play[byte_index];
 				apu->wave_nibble = (UINT8)((wave_byte >> ((nibble_index & 1u) ? 0 : 4)) & 0xf);
-				cur_nibble = (INT32)(apu->wave_nibble >> wave_shift);
 			}
-		}
-		apu->wave_phase = wave_pos;
-		INT32 wave_sample;
-		if (SB_UNLIKELY(wave_on && wave_span))
-			wave_sample = (INT32)(wave_acc / (float)wave_span + 0.5f);
-		else
+			apu->wave_phase = wave_next;
 			wave_sample = (INT32)(apu->wave_nibble >> wave_shift);
-
-		//Advance ch4 LFSR and box-average (always runs, even when muted).
-		float noise_acc = 0.0f;
-		UINT64 noise_span = 0;
-		UINT32 noise_pos = seq->ch_phase[3];
-		UINT32 noise_step = seq->ch_step[3];
-		UINT32 noise_left = noise_step;
-		INT32 lfsr_bit = (INT32)(seq->lfsr4 & 1u);
-		while (noise_left > 0) {
-			UINT32 adv_to_wrap = 0u - noise_pos;
-			UINT32 advance = (noise_left < adv_to_wrap) ? noise_left : adv_to_wrap;
-			if (advance == 0 && noise_pos == 0) advance = noise_left;
-			if (noise_audible) {
-				noise_acc += (float)lfsr_bit * (float)advance;
-				noise_span += advance;
+		} else if (SB_LIKELY(!(wave_next < wave_pos && wave_next != 0))) {
+			//Single segment (no wrap or exact boundary wrap to 0): value is constant.
+			apu->wave_phase = wave_next;
+			wave_sample = cur_nibble;
+		} else {
+			//Wrap mid-sample: fall back to time-weighted box average.
+			float  wave_acc  = 0.0f;
+			UINT64 wave_span = 0;
+			UINT32 wave_left = wave_step;
+			while (wave_left > 0) {
+				UINT32 adv_to_wrap = 0u - wave_pos;
+				UINT32 advance = (wave_left < adv_to_wrap) ? wave_left : adv_to_wrap;
+				if (advance == 0 && wave_pos == 0) advance = wave_left;
+				wave_acc  += (float)cur_nibble * (float)advance;
+				wave_span += advance;
+				wave_pos  += advance;
+				wave_left -= advance;
+				if (wave_pos == 0 && wave_left > 0) {
+					apu->wave_nibble_offset++;
+					UINT32 nibble_index = apu->wave_nibble_offset & (wave_len - 1u);
+					UINT32 byte_index = nibble_index >> 1;
+					INT32 wave_byte = (wave_len64 && byte_index >= 16)
+						? gba_io_read8(gba, GBA_WAVE_RAM + (byte_index - 16))
+						: apu->wave_play[byte_index];
+					apu->wave_nibble = (UINT8)((wave_byte >> ((nibble_index & 1u) ? 0 : 4)) & 0xf);
+					cur_nibble = (INT32)(apu->wave_nibble >> wave_shift);
+				}
 			}
-			noise_pos    += advance;
-			noise_left -= advance;
-			if (noise_pos == 0 && noise_left > 0) {
-				INT32 fb = (((INT32)seq->lfsr4 ^ ((INT32)seq->lfsr4 >> 1)) ^ 1) & 1;
-				seq->lfsr4 >>= 1;
-				if (fb) seq->lfsr4 |= noise_coeff;
-				else    seq->lfsr4 &= (UINT16)~noise_coeff;
-				lfsr_bit = (INT32)(seq->lfsr4 & 1u);
-			}
+			apu->wave_phase = wave_pos;
+			wave_sample = (INT32)(wave_acc / (float)wave_span + 0.5f);
 		}
-		seq->ch_phase[3] = noise_pos;
-		float noise_val = 0.0f;
+
+		//Advance ch4 LFSR; use fast paths when muted or no flip this sample.
+		UINT32 noise_pos  = seq->ch_phase[3];
+		UINT32 noise_step = seq->ch_step[3];
+		UINT32 noise_next = noise_pos + noise_step;
+		INT32  lfsr_bit   = (INT32)(seq->lfsr4 & 1u);
+		float  noise_val  = 0.0f;
 		if (noise_audible) {
-			if (noise_span) noise_val = noise_acc / (float)noise_span * 2.0f - 1.0f;
-			else           noise_val = (float)((lfsr_bit << 1) - 1);
+			if (SB_LIKELY(!(noise_next < noise_pos && noise_next != 0))) {
+				//Single segment: output bit is constant all sample.
+				seq->ch_phase[3] = noise_next;
+				noise_val = (float)((lfsr_bit << 1) - 1);
+			} else {
+				//Flip mid-sample: fall back to time-weighted box average.
+				float  noise_acc  = 0.0f;
+				UINT64 noise_span = 0;
+				UINT32 noise_left = noise_step;
+				while (noise_left > 0) {
+					UINT32 adv_to_wrap = 0u - noise_pos;
+					UINT32 advance = (noise_left < adv_to_wrap) ? noise_left : adv_to_wrap;
+					if (advance == 0 && noise_pos == 0) advance = noise_left;
+					noise_acc  += (float)lfsr_bit * (float)advance;
+					noise_span += advance;
+					noise_pos  += advance;
+					noise_left -= advance;
+					if (noise_pos == 0 && noise_left > 0) {
+						INT32 feedback = (((INT32)seq->lfsr4 ^ ((INT32)seq->lfsr4 >> 1)) ^ 1) & 1;
+						seq->lfsr4 >>= 1;
+						if (feedback) seq->lfsr4 |= noise_coeff;
+						else    seq->lfsr4 &= (UINT16)~noise_coeff;
+						lfsr_bit = (INT32)(seq->lfsr4 & 1u);
+					}
+				}
+				seq->ch_phase[3] = noise_pos;
+				noise_val = noise_acc / (float)noise_span * 2.0f - 1.0f;
+			}
+		} else {
+			//Muted: only advance LFSR on flip.
+			if (SB_UNLIKELY(noise_next < noise_pos && noise_next != 0)) {
+				INT32 feedback = (((INT32)seq->lfsr4 ^ ((INT32)seq->lfsr4 >> 1)) ^ 1) & 1;
+				seq->lfsr4 >>= 1;
+				if (feedback) seq->lfsr4 |= noise_coeff;
+				else    seq->lfsr4 &= (UINT16)~noise_coeff;
+			}
+			seq->ch_phase[3] = noise_next;
 		}
 
 		float channels[6];
 		//Step BLEP even for muted squares so tails decay; phase already advanced above.
-		if (SB_LIKELY(chan_vol[0])) {
-			channels[0] = gba_audio_square_sample(gba, 0, prev_phase0, seq->ch_phase[0], duty_sq0, seq->ch_step[0]) * chan_vol[0];
+		if (SB_LIKELY(chan_volume[0])) {
+			channels[0] = gba_audio_square_sample(gba, 0, prev_phase0, seq->ch_phase[0], duty_sq0, seq->ch_step[0]) * chan_volume[0];
 		} else {
 			gba_audio_blep_step(gba, 0);
 			channels[0] = 0.0f;
 		}
-		if (SB_LIKELY(chan_vol[1])) {
-			channels[1] = gba_audio_square_sample(gba, 1, prev_phase1, seq->ch_phase[1], duty_sq1, seq->ch_step[1]) * chan_vol[1];
+		if (SB_LIKELY(chan_volume[1])) {
+			channels[1] = gba_audio_square_sample(gba, 1, prev_phase1, seq->ch_phase[1], duty_sq1, seq->ch_step[1]) * chan_volume[1];
 		} else {
 			gba_audio_blep_step(gba, 1);
 			channels[1] = 0.0f;
 		}
-		channels[2] = chan_vol[2] ? (float)(wave_sample - wave_mid) * (1.0f / 8.0f) * chan_vol[2] : 0.0f;
-		channels[3] = chan_vol[3] * noise_val;
+		channels[2] = chan_volume[2] ? (float)(wave_sample - wave_mid) * (1.0f / 8.0f) * chan_volume[2] : 0.0f;
+		channels[3] = chan_volume[3] * noise_val;
 		channels[4] = fifo_sample[0];
 		channels[5] = fifo_sample[1];
 

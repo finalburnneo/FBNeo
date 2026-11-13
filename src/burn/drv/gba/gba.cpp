@@ -132,21 +132,33 @@ SB_ALWAYS_INLINE void arm7_block_transfer_decoded_fast(arm7_t* cpu, gba_t* gba,
 	if (cpu->phase == 0) {
 		INT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
 		INT32 increment = U ? 4 : -4;
-		INT32 num_regs  = 0;
-		for (INT32 i = 0; i < 16; ++i)
-			if (ARM7_BFE(reglist, i, 1) == 1)
-				num_regs += 1;
 		INT32 base_addr = addr;
-		if (reglist == 0) {
-			reglist  = 1 << 15;
-			num_regs = 16;
+		// Register count is needed for the writeback target (W=1) or, when U=0,
+		// for the starting address. An empty list transfers R15.
+		if (W || !U) {
+			INT32 num_regs;
+			if (reglist == 0) {
+				num_regs = 16;
+			} else {
+				num_regs = 0;
+				for (INT32 i = 0; i < 16; ++i)
+					if (ARM7_BFE(reglist, i, 1) == 1)
+						num_regs += 1;
+			}
+			if (W) {
+				if (!U)
+					base_addr += num_regs * increment;
+				addr = base_addr;
+				if (U)
+					base_addr += num_regs * increment;
+			} else if (!U) {
+				addr += num_regs * increment;
+			}
 		}
-		if (!U)
-			base_addr += (num_regs)*increment;
-		addr = base_addr;
-		if (U)
-			base_addr += (num_regs)*increment;
 		cpu->block.base_addr = base_addr;
+
+		if (reglist == 0)
+			reglist = 1 << 15;
 
 		if (!(P ^ U))
 			addr += 4;
@@ -157,16 +169,16 @@ SB_ALWAYS_INLINE void arm7_block_transfer_decoded_fast(arm7_t* cpu, gba_t* gba,
 	}
 	bool user_bank_transfer;
 	if (SB_UNLIKELY(cpu->phase != 0)) {
-		user_bank_transfer = cpu->block.fwd_user_bank;
+		user_bank_transfer = cpu->block.decoded_user_bank_transfer;
 	} else {
 		user_bank_transfer = S && (!L || !SB_BFE(reglist, 15, 1));
-		cpu->block.fwd_user_bank = user_bank_transfer;
-		cpu->block.fwd_s    = (UINT32)S;
-		cpu->block.fwd_w    = (UINT32)W;
-		cpu->block.fwd_l    = (UINT32)L;
-		cpu->block.fwd_rn   = (UINT32)Rn;
-		cpu->block.fwd_list = reglist;
-		cpu->block.fwd_resume = (0xeu << 28) | (4u << 25)
+		cpu->block.decoded_user_bank_transfer = user_bank_transfer;
+		cpu->block.decoded_psr_bit            = (UINT32)S;
+		cpu->block.decoded_writeback_bit      = (UINT32)W;
+		cpu->block.decoded_load_bit           = (UINT32)L;
+		cpu->block.decoded_base_register      = (UINT32)Rn;
+		cpu->block.decoded_register_list      = reglist;
+		cpu->block.decoded_resume_opcode      = (0xeu << 28) | (4u << 25)
 			| ((UINT32)P << 24) | ((UINT32)U << 23) | ((UINT32)S << 22)
 			| ((UINT32)W << 21) | ((UINT32)L << 20) | ((UINT32)Rn << 16) | reglist;
 	}
@@ -198,7 +210,7 @@ SB_ALWAYS_INLINE void arm7_block_transfer_decoded_fast(arm7_t* cpu, gba_t* gba,
 			cpu->registers[CPSR] = arm7_reg_read(cpu, SPSR);
 		}
 		cpu->phased_op_id   = ARM_PHASED_BLOCK_TRANSFER;
-		cpu->phased_opcode  = cpu->block.fwd_resume;
+		cpu->phased_opcode  = cpu->block.decoded_resume_opcode;
 		cpu->phase = i + 1;
 		return;
 	}
@@ -222,7 +234,7 @@ static inline void arm7_block_transfer_fast(arm7_t* cpu, gba_t* gba, UINT32 opco
 
 static inline void arm7_block_transfer_resume_fast(arm7_t* cpu, gba_t* gba)
 {
-	UINT32 resume = cpu->block.fwd_resume;
+	UINT32 resume = cpu->block.decoded_resume_opcode;
 	arm7_block_transfer_decoded_fast(cpu, gba,
 		0, 0,
 		(INT32)((resume >> 22) & 1), (INT32)((resume >> 21) & 1),
@@ -873,11 +885,15 @@ bool GbaCoreFramebufferIsDirectCopyable(const GbaCore *core)
 	return core != NULL && core->state.framebuffer_is_direct_copy;
 }
 
-UINT32 GbaCoreGetFramebufferPitch()
+UINT32 GbaCoreGetFramebufferPitch(const GbaCore *core)
 {
-	// Pitch is always GBA_WIDTH*4 from the core's perspective; DrvDraw
-	// does row-by-row memcpy respecting nBurnPitch, so this value is
-	// only used by non-DrvDraw consumers (e.g. screenshots).
+	// Byte stride of a row in the buffer returned by GbaCoreGetFramebuffer.
+	// Packed 16/24bpp worker output uses GBA_WIDTH * out_bpp with no row
+	// padding; all other paths use 4 bytes per pixel.
+	if (core == NULL)
+		return 0;
+	if (core->state.framebuffer_is_direct_copy && core->worker.out_bpp != 4)
+		return GBA_WIDTH * (UINT32)core->worker.out_bpp;
 	return GBA_WIDTH * sizeof(UINT32);
 }
 
@@ -913,6 +929,8 @@ INT32 GbaCoreRenderAudio(GbaCore *core, INT16 *stereo, INT32 frames)
 			memset(stereo + produced * 2, 0, missing * 2 * sizeof(INT16));
 		ring->read_ptr  += (UINT32)missing * 2;
 		ring->write_ptr += (UINT32)missing * 2;
+		// Re-normalise the pointers past the ring size.
+		(void)sb_ring_buffer_size(ring);
 	}
 	return frames;
 }

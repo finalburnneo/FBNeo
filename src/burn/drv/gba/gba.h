@@ -87,7 +87,7 @@ typedef struct {
 
 static inline UINT32 sb_ring_buffer_size(sb_ring_buffer_t* buff)
 {
-	if (buff->read_ptr > SB_AUDIO_RING_BUFFER_SIZE) {
+	if (buff->read_ptr >= SB_AUDIO_RING_BUFFER_SIZE) {
 		buff->write_ptr -= SB_AUDIO_RING_BUFFER_SIZE;
 		buff->read_ptr  -= SB_AUDIO_RING_BUFFER_SIZE;
 	}
@@ -354,16 +354,8 @@ typedef struct {
 
 typedef struct {
 	UINT8* bios;
-	UINT8  wram0[256 * 1024];
-	UINT8  wram1[32 * 1024];
-	UINT8  io[1024];
-	UINT8  palette[1024];
-	UINT8  vram[128 * 1024];
-	UINT8  oam[1024];
 	UINT8* cart_rom;
-	UINT8  cart_backup[128 * 1024];
-	UINT8  matrix_window[0x2000];
-	UINT8  flash_chip_id[4];
+
 	UINT32 openbus_word;
 	UINT32 eeprom_word;
 	UINT32 eeprom_addr;
@@ -376,6 +368,16 @@ typedef struct {
 	UINT8  wait_state_table[16 * 4];
 	UINT32 mmio_data_mask_lookup[256];
 	UINT8  mmio_reg_valid_lookup[256];
+
+	UINT8  wram0[256 * 1024];
+	UINT8  wram1[32 * 1024];
+	UINT8  io[1024];
+	UINT8  palette[1024];
+	UINT8  vram[128 * 1024];
+	UINT8  oam[1024];
+	UINT8  cart_backup[128 * 1024];
+	UINT8  matrix_window[0x2000];
+	UINT8  flash_chip_id[4];
 } gba_mem_t;
 
 typedef struct {
@@ -424,13 +426,13 @@ typedef struct {
 	UINT32 latched_transfer;
 	INT32  startup_delay;
 	bool   activate_audio_dma;
-	bool   video_dma_active;
 } gba_dma_t;
 
 typedef struct {
 	INT32  scan_clock;
 	bool   last_vblank;
 	bool   last_hblank;
+	bool   last_vcount_match;
 	UINT32 vblank_seq;			// increments at each vblank rising edge
 	UINT32 hblank_seq;			// increments at each hblank rising edge
 	INT32  last_lcd_y;
@@ -536,19 +538,9 @@ typedef struct {
 } gba_tilt_sensor_t;
 
 typedef struct gba_t {
-	gba_mem_t mem;
 	arm7_t    cpu;
-	gba_cartridge_t cart;
-	gba_ppu_t ppu;
-	gba_rtc_t rtc;
-	gba_dma_t dma[4];
-	gba_sio_t sio;
-	// 2-cycle penalty when the CPU takes over from the DMA
-	bool last_transaction_dma;
-	bool activate_dmas;
-	bool dma_wait_ppu;
-	gba_timer_t timers[4];
 	UINT32 global_timer;		// master clock driving the scheduler
+	UINT32 next_event_tick;		// cached absolute tick of the next due event; 0xFFFFFFFF = none
 	UINT32 timer_settle_clock;	// master clock at the last timer settle
 	gba_timing_t timing;
 	gba_event_t  timer_event;
@@ -556,28 +548,41 @@ typedef struct gba_t {
 	gba_event_t  sio_event;
 	gba_event_t  audio_event;
 	gba_event_t  dma_event;
-	UINT32 next_event_tick;		// cached absolute when of the next due event; 0xFFFFFFFF = none
-	gba_audio_t  audio;
+	// 2-cycle penalty when the CPU takes over from the DMA
+	bool last_transaction_dma;
+	bool activate_dmas;
+	bool dma_wait_ppu;
+	bool   interrupt_pending;	// cached (IE & IF) with IME enabled
 	bool   prev_key_interrupt;
+	// IF propagates with up to 4-cycle delay; this FIFO tracks it
+	UINT16 pipelined_if[5];
+	INT32  active_if_pipe_stages;
+	INT32  last_cpu_tick;
+	INT32  residual_dma_ticks;
+	struct ppu_worker_t* ppu_worker_ptr;  // per-instance worker (NULL = single-thread); safe for Netplay / multi-instance
+
+	gba_mem_t mem;
+
+	gba_cartridge_t cart;
+	gba_ppu_t ppu;
+	gba_rtc_t rtc;
+	gba_dma_t dma[4];
+	gba_timer_t timers[4];
+	gba_sio_t sio;
+	gba_audio_t  audio;
+
 	UINT32 first_target_buffer[GBA_LCD_W];
 	UINT32 second_target_buffer[GBA_LCD_W];
 	UINT8  window[GBA_LCD_W];
 	UINT8* framebuffer;
 	bool   framebuffer_is_direct_copy;  // true = framebuffer already in output bpp (DrvDraw can memcpy); false = scratch R,G,B,X (per-pixel conversion)
-	// IF propagates with up to 4-cycle delay; this FIFO tracks it
-	UINT16 pipelined_if[5];
-	INT32  active_if_pipe_stages;
-	bool   interrupt_pending;	// cached (IE & IF) with IME enabled
-	INT32  last_cpu_tick;
-	INT32  residual_dma_ticks;
 	bool   stop_mode;
 	bool   frame_in_progress;
 	bool   pause_after_frame;
+
 	gba_solar_sensor_t solar_sensor;
 	gba_gyro_sensor_t  gyro_sensor;
 	gba_tilt_sensor_t  tilt_sensor;
-
-	struct ppu_worker_t* ppu_worker_ptr;  // per-instance worker (NULL = single-thread); safe for Netplay / multi-instance
 } gba_t;
 
 typedef struct {
@@ -774,7 +779,7 @@ UINT8  GbaCoreGetRumbleOutput(const GbaCore *core);
 
 const UINT8* GbaCoreGetFramebuffer(const GbaCore* core);
 bool   GbaCoreFramebufferIsDirectCopyable(const GbaCore* core);  // true = framebuffer already in output bpp (DrvDraw can memcpy); false = scratch R,G,B,X (per-pixel conversion)
-UINT32 GbaCoreGetFramebufferPitch();
+UINT32 GbaCoreGetFramebufferPitch(const GbaCore* core);  // row stride in bytes of the buffer returned by GbaCoreGetFramebuffer
 INT32  GbaCoreRenderAudio(GbaCore *core, INT16 *stereo, INT32 frames);
 void   GbaCoreClearAudio(GbaCore *core);
 

@@ -1252,10 +1252,6 @@ INT32 cps3Init()
 		Sh2Init(1);
 		Sh2Open(0);
 
-#ifdef SPEED_HACK
-		cps3speedhack = 1;
-#endif
-
 		// Map sh-2 memory:
 		Sh2MapMemory(RomBios,		0x00000000, 0x0007ffff, MAP_ROM);	// BIOS
 		Sh2MapMemory(RamMain,		0x02000000, 0x0207ffff, MAP_RAM);	// Main RAM

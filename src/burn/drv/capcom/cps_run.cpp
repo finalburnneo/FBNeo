@@ -1,5 +1,6 @@
 // CPS - Run
 #include "cps.h"
+#include "burn_ost.h"
 
 // CPS2
 INT32 Cps2Volume = 39;
@@ -202,6 +203,8 @@ static INT32 DrvReset()
 
 	CpsRasterReset();
 
+	BurnOstReset();
+
 	if (Cps == 2) {
 		// CPS-2 uses Object Banks
 		SekOpen(0);
@@ -295,6 +298,8 @@ INT32 CpsRunInit()
 		QsndSetRoute(BURN_SND_QSND_OUTPUT_2, 2.00, BURN_SND_ROUTE_RIGHT);
 	}
 
+	CpsOstInit();							// OST packs (support/ost/), after sound init
+
 	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMReset();
 	
 	if (CpsRunInitCallbackFunction) {
@@ -320,6 +325,7 @@ INT32 CpsRunExit()
 	if (Cps == 2 || PangEEP || Cps1Qs == 1 || CpsBootlegEEPROM) EEPROMExit();
 
 	// Sound exit
+	BurnOstExit();
 	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) QsndExit();
 	if (Cps != 2 && Cps1Qs == 0 && !Cps1DisablePSnd) PsndExit();
 
@@ -439,6 +445,9 @@ INT32 Cps1Frame()
 		}
 	}
 
+	BurnOstFrame();
+	BurnOstRender(pBurnSoundOut, nBurnSoundLen);
+
 	if (CpsRunFrameEndCallbackFunction) {
 		CpsRunFrameEndCallbackFunction();
 	}
@@ -505,6 +514,9 @@ INT32 Cps2Frame()
 	nCpsCyclesExtra = SekTotalCycles() - nCpsCycles;
 
 	if (!Cps2DisableQSnd) QsndEndFrame();
+
+	BurnOstFrame();
+	BurnOstRender(pBurnSoundOut, nBurnSoundLen);
 
 	SekClose();
 

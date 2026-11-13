@@ -6,6 +6,7 @@
 TCHAR szAppHiscorePath[MAX_PATH] = _T("support/hiscores/");
 TCHAR szAppSamplesPath[MAX_PATH] = _T("support/samples/");
 TCHAR szAppSnesMsu1Path[MAX_PATH] = _T("support/snesmsu1/");
+TCHAR szAppOstPath[MAX_PATH]		= _T("support/ost/");
 TCHAR szAppCheatsPath[MAX_PATH] = _T("support/cheats/");
 TCHAR szAppPreviewsPath[MAX_PATH] = _T("support/previews/");
 TCHAR szAppTitlesPath[MAX_PATH] = _T("support/titles/");

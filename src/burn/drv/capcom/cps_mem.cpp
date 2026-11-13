@@ -1,4 +1,5 @@
 #include "cps.h"
+#include "burn_ost.h"
 // CPS - Memory
 
 UINT32 CpsMProt[4];
@@ -154,6 +155,10 @@ void __fastcall CPSQSoundC0WriteByte(UINT32 sekAddress, UINT8 byteValue)
 #else
 	QsndSyncZ80();
 #endif
+
+	if (sekAddress == 0x001F && BurnOstActive()) {
+		if (CpsOstQsndMailbox(byteValue) == 0) return;	// OST replaced it with nothing
+	}
 
 	CpsZRamC0[sekAddress >> 1] = byteValue;
 }
@@ -461,6 +466,8 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	} else {											// Scan PSound chips
 		if ((Cps & 1) && !Cps1DisablePSnd) PsndScan(nAction, pnMin);
 	}
+
+	BurnOstScan(nAction, pnMin);
 	
 	if (CpsMemScanCallbackFunction) {
 		CpsMemScanCallbackFunction(nAction, pnMin);

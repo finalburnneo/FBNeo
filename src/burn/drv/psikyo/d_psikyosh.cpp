@@ -573,10 +573,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		EEPROMFill(DrvEEPROM, 0, 0x100);
 	}
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "soldivid") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "soldividk") == 0) {
-		cpu_rate = 28636350/2;
-	}
-
 	BurnYMF278BReset();
 
 	sample_offs = 0;

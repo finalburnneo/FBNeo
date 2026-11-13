@@ -6,6 +6,9 @@
 // Based on the code in Kev's opwolf driver
 // Trackball/Paddle/Dial emulation by dink
 
+// Uncomment for the fbn-original single-colour 17x17 reticle
+//#define BURNGUN_CLASSIC_RETICLE
+
 INT32 nBurnGunNumPlayers = 0;
 bool bBurnGunHide[MAX_GUNS] = { 0, };
 bool bBurnGunAutoHide = 1;
@@ -18,7 +21,6 @@ static INT32 Using_Trackball = 0;
 
 static INT32 nBurnGunMaxX = 0;
 static INT32 nBurnGunMaxY = 0;
-static INT32 nBurnGunTargetScale = 1; // targets drawn this many times larger
 
 INT32 BurnGunX[MAX_GUNS];
 INT32 BurnGunY[MAX_GUNS];
@@ -28,6 +30,7 @@ INT32 BurnPaddleY[MAX_GUNS];
 
 struct GunWrap { INT32 xmin; INT32 xmax; INT32 ymin; INT32 ymax; };
 static GunWrap BurnGunBoxInf[MAX_GUNS]; // Gun use
+static INT32 BurnGunBoxRaw[MAX_GUNS][4];  // the box as given to BurnGunSetBox() (0 - 0xff), for resolution changes
 
 #define a 0,
 #define b 1,
@@ -75,7 +78,6 @@ static UINT8 GunTargetShouldDraw(INT32 player)
 {
 	return ((INT32)nCurrentFrame < GunTargetTimer[player] + GunTargetHideTime);
 }
-#undef GunTargetHideTime
 
 INT32 BurnGunIsActive()
 {
@@ -92,12 +94,64 @@ void BurnGunSetCoords(INT32 player, INT32 x, INT32 y)
 	BurnGunY[player] = (y - 8) << 8;
 }
 
+static void GunBoxCalc(INT32 num)
+{
+	BurnGunBoxInf[num].xmin = ((BurnGunBoxRaw[num][0] * nBurnGunMaxX / 0xff) - 8) << 8;
+	BurnGunBoxInf[num].xmax = ((BurnGunBoxRaw[num][1] * nBurnGunMaxX / 0xff) - 8) << 8;
+	BurnGunBoxInf[num].ymin = ((BurnGunBoxRaw[num][2] * nBurnGunMaxY / 0xff) - 8) << 8;
+	BurnGunBoxInf[num].ymax = ((BurnGunBoxRaw[num][3] * nBurnGunMaxY / 0xff) - 8) << 8;
+}
+
 void BurnGunSetBox(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax)
 {
-	BurnGunBoxInf[num].xmin = ((xmin * nBurnGunMaxX / 0xff) - 8) << 8;
-	BurnGunBoxInf[num].xmax = ((xmax * nBurnGunMaxX / 0xff) - 8) << 8;
-	BurnGunBoxInf[num].ymin = ((ymin * nBurnGunMaxY / 0xff) - 8) << 8;
-	BurnGunBoxInf[num].ymax = ((ymax * nBurnGunMaxY / 0xff) - 8) << 8;
+	if (num < 0 || num > MAX_GUNS - 1) return;
+
+	BurnGunBoxRaw[num][0] = xmin;
+	BurnGunBoxRaw[num][1] = xmax;
+	BurnGunBoxRaw[num][2] = ymin;
+	BurnGunBoxRaw[num][3] = ymax;
+
+	GunBoxCalc(num);
+}
+
+// Many games change resolution after BurnGunInit() (f.ex. booting in a low-res
+// mode, then switching to 640x480, or the other way around), and not every
+// driver calls BurnGunResolutionChanged(). Left alone, the guns would keep
+// coordinates from the old resolution: a gun centred in 640x480 ends up in
+// the bottom-right corner of a 320x240 screen (and could be drawn outside of
+// it). So: whenever the resolution changes, move the guns and their boxes to
+// the same relative spot on the new screen.
+static void GunCheckResolution()
+{
+	INT32 nNewX = 0, nNewY = 0;
+
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nNewY, &nNewX);
+	} else {
+		BurnDrvGetVisibleSize(&nNewX, &nNewY);
+	}
+
+	if (nNewX <= 0 || nNewY <= 0) return;
+	if (nNewX == nBurnGunMaxX && nNewY == nBurnGunMaxY) return;
+
+	const INT32 nOldX = nBurnGunMaxX;
+	const INT32 nOldY = nBurnGunMaxY;
+
+	nBurnGunMaxX = nNewX;
+	nBurnGunMaxY = nNewY;
+
+	for (INT32 i = 0; i < MAX_GUNS; i++) {
+		// BurnGunX/Y are the reticle's top-left (centre - 8) in 24.8 fixed point
+		if (nOldX > 0) BurnGunX[i] = (INT32)(((INT64)(BurnGunX[i] + (8 << 8)) * nNewX) / nOldX) - (8 << 8);
+		if (nOldY > 0) BurnGunY[i] = (INT32)(((INT64)(BurnGunY[i] + (8 << 8)) * nNewY) / nOldY) - (8 << 8);
+
+		GunBoxCalc(i);
+
+		if (BurnGunX[i] < BurnGunBoxInf[i].xmin) BurnGunX[i] = BurnGunBoxInf[i].xmin;
+		if (BurnGunX[i] > BurnGunBoxInf[i].xmax) BurnGunX[i] = BurnGunBoxInf[i].xmax;
+		if (BurnGunY[i] < BurnGunBoxInf[i].ymin) BurnGunY[i] = BurnGunBoxInf[i].ymin;
+		if (BurnGunY[i] > BurnGunBoxInf[i].ymax) BurnGunY[i] = BurnGunBoxInf[i].ymax;
+	}
 }
 
 UINT8 BurnGunReturnX(INT32 num)
@@ -544,6 +598,8 @@ void BurnGunMakeInputs(INT32 num, INT16 x, INT16 y)
 
 	if (bBurnRunAheadFrame) return; // remove jitter w/runahead
 
+	if (!Using_Trackball) GunCheckResolution();
+
 	if (bBurnGunPositionalMode) {
 		x = ProcessAnalog(x, 0, INPUT_DEADZONE, 0x00, 0xff);
 		y = ProcessAnalog(y, 0, INPUT_DEADZONE, 0x00, 0xff);
@@ -634,7 +690,6 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	}
 
 	GunTargetHideTime = (nBurnFPS / 100) * 4; // 4 seconds
-	nBurnGunTargetScale = 1;
 
 	// Trackball stuff (init)
 	memset(&TrackA, 0, sizeof(TrackA));
@@ -659,11 +714,7 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 
 void BurnGunResolutionChanged()
 {
-	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
-		BurnDrvGetVisibleSize(&nBurnGunMaxY, &nBurnGunMaxX);
-	} else {
-		BurnDrvGetVisibleSize(&nBurnGunMaxX, &nBurnGunMaxY);
-	}
+	GunCheckResolution();
 }
 
 void BurnGunExit()
@@ -677,7 +728,6 @@ void BurnGunExit()
 	
 	nBurnGunMaxX = 0;
 	nBurnGunMaxY = 0;
-	nBurnGunTargetScale = 1;
 	
 	for (INT32 i = 0; i < MAX_GUNS; i++) {
 		BurnGunX[i] = 0;
@@ -718,12 +768,317 @@ void BurnGunScan()
 	}
 }
 
-// For a driver drawing at a multiple of its native resolution: the targets
-// are drawn that many times larger, around the same centre (x + 8, y + 8).
-void BurnGunSetTargetScale(INT32 nScale)
+// Reticle drawing
+
+#define GUN_RETICLE_REF_LINES	240.0f	// retical is sized to 17px @ 256x240 lines
+
+// pixels covered by one "reference pixel" of the reticle, per axis
+static void GunReticleGetScale(float &fScaleX, float &fScaleY)
 {
-	nBurnGunTargetScale = (nScale < 1) ? 1 : nScale;
+	INT32 nAspX = 0, nAspY = 0;
+
+	if (nBurnGunMaxX <= 0 || nBurnGunMaxY <= 0) {
+		fScaleX = fScaleY = 1.0f;
+		return;
+	}
+
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetAspect(&nAspY, &nAspX);
+	} else {
+		BurnDrvGetAspect(&nAspX, &nAspY);
+	}
+
+	if (nAspX <= 0 || nAspY <= 0) { // unknown, assume square pixels
+		nAspX = nBurnGunMaxX;
+		nAspY = nBurnGunMaxY;
+	}
+
+	fScaleY = (float)nBurnGunMaxY / GUN_RETICLE_REF_LINES;
+	fScaleX = ((float)nBurnGunMaxX * nAspY) / ((float)nAspX * GUN_RETICLE_REF_LINES);
+
+	if (fScaleX < 0.5f) fScaleX = 0.5f;
+	if (fScaleY < 0.5f) fScaleY = 0.5f;
+	if (fScaleX > 16.0f) fScaleX = 16.0f;
+	if (fScaleY > 16.0f) fScaleY = 16.0f;
 }
+
+static inline UINT8* GunPixAddr(INT32 x, INT32 y)
+{
+	return pBurnDraw + (y * nBurnPitch) + (x * nBurnBpp);
+}
+
+static inline UINT32 GunGetPix(UINT8* pPix)
+{
+	if (nBurnBpp >= 4) return *((UINT32*)pPix);
+	if (nBurnBpp == 2) return *((UINT16*)pPix);
+	return pPix[0] | (pPix[1] << 8) | (pPix[2] << 16);
+}
+
+// Deprecated: the reticle now sizes itself from the game's resolution
+// (kept so drivers calling it still build)
+void BurnGunSetTargetScale(INT32 /*nScale*/)
+{
+}
+
+#if defined BURNGUN_CLASSIC_RETICLE
+
+// Original reticle: 17x17 bitmap, one solid colour per player, scaled by
+// whole pixels so its lines stay crisp
+static void GunDrawReticle(INT32 num, INT32 x, INT32 y)
+{
+	static const UINT8 TargetRGB[MAX_GUNS][3] = {
+		{ 0xfc, 0x12, 0xee }, { 0x1c, 0xfc, 0x1c }, { 0x15, 0x93, 0xfd }, { 0xf7, 0xfa, 0x0e }
+	};
+
+	const UINT32 nTargetCol = BurnHighCol(TargetRGB[num][0], TargetRGB[num][1], TargetRGB[num][2], 0);
+
+	float fScaleX, fScaleY;
+	GunReticleGetScale(fScaleX, fScaleY);
+
+	INT32 sx = (INT32)(fScaleX + 0.5f); if (sx < 1) sx = 1;
+	INT32 sy = (INT32)(fScaleY + 0.5f); if (sy < 1) sy = 1;
+
+	// keep the centre pixel (8, 8) of the bitmap at (x + 8, y + 8)
+	const INT32 x0 = x + 8 - 8 * sx - (sx - 1) / 2;
+	const INT32 y0 = y + 8 - 8 * sy - (sy - 1) / 2;
+
+	for (INT32 py = 0; py < 17 * sy; py++) {
+		const INT32 dy = y0 + py;
+		if (dy < 0 || dy > nBurnGunMaxY - 1) continue;
+
+		for (INT32 px = 0; px < 17 * sx; px++) {
+			const INT32 dx = x0 + px;
+			if (dx < 0 || dx > nBurnGunMaxX - 1) continue;
+
+			if (BurnGunTargetData[py / sy][px / sx]) {
+				PutPix(GunPixAddr(dx, dy), nTargetCol);
+			}
+		}
+	}
+}
+
+#else
+
+// animated reticle
+#define RETICLE_PI			3.14159265f
+#define RETICLE_RING_R		6.75f	// ring radius (reference pixels)
+#define RETICLE_RING_HT		0.75f	// ring half thickness
+#define RETICLE_ARC_FILL	0.66f	// portion of each arc segment that's drawn
+#define RETICLE_TICK_HW		0.5f	// crosshair half width (1 pixel line at 1x)
+#define RETICLE_TICK_OUT	9.5f	// crosshair outer end
+#define RETICLE_OUTLINE		0.8f	// black outline width (at least 1 pixel)
+#define RETICLE_OUTLINE_A	0.9f	// black outline opacity
+#define RETICLE_EXTENT		(RETICLE_TICK_OUT + RETICLE_OUTLINE + 3.0f)
+
+// animation speeds (per 60hz frame)
+#define RETICLE_SPIN_SPEED	0.028f	// ring rotation, turns per frame (~0.6 sec per turn)
+#define RETICLE_PULSE_SPEED	0.28f	// crosshair / dot pulse, radians per frame (~0.37 sec period)
+#define RETICLE_COLOR_SPEED	0.21f	// colour sweep around the ring, radians per frame
+
+// framebuffer format, worked out from BurnHighCol(), so we can blend with
+// whatever the game drew (15/16/24/32-bit, any channel order)
+struct GunChannel { UINT32 nMask; INT32 nShift; UINT32 nMax; };
+static GunChannel GunChan[3];
+static bool bGunCanBlend = false;
+
+static bool GunProbeChannel(GunChannel &c, UINT32 nMask)
+{
+	c.nMask = nMask;
+	c.nShift = 0;
+	c.nMax = 0;
+
+	if (nMask == 0) return false;
+
+	while (((nMask >> c.nShift) & 1) == 0) c.nShift++;
+	c.nMax = nMask >> c.nShift;
+
+	return (c.nMax & (c.nMax + 1)) == 0; // contiguous bits only
+}
+
+static void GunProbePixelFormat()
+{
+	bGunCanBlend  = GunProbeChannel(GunChan[0], BurnHighCol(0xff, 0, 0, 0));
+	bGunCanBlend &= GunProbeChannel(GunChan[1], BurnHighCol(0, 0xff, 0, 0));
+	bGunCanBlend &= GunProbeChannel(GunChan[2], BurnHighCol(0, 0, 0xff, 0));
+}
+
+static inline float GunUnpack(UINT32 nPix, INT32 c)
+{
+	return (float)((nPix & GunChan[c].nMask) >> GunChan[c].nShift) * 255.0f / GunChan[c].nMax;
+}
+
+static inline float GunClamp01(float f)
+{
+	return (f < 0.0f) ? 0.0f : ((f > 1.0f) ? 1.0f : f);
+}
+
+static void GunHSV(float h, float s, float v, float *rgb)
+{
+	h = h - floorf(h / 360.0f) * 360.0f;
+	const float c = v * s;
+	const float hh = h / 60.0f;
+	const float x = c * (1.0f - fabsf(fmodf(hh, 2.0f) - 1.0f));
+	float r = 0, g = 0, b = 0;
+
+	switch ((INT32)hh) {
+		case 0:  r = c; g = x; break;
+		case 1:  r = x; g = c; break;
+		case 2:  g = c; b = x; break;
+		case 3:  g = x; b = c; break;
+		case 4:  r = x; b = c; break;
+		default: r = c; b = x; break;
+	}
+
+	const float m = v - c;
+	rgb[0] = (r + m) * 255.0f;
+	rgb[1] = (g + m) * 255.0f;
+	rgb[2] = (b + m) * 255.0f;
+}
+
+static void GunDrawReticle(INT32 num, INT32 x, INT32 y)
+{
+	static const float PlayerHue[MAX_GUNS] = { 212.0f, 120.0f, 305.0f, 58.0f }; // blue, green, magenta, yellow
+	// minimum perceived brightness of the ring colours (0..1), so dark hues
+	// (deep blue) are lifted to match the others. 0 = leave as-is
+	static const float PlayerMinLuma[MAX_GUNS] = { 0.62f, 0.0f, 0.0f, 0.0f };
+
+	GunProbePixelFormat();
+
+	float fScaleX, fScaleY;
+	GunReticleGetScale(fScaleX, fScaleY);
+
+	// fade out over the last 1/8th of the auto-hide time
+	float fFade = 1.0f;
+	if (bBurnGunAutoHide && GunTargetHideTime > 0) {
+		INT32 nFadeLen = GunTargetHideTime / 8;
+		if (nFadeLen < 1) nFadeLen = 1;
+		const INT32 nLeft = GunTargetTimer[num] + GunTargetHideTime - (INT32)nCurrentFrame;
+		if (nLeft < nFadeLen) fFade = (float)nLeft / nFadeLen;
+	}
+	if (fFade <= 0.0f) return;
+
+	// animation clock, in 60hz frames (independent of the game's refresh rate)
+	const float t = (nBurnFPS > 0) ? ((float)nCurrentFrame * 6000.0f / nBurnFPS) : (float)nCurrentFrame;
+
+	const INT32 nArcs   = (num & 1) ? 3 : 4;
+	const float fDir    = (num & 1) ? -1.0f : 1.0f;
+	const float fRot    = fDir * t * RETICLE_SPIN_SPEED;             // ring rotation, in turns
+	const float fBreath = 0.5f + 0.5f * sinf(t * RETICLE_PULSE_SPEED); // 0..1
+	const float fTickIn = 2.6f + 0.9f * fBreath;                     // crosshair inner end
+	const float fTickMid  = (fTickIn + RETICLE_TICK_OUT) * 0.5f;
+	const float fTickHalf = (RETICLE_TICK_OUT - fTickIn) * 0.5f;
+	const float fDotR   = 0.75f + 0.35f * fBreath;
+	const float fArcLen = 2.0f * RETICLE_PI * RETICLE_RING_R / nArcs;
+	const float fHue    = PlayerHue[num];
+
+	float TickRGB[3], DotRGB[3];
+	GunHSV(fHue, 0.65f, 1.0f, TickRGB);
+	GunHSV(fHue, 0.15f + 0.25f * (1.0f - fBreath), 1.0f, DotRGB);
+
+	// one framebuffer pixel, in reference pixels (anti-aliasing width)
+	const float fPix = 2.0f / (fScaleX + fScaleY);
+
+	// in low-res games the reticle is drawn smaller than 1:1: keep every line
+	// at least one full pixel wide (thinner lines get blended with the
+	// background and look pale), and the outline at least one pixel
+	const float fPixMax  = 1.0f / ((fScaleX < fScaleY) ? fScaleX : fScaleY);
+	const float fRingHT  = (RETICLE_RING_HT > 0.75f * fPixMax) ? RETICLE_RING_HT : 0.75f * fPixMax;
+	const float fTickHW  = (RETICLE_TICK_HW > 0.5f * fPixMax) ? RETICLE_TICK_HW : 0.5f * fPixMax;
+	const float fOutline = (RETICLE_OUTLINE > fPixMax) ? RETICLE_OUTLINE : fPixMax;
+
+	// centre of the old 17x17 reticle's middle pixel
+	const float cx = (float)(x + 8) + 0.5f;
+	const float cy = (float)(y + 8) + 0.5f;
+
+	INT32 x0 = (INT32)floorf(cx - RETICLE_EXTENT * fScaleX), x1 = (INT32)ceilf(cx + RETICLE_EXTENT * fScaleX);
+	INT32 y0 = (INT32)floorf(cy - RETICLE_EXTENT * fScaleY), y1 = (INT32)ceilf(cy + RETICLE_EXTENT * fScaleY);
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 > nBurnGunMaxX - 1) x1 = nBurnGunMaxX - 1;
+	if (y1 > nBurnGunMaxY - 1) y1 = nBurnGunMaxY - 1;
+
+	for (INT32 py = y0; py <= y1; py++) {
+		const float dy = ((float)py + 0.5f - cy) / fScaleY;
+		const float ay = fabsf(dy);
+
+		for (INT32 px = x0; px <= x1; px++) {
+			const float dx = ((float)px + 0.5f - cx) / fScaleX;
+			const float ax = fabsf(dx);
+			const float r = sqrtf(dx * dx + dy * dy);
+
+			if (r > RETICLE_EXTENT) continue;
+
+			// segmented, rotating ring
+			const float th = atan2f(dy, dx);
+			float fPhase = th / (2.0f * RETICLE_PI) * nArcs + fRot;
+			fPhase -= floorf(fPhase);
+			float dArc;
+			if (fPhase < RETICLE_ARC_FILL) {
+				const float e = (fPhase < RETICLE_ARC_FILL - fPhase) ? fPhase : (RETICLE_ARC_FILL - fPhase);
+				dArc = -e * fArcLen;
+			} else {
+				const float e = ((fPhase - RETICLE_ARC_FILL) < (1.0f - fPhase)) ? (fPhase - RETICLE_ARC_FILL) : (1.0f - fPhase);
+				dArc = e * fArcLen;
+			}
+			float dRing = fabsf(r - RETICLE_RING_R) - fRingHT;
+			if (dArc > dRing) dRing = dArc;
+
+			// crosshair
+			float dH = fabsf(ax - fTickMid) - fTickHalf; if (ay - fTickHW > dH) dH = ay - fTickHW;
+			float dV = fabsf(ay - fTickMid) - fTickHalf; if (ax - fTickHW > dV) dV = ax - fTickHW;
+			const float dTick = (dH < dV) ? dH : dV;
+
+			// centre dot
+			const float dDot = r - fDotR;
+
+			float d = dRing;
+			INT32 nPart = 0;
+			if (dTick < d) { d = dTick; nPart = 1; }
+			if (dDot  < d) { d = dDot;  nPart = 2; }
+
+			if (d > fOutline + fPix) continue;
+
+			const float aFill   = GunClamp01(0.5f - d / fPix) * fFade;
+			const float aShadow = GunClamp01(0.5f - (d - fOutline) / fPix) * RETICLE_OUTLINE_A * fFade;
+
+			float Col[3];
+			if (nPart == 0) { // colour sweeps around the ring and cycles over time
+				GunHSV(fHue + 45.0f * sinf(th - t * RETICLE_COLOR_SPEED), 0.85f, 1.0f, Col);
+
+				// too dark? mix towards white until it's bright enough
+				const float fLuma = (0.299f * Col[0] + 0.587f * Col[1] + 0.114f * Col[2]) / 255.0f;
+				if (fLuma < PlayerMinLuma[num]) {
+					const float k = (PlayerMinLuma[num] - fLuma) / (1.0f - fLuma);
+					for (INT32 c = 0; c < 3; c++) Col[c] += (255.0f - Col[c]) * k;
+				}
+			} else if (nPart == 1) {
+				Col[0] = TickRGB[0]; Col[1] = TickRGB[1]; Col[2] = TickRGB[2];
+			} else {
+				Col[0] = DotRGB[0]; Col[1] = DotRGB[1]; Col[2] = DotRGB[2];
+			}
+
+			UINT8* pPix = GunPixAddr(px, py);
+
+			if (bGunCanBlend) {
+				const UINT32 nBg = GunGetPix(pPix);
+				float Out[3];
+				for (INT32 c = 0; c < 3; c++) {
+					const float bg = GunUnpack(nBg, c) * (1.0f - aShadow);
+					Out[c] = bg + (Col[c] - bg) * aFill;
+				}
+				PutPix(pPix, BurnHighCol((INT32)(Out[0] + 0.5f), (INT32)(Out[1] + 0.5f), (INT32)(Out[2] + 0.5f), 0));
+			} else { // unknown pixel format: solid pixels only
+				if (aFill >= 0.5f) {
+					PutPix(pPix, BurnHighCol((INT32)Col[0], (INT32)Col[1], (INT32)Col[2], 0));
+				} else if (aShadow >= 0.3f) {
+					PutPix(pPix, BurnHighCol(0, 0, 0, 0));
+				}
+			}
+		}
+	}
+}
+
+#endif
 
 void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 {
@@ -736,64 +1091,13 @@ void BurnGunDrawTarget(INT32 num, INT32 x, INT32 y)
 	if (bBurnGunDrawReticles == false) return; // UI-configured setting
 	if (pBurnDraw == NULL) return; // nothing to draw to
 
-	if (num > MAX_GUNS - 1) return;
+	if (num < 0 || num > MAX_GUNS - 1) return;
+
+	GunCheckResolution(); // never draw with a stale resolution (outside the screen)
 
 	if (bBurnGunHide[num] || (bBurnGunAutoHide && !GunTargetShouldDraw(num))) return;
 
-	UINT8* pTile = pBurnDraw + nBurnGunMaxX * nBurnBpp * (y - 1) + nBurnBpp * x;
-	
-	UINT32 nTargetCol = 0;
-	if (num == 0) nTargetCol = BurnHighCol(0xfc, 0x12, 0xee, 0);
-	if (num == 1) nTargetCol = BurnHighCol(0x1c, 0xfc, 0x1c, 0);
-	if (num == 2) nTargetCol = BurnHighCol(0x15, 0x93, 0xfd, 0);
-	if (num == 3) nTargetCol = BurnHighCol(0xf7, 0xfa, 0x0e, 0);
-
-	if (nBurnGunTargetScale > 1) {
-		// each pixel of the target as a square of nBurnGunTargetScale pixels
-		const INT32 s = nBurnGunTargetScale;
-		const INT32 x0 = x + 8 - 8 * s - s / 2, y0 = y + 8 - 8 * s - s / 2;
-		for (INT32 py = 0; py < 17 * s; py++) {
-			const INT32 sy = y0 + py;
-			if (sy < 0 || sy > nBurnGunMaxY - 1) continue;
-			UINT8* pLine = pBurnDraw + nBurnGunMaxX * nBurnBpp * sy;
-			for (INT32 px = 0; px < 17 * s; px++) {
-				const INT32 sx = x0 + px;
-				if (sx < 0 || sx > nBurnGunMaxX - 1) continue;
-				if (BurnGunTargetData[py / s][px / s]) {
-					if (nBurnBpp == 2) {
-						((UINT16*)pLine)[sx] = (UINT16)nTargetCol;
-					} else {
-						((UINT32*)pLine)[sx] = nTargetCol;
-					}
-				}
-			}
-		}
-		return;
-	}
-
-	for (INT32 y2 = 0; y2 < 17; y2++) {
-
-		pTile += nBurnGunMaxX * nBurnBpp;
-
-		if ((y + y2) < 0 || (y + y2) > nBurnGunMaxY - 1) {
-			continue;
-		}
-
-		for (INT32 x2 = 0; x2 < 17; x2++) {
-
-			if ((x + x2) < 0 || (x + x2) > nBurnGunMaxX - 1) {
-				continue;
-			}
-
-			if (BurnGunTargetData[y2][x2]) {
-				if (nBurnBpp == 2) {
-					((UINT16*)pTile)[x2] = (UINT16)nTargetCol;
-				} else {
-					((UINT32*)pTile)[x2] = nTargetCol;
-				}
-			}
-		}
-	}
+	GunDrawReticle(num, x, y);
 }
 
 void BurnGunDrawTargets()

@@ -37,6 +37,7 @@ INT32 MegadriveInitPsolar();
 INT32 MegadriveInitSot4w();
 INT32 MegadriveInitColocodx();
 INT32 MegadriveInitSegaCD();
+INT32 MegadriveInit32X();
 
 INT32 MegadriveExit();
 INT32 MegadriveFrame();

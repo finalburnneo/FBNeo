@@ -448,6 +448,8 @@ int ConfigAppLoad()
 		STR(szAppRomPaths[17]);
 		STR(szAppRomPaths[18]);
 		STR(szAppRomPaths[19]);
+		STR(szAppRomPaths[20]);
+		STR(szAppRomPaths[21]);
 
 		STR(szNeoCDGamesDir);
 

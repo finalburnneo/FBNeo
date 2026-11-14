@@ -722,6 +722,7 @@ static int CreateDatfileWindows(int bType)
 	if (bType == DAT_CHANNELF_ONLY) _sntprintf(szConsoleString, 64, _T(", Fairchild Channel F Games only"));
 	if (bType == DAT_ASTROHOME_ONLY) _sntprintf(szConsoleString, 64, _T(", Bally Astrocade Games only"));
 	if (bType == DAT_ATARI2600_ONLY) _sntprintf(szConsoleString, 64, _T(", Atari 2600 Games only"));
+	if (bType == DAT_32X_ONLY) _sntprintf(szConsoleString, 64, _T(", Sega 32X Games only"));
 
 	TCHAR szProgramString[25];
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
@@ -859,6 +860,9 @@ INT32 CreateAllDatfilesWindows(bool bSilent, const TCHAR* pszSpecDir)
 	create_datfile(szFilename, DAT_ASTROHOME_ONLY);
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Atari 2600 Games only"));
 	create_datfile(szFilename, DAT_ATARI2600_ONLY);
+
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Sega 32X Games only"));
+	create_datfile(szFilename, DAT_32X_ONLY);
 
 
 	return nRet;
@@ -1310,6 +1314,7 @@ static t_hw_Struct scrn_gamehw_cfg[] = {
 	{ "channelf",	{ HARDWARE_CHANNELF, 0 } },
 	{ "astrocade",	{ HARDWARE_ASTROHOME, 0 } },
 	{ "atari2600",	{ HARDWARE_ATARI2600, 0 } },
+	{ "32x",		{ HARDWARE_SEGA_32X, 0 } },
 	{ "cps1",		{ HARDWARE_CAPCOM_CPS1, HARDWARE_CAPCOM_CPS1_QSOUND, HARDWARE_CAPCOM_CPS1_GENERIC, HARDWARE_CAPCOM_CPSCHANGER, 0 } },
 	{ "cps2",		{ HARDWARE_CAPCOM_CPS2, 0 } },
 	{ "cps3",		{ HARDWARE_CAPCOM_CPS3, 0 } },
@@ -3744,6 +3749,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_ATARI2600_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_ATARI2600_ONLY);
+			}
+			break;
+
+		case MENU_CLRMAME_PRO_XML_32X_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_32X_ONLY);
 			}
 			break;
 

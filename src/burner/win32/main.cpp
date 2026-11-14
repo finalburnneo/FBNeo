@@ -1188,6 +1188,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 
+		if (_tcscmp(szName, _T("-listinfo32xonly")) == 0) {
+			write_datfile(DAT_32X_ONLY, stdout);
+			return 1;
+		}
+
 		if (_tcscmp(szName, _T("-listinfoall")) == 0 ||
 			_tcscmp(szName, _T("-listxmlall"))  == 0) {
 			TCHAR szDirPath[MAX_PATH] = { 0 };
@@ -1485,6 +1490,7 @@ static void CreateSupportFolders()
 		{_T("roms/channelf/")},
 		{_T("roms/astrocade/")},
 		{_T("roms/atari2600/")},
+		{_T("roms/32x/")},
 		{_T("roms/romdata/")},
 		{_T("\0")} // END of list
 	};

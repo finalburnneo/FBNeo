@@ -2062,7 +2062,7 @@ void LoadDrvIcons()
 
 		// By hardwares
 		if (bIconsByHardwares) {
-			if ((nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE || (nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD) {
+			if ((nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE || (nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD || (nCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_32X) {
 				hDrvIcon[nDrvIndex] = pIconsCache[nDrvCount + ICON_MEGADRIVE];	continue;
 			}
 			else

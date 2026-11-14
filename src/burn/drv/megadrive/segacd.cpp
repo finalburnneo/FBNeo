@@ -2202,6 +2202,26 @@ static INT32 scd_detect_region()
 	return 0;
 }
 
+// a sega cd 32x disc checks the 32x id ("MARS" at $a130ec) in its initial program
+INT32 SegaCDDiscNeeds32X()
+{
+	UINT8 sector[2048];
+
+	for (INT32 lba = 0; lba < 16; lba++) {
+		if (CDEmuReadDataSector(lba, sector)) return 0;
+		if (lba == 0 && memcmp(sector, "SEGADISCSYSTEM", 14) && memcmp(sector, "SEGABOOTDISC", 12)) return 0;
+
+		for (INT32 i = 0; i < 2048 - 4; i++) {
+			if (memcmp(sector + i, "MARS", 4)) continue;
+			for (INT32 j = ((i > 16) ? i - 16 : 0); j < i + 16 && j < 2048 - 4; j++) {
+				if (sector[j] == 0x00 && sector[j + 1] == 0xa1 && sector[j + 2] == 0x30 && sector[j + 3] == 0xec) return 1;
+			}
+		}
+	}
+
+	return 0;
+}
+
 INT32 SegaCDLoadBios(UINT8 *dest, INT32 base, INT32 region)
 {
 	INT32 select = MegadriveDIP[0] & 0x03;

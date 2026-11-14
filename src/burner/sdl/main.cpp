@@ -189,6 +189,9 @@ void generateDats()
 	_stprintf(filename, _T("%sFBNeo_-_Atari_-_2600.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_ATARI2600_ONLY);
 
+	_stprintf(filename, _T("%sFBNeo_-_Sega_32X.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_32X_ONLY);
+
 #else
 	printf("Creating fbneo dats\n");
 
@@ -254,6 +257,9 @@ void generateDats()
 	create_datfile(filename, DAT_ASTROHOME_ONLY);
 	sprintf(filename, "FBNeo_-_Atari_-_2600.dat");
 	create_datfile(filename, DAT_ATARI2600_ONLY);
+
+	sprintf(filename, "FBNeo_-_Sega_32X.dat");
+	create_datfile(filename, DAT_32X_ONLY);
 #endif
 }
 

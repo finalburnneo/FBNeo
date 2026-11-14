@@ -59,7 +59,7 @@ UINT8 *lua_hotkeys[] = {
 
 #define HW_NEOGEO ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOGEO) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_NEOCD) )
 #define HW_NES ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_NES) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_FDS) )
-#define HW_MEGADRIVE ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD) )
+#define HW_MEGADRIVE ( ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGACD) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_32X) )
 #define HW_MISC ( (! HW_NEOGEO) && (! HW_NES) && (! HW_MEGADRIVE) )
 #define SETS_VS ( (BurnDrvGetGenreFlags() & GBF_VSFIGHT) && ((BurnDrvGetFamilyFlags() & FBF_SF) || (BurnDrvGetFamilyFlags() & FBF_DSTLK) || (BurnDrvGetFamilyFlags() &FBF_PWRINST) || HW_NEOGEO) )
 
@@ -2181,6 +2181,7 @@ tIniStruct gamehw_cfg[] = {
 	{_T("PCE/SGX hardware"),			_T("config/presets/pce.ini"),		true,	{ HARDWARE_PCENGINE_PCENGINE, HARDWARE_PCENGINE_SGX, 0 },	"\t\t\t<item list=\"pce\" name=\""			},
 	{_T("PCE CD hardware"),				_T("config/presets/pcecd.ini"),		true,	{ HARDWARE_PCENGINE_PCE_CD, 0 },	"\t\t\t<item list=\"pce_cd\" name=\""		},
 	{_T("Sega CD hardware"),			_T("config/presets/megadrive.ini"),	true,	{ HARDWARE_SEGA_MEGACD, 0 },		"\t\t\t<item list=\"segacd\" name=\""		},
+	{_T("Sega 32X hardware"),			_T("config/presets/megadrive.ini"),	true,	{ HARDWARE_SEGA_32X, 0 },			"\t\t\t<item list=\"32x\" name=\""			},
 	{_T("TG16 hardware"),				_T("config/presets/pce.ini"),		true,	{ HARDWARE_PCENGINE_TG16, 0 },		"\t\t\t<item list=\"tg16\" name=\""			},
 	{_T("MSX1 hardware"),				_T("config/presets/msx.ini"),		false,	{ HARDWARE_MSX, 0 },				"\t\t\t<item list=\"msx1_cart\" name=\""	},
 	{_T("Coleco hardware"),				_T("config/presets/coleco.ini"),	true,	{ HARDWARE_COLECO, 0 },				"\t\t\t<item list=\"coleco\" name=\""		},

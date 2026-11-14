@@ -344,7 +344,7 @@ jobs:
 
   build_linux_sdl2_x86_64:
     name: Build (Linux SDL2 x86_64)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     continue-on-error: true
     defaults:
       run:
@@ -386,7 +386,7 @@ jobs:
 
   build_linux_sdl1_x86_64:
     name: Build (Linux SDL1 x86_64)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     continue-on-error: true
     defaults:
       run:

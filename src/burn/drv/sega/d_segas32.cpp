@@ -118,6 +118,12 @@ static INT32 use_v25 = 0;
 static INT32 screen_vflip = 0;
 static INT32 is_multi32 = 0;
 static INT32 is_scross = 0;
+
+#define MAX_SINGLE_SCREEN_PATCHES	4
+static INT32 single_screen_patch_count = 0;
+static INT32 single_screen_patch_offs[MAX_SINGLE_SCREEN_PATCHES];
+static INT32 single_screen_patch_len[MAX_SINGLE_SCREEN_PATCHES];
+static UINT8 single_screen_patch_data[MAX_SINGLE_SCREEN_PATCHES][2][4]; // [dual, single][bytes]
 static INT32 is_radm = 0;
 static INT32 is_radr = 0;
 static INT32 is_sonic = 0;
@@ -1047,20 +1053,20 @@ static struct BurnDIPInfo SlipstrmDIPList[]=
 
 STDDIPINFO(Slipstrm)
 
-#define DEFAULT_UNUSED_DIPS_MS(setname, offs)			\
+#define DEFAULT_UNUSED_DIPS_MS(setname, offs, single, dual)			\
 static struct BurnDIPInfo setname##DIPList[]=			\
 {														\
 	DIP_OFFSET(offs)									\
 	{0x00, 0xff, 0xff, 0x0f, NULL					},	\
-	{0x01, 0xff, 0xff, 0x00, NULL					},	\
+	{0x01, 0xff, 0xff, 0x01, NULL					},	\
 														\
 	{0   , 0xfe, 0   ,    2, "Unused"				},	\
 	{0x00, 0x01, 0x0f, 0x0f, "Off"					},	\
 	{0x00, 0x01, 0x0f, 0x00, "On"					},	\
 														\
-	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},	\
-	{0x01, 0x01, 0x01, 0x01, "Disabled"				},	\
-	{0x01, 0x01, 0x01, 0x00, "Enabled"				},	\
+	{0   , 0xfe, 0   ,    2, "Cabinet Mode"			},	\
+	{0x01, 0x01, 0x01, 0x01, single					},	\
+	{0x01, 0x01, 0x01, 0x00, dual					},	\
 														\
 	{0   , 0xfe, 0   ,    3, "Speaker Mode"			},	\
 	{0x01, 0x01, 0x0c, 0x00, "Stereo"				},	\
@@ -1070,20 +1076,20 @@ static struct BurnDIPInfo setname##DIPList[]=			\
 														\
 STDDIPINFO(setname)
 
-#define DEFAULT_UNUSED_DIPS_MS_WHEEL(setname, offs)		\
+#define DEFAULT_UNUSED_DIPS_MS_WHEEL(setname, offs, single, dual)		\
 static struct BurnDIPInfo setname##DIPList[]=			\
 {														\
 	DIP_OFFSET(offs)									\
 	{0x00, 0xff, 0xff, 0x0f, NULL					},	\
-	{0x01, 0xff, 0xff, 0x00, NULL					},	\
+	{0x01, 0xff, 0xff, 0x01, NULL					},	\
 														\
 	{0   , 0xfe, 0   ,    2, "Unused"				},	\
 	{0x00, 0x01, 0x0f, 0x0f, "Off"					},	\
 	{0x00, 0x01, 0x0f, 0x00, "On"					},	\
 														\
-	{0   , 0xfe, 0   ,    2, "Multi-Screen Mode"	},	\
-	{0x01, 0x01, 0x01, 0x01, "Disabled"				},	\
-	{0x01, 0x01, 0x01, 0x00, "Enabled"				},	\
+	{0   , 0xfe, 0   ,    2, "Cabinet Mode"			},	\
+	{0x01, 0x01, 0x01, 0x01, single					},	\
+	{0x01, 0x01, 0x01, 0x00, dual					},	\
 														\
 	{0   , 0xfe, 0   ,    3, "Speaker Mode"			},	\
 	{0x01, 0x01, 0x0c, 0x00, "Stereo"				},	\
@@ -1145,10 +1151,10 @@ DEFAULT_UNUSED_DIPS(Sonic, 0x14)
 DEFAULT_UNUSED_DIPS_WHEEL(Radm, 0x0c)
 DEFAULT_UNUSED_DIPS_WHEEL(F1en, 0x0c)
 DEFAULT_UNUSED_DIPS_WHEEL(F1lap, 0x0d)
-DEFAULT_UNUSED_DIPS_MS_WHEEL(Orunners, 0x19)
-DEFAULT_UNUSED_DIPS_MS(Harddunk, 0x3d)
-DEFAULT_UNUSED_DIPS_MS(Scross, 0x13)
-DEFAULT_UNUSED_DIPS_MS(Titlef, 0x1b)
+DEFAULT_UNUSED_DIPS_MS_WHEEL(Orunners, 0x19, "1 Player, 1 Screen", "2 Players, 2 Screens")
+DEFAULT_UNUSED_DIPS_MS(Harddunk, 0x3d, "3 Players, 1 Screen", "6 Players, 2 Screens")
+DEFAULT_UNUSED_DIPS_MS(Scross, 0x13, "1 Player, 1 Screen", "2 Players, 2 Screens")
+DEFAULT_UNUSED_DIPS_MS(Titlef, 0x1b, "1 Player, 1 Screen", "2 Players, 2 Screens")
 
 static INT32 irq_callback(INT32 /*state*/)
 {
@@ -2001,7 +2007,7 @@ static void tilemap_configure_allocate()
 		bitmaps[bitmap] = BurnBitmapGetBitmap(1+bitmap);
 	}
 
-	if (nScreenWidth >= 640) BurnBitmapAllocate(31, 512, 512, false); // extra bitmap for multi32
+	if (is_multi32) BurnBitmapAllocate(31, 512, 512, false); // extra bitmap for multi32
 
 	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80); // slipstrm
 }
@@ -2013,6 +2019,27 @@ inline static void DrvFMIRQHandler(INT32 chip, INT32 state)
 		signal_sound_irq(SOUND_IRQ_YM3438);
 	else
 		clear_sound_irq(SOUND_IRQ_YM3438);
+}
+
+// The program rom is mirrored, patch every copy
+static void single_screen_patch_add(const UINT8 *pattern, INT32 pattern_len, INT32 offs, const UINT8 *data, INT32 len)
+{
+	for (INT32 i = 0; i <= 0x100000 - pattern_len && single_screen_patch_count < MAX_SINGLE_SCREEN_PATCHES; i++) {
+		if (memcmp(DrvV60ROM + i, pattern, pattern_len) == 0) {
+			INT32 n = single_screen_patch_count++;
+			single_screen_patch_offs[n] = i + offs;
+			single_screen_patch_len[n] = len;
+			memcpy(single_screen_patch_data[n][0], DrvV60ROM + i + offs, len);
+			memcpy(single_screen_patch_data[n][1], data, len);
+		}
+	}
+}
+
+static void single_screen_patch_apply()
+{
+	for (INT32 i = 0; i < single_screen_patch_count; i++) {
+		memcpy(DrvV60ROM + single_screen_patch_offs[i], single_screen_patch_data[i][DrvDips[1] & 1], single_screen_patch_len[i]);
+	}
 }
 
 static INT32 DrvDoReset()
@@ -2047,6 +2074,8 @@ static INT32 DrvDoReset()
 	if (EEPROMAvailable() == 0) {
 		EEPROMFill(DrvEEPROM, 0, 0x80);
 	}
+
+	single_screen_patch_apply();
 
 	BurnShiftReset();
 
@@ -2665,6 +2694,7 @@ static INT32 DrvExit()
 	is_radm = 0;
 	is_radr = 0;
 	is_scross = 0;
+	single_screen_patch_count = 0;
 	is_sonic = 0;
 	is_slipstrm = 0;
 	is_ga2_spidman = 0;
@@ -4402,6 +4432,8 @@ static INT32 MultiScreenCheck()
 	INT32 screensize = (DrvDips[1] & 1) ? 320 : 640;
 	if (screensize != nScreenWidth)
 	{
+		single_screen_patch_apply();
+
 		BurnTransferSetDimensions(screensize, 224);
 		GenericTilesSetClipRaw(0, screensize, 0, 224);
 		BurnDrvSetVisibleSize(screensize, 224);
@@ -7626,7 +7658,7 @@ struct BurnDriver BurnDrvHarddunk = {
 	BDF_GAME_WORKING, 6, HARDWARE_SEGA_SYSTEM32, GBF_SPORTSMISC, 0,
 	NULL, harddunkRomInfo, harddunkRomName, NULL, NULL, NULL, NULL, HarddunkInputInfo, HarddunkDIPInfo,
 	HarddunkInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7664,7 +7696,7 @@ struct BurnDriver BurnDrvHarddunkj = {
 	BDF_GAME_WORKING | BDF_CLONE, 6, HARDWARE_SEGA_SYSTEM32, GBF_SPORTSMISC, 0,
 	NULL, harddunkjRomInfo, harddunkjRomName, NULL, NULL, NULL, NULL, HarddunkInputInfo, HarddunkDIPInfo,
 	HarddunkInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7739,6 +7771,14 @@ static INT32 OrunnersInit()
 	custom_io_write_0  = orunners_custom_io_write;
 	custom_io_read_0 = analog_custom_io_read;
 
+	{
+		// Stand-alone mode registers 2 stations (side A + side B), side A then waits for the
+		// end of side B's entry countdown. Register only side A: mov.b #2 -> #1, 41[R24]
+		static const UINT8 pattern[9] = { 0x09, 0x80, 0xe2, 0x18, 0x41, 0x09, 0x00, 0x18, 0x40 };
+		static const UINT8 patch[1] = { 0xe1 };
+		single_screen_patch_add(pattern, 9, 2, patch, 1);
+	}
+
 	DrvDoReset();
 
 	return 0;
@@ -7751,7 +7791,7 @@ struct BurnDriver BurnDrvOrunners = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, orunnersRomInfo, orunnersRomName, NULL, NULL, NULL, NULL, OrunnersInputInfo, OrunnersDIPInfo,
 	OrunnersInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7791,7 +7831,7 @@ struct BurnDriver BurnDrvOrunnersu = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, orunnersuRomInfo, orunnersuRomName, NULL, NULL, NULL, NULL, OrunnersInputInfo, OrunnersDIPInfo,
 	OrunnersInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7831,7 +7871,7 @@ struct BurnDriver BurnDrvOrunnersj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, orunnersjRomInfo, orunnersjRomName, NULL, NULL, NULL, NULL, OrunnersInputInfo, OrunnersDIPInfo,
 	OrunnersInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7883,6 +7923,21 @@ static INT32 ScrossInit()
 	custom_io_write_0  = scross_custom_io_write;
 	custom_io_read_0 = analog_custom_io_read;
 
+	{
+		// scross, scrossu: side A always waits 9 seconds for competitors before the race.
+		// Wait 1 tick instead: mov.h #10E -> #1, A[R25]
+		static const UINT8 pattern[15] = { 0x1b, 0x80, 0xe0, 0x41, 0x32, 0xff, 0x31, 0x00, 0x1b, 0x80, 0xf4, 0x0e, 0x01, 0x19, 0x0a };
+		static const UINT8 patch[2] = { 0x01, 0x00 };
+		single_screen_patch_add(pattern, 15, 11, patch, 2);
+	}
+
+	{
+		// scrossa: same as orunners, register only side A: mov.b #2 -> #1, F008[R24]
+		static const UINT8 pattern[8] = { 0x09, 0x80, 0xe2, 0x58, 0x08, 0xf0, 0x00, 0x00 };
+		static const UINT8 patch[1] = { 0xe1 };
+		single_screen_patch_add(pattern, 8, 2, patch, 1);
+	}
+
 	DrvDoReset();
 
 	return 0;
@@ -7895,7 +7950,7 @@ struct BurnDriver BurnDrvScross = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, scrossRomInfo, scrossRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
 	ScrossInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7937,7 +7992,7 @@ struct BurnDriver BurnDrvScrossa = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, scrossaRomInfo, scrossaRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
 	ScrossInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -7979,7 +8034,7 @@ struct BurnDriver BurnDrvScrossu = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM32, GBF_RACING, 0,
 	NULL, scrossuRomInfo, scrossuRomName, NULL, NULL, NULL, NULL, ScrossInputInfo, ScrossDIPInfo,
 	ScrossInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -8036,7 +8091,7 @@ struct BurnDriver BurnDrvTitlef = {
 	BDF_GAME_WORKING, 4, HARDWARE_SEGA_SYSTEM32, GBF_VSFIGHT, 0,
 	NULL, titlefRomInfo, titlefRomName, NULL, NULL, NULL, NULL, TitlefInputInfo, TitlefDIPInfo,
 	TitlefInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -8073,7 +8128,7 @@ struct BurnDriver BurnDrvTitlefu = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM32, GBF_VSFIGHT, 0,
 	NULL, titlefuRomInfo, titlefuRomName, NULL, NULL, NULL, NULL, TitlefInputInfo, TitlefDIPInfo,
 	TitlefInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 
@@ -8110,7 +8165,7 @@ struct BurnDriver BurnDrvTitlefj = {
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM32, GBF_VSFIGHT, 0,
 	NULL, titlefjRomInfo, titlefjRomName, NULL, NULL, NULL, NULL, TitlefInputInfo, TitlefDIPInfo,
 	TitlefInit, DrvExit, DrvFrame, MultiDraw, DrvScan, &DrvRecalc, 0x8000,
-	640, 224, 8, 3
+	320, 224, 4, 3
 };
 
 

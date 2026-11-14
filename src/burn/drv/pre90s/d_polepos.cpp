@@ -2,6 +2,9 @@
 // Based on MAME driver by Ernesto Corvi, Juergen Buchmueller, Alex Pasadyn,
 // Aaron Giles, Nicola Salmoria, sound: Derrick Renaud
 
+// dink.note: game saves hiscores in it's own nvram.  hiscore.dat hookup
+// causes problems leading to no-boot situations.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "z8000_intf.h"
@@ -1449,8 +1452,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		mb88xxClose();
 	}
 
-	HiscoreReset();
-
 	return 0;
 }
 
@@ -1984,7 +1985,7 @@ struct BurnDriver BurnDrvPolepos = {
 	"polepos", NULL, NULL, NULL, "1982",
 	"Pole Position (World)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, poleposRomInfo, poleposRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposaDIPInfo,
 	PoleposInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2047,7 +2048,7 @@ struct BurnDriver BurnDrvPoleposj = {
 	"poleposj", "polepos", NULL, NULL, "1982",
 	"Pole Position (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, poleposjRomInfo, poleposjRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposDIPInfo,
 	PoleposInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2110,7 +2111,7 @@ struct BurnDriver BurnDrvPoleposa1 = {
 	"poleposa1", "polepos", NULL, NULL, "1982",
 	"Pole Position (Atari version 1)\0", NULL, "Namco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, poleposa1RomInfo, poleposa1RomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposaDIPInfo,
 	PoleposAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2173,7 +2174,7 @@ struct BurnDriver BurnDrvPoleposa1n = {
 	"poleposa1n", "polepos", NULL, NULL, "1982",
 	"Pole Position (Atari version 1 on Namco PCB)\0", NULL, "Namco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, poleposa1nRomInfo, poleposa1nRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposaDIPInfo,
 	PoleposAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2236,7 +2237,7 @@ struct BurnDriver BurnDrvPoleposa2 = {
 	"poleposa2", "polepos", NULL, NULL, "1982",
 	"Pole Position (Atari version 2)\0", NULL, "Namco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, poleposa2RomInfo, poleposa2RomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposaDIPInfo,
 	PoleposAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2296,7 +2297,7 @@ struct BurnDriver BurnDrvTopracer = {
 	"topracer", "polepos", NULL, NULL, "1984",
 	"Top Racer (with MB8841 + MB8842, 1984)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, topracerRomInfo, topracerRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposDIPInfo,
 	PoleposAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2356,7 +2357,7 @@ struct BurnDriver BurnDrvTopracera = {
 	"topracera", "polepos", NULL, NULL, "1983",
 	"Top Racer (with MB8841 + MB8842, 1983)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, topraceraRomInfo, topraceraRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposDIPInfo,
 	PoleposAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2416,7 +2417,7 @@ struct BurnDriver BurnDrvPpspeed = {
 	"ppspeed", "polepos", NULL, NULL, "1983",
 	"Speed Up (Spanish bootleg of Pole Position)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, ppspeedRomInfo, ppspeedRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, PoleposDIPInfo,
 	PoleposAInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2483,7 +2484,7 @@ struct BurnDriver BurnDrvPolepos2 = {
 	"polepos2", NULL, NULL, NULL, "1983",
 	"Pole Position II (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, polepos2RomInfo, polepos2RomName, NULL, NULL, NULL, NULL, PoleposInputInfo, Polepos2jDIPInfo,
 	Polepos2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2550,7 +2551,7 @@ struct BurnDriver BurnDrvPolepos2a = {
 	"polepos2a", "polepos2", NULL, NULL, "1983",
 	"Pole Position II (Atari)\0", NULL, "Namco (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, polepos2aRomInfo, polepos2aRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, Polepos2DIPInfo,
 	Polepos2aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3
@@ -2615,7 +2616,7 @@ struct BurnDriver BurnDrvPolepos2b = {
 	"polepos2b", "polepos2", NULL, NULL, "1983",
 	"Pole Position II (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 1, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, polepos2bRomInfo, polepos2bRomName, NULL, NULL, NULL, NULL, PoleposInputInfo, Polepos2DIPInfo,
 	Polepos2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x0f00,
 	256, 224, 4, 3

@@ -164,6 +164,16 @@ static void Sh2SetIRQLine_Internal(const int line, int state);
 #define	SH2_MAXHANDLER	(8)
 
 
+#define SH2_IDLE_SLOTS	(16)
+#define SH2_IDLE_SLOT(pc) (((pc) >> 1) & (SH2_IDLE_SLOTS - 1))
+
+typedef struct
+{
+	UINT32 pc, gen, touched, total;
+	INT32 icount;
+	UINT32 regs[22];
+} SH2IDLE;
+
 typedef struct 
 {
 	SH2	sh2;
@@ -185,6 +195,11 @@ typedef struct
 
 	// serial interface status / receive data (only with Sh2SetSciLink())
 	UINT8 sci_ssr, sci_rdr;
+
+	// idle loop detection, see sh2_idle_check()
+	SH2IDLE idle[SH2_IDLE_SLOTS];
+	INT32 idle_wait[SH2_IDLE_SLOTS];
+	UINT32 idle_gen;
 } SH2EXT;
 
 static SH2EXT * pSh2Ext;
@@ -671,6 +686,17 @@ SH2_INLINE unsigned short cpu_readop16(unsigned int A)
 
 // ------------------------------------------------------
 
+static UINT32 sh2_mem_touched; // incremented by handler reads
+static void sh2_idle_check(UINT32 last);
+
+// after a short backward branch at ppc - 2 (delay slot included in the loop when slot is 1)
+#define SH2_IDLE_CHECK(disp, slot) \
+	if ((UINT32)((disp) + 32) < 32 && --pSh2Ext->idle_wait[SH2_IDLE_SLOT(sh2->ppc)] < 0) sh2_idle_check(sh2->ppc - 2 + (slot) * 2)
+
+// backward branch not taken: the loop was left, its next iteration isn't the following one
+#define SH2_IDLE_EXIT(d) \
+	if ((INT8)(d) < 0) pSh2Ext->idle[SH2_IDLE_SLOT(sh2->ppc)].gen = pSh2Ext->idle_gen - 1
+
 SH2_INLINE UINT8 RB(UINT32 A)
 {
 /*	if (A >= 0xe0000000) return sh2_internal_r((A & 0x1fc)>>2, ~(0xff << (((~A) & 3)*8))) >> (((~A) & 3)*8);
@@ -686,6 +712,7 @@ SH2_INLINE UINT8 RB(UINT32 A)
 #endif
 		return pr[A & SH2_PAGEM];
 	}
+	sh2_mem_touched++;
 	return pSh2Ext->ReadByte[(uintptr_t)pr](A);
 }
 
@@ -705,6 +732,7 @@ SH2_INLINE UINT16 RW(UINT32 A)
 		//return (pr[A & SH2_PAGEM] << 8) | pr[(A & SH2_PAGEM) + 1];
 		return *((unsigned short *)(pr + (A & SH2_PAGEM)));
 	}
+	sh2_mem_touched++;
 	return pSh2Ext->ReadWord[(uintptr_t)pr](A);
 }
 
@@ -736,6 +764,7 @@ SH2_INLINE UINT32 RL(UINT32 A)
 		//return (pr[(A & SH2_PAGEM) + 0] << 24) | (pr[(A & SH2_PAGEM) + 1] << 16) | (pr[(A & SH2_PAGEM) + 2] <<  8) | (pr[(A & SH2_PAGEM) + 3] <<  0);
 		return *((unsigned int *)(pr + (A & SH2_PAGEM)));
 	}
+	sh2_mem_touched++;
 	return pSh2Ext->ReadLong[(uintptr_t)pr](A);
 }
 
@@ -795,6 +824,8 @@ SH2_INLINE void WL(UINT32 A, UINT32 V)
 SH2_INLINE void sh2_exception(/*const char *message,*/ int irqline)
 {
 	int vector;
+
+	pSh2Ext->idle_gen++;
 
 	if (irqline != 16)
 	{
@@ -1001,6 +1032,11 @@ SH2_INLINE void BF(UINT32 d)
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
 		sh2->sh2_total_cycles += 2;
+		SH2_IDLE_CHECK(disp, 0);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1017,6 +1053,11 @@ SH2_INLINE void BFS(UINT32 d)
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
 		sh2->sh2_total_cycles += 1;
+		SH2_IDLE_CHECK(disp, 1);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1046,6 +1087,7 @@ SH2_INLINE void BRA(UINT32 d)
 	sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 	sh2->sh2_icount--;
 	sh2->sh2_total_cycles += 1;
+	SH2_IDLE_CHECK(disp, 1);
 }
 
 /*  code                 cycles  t-bit
@@ -1101,6 +1143,11 @@ SH2_INLINE void BT(UINT32 d)
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
 		sh2->sh2_total_cycles += 2;
+		SH2_IDLE_CHECK(disp, 0);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1117,6 +1164,11 @@ SH2_INLINE void BTS(UINT32 d)
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
 		sh2->sh2_total_cycles += 1;
+		SH2_IDLE_CHECK(disp, 1);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -3374,6 +3426,119 @@ static INT32 sh2_suspend_skip()
 	return steps;
 }
 
+// checks that a loop running from pc to last never writes to memory and never leaves this range
+static INT32 sh2_idle_loop_ok(UINT32 pc, UINT32 last)
+{
+	// code fetched through a handler can't be checked
+	if ((uintptr_t)pSh2Ext->MemMap[((pc & AM) >> SH2_SHIFT) + SH2_WADD * 2] < SH2_MAXHANDLER) return 0;
+	if ((uintptr_t)pSh2Ext->MemMap[((last & AM) >> SH2_SHIFT) + SH2_WADD * 2] < SH2_MAXHANDLER) return 0;
+
+	for (UINT32 a = pc; a <= last; a += 2) {
+		UINT16 op = OPRW(a & AM);
+		INT32 bad = 0, disp = 0, branch = 0;
+
+		switch (op >> 12) {
+			case 0x0: bad = ((op & 0x0f) >= 3 && (op & 0x0f) <= 6) || (op & 0xff) == 0x0b || (op & 0xff) == 0x1b || (op & 0xff) == 0x2b; break; // stores, bsrf, braf, rts, sleep, rte
+			case 0x1: bad = 1; break;
+			case 0x2: bad = (op & 0x0f) <= 6; break;
+			case 0x4: switch (op & 0xff) { case 0x02: case 0x03: case 0x12: case 0x13: case 0x22: case 0x23: case 0x0b: case 0x1b: case 0x2b: bad = 1; } break; // sts.l/stc.l @-rn, jsr, tas.b, jmp
+			case 0x8:
+				switch ((op >> 8) & 0x0f) {
+					case 0x0: case 0x1: bad = 1; break;
+					case 0x9: case 0xb: case 0xd: case 0xf: branch = 1; disp = (INT8)(op & 0xff); break;
+				}
+				break;
+			case 0xa: branch = 1; disp = ((INT32)((UINT32)op << 20)) >> 20; break;
+			case 0xb: bad = 1; break;
+			case 0xc: bad = ((op >> 8) & 0x0f) <= 3 || ((op >> 8) & 0x0f) >= 0x0d; break;
+			case 0xf: bad = 1; break;
+		}
+
+		if (branch) {
+			UINT32 t = a + 4 + disp * 2;
+			if (t < pc || t > last) bad = 1;
+		}
+		if (bad) return 0;
+	}
+
+	return 1;
+}
+
+static void sh2_idle_store(SH2IDLE *l)
+{
+	memcpy(l->regs, sh2->r, 16 * sizeof(UINT32));
+	l->regs[16] = sh2->sr; l->regs[17] = sh2->gbr; l->regs[18] = sh2->vbr; l->regs[19] = sh2->pr;
+	l->regs[20] = sh2->mach; l->regs[21] = sh2->macl;
+	l->pc = sh2->ppc;
+	l->gen = pSh2Ext->idle_gen;
+	l->touched = sh2_mem_touched;
+	l->icount = sh2->sh2_icount;
+	l->total = sh2->sh2_total_cycles;
+}
+
+// called after a short backward branch, the loop runs from target to last. the state is
+// compared with the one saved at the previous iteration: when the loop read only direct mapped
+// memory, wrote nothing, wasn't left and every register is unchanged, the following iterations
+// do exactly the same until an interrupt, a timer or the end of the run (other cpus and
+// devices don't run meanwhile). those are skipped, the last ones before the event are run.
+#if defined(__GNUC__)
+__attribute__((noinline))
+#endif
+static void sh2_idle_check(UINT32 last)
+{
+	SH2EXT *e = pSh2Ext;
+	INT32 slot = SH2_IDLE_SLOT(sh2->ppc);
+	SH2IDLE *l = &e->idle[slot];
+	UINT32 target = sh2->pc;
+
+	// dma (memory changed by something else than the cpu) or interrupt pending
+	if (sh2->test_irq || (((sh2->m[0x6c] & 7) == 1) && ((sh2->m[0x63] & 3) == 1 || (sh2->m[0x67] & 3) == 1))) {
+		l->gen = e->idle_gen - 1;
+		e->idle_wait[slot] = 32;
+		return;
+	}
+
+	if (l->pc != sh2->ppc || l->gen != e->idle_gen) {
+		sh2_idle_store(l);
+		e->idle_wait[slot] = 0;
+		return;
+	}
+
+	if (l->touched != sh2_mem_touched || memcmp(sh2->r, l->regs, 16 * sizeof(UINT32)) != 0 ||
+		l->regs[16] != sh2->sr || l->regs[17] != sh2->gbr || l->regs[18] != sh2->vbr || l->regs[19] != sh2->pr ||
+		l->regs[20] != sh2->mach || l->regs[21] != sh2->macl || l->icount <= sh2->sh2_icount || !sh2_idle_loop_ok(target, last)) {
+		// not an idle loop, the next checks are delayed
+		l->gen = e->idle_gen - 1;
+		e->idle_wait[slot] = 256;
+		return;
+	}
+
+	INT32 di = l->icount - sh2->sh2_icount;
+	UINT32 dt = sh2->sh2_total_cycles - l->total;
+	INT32 k = (sh2->sh2_icount - 1) / di - 1;
+	UINT32 now = sh2_GetTotalCycles();
+
+	if (e->wdt_csr & 0x20) {
+		INT32 d = (INT32)(e->wdt_next - now);
+		INT32 kw = (d - 1) / di - 1;
+		if (kw < k) k = kw;
+	}
+
+	if (sh2->timer_active) {
+		UINT32 el = now - sh2->timer_base;
+		INT32 kt = (el >= sh2->timer_cycles) ? -1 : (INT32)((sh2->timer_cycles - el - 1) / di) - 1;
+		if (kt < k) k = kt;
+	}
+
+	if (k > 0) {
+		sh2->sh2_icount -= k * di;
+		sh2->sh2_total_cycles += k * dt;
+	}
+
+	sh2_idle_store(l);
+	e->idle_wait[slot] = 0;
+}
+
 int Sh2Run(int cycles)
 {
 #if defined FBNEO_DEBUG
@@ -3383,6 +3548,8 @@ int Sh2Run(int cycles)
 	sh2->sh2_icount = cycles;
 	sh2->sh2_cycles_to_run = cycles;
 	sh2->end_run = 0;
+
+	pSh2Ext->idle_gen++;
 
 	do
 	{

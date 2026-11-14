@@ -13,7 +13,7 @@ static struct BurnInputInfo EndurorInputList[] = {
 
 	A("Steering"         , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
 	A("Bank Up/Down"     , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 y-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort3,   "p1 fire 2"  ),
 	
 	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 3 , "service"   },
@@ -31,7 +31,7 @@ static struct BurnInputInfo HangonInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 1, "p2 coin"    },
 
 	A("Steering"         , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
 	
 	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 3 , "service"   },
@@ -49,7 +49,7 @@ static struct BurnInputInfo ShangonrbInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 1, "p2 coin"    },
 
 	A("Steering"         , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
 	{"Super Charger"     , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 3"  },
 	
@@ -1632,7 +1632,7 @@ static UINT8 EndurorProcessAnalogControls(UINT16 value)
 	
 	switch (value) {
 
-		// Accelerate
+		// Accelerator
 		case 0: {
 			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
@@ -1675,7 +1675,7 @@ static UINT8 HangonProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 		
-		// Accelerate
+		// Accelerator
 		case 1: {
 			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}

@@ -324,7 +324,7 @@ static struct BurnInputInfo FourtraxInputList[] = {
 	A("Steering",		BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
 	A("Brake",			BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 1"),
 	A("Accelerator",	BIT_ANALOG_REL, &DrvAnalogPort2, "p1 fire 2"),
-	{"P1 Gear",			BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 3"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
@@ -341,7 +341,7 @@ static struct BurnInputInfo FinallapInputList[] = {
 	A("Steering",		BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
 	A("Brake",			BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 1"),
 	A("Accelerator",	BIT_ANALOG_REL, &DrvAnalogPort2, "p1 fire 2"),
-	{"P1 Gear",			BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 3"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},

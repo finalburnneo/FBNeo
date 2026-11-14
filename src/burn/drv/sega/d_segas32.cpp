@@ -671,7 +671,7 @@ static struct BurnInputInfo F1enInputList[] = {
 	{"P1 Shift Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Shift Down",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 	A("P1 Brake",		BIT_ANALOG_REL, &Analog[2],		"p1 z-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -692,7 +692,7 @@ static struct BurnInputInfo F1lapInputList[] = {
 	{"P1 Shift Down",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Overtake",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 	A("P1 Brake",		BIT_ANALOG_REL, &Analog[2],		"p1 z-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -747,7 +747,7 @@ static struct BurnInputInfo RadmInputList[] = {
 	{"P1 Headlights",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 	{"P1 Wipers",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 	A("P1 Brake",		BIT_ANALOG_REL, &Analog[2],		"p1 z-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -764,9 +764,9 @@ STDINPUTINFO(Radm)
 static struct BurnInputInfo RadrInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 start"	},
-	{"P1 Shift",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 	A("P1 Brake",		BIT_ANALOG_REL, &Analog[2],		"p1 z-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -783,9 +783,9 @@ STDINPUTINFO(Radr)
 static struct BurnInputInfo SlipstrmInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy5 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 start"	},
-	{"P1 Shift",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 	A("P1 Brake",		BIT_ANALOG_REL, &Analog[2],		"p1 z-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -912,7 +912,7 @@ static struct BurnInputInfo OrunnersInputList[] = {
 	{"P1 Music -",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 4"	},
 	{"P1 Music +",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 5"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 	A("P1 Brake",		BIT_ANALOG_REL, &Analog[2],		"p1 z-axis"	),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy13 + 2,	"p2 coin"	},
@@ -923,7 +923,7 @@ static struct BurnInputInfo OrunnersInputList[] = {
 	{"P2 Music -",		BIT_DIGITAL,	DrvJoy10 + 1,	"p2 fire 4"	},
 	{"P2 Music +",		BIT_DIGITAL,	DrvJoy10 + 2,	"p2 fire 5"	},
 	A("P2 Steering",	BIT_ANALOG_REL, &Analog[3],		"p2 x-axis"	),
-	A("P2 Accelerate",	BIT_ANALOG_REL, &Analog[4],		"p2 y-axis"	),
+	A("P2 Accelerator",	BIT_ANALOG_REL, &Analog[4],		"p2 y-axis"	),
 	A("P2 Brake",		BIT_ANALOG_REL, &Analog[5],		"p2 z-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
@@ -944,7 +944,7 @@ static struct BurnInputInfo ScrossInputList[] = {
 	{"P1 Wheelie",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Brake",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 	A("P1 Steering",	BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"	),
-	A("P1 Accelerate",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &Analog[1],		"p1 y-axis"	),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy13 + 2,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy13 + 4,	"p2 start"	},
@@ -952,7 +952,7 @@ static struct BurnInputInfo ScrossInputList[] = {
 	{"P2 Wheelie",		BIT_DIGITAL,	DrvJoy9 + 1,	"p2 fire 2"	},
 	{"P2 Brake",		BIT_DIGITAL,	DrvJoy9 + 2,	"p2 fire 3"	},
 	A("P2 Steering",	BIT_ANALOG_REL, &Analog[2],		"p2 x-axis"	),
-	A("P2 Accelerate",	BIT_ANALOG_REL, &Analog[3],		"p2 y-axis"	),
+	A("P2 Accelerator",	BIT_ANALOG_REL, &Analog[3],		"p2 y-axis"	),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy5 + 1,	"diag"		},

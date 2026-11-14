@@ -212,7 +212,7 @@ static struct BurnInputInfo RacingbInputList[] =
 	{"P1 Brake" 		 , BIT_DIGITAL   , TC0510NIOInputPort0 + 5, "p1 fire 1" },
 	{"P1 Accelerator"	 , BIT_DIGITAL   , TC0510NIOInputPort1 + 5, "p1 fire 2" },
 	{"P1 Pit In"		 , BIT_DIGITAL   , TC0510NIOInputPort1 + 0, "p1 fire 3" },
-	{"P1 Gear"  		 , BIT_DIGITAL   , TC0510NIOInputPort0 + 1, "p1 fire 4" },
+	{"P1 Gear Shift"	 , BIT_DIGITAL   , TC0510NIOInputPort0 + 1, "p1 fire 4" },
 	{"P1 Centre"		 , BIT_DIGITAL   , TC0510NIOInputPort1 + 2, "p1 fire 5" },
 
 	{"P2 Coin"           , BIT_DIGITAL   , TC0510NIOInputPort0 + 3, "p2 coin"   },

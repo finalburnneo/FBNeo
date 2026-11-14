@@ -13,7 +13,7 @@ static struct BurnInputInfo Gforce2InputList[] = {
 
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
 	A("Up/Down"          , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 y-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 3"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 3"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort3,   "p1 fire 4"  ),
 	{"Shoot"             , BIT_DIGITAL   , System16InputPort0 + 4, "p1 fire 1"  },
 	{"Missile"           , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 2"  },
@@ -78,9 +78,9 @@ static struct BurnInputInfo PdriftInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 7, "p2 coin"    },
 
 	A("Steering"         , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
-	{"Gear"              , BIT_DIGITAL   , &System16Gear       ,   "p1 fire 3"  },
+	{"Gear Shift"        , BIT_DIGITAL   , &System16Gear       ,   "p1 fire 3"  },
 
 	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 2 , "service"   },
 	{"Diagnostics"       , BIT_DIGITAL   , System16InputPort0 + 1 , "diag"      },
@@ -2261,9 +2261,9 @@ static UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE, 0x01, 0xff);
 		}
 
-		// Brake/Accelerate
+		// Brake/Accelerator
 		case 2: {
-			// ignore accelerate if brake is pressed, the dlx cabinet with its 2 pedals might be doing something like this
+			// ignore accelerator if brake is pressed, the dlx cabinet with its 2 pedals might be doing something like this
 			UINT8 Brake = ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x80, 0xff);
 			return (Brake > 0x80 ? Brake : ProcessAnalog(System16AnalogPort2, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x20, 0x80));
 		}
@@ -2353,7 +2353,7 @@ static UINT8 PdriftProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
 
-		// Accelerate
+		// Accelerator
 		case 4: {
 			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}

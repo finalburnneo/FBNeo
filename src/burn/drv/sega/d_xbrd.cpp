@@ -13,7 +13,7 @@ static struct BurnInputInfo AbcopInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 7, "p2 coin"    },
 
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	{"Jump"              , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 2"  },
 
 	{"Service"           , BIT_DIGITAL   , System16InputPort0 + 2 , "service"   },
@@ -53,7 +53,7 @@ static struct BurnInputInfo GpriderInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 7, "p2 coin"    },
 
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
 	{"Shift Down"        , BIT_DIGITAL   , System16InputPort0 + 4, "p1 fire 3"  },
 	{"Shift Up"          , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 4"  },
@@ -128,7 +128,7 @@ static struct BurnInputInfo RacheroInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 7, "p2 coin"    },
 
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
 	{"Move to centre"    , BIT_DIGITAL   , System16InputPort0 + 4, "p1 fire 3"  },
 	{"Suicide"           , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 4"  },
@@ -149,7 +149,7 @@ static struct BurnInputInfo SmgpInputList[] = {
 	{"Coin 2"            , BIT_DIGITAL   , System16InputPort0 + 7, "p2 coin"    },
 
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Accelerate"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Accelerator"      , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
 	A("Brake"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
 	{"Shift Down"        , BIT_DIGITAL   , System16InputPort0 + 4, "p1 fire 3"  },
 	{"Shift Up"          , BIT_DIGITAL   , System16InputPort0 + 5, "p1 fire 4"  },
@@ -3157,7 +3157,7 @@ static UINT8 AbcopProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 
-		// Accelerate
+		// Accelerator
 		case 1: {
 			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
@@ -3220,7 +3220,7 @@ static UINT8 GpriderProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x01, 0xff);
 		}
 
-		// Accelerate
+		// Accelerator
 		case 1: {
 			return ProcessAnalog(System16AnalogPort1, 1, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x10, 0xef);
 		}
@@ -3360,7 +3360,7 @@ static UINT8 RacheroProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort0, 1, INPUT_DEADZONE, 0x20, 0xe0);
 		}
 
-		// Accelerate
+		// Accelerator
 		case 1: {
 			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x00, 0xff);
 		}
@@ -3411,7 +3411,7 @@ static UINT8 SmgpProcessAnalogControls(UINT16 value)
 			return ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x38, 0xc8);
 		}
 
-		// Accelerate
+		// Accelerator
 		case 1: {
 			return ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x38, 0xb8);
 		}

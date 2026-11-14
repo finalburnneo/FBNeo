@@ -170,7 +170,7 @@ static struct BurnInputInfo Tx1InputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	A("P1 Accelerator",	BIT_ANALOG_REL,	&Analog[1],		"p1 fire 1"	),
 	A("P1 Brake",		BIT_ANALOG_REL,	&Analog[2],		"p1 fire 2"	),
-	{"P1 Gear Change",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -189,7 +189,7 @@ static struct BurnInputInfo BuggyboyInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 	A("P1 Accelerator",	BIT_ANALOG_REL,	&Analog[1],		"p1 fire 1"	),
 	A("P1 Brake",		BIT_ANALOG_REL,	&Analog[2],		"p1 fire 2"	),
-	{"P1 Gear Change",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},

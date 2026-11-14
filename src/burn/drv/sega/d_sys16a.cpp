@@ -180,7 +180,7 @@ static struct BurnInputInfo Afighter_analogInputList[] = {
 	{"P2 Start"          , BIT_DIGITAL  , System16InputPort0 + 5, "p2 start"  },
 
 	A("Steering"         , BIT_ANALOG_ABS, &System16AnalogPort0,  "p1 x-axis" ),
-	A("Accelerate"       , BIT_ANALOG_ABS, &System16AnalogPort1,  "p1 y-axis" ),
+	A("Accelerator"      , BIT_ANALOG_ABS, &System16AnalogPort1,  "p1 y-axis" ),
 	{"P1 Fire 1"         , BIT_DIGITAL  , System16InputPort1 + 4, "p1 fire 2" },
 	{"P1 Fire 2"         , BIT_DIGITAL  , System16InputPort1 + 5, "p1 fire 3" },
 	{"P1 Fire 3"         , BIT_DIGITAL  , System16InputPort1 + 6, "p1 fire 4" },

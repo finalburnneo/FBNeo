@@ -158,16 +158,16 @@ STDDIPINFO(Transfrm)
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo HangonjrInputList[] = {
 
-    {"P1 Coin",     BIT_DIGITAL,    DrvJoy0 + 0,    "p1 coin"},
-    {"P1 Start",    BIT_DIGITAL,    DrvJoy0 + 4,    "p1 start"},
-	A("P1 Steering", BIT_ANALOG_REL, &DrvWheel,     "p1 x-axis"),
-	A("P1 Accelerate", BIT_ANALOG_REL, &DrvAccel,   "p1 z-axis"),
+	{"P1 Coin",         BIT_DIGITAL,    DrvJoy0 + 0, "p1 coin"},
+	{"P1 Start",        BIT_DIGITAL,    DrvJoy0 + 4, "p1 start"},
+	A("P1 Steering",    BIT_ANALOG_REL, &DrvWheel  , "p1 x-axis"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAccel  , "p1 z-axis"),
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
-	{"Service",		BIT_DIGITAL,	DrvJoy0 + 3,	"service"},
-	{"Service Mode",		BIT_DIGITAL,	DrvJoy0 + 2,	"diag"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	    "dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"},
+	{"Reset",           BIT_DIGITAL,    &DrvReset  , "reset"},
+	{"Service",         BIT_DIGITAL,    DrvJoy0 + 3, "service"},
+	{"Service Mode",    BIT_DIGITAL,    DrvJoy0 + 2, "diag"},
+	{"Dip A",           BIT_DIPSWITCH,  DrvDip + 0 , "dip"},
+	{"Dip B",           BIT_DIPSWITCH,  DrvDip + 1 , "dip"},
 };
 
 STDINPUTINFO(Hangonjr)

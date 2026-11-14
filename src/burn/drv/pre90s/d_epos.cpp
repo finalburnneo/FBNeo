@@ -528,7 +528,7 @@ static prot_s gamelist[] = {
 	{ {"catapult", "\0", },				0xc0 },
 	{ {"suprglob", "theglob",
 	"theglob2", "theglob3" "\0", }, 	0x80 },
-	{ {"\0", }, 0 },
+	{ {"\0", }, -1 },
 };
 
 static void init_prot()

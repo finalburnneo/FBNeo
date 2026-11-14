@@ -388,7 +388,7 @@ static INT32 DrvDraw()
 		return 0;
 
 	if (GbaCoreFramebufferIsDirectCopyable(Gba)) {
-		// Worker path — output already in the target nBurnBpp format.
+		// Worker path - output already in the target nBurnBpp format.
 		// Copy whole frame when there's no row padding, else row-by-row.
 		const INT32 row_bytes = GBA_WIDTH * nBurnBpp;
 		if (nBurnPitch == row_bytes) {
@@ -401,8 +401,8 @@ static INT32 DrvDraw()
 			}
 		}
 	} else {
-		// Single-threaded fallback. gbappu.h writes byte R,G,B,X —
-		// feed each pixel through BurnHighCol → PutPix.
+		// Single-threaded fallback. gbappu.h writes byte R,G,B,X -
+		// feed each pixel through BurnHighCol -> PutPix.
 		for (INT32 y = 0; y < GBA_HEIGHT; y++) {
 			UINT8 *dest = pBurnDraw + y * nBurnPitch;
 			const UINT8 *source = framebuffer + y * GBA_WIDTH * 4;
@@ -580,7 +580,7 @@ struct BurnDriver BurnDrvgba_gba = {
 
 // =========================================================================================
 //  Please use short names from the MAME softwarelist/gba set wherever possible.
-//  Avoid excessively‑long titles that contradict the intent of the short‑name identifiers.
+//  Avoid excessively-long titles that contradict the intent of the short-name identifiers.
 //  [Example] Fire Emblem : The Sacred Stones (USA, Australia)
 //  ShortName: gba_firembssu
 // =========================================================================================

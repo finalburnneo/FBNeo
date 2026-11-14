@@ -59,13 +59,29 @@ UINT8 BurnGunTargetData[18][18] = {
 #undef a
 
 static INT32 GunTargetHideTime; // default: 4 seconds
-static INT32 GunTargetTimer[MAX_GUNS]  = {0, 0, 0, 0};
-static INT32 GunTargetLastX[MAX_GUNS]  = {0, 0, 0, 0};
-static INT32 GunTargetLastY[MAX_GUNS]  = {0, 0, 0, 0};
+static INT32 GunTargetTimer[MAX_GUNS+1]  = {0, 0, 0, 0, 0}; // +1 because gcc 16 is being stupid.
+static INT32 GunTargetLastX[MAX_GUNS+1]  = {0, 0, 0, 0, 0};
+static INT32 GunTargetLastY[MAX_GUNS+1]  = {0, 0, 0, 0, 0};
+static bool bGunTargetTimerReset = true; // set by BurnGunInit()
+
+// reset the auto-hide timers
+static void GunTargetTimerStart()
+{
+	if (!bGunTargetTimerReset) return;
+	bGunTargetTimerReset = false;
+
+	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
+		GunTargetTimer[i] = nCurrentFrame;
+		GunTargetLastX[i] = BurnGunReturnX(i);
+		GunTargetLastY[i] = BurnGunReturnY(i);
+	}
+}
 
 static void GunTargetUpdate(INT32 player)
 {
 	if (player >= MAX_GUNS) return;
+
+	GunTargetTimerStart();
 
 	if (GunTargetLastX[player] != BurnGunReturnX(player) || GunTargetLastY[player] != BurnGunReturnY(player)) {
 		GunTargetLastX[player] = BurnGunReturnX(player);
@@ -76,6 +92,7 @@ static void GunTargetUpdate(INT32 player)
 
 static UINT8 GunTargetShouldDraw(INT32 player)
 {
+	GunTargetTimerStart(); // drawn before any input was processed
 	return ((INT32)nCurrentFrame < GunTargetTimer[player] + GunTargetHideTime);
 }
 
@@ -114,13 +131,7 @@ void BurnGunSetBox(INT32 num, INT32 xmin, INT32 xmax, INT32 ymin, INT32 ymax)
 	GunBoxCalc(num);
 }
 
-// Many games change resolution after BurnGunInit() (f.ex. booting in a low-res
-// mode, then switching to 640x480, or the other way around), and not every
-// driver calls BurnGunResolutionChanged(). Left alone, the guns would keep
-// coordinates from the old resolution: a gun centred in 640x480 ends up in
-// the bottom-right corner of a 320x240 screen (and could be drawn outside of
-// it). So: whenever the resolution changes, move the guns and their boxes to
-// the same relative spot on the new screen.
+// on reso. change, move the reticle(s) to the same relative spot on new screen
 static void GunCheckResolution()
 {
 	INT32 nNewX = 0, nNewY = 0;
@@ -668,6 +679,37 @@ void BurnTrackballInit(INT32 nNumPlayers, INT32 nDefault)
 	BurnTrackballSetResetDefault(nDefault);
 }
 
+// stagger multi-player gun reticles for a nice startup look
+static void GunStartPosition(INT32 num)
+{
+	INT32 nGuns = nBurnGunNumPlayers;
+	if (nGuns < 1 || num >= nGuns) nGuns = 1; // unused guns: centre
+	const INT32 nSlot = (nGuns == 1) ? 0 : num;
+
+	// fraction of the way across the displayed screen: (slot + 1) / (guns + 1)
+	INT32 cx = nBurnGunMaxX / 2;
+	INT32 cy = nBurnGunMaxY / 2;
+
+	const UINT32 nFlags = BurnDrvGetFlags();
+
+	if (nFlags & BDF_ORIENTATION_VERTICAL) {
+		// the screen is rotated: displayed left->right runs along the framebuffer's
+		// y axis (downwards for ROT270, upwards when also flipped (ROT90))
+		INT32 p = (nBurnGunMaxY * (nSlot + 1)) / (nGuns + 1);
+		cy = (nFlags & BDF_ORIENTATION_FLIPPED) ? (nBurnGunMaxY - 1 - p) : p;
+	} else {
+		cx = (nBurnGunMaxX * (nSlot + 1)) / (nGuns + 1);
+	}
+
+	BurnGunX[num] = (cx - 8) << 8; // BurnGunX/Y are the reticle's top-left (centre - 8)
+	BurnGunY[num] = (cy - 8) << 8;
+
+	if (BurnGunX[num] < BurnGunBoxInf[num].xmin) BurnGunX[num] = BurnGunBoxInf[num].xmin;
+	if (BurnGunX[num] > BurnGunBoxInf[num].xmax) BurnGunX[num] = BurnGunBoxInf[num].xmax;
+	if (BurnGunY[num] < BurnGunBoxInf[num].ymin) BurnGunY[num] = BurnGunBoxInf[num].ymin;
+	if (BurnGunY[num] > BurnGunBoxInf[num].ymax) BurnGunY[num] = BurnGunBoxInf[num].ymax;
+}
+
 void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 {
 	Debug_BurnGunInitted = 1;
@@ -683,13 +725,17 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	}
 	
 	for (INT32 i = 0; i < MAX_GUNS; i++) {
-		BurnGunX[i] = ((nBurnGunMaxX >> 1) - 7) << 8;
-		BurnGunY[i] = ((nBurnGunMaxY >> 1) - 8) << 8;
-
 		BurnGunSetBox(i, 0, 0xff, 0, 0xff); // Gun stuff
+		GunStartPosition(i);
 	}
 
 	GunTargetHideTime = (nBurnFPS / 100) * 4; // 4 seconds
+
+	// forget the previous game's timers / positions
+	memset(GunTargetTimer, 0, sizeof(GunTargetTimer));
+	memset(GunTargetLastX, 0, sizeof(GunTargetLastX));
+	memset(GunTargetLastY, 0, sizeof(GunTargetLastY));
+	bGunTargetTimerReset = true;
 
 	// Trackball stuff (init)
 	memset(&TrackA, 0, sizeof(TrackA));

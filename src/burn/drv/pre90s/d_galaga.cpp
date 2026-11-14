@@ -5410,6 +5410,76 @@ static struct BurnRomInfo sboscoRomDesc[] = {
 STD_ROM_PICK(sbosco)
 STD_ROM_FN(sbosco)
 
+// Bosconian 87 Arcade (hack of "bosco", Namco new version)
+
+static struct BurnRomInfo bosco87RomDesc[] = {
+	{ "bos3_1.3n",    0x1000, 0x4c8dac81, BRF_PRG | BRF_ESS  }, //  0 Z80 #1 (main)    - patched
+	{ "bos1_2.3m",    0x1000, 0x2d8f3ebe, BRF_PRG | BRF_ESS  }, //  1
+	{ "bos1_3.3l",    0x1000, 0x68db1a66, BRF_PRG | BRF_ESS  }, //  2                  - patched
+	{ "bos1_4b.3k",   0x1000, 0x7d2f7af0, BRF_PRG | BRF_ESS  }, //  3                  - patched
+
+	{ "bos1_5c.3j",   0x1000, 0xa7c8e432, BRF_PRG | BRF_ESS  }, //  4 Z80 #2 (sub)
+	{ "bos3_6.3h",    0x1000, 0x4543cf82, BRF_PRG | BRF_ESS  }, //  5
+
+	{ "bos1_7.3e",    0x1000, 0x9ac7836c, BRF_PRG | BRF_ESS  }, //  6 Z80 #3 (sound)   - patched
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "bos1-4.2r",    0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(bosco87)
+STD_ROM_FN(bosco87)
+
+// Bosconian 87 Arcade (hack of "boscomd", Midway new version)
+
+static struct BurnRomInfo bosco87mRomDesc[] = {
+	{ "3n",           0x1000, 0x286ac876, BRF_PRG | BRF_ESS  }, //  0 Z80 #1 (main)    - patched
+	{ "3m",           0x1000, 0xa3c5c7ef, BRF_PRG | BRF_ESS  }, //  1
+	{ "3l",           0x1000, 0x6ca9a0cf, BRF_PRG | BRF_ESS  }, //  2
+	{ "3k",           0x1000, 0xf34970c8, BRF_PRG | BRF_ESS  }, //  3                  - patched
+
+	{ "3j",           0x1000, 0x4374e39a, BRF_PRG | BRF_ESS  }, //  4 Z80 #2 (sub)
+	{ "3h",           0x1000, 0x04e9fcef, BRF_PRG | BRF_ESS  }, //  5
+
+	{ "bos1_7.3e",    0x1000, 0x9ac7836c, BRF_PRG | BRF_ESS  }, //  6 Z80 #3 (sound)   - patched
+
+	{ "bos1_14.5d",   0x1000, 0xa956d3c5, BRF_GRA            }, //  7 Characters
+	{ "bos1_13.5e",   0x1000, 0xe869219c, BRF_GRA            }, //  8 Sprites
+	{ "bos1-4.2r",    0x0100, 0x9b69b543, BRF_GRA            }, //  9 Radar dots
+
+	{ "bos1-6.6b",    0x0020, 0xd2b96fb0, BRF_GRA            }, // 10 Palette
+	{ "bos1-5.4m",    0x0100, 0x4e15d59c, BRF_GRA            }, // 11 Colour lookup table
+	{ "bos1-3.2d",    0x0020, 0xb88d5ba9, BRF_GRA            }, // 12 Video layout (not used)
+	{ "bos1-7.7h",    0x0020, 0x87d61353, BRF_GRA            }, // 13 Video timing (not used)
+
+	{ "bos1-1.1d",    0x0100, 0xde2316c6, BRF_SND            }, // 14 Namco Sound Proms
+	{ "bos1-2.5c",    0x0100, 0x77245b66, BRF_SND            }, // 15 (timing - not used)
+
+	{ "bos1_9.5n",    0x1000, 0x09acc978, BRF_SND            }, // 16 52XX Samples
+	{ "bos1_10.5m",   0x1000, 0xe571e959, BRF_SND            }, // 17
+	{ "bos1_11.5k",   0x1000, 0x17ac9511, BRF_SND            }, // 18
+
+	{ "54xx.bin",     0x0400, 0xee7357e0, BRF_ESS | BRF_PRG  }, // 19 54XX MCU
+};
+
+STD_ROM_PICK(bosco87m)
+STD_ROM_FN(bosco87m)
+
 #define BOSCO_SCREEN_WIDTH                288
 #define BOSCO_SCREEN_HEIGHT               224
 
@@ -6873,7 +6943,7 @@ struct BurnDriver BurnDrvBosco = {
 	"bosco", NULL, NULL, NULL, "1981",
 	"Bosconian - Star Destroyer (version 5)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, boscoRomInfo, boscoRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
 	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
@@ -6883,7 +6953,7 @@ struct BurnDriver BurnDrvBosco3 = {
 	"bosco3", "bosco", NULL, NULL, "1981",
 	"Bosconian - Star Destroyer (version 3)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bosco3RomInfo, bosco3RomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
 	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
@@ -6893,7 +6963,7 @@ struct BurnDriver BurnDrvBosco1 = {
 	"bosco1", "bosco", NULL, NULL, "1981",
 	"Bosconian - Star Destroyer (version 1, newer)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bosco1RomInfo, bosco1RomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
 	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
@@ -6903,7 +6973,7 @@ struct BurnDriver BurnDrvBosco1o = {
 	"bosco1o", "bosco", NULL, NULL, "1981",
 	"Bosconian - Star Destroyer (version 1, older)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bosco1oRomInfo, bosco1oRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
 	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
@@ -6913,7 +6983,7 @@ struct BurnDriver BurnDrvBoscomd = {
 	"boscomd", "bosco", NULL, NULL, "1981",
 	"Bosconian - Star Destroyer (Midway, new version)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, boscomdRomInfo, boscomdRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscomdDIPInfo,
 	boscomdInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
@@ -6923,7 +6993,7 @@ struct BurnDriver BurnDrvBoscomdo = {
 	"boscomdo", "bosco", NULL, NULL, "1981",
 	"Bosconian - Star Destroyer (Midway, old version)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, boscomdoRomInfo, boscomdoRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscomdDIPInfo,
 	boscomdInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
@@ -6933,8 +7003,28 @@ struct BurnDriver BurnDrvSbosco = {
 	"sbosco", "bosco", NULL, NULL, "2026",
 	"Super Bosconian (Hack)\0", NULL, "zeroco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sboscoRomInfo, sboscoRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBosco87 = {
+	"bosco87", "bosco", NULL, NULL, "2026",
+	"Bosconian 87 Arcade\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bosco87RomInfo, bosco87RomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
+	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
+	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
+};
+
+struct BurnDriver BurnDrvBosco87m = {
+	"bosco87m", "bosco", NULL, NULL, "2026",
+	"Bosconian 87 Arcade (Midway version)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bosco87mRomInfo, bosco87mRomName, NULL, NULL, NULL, NULL, BoscoInputInfo, BoscoDIPInfo,
 	boscoInit, boscoExit, boscoFrame, DrvDraw, boscoScan, NULL,
 	BOSCO_PALETTE_SIZE, BOSCO_SCREEN_WIDTH, BOSCO_SCREEN_HEIGHT, 4, 3
 };

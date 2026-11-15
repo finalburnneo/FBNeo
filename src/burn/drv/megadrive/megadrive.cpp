@@ -268,6 +268,8 @@ static struct PicoMisc *RamMisc;
 static struct MegadriveJoyPad *JoyPad;
 
 UINT32 *MegadriveCurPal;
+static UINT16 *MegadriveCurRaw;		// cram index -> colour code stored in LineBuf
+static UINT32 *MegadriveHostPal;	// colour code -> display colour, used by MegadriveDraw()
 
 static UINT8 *HighCol;
 static UINT8 *HighColFull;
@@ -446,30 +448,45 @@ static void MegadriveCheckHardware()
 
 //-----------------------------------------------------------------
 
+// colour codes in LineBuf: 0x0000-0x7fff 32x colour, 0x8000 | bank << 9 | md colour (bank: 0 normal, 1 shadow, 2 highlight, 3 shadow)
 inline static void CalcCol(INT32 index, UINT16 nColour)
 {
-	UINT8 color_ramp[0x10] = { 0, 29, 52, 70, 87, 101, 116, 130, 144, 158, 172, 187, 206, 228, 255 };
-
-	INT32 r = (nColour & 0x000e) >> 0;	// Red
-	INT32 g = (nColour & 0x00e0) >> 4; 	// Green
-	INT32 b = (nColour & 0x0e00) >> 8;	// Blue
-
 	RamPal[index] = BURN_ENDIAN_SWAP_INT16(nColour & 0xeee);
 
-	// Normal Color
-	MegadriveCurPal[index + 0x00] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
+	UINT16 c = ((nColour >> 1) & 7) | (((nColour >> 5) & 7) << 3) | (((nColour >> 9) & 7) << 6);
 
-	// Shadow Color
-	r >>= 1;
-	g >>= 1;
-	b >>= 1;
-	MegadriveCurPal[index + 0x40] = MegadriveCurPal[index + 0xc0] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
+	MegadriveCurRaw[index + 0x00] = 0x8000 | c;
+	MegadriveCurRaw[index + 0x40] = 0x8200 | c;
+	MegadriveCurRaw[index + 0x80] = 0x8400 | c;
+	MegadriveCurRaw[index + 0xc0] = 0x8600 | c;
+}
 
-	// Highlight Color
-	r += 7;
-	g += 7;
-	b += 7;
-	MegadriveCurPal[index + 0x80] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
+static void MegadriveRecalcCurRaw()
+{
+	for (INT32 i = 0; i < 0x40; i++)
+		CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));
+}
+
+static void MegadriveRecalcHostPal()
+{
+	static const UINT8 color_ramp[0x10] = { 0, 29, 52, 70, 87, 101, 116, 130, 144, 158, 172, 187, 206, 228, 255 };
+
+	for (INT32 i = 0; i < 0x200; i++) {
+		INT32 r = (i >> 0) & 7;
+		INT32 g = (i >> 3) & 7;
+		INT32 b = (i >> 6) & 7;
+
+		MegadriveHostPal[0x8000 + i] = BurnHighCol(color_ramp[r << 1], color_ramp[g << 1], color_ramp[b << 1], 0);
+		MegadriveHostPal[0x8200 + i] = MegadriveHostPal[0x8600 + i] = BurnHighCol(color_ramp[r], color_ramp[g], color_ramp[b], 0);
+		MegadriveHostPal[0x8400 + i] = BurnHighCol(color_ramp[r + 7], color_ramp[g + 7], color_ramp[b + 7], 0);
+	}
+
+	for (INT32 i = 0; i < 0x8000; i++) { // 32x
+		INT32 r = (i >>  0) & 0x1f;
+		INT32 g = (i >>  5) & 0x1f;
+		INT32 b = (i >> 10) & 0x1f;
+		MegadriveHostPal[i] = BurnHighCol((r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2), 0);
+	}
 }
 
 static INT32 MemIndex()
@@ -497,10 +514,12 @@ static INT32 MemIndex()
 	RamMisc		= (struct PicoMisc *)Next; Next += sizeof(struct PicoMisc);
 
 	MegadriveCurPal		= (UINT32 *) Next; Next += 0x000040 * sizeof(UINT32) * 4;
+	MegadriveCurRaw		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16) * 4;
+	MegadriveHostPal	= (UINT32 *) Next; Next += (0x8000 + 0x800) * sizeof(UINT32);
 
 	HighColFull	= Next; Next += (8 + 320 + 8) * ((240 + 1) * 2);
 
-	LineBuf     = (UINT16 *) Next; Next += 320 * (240 * 2) * sizeof(UINT16); // palete-processed line-buffer (dink / for sonic mode)
+	LineBuf     = (UINT16 *) Next; Next += 320 * (240 * 2) * sizeof(UINT16); // colour codes (see MegadriveCurRaw), for mid-screen palette changes
 
 	HighCacheA	= (UINT32 *) Next; Next += (41+1) * sizeof(INT32);	// caches for high layers
 	HighCacheB	= (UINT32 *) Next; Next += (41+1) * sizeof(INT32);
@@ -1672,6 +1691,7 @@ static INT32 last_hardware = -1;
 static INT32 MegadriveResetDo()
 {
 	memset (RamStart, 0, RamEnd - RamStart);
+	MegadriveRecalcCurRaw();
 
 	if (papriummode) {
 		paprium_reset(); // before SekReset()!
@@ -5536,7 +5556,7 @@ static INT32 PicoLine(INT32 /*scan*/)
 			UINT8 *pSrc = HighColFull + (Scanline + offset + ((interlacemode2 & RamVReg->field) * 240))*(8+320+8) + 8;
 
 			for (INT32 i = 0; i < 320; i++)
-				pDest[i] = MegadriveCurPal[pSrc[i]];
+				pDest[i] = MegadriveCurRaw[pSrc[i]];
 
 		}
 	}
@@ -5553,10 +5573,10 @@ static INT32 PicoLine(INT32 /*scan*/)
 			UINT8 *pSrc = HighColFull + (Scanline + offset + ((interlacemode2 & RamVReg->field) * 240))*(8+320+8) + 8;
 
 			if (S32XMode) {
-				S32XDrawLine(Scanline, pSrc, pDest, MegadriveCurPal, RamVReg->reg[7] & 0x3f, RamVReg->reg[12] & 1);
+				S32XDrawLine(Scanline, pSrc, pDest, MegadriveCurRaw, RamVReg->reg[7] & 0x3f, RamVReg->reg[12] & 1);
 			} else {
 				for (INT32 i = 0; i < 320; i++)
-					pDest[i] = MegadriveCurPal[pSrc[i]];
+					pDest[i] = MegadriveCurRaw[pSrc[i]];
 			}
 		}
 	}
@@ -5622,68 +5642,49 @@ static INT32 res_check()
 	return 0;
 }
 
+// n pixels from LineBuf to the display, src advanced by step (16.16) per pixel
+static void MegadriveDrawLine(UINT8 *dst, const UINT16 *src, INT32 n, UINT32 step)
+{
+	UINT32 pos = 0;
+
+	for (INT32 i = 0; i < n; i++, pos += step, dst += nBurnBpp)
+		PutPix(dst, MegadriveHostPal[src[pos >> 16]]);
+}
+
 INT32 MegadriveDraw()
 {
 	if (bMegadriveRecalcPalette) {
-	    for (INT32 i=0; i< 0x40; i++)
-			CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));
+		MegadriveRecalcHostPal();
 		bMegadriveRecalcPalette = 0;
-		if (S32XMode) S32XRecalcPal();
 	}
+
+	for (INT32 i = 0; i < 0x100; i++)
+		MegadriveCurPal[i] = MegadriveHostPal[MegadriveCurRaw[i]];
 
 	if (res_check()) return 0; // resolution changed?
 
-	UINT16 *pDest = (UINT16 *)pBurnDraw;
+	UINT8 *pDest = pBurnDraw;
 
 	if (interlacemode2) {
-		//+ ((interlacemode2 & RamVreg->field) * 224)
-		// Normal / "Screen Resize"
-		for (INT32 j=0; j < screen_height; j++) {
-			UINT16 *pSrc = LineBuf + ((j/2) * 320) + ((j&1) * 240 * 320);
-			for (INT32 i = 0; i < screen_width; i++)
-				pDest[i] = pSrc[i];
-			pDest += screen_width;
-		}
+		for (INT32 j = 0; j < screen_height; j++, pDest += nBurnPitch)
+			MegadriveDrawLine(pDest, LineBuf + ((j/2) * 320) + ((j&1) * 240 * 320), screen_width, 0x10000);
 	} else
 	if ((RamVReg->reg[12]&1) || S32XMode || ((MegadriveDIP[1] & 0x03) == 0 || (MegadriveDIP[1] & 0x03) == 3) ) {
 		// Normal / "Screen Resize"
-		for (INT32 j=0; j < screen_height; j++) {
-			UINT16 *pSrc = LineBuf + (j * 320);
-			for (INT32 i = 0; i < screen_width; i++)
-				pDest[i] = pSrc[i];
-			pDest += screen_width;
+		for (INT32 j = 0; j < screen_height; j++, pDest += nBurnPitch)
+			MegadriveDrawLine(pDest, LineBuf + (j * 320), screen_width, 0x10000);
+	} else
+	if ((MegadriveDIP[1] & 0x03) == 0x01) {
+		// Center
+		for (INT32 j = 0; j < screen_height; j++, pDest += nBurnPitch) {
+			memset(pDest, 0, 32 * nBurnBpp);
+			MegadriveDrawLine(pDest + 32 * nBurnBpp, LineBuf + (j * 320), 256, 0x10000);
+			memset(pDest + (32 + 256) * nBurnBpp, 0, 32 * nBurnBpp);
 		}
-
 	} else {
-
-		if (( MegadriveDIP[1] & 0x03 ) == 0x01 ) {
-			// Center
-			pDest += 32;
-			for (INT32 j = 0; j < screen_height; j++) {
-				UINT16 *pSrc = LineBuf + (j * 320);
-
-				memset((UINT8 *)pDest -  32*2, 0, 64);
-
-				for (INT32 i = 0; i < 256; i++)
-					pDest[i] = pSrc[i];
-
-				memset((UINT8 *)pDest + 256*2, 0, 64);
-
-				pDest += 320;
-			}
-		} else {
-			// Zoom
-			for (INT32 j = 0; j < screen_height; j++) {
-				UINT16 *pSrc = LineBuf + (j * 320);
-				UINT32 delta = 0;
-				for (INT32 i = 0; i < 320; i++) {
-					pDest[i] = pSrc[delta >> 16];
-					delta += 0xCCCC;
-				}
-				pDest += 320;
-			}
-		}
-
+		// Zoom
+		for (INT32 j = 0; j < screen_height; j++, pDest += nBurnPitch)
+			MegadriveDrawLine(pDest, LineBuf + (j * 320), 320, 0xcccc);
 	}
 
 	if (has_gun) BurnGunDrawTargets();
@@ -6017,6 +6018,10 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dma_xfers);
 
 		SCAN_VAR(z80_cycle_cnt);
+
+		if (nAction & ACB_WRITE) {
+			MegadriveRecalcCurRaw();
+		}
 
 		BurnRandomScan(nAction);
 		clear_opposite.scan();

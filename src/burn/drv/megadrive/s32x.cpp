@@ -28,8 +28,6 @@ static UINT8 *Sdram;		// 256kb, sh-2 layout
 static UINT8 *Dram;			// 2 x 128kb frame buffers, sh-2 layout
 static UINT8 *CacheRam;		// 2 x 64kb (on-chip cache used as ram)
 static UINT16 *Cram;
-static UINT16 *Pal15;		// 32x colour -> display colour
-static INT32 pal_recalc;
 static INT32 is_pal;
 
 struct pwm_fifo {
@@ -1197,69 +1195,74 @@ void S32XEndFrame(INT32 main_cycles)
 // -----------------------------------------------------------------------------
 // video
 
-void S32XRecalcPal()
+// writes colour codes (see megadrive.cpp, CalcCol()): 32x colour or md colour code from md_raw
+void S32XDrawLine(INT32 line, UINT8 *md_line, UINT16 *dest, UINT16 *md_raw, INT32 backdrop, INT32 h40)
 {
-	pal_recalc = 1;
-}
-
-static void recalc_pal()
-{
-	for (INT32 i = 0; i < 0x8000; i++) {
-		INT32 r = (i >>  0) & 0x1f;
-		INT32 g = (i >>  5) & 0x1f;
-		INT32 b = (i >> 10) & 0x1f;
-		Pal15[i] = BurnHighCol((r << 3) | (r >> 2), (g << 3) | (g >> 2), (b << 3) | (b >> 2), 0);
-	}
-	pal_recalc = 0;
-}
-
-void S32XDrawLine(INT32 line, UINT8 *md_line, UINT16 *dest, UINT32 *md_pal, INT32 backdrop, INT32 h40)
-{
-	if (pal_recalc) recalc_pal();
-
-	UINT8 md[320];
-	for (INT32 x = 0; x < 320; x++) {
-		md[x] = md_line[h40 ? x : (x * 4 / 5)];
+	UINT8 md32[320];
+	const UINT8 *md = md_line;
+	if (!h40) {
+		for (INT32 x = 0; x < 320; x++) md32[x] = md_line[x * 4 / 5];
+		md = md32;
 	}
 
 	if (st.l_mode == 0 || line >= (st.l_lines ? 240 : 224)) {
-		for (INT32 x = 0; x < 320; x++) dest[x] = md_pal[md[x]];
+		for (INT32 x = 0; x < 320; x++) dest[x] = md_raw[md[x]];
 		return;
 	}
 
+	const UINT8 *fb = Dram + (st.fb_active ^ 1) * 0x20000; // displayed frame buffer
+	const UINT16 *cram = Cram;
 	UINT16 px[320];
-	INT32 buf = st.fb_active ^ 1; // displayed frame buffer
-	UINT16 addr = *fb_word(buf, line);
+	UINT16 addr = *(const UINT16*)(fb + SH2_WADDR((line & 0xffff) << 1));
+
+#define FB_WORD(w)	(*(const UINT16*)(fb + SH2_WADDR(((w) & 0xffff) << 1)))
 
 	switch (st.l_mode) {
 		case 1:
-			for (INT32 x = 0; x < 320; x++) {
-				INT32 p = x + st.l_dotshift;
-				UINT16 w = *fb_word(buf, addr + (p >> 1));
-				px[x] = Cram[(p & 1) ? (w & 0xff) : (w >> 8)];
+			if (st.l_dotshift == 0) {
+				for (INT32 i = 0; i < 160; i++) {
+					UINT16 w = FB_WORD(addr + i);
+					px[i * 2 + 0] = cram[w >> 8];
+					px[i * 2 + 1] = cram[w & 0xff];
+				}
+			} else {
+				px[0] = cram[FB_WORD(addr) & 0xff];
+				for (INT32 i = 1; i < 160; i++) {
+					UINT16 w = FB_WORD(addr + i);
+					px[i * 2 - 1] = cram[w >> 8];
+					px[i * 2 + 0] = cram[w & 0xff];
+				}
+				px[319] = cram[FB_WORD(addr + 160) >> 8];
 			}
 		break;
 
 		case 2:
 			for (INT32 x = 0; x < 320; x++) {
-				px[x] = *fb_word(buf, addr++);
+				px[x] = FB_WORD(addr + x);
 			}
 		break;
 
 		case 3:
 			for (INT32 x = 0; x < 320; ) {
-				UINT16 w = *fb_word(buf, addr++);
-				UINT16 c = Cram[w & 0xff];
+				UINT16 w = FB_WORD(addr++);
+				UINT16 c = cram[w & 0xff];
 				for (INT32 n = (w >> 8) + 1; n > 0 && x < 320; n--) px[x++] = c;
 			}
 		break;
 	}
 
+#undef FB_WORD
+
+	const INT32 priority = st.l_priority ? 1 : 0;
+
 	for (INT32 x = 0; x < 320; x++) {
-		INT32 through = px[x] >> 15;
-		INT32 is_backdrop = (md[x] & 0x3f) == backdrop;
-		INT32 show = (st.l_priority) ? (!through || is_backdrop) : (through || is_backdrop);
-		dest[x] = show ? Pal15[px[x] & 0x7fff] : md_pal[md[x]];
+		UINT16 c = px[x];
+		// through bit set: 32x pixel shown when priority is 0, hidden when 1. md backdrop always shows the 32x
+		if (((c >> 15) ^ priority) || (md[x] & 0x3f) == backdrop) {
+			dest[x] = c & 0x7fff;
+		} else {
+			dest[x] = md_raw[md[x]];
+		}
 	}
 }
 
@@ -1333,7 +1336,6 @@ INT32 S32XInit(UINT8 *rom, INT32 rom_size)
 	Dram     = (UINT8*)BurnMalloc(0x40000);
 	CacheRam = (UINT8*)BurnMalloc(0x20000);
 	Cram     = (UINT16*)BurnMalloc(0x200);
-	Pal15    = (UINT16*)BurnMalloc(0x8000 * sizeof(UINT16));
 	pwm_buf  = (INT16*)BurnMalloc(PWM_BUF_SIZE * 2 * sizeof(INT16));
 
 	// sh-2 layout rom copy (mirrored up to the next power of two)
@@ -1358,7 +1360,6 @@ INT32 S32XInit(UINT8 *rom, INT32 rom_size)
 		Sh2Close();
 	}
 
-	pal_recalc = 1;
 
 	S32XReset();
 
@@ -1374,7 +1375,6 @@ void S32XExit()
 	BurnFree(Dram);
 	BurnFree(CacheRam);
 	BurnFree(Cram);
-	BurnFree(Pal15);
 	BurnFree(pwm_buf);
 
 	RomMd = NULL;

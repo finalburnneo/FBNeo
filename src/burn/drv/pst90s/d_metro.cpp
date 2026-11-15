@@ -3469,7 +3469,7 @@ static INT32 blzntrndInit()
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
 	i4x00_set_blazing();
 
-	i4220_set_crtc_timing(422, 267); // 58.2329 hz (not verified)
+	i4220_set_crtc_timing(422, 267); // 58.2329 hz (58.2308 measured with scaler)
 
 	vblank_bit = 0;
 	irq_line = 1;

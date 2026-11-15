@@ -1,9 +1,11 @@
-/********************************************************************************
- Newer Seta Hardware
- MAME driver by Luca Elia (l.elia@tin.it)
- ********************************************************************************
- port to Finalburn Neo by OopsWare. 2007
- ********************************************************************************/
+// FB Neo Seta 2 driver module
+// Based on MAME driver by Luca Elia (l.elia@tin.it)
+// Ported by OopsWare. 2007
+
+/*
+	Notes:
+	- refresh rate measurements from https://github.com/finalburnneo/FBNeo/issues/2875
+ */
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -60,6 +62,18 @@ static INT32 raster_en;
 static INT32 current_scanline;
 
 static INT32 M68K_CYCS = 50000000 / 3;
+
+static double dFrameRate = 60.0;
+static INT32 nFrameLines = 256;
+
+// Formula confirmed by grdians, gundamex, turkhunt and trophyh PCBs
+static void SetVideoTiming(double dDotClock, INT32 nHTotalReg, INT32 nVTotalReg)
+{
+	nFrameLines = nVTotalReg + 2;
+	dFrameRate = dDotClock / ((double)(nHTotalReg + 2) * (double)(nVTotalReg + 2));
+
+	BurnSetRefreshRate(dFrameRate);
+}
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -1266,38 +1280,6 @@ static struct BurnRomInfo trophyhRomDesc[] = {
 STD_ROM_PICK(trophyh)
 STD_ROM_FN(trophyh)
 
-static struct BurnRomInfo funcube2RomDesc[] = {
-	{ "fc21_prg-0b.u3",	0x080000, 0xadd1c8a6, 1 }, //  0 68000 code
-
-	{ "fc21_iopr-0.u49",	0x020000, 0x314555ef, 2 }, //  1 H8/3007 code
-
-	{ "fc21a.u57",		0x000300, 0x00000000, 3 | BRF_NODUMP }, //  2 PIC12C508 Code
-
-	{ "fc21_obj-0.u43",	0x400000, 0x08cfe6d9, 4 }, //  3 GFX
-	{ "fc21_obj-1.u42",	0x400000, 0x4c1fbc20, 4 }, //  4
-
-	{ "fc21_voi0.u47",	0x200000, 0x4a49370a, 5 }, //  5 PCM
-};
-
-STD_ROM_PICK(funcube2)
-STD_ROM_FN(funcube2)
-
-static struct BurnRomInfo funcube4RomDesc[] = {
-	{ "fc41_prg-0.u3",	0x080000, 0xef870874, 1 }, //  0 68000 code
-
-	{ "fc21_iopr-0.u49",	0x020000, 0x314555ef, 2 }, //  1 H8/3007 code
-
-	{ "fc41a",		0x000300, 0x00000000, 3 | BRF_NODUMP }, //  2 PIC12C508 Code
-
-	{ "fc41_obj-0.u43",	0x400000, 0x9ff029d5, 4 }, //  3 GFX
-	{ "fc41_obj-1.u42",	0x400000, 0x5ab7b087, 4 }, //  4
-
-	{ "fc41_snd0.u47",	0x200000, 0xe6f7d2bc, 5 }, //  5 PCM
-};
-
-STD_ROM_PICK(funcube4)
-STD_ROM_FN(funcube4)
-
 
 inline static UINT32 CalcCol(UINT16 nColour)
 {
@@ -1841,6 +1823,8 @@ static INT32 grdiansInit()
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
+	SetVideoTiming(50000000.0 / 8, 0x19a, 0x102); // 58.3458 hz (58.3457 measured with scaler on P-FG01-1)
+
 	DrvDoReset();
 
 	return 0;
@@ -1945,6 +1929,8 @@ static INT32 grdiansaInit()
 	x1010_sound_init(M68K_CYCS, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+
+	SetVideoTiming(50000000.0 / 8, 0x19a, 0x102); // 58.3458 hz (not verified on P0-113A)
 
 	DrvDoReset();
 
@@ -2114,6 +2100,8 @@ static INT32 mj4simaiInit()
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 //	bMahjong = 1;
+
+	SetVideoTiming(32530470.0 / 4, 0x204, 0x105); // 59.6959 hz (not verified)
 
 	DrvDoReset();	
 
@@ -2409,6 +2397,8 @@ static INT32 myangel2Init()
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
+	SetVideoTiming(32530470.0 / 4, 0x200, 0x105); // 60.1605 hz (not verified)
+
 	DrvDoReset();
 
 	return 0;
@@ -2564,6 +2554,8 @@ static INT32 pzlbowlInit()
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 
+	SetVideoTiming(32530470.0 / 4, 0x204, 0x105); // 59.6959 hz (not verified)
+
 	DrvDoReset();
 
 	return 0;
@@ -2711,6 +2703,8 @@ static INT32 penbrosInit()
 	x1010_sound_init(50000000 / 3, 0x0000);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+
+	SetVideoTiming(28000000.0 / 4, 0x1c0, 0x0ff); // 60.5275 hz (not verified)
 
 	DrvDoReset();
 
@@ -2876,6 +2870,8 @@ static INT32 gundamexInit()
 
 	EEPROMInit(&eeprom_interface_93C46);
 
+	SetVideoTiming(32530470.0 / 4, 0x206, 0x104); // 59.6933 hz (59.6915 measured with scaler)
+
 	DrvDoReset();
 
 	return 0;
@@ -3010,6 +3006,8 @@ static INT32 samshootInit(INT32 game_id)
 
 	BurnGunInit(2, true);
 
+	SetVideoTiming(28000000.0 / 4, 0x1bd, 0x105); // 59.5436 hz (trophyh: 59.5449 measured with scaler, turkhunt: 59.54)
+
 	DrvDoReset();
 
 	return 0;
@@ -3058,6 +3056,8 @@ static INT32 grdiansExit()
 	grdiansbl = 0;
 
 	M68K_CYCS = 50000000 / 3;
+	dFrameRate = 60.0;
+	nFrameLines = 256;
 
 //	bMahjong = 0;
 
@@ -3643,8 +3643,9 @@ static INT32 grdiansFrame()
 		DrvInput[6] |= (DrvJoy5[i] & 1) << i;
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = (M68K_CYCS / 60) / nInterleave;
+	INT32 nInterleave = nFrameLines;
+	INT32 nCyclesFrame = (INT32)((double)M68K_CYCS / dFrameRate);
+	INT32 nCyclesTotal = nCyclesFrame / nInterleave;
 	INT32 nCyclesDone = nExtraCycles;
 	INT32 nCyclesNext = 0;
 	INT32 nCyclesExec = 0;
@@ -3654,7 +3655,7 @@ static INT32 grdiansFrame()
 	SekOpen(0);
 	DrvDrawBegin();
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesNext += nCyclesTotal;
+		nCyclesNext = ((i + 1) * nCyclesFrame) / nInterleave;
 		nCyclesExec = SekRun( nCyclesNext - nCyclesDone );
 		nCyclesDone += nCyclesExec;
 
@@ -3692,7 +3693,7 @@ static INT32 grdiansFrame()
 			tmp68301_update_irq_state(0);
 		}
 	}
-	nExtraCycles = SekTotalCycles() - (M68K_CYCS / 60);
+	nExtraCycles = SekTotalCycles() - nCyclesFrame;
 
 	SekClose();
 
@@ -3744,8 +3745,9 @@ static INT32 samshootFrame()
 		DrvAnalogInput[3] = (INT8)y1 + 22 + gun_offs[is_samshoot][1];
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = (M68K_CYCS / 60) / nInterleave;
+	INT32 nInterleave = nFrameLines;
+	INT32 nCyclesFrame = (INT32)((double)M68K_CYCS / dFrameRate);
+	INT32 nCyclesTotal = nCyclesFrame / nInterleave;
 	INT32 nCyclesDone = nExtraCycles;
 	INT32 nCyclesNext = 0;
 	INT32 nCyclesExec = 0;
@@ -3755,7 +3757,7 @@ static INT32 samshootFrame()
 	SekOpen(0);
 	DrvDrawBegin();
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nCyclesNext += nCyclesTotal;
+		nCyclesNext = ((i + 1) * nCyclesFrame) / nInterleave;
 		nCyclesExec = SekRun( nCyclesNext - nCyclesDone );
 		nCyclesDone += nCyclesExec;
 
@@ -3794,7 +3796,7 @@ static INT32 samshootFrame()
 		}
 	}
 
-	nExtraCycles = SekTotalCycles() - (M68K_CYCS / 60);
+	nExtraCycles = SekTotalCycles() - nCyclesFrame;
 
 	SekClose();
 
@@ -4085,31 +4087,6 @@ struct BurnDriver BurnDrvTrophyh = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, trophyhRomInfo, trophyhRomName, NULL, NULL, NULL, NULL, WschampInputInfo, TrophyhDIPInfo,
 	trophyhInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
-	320, 240, 4, 3
-};
-
-static INT32 funcubeInit()
-{
-	return 1;
-}
-
-struct BurnDriverD BurnDrvFuncube2 = {
-	"funcube2", NULL, NULL, NULL, "2001",
-	"Funcube 2 (v1.1)\0", "Unemulated Sub CPU", "Namco", "Newer Seta",
-	NULL, NULL, NULL, NULL,
-	0 | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
-	NULL, funcube2RomInfo, funcube2RomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	funcubeInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
-	320, 240, 4, 3
-};
-
-struct BurnDriverD BurnDrvFuncube4 = {
-	"funcube4", NULL, NULL, NULL, "2001",
-	"Funcube 4 (v1.0)\0", "Unemulated Sub CPU", "Namco", "Newer Seta",
-	NULL, NULL, NULL, NULL,
-	0 | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
-	NULL, funcube4RomInfo, funcube4RomName, NULL, NULL, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	funcubeInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 

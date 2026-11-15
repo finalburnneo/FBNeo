@@ -232,14 +232,14 @@ static inline void arm7_block_transfer_fast(arm7_t* cpu, gba_t* gba, UINT32 opco
 	arm7_block_transfer_decoded_fast(cpu, gba, P, U, S, w, L, Rn, (UINT32)reglist);
 }
 
+// Resume a suspended block transfer from the cached decoded fields. P and U
+// were consumed during phase-0 to set base_addr and iteration direction.
 static inline void arm7_block_transfer_resume_fast(arm7_t* cpu, gba_t* gba)
 {
-	UINT32 resume = cpu->block.decoded_resume_opcode;
-	arm7_block_transfer_decoded_fast(cpu, gba,
-		0, 0,
-		(INT32)((resume >> 22) & 1), (INT32)((resume >> 21) & 1),
-		(INT32)((resume >> 20) & 1), (INT32)((resume >> 16) & 0xf),
-		resume & 0xffff);
+	arm7_block_transfer_decoded_fast(cpu, gba, 0, 0,
+		(INT32)cpu->block.decoded_psr_bit, (INT32)cpu->block.decoded_writeback_bit,
+		(INT32)cpu->block.decoded_load_bit, (INT32)cpu->block.decoded_base_register,
+		cpu->block.decoded_register_list);
 }
 
 // Route ARM SDT (top3=2, or top3=3 with bit4=0) and BDT (top3=4) to the
@@ -261,6 +261,8 @@ static inline bool arm7_dispatch_opcode_fast(arm7_t* cpu, gba_t* gba, UINT32 opc
 static inline bool arm7_run_phased_opcode_fast(arm7_t* cpu, gba_t* gba)
 {
 	switch (cpu->phased_op_id) {
+		case ARM_PHASED_NONE:
+			return true;
 		case ARM_PHASED_FILL_PIPE:
 			arm7_fill_pipeline_fast(cpu, gba);
 			break;

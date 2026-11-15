@@ -1194,9 +1194,8 @@ static inline void arm7_block_transfer(arm7_t* cpu, UINT32 opcode)
 	arm7_block_transfer_decoded(cpu, P, U, S, w, L, Rn, (UINT32)reglist);
 }
 
-// Phased resume entry: the decode performed at phase 0 is still valid for
-// every remaining register of the same instruction, so reuse it. P/U are
-// only consumed by the phase-0 setup and are therefore not re-passed.
+// Resume a suspended block transfer from the cached decoded fields. P and U
+// were consumed during phase-0 to set base_addr and iteration direction.
 static inline void arm7_block_transfer_resume(arm7_t* cpu)
 {
 	arm7_block_transfer_decoded(cpu, 0, 0,

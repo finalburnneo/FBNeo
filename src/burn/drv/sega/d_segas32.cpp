@@ -119,11 +119,12 @@ static INT32 screen_vflip = 0;
 static INT32 is_multi32 = 0;
 static INT32 is_scross = 0;
 
-#define MAX_SINGLE_SCREEN_PATCHES	4
+#define MAX_SINGLE_SCREEN_PATCHES	8
 static INT32 single_screen_patch_count = 0;
 static INT32 single_screen_patch_offs[MAX_SINGLE_SCREEN_PATCHES];
 static INT32 single_screen_patch_len[MAX_SINGLE_SCREEN_PATCHES];
-static UINT8 single_screen_patch_data[MAX_SINGLE_SCREEN_PATCHES][2][4]; // [dual, single][bytes]
+static UINT8 single_screen_patch_data[MAX_SINGLE_SCREEN_PATCHES][2][12]; // [dual, single][bytes]
+static INT32 single_screen_mix_sides = 0;
 static INT32 is_radm = 0;
 static INT32 is_radr = 0;
 static INT32 is_sonic = 0;
@@ -1067,11 +1068,6 @@ static struct BurnDIPInfo setname##DIPList[]=			\
 	{0   , 0xfe, 0   ,    2, "Cabinet Mode"			},	\
 	{0x01, 0x01, 0x01, 0x01, single					},	\
 	{0x01, 0x01, 0x01, 0x00, dual					},	\
-														\
-	{0   , 0xfe, 0   ,    3, "Speaker Mode"			},	\
-	{0x01, 0x01, 0x0c, 0x00, "Stereo"				},	\
-	{0x01, 0x01, 0x0c, 0x04, "Mono"					},	\
-	{0x01, 0x01, 0x0c, 0x08, "Left Side Only"		},	\
 };														\
 														\
 STDDIPINFO(setname)
@@ -1090,11 +1086,6 @@ static struct BurnDIPInfo setname##DIPList[]=			\
 	{0   , 0xfe, 0   ,    2, "Cabinet Mode"			},	\
 	{0x01, 0x01, 0x01, 0x01, single					},	\
 	{0x01, 0x01, 0x01, 0x00, dual					},	\
-														\
-	{0   , 0xfe, 0   ,    3, "Speaker Mode"			},	\
-	{0x01, 0x01, 0x0c, 0x00, "Stereo"				},	\
-	{0x01, 0x01, 0x0c, 0x04, "Mono"					},	\
-	{0x01, 0x01, 0x0c, 0x08, "Left Side Only"		},	\
 														\
 	{0   , 0xfe, 0   ,    2, "Steering Response"	},  \
 	{0x01, 0x01, 0x10, 0x10, "Linear"				},  \
@@ -2021,16 +2012,23 @@ inline static void DrvFMIRQHandler(INT32 chip, INT32 state)
 		clear_sound_irq(SOUND_IRQ_YM3438);
 }
 
+static void single_screen_patch_add_at(INT32 offs, const UINT8 *data, INT32 len)
+{
+	if (single_screen_patch_count >= MAX_SINGLE_SCREEN_PATCHES) return;
+
+	INT32 n = single_screen_patch_count++;
+	single_screen_patch_offs[n] = offs;
+	single_screen_patch_len[n] = len;
+	memcpy(single_screen_patch_data[n][0], DrvV60ROM + offs, len);
+	memcpy(single_screen_patch_data[n][1], data, len);
+}
+
 // The program rom is mirrored, patch every copy
 static void single_screen_patch_add(const UINT8 *pattern, INT32 pattern_len, INT32 offs, const UINT8 *data, INT32 len)
 {
-	for (INT32 i = 0; i <= 0x100000 - pattern_len && single_screen_patch_count < MAX_SINGLE_SCREEN_PATCHES; i++) {
+	for (INT32 i = 0; i <= 0x100000 - pattern_len; i++) {
 		if (memcmp(DrvV60ROM + i, pattern, pattern_len) == 0) {
-			INT32 n = single_screen_patch_count++;
-			single_screen_patch_offs[n] = i + offs;
-			single_screen_patch_len[n] = len;
-			memcpy(single_screen_patch_data[n][0], DrvV60ROM + i + offs, len);
-			memcpy(single_screen_patch_data[n][1], data, len);
+			single_screen_patch_add_at(i + offs, data, len);
 		}
 	}
 }
@@ -2695,6 +2693,7 @@ static INT32 DrvExit()
 	is_radr = 0;
 	is_scross = 0;
 	single_screen_patch_count = 0;
+	single_screen_mix_sides = 0;
 	is_sonic = 0;
 	is_slipstrm = 0;
 	is_ga2_spidman = 0;
@@ -4426,9 +4425,6 @@ static INT32 DrvDraw()
 
 static INT32 MultiScreenCheck()
 {
-	// audio check :)
-	MultiPCMSetMonoMode((DrvDips[1] & 0xc) >> 2);
-
 	INT32 screensize = (DrvDips[1] & 1) ? 320 : 640;
 	if (screensize != nScreenWidth)
 	{
@@ -4674,6 +4670,16 @@ static INT32 DrvFrame()
 		BurnYM3438Update(pBurnSoundOut, nBurnSoundLen);
 		if (is_multi32) {
 			MultiPCMUpdate(pBurnSoundOut, nBurnSoundLen);
+
+			if (DrvDips[1] & 1) {
+				// each cabinet side has its own mono speaker (left = side A, right = side B),
+				// on a single screen cabinet only side A is heard, unless side B still has something to say
+				for (INT32 i = 0; i < nBurnSoundLen; i++) {
+					INT32 sample = pBurnSoundOut[i * 2 + 0];
+					if (single_screen_mix_sides) sample += pBurnSoundOut[i * 2 + 1];
+					pBurnSoundOut[i * 2 + 0] = pBurnSoundOut[i * 2 + 1] = BURN_SND_CLIP(sample);
+				}
+			}
 		} else {
 			RF5C68PCMUpdate(pBurnSoundOut, nBurnSoundLen);
 		}
@@ -7777,6 +7783,27 @@ static INT32 OrunnersInit()
 		static const UINT8 pattern[9] = { 0x09, 0x80, 0xe2, 0x18, 0x41, 0x09, 0x00, 0x18, 0x40 };
 		static const UINT8 patch[1] = { 0xe1 };
 		single_screen_patch_add(pattern, 9, 2, patch, 1);
+	}
+
+	{
+		// Side B and side A commentators speak in turn while side B waits for its entry countdown,
+		// side B then stops its sound. Wait for side A to leave the car selection instead:
+		//   test.h 1C1A[R24] / bne +28 / jsr sound_stop
+		//   -> cmp.b #6, -5800[R24] (side A game phase) / bl +26 / bsr sound_stop / nop
+		static const UINT8 pattern[8] = { 0xf2, 0x38, 0x1a, 0x1c, 0x65, 0x28, 0xe8, 0xf3 };
+		INT32 first = -1;
+		for (INT32 i = 0; i <= 0x100000 - 12; i++) {
+			if (memcmp(DrvV60ROM + i, pattern, 8) == 0) {
+				if (first < 0) first = i;
+				UINT32 target = DrvV60ROM[first + 8] | (DrvV60ROM[first + 9] << 8) | (DrvV60ROM[first + 10] << 16) | (DrvV60ROM[first + 11] << 24);
+				INT32 disp = (INT32)target - (first + 8);
+				if (disp < -0x8000 || disp > 0x7fff) break;
+				UINT8 patch[12] = { 0xb8, 0x80, 0xe6, 0x38, 0x00, 0xa8, 0x62, 0x26, 0x48, (UINT8)(disp & 0xff), (UINT8)((disp >> 8) & 0xff), 0xcd };
+				single_screen_patch_add_at(i, patch, 12);
+			}
+		}
+
+		single_screen_mix_sides = 1;
 	}
 
 	DrvDoReset();

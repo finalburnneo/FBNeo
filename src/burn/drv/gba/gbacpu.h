@@ -1109,9 +1109,10 @@ SB_ALWAYS_INLINE void arm7_block_transfer_decoded(arm7_t* cpu, INT32 P, INT32 U,
 				addr += num_regs * increment;
 			}
 		}
+		cpu->block.base_addr = base_addr;
+
 		if (reglist == 0)
 			reglist = 1 << 15;
-		cpu->block.base_addr = base_addr;
 
 		if (!(P ^ U))
 			addr += 4;

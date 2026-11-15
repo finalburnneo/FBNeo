@@ -68,6 +68,7 @@ static INT32 irq_line = 1;
 static INT32 blitter_bit = 0;
 static INT32 main_cpu_cycles = 12000000 / 60;
 static INT32 main_cpu_hz = 12000000;
+static double refresh_rate = 58.0;
 static INT32 ymf278bint = 0;
 static INT32 has_zoom = 0;
 
@@ -3364,6 +3365,26 @@ static void blzntrnd_zoomchip_draw()
 	if (nBurnLayer & 1) K053936Draw(0, (UINT16*)DrvK053936CRAM, (UINT16*)DrvK053936LRAM, (1 << 24) | (0xff << 16) | (1 << 8) | 0);
 }
 
+// htotal/vtotal: crtc totals the game programs into the vdp at boot
+static void set_crtc_timing(double dot_clock, INT32 htotal, INT32 vtotal)
+{
+	refresh_rate = dot_clock / ((htotal + 2) * (vtotal + 3));
+	main_cpu_cycles = (INT32)((double)main_cpu_hz / refresh_rate);
+
+	BurnSetRefreshRate(refresh_rate);
+}
+
+static void i4220_set_crtc_timing(INT32 htotal, INT32 vtotal)
+{
+	set_crtc_timing(26666000.0 / 4.0, htotal, vtotal);
+}
+
+// i4100 dot clock is the vdp clock / 3: 20 MHz (karatour boards) or 24 MHz (vg420 boards)
+static void i4100_set_crtc_timing(double vdp_clock, INT32 htotal, INT32 vtotal)
+{
+	set_crtc_timing(vdp_clock / 3.0, htotal, vtotal);
+}
+
 static INT32 blzntrndInit()
 {
 	graphics_length = 0x1800000;
@@ -3447,6 +3468,8 @@ static INT32 blzntrndInit()
 	i4x00_set_offsets(0, 0, 0);
 	i4x00_set_extrachip_callback(blzntrnd_zoomchip_draw);
 	i4x00_set_blazing();
+
+	i4220_set_crtc_timing(422, 267); // 58.2329 hz (58.2308 measured with scaler)
 
 	vblank_bit = 0;
 	irq_line = 1;
@@ -3576,6 +3599,8 @@ static INT32 gstrik2Init()
 
 	i4x00_set_extrachip_callback(gstrik2_zoomchip_draw);
 	i4x00_set_offsets(8,8,8);
+
+	i4220_set_crtc_timing(426, 267); // 57.6886 hz (57.69 measured with scaler)
 
 	vblank_bit = 0;
 	irq_line = 1;
@@ -3911,7 +3936,13 @@ static void skyalertMapCallback()
 
 static INT32 skyalertInit()
 {
-	return common_type1_init(4100, 0x200000, 1, skyalertMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4100, 0x200000, 1, skyalertMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4100_set_crtc_timing(24000000.0, 510, 267); // 57.8704 hz (not verified)
+	}
+
+	return nRet;
 }
 
 static void pangpomsMapCallback()
@@ -3925,7 +3956,13 @@ static void pangpomsMapCallback()
 
 static INT32 pangpomsInit()
 {
-	return common_type1_init(4100, 0x100000, 1, pangpomsMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4100, 0x100000, 1, pangpomsMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4100_set_crtc_timing(24000000.0, 510, 267); // 57.8704 hz (not verified)
+	}
+
+	return nRet;
 }
 
 static void poittoMapCallback()
@@ -3939,7 +3976,13 @@ static void poittoMapCallback()
 
 static INT32 poittoInit()
 {
-	return common_type1_init(4100, 0x200000, 2, poittoMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4100, 0x200000, 2, poittoMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4100_set_crtc_timing(24000000.0, 510, 267); // 57.8704 hz (not verified)
+	}
+
+	return nRet;
 }
 
 static void lastfortMapCallback()
@@ -3953,10 +3996,13 @@ static void lastfortMapCallback()
 
 static INT32 lastfortInit()
 {
-	main_cpu_cycles = 12000000 / 58;
-	main_cpu_hz = 12000000;
+	INT32 nRet = common_type1_init(4100, 0x200000, 1, lastfortMapCallback, NULL, 2/*udp*/);
 
-	return common_type1_init(4100, 0x200000, 1, lastfortMapCallback, NULL, 2/*udp*/);
+	if (nRet == 0) {
+		i4100_set_crtc_timing(24000000.0, 510, 267); // 57.8704 hz (rounded 58 measured by Guru)
+	}
+
+	return nRet;
 }
 
 static void lastforgMapCallback()
@@ -3970,10 +4016,13 @@ static void lastforgMapCallback()
 
 static INT32 lastforgInit()
 {
-	main_cpu_cycles = 12000000 / 58;
-	main_cpu_hz = 12000000;
+	INT32 nRet = common_type1_init(4100, 0x200000, 2, lastforgMapCallback, NULL, 2/*udp*/);
 
-	return common_type1_init(4100, 0x200000, 2, lastforgMapCallback, NULL, 2/*udp*/);
+	if (nRet == 0) {
+		i4100_set_crtc_timing(24000000.0, 510, 267); // 57.8704 hz (not verified, assumes 24 MHz vdp clock on VG460 like VG420)
+	}
+
+	return nRet;
 }
 
 static void dharmaMapCallback()
@@ -3996,12 +4045,24 @@ static void dharmaRomCallback()
 
 static INT32 dharmaInit()
 {
-	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2 | 0x10/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, dharmaMapCallback, dharmaRomCallback, 2 | 0x10/*udp*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
+
+	return nRet;
 }
 
 static INT32 dharmajInit()
 {
-	return common_type1_init(4200, 0x200000, 2, dharmaMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, dharmaMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
+
+	return nRet;
 }
 
 static void pururunMapCallback()
@@ -4015,10 +4076,13 @@ static void pururunMapCallback()
 
 static INT32 pururunInit()
 {
-	main_cpu_cycles = (INT32)((double)12000000 / 58.2328);
-	main_cpu_hz = 12000000;
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
 
-	return common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (gunmast: 59.35 measured with scaler, 59.3517 by Guru)
+	}
+
+	return nRet;
 }
 
 static void karatourMapCallback()
@@ -4032,7 +4096,13 @@ static void karatourMapCallback()
 
 static INT32 karatourInit()
 {
-	return common_type1_init(4200, 0x400000, 2, karatourMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x400000, 2, karatourMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4100_set_crtc_timing(20000000.0, 430, 267); // 57.1559 hz (57.1556 measured by Guru)
+	}
+
+	return nRet;
 }
 
 static void kokushiMapCallback()
@@ -4054,6 +4124,8 @@ static INT32 kokushiInit()
 			SekWriteWord(0x800000 + i, rand());
 		}
 		SekClose();
+
+		i4220_set_crtc_timing(430, 267); // 57.1545 hz (not verified)
 	}
 
 	return nRet;
@@ -4070,24 +4142,30 @@ static void daitoridMapCallback()
 
 static INT32 daitoridInit()
 {
-	main_cpu_cycles = 16000000 / 58;
 	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, daitoridMapCallback, NULL, 5/*udp + ym2151*/);
 
 	i4x00_set_offsets(-2, -2, -2);
 
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
+
 	return nRet;
 }
 
 static INT32 puzzliaInit()
 {
-	main_cpu_cycles = 16000000 / 58;
 	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 2, pururunMapCallback, NULL, 5/*udp + ym2151*/);
 
 	i4x00_set_offsets(-2, -2, -2);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
 
 	return nRet;
 }
@@ -4103,7 +4181,13 @@ static void toride2gMapCallback()
 
 static INT32 toride2gInit()
 {
-	return common_type1_init(4200, 0x200000, 2, toride2gMapCallback, NULL, 2/*udp*/);
+	INT32 nRet = common_type1_init(4200, 0x200000, 2, toride2gMapCallback, NULL, 2/*udp*/);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
+
+	return nRet;
 }
 
 static void msgogoMapCallback()
@@ -4125,7 +4209,6 @@ static void balcubeRomCallback()
 
 static INT32 msgogoInit()
 {
-	main_cpu_cycles = 16000000 / 60;
 	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 4, msgogoMapCallback, balcubeRomCallback, 3/*ymf278b*/);
@@ -4133,6 +4216,10 @@ static INT32 msgogoInit()
 	irq_line = 1;
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 1;
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
 
 	return nRet;
 }
@@ -4157,7 +4244,6 @@ static void balcubeMapCallback()
 
 static INT32 balcubeInit()
 {
-	main_cpu_cycles = 16000000 / 60;
 	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x200000, 4, balcubeMapCallback, balcubeRomCallback, 3/*ymf278b*/);
@@ -4165,6 +4251,10 @@ static INT32 balcubeInit()
 	irq_line = 1;
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 8;
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
 
 	return nRet;
 }
@@ -4180,7 +4270,6 @@ static void bangballMapCallback()
 
 static INT32 bangballInit()
 {
-	main_cpu_cycles = 16000000 / 60;
 	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x400000, 4, bangballMapCallback, balcubeRomCallback, 3/*ymf278b*/);
@@ -4189,6 +4278,10 @@ static INT32 bangballInit()
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 1;
 	bangballmode = 1;
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
 
 	return nRet;
 }
@@ -4212,7 +4305,6 @@ static void batlbublRomCallback()
 
 static INT32 batlbublInit()
 {
-	main_cpu_cycles = 16000000 / 60;
 	main_cpu_hz = 16000000;
 
 	INT32 nRet = common_type1_init(4200, 0x800000, 4, batlbublMapCallback, batlbublRomCallback, 3/*ymf278b*/);
@@ -4220,6 +4312,10 @@ static INT32 batlbublInit()
 	irq_line = 1;
 	i4x00_set_offsets(-2, -2, -2);
 	ymf278bint = 1;
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+	}
 
 	return nRet;
 }
@@ -4235,7 +4331,15 @@ static void vmetalMapCallback()
 
 static INT32 vmetalInit()
 {
-	return common_type1_init(4200, 0x800000, 5, vmetalMapCallback, NULL, 6);
+	main_cpu_hz = 16000000;
+
+	INT32 nRet = common_type1_init(4200, 0x800000, 5, vmetalMapCallback, NULL, 6);
+
+	if (nRet == 0) {
+		i4220_set_crtc_timing(422, 267); // 58.2329 hz (58.2328 measured by Guru)
+	}
+
+	return nRet;
 }
 
 static INT32 DrvExit()
@@ -4293,6 +4397,7 @@ static INT32 DrvExit()
 	has_zoom = 0;
 	main_cpu_cycles = 12000000 / 60;
 	main_cpu_hz = 12000000;
+	refresh_rate = 58.0;
 	ymf278bint = 0;
 	bangballmode = 0;
 
@@ -4322,7 +4427,7 @@ static INT32 Z80Frame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000 / 58 };
+	INT32 nCyclesTotal[2] = { (INT32)(16000000 / refresh_rate), (INT32)(8000000 / refresh_rate) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -4787,7 +4892,7 @@ static struct BurnRomInfo gstrik2jRomDesc[] = {
 STD_ROM_PICK(gstrik2j)
 STD_ROM_FN(gstrik2j)
 
-struct BurnDriverD BurnDrvGstrik2j = {
+struct BurnDriver BurnDrvGstrik2j = {
 	"gstrik2j", "gstrik2", NULL, NULL, "1996",
 	"Grand Striker 2 (Japan)\0", NULL, "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

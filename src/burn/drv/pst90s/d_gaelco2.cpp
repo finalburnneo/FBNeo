@@ -229,7 +229,7 @@ static struct BurnInputInfo Wrally2InputList[] = {
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
 	{"P1 Accelerator",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Shift",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	A("P1 Wheel",       BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 10,	"p2 coin"	},
@@ -239,7 +239,7 @@ static struct BurnInputInfo Wrally2InputList[] = {
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 right"	},
 	{"P2 Accelerator",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
-	{"P2 Shift",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+	{"P2 Gear Shift",	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	A("P2 Wheel",       BIT_ANALOG_REL, &Analog[1],		"p2 x-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},

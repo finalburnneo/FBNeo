@@ -42,10 +42,10 @@ static struct BurnInputInfo SuperchsInputList[] =
 	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort2 + 6, "p2 coin"   },
 
 	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0  , "p1 x-axis" ),
-	{"P1 Accelerate"     , BIT_DIGITAL   , TaitoInputPort3 + 0, "p1 fire 1" },
-	{"P1 Fire 2 (Brake)" , BIT_DIGITAL   , TaitoInputPort1 + 6, "p1 fire 2" },
-	{"P1 Fire 3 (Nitro)" , BIT_DIGITAL   , TaitoInputPort1 + 4, "p1 fire 3" },
-	{"P1 Fire 4 (Shift)" , BIT_DIGITAL   , TaitoInputPort1 + 5, "p1 fire 4" },
+	{"P1 Accelerator"    , BIT_DIGITAL   , TaitoInputPort3 + 0, "p1 fire 1" },
+	{"P1 Brake"          , BIT_DIGITAL   , TaitoInputPort1 + 6, "p1 fire 2" },
+	{"P1 Nitro"          , BIT_DIGITAL   , TaitoInputPort1 + 4, "p1 fire 3" },
+	{"P1 Gear Shift"     , BIT_DIGITAL   , TaitoInputPort1 + 5, "p1 fire 4" },
 
 	{"Reset"             , BIT_DIGITAL   , &TaitoReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL   , TaitoInputPort2 + 5, "service"   },

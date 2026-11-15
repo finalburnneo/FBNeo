@@ -37,6 +37,7 @@ struct channel_t
 	INT32 vol_l;
 	INT32 output_r;
 	INT32 output_l;
+	UINT32 loop_address;
 };
 
 static channel_t channels[16];
@@ -45,7 +46,7 @@ static UINT16 regs[0x80];
 static UINT16 *rom_base;
 static UINT32 rom_mask;
 static INT32 lut_volume[0x100];
-static const INT8 s_index_shift[8] = { -1, -1, -1, -1, 8, 4, 2, 1 };
+static const INT8 s_index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 static INT32 s_diff_lookup[49*16];
 
 // cheap resampler-izer
@@ -54,6 +55,11 @@ static INT16 *mixer_buffer_left;
 static INT16 *mixer_buffer_right;
 
 static UINT32 nSampleSize;
+static INT32 chip_clock;
+
+// the board's output has almost nothing below ~150 hz, where the adpcm decoding wanders
+struct biquad { double b0, b1, b2, a1, a2, z1, z2; };
+static biquad hpf[2][2];
 static INT32 nFractionalPosition;
 static INT32 nPosition;
 
@@ -81,6 +87,48 @@ static void compute_tables()
 	}
 }
 
+static void set_highpass(double rate)
+{
+	const double fc = 150.0, q = 0.70710678;
+	double w = 2.0 * 3.14159265358979 * fc / rate;
+	double alpha = sin(w) / (2.0 * q), cw = cos(w), a0 = 1.0 + alpha;
+
+	for (INT32 i = 0; i < 2; i++) {
+		for (INT32 j = 0; j < 2; j++) {
+			biquad *f = &hpf[i][j];
+			f->b0 = ((1.0 + cw) / 2.0) / a0;
+			f->b1 = -(1.0 + cw) / a0;
+			f->b2 = f->b0;
+			f->a1 = (-2.0 * cw) / a0;
+			f->a2 = (1.0 - alpha) / a0;
+			f->z1 = f->z2 = 0;
+		}
+	}
+}
+
+static inline INT32 highpass(INT32 ch, INT32 in)
+{
+	double x = in;
+	for (INT32 j = 0; j < 2; j++) {
+		biquad *f = &hpf[ch][j];
+		double y = f->b0 * x + f->z1;
+		f->z1 = f->b1 * x - f->a1 * y + f->z2;
+		f->z2 = f->b2 * x - f->a2 * y;
+		x = y;
+	}
+	return (INT32)x;
+}
+
+// register 0x46 sets the output rate: clock / (2 * (n + 1)), rabbit writes 0x85a0 (47962 hz)
+static void set_rate()
+{
+	sample_rate = (regs[0x46] & 0x8000) ? chip_clock / (2 * ((regs[0x46] & 0x3ff) + 1)) : chip_clock / 0x400;
+	if (sample_rate > 96000) sample_rate = 96000;
+
+	if (nBurnSoundRate) nSampleSize = (UINT32)sample_rate * (1 << 16) / nBurnSoundRate;
+	set_highpass(sample_rate);
+}
+
 void i5000sndInit(UINT8 *rom, INT32 clock, INT32 length)
 {
 	memset(channels, 0, sizeof(channels));
@@ -101,16 +149,14 @@ void i5000sndInit(UINT8 *rom, INT32 clock, INT32 length)
 	rom_base = (UINT16*)rom;
 	rom_mask = (length / 2) - 1;
 
-	sample_rate = clock / 0x400;
+	chip_clock = clock;
+	set_rate();
 
-	// for resampling
-	if (nBurnSoundRate) nSampleSize = (UINT32)sample_rate * (1 << 16) / nBurnSoundRate;
 	nFractionalPosition = 0;
 	nPosition = 0;
 
-
-	mixer_buffer_left = (INT16*)BurnMalloc(2 * sizeof(INT16) * sample_rate);
-	mixer_buffer_right = mixer_buffer_left + sample_rate;
+	mixer_buffer_left = (INT16*)BurnMalloc(2 * sizeof(INT16) * 96000);
+	mixer_buffer_right = mixer_buffer_left + 96000;
 }
 
 void i5000sndExit()
@@ -123,6 +169,9 @@ void i5000sndExit()
 
 void i5000sndReset()
 {
+	regs[0x46] = 0;
+	set_rate();
+
 	// stop playing
 	i5000sndWrite(0x43, 0xffff);
 
@@ -137,27 +186,39 @@ void i5000sndReset()
 	}
 }
 
+// samples are made of blocks, each one starting with a 0x7f7f marker followed by a command word:
+// 0x0000 ends the sample, 0xnn07 loops back to the start of the last block (until key off),
+// anything else (format word, 0x0184) starts a new block
 static bool read_sample(int ch)
 {
-	channels[ch].shift_pos &= 0xf;
-	channels[ch].sample = BURN_ENDIAN_SWAP_INT16(rom_base[channels[ch].address]);
-	channels[ch].address = (channels[ch].address + 1) & rom_mask;
+	channel_t *c = &channels[ch];
+	c->shift_pos &= 0xf;
 
-	// handle command
-	if (channels[ch].sample == 0x7f7f)
+	for (INT32 i = 0; i < 8; i++)
 	{
-		UINT16 cmd = BURN_ENDIAN_SWAP_INT16(rom_base[channels[ch].address]);
-		channels[ch].address = (channels[ch].address + 1) & rom_mask;
+		c->sample = BURN_ENDIAN_SWAP_INT16(rom_base[c->address]);
+		c->address = (c->address + 1) & rom_mask;
 
-		// volume envelope? or loop sample?
+		if (c->sample != 0x7f7f)
+			return true;
+
+		UINT16 cmd = BURN_ENDIAN_SWAP_INT16(rom_base[c->address]);
+		c->address = (c->address + 1) & rom_mask;
+
+		if (cmd == 0x0000)
+			return false;
+
 		if ((cmd & 0x00ff) == 0x0007)
 		{
-			return false;
+			c->address = c->loop_address;
 		}
-		else return false;
+		else
+		{
+			c->loop_address = c->address;
+		}
 	}
 
-	return true;
+	return false;
 }
 
 static inline INT16 clock(INT32 ch, UINT8 nibble)
@@ -166,10 +227,11 @@ static inline INT16 clock(INT32 ch, UINT8 nibble)
 	channels[ch].signal += s_diff_lookup[channels[ch].step * 16 + (nibble & 15)];
 
 	// clamp to the maximum
-	if (channels[ch].signal > 2047)
-		channels[ch].signal = 2047;
-	else if (channels[ch].signal < -2048)
-		channels[ch].signal = -2048;
+	// clamping to 12 bits like the msm6295 heavily distorts most samples, a wider range matches pcb recordings
+	if (channels[ch].signal > 8191)
+		channels[ch].signal = 8191;
+	else if (channels[ch].signal < -8192)
+		channels[ch].signal = -8192;
 
 	// adjust the step size and clamp
 	channels[ch].step += s_index_shift[nibble & 7];
@@ -233,8 +295,8 @@ void i5000sndUpdate(INT16 *output, INT32 length)
 			mix_r += channels[ch].output_r;
 			mix_l += channels[ch].output_l;
 		}
-		lmix[i] = mix_l / 16;
-		rmix[i] = mix_r / 16;
+		lmix[i] = BURN_SND_CLIP(highpass(0, mix_l / 32));
+		rmix[i] = BURN_SND_CLIP(highpass(1, mix_r / 32));
 	}
 
 	INT16 *pBufL = mixer_buffer_left  + 5;
@@ -333,7 +395,8 @@ void i5000sndWrite(INT32 offset, UINT16 data)
 							break;
 						}
 
-						channels[ch].address = (address + 4) & rom_mask;
+						channels[ch].address = (address + 2) & rom_mask; // the 2 words after the format word are data, not header
+						channels[ch].loop_address = channels[ch].address;
 						channels[ch].freq_timer = 0;
 						channels[ch].shift_pos = 0;
 						channels[ch].signal = -2;
@@ -354,6 +417,8 @@ void i5000sndWrite(INT32 offset, UINT16 data)
 	}
 
 	regs[reg] = data;
+
+	if (reg == 0x46) set_rate();
 }
 
 UINT16 i5000sndRead(INT32 offset)
@@ -384,5 +449,9 @@ void i5000sndScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(channels);
 		SCAN_VAR(regs);
+	}
+
+	if (nAction & ACB_WRITE) {
+		set_rate();
 	}
 }

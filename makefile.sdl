@@ -65,7 +65,7 @@ depobj	+= 	cdlist.o \
 			aud_dsp.o aud_interface.o cd_interface.o cd_chd.o inp_interface.o interface.o lowpass2.o  vid_interface.o \
 			vid_softfx.o vid_support.o \
 			\
-			2xpm.o 2xsai.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o xbr.o xbr32.o \
+			2xpm.o 2xsai.o 2xsai16.o crt.o ddt3x.o epx.o hq2xs.o hq2xs_16.o hqx.o hq2x.o hq3x.o hq4x.o eagle.o superscale.o xbr.o xbr32.o \
 			\
 			inp_sdl.o aud_sdl.o support_paths.o ips_manager.o scrn.o localise_gamelist.o \
 			cd_img.o config.o main.o run.o stringset.o bzip.o drv.o media.o romdata.o \
@@ -80,9 +80,6 @@ endif
 
 autobj += $(depobj)
 
-ifdef	BUILD_X86_ASM
-autobj += eagle_fm.o 2xsaimmx.o hq2x32.o hq3x32.o hq4x32.o superscale.o
-endif
 
 # End, platform stuff
 

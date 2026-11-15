@@ -1981,7 +1981,6 @@ static struct BurnInputInfo TdpgalInputList[] =
 	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 4, "p1 fire 1" },
 
 	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
-	{"Service"           , BIT_DIGITAL   , GalInputPort0 + 7, "service"   },
 	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
 	{"Dip 2"             , BIT_DIPSWITCH , GalDip + 1       , "dip"       },
 	{"Dip 3"             , BIT_DIPSWITCH , GalDip + 2       , "dip"       },
@@ -17125,6 +17124,29 @@ static struct BurnRomInfo ScrambleRomDesc[] = {
 STD_ROM_PICK(Scramble)
 STD_ROM_FN(Scramble)
 
+static struct BurnRomInfo HovvbovvRomDesc[] = {
+	{ "s1.2d",         0x00800, 0x013a2909, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s2.2e",         0x00800, 0xc0207df6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s3.2f",         0x00800, 0x65c80db9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s4.2h",         0x00800, 0x8e0a2aec, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s5.2j",         0x00800, 0xcdb4cd52, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s6.2l",         0x00800, 0x914a99a1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s7.2m",         0x00800, 0x4cb9456f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "s8.2p",         0x00800, 0xda14b38b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "ot1.5c",        0x00800, 0x09f0053e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "ot2.5d",        0x00800, 0x48a6e43d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "ot3.5e",        0x00800, 0xf1e8ba9e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "c2.5f",         0x00800, 0xd145d380, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "c1.5h",         0x00800, 0x9b2ad485, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "c01s.6e",       0x00020, 0x6664dbf0, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Hovvbovv)
+STD_ROM_FN(Hovvbovv)
+
 static struct BurnRomInfo ScramblesRomDesc[] = {
 	{ "2d", 			0x00800, 0xb89207a1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2e", 			0x00800, 0xe9b4b9eb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -18728,6 +18750,15 @@ static INT32 ScrambleInit()
 	return nRet;
 }
 
+static INT32 HovvbovvInit()
+{
+	INT32 nRet = ScrambleInit();
+
+	GalSpriteClipStart = 0; // Draw the mower on the top line!
+
+	return nRet;
+}
+
 static void ExplorerPostLoad()
 {
 	MapTheend();
@@ -19330,6 +19361,16 @@ struct BurnDriver BurnDrvScramble = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScrambleRomInfo, ScrambleRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
 	ScrambleInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvHovvbovv = {
+	"hovvbovv", NULL, NULL, NULL, "2026",
+	"Hovver Bovver\0", NULL, "Lambco", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, HovvbovvRomInfo, HovvbovvRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	HovvbovvInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

@@ -65,7 +65,7 @@ static void _2xpm_lq_1516(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, un
 
 	start_addr2 = (unsigned short int *)(src - 2);
 	start_addr1 = start_addr2;
-	start_addr3 = start_addr2 + src_pitch;
+	start_addr3 = start_addr2 + next_line_src;		// (was "+ src_pitch": bytes, not pixels - the first line read 2 lines down)
 
 	dst_pixel = (unsigned short int *)(dest);
 
@@ -210,6 +210,8 @@ static void _2xpm_lq_1516(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, un
 
 void _2xpm_lq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW, unsigned long SrcH, int nDepth)
 {
+	if (SrcW == 0 || SrcH == 0) return;
+
 	if (nDepth == 15) {
 		pg_red_mask = RED_MASK555;
 		pg_green_mask = GREEN_MASK555;
@@ -320,7 +322,7 @@ static void _2xpm_hq_1516(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, un
 
 	start_addr2 = (unsigned short int *)(src - 2);
 	start_addr1 = start_addr2;
-	start_addr3 = start_addr2 + src_pitch;
+	start_addr3 = start_addr2 + next_line_src;		// (was "+ src_pitch": bytes, not pixels - the first line read 2 lines down)
 
 	dst_pixel = (unsigned short int *)(dest);
 
@@ -526,6 +528,8 @@ static void _2xpm_hq_1516(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, un
 
 void _2xpm_hq(void *SrcPtr, void *DstPtr, unsigned long SrcPitch, unsigned long DstPitch, unsigned long SrcW, unsigned long SrcH, int nDepth)
 {
+	if (SrcW == 0 || SrcH == 0) return;
+
 	if (nDepth == 15) {
 		pg_red_mask = RED_MASK555;
 		pg_green_mask = GREEN_MASK555;

@@ -5,11 +5,19 @@
 // same search as BurnHDDOpen(): <hdd path><romset>/ then <hdd path><parent>/
 static bool BzipHDDPresent()
 {
-	char* szName = NULL;
-	if (BurnDrvGetHDDName(&szName, 0, 0) || szName == NULL) return true;
+	// every disk that isn't optional
+	for (INT32 i = 0; i < 0x100; i++) {
+		char* szName = NULL;
+		struct BurnHDDInfo hdi;
+		memset(&hdi, 0, sizeof(hdi));
+		if (BurnDrvGetHDDInfo(&hdi, i) || BurnDrvGetHDDName(&szName, i, 0) || szName == NULL) break;
+		if (hdi.nFlags & BRF_OPT) continue;
 
-	TCHAR szPath[MAX_PATH];
-	return !BurnHDDGetPath(0, _T(".chd"), szPath) || !BurnHDDGetPath(0, _T(".img"), szPath);
+		TCHAR szPath[MAX_PATH];
+		if (BurnHDDGetPath(i, _T(".chd"), szPath) && BurnHDDGetPath(i, _T(".img"), szPath)) return false;
+	}
+
+	return true;
 }
 
 int nBzipError = 0;                                                             // non-zero if there is a problem with the opened romset

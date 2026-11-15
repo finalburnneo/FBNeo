@@ -209,6 +209,7 @@ BEGIN
 	IDS_SEL_NGP                 "Neo Geo Pocket"
 	IDS_SEL_CHANNELF            "Fairchild Channel F"
 	IDS_SEL_ASTROHOME           "Bally Astrocade"
+	IDS_SEL_ATARI2600           "Atari 2600"
 	IDS_SEL_SPECTRUM			"ZX Spectrum"
 	IDS_SEL_MIDWAY				"Midway"
 	IDS_SEL_CAPCOM_GRP			"Capcom"

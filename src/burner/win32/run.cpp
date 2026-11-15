@@ -187,7 +187,7 @@ static void PrintFPS(double fps)
 static void DisplayFPSInit(bool display)
 {
 	if (display) {
-		const double fps = (nBurnFPS / 100);
+		const double fps = nBurnFPS / 100.0;
 		PrintFPS(fps);
 	}
 

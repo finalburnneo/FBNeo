@@ -26,7 +26,47 @@ struct megasd_state {
 
 static INT32 megasdmode = 0;
 static megasd_state megasd;
-static TCHAR megasd_prev_image[MAX_PATH];
+
+// cd image given as the driver's hdd (md+ games, mega cd + cartridge games)
+static TCHAR hddcd_prev_image[MAX_PATH];
+static INT32 hddcd_opened = 0;
+
+static INT32 hddcd_present()
+{
+	// BurnDrvGetHDDName() succeeds without setting a name for drivers without hdd
+	char *name = NULL;
+	return !BurnDrvGetHDDName(&name, 0, 0) && name != NULL;
+}
+
+static INT32 hddcd_open(INT32 index)
+{
+	TCHAR path[MAX_PATH];
+	if (BurnHDDGetPath(index, _T(".chd"), path)) {
+		bprintf(PRINT_ERROR, _T("cd image not found\n"));
+		return 1;
+	}
+
+	// all of them are MAX_PATH sized
+	memcpy(hddcd_prev_image, CDEmuImage, sizeof(hddcd_prev_image));
+	memcpy(CDEmuImage, path, sizeof(path));
+	if (CDEmuInit()) {
+		bprintf(PRINT_ERROR, _T("can't open %s\n"), path);
+		memcpy(CDEmuImage, hddcd_prev_image, sizeof(hddcd_prev_image));
+		return 1;
+	}
+
+	hddcd_opened = 1;
+	return 0;
+}
+
+static void hddcd_close()
+{
+	if (!hddcd_opened) return;
+
+	CDEmuExit();
+	memcpy(CDEmuImage, hddcd_prev_image, sizeof(hddcd_prev_image));
+	hddcd_opened = 0;
+}
 
 // toc in absolute sectors, rebuilt from the image
 static INT32 megasd_first, megasd_last;
@@ -299,26 +339,13 @@ static void megasd_reset()
 	SekClose();
 }
 
-// md+ games are the cartridge drivers with a cd image as hdd
+// md+ games are the cartridge drivers with a cd image as (required) hdd
 static INT32 megasd_init()
 {
-	// BurnDrvGetHDDName() succeeds without setting a name for drivers without hdd
-	char *name = NULL;
-	if (BurnDrvGetHDDName(&name, 0, 0) || name == NULL) return 0;
-
-	TCHAR path[MAX_PATH];
-	if (BurnHDDGetPath(0, _T(".chd"), path)) {
-		bprintf(PRINT_ERROR, _T("MegaSD: cd image not found\n"));
-		return 1;
-	}
-
-	_tcscpy(megasd_prev_image, CDEmuImage);
-	_tcscpy(CDEmuImage, path);
-	if (CDEmuInit()) {
-		bprintf(PRINT_ERROR, _T("MegaSD: can't open %s\n"), path);
-		_tcscpy(CDEmuImage, megasd_prev_image);
-		return 1;
-	}
+	struct BurnHDDInfo hdd;
+	memset(&hdd, 0, sizeof(hdd));
+	if (!hddcd_present() || BurnDrvGetHDDInfo(&hdd, 0) || (hdd.nFlags & BRF_OPT)) return 0;
+	if (hddcd_open(0)) return 1;
 
 	megasd_toc();
 	megasdmode = 1;
@@ -341,8 +368,7 @@ static void megasd_exit()
 	if (!megasdmode) return;
 
 	megasd_stop();
-	CDEmuExit();
-	_tcscpy(CDEmuImage, megasd_prev_image);
+	hddcd_close();
 
 	megasdmode = 0;
 }

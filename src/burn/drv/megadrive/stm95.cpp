@@ -43,6 +43,7 @@ static UINT8 bank[3];
 static INT32 rdcnt;
 
 static UINT16 *game_rom;
+static INT32 direct_banks = 0;	// with the mega cd (mode 1): rom and banks mapped directly, handlers 0-7 belong to the mega cd
 
 static void set_cs_line(INT32 state)
 {
@@ -259,6 +260,9 @@ static void __fastcall write_a13_word(UINT32 offset, UINT16 data)
 	{
 		if (offset != 0) {
 			bank[offset - 1] = data & 0x0f;
+			if (direct_banks) {
+				SekMapMemory((UINT8*)game_rom + bank[offset - 1] * 0x80000, 0x200000 + offset * 0x80000, 0x27ffff + offset * 0x80000, MAP_ROM);
+			}
 		}
 	}
 	else if (offset < 0x0a/2)
@@ -279,6 +283,7 @@ static void __fastcall write_a13_byte(UINT32 offset, UINT8 data)
 void md_eeprom_stm95_init(UINT8 *rom)
 {
 	game_rom = (UINT16*)rom;
+	direct_banks = 0;
 
 	SekOpen(0);
 
@@ -298,6 +303,37 @@ void md_eeprom_stm95_init(UINT8 *rom)
 	SekSetWriteWordHandler(6, 	write_a13_word);
 	
 	SekClose();
+}
+
+void md_eeprom_stm95_map_banks()
+{
+	if (!direct_banks) return;
+
+	SekOpen(0);
+	for (INT32 i = 0; i < 3; i++) {
+		SekMapMemory((UINT8*)game_rom + bank[i] * 0x80000, 0x280000 + i * 0x80000, 0x2fffff + i * 0x80000, MAP_ROM);
+	}
+	SekClose();
+}
+
+void md_eeprom_stm95_init_scd(UINT8 *rom)
+{
+	game_rom = (UINT16*)rom;
+	direct_banks = 1;
+
+	SekOpen(0);
+	SekMapHandler(8,		0x001400, 0x0017ff, MAP_READ); // protection
+	SekSetReadByteHandler (8, 	read_byte);
+	SekSetReadWordHandler (8, 	read_word);
+
+	SekMapHandler(9,		0xa13000, 0xa130ff, MAP_RAM);
+	SekSetReadByteHandler (9, 	read_a13_byte);
+	SekSetReadWordHandler (9, 	read_a13_word);
+	SekSetWriteByteHandler(9, 	write_a13_byte);
+	SekSetWriteWordHandler(9, 	write_a13_word);
+	SekClose();
+
+	md_eeprom_stm95_map_banks();
 }
 
 void md_eeprom_stm95_scan(INT32 nAction)
@@ -325,5 +361,7 @@ void md_eeprom_stm95_scan(INT32 nAction)
 
 		SCAN_VAR(bank);
 		SCAN_VAR(rdcnt);
+
+		if (nAction & ACB_WRITE) md_eeprom_stm95_map_banks();
 	}
 }

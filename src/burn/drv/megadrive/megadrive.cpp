@@ -34,6 +34,7 @@
 #include "i2ceeprom.h" // i2c eeprom for MD
 #include "burn_gun.h" // menacer, justifier
 #include "segacd.h"
+#include "s32x.h"
 
 UINT8 MegadriveUnmappedRom = 0xff;
 
@@ -85,13 +86,18 @@ static void SekRunM68kSlice(INT32 cyc)
 // Sega CD: the sub cpu catches up with the main cpu in small slices
 #define SEGACD_SLICE	122
 
+// 32X: both sh-2 catch up with the main cpu in small slices
+#define S32X_SLICE		32
+
 static void SekRunM68k(INT32 cyc)
 {
-	if (SegaCDMode) {
+	if (SegaCDMode || S32XMode) {
+		INT32 slice_max = (S32XMode) ? S32X_SLICE : SEGACD_SLICE;
 		while (cyc > 0) {
-			INT32 slice = (cyc > SEGACD_SLICE) ? SEGACD_SLICE : cyc;
+			INT32 slice = (cyc > slice_max) ? slice_max : cyc;
 			SekRunM68kSlice(slice);
-			SegaCDRunSub(SekCyclesDoneFrame());
+			if (SegaCDMode) SegaCDRunSub(SekCyclesDoneFrame());
+			if (S32XMode) S32XRunSh2(SekCyclesDoneFrame());
 			cyc -= slice;
 		}
 		return;
@@ -304,6 +310,9 @@ static UINT8 Hardware;
 static UINT8 bNoDebug = 0;
 static INT32 bForce3Button = 0;
 INT32 psolarmode = 0; // pier solar
+static INT32 SegaCDCart = 0; // cartridge boot with the mega cd at 0x400000 (mode 1): 2 pier solar
+static INT32 SegaCDCartDisc = 0; // hdd index of the disc
+static UINT8 *SegaCDCartBios = NULL;
 static INT32 TeamPlayerMode = 0;
 static INT32 FourWayPlayMode = 0;
 
@@ -319,7 +328,7 @@ static UINT8 __fastcall MegadriveReadByte(UINT32 address);
 
 static void MegadriveCheckHardware()
 {
-	if (SegaCDMode) {
+	if (SegaCDMode && !SegaCDCart) {
 		Hardware = SegaCDGetHardware();
 		bprintf(PRINT_IMPORTANT, _T("Emulating %s Mega CD / Sega CD\n"), ((Hardware & 0xc0) == 0xc0) ? _T("Europe PAL") : ((Hardware & 0x80) ? _T("USA NTSC") : _T("Japan NTSC")));
 		return;
@@ -353,7 +362,7 @@ static void MegadriveCheckHardware()
 				case 0x43:
 				case 0x44:
 				case 0x46: {
-					support |= v - 0x41;
+					support |= v - 0x41 + 10;
 					break;
 				}
 
@@ -381,7 +390,7 @@ static void MegadriveCheckHardware()
 				case 0x64:
 				case 0x65:
 				case 0x66: {
-					support |= v - 0x61;
+					support |= v - 0x61 + 10;
 					break;
 				}
 			}
@@ -413,6 +422,8 @@ static void MegadriveCheckHardware()
 		// CD-ROM
 		Hardware |= MegadriveDIP[0] & 0x20;
 	}
+
+	if (SegaCDCart) Hardware &= ~0x20; // mega cd attached
 
 	if ((Hardware & 0xc0) == 0xc0) {
 		bprintf(PRINT_IMPORTANT, _T("Emulating Europe PAL Machine\n"));
@@ -784,7 +795,7 @@ static void DmaSlow(INT32 len)
 	if ((source & 0xe00000) == 0xe00000) { // RAM
 		pd    = (UINT16 *)(Ram68K + (source & 0xfffe));
 		pdend = (UINT16 *)(Ram68K + 0x10000);
-	} else if (SegaCDMode && source < 0x400000) { // Sega CD: bios, prg-ram window, word ram
+	} else if (SegaCDMode && (source & 0xc00000) == (SegaCDCart ? 0x400000 : 0)) { // Sega CD: bios, prg-ram window, word ram
 		fromrom = 1;
 		source &= ~1;
 		// dma from word ram responds with a one-access delay
@@ -972,7 +983,7 @@ static void DmaFill(INT32 data)
 	RamVReg->rendstatus |= PDRAW_DIRTY_SPRITES;
 }
 
-static void CommandChange()
+static void CommandChange(INT32 can_dma)
 {
 	//struct MegadrivePicoVideo *pvid=&Pico.video;
 	UINT32 cmd = RamVReg->command;
@@ -993,7 +1004,7 @@ static void CommandChange()
 	//dprintf("addr set: %04x", addr);
 
 	// Check for dma:
-	if (cmd & 0x80) {
+	if ((cmd & 0x80) && can_dma) {
 		// Command DMA
 		if ((RamVReg->reg[1] & 0x10) == 0) return; // DMA not enabled
 
@@ -1206,7 +1217,8 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 	switch (sekAddress & 0x1c) {
 	case 0x00:	// data
 		if (RamVReg->pending) {
-			CommandChange();
+			// only the first half of a command was written: dma is only started by the second half
+			CommandChange(0);
 			RamVReg->pending = 0;
 		}
 		if ((RamVReg->command & 0x80) && (RamVReg->reg[1]&0x10) && (RamVReg->reg[0x17]>>6)==2) {
@@ -1270,7 +1282,7 @@ static void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordVal
 			RamVReg->command &= 0xffff0000;
 			RamVReg->command |= wordValue;
 			RamVReg->pending = 0;
-			CommandChange();
+			CommandChange(1);
 		} else {
 			if((wordValue & 0xc000) == 0x8000) {
 				INT32 num = (wordValue >> 8) & 0x1f;
@@ -1359,7 +1371,7 @@ static INT32 PadRead(INT32 i)
 {
 	INT32 pad=0,value=0,TH;
 	pad = ~(JoyPad->pad[i]);					// Get inverse of pad MXYZ SACB RLDU
-	TH = ((FourWayPlayMode) ? JoyPad->fourway[i & 0x03] : RamIO[i+1]) & 0x40;
+	TH = ((FourWayPlayMode) ? JoyPad->fourway[i & 0x03] : (RamIO[i+1] | ~RamIO[i+4])) & 0x40; // TH is pulled up when set as an input
 
 	if (has_gun != 0 && i == 1) { // lightgun on second port
 		UINT8 data_reg = RamIO[i + 1];
@@ -1669,6 +1681,10 @@ static INT32 MegadriveResetDo()
 		vx_reset();
 	}
 
+	if (S32XMode) {
+		S32XReset(); // before the 68k reset (vector rom)
+	}
+
 	SekOpen(0);
 	SekReset();
 	m68k_megadrive_sr_checkint_mode(1);
@@ -1703,6 +1719,10 @@ static INT32 MegadriveResetDo()
 
 	if (SegaCDMode) {
 		SegaCDSetPAL(Hardware & 0x40);
+	}
+
+	if (S32XMode) {
+		S32XSetPAL(Hardware & 0x40);
 	}
 
 	if (last_hardware != Hardware) {
@@ -1796,6 +1816,7 @@ static INT32 MegadriveResetDo()
 	z80CyclesReset();
 
 	md_eeprom_stm95_reset();
+	if (SegaCDCart == 2) md_eeprom_stm95_map_banks();
 	{
 		RamIO[1] = RamIO[2] = RamIO[3] = 0xff; // picodrive
 
@@ -3890,6 +3911,18 @@ INT32 MegadriveInitPaprium()
 
 INT32 MegadriveInitPsolar()
 {
+	// enhanced soundtrack disc selected and present: cartridge boot with the mega cd (mode 1)
+	INT32 disc = (MegadriveDIP[1] >> 4) & 3;
+	if (disc) {
+		TCHAR path[MAX_PATH];
+		if (BurnHDDGetPath(disc - 1, _T(".chd"), path) == 0) {
+			SegaCDCart = 2;
+			SegaCDCartDisc = disc - 1;
+			return MegadriveInitSegaCD();
+		}
+		bprintf(PRINT_ERROR, _T("Pier Solar: the selected disc is missing, running without the Mega CD\n"));
+	}
+
 	psolarmode = 1;
 
 	INT32 rc = MegadriveInit();
@@ -3915,10 +3948,52 @@ INT32 MegadriveInitColocodx()
 	return rc;
 }
 
+// 32X: the cartridge is mapped at $000000 only while the adapter is off or RV is set
+static void S32XCartRemapCB()
+{
+	if (RamMisc->SRamHandlersInstalled) {
+		SekMapHandler(6, RamMisc->SRamStart & 0x3fffff, RamMisc->SRamEnd & 0x3fffff, MAP_READ | MAP_WRITE);
+	}
+
+	if (RamMisc->SRamHasSerialEEPROM && !RamMisc->SRamDetected) {
+		switch (BurnDrvGetHardwareCode() & 0x3f) {
+			case HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM:
+			case HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM:
+			case HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE:
+			case HARDWARE_SEGA_MEGADRIVE_PCB_NFL_QB_96:
+			case HARDWARE_SEGA_MEGADRIVE_PCB_C_SLAM:
+			case HARDWARE_SEGA_MEGADRIVE_PCB_EA_NHLPA:
+				SekMapHandler(5, 0x200000, 0x200001, MAP_READ | MAP_WRITE);
+			break;
+		}
+	}
+}
+
+static void S32XCartWriteCB(UINT32 address, UINT8 data)
+{
+	if (address == 0xa130f1 && RamMisc->SRamHandlersInstalled) {
+		MegadriveSRAMToggleWriteByte(address, data);
+	}
+}
+
+INT32 MegadriveInit32X()
+{
+	S32XMode = 1;
+	S32XMainCycles = SekCyclesDoneFrameF;
+
+	return MegadriveInit();
+}
+
 INT32 MegadriveInitSegaCD()
 {
 	SegaCDMode = 1;
 	SegaCDMainCycles = SekCyclesDoneFrameF;
+
+	if (SegaCDCart == 0 && SegaCDDiscNeeds32X()) {
+		bprintf(PRINT_IMPORTANT, _T("Sega CD 32X disc, attaching the 32X\n"));
+		S32XMode = 2;
+		S32XMainCycles = SekCyclesDoneFrameF;
+	}
 
 	return MegadriveInit();
 }
@@ -3933,8 +4008,16 @@ INT32 MegadriveInit()
 
 	memset(RomMain, MegadriveUnmappedRom, MAX_CARTRIDGE_SIZE);
 
-	if (SegaCDMode) {
-		if (SegaCDLoadBios(RomMain)) return 1;
+	if (SegaCDCart) {
+		// the cd image is the hdd, the bios (roms 0x80+) follows the console region
+		if (hddcd_open(SegaCDCartDisc)) return 1;
+		MegadriveLoadRoms(0);
+		if (MegadriveLoadRoms(1)) return 1;
+		MegadriveCheckHardware();
+		SegaCDCartBios = (UINT8*)BurnMalloc(0x20000);
+		if (SegaCDLoadBios(SegaCDCartBios, 0x80, ((Hardware & 0xc0) == 0xc0) ? 1 : ((Hardware & 0x80) ? 0 : 2))) return 1;
+	} else if (SegaCDMode) {
+		if (SegaCDLoadBios(RomMain, 0, -1)) return 1;
 		RomNum = 1;
 		RomSize = 0x20000;
 	} else {
@@ -4010,7 +4093,14 @@ INT32 MegadriveInit()
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	if (SegaCDMode) {
-		if (SegaCDInit(RomMain)) return 1;
+		if (SegaCDInit(SegaCDCart ? SegaCDCartBios : RomMain, SegaCDCart)) return 1;
+		if (SegaCDCart == 2) md_eeprom_stm95_init_scd(RomMain);
+		if (S32XMode && S32XInit(NULL, 0)) return 1;
+	} else if (S32XMode) {
+		MegadriveSetupSRAM();
+		S32XCartRemap = S32XCartRemapCB;
+		S32XCartWrite = S32XCartWriteCB;
+		if (S32XInit(RomMain, RomSize)) return 1;
 	} else {
 		MegadriveSetupSRAM();
 		SetupCustomCartridgeMappers();
@@ -4073,7 +4163,13 @@ INT32 MegadriveExit()
 		SegaCDExit();
 	}
 
+	if (S32XMode) {
+		S32XExit();
+	}
+
 	megasd_exit();
+	hddcd_close();
+	BurnFree(SegaCDCartBios);
 
 	if (has_gun != 0) {
 		BurnGunExit();
@@ -4110,6 +4206,8 @@ INT32 MegadriveExit()
 
 	psolarmode = 0;
 	colocodxmode = 0;
+	SegaCDCart = 0;
+	SegaCDCartDisc = 0;
 
 	return 0;
 }
@@ -5454,9 +5552,12 @@ static INT32 PicoLine(INT32 /*scan*/)
 			UINT16 *pDest = LineBuf + (Scanline * 320) + ((interlacemode2 & RamVReg->field) * 240 * 320);
 			UINT8 *pSrc = HighColFull + (Scanline + offset + ((interlacemode2 & RamVReg->field) * 240))*(8+320+8) + 8;
 
-			for (INT32 i = 0; i < 320; i++)
-				pDest[i] = MegadriveCurPal[pSrc[i]];
-
+			if (S32XMode) {
+				S32XDrawLine(Scanline, pSrc, pDest, MegadriveCurPal, RamVReg->reg[7] & 0x3f, RamVReg->reg[12] & 1);
+			} else {
+				for (INT32 i = 0; i < 320; i++)
+					pDest[i] = MegadriveCurPal[pSrc[i]];
+			}
 		}
 	}
 
@@ -5499,7 +5600,7 @@ static INT32 res_check()
 		}
 	}
 	else
-	if ((MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
+	if (!S32XMode && (MegadriveDIP[1] & 3) == 3 && (~RamVReg->reg[12] & 1)) {
 		get_size(screen_width, screen_height);
 		if (screen_width != 256 || screen_height != 224) {
 			bprintf(0, _T("switching to 256 x 224 mode (from %d x %d)\n"), screen_width, screen_height);
@@ -5527,6 +5628,7 @@ INT32 MegadriveDraw()
 	    for (INT32 i=0; i< 0x40; i++)
 			CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));
 		bMegadriveRecalcPalette = 0;
+		if (S32XMode) S32XRecalcPal();
 	}
 
 	if (res_check()) return 0; // resolution changed?
@@ -5543,7 +5645,7 @@ INT32 MegadriveDraw()
 			pDest += screen_width;
 		}
 	} else
-	if ((RamVReg->reg[12]&1) || ((MegadriveDIP[1] & 0x03) == 0 || (MegadriveDIP[1] & 0x03) == 3) ) {
+	if ((RamVReg->reg[12]&1) || S32XMode || ((MegadriveDIP[1] & 0x03) == 0 || (MegadriveDIP[1] & 0x03) == 3) ) {
 		// Normal / "Screen Resize"
 		for (INT32 j=0; j < screen_height; j++) {
 			UINT16 *pSrc = LineBuf + (j * 320);
@@ -5681,6 +5783,10 @@ INT32 MegadriveFrame()
 	for (INT32 y=0; y<lines; y++) {
 
 		line_base_cycles = SekCycleAim;//SekCyclesDone();
+
+		if (S32XMode) {
+			S32XLineStart(y, lines_vis, SekCyclesDoneFrame());
+		}
 
 		if (y == 0) SekRunM68k(CYCLES_M68K_ASD);
 
@@ -5839,6 +5945,10 @@ INT32 MegadriveFrame()
 		SegaCDEndFrame(SekCyclesDoneFrame());
 	}
 
+	if (S32XMode) {
+		S32XEndFrame(SekCyclesDoneFrame());
+	}
+
 	if (pBurnDraw) MegadriveDraw();
 
 	if (pBurnSoundOut) {
@@ -5858,6 +5968,10 @@ INT32 MegadriveFrame()
 
 	if (SegaCDMode) {
 		SegaCDSoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
+
+	if (S32XMode) {
+		S32XSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (megasdmode) {
@@ -5933,13 +6047,17 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		i2c_scan(nAction, pnMin);
 	}
 
-	if (psolarmode) // pier solar
+	if (psolarmode || SegaCDCart == 2) // pier solar
 	{
 		md_eeprom_stm95_scan(nAction);
 	}
 
 	if (SegaCDMode) {
 		SegaCDScan(nAction, pnMin);
+	}
+
+	if (S32XMode) {
+		S32XScan(nAction, pnMin);
 	}
 
 	if (megasdmode) {

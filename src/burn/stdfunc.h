@@ -211,6 +211,7 @@ static INT32 Name##HDDInfo(struct BurnHDDInfo* pri, UINT32 i)			\
 	}																	\
 	if (pri) {															\
 		pri->szSha1 = por->szSha1;										\
+		pri->nFlags = por->nFlags;										\
 	}																	\
 	return 0;															\
 }																		\

@@ -211,6 +211,7 @@
 #define IDS_SEL_CHANNELF				(IDS_STRING +  558) // ""
 #define IDS_SEL_ASTROHOME				(IDS_STRING +  712) // ""
 #define IDS_SEL_GBA						(IDS_STRING +  714) // ""
+#define IDS_SEL_ATARI2600				(IDS_STRING +  716) // ""
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)

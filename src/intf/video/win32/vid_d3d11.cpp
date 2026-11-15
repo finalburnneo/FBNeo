@@ -214,7 +214,7 @@ static int nTextureWidth = 0, nTextureHeight = 0;
 static int nImageWidth = 0, nImageHeight = 0;		// size of the image on screen (in game orientation)
 static int nPreScaleZoom = 1;
 static int nPreScaleEffect = 0;
-static unsigned char* pConvBuffer = NULL;			// for SoftFX filters that only output 16-bit
+static unsigned char* pConvBuffer = NULL;			// SoftFX output (system memory), copied / converted into the texture
 static int nConvPitch = 0;
 
 static RECT Dest = { 0, 0, 0, 0 };					// game image, client coordinates of hVidWnd
@@ -2980,8 +2980,10 @@ static int d3d11ImageInit()
 		free(pConvBuffer);
 		pConvBuffer = NULL;
 	}
-	if (nVidImageDepth == 16) {
-		nConvPitch = nTextureWidth * 2;
+	// SoftFX filters render into system memory: many (e.g. xBR) read back pixels they've already
+	// written, and reading a mapped texture (write-combined memory) is extremely slow
+	if (nPreScaleEffect) {
+		nConvPitch = nTextureWidth * nVidImageBPP;
 		pConvBuffer = (unsigned char*)calloc(nConvPitch, nTextureHeight + 2);
 		if (pConvBuffer == NULL) {
 			return 1;
@@ -3192,49 +3194,47 @@ static int d3d11UploadImage()
 	int nPitch = ms.RowPitch;
 	int nWidth = nGameImageWidth, nHeight = nGameImageHeight;
 
+	unsigned char* ps = pVidImage + nVidImageLeft * nVidImageBPP;
+	int nSrcPitch = nVidImagePitch;
+
 	if (nPreScaleEffect) {
 		nWidth *= nPreScaleZoom;
 		nHeight *= nPreScaleZoom;
 
-		if (nVidImageDepth == 32) {
-			VidFilterApplyEffect(pd, nPitch);
-		} else {
-			VidFilterApplyEffect(pConvBuffer, nConvPitch);
-		}
+		VidFilterApplyEffect(pConvBuffer, nConvPitch);
+		ps = pConvBuffer;
+		nSrcPitch = nConvPitch;
 	}
 
-	if (nVidImageDepth == 16) {
-		// RGB565 -> XRGB8888
-		unsigned char* ps = nPreScaleEffect ? pConvBuffer : (pVidImage + nVidImageLeft * nVidImageBPP);
-		int nSrcPitch = nPreScaleEffect ? nConvPitch : nVidImagePitch;
+	// Only write to the mapped texture (never read it: it's write-combined memory). The last column
+	// and line are repeated into the texture padding, so linear filtering at the edges is clean.
+	bool bPadX = (nWidth < nTextureWidth);
+	int nLines = (nHeight < nTextureHeight) ? nHeight + 1 : nHeight;
 
-		for (int y = 0; y < nHeight; y++) {
-			UINT16* s = (UINT16*)(ps + y * nSrcPitch);
-			UINT32* d = (UINT32*)(pd + y * nPitch);
+	for (int y = 0; y < nLines; y++) {
+		int sy = (y < nHeight) ? y : nHeight - 1;
+		UINT32* d = (UINT32*)(pd + y * nPitch);
+
+		if (nVidImageDepth == 16) {
+			// RGB565 -> XRGB8888
+			const UINT16* src = (const UINT16*)(ps + sy * nSrcPitch);
+			UINT32 c32 = 0;
 			for (int x = 0; x < nWidth; x++) {
-				UINT32 c = s[x];
+				UINT32 c = src[x];
 				UINT32 r = (c >> 11) & 0x1F, g = (c >> 5) & 0x3F, b = c & 0x1F;
-				d[x] = 0xFF000000 | (((r << 3) | (r >> 2)) << 16) | (((g << 2) | (g >> 4)) << 8) | ((b << 3) | (b >> 2));
+				c32 = 0xFF000000 | (((r << 3) | (r >> 2)) << 16) | (((g << 2) | (g >> 4)) << 8) | ((b << 3) | (b >> 2));
+				d[x] = c32;
+			}
+			if (bPadX) {
+				d[nWidth] = c32;
+			}
+		} else {
+			const UINT32* src = (const UINT32*)(ps + sy * nSrcPitch);
+			memcpy(d, src, nWidth * 4);
+			if (bPadX) {
+				d[nWidth] = src[nWidth - 1];
 			}
 		}
-	} else if (nPreScaleEffect == 0) {
-		unsigned char* ps = pVidImage + nVidImageLeft * nVidImageBPP;
-		int nLineSize = nWidth * 4;
-
-		for (int y = 0; y < nHeight; y++) {
-			memcpy(pd + y * nPitch, ps + y * nVidImagePitch, nLineSize);
-		}
-	}
-
-	// Repeat the last column / line into the texture padding, so linear filtering at the edges is clean
-	if (nWidth < nTextureWidth) {
-		for (int y = 0; y < nHeight; y++) {
-			UINT32* d = (UINT32*)(pd + y * nPitch);
-			d[nWidth] = d[nWidth - 1];
-		}
-	}
-	if (nHeight < nTextureHeight) {
-		memcpy(pd + nHeight * nPitch, pd + (nHeight - 1) * nPitch, ((nWidth < nTextureWidth) ? nWidth + 1 : nWidth) * 4);
 	}
 
 	pContext->Unmap(pTexture, 0);

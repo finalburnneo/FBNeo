@@ -675,6 +675,8 @@ static void MachineInit()
 	GenericTilemapSetGfx(1, DrvChars, 2,  8,  8, 0x08000, 0x000, 0x3f);
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+
+	BurnSetRefreshRate(59.637405);
 	
 	// Reset the driver
 	DrvDoReset();
@@ -959,7 +961,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 8;
-	INT32 nCyclesTotal[2] = { 4000000 / 60, 3000000 / 60 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)4000000 * 100 / nBurnFPS), (INT32)((double)3000000 * 100 / nBurnFPS) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {

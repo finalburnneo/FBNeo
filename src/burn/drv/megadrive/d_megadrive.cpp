@@ -463,11 +463,14 @@ INT32 MegadriveGetZipName(char** pszName, UINT32 i)
 
 	if (i == 0) {
 		pszGameName = BurnDrvGetTextA(DRV_NAME);
-	} else {
+	} else if (i == 1) {
 		pszGameName = BurnDrvGetTextA(DRV_PARENT);
+		if (pszGameName == NULL) pszGameName = BurnDrvGetTextA(DRV_BOARDROM);
+	} else if (i == 2 && BurnDrvGetTextA(DRV_PARENT)) {
+		pszGameName = BurnDrvGetTextA(DRV_BOARDROM); // mega cd bios for cartridge games
 	}
 
-	if (pszGameName == NULL || i > 1) {
+	if (pszGameName == NULL || i > 2) {
 		*pszName = NULL;
 		return 1;
 	}
@@ -507,8 +510,8 @@ STDDIPINFO(SegaCD)
 
 static struct BurnRomInfo md_segacdRomDesc[] = {
 	{ "Sega CD BIOS (USA, v1.10).bin",      0x020000, 0xc6d10268, BRF_PRG | BRF_ESS },
-	{ "Mega-CD BIOS (Europe, v1.00).bin",   0x020000, 0x529ac15a, BRF_PRG | BRF_ESS | BRF_OPT },
-	{ "Mega-CD BIOS (Japan, v1.00P).bin",   0x020000, 0x9d2da8f2, BRF_PRG | BRF_ESS | BRF_OPT },
+	{ "Mega-CD BIOS (Europe, v1.00).bin",   0x020000, 0x529ac15a, BRF_PRG | BRF_ESS },
+	{ "Mega-CD BIOS (Japan, v1.00P).bin",   0x020000, 0x9d2da8f2, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(md_segacd)
@@ -4801,32 +4804,6 @@ struct BurnDriver BurnDrvmd_castlilljte = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_castlilljteRomInfo, md_castlilljteRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)
-// MegaSD MD+ patch, the cd audio comes from the chd
-static struct BurnRomInfo md_castlillmdpRomDesc[] = {
-	{ "MD+ Castle Of Illusion (Grant Kirkhope Arranged).md", 0x100000, 0x39601b88, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_castlillmdp)
-STD_ROM_FN(md_castlillmdp)
-
-static struct BurnHDDInfo md_castlillmdpHDDDesc[] = {
-	{ "md_castlillmdp", "63cbf9c46268f7ffaf494e0f3d939949263b5eb1" }
-};
-
-STD_HDD_PICK(md_castlillmdp)
-STD_HDD_FN(md_castlillmdp)
-
-struct BurnDriver BurnDrvmd_castlillmdp = {
-	"md_castlillmdp", "md_castlill", NULL, NULL, "2021",
-	"Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)\0", NULL, "Sega", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_castlillmdpRomInfo, md_castlillmdpRomName, md_castlillmdpHDDInfo, md_castlillmdpHDDName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43114,25 +43091,6 @@ struct BurnDriver BurnDrvmd_phantomgear = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Pier Solar and the Great Architects (World, Rev. C) (HB)
-
-static struct BurnRomInfo md_psolarRomDesc[] = {
-	{ "Pier Solar and the Great Architects (World)(Rev C)(2010)(WaterMelon).bin", 0x800000, 0xDFB94F1B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_psolar)
-STD_ROM_FN(md_psolar)
-
-struct BurnDriver BurnDrvmd_psolar = {
-	"md_psolar", NULL, NULL, NULL, "2010",
-	"Pier Solar and the Great Architects (World, Rev. C) (HB)\0", "64 Mbit (8MB) cartridge", "WaterMelon", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_RPG, 0,
-	MegadriveGetZipName, md_psolarRomInfo, md_psolarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInitPsolar, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Pirates of the Drowned Hypertorus (HB, v0.0.13)
 // https://safetystoatstudios.itch.io/pirates
 static struct BurnRomInfo md_piratesdrownedRomDesc[] = {
@@ -56017,3 +55975,87 @@ struct BurnDriverD BurnDrvmd_insnspeed = {
 
 */
 
+// --------------------
+// Sega CD Mode 1 games
+// --------------------
+
+// Pier Solar and the Great Architects (World, Rev. C) (HB)
+
+// the enhanced soundtrack discs need the mega cd (mode 1): bios from segacd.zip, discs as optional hdds
+static struct BurnDIPInfo PsolarDIPList[] = {
+	{0x19,	0xff, 0xff, 0x21,  NULL               },
+
+	{0,	0xfe, 0,       2, "Mega CD (needs a restart)" },
+	{0x1a,	0x01, 0x30, 0x00, "None"              },
+	{0x1a,	0x01, 0x30, 0x10, "Enhanced Soundtrack Disc" },
+};
+
+STDDIPINFOEXT(Psolar, Psolar, Megadrive)
+
+static struct BurnRomInfo md_psolarRomDesc[] = {
+	{ "Pier Solar and the Great Architects (World)(Rev C)(2010)(WaterMelon).bin", 0x800000, 0xDFB94F1B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "", 0, 0, 0 },
+};
+
+STDROMPICKEXT(md_psolar, md_psolar, md_segacd)
+STD_ROM_FN(md_psolar)
+
+// the mega cd bios is only needed with the enhanced soundtrack discs
+static INT32 md_psolarcdRomInfo(struct BurnRomInfo* pri, UINT32 i)
+{
+	INT32 nRet = md_psolarRomInfo(pri, i);
+	if (nRet == 0 && pri && i >= 0x80) pri->nType |= BRF_OPT;
+	return nRet;
+}
+
+// the dip switch picks the disc (hdd index + 1)
+static struct BurnHDDInfo md_psolarHDDDesc[] = {
+	{ "Pier Solar and the Great Architects - Enhanced Soundtrack Disc (USA)", "05dcd8e5d8dba48ed612f8c737fcf9c3e9812e57", BRF_OPT },
+//	{ "Pier Solar and the Great Architects - The Definitive Original Soundtrack (Europe) (Disc 4) (Enhanced Soundtrack Disc)", "9b0ee2727a2f7825654d3edda0b49b65cc6320c4", BRF_OPT }, // same music as the usa disc
+};
+
+STD_HDD_PICK(md_psolar)
+STD_HDD_FN(md_psolar)
+
+struct BurnDriver BurnDrvmd_psolar = {
+	"md_psolar", NULL, "md_segacd", NULL, "2010",
+	"Pier Solar and the Great Architects (World, Rev. C) (HB)\0", "64 Mbit (8MB) cartridge, Enhanced Soundtrack Disc with the Mega CD", "WaterMelon", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_RPG, 0,
+	MegadriveGetZipName, md_psolarcdRomInfo, md_psolarRomName, md_psolarHDDInfo, md_psolarHDDName, NULL, NULL, MegadriveInputInfo, PsolarDIPInfo,
+	MegadriveInitPsolar, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// ---------
+// MD+ games
+// ---------
+
+// Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)
+// MegaSD MD+ patch, the cd audio comes from the chd
+static struct BurnRomInfo md_castlillmdpRomDesc[] = {
+	{ "MD+ Castle Of Illusion (Grant Kirkhope Arranged).md", 0x100000, 0x39601b88, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_castlillmdp)
+STD_ROM_FN(md_castlillmdp)
+
+static struct BurnHDDInfo md_castlillmdpHDDDesc[] = {
+	{ "md_castlillmdp", "63cbf9c46268f7ffaf494e0f3d939949263b5eb1" }
+};
+
+STD_HDD_PICK(md_castlillmdp)
+STD_HDD_FN(md_castlillmdp)
+
+struct BurnDriver BurnDrvmd_castlillmdp = {
+	"md_castlillmdp", "md_castlill", NULL, NULL, "2021",
+	"Castle of Illusion Starring Mickey Mouse (Hack, MD+, Grant Kirkhope Arranged)\0", NULL, "Sega", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_castlillmdpRomInfo, md_castlillmdpRomName, md_castlillmdpHDDInfo, md_castlillmdpHDDName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

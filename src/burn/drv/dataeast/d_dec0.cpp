@@ -4495,6 +4495,7 @@ static INT32 HippodrmInit()
 	DrvH6280Rom[0x21a] = 0x60;
 
 	SekOpen(0);
+	SekMapMemory(DrvSpriteRam, 0xffc800, 0xffcfff, MAP_WRITE); // weird write-only sprite mirror
 	SekMapHandler(1, 0x180000, 0x180fff, MAP_RAM);
 	SekSetReadByteHandler(1, HippodrmShared68KReadByte);
 	SekSetWriteByteHandler(1, HippodrmShared68KWriteByte);

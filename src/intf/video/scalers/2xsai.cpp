@@ -319,17 +319,22 @@ void Super2xSaI32 (u8 *srcPtr, u32 srcPitch,
                    u8 * /* deltaPtr */, u8 *dstPtr, u32 dstPitch,
                    int width, int height)
 {
-  u32 *bP;
   u32 *dP;
-  u32 inc_bP;
-  u32 Nextline = srcPitch >> 2;
-  inc_bP = 1;
 
-  for (; height; height--) {
-    bP = (u32 *) srcPtr;
+  for (int y = 0; y < height; y++) {
+    // clamp source reads to the image (no reading outside the buffer at the edges)
+    const u32 *rB = (const u32 *)(srcPtr + (y > 0 ? y - 1 : 0) * srcPitch);
+    const u32 *r0 = (const u32 *)(srcPtr + y * srcPitch);
+    const u32 *r1 = (const u32 *)(srcPtr + (y + 1 < height ? y + 1 : height - 1) * srcPitch);
+    const u32 *r2 = (const u32 *)(srcPtr + (y + 2 < height ? y + 2 : height - 1) * srcPitch);
+
     dP = (u32 *) dstPtr;
 
-    for (u32 finish = width; finish; finish -= inc_bP) {
+    for (int x = 0; x < width; x++) {
+      const int xl  = (x > 0) ? x - 1 : 0;
+      const int xr  = (x + 1 < width) ? x + 1 : width - 1;
+      const int xrr = (x + 2 < width) ? x + 2 : width - 1;
+
       u32 color4, color5, color6;
       u32 color1, color2, color3;
       u32 colorA0, colorA1, colorA2, colorA3,
@@ -341,25 +346,25 @@ void Super2xSaI32 (u8 *srcPtr, u32 srcPitch,
       //                                         1  2  3 S1
       //                                           A1 A2
 
-      colorB0 = *(bP - Nextline - 1);
-      colorB1 = *(bP - Nextline);
-      colorB2 = *(bP - Nextline + 1);
-      colorB3 = *(bP - Nextline + 2);
+      colorB0 = rB[xl];
+      colorB1 = rB[x];
+      colorB2 = rB[xr];
+      colorB3 = rB[xrr];
 
-      color4 = *(bP - 1);
-      color5 = *(bP);
-      color6 = *(bP + 1);
-      colorS2 = *(bP + 2);
+      color4 = r0[xl];
+      color5 = r0[x];
+      color6 = r0[xr];
+      colorS2 = r0[xrr];
 
-      color1 = *(bP + Nextline - 1);
-      color2 = *(bP + Nextline);
-      color3 = *(bP + Nextline + 1);
-      colorS1 = *(bP + Nextline + 2);
+      color1 = r1[xl];
+      color2 = r1[x];
+      color3 = r1[xr];
+      colorS1 = r1[xrr];
 
-      colorA0 = *(bP + Nextline + Nextline - 1);
-      colorA1 = *(bP + Nextline + Nextline);
-      colorA2 = *(bP + Nextline + Nextline + 1);
-      colorA3 = *(bP + Nextline + Nextline + 2);
+      colorA0 = r2[xl];
+      colorA1 = r2[x];
+      colorA2 = r2[xr];
+      colorA3 = r2[xrr];
 
       //--------------------------------------
       if (color2 == color6 && color5 != color3) {
@@ -429,11 +434,9 @@ void Super2xSaI32 (u8 *srcPtr, u32 srcPitch,
       *(dP + (dstPitch >> 2)) = product2a;
       *(dP + (dstPitch >> 2) + 1) = product2b;
 
-      bP += inc_bP;
       dP += 2;
     }                       // end of for ( finish= width etc..)
 
-    srcPtr   += srcPitch;
     dstPtr   += dstPitch << 1;
     //        deltaPtr += srcPitch;
   }                 // endof: for (; height; height--)
@@ -579,39 +582,44 @@ void SuperEagle32 (u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
                    u8 *dstPtr, u32 dstPitch, int width, int height)
 {
   u32  *dP;
-  u32 *bP;
 //  u32 *xP;
-  u32 inc_bP;
 
-  inc_bP = 1;
 
-  u32 Nextline = srcPitch >> 2;
 
-  for (; height; height--) {
-    bP = (u32 *) srcPtr;
+  for (int y = 0; y < height; y++) {
+    // clamp source reads to the image (no reading outside the buffer at the edges)
+    const u32 *rB = (const u32 *)(srcPtr + (y > 0 ? y - 1 : 0) * srcPitch);
+    const u32 *r0 = (const u32 *)(srcPtr + y * srcPitch);
+    const u32 *r1 = (const u32 *)(srcPtr + (y + 1 < height ? y + 1 : height - 1) * srcPitch);
+    const u32 *r2 = (const u32 *)(srcPtr + (y + 2 < height ? y + 2 : height - 1) * srcPitch);
+
 //    xP = (u32 *) deltaPtr;
     dP = (u32 *)dstPtr;
-    for (u32 finish = width; finish; finish -= inc_bP) {
+    for (int x = 0; x < width; x++) {
+      const int xl  = (x > 0) ? x - 1 : 0;
+      const int xr  = (x + 1 < width) ? x + 1 : width - 1;
+      const int xrr = (x + 2 < width) ? x + 2 : width - 1;
+
       u32 color4, color5, color6;
       u32 color1, color2, color3;
       u32 colorA1, colorA2, colorB1, colorB2, colorS1, colorS2;
       u32 product1a, product1b, product2a, product2b;
 
-      colorB1 = *(bP - Nextline);
-      colorB2 = *(bP - Nextline + 1);
+      colorB1 = rB[x];
+      colorB2 = rB[xr];
 
-      color4 = *(bP - 1);
-      color5 = *(bP);
-      color6 = *(bP + 1);
-      colorS2 = *(bP + 2);
+      color4 = r0[xl];
+      color5 = r0[x];
+      color6 = r0[xr];
+      colorS2 = r0[xrr];
 
-      color1 = *(bP + Nextline - 1);
-      color2 = *(bP + Nextline);
-      color3 = *(bP + Nextline + 1);
-      colorS1 = *(bP + Nextline + 2);
+      color1 = r1[xl];
+      color2 = r1[x];
+      color3 = r1[xr];
+      colorS1 = r1[xrr];
 
-      colorA1 = *(bP + Nextline + Nextline);
-      colorA2 = *(bP + Nextline + Nextline + 1);
+      colorA1 = r2[x];
+      colorA2 = r2[xr];
 
       // --------------------------------------
       if (color2 == color6 && color5 != color3) {
@@ -692,12 +700,10 @@ void SuperEagle32 (u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
       *(dP + (dstPitch >> 2) +1) = product2b;
 //      *xP = color5;
 
-      bP += inc_bP;
 //      xP += inc_bP;
       dP += 2;
     }                 // end of for ( finish= width etc..)
 
-    srcPtr += srcPitch;
     dstPtr += dstPitch << 1;
 //    deltaPtr += srcPitch;
   }                   // endof: for (height; height; height--)
@@ -871,16 +877,22 @@ void _2xSaI32 (u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
                u8 *dstPtr, u32 dstPitch, int width, int height)
 {
   u32  *dP;
-  u32 *bP;
-  u32 inc_bP = 1;
 
-  u32 Nextline = srcPitch >> 2;
 
-  for (; height; height--) {
-    bP = (u32 *) srcPtr;
+  for (int y = 0; y < height; y++) {
+    // clamp source reads to the image (no reading outside the buffer at the edges)
+    const u32 *rB = (const u32 *)(srcPtr + (y > 0 ? y - 1 : 0) * srcPitch);
+    const u32 *r0 = (const u32 *)(srcPtr + y * srcPitch);
+    const u32 *r1 = (const u32 *)(srcPtr + (y + 1 < height ? y + 1 : height - 1) * srcPitch);
+    const u32 *r2 = (const u32 *)(srcPtr + (y + 2 < height ? y + 2 : height - 1) * srcPitch);
+
     dP = (u32 *) dstPtr;
 
-    for (u32 finish = width; finish; finish -= inc_bP) {
+    for (int x = 0; x < width; x++) {
+      const int xl  = (x > 0) ? x - 1 : 0;
+      const int xr  = (x + 1 < width) ? x + 1 : width - 1;
+      const int xrr = (x + 2 < width) ? x + 2 : width - 1;
+
       register u32 colorA, colorB;
       u32 colorC, colorD,
         colorE, colorF, colorG, colorH,
@@ -894,25 +906,25 @@ void _2xSaI32 (u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
       //                                       G|A B|K
       //                                       H|C D|L
       //                                       M|N O|P
-      colorI = *(bP - Nextline - 1);
-      colorE = *(bP - Nextline);
-      colorF = *(bP - Nextline + 1);
-      colorJ = *(bP - Nextline + 2);
+      colorI = rB[xl];
+      colorE = rB[x];
+      colorF = rB[xr];
+      colorJ = rB[xrr];
 
-      colorG = *(bP - 1);
-      colorA = *(bP);
-      colorB = *(bP + 1);
-      colorK = *(bP + 2);
+      colorG = r0[xl];
+      colorA = r0[x];
+      colorB = r0[xr];
+      colorK = r0[xrr];
 
-      colorH = *(bP + Nextline - 1);
-      colorC = *(bP + Nextline);
-      colorD = *(bP + Nextline + 1);
-      colorL = *(bP + Nextline + 2);
+      colorH = r1[xl];
+      colorC = r1[x];
+      colorD = r1[xr];
+      colorL = r1[xrr];
 
-      colorM = *(bP + Nextline + Nextline - 1);
-      colorN = *(bP + Nextline + Nextline);
-      colorO = *(bP + Nextline + Nextline + 1);
-      colorP = *(bP + Nextline + Nextline + 2);
+      colorM = r2[xl];
+      colorN = r2[x];
+      colorO = r2[xr];
+      colorP = r2[xrr];
 
       if ((colorA == colorD) && (colorB != colorC)) {
         if (((colorA == colorE) && (colorB == colorL)) ||
@@ -1010,11 +1022,9 @@ void _2xSaI32 (u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
       *(dP + (dstPitch >> 2)) = product1;
       *(dP + (dstPitch >> 2) + 1) = product2;
 
-      bP += inc_bP;
       dP += 2;
     }                 // end of for ( finish= width etc..)
 
-    srcPtr += srcPitch;
     dstPtr += dstPitch << 1;
     //    deltaPtr += srcPitch;
   }                   // endof: for (height; height; height--)

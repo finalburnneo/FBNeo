@@ -329,6 +329,8 @@ void __fastcall CpsWriteWord(UINT32 a, UINT16 d);
 
 typedef void (*CpsRWSoundCommandCallback)(UINT16);
 extern CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction;
+void CpsOstInit();						// OST packs, see burn/snd/burn_ost.h
+INT32 CpsOstQsndMailbox(UINT8 nTrigger);	// returns 0 if the command is to be dropped
 // Prepare inputs before port compilation; return the number of stock-port players.
 typedef INT32 (*CpsRwGetInpCallback)();
 extern CpsRwGetInpCallback CpsRwGetInpCallbackFunction;

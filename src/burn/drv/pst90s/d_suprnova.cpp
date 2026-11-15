@@ -169,37 +169,9 @@ static struct BurnDIPInfo SknsDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Freeze"	},
 	{0x15, 0x01, 0x80, 0x00, "Freezes the game"},
 	{0x15, 0x01, 0x80, 0x80, "No"	},
-
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"		},
-	{0x16, 0x01, 0x01, 0x01, "Yes"		},
 };
 
 STDDIPINFO(Skns)
-
-static struct BurnDIPInfo SknsNoSpeedhackDIPList[]=
-{
-	{0x15, 0xff, 0xff, 0xff, NULL		},
-	{0x16, 0xff, 0xff, 0x00, NULL		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x15, 0x01, 0x01, 0x01, "Off"		},
-	{0x15, 0x01, 0x01, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
-	{0x15, 0x01, 0x02, 0x02, "Off"		},
-	{0x15, 0x01, 0x02, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Use Backup Ram"},
-	{0x15, 0x01, 0x40, 0x00, "No"		},
-	{0x15, 0x01, 0x40, 0x40, "Yes"		},
-
-	{0   , 0xfe, 0   ,    2, "Freeze"	},
-	{0x15, 0x01, 0x80, 0x00, "Freezes the game"},
-	{0x15, 0x01, 0x80, 0x80, "No"	},
-};
-
-STDDIPINFO(SknsNoSpeedhack)
 
 static struct BurnDIPInfo VblokbrkDIPList[]=
 {
@@ -221,10 +193,6 @@ static struct BurnDIPInfo VblokbrkDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Freeze"	},
 	{0x17, 0x01, 0x80, 0x00, "Freezes the game"},
 	{0x17, 0x01, 0x80, 0x80, "No"	},
-
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x18, 0x01, 0x01, 0x00, "No"		},
-	{0x18, 0x01, 0x01, 0x01, "Yes"		},
 };
 
 STDDIPINFO(Vblokbrk)
@@ -279,9 +247,6 @@ static struct BurnDIPInfo CyvernDIPList[]=
 	{0x13, 0x01, 0x80, 0x00, "Freezes the game"},
 	{0x13, 0x01, 0x80, 0x80, "No"	},
 
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x14, 0x01, 0x01, 0x00, "No"		},
-	{0x14, 0x01, 0x01, 0x01, "Yes"		},
 
 	{0   , 0xfe, 0   ,    2, "Headache Filter (audio hack)"},
 	{0x14, 0x01, 0x02, 0x00, "No"		},
@@ -290,7 +255,7 @@ static struct BurnDIPInfo CyvernDIPList[]=
 
 STDDIPINFO(Cyvern)
 
-static struct BurnDIPInfo CyvernNoSpeedhackDIPList[]= // gals panic 4 (galpani4)
+static struct BurnDIPInfo Galpani4DIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xff, NULL		},
 	{0x14, 0xff, 0xff, 0x00, NULL		},
@@ -312,7 +277,7 @@ static struct BurnDIPInfo CyvernNoSpeedhackDIPList[]= // gals panic 4 (galpani4)
 	{0x13, 0x01, 0x80, 0x80, "No"	},
 };
 
-STDDIPINFO(CyvernNoSpeedhack)
+STDDIPINFO(Galpani4)
 
 static void hit_calc_orig(UINT16 p, UINT16 s, UINT16 org, UINT16 *l, UINT16 *r)
 {
@@ -1020,8 +985,6 @@ static INT32 DrvDoReset()
 	olddepths[0] = olddepths[1] = 0xff;
 
 	HiscoreReset();
-
-	Sh2SetEatCycles((DrvDips[1] & 1) ? 4 : 1);
 
  	return 0;
 }
@@ -2421,7 +2384,7 @@ struct BurnDriver BurnDrvGalpani4 = {
 	"Gals Panic 4 (Europe)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	Galpani4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2457,7 +2420,7 @@ struct BurnDriver BurnDrvGalpani4j = {
 	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpani4jRomInfo, galpani4jRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpani4jRomInfo, galpani4jRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	Galpani4jInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2499,7 +2462,7 @@ struct BurnDriver BurnDrvGalpani4a = {
 	"Gals Panic 4 (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpani4aRomInfo, galpani4aRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpani4aRomInfo, galpani4aRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	Galpani4aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2537,7 +2500,7 @@ struct BurnDriver BurnDrvGalpani4k = {
 	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	Galpani4kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2574,7 +2537,7 @@ struct BurnDriver BurnDrvGalpaniex = {
 	"Gals Panic EX (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpaniexRomInfo, galpaniexRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpaniexRomInfo, galpaniexRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	GalpaniexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2607,7 +2570,7 @@ struct BurnDriver BurnDrvGalpanisu = {
 	"Gals Panic SU (Korea, Gals Panic 4 re-release)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanisuRomInfo, galpanisuRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpanisuRomInfo, galpanisuRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	Galpani4kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2648,7 +2611,7 @@ struct BurnDriver BurnDrvGalpanidx = {
 	"Gals Panic DX (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanidxRomInfo, galpanidxRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
+	NULL, galpanidxRomInfo, galpanidxRomName, NULL, NULL, NULL, NULL, CyvernInputInfo, Galpani4DIPInfo,
 	GalpaniexInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2686,7 +2649,7 @@ struct BurnDriver BurnDrvGalpanis = {
 	"Gals Panic S - Extra Edition (Europe, revision 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2716,7 +2679,7 @@ struct BurnDriver BurnDrvGalpanise = {
 	"Gals Panic S - Extra Edition (Europe, set 2)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpaniseRomInfo, galpaniseRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	NULL, galpaniseRomInfo, galpaniseRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2754,7 +2717,7 @@ struct BurnDriver BurnDrvGalpanisj = {
 	"Gals Panic S - Extra Edition (Japan, revision 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GalpanisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2792,7 +2755,7 @@ struct BurnDriver BurnDrvGalpanisa = {
 	"Gals Panic S - Extra Edition (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanisaRomInfo, galpanisaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	NULL, galpanisaRomInfo, galpanisaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GalpanisaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2830,7 +2793,7 @@ struct BurnDriver BurnDrvGalpanisk = {
 	"Gals Panic S - Extra Edition (Korea, revision 1)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2860,7 +2823,7 @@ struct BurnDriver BurnDrvGalpaniska = {
 	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpaniskaRomInfo, galpaniskaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
+	NULL, galpaniskaRomInfo, galpaniskaRomName, NULL, NULL, NULL, NULL, SknsInputInfo, SknsDIPInfo,
 	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

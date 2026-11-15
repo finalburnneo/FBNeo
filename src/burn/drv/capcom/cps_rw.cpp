@@ -1,4 +1,5 @@
 #include "cps.h"
+#include "burn_ost.h"
 // CPS - Read/Write
 
 CpsRwGetInpCallback CpsRwGetInpCallbackFunction = NULL;
@@ -66,6 +67,57 @@ INT32 Ecofght = 0;
 ClearOpposite<4, UINT8> clear_opposite;
 
 CpsRWSoundCommandCallback CpsRWSoundCommandCallbackFunction = NULL;
+
+// ---------------------------------------------------------------------------
+// OST packs (burn/snd/burn_ost.cpp): music commands -> external tracks
+
+static UINT8 nOstQsndTrigger = 0;
+
+static void CpsOstSendPsnd(UINT32 nCode)	// CPS1: sound latch
+{
+	PsndCode = nCode & 0xff;
+}
+
+static void CpsOstSendQsnd(UINT32 nCode)	// CPS2 / CPS1 QSound: mailbox in the shared ram
+{
+	CpsZRamC0[0x000] = (nCode >> 8) & 0xff;
+	CpsZRamC0[0x001] = nCode & 0xff;
+	CpsZRamC0[0x00f] = nOstQsndTrigger;
+}
+
+// 68k wrote the last byte of a QSound command (0x61801f / 0xf1801f)
+INT32 CpsOstQsndMailbox(UINT8 nTrigger)
+{
+	nOstQsndTrigger = nTrigger;
+
+	if (bBurnOstLog) {
+		bprintf(0, _T("OST: qsound mailbox"));
+		for (INT32 i = 0; i < 0x0f; i++) bprintf(0, _T(" %02x"), CpsZRamC0[i]);
+		bprintf(0, _T(" [%02x]\n"), nTrigger);
+	}
+
+	// command code: first two bytes of the mailbox
+	INT32 nOut = BurnOstCommand((CpsZRamC0[0x000] << 8) | CpsZRamC0[0x001]);
+	if (nOut == OST_DROP) return 0;
+
+	CpsZRamC0[0x000] = (nOut >> 8) & 0xff;
+	CpsZRamC0[0x001] = nOut & 0xff;
+
+	return 1;
+}
+
+void CpsOstInit()
+{
+	// BurnSample is shared, so not for drivers with samples of their own (d_cps2_custom.cpp)
+	if (BurnDrvGetTextA(DRV_SAMPLENAME) != NULL) return;
+
+	if (Cps == 2 || Cps1Qs == 1) {
+		if (Cps == 2 && Cps2DisableQSnd) return;
+		BurnOstInit(BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT), OST_MAILBOX, CpsOstSendQsnd);
+	} else if ((Cps & 1) && !Cps1DisablePSnd) {
+		BurnOstInit(BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT), OST_LATCH, CpsOstSendPsnd);
+	}
+}
 
 static INT32 nCalc[2] = {0, 0};
 
@@ -375,6 +427,12 @@ void CpsWritePort(const UINT32 ia, UINT8 d)
 			if (ia == 0x181 || (Port6SoundWrite && (ia == 0x006 || ia == 0x007))) {
 				PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
 
+				if (BurnOstActive()) {
+					INT32 nOst = BurnOstCommand(d);
+					if (nOst == OST_DROP) return;
+					d = nOst & 0xff;
+				}
+
 				PsndCode = d;
 				return;
 			}
@@ -382,6 +440,8 @@ void CpsWritePort(const UINT32 ia, UINT8 d)
 			// CPS1 sound fade
 			if (ia == 0x189) {
 				PsndSyncZ80((INT64)SekTotalCycles() * nCpsZ80Cycles / nCpsCycles);
+
+				BurnOstFadeLatch(d);
 
 				PsndFade = d;
 				return;

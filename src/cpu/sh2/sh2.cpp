@@ -34,7 +34,6 @@
 #include <stddef.h>
 
 int has_sh2;
-INT32 cps3speedhack; // must be set _after_ Sh2Init();
 
 #define BUSY_LOOP_HACKS     0
 #define FAST_OP_FETCH		1
@@ -105,11 +104,6 @@ typedef struct
 	UINT32 	timer_base;
 	INT32   timer_active;
 	
-//	emu_timer *dma_timer[2];
-	UINT32 	dma_timer_cycles[2];
-	UINT32 	dma_timer_base[2];
-	INT32   dma_timer_active[2];
-
 //	int     is_slave, cpu_number;
 	
 	UINT32	cycle_counts; // used internally for timers / sh2_GetTotalCycles()
@@ -170,6 +164,16 @@ static void Sh2SetIRQLine_Internal(const int line, int state);
 #define	SH2_MAXHANDLER	(8)
 
 
+#define SH2_IDLE_SLOTS	(16)
+#define SH2_IDLE_SLOT(pc) (((pc) >> 1) & (SH2_IDLE_SLOTS - 1))
+
+typedef struct
+{
+	UINT32 pc, gen, touched, total;
+	INT32 icount;
+	UINT32 regs[22];
+} SH2IDLE;
+
 typedef struct 
 {
 	SH2	sh2;
@@ -183,10 +187,29 @@ typedef struct
 	
 	unsigned char * opbase;
 	int suspend;
+
+	// external dma requests (DREQ0/1)
+	int dreq[2];
+	int dreq_pulse[2];
+	UINT32 wdt_csr, wdt_cnt, wdt_base, wdt_next;
+
+	// serial interface status / receive data (only with Sh2SetSciLink())
+	UINT8 sci_ssr, sci_rdr;
+
+	// idle loop detection, see sh2_idle_check()
+	SH2IDLE idle[SH2_IDLE_SLOTS];
+	INT32 idle_wait[SH2_IDLE_SLOTS];
+	UINT32 idle_gen;
+
+	// per instruction checks are needed (see sh2_update_events())
+	INT32 slow;
+	INT32 event_icount;
 } SH2EXT;
 
 static SH2EXT * pSh2Ext;
 static SH2EXT * Sh2Ext = NULL;
+static int nSh2Count = 0;
+static int sci_link = 0; // the serial interfaces of cpu 0 and 1 are wired together (32x)
 
 static INT32 core_idle(INT32 cycles)
 {
@@ -478,6 +501,7 @@ void Sh2Exit()
 		Sh2Ext = NULL;
 	}
 	pSh2Ext = NULL;
+	nSh2Count = 0;
 	
 	DebugCPU_SH2Initted = 0;
 
@@ -494,13 +518,13 @@ UINT8 Sh2CheatReadByte(UINT32 a)
 	return Sh2ReadByte(a);
 }
 
+static void sh2_build_optab();
+
 int Sh2Init(int nCount)
 {
 	DebugCPU_SH2Initted = 1;
 
 	has_sh2 = 1;
-
-	cps3speedhack = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
 	if (Sh2Ext == NULL) {
@@ -508,6 +532,10 @@ int Sh2Init(int nCount)
 		return 1;
 	}
 	memset(Sh2Ext, 0, sizeof(SH2EXT) * nCount);
+	nSh2Count = nCount;
+	sci_link = 0;
+
+	sh2_build_optab();
 
 	// init default memory handler
 	for (int i=0; i<nCount; i++) {
@@ -548,6 +576,15 @@ void Sh2Open(const int i)
 
 	pSh2Ext = Sh2Ext + i;
 	sh2 = & (pSh2Ext->sh2);
+
+#if FAST_OP_FETCH
+	// readop_pr is shared by all cpus, rebuild it for the selected one
+	if (nSh2Count > 1) {
+		UINT32 fpc = (sh2->delay ? sh2->delay : sh2->pc) & AM;
+		readop_pr = pSh2Ext->MemMap[ (fpc >> SH2_SHIFT) + SH2_WADD * 2 ];
+		pSh2Ext->opbase = readop_pr - (fpc & ~SH2_PAGEM);
+	}
+#endif
 }
 
 void Sh2Close()
@@ -572,7 +609,7 @@ int Sh2GetActive()
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2GetActive called without init\n"));
 #endif
 
-	return 0;
+	return (pSh2Ext) ? (int)(pSh2Ext - Sh2Ext) : 0;
 }
 
 void Sh2Reset(unsigned int pc, unsigned r15)
@@ -596,6 +633,9 @@ void Sh2Reset(unsigned int pc, unsigned r15)
 	change_pc(sh2->pc & AM);
 
 	sh2->internal_irq_level = -1;
+
+	pSh2Ext->sci_ssr = 0x84; // TDRE, TEND
+	pSh2Ext->sci_rdr = 0;
 }
 
 //----------------------------------------------------------------
@@ -654,6 +694,17 @@ SH2_INLINE unsigned short cpu_readop16(unsigned int A)
 
 // ------------------------------------------------------
 
+static UINT32 sh2_mem_touched; // incremented by handler reads
+static void sh2_idle_check(UINT32 last);
+
+// after a short backward branch at ppc - 2 (delay slot included in the loop when slot is 1)
+#define SH2_IDLE_CHECK(disp, slot) \
+	if ((UINT32)((disp) + 32) < 32 && --pSh2Ext->idle_wait[SH2_IDLE_SLOT(sh2->ppc)] < 0) sh2_idle_check(sh2->ppc - 2 + (slot) * 2)
+
+// backward branch not taken: the loop was left, its next iteration isn't the following one
+#define SH2_IDLE_EXIT(d) \
+	if ((INT8)(d) < 0) pSh2Ext->idle[SH2_IDLE_SLOT(sh2->ppc)].gen = pSh2Ext->idle_gen - 1
+
 SH2_INLINE UINT8 RB(UINT32 A)
 {
 /*	if (A >= 0xe0000000) return sh2_internal_r((A & 0x1fc)>>2, ~(0xff << (((~A) & 3)*8))) >> (((~A) & 3)*8);
@@ -669,6 +720,7 @@ SH2_INLINE UINT8 RB(UINT32 A)
 #endif
 		return pr[A & SH2_PAGEM];
 	}
+	sh2_mem_touched++;
 	return pSh2Ext->ReadByte[(uintptr_t)pr](A);
 }
 
@@ -688,6 +740,7 @@ SH2_INLINE UINT16 RW(UINT32 A)
 		//return (pr[A & SH2_PAGEM] << 8) | pr[(A & SH2_PAGEM) + 1];
 		return *((unsigned short *)(pr + (A & SH2_PAGEM)));
 	}
+	sh2_mem_touched++;
 	return pSh2Ext->ReadWord[(uintptr_t)pr](A);
 }
 
@@ -719,6 +772,7 @@ SH2_INLINE UINT32 RL(UINT32 A)
 		//return (pr[(A & SH2_PAGEM) + 0] << 24) | (pr[(A & SH2_PAGEM) + 1] << 16) | (pr[(A & SH2_PAGEM) + 2] <<  8) | (pr[(A & SH2_PAGEM) + 3] <<  0);
 		return *((unsigned int *)(pr + (A & SH2_PAGEM)));
 	}
+	sh2_mem_touched++;
 	return pSh2Ext->ReadLong[(uintptr_t)pr](A);
 }
 
@@ -778,6 +832,8 @@ SH2_INLINE void WL(UINT32 A, UINT32 V)
 SH2_INLINE void sh2_exception(/*const char *message,*/ int irqline)
 {
 	int vector;
+
+	pSh2Ext->idle_gen++;
 
 	if (irqline != 16)
 	{
@@ -984,6 +1040,11 @@ SH2_INLINE void BF(UINT32 d)
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
 		sh2->sh2_total_cycles += 2;
+		SH2_IDLE_CHECK(disp, 0);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1000,6 +1061,11 @@ SH2_INLINE void BFS(UINT32 d)
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
 		sh2->sh2_total_cycles += 1;
+		SH2_IDLE_CHECK(disp, 1);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1029,6 +1095,7 @@ SH2_INLINE void BRA(UINT32 d)
 	sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 	sh2->sh2_icount--;
 	sh2->sh2_total_cycles += 1;
+	SH2_IDLE_CHECK(disp, 1);
 }
 
 /*  code                 cycles  t-bit
@@ -1084,6 +1151,11 @@ SH2_INLINE void BT(UINT32 d)
 		change_pc(sh2->pc & AM);
 		sh2->sh2_icount -= 2;
 		sh2->sh2_total_cycles += 2;
+		SH2_IDLE_CHECK(disp, 0);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1100,6 +1172,11 @@ SH2_INLINE void BTS(UINT32 d)
 		sh2->pc = sh2->ea = sh2->pc + disp * 2 + 2;
 		sh2->sh2_icount--;
 		sh2->sh2_total_cycles += 1;
+		SH2_IDLE_CHECK(disp, 1);
+	}
+	else
+	{
+		SH2_IDLE_EXIT(d);
 	}
 }
 
@@ -1519,6 +1596,7 @@ SH2_INLINE void LDCSR(UINT32 m)
 {
 	sh2->sr = sh2->r[m] & FLAGS;
 	sh2->test_irq = 1;
+	pSh2Ext->slow = 1;
 }
 
 /*  LDC     Rm,GBR */
@@ -1542,6 +1620,7 @@ SH2_INLINE void LDCMSR(UINT32 m)
 	sh2->sh2_icount -= 2;
 	sh2->sh2_total_cycles += 2;
 	sh2->test_irq = 1;
+	pSh2Ext->slow = 1;
 }
 
 /*  LDC.L   @Rm+,GBR */
@@ -2135,6 +2214,7 @@ SH2_INLINE void RTE(void)
 	sh2->sh2_icount -= 3;
 	sh2->sh2_total_cycles += 3;
 	sh2->test_irq = 1;
+	pSh2Ext->slow = 1;
 }
 
 /*  RTS */
@@ -2500,317 +2580,507 @@ SH2_INLINE void XTRCT(UINT32 m, UINT32 n)
  *  OPCODE DISPATCHERS
  *****************************************************************************/
 
-SH2_INLINE void op0000(UINT16 opcode)
+enum {
+	SH2OP_NOP,
+	SH2OP_STCSR,
+	SH2OP_BSRF,
+	SH2OP_MOVBS0,
+	SH2OP_MOVWS0,
+	SH2OP_MOVLS0,
+	SH2OP_MULL,
+	SH2OP_CLRT,
+	SH2OP_STSMACH,
+	SH2OP_RTS,
+	SH2OP_MOVBL0,
+	SH2OP_MOVWL0,
+	SH2OP_MOVLL0,
+	SH2OP_MAC_L,
+	SH2OP_STCGBR,
+	SH2OP_SETT,
+	SH2OP_DIV0U,
+	SH2OP_STSMACL,
+	SH2OP_SLEEP,
+	SH2OP_STCVBR,
+	SH2OP_BRAF,
+	SH2OP_CLRMAC,
+	SH2OP_MOVT,
+	SH2OP_STSPR,
+	SH2OP_RTE,
+	SH2OP_MOVLS4,
+	SH2OP_MOVBS,
+	SH2OP_MOVWS,
+	SH2OP_MOVLS,
+	SH2OP_MOVBM,
+	SH2OP_MOVWM,
+	SH2OP_MOVLM,
+	SH2OP_DIV0S,
+	SH2OP_TST,
+	SH2OP_AND,
+	SH2OP_XOR,
+	SH2OP_OR,
+	SH2OP_CMPSTR,
+	SH2OP_XTRCT,
+	SH2OP_MULU,
+	SH2OP_MULS,
+	SH2OP_CMPEQ,
+	SH2OP_CMPHS,
+	SH2OP_CMPGE,
+	SH2OP_DIV1,
+	SH2OP_DMULU,
+	SH2OP_CMPHI,
+	SH2OP_CMPGT,
+	SH2OP_SUB,
+	SH2OP_SUBC,
+	SH2OP_SUBV,
+	SH2OP_ADD,
+	SH2OP_DMULS,
+	SH2OP_ADDC,
+	SH2OP_ADDV,
+	SH2OP_SHLL,
+	SH2OP_SHLR,
+	SH2OP_STSMMACH,
+	SH2OP_STCMSR,
+	SH2OP_ROTL,
+	SH2OP_ROTR,
+	SH2OP_LDSMMACH,
+	SH2OP_LDCMSR,
+	SH2OP_SHLL2,
+	SH2OP_SHLR2,
+	SH2OP_LDSMACH,
+	SH2OP_JSR,
+	SH2OP_LDCSR,
+	SH2OP_MAC_W,
+	SH2OP_DT,
+	SH2OP_CMPPZ,
+	SH2OP_STSMMACL,
+	SH2OP_STCMGBR,
+	SH2OP_CMPPL,
+	SH2OP_LDSMMACL,
+	SH2OP_LDCMGBR,
+	SH2OP_SHLL8,
+	SH2OP_SHLR8,
+	SH2OP_LDSMACL,
+	SH2OP_TAS,
+	SH2OP_LDCGBR,
+	SH2OP_SHAL,
+	SH2OP_SHAR,
+	SH2OP_STSMPR,
+	SH2OP_STCMVBR,
+	SH2OP_ROTCL,
+	SH2OP_ROTCR,
+	SH2OP_LDSMPR,
+	SH2OP_LDCMVBR,
+	SH2OP_SHLL16,
+	SH2OP_SHLR16,
+	SH2OP_LDSPR,
+	SH2OP_JMP,
+	SH2OP_LDCVBR,
+	SH2OP_MOVLL4,
+	SH2OP_MOVBL,
+	SH2OP_MOVWL,
+	SH2OP_MOVLL,
+	SH2OP_MOV,
+	SH2OP_MOVBP,
+	SH2OP_MOVWP,
+	SH2OP_MOVLP,
+	SH2OP_NOT,
+	SH2OP_SWAPB,
+	SH2OP_SWAPW,
+	SH2OP_NEGC,
+	SH2OP_NEG,
+	SH2OP_EXTUB,
+	SH2OP_EXTUW,
+	SH2OP_EXTSB,
+	SH2OP_EXTSW,
+	SH2OP_ADDI,
+	SH2OP_MOVBS4,
+	SH2OP_MOVWS4,
+	SH2OP_MOVBL4,
+	SH2OP_MOVWL4,
+	SH2OP_CMPIM,
+	SH2OP_BT,
+	SH2OP_BF,
+	SH2OP_BTS,
+	SH2OP_BFS,
+	SH2OP_MOVWI,
+	SH2OP_BRA,
+	SH2OP_BSR,
+	SH2OP_MOVBSG,
+	SH2OP_MOVWSG,
+	SH2OP_MOVLSG,
+	SH2OP_TRAPA,
+	SH2OP_MOVBLG,
+	SH2OP_MOVWLG,
+	SH2OP_MOVLLG,
+	SH2OP_MOVA,
+	SH2OP_TSTI,
+	SH2OP_ANDI,
+	SH2OP_XORI,
+	SH2OP_ORI,
+	SH2OP_TSTM,
+	SH2OP_ANDM,
+	SH2OP_XORM,
+	SH2OP_ORM,
+	SH2OP_MOVLI,
+	SH2OP_MOVI,
+	SH2OP_COUNT
+};
+
+static UINT8 sh2_opid0000(UINT16 opcode)
 {
 	switch (opcode & 0x3F)
 	{
-	case 0x00: NOP();						break;
-	case 0x01: NOP();						break;
-	case 0x02: STCSR(Rn);					break;
-	case 0x03: BSRF(Rn);					break;
-	case 0x04: MOVBS0(Rm, Rn);				break;
-	case 0x05: MOVWS0(Rm, Rn);				break;
-	case 0x06: MOVLS0(Rm, Rn);				break;
-	case 0x07: MULL(Rm, Rn);				break;
-	case 0x08: CLRT();						break;
-	case 0x09: NOP();						break;
-	case 0x0a: STSMACH(Rn); 				break;
-	case 0x0b: RTS();						break;
-	case 0x0c: MOVBL0(Rm, Rn);				break;
-	case 0x0d: MOVWL0(Rm, Rn);				break;
-	case 0x0e: MOVLL0(Rm, Rn);				break;
-	case 0x0f: MAC_L(Rm, Rn);				break;
+	case 0x00: return SH2OP_NOP;
+	case 0x01: return SH2OP_NOP;
+	case 0x02: return SH2OP_STCSR;
+	case 0x03: return SH2OP_BSRF;
+	case 0x04: return SH2OP_MOVBS0;
+	case 0x05: return SH2OP_MOVWS0;
+	case 0x06: return SH2OP_MOVLS0;
+	case 0x07: return SH2OP_MULL;
+	case 0x08: return SH2OP_CLRT;
+	case 0x09: return SH2OP_NOP;
+	case 0x0a: return SH2OP_STSMACH;
+	case 0x0b: return SH2OP_RTS;
+	case 0x0c: return SH2OP_MOVBL0;
+	case 0x0d: return SH2OP_MOVWL0;
+	case 0x0e: return SH2OP_MOVLL0;
+	case 0x0f: return SH2OP_MAC_L;
 
-	case 0x10: NOP();						break;
-	case 0x11: NOP();						break;
-	case 0x12: STCGBR(Rn);					break;
-	case 0x13: NOP();						break;
-	case 0x14: MOVBS0(Rm, Rn);				break;
-	case 0x15: MOVWS0(Rm, Rn);				break;
-	case 0x16: MOVLS0(Rm, Rn);				break;
-	case 0x17: MULL(Rm, Rn);				break;
-	case 0x18: SETT();						break;
-	case 0x19: DIV0U(); 					break;
-	case 0x1a: STSMACL(Rn); 				break;
-	case 0x1b: SLEEP(); 					break;
-	case 0x1c: MOVBL0(Rm, Rn);				break;
-	case 0x1d: MOVWL0(Rm, Rn);				break;
-	case 0x1e: MOVLL0(Rm, Rn);				break;
-	case 0x1f: MAC_L(Rm, Rn);				break;
+	case 0x10: return SH2OP_NOP;
+	case 0x11: return SH2OP_NOP;
+	case 0x12: return SH2OP_STCGBR;
+	case 0x13: return SH2OP_NOP;
+	case 0x14: return SH2OP_MOVBS0;
+	case 0x15: return SH2OP_MOVWS0;
+	case 0x16: return SH2OP_MOVLS0;
+	case 0x17: return SH2OP_MULL;
+	case 0x18: return SH2OP_SETT;
+	case 0x19: return SH2OP_DIV0U;
+	case 0x1a: return SH2OP_STSMACL;
+	case 0x1b: return SH2OP_SLEEP;
+	case 0x1c: return SH2OP_MOVBL0;
+	case 0x1d: return SH2OP_MOVWL0;
+	case 0x1e: return SH2OP_MOVLL0;
+	case 0x1f: return SH2OP_MAC_L;
 
-	case 0x20: NOP();						break;
-	case 0x21: NOP();						break;
-	case 0x22: STCVBR(Rn);					break;
-	case 0x23: BRAF(Rn);					break;
-	case 0x24: MOVBS0(Rm, Rn);				break;
-	case 0x25: MOVWS0(Rm, Rn);				break;
-	case 0x26: MOVLS0(Rm, Rn);				break;
-	case 0x27: MULL(Rm, Rn);				break;
-	case 0x28: CLRMAC();					break;
-	case 0x29: MOVT(Rn);					break;
-	case 0x2a: STSPR(Rn);					break;
-	case 0x2b: RTE();						break;
-	case 0x2c: MOVBL0(Rm, Rn);				break;
-	case 0x2d: MOVWL0(Rm, Rn);				break;
-	case 0x2e: MOVLL0(Rm, Rn);				break;
-	case 0x2f: MAC_L(Rm, Rn);				break;
+	case 0x20: return SH2OP_NOP;
+	case 0x21: return SH2OP_NOP;
+	case 0x22: return SH2OP_STCVBR;
+	case 0x23: return SH2OP_BRAF;
+	case 0x24: return SH2OP_MOVBS0;
+	case 0x25: return SH2OP_MOVWS0;
+	case 0x26: return SH2OP_MOVLS0;
+	case 0x27: return SH2OP_MULL;
+	case 0x28: return SH2OP_CLRMAC;
+	case 0x29: return SH2OP_MOVT;
+	case 0x2a: return SH2OP_STSPR;
+	case 0x2b: return SH2OP_RTE;
+	case 0x2c: return SH2OP_MOVBL0;
+	case 0x2d: return SH2OP_MOVWL0;
+	case 0x2e: return SH2OP_MOVLL0;
+	case 0x2f: return SH2OP_MAC_L;
 
-	case 0x30: NOP();						break;
-	case 0x31: NOP();						break;
-	case 0x32: NOP();						break;
-	case 0x33: NOP();						break;
-	case 0x34: MOVBS0(Rm, Rn);				break;
-	case 0x35: MOVWS0(Rm, Rn);				break;
-	case 0x36: MOVLS0(Rm, Rn);				break;
-	case 0x37: MULL(Rm, Rn);				break;
-	case 0x38: NOP();						break;
-	case 0x39: NOP();						break;
-	case 0x3a: NOP();						break;
-	case 0x3b: NOP();						break;
-	case 0x3c: MOVBL0(Rm, Rn);				break;
-	case 0x3d: MOVWL0(Rm, Rn);				break;
-	case 0x3e: MOVLL0(Rm, Rn);				break;
-	case 0x3f: MAC_L(Rm, Rn);				break;
-
-
-
+	case 0x30: return SH2OP_NOP;
+	case 0x31: return SH2OP_NOP;
+	case 0x32: return SH2OP_NOP;
+	case 0x33: return SH2OP_NOP;
+	case 0x34: return SH2OP_MOVBS0;
+	case 0x35: return SH2OP_MOVWS0;
+	case 0x36: return SH2OP_MOVLS0;
+	case 0x37: return SH2OP_MULL;
+	case 0x38: return SH2OP_NOP;
+	case 0x39: return SH2OP_NOP;
+	case 0x3a: return SH2OP_NOP;
+	case 0x3b: return SH2OP_NOP;
+	case 0x3c: return SH2OP_MOVBL0;
+	case 0x3d: return SH2OP_MOVWL0;
+	case 0x3e: return SH2OP_MOVLL0;
+	case 0x3f: return SH2OP_MAC_L;
 	}
+
+	return SH2OP_NOP;
 }
 
-SH2_INLINE void op0001(UINT16 opcode)
+static UINT8 sh2_opid0001(UINT16 opcode)
 {
-	MOVLS4(Rm, opcode & 0x0f, Rn);
+	return SH2OP_MOVLS4;
 }
 
-SH2_INLINE void op0010(UINT16 opcode)
-{
-	switch (opcode & 15)
-	{
-	case  0: MOVBS(Rm, Rn); 				break;
-	case  1: MOVWS(Rm, Rn); 				break;
-	case  2: MOVLS(Rm, Rn); 				break;
-	case  3: NOP(); 						break;
-	case  4: MOVBM(Rm, Rn); 				break;
-	case  5: MOVWM(Rm, Rn); 				break;
-	case  6: MOVLM(Rm, Rn); 				break;
-	case  7: DIV0S(Rm, Rn); 				break;
-	case  8: TST(Rm, Rn);					break;
-	case  9: AND(Rm, Rn);					break;
-	case 10: XOR(Rm, Rn);					break;
-	case 11: OR(Rm, Rn);					break;
-	case 12: CMPSTR(Rm, Rn);				break;
-	case 13: XTRCT(Rm, Rn); 				break;
-	case 14: MULU(Rm, Rn);					break;
-	case 15: MULS(Rm, Rn);					break;
-	}
-}
-
-SH2_INLINE void op0011(UINT16 opcode)
+static UINT8 sh2_opid0010(UINT16 opcode)
 {
 	switch (opcode & 15)
 	{
-	case  0: CMPEQ(Rm, Rn); 				break;
-	case  1: NOP(); 						break;
-	case  2: CMPHS(Rm, Rn); 				break;
-	case  3: CMPGE(Rm, Rn); 				break;
-	case  4: DIV1(Rm, Rn);					break;
-	case  5: DMULU(Rm, Rn); 				break;
-	case  6: CMPHI(Rm, Rn); 				break;
-	case  7: CMPGT(Rm, Rn); 				break;
-	case  8: SUB(Rm, Rn);					break;
-	case  9: NOP(); 						break;
-	case 10: SUBC(Rm, Rn);					break;
-	case 11: SUBV(Rm, Rn);					break;
-	case 12: ADD(Rm, Rn);					break;
-	case 13: DMULS(Rm, Rn); 				break;
-	case 14: ADDC(Rm, Rn);					break;
-	case 15: ADDV(Rm, Rn);					break;
+	case  0: return SH2OP_MOVBS;
+	case  1: return SH2OP_MOVWS;
+	case  2: return SH2OP_MOVLS;
+	case  3: return SH2OP_NOP;
+	case  4: return SH2OP_MOVBM;
+	case  5: return SH2OP_MOVWM;
+	case  6: return SH2OP_MOVLM;
+	case  7: return SH2OP_DIV0S;
+	case  8: return SH2OP_TST;
+	case  9: return SH2OP_AND;
+	case 10: return SH2OP_XOR;
+	case 11: return SH2OP_OR;
+	case 12: return SH2OP_CMPSTR;
+	case 13: return SH2OP_XTRCT;
+	case 14: return SH2OP_MULU;
+	case 15: return SH2OP_MULS;
 	}
+
+	return SH2OP_NOP;
 }
 
-SH2_INLINE void op0100(UINT16 opcode)
+static UINT8 sh2_opid0011(UINT16 opcode)
+{
+	switch (opcode & 15)
+	{
+	case  0: return SH2OP_CMPEQ;
+	case  1: return SH2OP_NOP;
+	case  2: return SH2OP_CMPHS;
+	case  3: return SH2OP_CMPGE;
+	case  4: return SH2OP_DIV1;
+	case  5: return SH2OP_DMULU;
+	case  6: return SH2OP_CMPHI;
+	case  7: return SH2OP_CMPGT;
+	case  8: return SH2OP_SUB;
+	case  9: return SH2OP_NOP;
+	case 10: return SH2OP_SUBC;
+	case 11: return SH2OP_SUBV;
+	case 12: return SH2OP_ADD;
+	case 13: return SH2OP_DMULS;
+	case 14: return SH2OP_ADDC;
+	case 15: return SH2OP_ADDV;
+	}
+
+	return SH2OP_NOP;
+}
+
+static UINT8 sh2_opid0100(UINT16 opcode)
 {
 	switch (opcode & 0x3F)
 	{
-	case 0x00: SHLL(Rn);					break;
-	case 0x01: SHLR(Rn);					break;
-	case 0x02: STSMMACH(Rn);				break;
-	case 0x03: STCMSR(Rn);					break;
-	case 0x04: ROTL(Rn);					break;
-	case 0x05: ROTR(Rn);					break;
-	case 0x06: LDSMMACH(Rn);				break;
-	case 0x07: LDCMSR(Rn);					break;
-	case 0x08: SHLL2(Rn);					break;
-	case 0x09: SHLR2(Rn);					break;
-	case 0x0a: LDSMACH(Rn); 				break;
-	case 0x0b: JSR(Rn); 					break;
-	case 0x0c: NOP();						break;
-	case 0x0d: NOP();						break;
-	case 0x0e: LDCSR(Rn);					break;
-	case 0x0f: MAC_W(Rm, Rn);				break;
+	case 0x00: return SH2OP_SHLL;
+	case 0x01: return SH2OP_SHLR;
+	case 0x02: return SH2OP_STSMMACH;
+	case 0x03: return SH2OP_STCMSR;
+	case 0x04: return SH2OP_ROTL;
+	case 0x05: return SH2OP_ROTR;
+	case 0x06: return SH2OP_LDSMMACH;
+	case 0x07: return SH2OP_LDCMSR;
+	case 0x08: return SH2OP_SHLL2;
+	case 0x09: return SH2OP_SHLR2;
+	case 0x0a: return SH2OP_LDSMACH;
+	case 0x0b: return SH2OP_JSR;
+	case 0x0c: return SH2OP_NOP;
+	case 0x0d: return SH2OP_NOP;
+	case 0x0e: return SH2OP_LDCSR;
+	case 0x0f: return SH2OP_MAC_W;
 
-	case 0x10: DT(Rn);						break;
-	case 0x11: CMPPZ(Rn);					break;
-	case 0x12: STSMMACL(Rn);				break;
-	case 0x13: STCMGBR(Rn); 				break;
-	case 0x14: NOP();						break;
-	case 0x15: CMPPL(Rn);					break;
-	case 0x16: LDSMMACL(Rn);				break;
-	case 0x17: LDCMGBR(Rn); 				break;
-	case 0x18: SHLL8(Rn);					break;
-	case 0x19: SHLR8(Rn);					break;
-	case 0x1a: LDSMACL(Rn); 				break;
-	case 0x1b: TAS(Rn); 					break;
-	case 0x1c: NOP();						break;
-	case 0x1d: NOP();						break;
-	case 0x1e: LDCGBR(Rn);					break;
-	case 0x1f: MAC_W(Rm, Rn);				break;
+	case 0x10: return SH2OP_DT;
+	case 0x11: return SH2OP_CMPPZ;
+	case 0x12: return SH2OP_STSMMACL;
+	case 0x13: return SH2OP_STCMGBR;
+	case 0x14: return SH2OP_NOP;
+	case 0x15: return SH2OP_CMPPL;
+	case 0x16: return SH2OP_LDSMMACL;
+	case 0x17: return SH2OP_LDCMGBR;
+	case 0x18: return SH2OP_SHLL8;
+	case 0x19: return SH2OP_SHLR8;
+	case 0x1a: return SH2OP_LDSMACL;
+	case 0x1b: return SH2OP_TAS;
+	case 0x1c: return SH2OP_NOP;
+	case 0x1d: return SH2OP_NOP;
+	case 0x1e: return SH2OP_LDCGBR;
+	case 0x1f: return SH2OP_MAC_W;
 
-	case 0x20: SHAL(Rn);					break;
-	case 0x21: SHAR(Rn);					break;
-	case 0x22: STSMPR(Rn);					break;
-	case 0x23: STCMVBR(Rn); 				break;
-	case 0x24: ROTCL(Rn);					break;
-	case 0x25: ROTCR(Rn);					break;
-	case 0x26: LDSMPR(Rn);					break;
-	case 0x27: LDCMVBR(Rn); 				break;
-	case 0x28: SHLL16(Rn);					break;
-	case 0x29: SHLR16(Rn);					break;
-	case 0x2a: LDSPR(Rn);					break;
-	case 0x2b: JMP(Rn); 					break;
-	case 0x2c: NOP();						break;
-	case 0x2d: NOP();						break;
-	case 0x2e: LDCVBR(Rn);					break;
-	case 0x2f: MAC_W(Rm, Rn);				break;
+	case 0x20: return SH2OP_SHAL;
+	case 0x21: return SH2OP_SHAR;
+	case 0x22: return SH2OP_STSMPR;
+	case 0x23: return SH2OP_STCMVBR;
+	case 0x24: return SH2OP_ROTCL;
+	case 0x25: return SH2OP_ROTCR;
+	case 0x26: return SH2OP_LDSMPR;
+	case 0x27: return SH2OP_LDCMVBR;
+	case 0x28: return SH2OP_SHLL16;
+	case 0x29: return SH2OP_SHLR16;
+	case 0x2a: return SH2OP_LDSPR;
+	case 0x2b: return SH2OP_JMP;
+	case 0x2c: return SH2OP_NOP;
+	case 0x2d: return SH2OP_NOP;
+	case 0x2e: return SH2OP_LDCVBR;
+	case 0x2f: return SH2OP_MAC_W;
 
-	case 0x30: NOP();						break;
-	case 0x31: NOP();						break;
-	case 0x32: NOP();						break;
-	case 0x33: NOP();						break;
-	case 0x34: NOP();						break;
-	case 0x35: NOP();						break;
-	case 0x36: NOP();						break;
-	case 0x37: NOP();						break;
-	case 0x38: NOP();						break;
-	case 0x39: NOP();						break;
-	case 0x3a: NOP();						break;
-	case 0x3b: NOP();						break;
-	case 0x3c: NOP();						break;
-	case 0x3d: NOP();						break;
-	case 0x3e: NOP();						break;
-	case 0x3f: MAC_W(Rm, Rn);				break;
-
+	case 0x30: return SH2OP_NOP;
+	case 0x31: return SH2OP_NOP;
+	case 0x32: return SH2OP_NOP;
+	case 0x33: return SH2OP_NOP;
+	case 0x34: return SH2OP_NOP;
+	case 0x35: return SH2OP_NOP;
+	case 0x36: return SH2OP_NOP;
+	case 0x37: return SH2OP_NOP;
+	case 0x38: return SH2OP_NOP;
+	case 0x39: return SH2OP_NOP;
+	case 0x3a: return SH2OP_NOP;
+	case 0x3b: return SH2OP_NOP;
+	case 0x3c: return SH2OP_NOP;
+	case 0x3d: return SH2OP_NOP;
+	case 0x3e: return SH2OP_NOP;
+	case 0x3f: return SH2OP_MAC_W;
 	}
+
+	return SH2OP_NOP;
 }
 
-SH2_INLINE void op0101(UINT16 opcode)
+static UINT8 sh2_opid0101(UINT16 opcode)
 {
-	MOVLL4(Rm, opcode & 0x0f, Rn);
+	return SH2OP_MOVLL4;
 }
 
-SH2_INLINE void op0110(UINT16 opcode)
+static UINT8 sh2_opid0110(UINT16 opcode)
 {
 	switch (opcode & 15)
 	{
-	case  0: MOVBL(Rm, Rn); 				break;
-	case  1: MOVWL(Rm, Rn); 				break;
-	case  2: MOVLL(Rm, Rn); 				break;
-	case  3: MOV(Rm, Rn);					break;
-	case  4: MOVBP(Rm, Rn); 				break;
-	case  5: MOVWP(Rm, Rn); 				break;
-	case  6: MOVLP(Rm, Rn); 				break;
-	case  7: NOT(Rm, Rn);					break;
-	case  8: SWAPB(Rm, Rn); 				break;
-	case  9: SWAPW(Rm, Rn); 				break;
-	case 10: NEGC(Rm, Rn);					break;
-	case 11: NEG(Rm, Rn);					break;
-	case 12: EXTUB(Rm, Rn); 				break;
-	case 13: EXTUW(Rm, Rn); 				break;
-	case 14: EXTSB(Rm, Rn); 				break;
-	case 15: EXTSW(Rm, Rn); 				break;
+	case  0: return SH2OP_MOVBL;
+	case  1: return SH2OP_MOVWL;
+	case  2: return SH2OP_MOVLL;
+	case  3: return SH2OP_MOV;
+	case  4: return SH2OP_MOVBP;
+	case  5: return SH2OP_MOVWP;
+	case  6: return SH2OP_MOVLP;
+	case  7: return SH2OP_NOT;
+	case  8: return SH2OP_SWAPB;
+	case  9: return SH2OP_SWAPW;
+	case 10: return SH2OP_NEGC;
+	case 11: return SH2OP_NEG;
+	case 12: return SH2OP_EXTUB;
+	case 13: return SH2OP_EXTUW;
+	case 14: return SH2OP_EXTSB;
+	case 15: return SH2OP_EXTSW;
 	}
+
+	return SH2OP_NOP;
 }
 
-SH2_INLINE void op0111(UINT16 opcode)
+static UINT8 sh2_opid0111(UINT16 opcode)
 {
-	ADDI(opcode & 0xff, Rn);
+	return SH2OP_ADDI;
 }
 
-SH2_INLINE void op1000(UINT16 opcode)
+static UINT8 sh2_opid1000(UINT16 opcode)
 {
 	switch ( opcode  & (15<<8) )
 	{
-	case  0 << 8: MOVBS4(opcode & 0x0f, Rm); 	break;
-	case  1 << 8: MOVWS4(opcode & 0x0f, Rm); 	break;
-	case  2<< 8: NOP(); 				break;
-	case  3<< 8: NOP(); 				break;
-	case  4<< 8: MOVBL4(Rm, opcode & 0x0f); 	break;
-	case  5<< 8: MOVWL4(Rm, opcode & 0x0f); 	break;
-	case  6<< 8: NOP(); 				break;
-	case  7<< 8: NOP(); 				break;
-	case  8<< 8: CMPIM(opcode & 0xff);		break;
-	case  9<< 8: BT(opcode & 0xff); 		break;
-	case 10<< 8: NOP(); 				break;
-	case 11<< 8: BF(opcode & 0xff); 		break;
-	case 12<< 8: NOP(); 				break;
-	case 13<< 8: BTS(opcode & 0xff);		break;
-	case 14<< 8: NOP(); 				break;
-	case 15<< 8: BFS(opcode & 0xff);		break;
+	case  0 << 8: return SH2OP_MOVBS4;
+	case  1 << 8: return SH2OP_MOVWS4;
+	case  2<< 8: return SH2OP_NOP;
+	case  3<< 8: return SH2OP_NOP;
+	case  4<< 8: return SH2OP_MOVBL4;
+	case  5<< 8: return SH2OP_MOVWL4;
+	case  6<< 8: return SH2OP_NOP;
+	case  7<< 8: return SH2OP_NOP;
+	case  8<< 8: return SH2OP_CMPIM;
+	case  9<< 8: return SH2OP_BT;
+	case 10<< 8: return SH2OP_NOP;
+	case 11<< 8: return SH2OP_BF;
+	case 12<< 8: return SH2OP_NOP;
+	case 13<< 8: return SH2OP_BTS;
+	case 14<< 8: return SH2OP_NOP;
+	case 15<< 8: return SH2OP_BFS;
 	}
+
+	return SH2OP_NOP;
 }
 
 
-SH2_INLINE void op1001(UINT16 opcode)
+static UINT8 sh2_opid1001(UINT16 opcode)
 {
-	MOVWI(opcode & 0xff, Rn);
+	return SH2OP_MOVWI;
 }
 
-SH2_INLINE void op1010(UINT16 opcode)
+static UINT8 sh2_opid1010(UINT16 opcode)
 {
-	BRA(opcode & 0xfff);
+	return SH2OP_BRA;
 }
 
-SH2_INLINE void op1011(UINT16 opcode)
+static UINT8 sh2_opid1011(UINT16 opcode)
 {
-	BSR(opcode & 0xfff);
+	return SH2OP_BSR;
 }
 
-SH2_INLINE void op1100(UINT16 opcode)
+static UINT8 sh2_opid1100(UINT16 opcode)
 {
 	switch (opcode & (15<<8))
 	{
-	case  0<<8: MOVBSG(opcode & 0xff); 		break;
-	case  1<<8: MOVWSG(opcode & 0xff); 		break;
-	case  2<<8: MOVLSG(opcode & 0xff); 		break;
-	case  3<<8: TRAPA(opcode & 0xff);		break;
-	case  4<<8: MOVBLG(opcode & 0xff); 		break;
-	case  5<<8: MOVWLG(opcode & 0xff); 		break;
-	case  6<<8: MOVLLG(opcode & 0xff); 		break;
-	case  7<<8: MOVA(opcode & 0xff);		break;
-	case  8<<8: TSTI(opcode & 0xff);		break;
-	case  9<<8: ANDI(opcode & 0xff);		break;
-	case 10<<8: XORI(opcode & 0xff);		break;
-	case 11<<8: ORI(opcode & 0xff);			break;
-	case 12<<8: TSTM(opcode & 0xff);		break;
-	case 13<<8: ANDM(opcode & 0xff);		break;
-	case 14<<8: XORM(opcode & 0xff);		break;
-	case 15<<8: ORM(opcode & 0xff);			break;
+	case  0<<8: return SH2OP_MOVBSG;
+	case  1<<8: return SH2OP_MOVWSG;
+	case  2<<8: return SH2OP_MOVLSG;
+	case  3<<8: return SH2OP_TRAPA;
+	case  4<<8: return SH2OP_MOVBLG;
+	case  5<<8: return SH2OP_MOVWLG;
+	case  6<<8: return SH2OP_MOVLLG;
+	case  7<<8: return SH2OP_MOVA;
+	case  8<<8: return SH2OP_TSTI;
+	case  9<<8: return SH2OP_ANDI;
+	case 10<<8: return SH2OP_XORI;
+	case 11<<8: return SH2OP_ORI;
+	case 12<<8: return SH2OP_TSTM;
+	case 13<<8: return SH2OP_ANDM;
+	case 14<<8: return SH2OP_XORM;
+	case 15<<8: return SH2OP_ORM;
 	}
+
+	return SH2OP_NOP;
 }
 
-SH2_INLINE void op1101(UINT16 opcode)
+static UINT8 sh2_opid1101(UINT16 opcode)
 {
-	MOVLI(opcode & 0xff, Rn);
+	return SH2OP_MOVLI;
 }
 
-SH2_INLINE void op1110(UINT16 opcode)
+static UINT8 sh2_opid1110(UINT16 opcode)
 {
-	MOVI(opcode & 0xff, Rn);
+	return SH2OP_MOVI;
 }
 
-SH2_INLINE void op1111(UINT16 /*opcode*/)
+static UINT8 sh2_opid1111(UINT16 opcode)
 {
-	NOP();
+	return SH2OP_NOP;
+}
+
+static UINT8 sh2_opid(UINT16 opcode)
+{
+	switch (opcode >> 12)
+	{
+		case 0x0: return sh2_opid0000(opcode);
+		case 0x1: return sh2_opid0001(opcode);
+		case 0x2: return sh2_opid0010(opcode);
+		case 0x3: return sh2_opid0011(opcode);
+		case 0x4: return sh2_opid0100(opcode);
+		case 0x5: return sh2_opid0101(opcode);
+		case 0x6: return sh2_opid0110(opcode);
+		case 0x7: return sh2_opid0111(opcode);
+		case 0x8: return sh2_opid1000(opcode);
+		case 0x9: return sh2_opid1001(opcode);
+		case 0xa: return sh2_opid1010(opcode);
+		case 0xb: return sh2_opid1011(opcode);
+		case 0xc: return sh2_opid1100(opcode);
+		case 0xd: return sh2_opid1101(opcode);
+		case 0xe: return sh2_opid1110(opcode);
+		case 0xf: return sh2_opid1111(opcode);
+	}
+
+	return SH2OP_NOP;
+}
+
+// opcode -> instruction, the dispatch is a single switch in Sh2Run()
+static UINT8 sh2_optab[0x10000];
+
+static void sh2_build_optab()
+{
+	for (INT32 i = 0; i < 0x10000; i++)
+		sh2_optab[i] = sh2_opid(i);
 }
 
 #endif	// USE_JUMPTABLE
@@ -2908,7 +3178,7 @@ static void sh2_recalc_irq(void)
 		level = (sh2->m[0x38] >> 8) & 15;
 		if(level > irq) {
 			irq = level;
-			vector = (sh2->m[0x68] >> 24) & 0x7f;
+			vector = sh2->m[0x68] & 0x7f; // VCRDMA0: vector in bits 6-0
 		}
 	}
 
@@ -2916,14 +3186,83 @@ static void sh2_recalc_irq(void)
 		level = (sh2->m[0x38] >> 8) & 15;
 		if(level > irq) {
 			irq = level;
-			vector = (sh2->m[0x6a] >> 24) & 0x7f;
+			vector = sh2->m[0x6a] & 0x7f; // VCRDMA1
 		}
 	}
 
 
+	// watchdog interval timer
+	if ((pSh2Ext->wdt_csr & 0xc0) == 0x80) {
+		level = (sh2->m[0x38] >> 4) & 15;
+		if(level > irq) {
+			irq = level;
+			vector = (sh2->m[0x39] >> 24) & 0x7f;
+		}
+	}
+
+	// serial interface: receive full, transmit empty, transmit end
+	if (sci_link) {
+		UINT32 scr = (sh2->m[0] >> 8) & pSh2Ext->sci_ssr;
+		level = (sh2->m[0x18] >> 28) & 15;
+		if (level > irq && (scr & 0xc4)) {
+			irq = level;
+			if (scr & 0x40)
+				vector = sh2->m[0x18] & 0x7f;			// VCRA: SRXV
+			else if (scr & 0x80)
+				vector = (sh2->m[0x19] >> 24) & 0x7f;	// VCRB: STXV
+			else
+				vector = (sh2->m[0x19] >> 16) & 0x7f;	// VCRB: STEV
+		}
+	}
+
 	sh2->internal_irq_level = irq;
 	sh2->internal_irq_vector = vector;
 	sh2->test_irq = 1;
+	pSh2Ext->slow = 1;
+}
+
+// transmit the byte in TDR to the other cpu, if its receiver is enabled
+static void sh2_sci_transmit()
+{
+	int other = (pSh2Ext - Sh2Ext) ^ 1;
+	if (other >= nSh2Count) return;
+
+	SH2EXT *ext = Sh2Ext + other;
+	if (~ext->sh2.m[0] & 0x1000) return; // RE
+
+	ext->sci_rdr = sh2->m[0] & 0xff;
+	ext->sci_ssr |= (ext->sci_ssr & 0x40) ? 0x20 : 0x40; // RDRF, or ORER when not read yet
+	pSh2Ext->sci_ssr |= 0x80; // TDRE
+	sh2_recalc_irq();
+
+	SH2EXT *cur = pSh2Ext;
+	pSh2Ext = ext;
+	sh2 = &ext->sh2;
+	sh2_recalc_irq();
+	pSh2Ext = cur;
+	sh2 = &cur->sh2;
+}
+
+static void sh2_wdt_sync()
+{
+	static const UINT32 wdt_div[8] = { 2, 64, 128, 256, 512, 1024, 4096, 8192 };
+	UINT32 now = sh2_GetTotalCycles();
+
+	if (~pSh2Ext->wdt_csr & 0x20) {
+		pSh2Ext->wdt_base = now;
+		return;
+	}
+
+	UINT32 div = wdt_div[pSh2Ext->wdt_csr & 7];
+	UINT32 ticks = (now - pSh2Ext->wdt_base) / div;
+	pSh2Ext->wdt_base += ticks * div;
+
+	if (pSh2Ext->wdt_cnt + ticks > 0xff) {
+		pSh2Ext->wdt_csr |= 0x80;
+		sh2_recalc_irq();
+	}
+	pSh2Ext->wdt_cnt = (pSh2Ext->wdt_cnt + ticks) & 0xff;
+	pSh2Ext->wdt_next = pSh2Ext->wdt_base + (0x100 - pSh2Ext->wdt_cnt) * div;
 }
 
 static void sh2_timer_callback()
@@ -2957,147 +3296,55 @@ static void sh2_timer_callback()
 
 static void sh2_dmac_callback(int dma)
 {
-//	cpuintrf_push_context(cpunum);
-
-//	LOG(("SH2.%d: DMA %d complete\n", cpunum, dma));
-	//bprintf(0, _T("SH2: DMA %d complete at %d\n"), dma, sh2_GetTotalCycles());
-
 	sh2->m[0x63+4*dma] |= 2;
-	sh2->dma_timer_active[dma] = 0;
 	sh2_recalc_irq();
-	
-//	cpuintrf_pop_context();
 }
 
-static void sh2_dmac_check(int dma)
+// one unit transfer, used by the dreq mode (auto request: every step, external request: per DREQ)
+static void sh2_dmac_unit(int dma)
 {
-	if(sh2->m[0x63+4*dma] & sh2->m[0x6c] & 1)
+	UINT32 chcr = sh2->m[0x63+4*dma];
+	UINT32 src = sh2->m[0x60+4*dma];
+	UINT32 dst = sh2->m[0x61+4*dma];
+	INT32 ts = (chcr >> 10) & 3;
+	INT32 sm = (chcr >> 12) & 3;
+	INT32 dm = (chcr >> 14) & 3;
+
+	switch (ts)
 	{
-		if(!sh2->dma_timer_active[dma] && !(sh2->m[0x63+4*dma] & 2))
-		{
-			int incs, incd, size;
-			UINT32 src, dst, count;
-			incd = (sh2->m[0x63+4*dma] >> 14) & 3;
-			incs = (sh2->m[0x63+4*dma] >> 12) & 3;
-			size = (sh2->m[0x63+4*dma] >> 10) & 3;
-			if(incd == 3 || incs == 3)
-			{
-//				logerror("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n", incd, incs, size, sh2->m[0x63+4*dma]);
-				//bprintf(0, _T("SH2: DMA: bad increment values (%d, %d, %d, %04x)\n"), incd, incs, size, sh2->m[0x63+4*dma]);
-				return;
-			}
-			src   = sh2->m[0x60+4*dma];
-			dst   = sh2->m[0x61+4*dma];
-			count = sh2->m[0x62+4*dma];
-			if(!count)
-				count = 0x1000000;
-
-//			LOG(("SH2: DMA %d start %x, %x, %x, %04x, %d, %d, %d\n", dma, src, dst, count, sh2->m[0x63+4*dma], incs, incd, size));
-			//bprintf(1, _T("DMA %d start %08x, %08x, %x, %04x, %d, %d, %d : %d cys from %d\n"), dma, src, dst, count, sh2->m[0x63+4*dma], incs, incd, size, 2*count+1, Sh2GetTotalCycles());
-
-			sh2->dma_timer_active[dma] = 1;
-			//timer_adjust(sh2->dma_timer[dma], ATTOTIME_IN_CYCLES(2*count+1, sh2->cpu_number), (sh2->cpu_number<<1)|dma, attotime_zero);
-			sh2->dma_timer_cycles[dma] = 2 * count + 1;
-			sh2->dma_timer_base[dma] = sh2_GetTotalCycles();
-			
-			src &= AM;
-			dst &= AM;
-
-			switch(size)
-			{
-			case 0:
-				for(;count > 0; count --)
-				{
-					if(incs == 2)
-						src --;
-					if(incd == 2)
-						dst --;
-					//program_write_byte_32be(dst, program_read_byte_32be(src));
-					WB(dst, RB(src));
-					if(incs == 1)
-						src ++;
-					if(incd == 1)
-						dst ++;
-				}
-				break;
-			case 1:
-				src &= ~1;
-				dst &= ~1;
-				for(;count > 0; count --)
-				{
-					if(incs == 2)
-						src -= 2;
-					if(incd == 2)
-						dst -= 2;
-					//program_write_word_32be(dst, program_read_word_32be(src));
-					WW(dst, RW(src));
-					if(incs == 1)
-						src += 2;
-					if(incd == 1)
-						dst += 2;
-				}
-				break;
-			case 2:
-				src &= ~3;
-				dst &= ~3;
-				for(;count > 0; count --)
-				{
-					if(incs == 2)
-						src -= 4;
-					if(incd == 2)
-						dst -= 4;
-						
-					//program_write_dword_32be(dst, program_read_dword_32be(src));
-					WL(dst, RL(src));
-					
-					if(incs == 1)
-						src += 4;
-					if(incd == 1)
-						dst += 4;
-
-				}
-				break;
-			case 3:
-				src &= ~3;
-				dst &= ~3;
-				count &= ~3;
-				for(;count > 0; count -= 4)
-				{
-					if(incd == 2)
-						dst -= 16;
-					WL(dst, RL(src));
-					WL(dst+4, RL(src+4));
-					WL(dst+8, RL(src+8));
-					WL(dst+12, RL(src+12));
-					//program_write_dword_32be(dst, program_read_dword_32be(src));
-					//program_write_dword_32be(dst+4, program_read_dword_32be(src+4));
-					//program_write_dword_32be(dst+8, program_read_dword_32be(src+8));
-					//program_write_dword_32be(dst+12, program_read_dword_32be(src+12));
-					src += 16;
-					if(incd == 1)
-						dst += 16;
-				}
-				break;
-			}
-		}
+		case 0: WB(dst & AM, RB(src & AM)); break;
+		case 1: WW(dst & AM, RW(src & AM)); break;
+		case 2: WL(dst & AM, RL(src & AM)); break;
+		case 3:
+			WL((dst +  0) & AM, RL((src +  0) & AM));
+			WL((dst +  4) & AM, RL((src +  4) & AM));
+			WL((dst +  8) & AM, RL((src +  8) & AM));
+			WL((dst + 12) & AM, RL((src + 12) & AM));
+			src += 16;
+			sh2->m[0x62+4*dma] = (sh2->m[0x62+4*dma] - 3) & 0xffffff;
+			break;
 	}
-	else
-	{
-		if(sh2->dma_timer_active[dma])
-		{
-//			logerror("SH2: DMA %d cancelled in-flight", dma);
-			//bprintf(0, _T("SH2: DMA %d cancelled in-flight"), dma);
-			//timer_adjust(sh2->dma_timer[dma], attotime_never, 0, attotime_zero);
-			sh2->dma_timer_active[dma] = 0;
 
-		}
+	static const UINT32 ssize[4] = { 1, 2, 4, 0 };
+	static const UINT32 dsize[4] = { 1, 2, 4, 16 };
+	if (sm == 1) src += ssize[ts];
+	if (sm == 2) src -= ssize[ts];
+	if (dm == 1) dst += dsize[ts];
+	if (dm == 2) dst -= dsize[ts];
+
+	sh2->m[0x60+4*dma] = src;
+	sh2->m[0x61+4*dma] = dst;
+	sh2->m[0x62+4*dma] = (sh2->m[0x62+4*dma] - 1) & 0xffffff;
+
+	if (sh2->m[0x62+4*dma] == 0) {
+		sh2_dmac_callback(dma); // sets TE, raises the irq if enabled
 	}
 }
-
 
 static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 {
 	UINT32 old = sh2->m[offset];
+	pSh2Ext->slow = 1;
 	COMBINE_DATA(sh2->m+offset);
 
 	//  if(offset != 0x20)
@@ -3105,6 +3352,24 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 
 	switch( offset )
 	{
+		// Serial interface
+	case 0x00: // SMR, BRR, SCR, TDR
+		if (sci_link && (~mem_mask & 0x0000ff00)) {
+			if ((old & 0x2000) && (~sh2->m[0] & 0x2000)) pSh2Ext->sci_ssr |= 0x80; // TE cleared: TDRE set
+			sh2_recalc_irq();
+		}
+		break;
+
+	case 0x01: // SSR, RDR
+		if (sci_link && (~mem_mask & 0xff000000)) {
+			UINT8 ssr = pSh2Ext->sci_ssr;
+			UINT8 d = data >> 24;
+			pSh2Ext->sci_ssr = (ssr & 0x06) | (d & 0x01) | (ssr & d & 0xf8); // flags can only be cleared
+			if ((ssr & 0x80) && (~pSh2Ext->sci_ssr & 0x80)) sh2_sci_transmit();
+			sh2_recalc_irq();
+		}
+		break;
+
 		// Timers
 	case 0x04: // TIER, FTCSR, FRC
 		if((mem_mask & 0x00ffffff) != 0xffffff)
@@ -3142,6 +3407,20 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 
 		// Watchdog
 	case 0x20: // WTCNT, RSTCSR
+		if ((mem_mask & 0xffff0000) == 0) { // word writes with a key
+			UINT32 w = (data >> 16) & 0xffff;
+			sh2_wdt_sync();
+			if ((w >> 8) == 0xa5) {
+				pSh2Ext->wdt_csr = (pSh2Ext->wdt_csr & w & 0x80) | (w & 0x67) | 0x18; // OVF can only be cleared
+				pSh2Ext->wdt_base = sh2_GetTotalCycles();
+				sh2_wdt_sync();
+				sh2_recalc_irq();
+			} else if ((w >> 8) == 0x5a) {
+				pSh2Ext->wdt_cnt = w & 0xff;
+				pSh2Ext->wdt_base = sh2_GetTotalCycles();
+				sh2_wdt_sync();
+			}
+		}
 		break;
 
 		// Standby and cache
@@ -3225,7 +3504,6 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x63: // CHCR0
 		sh2->m[0x63] = (sh2->m[0x63] & ~2) | (old & sh2->m[0x63] & 2);
-		sh2_dmac_check(0);
 		break;
 	case 0x64: // SAR1
 	case 0x65: // DAR1
@@ -3235,7 +3513,6 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x67: // CHCR1
 		sh2->m[0x67] = (sh2->m[0x67] & ~2) | (old & sh2->m[0x67] & 2);
-		sh2_dmac_check(1);
 		break;
 	case 0x68: // VCRDMA0
 	case 0x6a: // VCRDMA1
@@ -3243,8 +3520,6 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		break;
 	case 0x6c: // DMAOR
 		sh2->m[0x6c] = (sh2->m[0x6c] & ~6) | (old & sh2->m[0x6c] & 6);
-		sh2_dmac_check(0);
-		sh2_dmac_check(1);
 		break;
 
 		// Bus controller
@@ -3265,11 +3540,16 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 
 static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 {
+	pSh2Ext->slow = 1;
 	//  logerror("sh2_internal_r:  Read %08x (%x) @ %08x\n", 0xfffffe00+offset*4, offset, mem_mask);
 	//bprintf(0, _T("sh2_internal_r:  Read %08x (%x) @ %08x\n"), 0xfffffe00+offset*4, offset, mem_mask);
 	
 	switch( offset )
 	{
+	case 0x01: // SSR, RDR
+		if (sci_link) return (pSh2Ext->sci_ssr << 24) | (pSh2Ext->sci_rdr << 16) | (sh2->m[1] & 0xffff);
+		break;
+
 	case 0x04: // TIER, FTCSR, FRC
 		sh2_timer_resync();
 		return (sh2->m[4] & 0xffff0000) | sh2->frc;
@@ -3295,11 +3575,205 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 
 	case 0x46: // dvdnth mirror
 		return sh2->m[0x44];
+
+	case 0x20: // WTCSR, WTCNT, RSTCSR
+		sh2_wdt_sync();
+		return (pSh2Ext->wdt_csr << 24) | (pSh2Ext->wdt_cnt << 16) | 0x1f;
 	}
 	return sh2->m[offset];
 }
 
 // -------------------------------------------------------
+
+static inline int sh2_is_branch(UINT16 op)
+{
+	switch (op & 0xf000) {
+		case 0x0000: return (op & 0xf0df) == 0x0003 || (op & 0xffdf) == 0x000b; // bsrf, braf, rts, rte
+		case 0x4000: return (op & 0xf0df) == 0x400b;                           // jsr, jmp
+		case 0x8000: return (op & 0xf900) == 0x8900;                           // bt, bf, bt/s, bf/s
+		case 0xa000:
+		case 0xb000: return 1;                                                  // bra, bsr
+		case 0xc000: return (op & 0xff00) == 0xc300;                           // trapa
+	}
+	return 0;
+}
+
+// while suspended (Sh2BurnUntilInt) nothing happens until an internal timer (frt, wdt) fires:
+// returns the number of empty steps before the next event or the end of the run
+static INT32 sh2_suspend_skip()
+{
+	INT32 eat = sh2->sh2_eat_cycles;
+	if (eat <= 0) return 0;
+
+	// dma transfers go on while the cpu is suspended
+	if ((sh2->m[0x6c] & 7) == 1 && ((sh2->m[0x63] & 3) == 1 || (sh2->m[0x67] & 3) == 1)) return 0;
+
+	INT32 steps = (sh2->sh2_icount + eat - 1) / eat;
+	UINT32 now = sh2_GetTotalCycles();
+
+	// checked before the step's cycles are counted
+	if (pSh2Ext->wdt_csr & 0x20) {
+		INT32 d = (INT32)(pSh2Ext->wdt_next - now);
+		if (d <= 0) return 0;
+		INT32 k = (d + eat - 1) / eat;
+		if (k < steps) steps = k;
+	}
+
+	// checked after the step's cycles are counted
+	if (sh2->timer_active) {
+		UINT32 e = now - sh2->timer_base;
+		if (e >= sh2->timer_cycles) return 0;
+		UINT32 k = (sh2->timer_cycles - e + eat - 1) / eat - 1;
+		if (k < (UINT32)steps) steps = k;
+	}
+
+	return steps;
+}
+
+// checks that a loop running from pc to last never writes to memory and never leaves this range
+static INT32 sh2_idle_loop_ok(UINT32 pc, UINT32 last)
+{
+	// code fetched through a handler can't be checked
+	if ((uintptr_t)pSh2Ext->MemMap[((pc & AM) >> SH2_SHIFT) + SH2_WADD * 2] < SH2_MAXHANDLER) return 0;
+	if ((uintptr_t)pSh2Ext->MemMap[((last & AM) >> SH2_SHIFT) + SH2_WADD * 2] < SH2_MAXHANDLER) return 0;
+
+	for (UINT32 a = pc; a <= last; a += 2) {
+		UINT16 op = OPRW(a & AM);
+		INT32 bad = 0, disp = 0, branch = 0;
+
+		switch (op >> 12) {
+			case 0x0: bad = ((op & 0x0f) >= 3 && (op & 0x0f) <= 6) || (op & 0xff) == 0x0b || (op & 0xff) == 0x1b || (op & 0xff) == 0x2b; break; // stores, bsrf, braf, rts, sleep, rte
+			case 0x1: bad = 1; break;
+			case 0x2: bad = (op & 0x0f) <= 6; break;
+			case 0x4: switch (op & 0xff) { case 0x02: case 0x03: case 0x12: case 0x13: case 0x22: case 0x23: case 0x0b: case 0x1b: case 0x2b: bad = 1; } break; // sts.l/stc.l @-rn, jsr, tas.b, jmp
+			case 0x8:
+				switch ((op >> 8) & 0x0f) {
+					case 0x0: case 0x1: bad = 1; break;
+					case 0x9: case 0xb: case 0xd: case 0xf: branch = 1; disp = (INT8)(op & 0xff); break;
+				}
+				break;
+			case 0xa: branch = 1; disp = ((INT32)((UINT32)op << 20)) >> 20; break;
+			case 0xb: bad = 1; break;
+			case 0xc: bad = ((op >> 8) & 0x0f) <= 3 || ((op >> 8) & 0x0f) >= 0x0d; break;
+			case 0xf: bad = 1; break;
+		}
+
+		if (branch) {
+			UINT32 t = a + 4 + disp * 2;
+			if (t < pc || t > last) bad = 1;
+		}
+		if (bad) return 0;
+	}
+
+	return 1;
+}
+
+static void sh2_idle_store(SH2IDLE *l)
+{
+	memcpy(l->regs, sh2->r, 16 * sizeof(UINT32));
+	l->regs[16] = sh2->sr; l->regs[17] = sh2->gbr; l->regs[18] = sh2->vbr; l->regs[19] = sh2->pr;
+	l->regs[20] = sh2->mach; l->regs[21] = sh2->macl;
+	l->pc = sh2->ppc;
+	l->gen = pSh2Ext->idle_gen;
+	l->touched = sh2_mem_touched;
+	l->icount = sh2->sh2_icount;
+	l->total = sh2->sh2_total_cycles;
+}
+
+// called after a short backward branch, the loop runs from target to last. the state is
+// compared with the one saved at the previous iteration: when the loop read only direct mapped
+// memory, wrote nothing, wasn't left and every register is unchanged, the following iterations
+// do exactly the same until an interrupt, a timer or the end of the run (other cpus and
+// devices don't run meanwhile). those are skipped, the last ones before the event are run.
+#if defined(__GNUC__)
+__attribute__((noinline))
+#endif
+static void sh2_idle_check(UINT32 last)
+{
+	SH2EXT *e = pSh2Ext;
+	INT32 slot = SH2_IDLE_SLOT(sh2->ppc);
+	SH2IDLE *l = &e->idle[slot];
+	UINT32 target = sh2->pc;
+
+	// dma (memory changed by something else than the cpu) or interrupt pending
+	if (sh2->test_irq || (((sh2->m[0x6c] & 7) == 1) && ((sh2->m[0x63] & 3) == 1 || (sh2->m[0x67] & 3) == 1))) {
+		l->gen = e->idle_gen - 1;
+		e->idle_wait[slot] = 32;
+		return;
+	}
+
+	if (l->pc != sh2->ppc || l->gen != e->idle_gen) {
+		sh2_idle_store(l);
+		e->idle_wait[slot] = 0;
+		return;
+	}
+
+	if (l->touched != sh2_mem_touched || memcmp(sh2->r, l->regs, 16 * sizeof(UINT32)) != 0 ||
+		l->regs[16] != sh2->sr || l->regs[17] != sh2->gbr || l->regs[18] != sh2->vbr || l->regs[19] != sh2->pr ||
+		l->regs[20] != sh2->mach || l->regs[21] != sh2->macl || l->icount <= sh2->sh2_icount || !sh2_idle_loop_ok(target, last)) {
+		// not an idle loop, the next checks are delayed
+		l->gen = e->idle_gen - 1;
+		e->idle_wait[slot] = 256;
+		return;
+	}
+
+	INT32 di = l->icount - sh2->sh2_icount;
+	UINT32 dt = sh2->sh2_total_cycles - l->total;
+	INT32 k = (sh2->sh2_icount - 1) / di - 1;
+	UINT32 now = sh2_GetTotalCycles();
+
+	if (e->wdt_csr & 0x20) {
+		INT32 d = (INT32)(e->wdt_next - now);
+		INT32 kw = (d - 1) / di - 1;
+		if (kw < k) k = kw;
+	}
+
+	if (sh2->timer_active) {
+		UINT32 el = now - sh2->timer_base;
+		INT32 kt = (el >= sh2->timer_cycles) ? -1 : (INT32)((sh2->timer_cycles - el - 1) / di) - 1;
+		if (kt < k) k = kt;
+	}
+
+	if (k > 0) {
+		sh2->sh2_icount -= k * di;
+		sh2->sh2_total_cycles += k * dt;
+	}
+
+	sh2_idle_store(l);
+	e->idle_wait[slot] = 0;
+}
+
+// the per instruction checks (interrupts, watchdog, dma, frt) are only needed when
+// something happens (slow) or when the next timer event can be reached (event_icount)
+static void sh2_update_events()
+{
+	pSh2Ext->slow = pSh2Ext->suspend || sh2->test_irq || sh2->end_run;
+
+	if ((sh2->m[0x6c] & 7) == 1) {
+		for (INT32 c = 0; c < 2; c++) {
+			UINT32 chcr = sh2->m[0x63+4*c];
+			if ((chcr & 3) == 1 && ((chcr & 0x200) || pSh2Ext->dreq[c] || pSh2Ext->dreq_pulse[c])) pSh2Ext->slow = 1; // a dma unit runs at the next step
+		}
+	}
+
+	UINT32 now = sh2_GetTotalCycles();
+	INT64 r = 0x7fffffff;
+
+	if (pSh2Ext->wdt_csr & 0x20) {
+		INT64 d = (INT32)(pSh2Ext->wdt_next - now);
+		if (d < r) r = d;
+	}
+
+	if (sh2->timer_active) {
+		UINT32 el = now - sh2->timer_base;
+		INT64 d = (el >= sh2->timer_cycles) ? 0 : (INT64)(sh2->timer_cycles - el);
+		if (d < r) r = d;
+	}
+
+	INT64 ev = (INT64)sh2->sh2_icount - r;
+	if (ev < -0x40000000) ev = -0x40000000;
+	pSh2Ext->event_icount = (INT32)ev;
+}
 
 int Sh2Run(int cycles)
 {
@@ -3311,21 +3785,30 @@ int Sh2Run(int cycles)
 	sh2->sh2_cycles_to_run = cycles;
 	sh2->end_run = 0;
 
-	do
-	{
-		if ( pSh2Ext->suspend && cps3speedhack ) {
-			sh2->sh2_total_cycles += sh2->sh2_icount;
-			sh2->sh2_icount = 0;
-			break;
-		}
+	pSh2Ext->idle_gen++;
+	pSh2Ext->slow = 1;
 
-		if (pSh2Ext->suspend == 0) {
+	for (;;)
+	{
+		if (pSh2Ext->slow && pSh2Ext->suspend) {
+			if (!sh2->test_irq) {
+				INT32 skip = sh2_suspend_skip();
+				if (skip > 0) {
+					sh2->sh2_total_cycles += skip;
+					sh2->sh2_icount -= skip * sh2->sh2_eat_cycles;
+					if (sh2->sh2_icount > 0 && !sh2->end_run) continue;
+					break;
+				}
+			}
+		} else {
 			UINT16 opcode;
 
+			int in_slot = 0;
 			if (sh2->delay) {
 				opcode = cpu_readop16(sh2->delay & AM);
 				change_pc(sh2->pc & AM);
 				sh2->delay = 0;
+				in_slot = 1;
 			} else {
 				opcode = cpu_readop16(sh2->pc & AM);
 				sh2->pc += 2;
@@ -3333,24 +3816,167 @@ int Sh2Run(int cycles)
 
 			sh2->ppc = sh2->pc;
 
-			switch (opcode & ( 15 << 12))
+			if (in_slot && sh2_is_branch(opcode)) {
+				// the delayed branch target is saved, the handler returns there
+				sh2->r[15] -= 4;
+				WL(sh2->r[15], sh2->sr);
+				sh2->r[15] -= 4;
+				WL(sh2->r[15], sh2->pc);
+				sh2->pc = RL(sh2->vbr + 6 * 4);
+				change_pc(sh2->pc & AM);
+			}
+			else
+			switch (sh2_optab[opcode])
 			{
-				case  0<<12: op0000(opcode); break;
-				case  1<<12: op0001(opcode); break;
-				case  2<<12: op0010(opcode); break;
-				case  3<<12: op0011(opcode); break;
-				case  4<<12: op0100(opcode); break;
-				case  5<<12: op0101(opcode); break;
-				case  6<<12: op0110(opcode); break;
-				case  7<<12: op0111(opcode); break;
-				case  8<<12: op1000(opcode); break;
-				case  9<<12: op1001(opcode); break;
-				case 10<<12: op1010(opcode); break;
-				case 11<<12: op1011(opcode); break;
-				case 12<<12: op1100(opcode); break;
-				case 13<<12: op1101(opcode); break;
-				case 14<<12: op1110(opcode); break;
-			default: op1111(opcode); break;
+				case SH2OP_NOP: NOP(); break;
+				case SH2OP_STCSR: STCSR(Rn); break;
+				case SH2OP_BSRF: BSRF(Rn); break;
+				case SH2OP_MOVBS0: MOVBS0(Rm, Rn); break;
+				case SH2OP_MOVWS0: MOVWS0(Rm, Rn); break;
+				case SH2OP_MOVLS0: MOVLS0(Rm, Rn); break;
+				case SH2OP_MULL: MULL(Rm, Rn); break;
+				case SH2OP_CLRT: CLRT(); break;
+				case SH2OP_STSMACH: STSMACH(Rn); break;
+				case SH2OP_RTS: RTS(); break;
+				case SH2OP_MOVBL0: MOVBL0(Rm, Rn); break;
+				case SH2OP_MOVWL0: MOVWL0(Rm, Rn); break;
+				case SH2OP_MOVLL0: MOVLL0(Rm, Rn); break;
+				case SH2OP_MAC_L: MAC_L(Rm, Rn); break;
+				case SH2OP_STCGBR: STCGBR(Rn); break;
+				case SH2OP_SETT: SETT(); break;
+				case SH2OP_DIV0U: DIV0U(); break;
+				case SH2OP_STSMACL: STSMACL(Rn); break;
+				case SH2OP_SLEEP: SLEEP(); break;
+				case SH2OP_STCVBR: STCVBR(Rn); break;
+				case SH2OP_BRAF: BRAF(Rn); break;
+				case SH2OP_CLRMAC: CLRMAC(); break;
+				case SH2OP_MOVT: MOVT(Rn); break;
+				case SH2OP_STSPR: STSPR(Rn); break;
+				case SH2OP_RTE: RTE(); break;
+				case SH2OP_MOVLS4: MOVLS4(Rm, opcode & 0x0f, Rn); break;
+				case SH2OP_MOVBS: MOVBS(Rm, Rn); break;
+				case SH2OP_MOVWS: MOVWS(Rm, Rn); break;
+				case SH2OP_MOVLS: MOVLS(Rm, Rn); break;
+				case SH2OP_MOVBM: MOVBM(Rm, Rn); break;
+				case SH2OP_MOVWM: MOVWM(Rm, Rn); break;
+				case SH2OP_MOVLM: MOVLM(Rm, Rn); break;
+				case SH2OP_DIV0S: DIV0S(Rm, Rn); break;
+				case SH2OP_TST: TST(Rm, Rn); break;
+				case SH2OP_AND: AND(Rm, Rn); break;
+				case SH2OP_XOR: XOR(Rm, Rn); break;
+				case SH2OP_OR: OR(Rm, Rn); break;
+				case SH2OP_CMPSTR: CMPSTR(Rm, Rn); break;
+				case SH2OP_XTRCT: XTRCT(Rm, Rn); break;
+				case SH2OP_MULU: MULU(Rm, Rn); break;
+				case SH2OP_MULS: MULS(Rm, Rn); break;
+				case SH2OP_CMPEQ: CMPEQ(Rm, Rn); break;
+				case SH2OP_CMPHS: CMPHS(Rm, Rn); break;
+				case SH2OP_CMPGE: CMPGE(Rm, Rn); break;
+				case SH2OP_DIV1: DIV1(Rm, Rn); break;
+				case SH2OP_DMULU: DMULU(Rm, Rn); break;
+				case SH2OP_CMPHI: CMPHI(Rm, Rn); break;
+				case SH2OP_CMPGT: CMPGT(Rm, Rn); break;
+				case SH2OP_SUB: SUB(Rm, Rn); break;
+				case SH2OP_SUBC: SUBC(Rm, Rn); break;
+				case SH2OP_SUBV: SUBV(Rm, Rn); break;
+				case SH2OP_ADD: ADD(Rm, Rn); break;
+				case SH2OP_DMULS: DMULS(Rm, Rn); break;
+				case SH2OP_ADDC: ADDC(Rm, Rn); break;
+				case SH2OP_ADDV: ADDV(Rm, Rn); break;
+				case SH2OP_SHLL: SHLL(Rn); break;
+				case SH2OP_SHLR: SHLR(Rn); break;
+				case SH2OP_STSMMACH: STSMMACH(Rn); break;
+				case SH2OP_STCMSR: STCMSR(Rn); break;
+				case SH2OP_ROTL: ROTL(Rn); break;
+				case SH2OP_ROTR: ROTR(Rn); break;
+				case SH2OP_LDSMMACH: LDSMMACH(Rn); break;
+				case SH2OP_LDCMSR: LDCMSR(Rn); break;
+				case SH2OP_SHLL2: SHLL2(Rn); break;
+				case SH2OP_SHLR2: SHLR2(Rn); break;
+				case SH2OP_LDSMACH: LDSMACH(Rn); break;
+				case SH2OP_JSR: JSR(Rn); break;
+				case SH2OP_LDCSR: LDCSR(Rn); break;
+				case SH2OP_MAC_W: MAC_W(Rm, Rn); break;
+				case SH2OP_DT: DT(Rn); break;
+				case SH2OP_CMPPZ: CMPPZ(Rn); break;
+				case SH2OP_STSMMACL: STSMMACL(Rn); break;
+				case SH2OP_STCMGBR: STCMGBR(Rn); break;
+				case SH2OP_CMPPL: CMPPL(Rn); break;
+				case SH2OP_LDSMMACL: LDSMMACL(Rn); break;
+				case SH2OP_LDCMGBR: LDCMGBR(Rn); break;
+				case SH2OP_SHLL8: SHLL8(Rn); break;
+				case SH2OP_SHLR8: SHLR8(Rn); break;
+				case SH2OP_LDSMACL: LDSMACL(Rn); break;
+				case SH2OP_TAS: TAS(Rn); break;
+				case SH2OP_LDCGBR: LDCGBR(Rn); break;
+				case SH2OP_SHAL: SHAL(Rn); break;
+				case SH2OP_SHAR: SHAR(Rn); break;
+				case SH2OP_STSMPR: STSMPR(Rn); break;
+				case SH2OP_STCMVBR: STCMVBR(Rn); break;
+				case SH2OP_ROTCL: ROTCL(Rn); break;
+				case SH2OP_ROTCR: ROTCR(Rn); break;
+				case SH2OP_LDSMPR: LDSMPR(Rn); break;
+				case SH2OP_LDCMVBR: LDCMVBR(Rn); break;
+				case SH2OP_SHLL16: SHLL16(Rn); break;
+				case SH2OP_SHLR16: SHLR16(Rn); break;
+				case SH2OP_LDSPR: LDSPR(Rn); break;
+				case SH2OP_JMP: JMP(Rn); break;
+				case SH2OP_LDCVBR: LDCVBR(Rn); break;
+				case SH2OP_MOVLL4: MOVLL4(Rm, opcode & 0x0f, Rn); break;
+				case SH2OP_MOVBL: MOVBL(Rm, Rn); break;
+				case SH2OP_MOVWL: MOVWL(Rm, Rn); break;
+				case SH2OP_MOVLL: MOVLL(Rm, Rn); break;
+				case SH2OP_MOV: MOV(Rm, Rn); break;
+				case SH2OP_MOVBP: MOVBP(Rm, Rn); break;
+				case SH2OP_MOVWP: MOVWP(Rm, Rn); break;
+				case SH2OP_MOVLP: MOVLP(Rm, Rn); break;
+				case SH2OP_NOT: NOT(Rm, Rn); break;
+				case SH2OP_SWAPB: SWAPB(Rm, Rn); break;
+				case SH2OP_SWAPW: SWAPW(Rm, Rn); break;
+				case SH2OP_NEGC: NEGC(Rm, Rn); break;
+				case SH2OP_NEG: NEG(Rm, Rn); break;
+				case SH2OP_EXTUB: EXTUB(Rm, Rn); break;
+				case SH2OP_EXTUW: EXTUW(Rm, Rn); break;
+				case SH2OP_EXTSB: EXTSB(Rm, Rn); break;
+				case SH2OP_EXTSW: EXTSW(Rm, Rn); break;
+				case SH2OP_ADDI: ADDI(opcode & 0xff, Rn); break;
+				case SH2OP_MOVBS4: MOVBS4(opcode & 0x0f, Rm); break;
+				case SH2OP_MOVWS4: MOVWS4(opcode & 0x0f, Rm); break;
+				case SH2OP_MOVBL4: MOVBL4(Rm, opcode & 0x0f); break;
+				case SH2OP_MOVWL4: MOVWL4(Rm, opcode & 0x0f); break;
+				case SH2OP_CMPIM: CMPIM(opcode & 0xff); break;
+				case SH2OP_BT: BT(opcode & 0xff); break;
+				case SH2OP_BF: BF(opcode & 0xff); break;
+				case SH2OP_BTS: BTS(opcode & 0xff); break;
+				case SH2OP_BFS: BFS(opcode & 0xff); break;
+				case SH2OP_MOVWI: MOVWI(opcode & 0xff, Rn); break;
+				case SH2OP_BRA: BRA(opcode & 0xfff); break;
+				case SH2OP_BSR: BSR(opcode & 0xfff); break;
+				case SH2OP_MOVBSG: MOVBSG(opcode & 0xff); break;
+				case SH2OP_MOVWSG: MOVWSG(opcode & 0xff); break;
+				case SH2OP_MOVLSG: MOVLSG(opcode & 0xff); break;
+				case SH2OP_TRAPA: TRAPA(opcode & 0xff); break;
+				case SH2OP_MOVBLG: MOVBLG(opcode & 0xff); break;
+				case SH2OP_MOVWLG: MOVWLG(opcode & 0xff); break;
+				case SH2OP_MOVLLG: MOVLLG(opcode & 0xff); break;
+				case SH2OP_MOVA: MOVA(opcode & 0xff); break;
+				case SH2OP_TSTI: TSTI(opcode & 0xff); break;
+				case SH2OP_ANDI: ANDI(opcode & 0xff); break;
+				case SH2OP_XORI: XORI(opcode & 0xff); break;
+				case SH2OP_ORI: ORI(opcode & 0xff); break;
+				case SH2OP_TSTM: TSTM(opcode & 0xff); break;
+				case SH2OP_ANDM: ANDM(opcode & 0xff); break;
+				case SH2OP_XORM: XORM(opcode & 0xff); break;
+				case SH2OP_ORM: ORM(opcode & 0xff); break;
+				case SH2OP_MOVLI: MOVLI(opcode & 0xff, Rn); break;
+				case SH2OP_MOVI: MOVI(opcode & 0xff, Rn); break;
+			}
+
+			if (!pSh2Ext->slow && sh2->sh2_icount - sh2->sh2_eat_cycles > pSh2Ext->event_icount) {
+				sh2->sh2_total_cycles++;
+				sh2->sh2_icount -= sh2->sh2_eat_cycles;
+				if (sh2->sh2_icount > 0) continue;
+				break;
 			}
 		}
 
@@ -3358,6 +3984,22 @@ int Sh2Run(int cycles)
 		{
 			CHECK_PENDING_IRQ(/*"mame_sh2_execute"*/);
 			sh2->test_irq = 0;
+		}
+
+		if ((pSh2Ext->wdt_csr & 0x20) && (INT32)(sh2_GetTotalCycles() - pSh2Ext->wdt_next) >= 0) {
+			sh2_wdt_sync();
+		}
+
+		// dma: one unit per step (auto request) or per external request
+		if ((sh2->m[0x6c] & 7) == 1) {
+			for (INT32 c = 0; c < 2; c++) {
+				UINT32 chcr = sh2->m[0x63+4*c];
+				if ((chcr & 3) == 1 && ((chcr & 0x200) || pSh2Ext->dreq[c] || pSh2Ext->dreq_pulse[c])) { // DE, !TE, AR or DREQ
+					pSh2Ext->dreq_pulse[c] = 0;
+					sh2_dmac_unit(c);
+					break;
+				}
+			}
 		}
 
 		sh2->sh2_total_cycles++;
@@ -3369,21 +4011,15 @@ int Sh2Run(int cycles)
 			unsigned int cy = sh2_GetTotalCycles();
 
 
-			if (sh2->dma_timer_active[0])
-				if ((cy - sh2->dma_timer_base[0]) >= sh2->dma_timer_cycles[0])
-					sh2_dmac_callback(0);
-
-			if (sh2->dma_timer_active[1])
-				if ((cy - sh2->dma_timer_base[1]) >= sh2->dma_timer_cycles[1])
-					sh2_dmac_callback(1);
-
 			if ( sh2->timer_active )
 				if ((cy - sh2->timer_base) >= sh2->timer_cycles)
 					sh2_timer_callback();
 		}
-		
-		
-	} while( sh2->sh2_icount > 0 && !sh2->end_run );
+
+		sh2_update_events();
+
+		if (sh2->sh2_icount <= 0 || sh2->end_run) break;
+	}
 
 	cycles = cycles - sh2->sh2_icount;
 
@@ -3414,9 +4050,10 @@ static void Sh2SetIRQLine_Internal(const int line, int state)
 		sh2->pending_irq |= 1 << line;
 		sh2->irq_line_hold[line] = hold;
 
-		if(sh2->delay)
+		if(sh2->delay) {
 			sh2->test_irq = 1;
-		else
+			pSh2Ext->slow = 1;
+		} else
 			CHECK_PENDING_IRQ(/*"sh2_set_irq_line"*/);
 
 		pSh2Ext->suspend = 0;
@@ -3452,6 +4089,28 @@ unsigned int Sh2GetPC(int)
 	return (sh2->delay) ? (sh2->delay & AM) : (sh2->pc & AM);
 }
 
+void Sh2SetDreq(int i, int channel, int state)
+{
+	Sh2Ext[i].dreq[channel] = state;
+	Sh2Ext[i].slow = 1;
+}
+
+void Sh2PulseDreq(int i, int channel)
+{
+	Sh2Ext[i].dreq_pulse[channel] = 1;
+	Sh2Ext[i].slow = 1;
+}
+
+void Sh2SetSciLink(int link)
+{
+	sci_link = link;
+}
+
+void Sh2SetGBR(unsigned int i)
+{
+	sh2->gbr = i;
+}
+
 void Sh2SetVBR(unsigned int i)
 {
 #if defined FBNEO_DEBUG
@@ -3468,6 +4127,7 @@ void Sh2BurnUntilInt(int)
 #endif
 
 	pSh2Ext->suspend = 1;
+	pSh2Ext->slow = 1;
 }
 
 void Sh2StopRun()
@@ -3477,6 +4137,7 @@ void Sh2StopRun()
 #endif
 
 	sh2->end_run = 1;
+	pSh2Ext->slow = 1;
 }
 
 INT32 Sh2TotalCycles()
@@ -3515,6 +4176,7 @@ void Sh2Idle(int cycles)
 
 	sh2->sh2_total_cycles += cycles;
 	sh2->cycle_counts += cycles;
+	pSh2Ext->slow = 1;
 }
 
 void __fastcall Sh2WriteByte(unsigned int a, unsigned char d)
@@ -3552,7 +4214,7 @@ int Sh2Scan(int nAction)
 	if (nAction & ACB_DRIVER_DATA) {
 		char szText[] = "SH2 #0";
 
-		for (int i = 0; i < 1 /*nCPUCount*/; i++) {
+		for (int i = 0; i < nSh2Count; i++) {
 			struct BurnArea ba;
 
 			szText[5] = '0' + i;
@@ -3564,6 +4226,15 @@ int Sh2Scan(int nAction)
 			BurnAcb(&ba);
 
 			SCAN_VAR (Sh2Ext[i].suspend);
+
+			SCAN_VAR (Sh2Ext[i].dreq);
+			SCAN_VAR (Sh2Ext[i].dreq_pulse);
+			SCAN_VAR (Sh2Ext[i].wdt_csr);
+			SCAN_VAR (Sh2Ext[i].wdt_cnt);
+			SCAN_VAR (Sh2Ext[i].wdt_base);
+			SCAN_VAR (Sh2Ext[i].wdt_next);
+			SCAN_VAR (Sh2Ext[i].sci_ssr);
+			SCAN_VAR (Sh2Ext[i].sci_rdr);
 
 #if FAST_OP_FETCH
 			if (nAction & ACB_WRITE) {

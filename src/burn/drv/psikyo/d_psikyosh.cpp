@@ -40,7 +40,7 @@ static INT32 nExtraCycles;
 
 static UINT8 DrvReset;
 static UINT32 DrvInputs;
-static UINT8 DrvDips[3];
+static UINT8 DrvDips[2];
 static UINT8 DrvJoy1[32];
 
 static struct BurnInputInfo Common2ButtonInputList[] = {
@@ -66,7 +66,6 @@ static struct BurnInputInfo Common2ButtonInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       	BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
 };
 
 STDINPUTINFO(Common2Button)
@@ -96,7 +95,6 @@ static struct BurnInputInfo Common3ButtonInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       	BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
 };
 
 STDINPUTINFO(Common3Button)
@@ -128,7 +126,6 @@ static struct BurnInputInfo Common4ButtonInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 4,	"service"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",       	BIT_DIPSWITCH,  DrvDips + 2,    "dip"       },
 };
 
 STDINPUTINFO(Common4Button)
@@ -137,7 +134,6 @@ static struct BurnDIPInfo DarakuDIPList[]=
 {
 	{0x16, 0xff, 0xff, 0x60, NULL			},
 	{0x17, 0xff, 0xff, 0x01, NULL			},
-	{0x18, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x16, 0x01, 0x20, 0x20, "Off"			},
@@ -150,10 +146,6 @@ static struct BurnDIPInfo DarakuDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Region"		},
 	{0x17, 0x01, 0x01, 0x00, "Japan"		},
 	{0x17, 0x01, 0x01, 0x01, "World"		},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x18, 0x01, 0x01, 0x00, "No"			},
-	{0x18, 0x01, 0x01, 0x01, "Yes"			},
 };
 
 STDDIPINFO(Daraku)
@@ -162,7 +154,6 @@ static struct BurnDIPInfo S1945iiDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0x60, NULL			},
 	{0x13, 0xff, 0xff, 0x01, NULL			},
-	{0x14, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x12, 0x01, 0x20, 0x20, "Off"			},
@@ -175,10 +166,6 @@ static struct BurnDIPInfo S1945iiDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Region"		},
 	{0x13, 0x01, 0x01, 0x00, "Japan"		},
 	{0x13, 0x01, 0x01, 0x01, "World"		},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x14, 0x01, 0x01, 0x00, "No"			},
-	{0x14, 0x01, 0x01, 0x01, "Yes"			},
 };
 
 STDDIPINFO(S1945ii)
@@ -187,7 +174,6 @@ static struct BurnDIPInfo DragnblzDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x20, NULL			},
 	{0x15, 0xff, 0xff, 0x01, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -200,10 +186,6 @@ static struct BurnDIPInfo DragnblzDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Region"		},
 	{0x15, 0x01, 0x01, 0x00, "Japan"		},
 	{0x15, 0x01, 0x01, 0x01, "World"		},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"			},
-	{0x16, 0x01, 0x01, 0x01, "Yes"			},
 };
 
 STDDIPINFO(Dragnblz)
@@ -212,7 +194,6 @@ static struct BurnDIPInfo SoldividDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x60, NULL			},
 	{0x15, 0xff, 0xff, 0x01, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -225,10 +206,6 @@ static struct BurnDIPInfo SoldividDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Region"		},
 	{0x15, 0x01, 0x01, 0x00, "Japan"		},
 	{0x15, 0x01, 0x01, 0x01, "World"		},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"			},
-	{0x16, 0x01, 0x01, 0x01, "Yes"	},
 };
 
 STDDIPINFO(Soldivid)
@@ -237,7 +214,6 @@ static struct BurnDIPInfo SoldividkDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x60, NULL			},
 	{0x15, 0xff, 0xff, 0x01, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -250,10 +226,6 @@ static struct BurnDIPInfo SoldividkDIPList[]=
 //	{0   , 0xfe, 0   ,    2, "Region"		}, /* Game is hard coded to Korea */
 //	{0x15, 0x01, 0x01, 0x00, "Japan"		},
 //	{0x15, 0x01, 0x01, 0x01, "World"		},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"			},
-	{0x16, 0x01, 0x01, 0x01, "Yes"	},
 };
 
 STDDIPINFO(Soldividk)
@@ -262,7 +234,6 @@ static struct BurnDIPInfo Gunbird2DIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x60, NULL			},
 	{0x15, 0xff, 0xff, 0x02, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -276,10 +247,6 @@ static struct BurnDIPInfo Gunbird2DIPList[]=
 	{0x15, 0x01, 0x03, 0x00, "Japan"		},
 	{0x15, 0x01, 0x03, 0x01, "International Ver A."	},
 	{0x15, 0x01, 0x03, 0x02, "International Ver B."	},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"			},
-	{0x16, 0x01, 0x01, 0x01, "Yes"			},
 };
 
 STDDIPINFO(Gunbird2)
@@ -288,7 +255,6 @@ static struct BurnDIPInfo S1945iiiDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x60, NULL			},
 	{0x15, 0xff, 0xff, 0x01, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -302,10 +268,6 @@ static struct BurnDIPInfo S1945iiiDIPList[]=
 	{0x15, 0x01, 0x03, 0x00, "Japan"		},
 	{0x15, 0x01, 0x03, 0x02, "International Ver A."	},
 	{0x15, 0x01, 0x03, 0x01, "International Ver B."	},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"			},
-	{0x16, 0x01, 0x01, 0x01, "Yes"			},
 };
 
 STDDIPINFO(S1945iii)
@@ -314,7 +276,6 @@ static struct BurnDIPInfo Tgm2DIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x60, NULL			},
 	{0x15, 0xff, 0xff, 0x00, NULL			},
-	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -323,10 +284,6 @@ static struct BurnDIPInfo Tgm2DIPList[]=
 	{0   , 0xfe, 0   ,    2, "Debug"		},
 	{0x14, 0x01, 0x40, 0x40, "Off"			},
 	{0x14, 0x01, 0x40, 0x00, "On"			},
-	
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
-	{0x16, 0x01, 0x01, 0x00, "No"			},
-	{0x16, 0x01, 0x01, 0x01, "Yes"			},
 };
 
 STDDIPINFO(Tgm2)
@@ -614,14 +571,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	if (EEPROMAvailable() == 0) {
 		EEPROMFill(DrvEEPROM, 0, 0x100);
-	}
-
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "soldivid") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "soldividk") == 0) {
-		cpu_rate = ((DrvDips[2] & 1) ? 7600000 : 28636350/2);
-		Sh2SetEatCycles((DrvDips[2] & 1) ? 2 : 1);
-	}
-	else {
-		cps3speedhack = (DrvDips[2] & 1);
 	}
 
 	BurnYMF278BReset();

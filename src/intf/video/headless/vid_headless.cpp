@@ -12,6 +12,7 @@
 // an upright, correctly-pitched buffer to the host, rotating when needed.
 // Subject to the FB Neo license (see src/license.txt).
 
+#include <stdint.h>
 #include "burner.h"
 #include "fbheadless.h"
 

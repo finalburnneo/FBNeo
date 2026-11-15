@@ -34,7 +34,7 @@ static UINT8 DrvReset;
 
 static struct BurnInputInfo WarpspeedInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
-	{"P1 Accelerate",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
+	{"P1 Accelerator",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Brake",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 // analog placeholders
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 3"	},

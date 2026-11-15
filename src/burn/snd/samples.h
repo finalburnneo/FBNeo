@@ -37,6 +37,23 @@ void BurnSampleChannelSetPlaybackRate(INT32 channel, INT32 rate);
 void BurnSampleReset();
 
 void BurnSampleInit(INT32 bAdd);
+
+// External sample list, instead of the driver's BurnSampleInfo list + support/samples/<name>.zip.
+// Call right before BurnSampleInit(), the pointer must stay valid until BurnSampleExit() (which clears it).
+// Each name is tried as .wav, .flac, .mp3: in szArchive (.zip/.7z, path without extension), then as a
+// loose file in szFolder.  Either path may be NULL.
+struct BurnSampleSource {
+	const char *szArchive;			// ie. "support/ost/ghouls"
+	const char *szFolder;			// ie. "support/ost/ghouls/" (trailing slash)
+	INT32 nCount;
+	const char *(*GetName)(INT32 i);	// file name without extension
+	INT32 (*GetFlags)(INT32 i);		// SAMPLE_* flags, must be non-zero (ie. SAMPLE_NOSTOREF for long music)
+};
+void BurnSampleSetSource(const BurnSampleSource *pSrc);
+
+UINT32 BurnSampleGetLength(INT32 sample);		// frames at nBurnSoundRate (0 if not loaded yet)
+UINT32 BurnSampleGetSourceRate(INT32 sample);		// sample rate of the file, before resampling
+void BurnSampleSetLoopStart(INT32 sample, UINT32 frame);	// looping restarts here (frames at nBurnSoundRate), 0 = beginning
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir);
 
 // BurnSampleSetRouteFade() fades up/down to volume to eliminate clicks/pops

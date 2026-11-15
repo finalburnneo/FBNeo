@@ -49,17 +49,21 @@ static void hq2xS_16_def(u16* dst0, u16* dst1, const u16* src0, const u16* src1,
 
     u16 c[9];
 
+    // clamp to the image (used to read one pixel past each end of the line)
+    const int l = (i > 0) ? -1 : 0;
+    const int r = (i + 1 < count) ? 1 : 0;
+
     c[1] = src0[0];
     c[4] = src1[0];
     c[7] = src2[0];
 
-    c[0] = src0[-1];
-    c[3] = src1[-1];
-    c[6] = src2[-1];
+    c[0] = src0[l];
+    c[3] = src1[l];
+    c[6] = src2[l];
 
-    c[2] = src0[1];
-    c[5] = src1[1];
-    c[8] = src2[1];
+    c[2] = src0[r];
+    c[5] = src1[r];
+    c[8] = src2[r];
 
 	mask = 0;
 
@@ -177,17 +181,21 @@ static void hq2xS_32_def(u32* dst0, u32* dst1, const u32* src0, const u32* src1,
 
     u32 c[9];
 
+    // clamp to the image (used to read one pixel past each end of the line)
+    const int l = (i > 0) ? -1 : 0;
+    const int r = (i + 1 < count) ? 1 : 0;
+
     c[1] = src0[0];
     c[4] = src1[0];
     c[7] = src2[0];
 
-    c[0] = src0[-1];
-    c[3] = src1[-1];
-    c[6] = src2[-1];
+    c[0] = src0[l];
+    c[3] = src1[l];
+    c[6] = src2[l];
 
-    c[2] = src0[1];
-    c[5] = src1[1];
-    c[8] = src2[1];
+    c[2] = src0[r];
+    c[5] = src1[r];
+    c[8] = src2[r];
 
 	mask = 0;
 
@@ -299,6 +307,12 @@ void hq2xS(u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
   u16 *src1 = src0 + (srcPitch >> 1);
   u16 *src2 = src1 + (srcPitch >> 1);
 
+  if (width <= 0 || height <= 0) return;
+  if (height == 1) {	// (the loop below needs 2+ lines)
+    hq2xS_16_def(dst0, dst1, src0, src0, src0, width);
+    return;
+  }
+
   hq2xS_16_def(dst0, dst1, src0, src0, src1, width);
 
   int count = height;
@@ -327,6 +341,12 @@ void hq2xS32(u8 *srcPtr, u32 srcPitch, u8 * /* deltaPtr */,
   u32 *src0 = (u32 *)srcPtr;
   u32 *src1 = src0 + (srcPitch >> 2);
   u32 *src2 = src1 + (srcPitch >> 2);
+
+  if (width <= 0 || height <= 0) return;
+  if (height == 1) {	// (the loop below needs 2+ lines)
+    hq2xS_32_def(dst0, dst1, src0, src0, src0, width);
+    return;
+  }
   hq2xS_32_def(dst0, dst1, src0, src0, src1, width);
 
   int count = height;

@@ -82,7 +82,7 @@ static struct BurnInputInfo TurboInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
+	{"P1 Gear Shift",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,	    "reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},

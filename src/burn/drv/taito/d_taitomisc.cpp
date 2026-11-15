@@ -190,11 +190,11 @@ static struct BurnInputInfo TopspeedInputList[] =
 	{"P1 Start"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 3, "p1 start"       },
 
 	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis"      ),
-	A("P1 Fire 1 (Accelerator)" , BIT_ANALOG_REL, &TaitoAnalogPort1      , "p1 fire 1"      ),
-	A("P1 Fire 2 (Brake)"       , BIT_ANALOG_REL, &TaitoAnalogPort2      , "p1 fire 2"      ),
+	A("P1 Accelerator"   , BIT_ANALOG_REL, &TaitoAnalogPort1      , "p1 fire 1"      ),
+	A("P1 Brake"         , BIT_ANALOG_REL, &TaitoAnalogPort2      , "p1 fire 2"      ),
 
-	{"P1 Fire 3 (Nitro)" , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 3"      },
-	{"P1 Fire 4 (Gear)"  , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4"      },
+	{"P1 Nitro"          , BIT_DIGITAL   , TC0220IOCInputPort1 + 0, "p1 fire 3"      },
+	{"P1 Gear Shift"     , BIT_DIGITAL   , TC0220IOCInputPort1 + 4, "p1 fire 4"      },
 
 	{"P2 Coin"           , BIT_DIGITAL   , TC0220IOCInputPort0 + 2, "p2 coin"        },
 

@@ -67,7 +67,7 @@ static struct BurnInputInfo BackfireInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
-//	{"P1 Shift",        BIT_DIGITAL,    DrvJoyF + 0,    "p1 fire 4" },
+//	{"P1 Gear Shift",   BIT_DIGITAL,    DrvJoyF + 0,    "p1 fire 4" },
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
@@ -79,7 +79,7 @@ static struct BurnInputInfo BackfireInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
-//	{"P2 Shift",        BIT_DIGITAL,    DrvJoyF + 1,    "p2 fire 4" },
+//	{"P2 Gear Shift",   BIT_DIGITAL,    DrvJoyF + 1,    "p2 fire 4" },
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},

@@ -74,6 +74,7 @@
 #include "burn_ym2610.h"
 #include "bitswap.h"
 #include "neocdlist.h"
+#include "burn_ost.h"
 
 // #undef USE_SPEEDHACKS
 static INT32 NEO_RASTER_IRQ_TWEAK = 0; // spinmast prefers offset of 3 here.
@@ -1505,6 +1506,8 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		BurnYM2610Scan(nAction, pnMin);
 		ZetClose();
 
+		BurnOstScan(nAction, pnMin);
+
 		if (nNeoSystemType & NEO_SYS_MVS) {
 			uPD4990AScan(nAction, pnMin);
 		}
@@ -1895,13 +1898,8 @@ static inline void NeoCDIRQUpdate(UINT8 byteValue)
 	}
 }
 
-static inline void SendSoundCommand(const UINT8 nCommand)
+static inline void SendSoundCommandZ80(const UINT8 nCommand)
 {
-	if (ZetGetActive() == -1) return;
-//	bprintf(PRINT_NORMAL, _T("  - Sound command sent (0x%02X).\n"), nCommand);
-
-	neogeoSynchroniseZ80(0);
-
 	nSoundStatus &= ~1;
 	nSoundLatch = nCommand;
 
@@ -1909,6 +1907,34 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 		ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
 		ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 	}
+}
+
+// OST packs (burn/snd/burn_ost.cpp): "then=native" / "then=<code>", sent from BurnOstFrame()
+static void NeoOstSend(UINT32 nCode)
+{
+	if (ZetGetActive() == -1) return;
+
+	SendSoundCommandZ80(nCode & 0xff);
+}
+
+static inline void SendSoundCommand(UINT8 nCommand)
+{
+	if (ZetGetActive() == -1) return;
+//	bprintf(PRINT_NORMAL, _T("  - Sound command sent (0x%02X).\n"), nCommand);
+
+	neogeoSynchroniseZ80(0);
+
+	if (BurnOstActive()) {
+		INT32 nOst = BurnOstCommand(nCommand);
+		if (nOst == OST_DROP) {
+			// nothing for the Z80, but the 68k may wait for the command to be taken
+			nSoundStatus |= 1;
+			return;
+		}
+		nCommand = nOst & 0xff;
+	}
+
+	SendSoundCommandZ80(nCommand);
 
 	// notes: if sound timing changes, check these sensitive games:
 	// nam1975: voice dies after coin up
@@ -3945,6 +3971,8 @@ static INT32 neogeoReset()
 	BurnYM2610Reset();
 	ZetClose();
 
+	BurnOstReset();
+
 #if defined EMULATE_WATCHDOG
 	nNeoWatchdog = 0;
 #endif
@@ -4238,6 +4266,11 @@ static INT32 NeoInitCommon()
 
 	BurnTimerAttachZet(nZ80Clockspeed);
 
+	if (!IsNeoGeoCD()) {
+		// OST packs (support/ost/<set>.ost), every write to 0x320000 is a command
+		BurnOstInit(BurnDrvGetTextA(DRV_NAME), BurnDrvGetTextA(DRV_PARENT), OST_MAILBOX, NeoOstSend);
+	}
+
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
 		for (nNeoActiveSlot = 0; nNeoActiveSlot < MAX_SLOT; nNeoActiveSlot++) {
 			if (nBurnDrvSelect[nNeoActiveSlot] < nBurnDrvCount) {
@@ -4504,6 +4537,7 @@ INT32 NeoExit()
 
 	NeoExitPalette();
 
+	BurnOstExit();
 	BurnYM2610Exit();
 
 	ZetExit();									// Deallocate Z80
@@ -5178,8 +5212,10 @@ INT32 NeoFrame()
 
 	nCycles68KSync = SekTotalCycles();
 	BurnTimerEndFrame(nCyclesTotal[1]);
+	BurnOstFrame();
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
+		BurnOstRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	// Update the uPD4990 until the end of the frame

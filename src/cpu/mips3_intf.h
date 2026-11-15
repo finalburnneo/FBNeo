@@ -1,6 +1,8 @@
 #ifndef MIPS3_INTF
 #define MIPS3_INTF
 
+#include <stdint.h>
+
 // MIPS III (R4600) interpreter, little-endian guest.
 // Addresses given to Mips3MapMemory/Mips3MapHandler and passed to handlers are physical.
 

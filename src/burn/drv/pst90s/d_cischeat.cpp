@@ -2859,10 +2859,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
 
-		BurnShiftScan(nAction);
+		switch (is_game) {
+			case 0:
+			case 1:
+				BurnShiftScan(nAction);
+				break;
 
-		if (is_game == 2) {
-			BurnGunScan();
+			case 2:
+				BurnGunScan();
+				break;
 		}
 
 		SCAN_VAR(soundbank0);

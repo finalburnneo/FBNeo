@@ -140,5 +140,5 @@ drivers = {
     'd_yunsung8.cpp': ['msm5205', 'ym3812', 'z80'],
     'd_zerozone.cpp': ['m68000', 'msm6295', 'z80'],
     'd_cyclwarr.cpp': ['i8255', 'cxd1095', 'e132xs', 'eeprom', 'gaelco_crypt', 'i8051', 'm68000', 'msm5205', 'msm6295', 'qs1000', 'saa1099', 'ym2151', 'ym2610', 'ym3812', 'z80'],
-    'd_megaphx.cpp': ['i8255', 'i8255', 'cxd1095', 'e132xs', 'eeprom', 'gaelco_crypt', 'i8051', 'm68000', 'msm5205', 'msm6295', 'qs1000', 'saa1099', 'ym2151', 'ym2610', 'ym3812', 'z80'],
+    'd_megaphx.cpp': ['cxd1095', 'dac', 'e132xs', 'eeprom', 'gaelco_crypt', 'i8051', 'i8255', 'm68000', 'msm5205', 'msm6295', 'pic16c5x', 'qs1000', 'saa1099', 'tms34010', 'ym2151', 'ym2610', 'ym3812', 'z80'],
 }

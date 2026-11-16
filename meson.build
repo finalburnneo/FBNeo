@@ -11,13 +11,24 @@ cpp = meson.get_compiler('cpp')
 
 if cc.get_id() in ['gcc', 'clang']
     add_project_arguments('-D_GNU_SOURCE', language: 'c')
+    add_project_arguments('-D_FILE_OFFSET_BITS=64', language: ['c', 'cpp'])
+    add_project_arguments('-D_LARGEFILE64_SOURCE=0', language: ['c', 'cpp'])
 endif
+
 if cpp.get_id() in ['gcc', 'clang']
     add_project_arguments('-D_GNU_SOURCE', language: 'cpp')
 endif
 
+if cc.get_id() in ['gcc', 'clang']
+    add_project_arguments(
+        cc.get_supported_arguments([
+            '-Wno-incompatible-pointer-types',
+        ]),
+        language: 'c',
+    )
+endif
 if cpp.get_id() in ['gcc', 'clang']
-    add_project_arguments('-Wno-write-strings', language: 'cpp')
+   add_project_arguments('-Wno-write-strings', language: 'cpp')
 elif cpp.get_id() == 'msvc'
     add_project_arguments('/Zc:strictStrings-', language: 'cpp')
 endif

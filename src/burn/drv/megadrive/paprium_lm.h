@@ -1791,11 +1791,34 @@ static void lm_reset()
 	lm.boot_pending = 1;
 }
 
+// the saves of the earlier high level emulation: the game's slots 1-4 as 0x780-byte banks at the
+// start of the nv ram. Into a blank battery they go as the plain layout the firmware imports once at
+// its boot (slot 4's 0x200 bytes at 0x000, slots 1-3's 0x100 bytes at 0x400, 0x600, 0x800)
+static void lm_import_old_saves()
+{
+	UINT8 or_ = 0, and_ = 0xff;
+	for (INT32 i = 0; i < LM_BAT_SIZE; i++) { or_ |= lm_bat[i]; and_ &= lm_bat[i]; }
+	if (or_ && and_ != 0xff) return;	// the battery is in use
+
+	const UINT8 *old = SRam;
+	or_ = 0; and_ = 0xff;
+	for (INT32 i = 0; i < 4 * 0x780; i++) { or_ |= old[i]; and_ &= old[i]; }
+	if (!or_ || and_ == 0xff) return;	// no old save
+
+	memset(lm_bat, 0xff, LM_BAT_SIZE);
+	memcpy(lm_bat + 0x000, old + 3 * 0x780, 0x200);
+	for (INT32 slot = 1; slot <= 3; slot++) {
+		memcpy(lm_bat + 0x200 + 0x200 * slot, old + (slot - 1) * 0x780, 0x100);
+	}
+	bprintf(0, _T("Paprium: the saves of the earlier emulation were imported\n"));
+}
+
 // run the mcu alone until it releases the console (at power-on it also unpacks the sound bank);
 // done at the start of the first frame, once the nv ram is in place
 static void lm_boot_mcu()
 {
 	if (lm.boot_pending != 1) return;
+	if (!lm_tracking) lm_import_old_saves();
 	lm.boot_pending = 2;
 	lm_idle_forget();
 

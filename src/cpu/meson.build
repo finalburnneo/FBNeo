@@ -52,6 +52,7 @@ all_cpu = {
     'v60': {'desc': 'NEC V60', 'sources': ['v60/v60.cpp'], 'inc': ['v60']},
     'z80': {'desc': 'Zilog Z80', 'sources': ['z80/z80.cpp', 'z80/z80ctc.cpp', 'z80/z80daisy.cpp', 'z80/z80pio.cpp', 'z80_intf.cpp'], 'inc': ['z80']},
     'z180': {'desc': 'Zilog Z180', 'sources': ['z180/z180.cpp', 'z180_intf.cpp'], 'inc': ['z180']},
+    'xa': {'desc': 'XA', 'sources': ['xa/xa.cpp', 'xa/xa_ops.cpp'], 'inc': ['xa']},
 }
 
 # ---------------------------------------------------------------------------

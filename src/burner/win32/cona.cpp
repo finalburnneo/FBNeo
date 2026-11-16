@@ -421,6 +421,10 @@ int ConfigAppLoad()
 		VAR(nSelDlgWidth);
 		VAR(nSelDlgHeight);
 		VARI64(nLoadMenuShowX);
+		VARI64(nLoadMenuHwPreset[0]);
+		VARI64(nLoadMenuHwPreset[1]);
+		STR(szLoadMenuHwPresetName[0]);
+		STR(szLoadMenuHwPresetName[1]);
 		VAR(nLoadMenuShowY);
 		VAR(nLoadMenuExpand);
 		VAR(nLoadMenuBoardTypeFilter);
@@ -899,6 +903,10 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Load game dialog options\n"));
 	VARI64(nLoadMenuShowX);
+	VARI64(nLoadMenuHwPreset[0]);
+	VARI64(nLoadMenuHwPreset[1]);
+	STR(szLoadMenuHwPresetName[0]);
+	STR(szLoadMenuHwPresetName[1]);
 	VAR(nLoadMenuShowY);
 	VAR(nLoadMenuExpand);
 

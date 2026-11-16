@@ -357,6 +357,8 @@ bool unzip_unzip_context(zip_t **zip_context, char *szFn, void **buf, size_t *bu
 bool unzip_exists_context(zip_t **zip_context, char *szFn);
 
 extern UINT64 nLoadMenuShowX;
+extern UINT64 nLoadMenuHwPreset[2];
+extern TCHAR szLoadMenuHwPresetName[2][MAX_PATH];
 extern int nLoadMenuShowY;
 extern int nLoadMenuExpand;
 extern int nLoadMenuBoardTypeFilter;

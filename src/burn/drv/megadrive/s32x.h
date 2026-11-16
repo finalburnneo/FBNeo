@@ -19,8 +19,7 @@ void S32XRunSh2(INT32 main_cycles);
 void S32XEndFrame(INT32 main_cycles);
 
 // video / sound
-void S32XRecalcPal();
-void S32XDrawLine(INT32 line, UINT8 *md_line, UINT16 *dest, UINT32 *md_pal, INT32 backdrop, INT32 h40);
+void S32XDrawLine(INT32 line, UINT8 *md_line, UINT16 *dest, UINT16 *md_raw, INT32 backdrop, INT32 h40);
 void S32XSoundUpdate(INT16 *output, INT32 samples);
 
 INT32 S32XScan(INT32 nAction, INT32 *pnMin);

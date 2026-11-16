@@ -468,7 +468,7 @@ static void obj_tick(INT32 i)
 	}
 
 	// RESMPx: missile follows the centre of its player's main copy
-	if (i < 2 && tia_resmp[i] && o->is_main && o->scan == 4 * player_width(nus)) {
+	if (i < 2 && (tia_resmp[i] & 2) && o->is_main && o->scan == 4 * player_width(nus)) {
 		tia_obj[OM0 + i].cnt = 2;
 	}
 }

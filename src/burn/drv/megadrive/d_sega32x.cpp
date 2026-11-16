@@ -92,7 +92,7 @@ struct BurnDriver BurnDrvs32x_aburner = {
 	"s32x_aburner", NULL, NULL, NULL, "1994",
 	"After Burner Complete ~ After Burner (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_aburnerRomInfo, s32x_aburnerRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -111,7 +111,7 @@ struct BurnDriver BurnDrvs32x_aburnere = {
 	"s32x_aburnere", "s32x_aburner", NULL, NULL, "1994",
 	"After Burner Complete (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_aburnereRomInfo, s32x_aburnereRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -130,7 +130,7 @@ struct BurnDriver BurnDrvs32x_bcracers = {
 	"s32x_bcracers", NULL, NULL, NULL, "1995",
 	"BC Racers (USA)\0", NULL, "Core Design", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
 	S32XGetZipName, s32x_bcracersRomInfo, s32x_bcracersRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -149,7 +149,7 @@ struct BurnDriver BurnDrvs32x_blackthn = {
 	"s32x_blackthn", NULL, NULL, NULL, "1995",
 	"Blackthorne (USA)\0", NULL, "Interplay", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_blackthnRomInfo, s32x_blackthnRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -168,7 +168,7 @@ struct BurnDriver BurnDrvs32x_brutal = {
 	"s32x_brutal", NULL, NULL, NULL, "1995",
 	"Brutal - Above the Claw (USA)\0", NULL, "GameTek", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_brutalRomInfo, s32x_brutalRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -187,7 +187,7 @@ struct BurnDriver BurnDrvs32x_chaotix = {
 	"s32x_chaotix", NULL, NULL, NULL, "1995",
 	"Knuckles' Chaotix (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_chaotixRomInfo, s32x_chaotixRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -206,7 +206,7 @@ struct BurnDriver BurnDrvs32x_chaotixe = {
 	"s32x_chaotixe", "s32x_chaotix", NULL, NULL, "1995",
 	"Knuckles' Chaotix (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_chaotixeRomInfo, s32x_chaotixeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -225,7 +225,7 @@ struct BurnDriver BurnDrvs32x_clayfgt2 = {
 	"s32x_clayfgt2", NULL, NULL, NULL, "1995",
 	"ClayFighter 2 (USA, Prototype 19950428)\0", NULL, "Interplay", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_clayfgt2RomInfo, s32x_clayfgt2RomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -244,7 +244,7 @@ struct BurnDriver BurnDrvs32x_cosmiccr = {
 	"s32x_cosmiccr", "s32x_cybrawl", NULL, NULL, "1994",
 	"Cosmic Carnage (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_cosmiccrRomInfo, s32x_cosmiccrRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -263,7 +263,7 @@ struct BurnDriver BurnDrvs32x_cybrawl = {
 	"s32x_cybrawl", NULL, NULL, NULL, "1994",
 	"Cyber Brawl ~ Cosmic Carnage (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_cybrawlRomInfo, s32x_cybrawlRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -282,7 +282,7 @@ struct BurnDriver BurnDrvs32x_darxide = {
 	"s32x_darxide", NULL, NULL, NULL, "1996",
 	"Darxide (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_darxideRomInfo, s32x_darxideRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -301,7 +301,7 @@ struct BurnDriver BurnDrvs32x_doom = {
 	"s32x_doom", NULL, NULL, NULL, "1994",
 	"Doom (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_doomRomInfo, s32x_doomRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -320,7 +320,7 @@ struct BurnDriver BurnDrvs32x_doome = {
 	"s32x_doome", "s32x_doom", NULL, NULL, "1994",
 	"Doom (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_doomeRomInfo, s32x_doomeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -339,7 +339,7 @@ struct BurnDriver BurnDrvs32x_eccod = {
 	"s32x_eccod", NULL, NULL, NULL, "1995",
 	"Ecco the Dolphin (USA, Demo)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_DEMO, 1, HARDWARE_SEGA_32X, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_DEMO, 1, HARDWARE_SEGA_32X, GBF_ACTION, 0,
 	S32XGetZipName, s32x_eccodRomInfo, s32x_eccodRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -358,7 +358,7 @@ struct BurnDriver BurnDrvs32x_fifa96 = {
 	"s32x_fifa96", NULL, NULL, NULL, "1995",
 	"FIFA Soccer 96 (Europe)\0", NULL, "EA Sports", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SPORTSFOOTBALL, 0,
 	S32XGetZipName, s32x_fifa96RomInfo, s32x_fifa96RomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -377,7 +377,7 @@ struct BurnDriver BurnDrvs32x_golfmag = {
 	"s32x_golfmag", NULL, NULL, NULL, "1995",
 	"Golf Magazine Presents - 36 Great Holes Starring Fred Couples (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
 	S32XGetZipName, s32x_golfmagRomInfo, s32x_golfmagRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -396,7 +396,7 @@ struct BurnDriver BurnDrvs32x_golfmage = {
 	"s32x_golfmage", "s32x_golfmag", NULL, NULL, "1995",
 	"Golf Magazine Presents - 36 Great Holes Starring Fred Couples (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
 	S32XGetZipName, s32x_golfmageRomInfo, s32x_golfmageRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -415,7 +415,7 @@ struct BurnDriver BurnDrvs32x_kolibri = {
 	"s32x_kolibri", NULL, NULL, NULL, "1995",
 	"Kolibri (USA, Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_kolibriRomInfo, s32x_kolibriRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -434,7 +434,7 @@ struct BurnDriver BurnDrvs32x_megamw2 = {
 	"s32x_megamw2", NULL, NULL, NULL, "2020",
 	"Mega Marble World 2 (World, Prototype)\0", NULL, "<unknown>", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_ACTION, 0,
 	S32XGetZipName, s32x_megamw2RomInfo, s32x_megamw2RomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -453,7 +453,7 @@ struct BurnDriver BurnDrvs32x_metalhed = {
 	"s32x_metalhed", NULL, NULL, NULL, "1995",
 	"Metal Head (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_metalhedRomInfo, s32x_metalhedRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -472,7 +472,7 @@ struct BurnDriver BurnDrvs32x_metalhede = {
 	"s32x_metalhede", "s32x_metalhed", NULL, NULL, "1995",
 	"Metal Head (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_metalhedeRomInfo, s32x_metalhedeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -491,7 +491,7 @@ struct BurnDriver BurnDrvs32x_mk2 = {
 	"s32x_mk2", NULL, NULL, NULL, "1995",
 	"Mortal Kombat II (Japan, USA)\0", NULL, "Acclaim", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_mk2RomInfo, s32x_mk2RomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -510,7 +510,7 @@ struct BurnDriver BurnDrvs32x_mk2e = {
 	"s32x_mk2e", "s32x_mk2", NULL, NULL, "1995",
 	"Mortal Kombat II (Europe)\0", NULL, "Acclaim", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_mk2eRomInfo, s32x_mk2eRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -529,7 +529,7 @@ struct BurnDriver BurnDrvs32x_motoxch = {
 	"s32x_motoxch", NULL, NULL, NULL, "1994",
 	"Motocross Championship (USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
 	S32XGetZipName, s32x_motoxchRomInfo, s32x_motoxchRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -548,7 +548,7 @@ struct BurnDriver BurnDrvs32x_motoxche = {
 	"s32x_motoxche", "s32x_motoxch", NULL, NULL, "1994",
 	"Motocross Championship (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
 	S32XGetZipName, s32x_motoxcheRomInfo, s32x_motoxcheRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -567,7 +567,7 @@ struct BurnDriver BurnDrvs32x_nbajamte = {
 	"s32x_nbajamte", NULL, NULL, NULL, "1995",
 	"NBA Jam - Tournament Edition (World)\0", NULL, "Acclaim", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X | HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X | HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE, GBF_SPORTSMISC, 0,
 	S32XGetZipName, s32x_nbajamteRomInfo, s32x_nbajamteRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -586,7 +586,7 @@ struct BurnDriver BurnDrvs32x_nflqbc = {
 	"s32x_nflqbc", NULL, NULL, NULL, "1995",
 	"NFL Quarterback Club (World)\0", NULL, "Acclaim", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X | HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X | HARDWARE_SEGA_MEGADRIVE_PCB_NBA_JAM_TE, GBF_SPORTSFOOTBALL, 0,
 	S32XGetZipName, s32x_nflqbcRomInfo, s32x_nflqbcRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -605,7 +605,7 @@ struct BurnDriver BurnDrvs32x_pinocchi = {
 	"s32x_pinocchi", NULL, NULL, NULL, "1995",
 	"Pinocchio (Europe, Prototype 19950612)\0", NULL, "Virgin Interactive", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_pinocchiRomInfo, s32x_pinocchiRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -624,7 +624,7 @@ struct BurnDriver BurnDrvs32x_pitfall = {
 	"s32x_pitfall", NULL, NULL, NULL, "1995",
 	"Pitfall - The Mayan Adventure (USA)\0", NULL, "Activision", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_pitfallRomInfo, s32x_pitfallRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -643,7 +643,7 @@ struct BurnDriver BurnDrvs32x_primrage = {
 	"s32x_primrage", NULL, NULL, NULL, "1995",
 	"Primal Rage (USA, Europe)\0", NULL, "Time Warner Interactive", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_primrageRomInfo, s32x_primrageRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -662,7 +662,7 @@ struct BurnDriver BurnDrvs32x_rbi95 = {
 	"s32x_rbi95", NULL, NULL, NULL, "1995",
 	"RBI Baseball '95 (USA)\0", NULL, "Time Warner Interactive", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
 	S32XGetZipName, s32x_rbi95RomInfo, s32x_rbi95RomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -681,7 +681,7 @@ struct BurnDriver BurnDrvs32x_sangoku4 = {
 	"s32x_sangoku4", NULL, NULL, NULL, "1995",
 	"Sangokushi IV (Japan)\0", NULL, "Koei", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_STRATEGY, 0,
 	S32XGetZipName, s32x_sangoku4RomInfo, s32x_sangoku4RomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -700,7 +700,7 @@ struct BurnDriver BurnDrvs32x_sharrier = {
 	"s32x_sharrier", NULL, NULL, NULL, "1994",
 	"Space Harrier (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_sharrierRomInfo, s32x_sharrierRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -719,7 +719,7 @@ struct BurnDriver BurnDrvs32x_sharriere = {
 	"s32x_sharriere", "s32x_sharrier", NULL, NULL, "1994",
 	"Space Harrier (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_sharriereRomInfo, s32x_sharriereRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -738,7 +738,7 @@ struct BurnDriver BurnDrvs32x_sonic = {
 	"s32x_sonic", NULL, NULL, NULL, "2007",
 	"Sonic the Hedgehog (World)\0", NULL, "<unknown>", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_sonicRomInfo, s32x_sonicRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -757,7 +757,7 @@ struct BurnDriver BurnDrvs32x_soulstrx = {
 	"s32x_soulstrx", NULL, NULL, NULL, "1995",
 	"Soulstar X (USA, Prototype)\0", NULL, "Core Design", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_soulstrxRomInfo, s32x_soulstrxRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -776,7 +776,7 @@ struct BurnDriver BurnDrvs32x_spidwof = {
 	"s32x_spidwof", NULL, NULL, NULL, "1996",
 	"The Amazing Spider-Man - Web of Fire (USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_spidwofRomInfo, s32x_spidwofRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -795,7 +795,7 @@ struct BurnDriver BurnDrvs32x_spotgoh = {
 	"s32x_spotgoh", NULL, NULL, NULL, "1995",
 	"Spot Goes to Hollywood (USA, Prototype)\0", NULL, "Virgin Interactive", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_spotgohRomInfo, s32x_spotgohRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -814,7 +814,7 @@ struct BurnDriver BurnDrvs32x_stelasl = {
 	"s32x_stelasl", NULL, NULL, NULL, "1995",
 	"Stellar Assault (USA, Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_stelaslRomInfo, s32x_stelaslRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -833,7 +833,7 @@ struct BurnDriver BurnDrvs32x_stelaslj = {
 	"s32x_stelaslj", "s32x_stelasl", NULL, NULL, "1995",
 	"Stellar Assault (Japan)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_stelasljRomInfo, s32x_stelasljRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -852,7 +852,7 @@ struct BurnDriver BurnDrvs32x_stfleet = {
 	"s32x_stfleet", NULL, NULL, NULL, "1995",
 	"Star Trek - Starfleet Academy - Starship Bridge Simulator (USA)\0", NULL, "Interplay", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SIM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SIM, 0,
 	S32XGetZipName, s32x_stfleetRomInfo, s32x_stfleetRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -871,7 +871,7 @@ struct BurnDriver BurnDrvs32x_swarcade = {
 	"s32x_swarcade", NULL, NULL, NULL, "1994",
 	"Star Wars Arcade (USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_swarcadeRomInfo, s32x_swarcadeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -890,7 +890,7 @@ struct BurnDriver BurnDrvs32x_swarcadee = {
 	"s32x_swarcadee", "s32x_swarcade", NULL, NULL, "1994",
 	"Star Wars Arcade (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_swarcadeeRomInfo, s32x_swarcadeeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -909,7 +909,7 @@ struct BurnDriver BurnDrvs32x_swarcadej = {
 	"s32x_swarcadej", "s32x_swarcade", NULL, NULL, "1994",
 	"Star Wars Arcade (Japan)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_swarcadejRomInfo, s32x_swarcadejRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -928,7 +928,7 @@ struct BurnDriver BurnDrvs32x_tempo = {
 	"s32x_tempo", NULL, NULL, NULL, "1995",
 	"Tempo (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_tempoRomInfo, s32x_tempoRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -947,7 +947,7 @@ struct BurnDriver BurnDrvs32x_tmek = {
 	"s32x_tmek", NULL, NULL, NULL, "1995",
 	"T-MEK (USA, Europe)\0", NULL, "Time Warner Interactive", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_tmekRomInfo, s32x_tmekRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -966,7 +966,7 @@ struct BurnDriver BurnDrvs32x_toughman = {
 	"s32x_toughman", NULL, NULL, NULL, "1995",
 	"Toughman Contest (USA, Europe)\0", NULL, "EA Sports", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
 	S32XGetZipName, s32x_toughmanRomInfo, s32x_toughmanRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -985,7 +985,7 @@ struct BurnDriver BurnDrvs32x_vf = {
 	"s32x_vf", NULL, NULL, NULL, "1995",
 	"Virtua Fighter (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_vfRomInfo, s32x_vfRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1004,7 +1004,7 @@ struct BurnDriver BurnDrvs32x_vfe = {
 	"s32x_vfe", "s32x_vf", NULL, NULL, "1995",
 	"Virtua Fighter (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_vfeRomInfo, s32x_vfeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1023,7 +1023,7 @@ struct BurnDriver BurnDrvs32x_vhamster = {
 	"s32x_vhamster", NULL, NULL, NULL, "1995",
 	"Virtua Hamster (USA, Prototype)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_ACTION, 0,
 	S32XGetZipName, s32x_vhamsterRomInfo, s32x_vhamsterRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1042,7 +1042,7 @@ struct BurnDriver BurnDrvs32x_vrdx = {
 	"s32x_vrdx", NULL, NULL, NULL, "1994",
 	"Virtua Racing Deluxe (USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
 	S32XGetZipName, s32x_vrdxRomInfo, s32x_vrdxRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1061,7 +1061,7 @@ struct BurnDriver BurnDrvs32x_vrdxe = {
 	"s32x_vrdxe", "s32x_vrdx", NULL, NULL, "1994",
 	"Virtua Racing Deluxe (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
 	S32XGetZipName, s32x_vrdxeRomInfo, s32x_vrdxeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1080,7 +1080,7 @@ struct BurnDriver BurnDrvs32x_vrdxj = {
 	"s32x_vrdxj", "s32x_vrdx", NULL, NULL, "1994",
 	"Virtua Racing Deluxe (Japan)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_32X, GBF_RACING, 0,
 	S32XGetZipName, s32x_vrdxjRomInfo, s32x_vrdxjRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1099,7 +1099,7 @@ struct BurnDriver BurnDrvs32x_wsbaseb = {
 	"s32x_wsbaseb", NULL, NULL, NULL, "1995",
 	"World Series Baseball Starring Deion Sanders (USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_SPORTSMISC, 0,
 	S32XGetZipName, s32x_wsbasebRomInfo, s32x_wsbasebRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1118,7 +1118,7 @@ struct BurnDriver BurnDrvs32x_wwfraw = {
 	"s32x_wwfraw", NULL, NULL, NULL, "1995",
 	"WWF Raw (World)\0", NULL, "Acclaim", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_wwfrawRomInfo, s32x_wwfrawRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1137,7 +1137,7 @@ struct BurnDriver BurnDrvs32x_wwfwma = {
 	"s32x_wwfwma", NULL, NULL, NULL, "1995",
 	"WWF WrestleMania - The Arcade Game (USA)\0", NULL, "Acclaim", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_32X, GBF_VSFIGHT, 0,
 	S32XGetZipName, s32x_wwfwmaRomInfo, s32x_wwfwmaRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1158,7 +1158,7 @@ struct BurnDriverD BurnDrvs32x_xmen = {
 	"s32x_xmen", NULL, NULL, NULL, "1995",
 	"X-Men (USA, Prototype)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_SCRFIGHT, 0,
+	BDF_PROTOTYPE, 1, HARDWARE_SEGA_32X, GBF_SCRFIGHT, 0,
 	S32XGetZipName, s32x_xmenRomInfo, s32x_xmenRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1177,7 +1177,7 @@ struct BurnDriver BurnDrvs32x_xrick = {
 	"s32x_xrick", NULL, NULL, NULL, "2011",
 	"xRick (World, v1.1)\0", NULL, "<unknown>", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_32X, GBF_PLATFORM, 0,
 	S32XGetZipName, s32x_xrickRomInfo, s32x_xrickRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1196,7 +1196,7 @@ struct BurnDriver BurnDrvs32x_zaxxonmb = {
 	"s32x_zaxxonmb", NULL, NULL, NULL, "1995",
 	"Zaxxon's Motherbase 2000 (Japan, USA)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_zaxxonmbRomInfo, s32x_zaxxonmbRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -1215,7 +1215,7 @@ struct BurnDriver BurnDrvs32x_zaxxonmbe = {
 	"s32x_zaxxonmbe", "s32x_zaxxonmb", NULL, NULL, "1995",
 	"Motherbase (Europe)\0", NULL, "Sega", "Sega 32X",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_32X, GBF_SHOOT, 0,
 	S32XGetZipName, s32x_zaxxonmbeRomInfo, s32x_zaxxonmbeRomName, NULL, NULL, NULL, NULL, S32XInputInfo, S32XDIPInfo,
 	MegadriveInit32X, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

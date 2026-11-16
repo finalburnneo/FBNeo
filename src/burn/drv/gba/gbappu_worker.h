@@ -1,6 +1,5 @@
-// GBA PPU multithreaded renderer
-// Main thread captures per-scanline snapshots; worker composes pixels
-// into triple-buffered outputs. POSIX (pthread) / Win32 / single-threaded.
+// GBA PPU multithreaded renderer: scanline snapshots + worker composition.
+// Backends: pthread / Win32 / single-threaded fallback.
 
 #pragma once
 
@@ -46,17 +45,13 @@
 
 #define GBAPPU_WORKER_ENABLED (GBAPPU_WORKER_HAVE_PTHREAD || GBAPPU_WORKER_HAVE_WINTHREAD)
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-
 typedef struct ppw_blob_hdr_t {
 	UINT32 magic;      // PPW_BLOB_MAGIC
 	UINT32 version;    // PPW_BLOB_VERSION
 	INT32  out_bpp;    // depth of the saved payload (2/3/4)
 	INT32  front_idx;  // presented slot (0..N-1), -1 = no frame presented yet
 } ppw_blob_hdr_t;
-#define PPW_BLOB_MAGIC    0x00575021u	// "!PW" (fixed)
+#define PPW_BLOB_MAGIC    0x00575021u	// "!PW"
 #define PPW_BLOB_VERSION  1u
 #define PPW_BLOB_HEADER   ((int)sizeof(ppw_blob_hdr_t))
 #define PPW_BPP_MAX       4                          // 32bpp XRGB8888 = 4 B/px (max of 2/3/4)
@@ -68,25 +63,19 @@ typedef struct ppw_blob_hdr_t {
 
 // PPU MMIO snapshot window (96B; DISPCNT..BLDY plus padding).
 #define GBAPPU_WORKER_IO_SIZE     0x60
+// Three slots: presented, being-rendered, being-captured; one job in flight.
 #define GBAPPU_WORKER_N_BUFFERS   3
+
+// Per-line VRAM journal capacity inside a snapshot slot (bytes).
+#define PPW_VRAM_POOL             (256 * 1024)
 // Worker thread stack size.
 #define GBAPPU_WORKER_STACK_SIZE  (128 * 1024)
 
-// VBlank always waits for the worker to finish the previous job, so no
-// frame is dropped. The cost is that the main thread can be limited to
-// the worker's render speed when a job takes longer than a frame budget.
-
-#if GBAPPU_WORKER_N_BUFFERS < 2 || GBAPPU_WORKER_N_BUFFERS > 8
-#error GBAPPU_WORKER_N_BUFFERS must be between 2 and 8
-#endif
-
 // Render context - worker-side pixel composition state.
-//   framebuffer / backbuf = internal 32-bit XRGB8888 render target
-//     ([23:0]=BGR888, [31:24]=priority/flags). All BG/OBJ/alpha/ghosting/
-//     green-swap logic runs here for 8-bit precision without per-bpp bloat.
-//   out_ptr / out_bpp: when out_bpp != 4, each scanline is converted to
-//     native format (BGR24 or RGB565) after the pixel loop completes, so
-//     DrvDraw can memcpy rows directly to pBurnDraw with no post-pass.
+//   framebuffer/backbuf: XRGB8888 target ([23:0]=BGR888, [31:24]=priority/flags),
+//     where all BG/OBJ/alpha/ghosting work runs.
+//   out_ptr/out_bpp: scanlines are converted to native format (BGR24/RGB565) when
+//     out_bpp != 4, so DrvDraw memcpys rows to pBurnDraw directly.
 typedef struct ppu_worker_render_ctx_t {
 	UINT8* vram;
 	UINT8* oam;
@@ -98,58 +87,108 @@ typedef struct ppu_worker_render_ctx_t {
 	UINT8*  window;
 	UINT32* framebuffer;   // internal 32-bit XRGB8888 render target
 	// Direct output: when out_ptr!=NULL, each scanline is written in out_bpp
-	// format right after the pixel loop completes (when green_swap neighbor
-	// G writes have finished for the whole line, so all pixels are final).
+	// format right after the pixel loop completes (all pixels then final).
 	UINT8*  out_ptr;       // output buffer (row stride = GBA_LCD_W * out_bpp)
 	INT32   out_bpp;       // 2=RGB565, 3=BGR24; 4 uses framebuffer directly
 	bool    stop_mode;
-	// True when every scanline's OAM equals line 0's (the Y-bucket seed): lets
-	// render_objs skip both per-line 128-sprite rescans unless a bucket overflowed.
+	// True when every scanline's OAM equals line 0's; lets render_objs skip
+	// the late catch-up rescan.
 	bool    oam_uniform;
+	// True when every enabled OBJ in the frame is a regular (non-rot/scale)
+	// sprite with OBJ mosaic off and OBJ window off.
+	bool    oam_all_regular;
+	// Visible OBJ count per scanline; built from line 0 OAM and valid only
+	// when oam_all_regular is true.
+	INT32   obj_count[GBA_LCD_H];
 	// Per-frame ghosting Q8 factor (frame-level constant).
-	INT32 sbf_q8;
-	INT32 one_m_sbf_q8;
-	bool  ghost_fast;         // sbf_q8 == 0 -> direct write, no blend
+	INT32 ghost_q8;
+	INT32 one_minus_ghost_q8;
+	bool  ghost_fast;         // ghost_q8 == 0 -> direct write, no blend
 
 	// Per-frame tile-row cache (same tile + same py reused across scanlines).
-	INT32  fc_tile_key[4];
-	UINT8  fc_tile_bytes[4][8];
-	bool   fc_tile_valid[4];
+	INT32  tile_fetch_key[4];
+	UINT8  tile_fetch_bytes[4][8];
+	bool   tile_fetch_valid[4];
 
 	// Per-frame OBJ Y-buckets: up to 64 sprites per scanline.
 	const INT32 (*obj_bucket)[64];
 	const INT32*  obj_bucket_n;
 	// Scanline flags set at render_scanline entry.
 	bool  no_windows;         // windows have no per-pixel effect this line
-	bool  need_second_buf;    // frame-level flag: 1 if any scanline needs a second buffer (set by render_objs)
-	INT32 eff_bld_mode;       // BLDCNT effect mode actually in force (0 when inert)
+	bool  frame_needs_second_buf; // frame-level: 1 if any scanline needs second buffer (set by render_objs)
+	bool  need_second_this_line;  // per-line flag: true while this scanline actually uses st_buf
+	INT32 eff_blend_mode;       // BLDCNT effect mode actually in force (0 when inert)
 	bool  has_any_obj_this_line; // render_objs saw a visible OBJ; fast-pixel skips backdrop fill when set
-	// FP-A: pre-expanded palette table (512 x XRGB8888 UINT32), rebuilt per
+	// Pre-expanded palette table (512 x XRGB8888 UINT32), rebuilt per
 	// scanline only when the palette changed (dirty-checked).
-	UINT32 pal_xrgb32[512];
-	UINT8  last_palette[1024];   // FP-A: snapshot of palette at last rebuild
+	UINT32 pal_xrgb[512];
+	UINT8  pal_snapshot[1024];   // Snapshot of palette at last rebuild
 	bool   pal_valid;            // false until first rebuild (ctx is not zeroed)
 	// BG palette bank cache, refreshed at tile boundaries by the generic BG loop.
 	INT32  cached_pal_bank[4];
 } ppu_worker_render_ctx_t;
 
-// Per-scanline snapshot (~2.1 KB / line).
+// Per-scanline snapshot.
 typedef struct ppu_worker_line_state_t {
 	UINT8  io[GBAPPU_WORKER_IO_SIZE];
 	UINT8  oam[1024];
 	UINT8  palette[1024];
-	INT32  bgx[2];
-	INT32  bgy[2];
+	INT32  aff_bgx[2];
+	INT32  aff_bgy[2];
 	UINT16 dispcnt_pipeline[3];
 } ppu_worker_line_state_t;
 
-// Full frame snapshot: 128 KB VRAM + 160 line states + frame settings.
+// Full frame snapshot: 160 line states + frame settings + a per-line VRAM
+// journal replayed on the shared line-0 baseline (ppu_worker_t::vram_shadow).
 typedef struct ppu_worker_snapshot_t {
-	UINT8  vram[128 * 1024];
 	ppu_worker_line_state_t line_state[GBA_LCD_H];
 	float  ghosting_strength;
 	bool   stop_mode;
+
+	// Per-scanline VRAM journal replayed onto the shared vram_shadow baseline.
+	UINT8  vram_pool[PPW_VRAM_POOL];
+	UINT32 vram_line_lo[GBA_LCD_H];   // dirty range low; lo >= hi means unchanged
+	UINT32 vram_line_hi[GBA_LCD_H];   // dirty range high (exclusive)
+	UINT32 vram_line_off[GBA_LCD_H];  // where line y's bytes start in vram_pool
+	UINT32 vram_pool_used;
+	bool   vram_journal;              // at least one line changed mid-frame
+	bool   vram_journal_overflow;     // pool full: render reads vram_shadow directly
+
+	// OAM/palette sharing: false while no mid-frame write was seen, in which
+	// case every scanline reads line 0's copy and no per-line copy is stored.
+	bool   oam_per_line;
+	bool   palette_per_line;
+
+	// Frame-level palette pre-expanded to 512 XRGB8888 entries from
+	// line_state[0].palette at the lcd_y == 0 HBlank capture; used when
+	// palette_per_line is false.
+	UINT32 pal_xrgb[512];
 } ppu_worker_snapshot_t;
+
+// Resolve a scanline's OAM/palette: line 0's frame-level copy, unless the line
+// was captured after a mid-frame write.
+SB_ALWAYS_INLINE const UINT8* ppu_worker_line_oam(const ppu_worker_snapshot_t* snap, INT32 y)
+{
+	return snap->oam_per_line ? snap->line_state[y].oam : snap->line_state[0].oam;
+}
+SB_ALWAYS_INLINE const UINT8* ppu_worker_line_palette(const ppu_worker_snapshot_t* snap, INT32 y)
+{
+	return snap->palette_per_line ? snap->line_state[y].palette : snap->line_state[0].palette;
+}
+
+// Expand a BGR555 palette snapshot (512 entries) to XRGB8888; bits 24-31 stay 0.
+SB_ALWAYS_INLINE void ppu_worker_expand_palette(UINT32* dst, const UINT8* pal_bytes)
+{
+	const UINT16* p16 = (const UINT16*)pal_bytes;
+	for (INT32 pi = 0; pi < 512; ++pi) {
+		UINT16 c = BURN_ENDIAN_SWAP_INT16(p16[pi]);
+		UINT32 r = c & 0x1Fu, g = (c >> 5) & 0x1Fu, b = (c >> 10) & 0x1Fu;
+		r = (r << 3) | (r >> 2);
+		g = (g << 3) | (g >> 2);
+		b = (b << 3) | (b >> 2);
+		dst[pi] = (r << 16) | (g << 8) | b;
+	}
+}
 
 #if GBAPPU_WORKER_HAVE_PTHREAD
 typedef struct ppu_worker_evt_t {
@@ -165,29 +204,39 @@ typedef struct ppu_worker_t {
 	bool enabled;
 	bool exiting;
 
-	// Output pixel depth - set once at driver init (nBurnBpp = 2/3/4).
-	// Constant for the session; worker picks its pixel write path from this.
+	// Output pixel depth (2/3/4), fixed per session.
 	INT32 out_bpp;
 
 	ppu_worker_snapshot_t snapshots[GBAPPU_WORKER_N_BUFFERS];
-	// Internal XRGB8888 render targets (one per triple-buffer slot); all
-	// BG/OBJ/alpha/ghosting/green-swap logic runs in UINT32 space here.
-	// When out_bpp==4 this is presented to DrvDraw directly (zero copy), else
-	// the scanline renderer writes native-format pixels into out_buf[slot].
+	// Internal XRGB8888 render targets (one per slot); presented directly at
+	// 32bpp (zero copy), otherwise re-encoded per scanline into out_buf.
 	UINT32  backbuf[GBAPPU_WORKER_N_BUFFERS][GBA_LCD_W * GBA_LCD_H];
+	// Shared VRAM line-0 baseline of the frame being rendered.
+	UINT8   vram_shadow[128 * 1024];
+	// Running VRAM the journal path replays deltas onto (worker thread only).
+	UINT8   vram_scratch[128 * 1024];
 
 	// Output scanline buffers (one per slot), lazily allocated when
-	// out_bpp!=4 (bpp=2: 75 KB/slot, bpp=3: 112 KB/slot; NULL at 32bpp).
+	// out_bpp!=4 (NULL at 32bpp).
 	UINT8* out_buf[GBAPPU_WORKER_N_BUFFERS];
 
-	volatile int w_idx;          // main: slot the next frame is captured into
-	volatile int r_idx;          // worker: slot the in-flight job renders into
+	volatile int write_snap_idx;          // main: slot the next frame is captured into
+	volatile int read_snap_idx;          // worker: slot the in-flight job renders into
 	volatile int ready_back_idx; // slot of the last completed job
 	volatile int front_idx;      // presented slot (backbuf at 32bpp, else out_buf)
 
 	volatile bool worker_busy;
 	volatile bool have_first_frame;
 	volatile int  inflight;      // submitted-but-not-collected job count
+	// Set by main thread to abort the in-flight render (load_state / mode switch).
+	volatile bool cancel_render;
+
+	// OAM/palette write counters (main thread): the snapshot compares them
+	// against the line-0 baseline to detect mid-frame modification.
+	UINT32 oam_write_seq;
+	UINT32 palette_write_seq;
+	UINT32 oam_write_base;
+	UINT32 palette_write_base;
 
 #if GBAPPU_WORKER_HAVE_PTHREAD
 	pthread_t        worker;
@@ -200,77 +249,104 @@ typedef struct ppu_worker_t {
 #endif
 } ppu_worker_t;
 
-static inline bool ppu_worker_enabled(const ppu_worker_t* w) {
-	return w && w->enabled;
+static inline bool ppu_worker_enabled(const ppu_worker_t* worker) {
+	return worker && worker->enabled;
+}
+
+// Note a palette (0x05) or OAM (0x07) write. No-op without a worker.
+static inline void gba_ppu_worker_note_mem_write(gba_t* gba, UINT32 bank)
+{
+	ppu_worker_t* worker = gba->ppu_worker_ptr;
+	if (worker == NULL) return;
+	if (bank == 0x05u)      worker->palette_write_seq = worker->palette_write_seq + 1u;
+	else if (bank == 0x07u) worker->oam_write_seq     = worker->oam_write_seq + 1u;
 }
 
 // --- Internal helpers ------------------------------------------------------
 
 // Reset per-slot state. line_state is overwritten each frame by snapshots
 // before being read - no memset needed.
-static inline void ppu_worker_reset_slot(ppu_worker_t* w, int idx, gba_t* gba)
+static inline void ppu_worker_reset_slot(ppu_worker_t* worker, int snap_idx, gba_t* gba)
 {
-	ppu_worker_snapshot_t* s = &w->snapshots[idx];
-	s->ghosting_strength = gba->ppu.ghosting_strength;
-	s->stop_mode         = gba->stop_mode;
-	// Seed line_state[0] OAM/palette: OAM feeds the OBJ Y-bucket seed, and both
-	// must be valid even before line 0 is snapshotted.
-	memcpy(s->line_state[0].oam,     gba->mem.oam,     1024);
-	memcpy(s->line_state[0].palette, gba->mem.palette, 1024);
+	ppu_worker_snapshot_t* snap = &worker->snapshots[snap_idx];
+	snap->ghosting_strength = gba->ppu.ghosting_strength;
+	snap->stop_mode         = gba->stop_mode;
+	snap->oam_per_line      = false;
+	snap->palette_per_line  = false;
+	// Seed line_state[0] OAM/palette; both must be valid before line 0 is snapshotted.
+	memcpy(snap->line_state[0].oam,     gba->mem.oam,     1024);
+	memcpy(snap->line_state[0].palette, gba->mem.palette, 1024);
+	// The per-line VRAM journal is rebuilt by the line snapshots of this frame.
+	snap->vram_journal          = false;
+	snap->vram_journal_overflow = false;
+	snap->vram_pool_used        = 0;
 }
 
 // Install per-line state into the render context. stop_mode is frame-level.
 static inline void ppu_worker_install_io(ppu_worker_render_ctx_t* ctx,
-                                         const ppu_worker_line_state_t* ls,
+                                         const ppu_worker_line_state_t* line,
                                          bool stop_mode)
 {
-	ctx->io      = (UINT8*)ls->io;
-	ctx->oam     = (UINT8*)ls->oam;
-	ctx->palette = (UINT8*)ls->palette;
-	ctx->ppu->aff[0].render_bgx = ls->bgx[0];
-	ctx->ppu->aff[0].render_bgy = ls->bgy[0];
-	ctx->ppu->aff[1].render_bgx = ls->bgx[1];
-	ctx->ppu->aff[1].render_bgy = ls->bgy[1];
-	ctx->ppu->dispcnt_pipeline[0] = ls->dispcnt_pipeline[0];
-	ctx->ppu->dispcnt_pipeline[1] = ls->dispcnt_pipeline[1];
-	ctx->ppu->dispcnt_pipeline[2] = ls->dispcnt_pipeline[2];
+	ctx->io      = (UINT8*)line->io;
+	ctx->oam     = (UINT8*)line->oam;
+	ctx->palette = (UINT8*)line->palette;
+	ctx->ppu->aff[0].render_bgx = line->aff_bgx[0];
+	ctx->ppu->aff[0].render_bgy = line->aff_bgy[0];
+	ctx->ppu->aff[1].render_bgx = line->aff_bgx[1];
+	ctx->ppu->aff[1].render_bgy = line->aff_bgy[1];
+	ctx->ppu->dispcnt_pipeline[0] = line->dispcnt_pipeline[0];
+	ctx->ppu->dispcnt_pipeline[1] = line->dispcnt_pipeline[1];
+	ctx->ppu->dispcnt_pipeline[2] = line->dispcnt_pipeline[2];
 	ctx->stop_mode = stop_mode;
 }
 
-// Worker-side scanline composition. All BG/OBJ/blend/ghosting/green-swap logic
-// works in 32-bit XRGB8888 space ([23:0]=BGR888, [31:24]=priority/flags).
-//
-// Key optimizations:
-//   FP-A pal_xrgb32 palette pre-expansion - 1 table lookup/px replaces 3 BFE + 3 shift
-//   FP-B bitmap BG pre-setup              - skip BG0/1/3 state for modes 3/4/5
-//   FP-C single-BG no-OBJ fast path       - 4-pixel unrolled loop, skips second buffer
-//   FP-D fast-pixel + opaque-OBJ row      - fast-pixel row with OBJ already composed
-//   FP-E 4bpp text 8px tile-block decode  - 1 tilemap read + 1 VRAM read per 8px (no h-flip/mosaic)
-//   FP-F no-OBJ quick scanline            - early return when Y-bucket is empty and no windows are enabled
-//   Lazy window/blend reduction           -> skip the per-line window passes
-//                                           and the effect chain when inert
-//   OBJ Y-bucket pre-filter (VBlank)      - drop off-screen sprites before Pass2
-//   HBlank OAM Y re-scan                  - catch DMA-modified sprites
-//   OBJ rot/scale DDA                    -> 2 adds/px instead of 4 multiplies
-//   Ghosting Q8 fixed point              -> no FP ops in blend
-//   BG/OBJ tile-row byte cache           -> 1 VRAM read/tile row vs 8
-//   Affine BG tile-entry cache           -> tilemap read only at tile boundaries
-//   BG early-exit (obj_covers)           -> skip BG loop when opaque OBJ dominates
-//   Active-BG list                       -> skip disabled BGs without per-pixel bit tests
-//   BGR24/RGB565 4-pixel unroll          -> output loop overhead halved
-//   Pointerized pixel loops (SB_RESTRICT) -> eliminate indexed addressing
-//   Integer blend lookup tables per-line -> no per-pixel multiply/division
-//   Palette dirty-check (1KB memcmp)     -> skip pal_xrgb32 rebuild on unchanged lines
-//   Per-tile pal_bank cache              -> eliminate per-pixel palette*16 multiply
-//   OBJ Pass1 fill_hit helper            -> deduplicate Y-bucket/late-catch hit filling
-//   Blend tables built conditionally     -> skip unused tables based on bld_mode
-
-static inline UINT16 ppu_worker_io_read16(ppu_worker_render_ctx_t* ctx, UINT32 addr)
+// Read a PPU MMIO halfword from the per-line IO snapshot.
+SB_ALWAYS_INLINE UINT16 ppu_worker_io_read16(ppu_worker_render_ctx_t* ctx, UINT32 addr)
 {
 	return BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->io + (addr & 0x3ff)));
 }
 
-// OBJ size lookup: index = obj_size * 4 + obj_shape (0..15).
+// 4bpp tile row: fetch 4 VRAM bytes into the per-frame tile cache.
+SB_ALWAYS_INLINE const UINT8* ppu_worker_fetch_tile4(ppu_worker_render_ctx_t* ctx, INT32 bg, INT32 addr)
+{
+	if (!ctx->tile_fetch_valid[bg] || ctx->tile_fetch_key[bg] != addr) {
+		ctx->tile_fetch_key[bg] = addr;
+		UINT32 tile_word = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
+		UINT8* tile_bytes = ctx->tile_fetch_bytes[bg];
+		tile_bytes[0] = (UINT8)tile_word;
+		tile_bytes[1] = (UINT8)(tile_word >> 8);
+		tile_bytes[2] = (UINT8)(tile_word >> 16);
+		tile_bytes[3] = (UINT8)(tile_word >> 24);
+		ctx->tile_fetch_valid[bg] = true;
+	}
+	return ctx->tile_fetch_bytes[bg];
+}
+
+// 8bpp tile row: fetch 8 VRAM bytes into the per-frame tile cache.
+SB_ALWAYS_INLINE const UINT8* ppu_worker_fetch_tile8(ppu_worker_render_ctx_t* ctx, INT32 bg, INT32 addr)
+{
+	if (!ctx->tile_fetch_valid[bg] || ctx->tile_fetch_key[bg] != addr) {
+		ctx->tile_fetch_key[bg] = addr;
+		UINT64 tile_qword = BURN_ENDIAN_SWAP_INT64(*(const UINT64*)(ctx->vram + addr));
+		UINT8* tile_bytes = ctx->tile_fetch_bytes[bg];
+		for (INT32 k = 0; k < 8; ++k) tile_bytes[k] = (UINT8)(tile_qword >> (8 * k));
+		ctx->tile_fetch_valid[bg] = true;
+	}
+	return ctx->tile_fetch_bytes[bg];
+}
+
+// Fill a 240-pixel row with a constant colour (4-pixel unroll).
+SB_ALWAYS_INLINE void ppu_worker_fill_row(UINT32* dst, UINT32 col)
+{
+	for (INT32 x = 0; x < GBA_LCD_W; x += 4) {
+		dst[x]     = col;
+		dst[x + 1] = col;
+		dst[x + 2] = col;
+		dst[x + 3] = col;
+	}
+}
+
+// OBJ size table; index = obj_size * 4 + obj_shape.
 static const INT32 gba_obj_xsize[16] = {
 	 8,16, 8, 0,  16,32, 8, 0,  32,32,16, 0,  64,64,32, 0
 };
@@ -278,183 +354,267 @@ static const INT32 gba_obj_ysize[16] = {
 	 8, 8,16, 0,  16, 8,32, 0,  32, 16,32, 0,  64,32,64, 0
 };
 
-// Compact hit record - all data Pass 2 needs, no extra OAM reads.
+// Vertical wrap: tall OBJ whose bottom exceeds Y=256 is moved up by 256.
+SB_ALWAYS_INLINE INT32 ppu_worker_obj_y_wrap(INT32 y_coord, INT32 y_size_eff)
+{
+	return (y_coord + y_size_eff > 256) ? (y_coord - 256) : y_coord;
+}
+
+// Decoded geometry for one OBJ slot (shared across all per-scanline passes).
+typedef struct ppu_worker_obj_geom_t {
+	INT32 x_size, y_size, y_size_eff, x_draw_w;
+	INT32 y_coord, y_wrap, x_raw;
+	INT16 x_coord;
+	bool  rot_scale, double_size;
+	// Pre-decoded attr0/1/2 fields (populated by ppu_worker_obj_decode for valid slots).
+	UINT8 obj_mode, mosaic, colors_or_palettes, h_flip, v_flip;
+	UINT8 priority, palette;
+	UINT16 rot_scale_param;
+	INT16  tile_base;
+	bool   valid;   // false for disabled (attr0 bit9 && !rot_scale) slots
+} ppu_worker_obj_geom_t;
+
+// Decode one OAM slot into geom (includes attr0/1/2 attribute bits for Pass 2).
+// Returns false when the slot is disabled (double-size bit set without rot/scale).
+static inline bool ppu_worker_obj_decode(ppu_worker_obj_geom_t* geom, const UINT8* oam, INT32 obj_idx)
+{
+	const UINT8* entry = oam + obj_idx * 8;
+	UINT32 attr_word01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)entry);
+	UINT16 attr0 = (UINT16)attr_word01;
+	UINT16 attr1 = (UINT16)(attr_word01 >> 16);
+	UINT16 attr2 = BURN_ENDIAN_SWAP_INT16(*(const UINT16*)(entry + 4));
+
+	geom->rot_scale   = SB_BFE(attr0, 8, 1);
+	geom->double_size = SB_BFE(attr0, 9, 1) && geom->rot_scale;
+	if (SB_BFE(attr0, 9, 1) && !geom->rot_scale) {
+		geom->valid = false;
+		return false;
+	}
+	INT32 obj_shape = SB_BFE(attr0, 14, 2);
+	INT32 obj_size  = SB_BFE(attr1, 14, 2);
+	geom->x_size     = gba_obj_xsize[obj_size * 4 + obj_shape];
+	geom->y_size     = gba_obj_ysize[obj_size * 4 + obj_shape];
+	geom->y_size_eff = geom->y_size * (geom->double_size ? 2 : 1);
+	geom->x_draw_w   = geom->x_size * (geom->double_size ? 2 : 1);
+	geom->y_coord    = SB_BFE(attr0, 0, 8);
+	geom->y_wrap     = ppu_worker_obj_y_wrap(geom->y_coord, geom->y_size_eff);
+	geom->x_raw      = SB_BFE(attr1, 0, 9);
+	INT16 x_coord = (INT16)geom->x_raw;
+	if (SB_BFE(x_coord, 8, 1)) x_coord |= 0xfe00;
+	geom->x_coord = x_coord;
+	geom->obj_mode           = (UINT8)SB_BFE(attr0, 10, 2);
+	geom->mosaic             = (UINT8)SB_BFE(attr0, 12, 1);
+	geom->colors_or_palettes = (UINT8)SB_BFE(attr0, 13, 1);
+	geom->h_flip             = (UINT8)(SB_BFE(attr1, 12, 1) && !geom->rot_scale);
+	geom->v_flip             = (UINT8)(SB_BFE(attr1, 13, 1) && !geom->rot_scale);
+	geom->rot_scale_param    = (UINT16)SB_BFE(attr1, 9, 5);
+	geom->priority           = (UINT8)SB_BFE(attr2, 10, 2);
+	geom->palette            = (UINT8)SB_BFE(attr2, 12, 4);
+	geom->tile_base          = (INT16)SB_BFE(attr2, 0, 10);
+	geom->valid = true;
+	return true;
+}
+
+// True when the OBJ covers the given scanline after vertical wrap.
+SB_ALWAYS_INLINE bool ppu_worker_obj_covers_row(const ppu_worker_obj_geom_t* geom, INT32 sprite_lcd_y)
+{
+	INT32 sy = sprite_lcd_y - geom->y_wrap;
+	return sy >= 0 && sy < geom->y_size_eff;
+}
+
+// True when the OBJ lies fully outside the 240-pixel row.
+SB_ALWAYS_INLINE bool ppu_worker_obj_off_row(const ppu_worker_obj_geom_t* geom)
+{
+	return geom->x_raw >= 240 && geom->x_raw + geom->x_draw_w < 512;
+}
+
+// Horizontal clip range on the row; an empty range has no visible pixel.
+SB_ALWAYS_INLINE void ppu_worker_obj_x_clip(const ppu_worker_obj_geom_t* geom, INT32* x_lo, INT32* x_hi)
+{
+	INT32 x_end = geom->x_coord + geom->x_draw_w;
+	*x_lo = geom->x_coord < 0 ? 0 : (geom->x_coord > GBA_LCD_W ? GBA_LCD_W : geom->x_coord);
+	*x_hi = x_end > GBA_LCD_W ? GBA_LCD_W : (x_end < 0 ? 0 : x_end);
+}
+
+// OBJ draw-cycle cost. Returns false when a normal OBJ is fully left-offscreen
+// and charges zero cycles.
+static inline bool ppu_worker_obj_draw_cycles(const ppu_worker_obj_geom_t* geom, INT32* cycles)
+{
+	if (geom->rot_scale) {
+		INT32 cost = 8 + geom->x_draw_w * 2;
+		if (geom->x_coord < 0) cost += geom->x_coord;
+		*cycles = cost;
+		return true;
+	}
+	if (geom->x_coord < 0 && geom->x_coord + geom->x_size < 0)
+		return false;
+	INT32 cost = geom->x_size - 2;
+	if (geom->x_coord < 0) cost += geom->x_coord >> 1;
+	*cycles = cost;
+	return true;
+}
+
+
+// Compact hit record for one OBJ (Pass 2 uses only this, no further OAM reads).
 typedef struct ppu_worker_hit_t {
-	UINT8  o, rot_scale, double_size, obj_mode;
+	UINT8  rot_scale, double_size, obj_mode;
 	UINT8  mosaic, colors_or_palettes, h_flip, v_flip;
 	UINT8  priority, palette;
-	UINT16 rotscale_param;
+	UINT16 rot_scale_param;
 	INT16  tile_base;
 	INT16  x_coord, x_start, x_end;
 	UINT16 y_coord, x_size, y_size;
 } ppu_worker_hit_t;
 
-// Helper: fill one hit entry from OAM attributes (eliminates Pass1/late-catch-up duplication).
-static inline void ppu_worker_fill_hit(ppu_worker_hit_t* h, const UINT8* oam, INT32 o,
-                                       bool rot_scale, bool double_size,
-                                       INT32* n_semitrans_objs, bool* obj_seen,
-                                       INT32 y_coord, INT32 x_coord, INT32 x_size, INT32 y_size,
-                                       INT32 xs_c, INT32 xe_c) {
-	UINT32 a012 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(oam + o * 8));
-	UINT16 attr0 = (UINT16)(a012 & 0xFFFFu);
-	UINT16 attr1 = (UINT16)(a012 >> 16);
-	UINT16 attr2 = BURN_ENDIAN_SWAP_INT16(*(const UINT16*)(oam + o * 8 + 4));
-
-	h->o                  = (UINT8)o;
-	h->rot_scale          = (UINT8)rot_scale;
-	h->double_size        = (UINT8)double_size;
-	INT32 obj_mode_val    = SB_BFE(attr0, 10, 2);
-	h->obj_mode           = (UINT8)obj_mode_val;
+// Populate one hit entry from a pre-decoded geom (no further OAM reads).
+static void ppu_worker_fill_hit(ppu_worker_hit_t* hit, const ppu_worker_obj_geom_t* geom,
+                                       INT32 x_clip_lo, INT32 x_clip_hi,
+                                       INT32* n_semitrans_objs) {
+	hit->rot_scale          = (UINT8)geom->rot_scale;
+	hit->double_size        = (UINT8)geom->double_size;
+	INT32 obj_mode_val      = geom->obj_mode;
+	hit->obj_mode           = (UINT8)obj_mode_val;
 	if (obj_mode_val == 1) ++(*n_semitrans_objs);
-	h->mosaic             = (UINT8)SB_BFE(attr0, 12, 1);
-	bool  is_256          = SB_BFE(attr0, 13, 1);
-	h->colors_or_palettes = (UINT8)is_256;
-	h->h_flip             = (UINT8)(SB_BFE(attr1, 12, 1) && !rot_scale);
-	h->v_flip             = (UINT8)(SB_BFE(attr1, 13, 1) && !rot_scale);
-	h->rotscale_param     = (UINT16)SB_BFE(attr1,  9, 5);
-	h->priority           = (UINT8)SB_BFE(attr2, 10, 2);
-	h->palette            = (UINT8)SB_BFE(attr2, 12, 4);
-	h->tile_base          = (INT16)SB_BFE(attr2,  0, 10);
-	h->x_coord            = (INT16)x_coord;
-	h->x_start            = (INT16)xs_c;
-	h->x_end              = (INT16)xe_c;
-	h->y_coord            = (UINT16)y_coord;
-	h->x_size             = (UINT16)x_size;
-	h->y_size             = (UINT16)y_size;
-	obj_seen[o] = true;
+	hit->mosaic             = geom->mosaic;
+	hit->colors_or_palettes = geom->colors_or_palettes;
+	hit->h_flip             = geom->h_flip;
+	hit->v_flip             = geom->v_flip;
+	hit->rot_scale_param    = geom->rot_scale_param;
+	hit->priority           = geom->priority;
+	hit->palette            = geom->palette;
+	hit->tile_base          = geom->tile_base;
+	hit->x_coord            = geom->x_coord;
+	hit->x_start            = (INT16)x_clip_lo;
+	hit->x_end              = (INT16)x_clip_hi;
+	hit->y_coord            = (UINT16)geom->y_coord;
+	hit->x_size             = (UINT16)geom->x_size;
+	hit->y_size             = (UINT16)geom->y_size;
 }
 
-// Render OBJ layer + build window mask for one scanline.
-// Window reduction: when the enabled WIN0/WIN1 rectangles leave the whole
-// window mask at one value equivalent to the no-window default (0x3F, or
-// 0x1F when BLDCNT has no first target so the special-effect bit is inert),
-// the window array/rect/backdrop-clear passes can be skipped.
-// Returns true when that holds for this scanline.
-static inline bool ppu_worker_window_permissive(ppu_worker_render_ctx_t* ctx,
+// window_permissive(): true when this scanline's WIN0/WIN1 rects reduce to a
+// single mask equal to the no-window default, so the window passes can be skipped.
+static bool ppu_worker_window_permissive(ppu_worker_render_ctx_t* ctx,
                                                 UINT16 dispcnt, INT32 lcd_y)
 {
 	// OBJ-window coverage follows sprite shapes, so it is not statically reducible.
 	if (SB_BFE(dispcnt, 15, 1)) return false;
 
-	UINT8  cdef  = (UINT8)(ppu_worker_io_read16(ctx, GBA_WINOUT) & 0x3F);
-	UINT16 winin = ppu_worker_io_read16(ctx, GBA_WININ);
-	bool   cov[2]  = { false, false };
-	bool   full[2] = { false, false };
-	UINT8  val[2]  = { 0, 0 };
-	INT32  xmin[2] = { 0, 0 }, xmax[2] = { 0, 0 };
+	UINT8  win_out_default  = (UINT8)(ppu_worker_io_read16(ctx, GBA_WINOUT) & 0x3F);
+	UINT16 win_in = ppu_worker_io_read16(ctx, GBA_WININ);
+	bool   covered[2]  = { false, false };
+	bool   full_width[2] = { false, false };
+	UINT8  win_val[2]  = { 0, 0 };
+	INT32  x_min[2] = { 0, 0 }, x_max[2] = { 0, 0 };
 	for (INT32 n = 0; n < 2; ++n) {
 		if (!SB_BFE(dispcnt, 13 + n, 1)) continue;
 		UINT16 WINH = ppu_worker_io_read16(ctx, (n == 0) ? GBA_WIN0H : GBA_WIN1H);
 		UINT16 WINV = ppu_worker_io_read16(ctx, (n == 0) ? GBA_WIN0V : GBA_WIN1V);
-		xmin[n] = SB_BFE(WINH, 8, 8); xmax[n] = SB_BFE(WINH, 0, 8);
+		x_min[n] = SB_BFE(WINH, 8, 8); x_max[n] = SB_BFE(WINH, 0, 8);
 		INT32 ymin = SB_BFE(WINV, 8, 8), ymax = SB_BFE(WINV, 0, 8);
-		if (xmin[n] > xmax[n]) xmax[n] = 240;
-		if (ymin > ymax) ymax = 160;
-		if (xmax[n] > 240) xmax[n] = 240;
-		if (ymax > 160) ymax = 160;
-		if (xmin[n] >= xmax[n]) continue;
-		if (lcd_y < ymin || lcd_y >= ymax) continue;
-		cov[n]  = true;
-		full[n] = (xmin[n] == 0 && xmax[n] >= 240);
-		val[n]  = (UINT8)(SB_BFE(winin, n * 8, 6) & 0x3F);
-	}
-	UINT8 unival;
-	if (cov[0] && full[0])                 unival = val[0];
-	else if (!cov[0] && cov[1] && full[1]) unival = val[1];
-	else if (!cov[0] && !cov[1])           unival = cdef;
-	else {
-		// Partial coverage: split the line at the WIN0/WIN1 x-edges (<= 4 edges
-		// -> <= 5 intervals), sample one pixel per interval and require all
-		// samples to agree. The mask is piecewise-constant, so this is exact.
-		INT32 segs[4]; INT32 n_segs = 0;
-		if (cov[0]) { segs[n_segs++] = xmin[0]; segs[n_segs++] = xmax[0]; }
-		if (cov[1]) { segs[n_segs++] = xmin[1]; segs[n_segs++] = xmax[1]; }
-		for (INT32 i = 0; i < n_segs; ++i)
-			for (INT32 j = i + 1; j < n_segs; ++j)
-				if (segs[j] < segs[i]) { INT32 t = segs[i]; segs[i] = segs[j]; segs[j] = t; }
-		INT32 nd = 0;
-		for (INT32 i = 0; i < n_segs; ++i)
-			if (segs[i] > 0 && segs[i] < 240 && (nd == 0 || segs[i] != segs[nd - 1]))
-				segs[nd++] = segs[i];
-		n_segs = nd;
-		UINT8 uv = 0xFF;
-		INT32 prev = 0;
-		for (INT32 i = 0; i <= n_segs; ++i) {
-			INT32 end = (i < n_segs) ? segs[i] : 240;
-			if (end > prev) {
-				INT32 sx = prev + ((end - prev) >> 1);
-				UINT8 v;
-				if      (cov[0] && sx >= xmin[0] && sx < xmax[0]) v = val[0];
-				else if (cov[1] && sx >= xmin[1] && sx < xmax[1]) v = val[1];
-				else                                             v = cdef;
-				if (uv == 0xFF) uv = v;
-				else if (uv != v) return false;
-			}
-			prev = end;
+		if (x_min[n] > x_max[n]) x_max[n] = 240;
+		bool y_wrapped = (ymin > ymax);
+		if (y_wrapped) {
+			// Y-wrap covers [ymin,160) union [0,ymax); never full-height on any line.
+			bool in_wrap = (lcd_y >= ymin) || (lcd_y < ymax);
+			if (!in_wrap) continue;
+			ymin = 0; ymax = 160;
 		}
-		unival = uv;
+		if (x_max[n] > 240) x_max[n] = 240;
+		if (ymax > 160) ymax = 160;
+		if (x_min[n] >= x_max[n]) continue;
+		if (lcd_y < ymin || lcd_y >= ymax) continue;
+		covered[n]  = true;
+		full_width[n] = (x_min[n] == 0 && x_max[n] >= 240) && !y_wrapped && (ymin == 0 && ymax >= 160);
+		win_val[n]  = (UINT8)(SB_BFE(win_in, n * 8, 6) & 0x3F);
 	}
-	if (unival == 0x3F) return true;
-	// 0x1F differs from the no-window default 0x3F only in the special-effects
-	// enable bit.  That bit can only change the picture while a BLDCNT effect is
-	// actually in force, so accept 0x1F whenever the effect mode is inert
-	// (empty first-target mask, mode 0, or alpha with no second target).
-	if (unival == 0x1F && ctx->eff_bld_mode == 0) {
+	UINT8 uniform_val;
+	if (covered[0] && full_width[0])                 uniform_val = win_val[0];
+	else if (!covered[0] && covered[1] && full_width[1]) uniform_val = win_val[1];
+	else if (!covered[0] && !covered[1])           uniform_val = win_out_default;
+	else {
+		// Partial coverage: split at the WIN0/WIN1 x-edges and sample one pixel
+		// per interval; the mask is piecewise-constant, so agreement is exact.
+		INT32 edges[4]; INT32 n_edges = 0;
+		if (covered[0]) { edges[n_edges++] = x_min[0]; edges[n_edges++] = x_max[0]; }
+		if (covered[1]) { edges[n_edges++] = x_min[1]; edges[n_edges++] = x_max[1]; }
+		for (INT32 i = 0; i < n_edges; ++i)
+			for (INT32 j = i + 1; j < n_edges; ++j)
+				if (edges[j] < edges[i]) { INT32 swap_tmp = edges[i]; edges[i] = edges[j]; edges[j] = swap_tmp; }
+		INT32 n_unique = 0;
+		for (INT32 i = 0; i < n_edges; ++i)
+			if (edges[i] > 0 && edges[i] < 240 && (n_unique == 0 || edges[i] != edges[n_unique - 1]))
+				edges[n_unique++] = edges[i];
+		n_edges = n_unique;
+		UINT8 scan_val = 0xFF;
+		INT32 prev_edge = 0;
+		for (INT32 i = 0; i <= n_edges; ++i) {
+			INT32 seg_end = (i < n_edges) ? edges[i] : 240;
+			if (seg_end > prev_edge) {
+				INT32 sample_x = prev_edge + ((seg_end - prev_edge) >> 1);
+				UINT8 sample_val;
+				if      (covered[0] && sample_x >= x_min[0] && sample_x < x_max[0]) sample_val = win_val[0];
+				else if (covered[1] && sample_x >= x_min[1] && sample_x < x_max[1]) sample_val = win_val[1];
+				else                                             sample_val = win_out_default;
+				if (scan_val == 0xFF) scan_val = sample_val;
+				else if (scan_val != sample_val) return false;
+			}
+			prev_edge = seg_end;
+		}
+		uniform_val = scan_val;
+	}
+	if (uniform_val == 0x3F) return true;
+	// 0x1F masks out the "effects" bit: inert when no blend/bright/dark applies.
+	bool effects_inert = (ctx->eff_blend_mode == 0);
+	if (uniform_val == 0x1F && effects_inert) {
 		return true;
 	}
 	return false;
 }
 
-static inline bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lcd_y)
+static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lcd_y)
 {
 	UINT16 dispcnt         = ppu_worker_io_read16(ctx, GBA_DISPCNT);
 	INT32  bg_mode         = SB_BFE(dispcnt, 0, 3);
-	INT32  obj_vram_map_2d = !SB_BFE(dispcnt, 6, 1);
+	INT32  obj_map_2d      = !SB_BFE(dispcnt, 6, 1);
 
-	UINT16 mos_reg = ppu_worker_io_read16(ctx, GBA_MOSAIC);
-	INT32  mos_x   = SB_BFE(mos_reg,  8, 4) + 1;
-	INT32  mos_y   = SB_BFE(mos_reg, 12, 4) + 1;
-	if (++ctx->ppu->mosaic_y_counter >= mos_y || sprite_lcd_y == 0)
+	UINT16 mosaic_reg = ppu_worker_io_read16(ctx, GBA_MOSAIC);
+	INT32  mosaic_x   = SB_BFE(mosaic_reg,  8, 4) + 1;
+	INT32  mosaic_y   = SB_BFE(mosaic_reg, 12, 4) + 1;
+	if (++ctx->ppu->mosaic_y_counter >= mosaic_y || sprite_lcd_y == 0)
 		ctx->ppu->mosaic_y_counter = 0;
 
-	bool win_en            = SB_BFE(dispcnt, 13, 3) != 0;
+	bool win_enabled            = SB_BFE(dispcnt, 13, 3) != 0;
 	bool  obj_window_enable = SB_BFE(dispcnt, 15, 1);
-	UINT8 default_window_control = 0x3F;     // no windows: all layers visible (matches gbappu.h)
+	UINT8 default_window_control = 0x3F;     // no windows: all layers visible
 	UINT8 obj_window_control    = 0x3F;
-	if (win_en || obj_window_enable) {
+	if (win_enabled || obj_window_enable) {
 		UINT16 WINOUT = ppu_worker_io_read16(ctx, GBA_WINOUT);
-		if (win_en)
-			default_window_control = SB_BFE(WINOUT, 0, 8);
-		obj_window_control = default_window_control;  // gbappu.h: obj_window_control defaults to WINOUT outside value
+		if (win_enabled)
+			default_window_control = SB_BFE(WINOUT, 0, 6);
+		obj_window_control = default_window_control;  // WINOUT outside value (gbappu.h)
 		if (obj_window_enable)
 			obj_window_control   = SB_BFE(WINOUT, 8, 6);
 	}
 
-	// Count semi-transparent OBJs this scanline for need_second_buf.
+	// Count semi-transparent OBJs and pixels actually written, for need_second_buf.
 	INT32 n_semitrans_objs = 0;
+	bool  saw_semitrans_pixel = false;
 
-	// Read BLDCNT early so FP-F early-return can set need_second_buf correctly.
-	UINT16 bldcnt_for_nb = ppu_worker_io_read16(ctx, GBA_BLDCNT);
-	INT32  bld_mode_nb   = SB_BFE(bldcnt_for_nb, 6, 2);
-	// An empty first-target mask means effect_enable can never become 1 for a
-	// normal pixel, so the BLDCNT effect mode is inert on this line.  A
-	// semi-transparent OBJ can still blend, which need_second_buf covers.
-	// Alpha mode is likewise inert when the second-target mask is empty: every
-	// blend test reads BFE(bldcnt, 8+type2, 1), which is then zero for every
-	// pixel, so no pixel can change colour.  Reporting mode 0 here lets the
-	// fast pixel path run instead of the generic per-pixel blend chain.
-	bool alpha_inert = (bld_mode_nb == 1) && ((bldcnt_for_nb & 0x3F00) == 0);
-	ctx->eff_bld_mode = (((bldcnt_for_nb & 0x3F) == 0) || alpha_inert) ? 0 : bld_mode_nb;
+	// Read BLDCNT early so the early-return can set need_second_buf correctly.
+	UINT16 bldcnt = ppu_worker_io_read16(ctx, GBA_BLDCNT);
+	INT32  bld_mode   = SB_BFE(bldcnt, 6, 2);
+	// Mode is inert with an empty first-target mask or alpha with no second target;
+	// reporting 0 runs the fast-pixel path.
+	bool alpha_inert = (bld_mode == 1) && ((bldcnt & 0x3F00) == 0);
+	ctx->eff_blend_mode = (((bldcnt & 0x3F) == 0) || alpha_inert) ? 0 : bld_mode;
 
-	// no_windows: WIN0/WIN1/OBJWIN all disabled; window[x] is not read by BG/pixel loop.
-	// Skip window array init, WIN0/1 rendering, and backdrop-clear loop.
-	ctx->no_windows = !win_en && !obj_window_enable;
+	// no_windows: all windows off (window[x] unread) -> skip the window passes.
+	ctx->no_windows = !win_enabled && !obj_window_enable;
 	if (!ctx->no_windows && !obj_window_enable) {
 		if (ppu_worker_window_permissive(ctx, dispcnt, sprite_lcd_y))
 			ctx->no_windows = true;
 	}
 
-	// Only initialize window mask when windows actually affect output.
 	if (!ctx->no_windows) {
 		for (INT32 x = 0; x < 240; ++x)
 			ctx->window[x] = default_window_control;
@@ -462,169 +622,113 @@ static inline bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sp
 
 	ppu_worker_hit_t hits[128];
 	INT32 n_hits = 0;
-	// obj_seen bitmap: sprites added via Y-bucket (used by late catch-up).
-	bool  obj_seen[128] = { false };
+	// Pre-decode all 128 OAM slots once for this scanline; all passes index this array.
+	const UINT8* oam_full = ctx->oam;
+	ppu_worker_obj_geom_t geoms[128];
+	bool  obj_hit_mask[128] = { false };
+	for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx)
+		ppu_worker_obj_decode(&geoms[obj_idx], oam_full, obj_idx);
 
 	bool display_obj = SB_BFE(dispcnt, 12, 1);
 	if (display_obj) {
 		INT32 sprite_cycles = SB_BFE(dispcnt, 5, 1) ? 954 : 1210;
 
-		// FP-F: empty Y-bucket and no windows -> skip Pass 1/Pass 2 when no
-		// sprite covers this line. Uniform OAM proves it directly; otherwise a
-		// Y-only scan of attr0/attr1 (no X-clip/attr2/cycle accounting) checks it.
+		// Pass 0: budget scan in OAM index order. Every OAM slot costs 2 cycles;
+		// an OBJ that misses this row or lies fully off-row costs no draw cycles.
+		bool obj_budget_ok[128] = { false };
+		INT32 last_idx = 0;
+		for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+			sprite_cycles -= 2 * (obj_idx - last_idx);
+			last_idx = obj_idx;
+			if (sprite_cycles <= 0) break;
+			const ppu_worker_obj_geom_t* geom = &geoms[obj_idx];
+			if (!geom->valid) continue;
+			if (ppu_worker_obj_off_row(geom)) continue;
+			if (!ppu_worker_obj_covers_row(geom, sprite_lcd_y)) continue;
+			INT32 obj_cycles;
+			if (!ppu_worker_obj_draw_cycles(geom, &obj_cycles)) continue;
+			sprite_cycles -= obj_cycles;
+			obj_budget_ok[obj_idx] = true;
+		}
+
+		// With an empty Y-bucket and no windows, skip the OBJ passes when no
+		// OBJ covers this row (oam_all_regular: obj_count; else a Y-only scan).
 		INT32 n_bucket = ctx->obj_bucket_n[sprite_lcd_y];
 		if (n_bucket == 0 && ctx->no_windows) {
-			// Uniform OAM: an empty bucket proves no sprite covers this line,
-			// so the Y-scan below cannot find one either.
-			if (ctx->oam_uniform) {
-				ctx->need_second_buf = (ctx->eff_bld_mode == 1) || obj_window_enable;
-				return false;
+			bool any_visible = false;
+			if (ctx->oam_all_regular) {
+				any_visible = (ctx->obj_count[sprite_lcd_y] > 0);
+			} else {
+				for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+					if (!obj_budget_ok[obj_idx]) continue;
+					const ppu_worker_obj_geom_t* geom = &geoms[obj_idx];
+					if (ppu_worker_obj_covers_row(geom, sprite_lcd_y)) { any_visible = true; break; }
+				}
 			}
-			bool any = false;
-			const UINT8* oq_p = ctx->oam;
-			for (INT32 oq = 0; oq < 128; ++oq) {
-				UINT16 a0 = BURN_ENDIAN_SWAP_INT16(*(const UINT16*)(oq_p + oq*8));
-				bool   rs  = SB_BFE(a0, 8, 1);
-				if (SB_BFE(a0, 9, 1) && !rs) continue;
-				bool   ds  = SB_BFE(a0, 9, 1) && rs;
-				INT32  y0  = SB_BFE(a0, 0, 8);
-				INT32  sh  = SB_BFE(a0, 14, 2);
-				UINT16 a1  = BURN_ENDIAN_SWAP_INT16(*(const UINT16*)(oq_p + oq*8 + 2));
-				INT32  sz  = SB_BFE(a1, 14, 2);
-				INT32  ys  = gba_obj_ysize[sz*4 + sh];
-				INT32  ye  = ys * (ds ? 2 : 1);
-				INT32  sy  = sprite_lcd_y - y0;
-				if (y0 >= GBA_LCD_H) sy += 256;
-				if (sy >= 0 && sy < ye) { any = true; break; }
-			}
-			if (!any) {
-				ctx->need_second_buf = (ctx->eff_bld_mode == 1) || obj_window_enable;
+			if (!any_visible) {
+				bool line_needs = (ctx->eff_blend_mode == 1);
+				ctx->need_second_this_line = line_needs;
+				if (line_needs) ctx->frame_needs_second_buf = true;
 				return false;
 			}
 		}
-		// Pass 1: Y-bucket filtered + X-clip pre-filter. Only this scanline's
-		// bucket is scanned (instead of all 128 sprites); off-screen sprites
-		// are dropped here and attr2 is read only for hits.
-		for (INT32 bi = 0; bi < n_bucket; ++bi) {
-			INT32 o = ctx->obj_bucket[sprite_lcd_y][bi];
-			UINT32 attr01 = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(ctx->oam + o * 8));
-			UINT16 attr0 = (UINT16)attr01;
-			UINT16 attr1 = (UINT16)(attr01 >> 16);
-
-			bool  rot_scale   = SB_BFE(attr0, 8, 1);
-			bool  double_size = SB_BFE(attr0, 9, 1) && rot_scale;
-			if (SB_BFE(attr0, 9, 1) && !rot_scale)  // obj_disable
-				continue;
-
-			INT32 y_coord   = SB_BFE(attr0, 0, 8);
-			INT32 obj_shape = SB_BFE(attr0, 14, 2);
-			INT32 obj_size  = SB_BFE(attr1, 14, 2);
-			INT32 y_size    = gba_obj_ysize[obj_size * 4 + obj_shape];
-			INT32 y_size_eff = y_size * (double_size ? 2 : 1);
-			INT32 sy        = sprite_lcd_y - y_coord;
-			if (y_coord >= GBA_LCD_H) sy += 256;
-			if (sy < 0 || sy >= y_size_eff)
-				continue;
-
-			// Pre-compute X range before deducting cycles; fully off-screen
-			// sprites cost zero (hardware skips them entirely).
-			INT32 x_size = gba_obj_xsize[obj_size * 4 + obj_shape];
-			INT16 x_coord = SB_BFE(attr1, 0, 9);
-			if (SB_BFE(x_coord, 8, 1))
-				x_coord |= 0xfe00;
-			INT32 draw_w = x_size * (double_size ? 2 : 1);
-			INT32 xs_c   = x_coord < 0 ? 0 : (x_coord > GBA_LCD_W ? GBA_LCD_W : x_coord);
-			INT32 xe_c   = (x_coord + draw_w) > GBA_LCD_W ? GBA_LCD_W :
-			                ((x_coord + draw_w) < 0 ? 0 : (x_coord + draw_w));
-			if (xe_c <= xs_c)
-				continue;
-
-			// Charge cycles based on VISIBLE horizontal span (not full width)
-			// and color depth. Must be done after X-clip so off-screen sprites
-			// don't eat into the budget of sprites that are actually drawn.
-			INT32 vis_w = xe_c - xs_c;
-			bool  is_256 = SB_BFE(attr0, 13, 1);
-			INT32 bpp_cost = is_256 ? 2 : 1;
-			if (rot_scale)
-				sprite_cycles -= 10 + vis_w * 2;   // 10-cycle setup + double-width fetch
-			else
-				sprite_cycles -= vis_w * bpp_cost;
-			if (sprite_cycles <= 0)
-				break;
-
-			if (n_hits >= 128)
-				break;
-
-			ppu_worker_fill_hit(&hits[n_hits++], ctx->oam, o, rot_scale, double_size,
-			                     &n_semitrans_objs, obj_seen, y_coord, x_coord, x_size, y_size, xs_c, xe_c);
+		// Pass 1: scan this line's Y-bucket only; X-clip drops off-screen hits.
+		for (INT32 bucket_i = 0; bucket_i < n_bucket; ++bucket_i) {
+			INT32 obj_idx = ctx->obj_bucket[sprite_lcd_y][bucket_i];
+			if (!obj_budget_ok[obj_idx]) continue;
+			const ppu_worker_obj_geom_t* geom = &geoms[obj_idx];
+			if (!ppu_worker_obj_covers_row(geom, sprite_lcd_y)) continue;
+			INT32 x_clip_lo, x_clip_hi;
+			ppu_worker_obj_x_clip(geom, &x_clip_lo, &x_clip_hi);
+			if (x_clip_hi <= x_clip_lo) continue;
+			if (n_hits >= 128) break;
+			ppu_worker_fill_hit(&hits[n_hits++], geom, x_clip_lo, x_clip_hi, &n_semitrans_objs);
+			obj_hit_mask[obj_idx] = true;
 		}
 
-		// Late catch-up scan: recovers sprites moved into this scanline by HBlank
-		// DMA after Y-bucketing; bucket sprites are skipped via obj_seen[]. With
-		// uniform OAM and a non-overflowing bucket every visible sprite is already
-		// in obj_seen, so the scan can add nothing - kept only for the overflow
-		// case, where dropped sprites are recoverable here alone.
-		if (!(ctx->oam_uniform && n_bucket < 64))
+		// Late catch-up for HBlank DMA-moved sprites (budget-filtered);
+		// skipped when oam_uniform and oam_all_regular.
+		if (!(ctx->oam_uniform && ctx->oam_all_regular))
 		{
-			const UINT8* oam_now = ctx->oam;
-			for (INT32 o = 0; o < 128; ++o) {
-				if (obj_seen[o]) continue;
-				UINT32 a01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(oam_now + o * 8));
-				UINT16 a0_n = (UINT16)a01;
-				UINT16 a1_n = (UINT16)(a01 >> 16);
-				bool   rs_n = SB_BFE(a0_n, 8, 1);
-				bool   ds_n = SB_BFE(a0_n, 9, 1) && rs_n;
-				if (SB_BFE(a0_n, 9, 1) && !rs_n) continue;
-				INT32 y_n  = SB_BFE(a0_n, 0, 8);
-				INT32 sh_n = SB_BFE(a0_n, 14, 2);
-				INT32 sz_n = SB_BFE(a1_n, 14, 2);
-				INT32 ys_n = gba_obj_ysize[sz_n * 4 + sh_n];
-				INT32 ye_n = ys_n * (ds_n ? 2 : 1);
-				INT32 sy_n = sprite_lcd_y - y_n;
-				if (y_n >= GBA_LCD_H) sy_n += 256;
-				if (sy_n < 0 || sy_n >= ye_n) continue;
-				INT32 xs_n = gba_obj_xsize[sz_n * 4 + sh_n];
-				INT16 xc_n = SB_BFE(a1_n, 0, 9);
-				if (SB_BFE(xc_n, 8, 1)) xc_n |= 0xfe00;
-				INT32 dw_n = xs_n * (ds_n ? 2 : 1);
-				INT32 xsc  = xc_n < 0 ? 0 : (xc_n > GBA_LCD_W ? GBA_LCD_W : xc_n);
-				INT32 xec  = (xc_n + dw_n) > GBA_LCD_W ? GBA_LCD_W :
-				             ((xc_n + dw_n) < 0 ? 0 : (xc_n + dw_n));
-				if (xec <= xsc) continue;
-				INT32 vw_n = xec - xsc;
-				bool  c256 = SB_BFE(a0_n, 13, 1);
-				if (rs_n) sprite_cycles -= 10 + vw_n * 2;
-				else     sprite_cycles -= vw_n * (c256 ? 2 : 1);
-				if (sprite_cycles <= 0) break;
+			for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+				if (!obj_budget_ok[obj_idx]) continue;
+				if (obj_hit_mask[obj_idx]) continue;
+				const ppu_worker_obj_geom_t* geom = &geoms[obj_idx];
+				if (!ppu_worker_obj_covers_row(geom, sprite_lcd_y)) continue;
+				INT32 x_clip_lo, x_clip_hi;
+				ppu_worker_obj_x_clip(geom, &x_clip_lo, &x_clip_hi);
+				if (x_clip_hi <= x_clip_lo) continue;
 				if (n_hits >= 128) break;
-				ppu_worker_fill_hit(&hits[n_hits++], oam_now, o, rs_n, ds_n,
-				                     &n_semitrans_objs, obj_seen, y_n, xc_n, xs_n, ys_n, xsc, xec);
+				ppu_worker_fill_hit(&hits[n_hits++], geom, x_clip_lo, x_clip_hi, &n_semitrans_objs);
+				obj_hit_mask[obj_idx] = true;
 			}
 		}
 
 		// Pass 2: full decode + pixel composition for hit sprites only.
-		for (INT32 hi = 0; hi < n_hits; ++hi) {
-			const ppu_worker_hit_t* h = &hits[hi];
-			bool  double_size        = h->double_size;
-			INT32 obj_mode           = h->obj_mode;
-			bool  mosaic             = h->mosaic;
-			bool  colors_or_palettes = h->colors_or_palettes;
-			bool  h_flip             = h->h_flip;
-			bool  v_flip             = h->v_flip;
-			INT32 rotscale_param     = h->rotscale_param;
-			INT32 tile_base          = h->tile_base;
-			INT32 priority           = h->priority;
-			INT32 palette            = h->palette;
-			INT32 x_coord            = h->x_coord;
-			INT32 x_start            = h->x_start;
-			INT32 x_end              = h->x_end;
-			INT32 y_coord            = h->y_coord;
-			INT32 x_size             = h->x_size;
-			INT32 y_size             = h->y_size;
-			bool  rot_scale          = h->rot_scale;
+		const UINT32* SB_RESTRICT pal_obj_xrgb = ctx->pal_xrgb + 256;
+		for (INT32 hit_i = 0; hit_i < n_hits; ++hit_i) {
+			const ppu_worker_hit_t* hit = &hits[hit_i];
+			bool  double_size        = hit->double_size;
+			INT32 obj_mode           = hit->obj_mode;
+			bool  mosaic             = hit->mosaic;
+			bool  colors_or_palettes = hit->colors_or_palettes;
+			bool  h_flip             = hit->h_flip;
+			bool  v_flip             = hit->v_flip;
+			INT32 rot_scale_param     = hit->rot_scale_param;
+			INT32 tile_base          = hit->tile_base;
+			INT32 priority           = hit->priority;
+			INT32 palette            = hit->palette;
+			INT32 x_coord            = hit->x_coord;
+			INT32 x_start            = hit->x_start;
+			INT32 x_end              = hit->x_end;
+			INT32 y_coord            = hit->y_coord;
+			INT32 x_size             = hit->x_size;
+			INT32 y_size             = hit->y_size;
+			bool  rot_scale          = hit->rot_scale;
 
-			INT32 sy0    = sprite_lcd_y - y_coord;
-			if (y_coord >= GBA_LCD_H) sy0 += 256;
+			INT32 y_size_eff_hit = y_size * (double_size ? 2 : 1);
+			INT32 y_wrap_hit = ppu_worker_obj_y_wrap(y_coord, y_size_eff_hit);
+			INT32 sy0    = sprite_lcd_y - y_wrap_hit;
 			INT32 sy_eff = sy0;
 			if (mosaic) {
 				sy_eff = sy0 - ctx->ppu->mosaic_y_counter;
@@ -632,98 +736,88 @@ static inline bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sp
 			}
 
 			// Rot/scale parameters - loaded once per hit sprite.
-			INT32 a = 0, b = 0, c = 0, d = 0;
-			INT32 sx_cx = 0, sy_cy = 0, d_cx = 0, d_cy = 0;
+			INT32 pa = 0, pb = 0, pc = 0, pd = 0;
+			INT32 dda_x = 0, dda_y = 0, dda_step_x = 0, dda_step_y = 0;
 			bool use_rot_dda = rot_scale && !mosaic;
 			if (rot_scale) {
-				UINT32 param_base = rotscale_param * 0x20;
-				a = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0x6));
-				b = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0xe));
-				c = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0x16));
-				d = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0x1e));
+				UINT32 param_base = rot_scale_param * 0x20;
+				pa = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0x6));
+				pb = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0xe));
+				pc = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0x16));
+				pd = (INT16)BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->oam + param_base + 0x1e));
 
 				if (use_rot_dda) {
-					INT32 sx_start_pix = x_start - x_coord;
-					INT64 x1_start = (INT64)sx_start_pix << 8;
+					INT32 sx_start = x_start - x_coord;
+					INT64 start_x_q8 = (INT64)sx_start << 8;
 					INT64 y1       = (INT64)sy_eff       << 8;
-					INT64 objref_x = (INT64)(x_size << (double_size ? 8 : 7));
-					INT64 objref_y = (INT64)(y_size << (double_size ? 8 : 7));
-					sx_cx = (INT32)(a * (x1_start - objref_x) + b * (y1 - objref_y) + ((INT64)x_size << 15));
-					sy_cy = (INT32)(c * (x1_start - objref_x) + d * (y1 - objref_y) + ((INT64)y_size << 15));
-					d_cx = a * 256;
-					d_cy = c * 256;
+					INT64 obj_ref_x = (INT64)(x_size << (double_size ? 8 : 7));
+					INT64 obj_ref_y = (INT64)(y_size << (double_size ? 8 : 7));
+					dda_x = (INT32)(pa * (start_x_q8 - obj_ref_x) + pb * (y1 - obj_ref_y) + ((INT64)x_size << 15));
+					dda_y = (INT32)(pc * (start_x_q8 - obj_ref_x) + pd * (y1 - obj_ref_y) + ((INT64)y_size << 15));
+					dda_step_x = pa * 256;
+					dda_step_y = pc * 256;
 				}
 			}
 
-			// OBJ tile-row byte cache (regular + rot/scale sprites), key = tile*16 + ty.
-			// One VRAM fetch serves all pixels of the same tile row.
+			// OBJ tile-row byte cache (regular + rot/scale); key = tile*16 + ty.
 			INT32  obj_cached_key = -1;
 			UINT8  obj_cached_row[8];
 			INT32  pal_offset  = palette * 16;   // hoisted out of pixel loop
-			// Priority code (top byte):
-			//   [31:29] = (5-pri)     (3 bits, same as gbappu.h (5-prio)<<28 shifted +1)
-			//   [28:26] = tie         (3 bits, matches gbappu.h bits 25-27: OBJ=7, BG0=4, BG1=3, BG2=2, BG3=1, BD=0)
-			//   [25]    = semi        (semi-transparent OBJ flag, bit16 in gbappu.h, shifted +9)
-			//   [24]    = opaque      (1 = visible pixel, 0 = uninitialized/transparent)
-			// Priority comparison: ((col >> 26) & 0x3F) - 6 bits tie+pri, matches gbappu.h `col>>17` ordering.
+			// OBJ priority code (layout in the scanline-render header).
 			UINT32 obj_pri_col = ((UINT32)(5 - priority) << 29) | ((UINT32)7 << 26) | (1u << 24);
-			const UINT32* SB_RESTRICT pal_obj_xrgb = ctx->pal_xrgb32 + 256;
-			// Hoist 1D OBJ tile-row stride out of pixel loop.
-			// For 1D mapping, each tile row advances (x_size/8)*tile_step tiles.
+			// 1D OBJ mapping: tile-row stride in tiles (0 for 2D).
 			INT32  tile_step = colors_or_palettes ? 2 : 1;
 			INT32  obj_tile_row_stride = 0;
-			if (!obj_vram_map_2d)
+			if (!obj_map_2d)
 				obj_tile_row_stride = (x_size >> 3) * tile_step;
 
 			UINT32* SB_RESTRICT ft_obj = &ctx->first_target_buffer[x_start];
 			for (INT32 x = x_start; x < x_end; ++x) {
-				UINT32* SB_RESTRICT ft_p = ft_obj++;
-				INT32 sx = x - x_coord;
+				UINT32* SB_RESTRICT ft_ptr = ft_obj++;
+				INT32 src_x = x - x_coord;
 				INT32 sy = mosaic ? sy_eff : sy0;
 
 				if (mosaic) {
-					sx = ((x / mos_x) * mos_x - x_coord);
-					if (sx < 0) sx = 0;
+					src_x = ((x / mosaic_x) * mosaic_x - x_coord);
+					if (src_x < 0) src_x = 0;
 				}
 
 				if (rot_scale) {
 					if (use_rot_dda) {
-						sx = (sx_cx >> 16);
-						sy = (sy_cy >> 16);
-						sx_cx += d_cx;
-						sy_cy += d_cy;
+						src_x = (dda_x >> 16);
+						sy = (dda_y >> 16);
+						dda_x += dda_step_x;
+						dda_y += dda_step_y;
 					} else {
-						INT64 x1 = (INT64)sx << 8;
+						INT64 x1 = (INT64)src_x << 8;
 						INT64 y1 = (INT64)sy << 8;
-						INT64 objref_x = (INT64)(x_size << (double_size ? 8 : 7));
-						INT64 objref_y = (INT64)(y_size << (double_size ? 8 : 7));
-						INT64 x2 = a * (x1 - objref_x) + b * (y1 - objref_y) + ((INT64)x_size << 15);
-						INT64 y2 = c * (x1 - objref_x) + d * (y1 - objref_y) + ((INT64)y_size << 15);
-						sx = (INT32)(x2 >> 16);
+						INT64 obj_ref_x = (INT64)(x_size << (double_size ? 8 : 7));
+						INT64 obj_ref_y = (INT64)(y_size << (double_size ? 8 : 7));
+						INT64 x2 = pa * (x1 - obj_ref_x) + pb * (y1 - obj_ref_y) + ((INT64)x_size << 15);
+						INT64 y2 = pc * (x1 - obj_ref_x) + pd * (y1 - obj_ref_y) + ((INT64)y_size << 15);
+						src_x = (INT32)(x2 >> 16);
 						sy = (INT32)(y2 >> 16);
 					}
-					if (sx >= x_size || sy >= y_size || sx < 0 || sy < 0)
+					if (src_x >= x_size || sy >= y_size || src_x < 0 || sy < 0)
 						continue;
 				} else {
-					if (h_flip) sx = x_size - sx - 1;
+					if (h_flip) src_x = x_size - src_x - 1;
 					if (v_flip) sy = y_size - sy - 1;
 				}
-				INT32 tx = sx & 7;
+				INT32 tx = src_x & 7;
 				INT32 ty = sy & 7;
 
 				INT32 tile;
-				if (obj_vram_map_2d) {
+				if (obj_map_2d) {
 					INT32 base = colors_or_palettes ? tile_base & ~1 : tile_base;
-					tile  = (base + (sx >> 3) * tile_step) & 0x1f;
+					tile  = (base + (src_x >> 3) * tile_step) & 0x1f;
 					tile |= (base + (sy >> 3) * 32       ) & 0x3e0;
 				} else {
-					tile = (tile_base + (sx >> 3) * tile_step + (sy >> 3) * obj_tile_row_stride) & 0x3ff;
+					tile = (tile_base + (src_x >> 3) * tile_step + (sy >> 3) * obj_tile_row_stride) & 0x3ff;
 				}
 				if (tile < 512 && bg_mode >= 3 && bg_mode <= 5)
 					continue;
 
-				// Tile-row byte cache: same (tile,ty) within a scanline reuses
-				// cached row bytes - avoids repeated VRAM reads.
 				INT32 cache_key = tile * 16 + ty;
 				if (cache_key != obj_cached_key) {
 					obj_cached_key = cache_key;
@@ -772,14 +866,16 @@ static inline bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sp
 						if (obj_mode == 1)
 							col |= (1u << 25);
 					}
-					if (((col >> 26) & 0x3F) > (((*ft_p) >> 26) & 0x3F)) {
+					if (((col >> 26) & 0x3F) > (((*ft_ptr) >> 26) & 0x3F)) {
 						if (transparent) {
-							// gbappu.h guards with `type != 5` (BD). BD maps to tie=0 here, so
-							// `tie != 0` is the same guard: a transparent OBJ must not
-							// overwrite an already-rendered BG/OBJ pixel.
-							if ((((*ft_p) >> 26) & 7) != 0)
-								*ft_p = ((*ft_p) & 0x01FFFFFFu) | (col & 0xFE000000u);
-						} else {							*ft_p = col;
+							// Transparent OBJ keeps a drawn BG/OBJ pixel: replace priority+tie
+							// only, keep flags/BGR.
+							if ((((*ft_ptr) >> 26) & 7) != 0)
+								*ft_ptr = ((*ft_ptr) & 0x03FFFFFFu) | (col & 0xFC000000u);
+						} else {
+							*ft_ptr = col;
+							// Record a drawn semi-transparent OBJ pixel for need_second_buf.
+							if (obj_mode == 1) saw_semitrans_pixel = true;
 						}
 					}
 				}
@@ -787,9 +883,8 @@ static inline bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sp
 		}
 	}
 
-	// Win0 / Win1 rectangular windows - rendered in reverse (WIN0 on top).
-	// Skipped entirely when no windows are enabled (no_windows fast path).
-	if (!ctx->no_windows && win_en) {
+	// WIN0/WIN1 rectangles - render WIN1 first so WIN0 wins on overlap.
+	if (!ctx->no_windows && win_enabled) {
 		for (INT32 win = 1; win >= 0; --win) {
 			if (!SB_BFE(dispcnt, 13 + win, 1))
 				continue;
@@ -799,67 +894,74 @@ static inline bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sp
 			INT32  win_xmax = SB_BFE(WINH, 0, 8);  // x2 (right edge, low byte)
 			INT32  win_ymin = SB_BFE(WINV, 8, 8);
 			INT32  win_ymax = SB_BFE(WINV, 0, 8);
-			// Match gbappu.h: Y2>160 or Y1>Y2 -> Y2=160
-			if (win_xmin > win_xmax)
+			// An X1>X2 (Y1>Y2) range wraps and covers [0,X2) plus [X1,240).
+			if (win_xmin > 240 && win_xmin > win_xmax)
+				win_xmin = 0;
+			if (win_xmax > 240) {
 				win_xmax = 240;
-			if (win_ymin > win_ymax)
-				win_ymax = 160;
-			if (win_xmax > 240)
-				win_xmax = 240;
-			if (win_ymax > 160)
-				win_ymax = 160;
-			if (sprite_lcd_y < win_ymin || sprite_lcd_y >= win_ymax)
+				if (win_xmin > 240)
+					win_xmin = 240;
+			}
+			bool y_in_window = (win_ymin > win_ymax)
+				? (sprite_lcd_y < win_ymax || sprite_lcd_y >= win_ymin)
+				: (sprite_lcd_y >= win_ymin && sprite_lcd_y < win_ymax);
+			if (!y_in_window)
 				continue;
-			UINT16 winin     = ppu_worker_io_read16(ctx, GBA_WININ);
-			UINT8  win_value = SB_BFE(winin, win * 8, 6);
-			// Single segment [xmin, xmax); x1==x2 => zero width, skip.
-			for (INT32 x = win_xmin; x < win_xmax; ++x)
-				ctx->window[x] = win_value;
+			UINT16 win_in     = ppu_worker_io_read16(ctx, GBA_WININ);
+			UINT8  win_value = SB_BFE(win_in, win * 8, 6);
+			if (win_xmin > win_xmax) {
+				for (INT32 x = 0; x < win_xmax; ++x)
+					ctx->window[x] = win_value;
+				for (INT32 x = win_xmin; x < 240; ++x)
+					ctx->window[x] = win_value;
+			} else {
+				for (INT32 x = win_xmin; x < win_xmax; ++x)
+					ctx->window[x] = win_value;
+			}
 		}
-		// Pixels where OBJ is disabled by window -> backdrop (matches gbappu.h line 240-244).
-		UINT32 backdrop_col = (ctx->pal_xrgb32[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
-		UINT32* SB_RESTRICT ft_win = ctx->first_target_buffer;
-		UINT8*  SB_RESTRICT win_arr = ctx->window;
+		// Window regions with OBJ disabled -> backdrop.
+		UINT32 backdrop_col = (ctx->pal_xrgb[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
+		UINT32* SB_RESTRICT ft_window_ptr = ctx->first_target_buffer;
+		UINT8*  SB_RESTRICT window_arr = ctx->window;
 		for (INT32 x = 0; x < 240; ++x) {
-			if (SB_BFE(win_arr[x], 4, 1) == 0)
-				ft_win[x] = backdrop_col;
+			if (SB_BFE(window_arr[x], 4, 1) == 0)
+				ft_window_ptr[x] = backdrop_col;
 		}
 	}
 
-	// Determine if second_target_buffer is needed: alpha blend (bld_mode==1)
-	// or any semi-transparent OBJ (which forces alpha blend check per-pixel).
-	ctx->need_second_buf = (bld_mode_nb == 1) || (n_semitrans_objs > 0) || obj_window_enable;
-	if (ctx->eff_bld_mode == 0)
-		ctx->need_second_buf = (n_semitrans_objs > 0) || obj_window_enable;
+	// Per-line: set when this scanline has an alpha blend, a drawn semi-transparent
+	// OBJ pixel, or an OBJ window; OR-ed into frame_needs_second_buf.
+	bool line_needs_second;
+	if (ctx->eff_blend_mode == 0)
+		line_needs_second = saw_semitrans_pixel || obj_window_enable;
+	else
+		line_needs_second = (ctx->eff_blend_mode == 1) || saw_semitrans_pixel || obj_window_enable;
+	ctx->need_second_this_line = line_needs_second;
+	if (line_needs_second) ctx->frame_needs_second_buf = true;
 	return n_hits > 0;
 }
 
 // Max cycles to skip from current beam position (worker-side copy).
-static inline INT32 ppu_worker_compute_max_fast_forward(ppu_worker_render_ctx_t* ctx, bool render)
+static INT32 ppu_worker_compute_max_fast_forward(ppu_worker_render_ctx_t* ctx)
 {
 	INT32 scanline_clock = (ctx->ppu->scan_clock) % 1232;
 	if (scanline_clock >= GBA_LCD_HBLANK_START * 4 && scanline_clock <= GBA_LCD_HBLANK_END * 4)
 		return GBA_LCD_HBLANK_END   * 4 - scanline_clock - 1;
-	bool not_visible = !render || ctx->ppu->scan_clock > GBA_LCD_VBLANK_START;
-	if (not_visible && scanline_clock >= 1 && scanline_clock <= GBA_LCD_HBLANK_START * 4)
+	if (scanline_clock >= 1 && scanline_clock <= GBA_LCD_HBLANK_START * 4)
 		return GBA_LCD_HBLANK_START * 4 - scanline_clock - 1;
-	// Past HBLANK_END (lcd_x > 295) the line is finished: this handler draws
-	// nothing (the worker renders from line snapshots), and the last DISPSTAT/
-	// VCOUNT update is at HBLANK_END.  Jump to the next line's first cycle
-	// (the old fall-through cost ~12 extra callbacks per line).
+	// Past HBLANK_END nothing is drawn: jump straight to the next line.
 	if (scanline_clock > GBA_LCD_HBLANK_END * 4)
 		return 1232 - scanline_clock - 1;
 	return 3 - ((ctx->ppu->scan_clock) % 4);
 }
 
-// Per-scanline native-format output: convert XRGB8888 src row to out_bpp
-// (BGR24 or RGB565) and write to dst. Shared by generic path and FP-C.
-static inline void ppu_worker_write_scanline_out(UINT8* SB_RESTRICT dst,
+// Convert one XRGB8888 row to out_bpp (BGR24/RGB565) into dst.
+static void ppu_worker_write_scanline_out(UINT8* SB_RESTRICT dst,
                                                  const UINT32* SB_RESTRICT src,
                                                  INT32 out_bpp)
 {
 	if (out_bpp == 3) {
-		// BGR24: B,G,R taken directly from the XRGB8888 layout; 4-pixel unroll.
+		// BGR24 output; 4-pixel unroll.
 		INT32 x = 0;
 		for (; x < GBA_LCD_W - 3; x += 4) {
 			UINT32 p0 = src[0], p1 = src[1], p2 = src[2], p3 = src[3];
@@ -876,7 +978,7 @@ static inline void ppu_worker_write_scanline_out(UINT8* SB_RESTRICT dst,
 			*dst++ = (UINT8)((pix >> 16) & 0xFF);
 		}
 	} else if (out_bpp == 2) {
-		// RGB565 from XRGB8888: R=bits19-23, G=bits10-15, B=bits3-7; 4-pixel unroll.
+		// RGB565 output (R=bits19-23, G=10-15, B=3-7); 4-pixel unroll.
 		UINT16* SB_RESTRICT dst16 = (UINT16*)dst;
 		INT32 x = 0;
 		for (; x < GBA_LCD_W - 3; x += 4) {
@@ -894,79 +996,90 @@ static inline void ppu_worker_write_scanline_out(UINT8* SB_RESTRICT dst,
 	}
 }
 
-// Scanline render - registers snapshotted at hblank; pixel loop does no IO reads.
-//
-// XRGB8888 pixel layout (32-bit UINT32):
-//   [31:29] = 5 - priority   (3 bits; higher = drawn on top)
-//   [28:26] = tie-breaker    (matches gbappu.h bits 25-27: BG3=1, BG2=2, BG1=3, BG0=4, OBJ=7, BD=0; higher wins)
-//   [25]    = semi-transparent OBJ flag (obj_mode==1 -> forced alpha blend)
-//   [24]    = opaque flag    (1 = visible pixel; 0 = transparent)
-//   [23:0]  = BGR888 color (R<<16, G<<8, B<<0)
-// Tie values match gbappu.h `(4-bg)<<25` for BGs / `0x7<<25` for OBJ / `0<<25` for BD exactly.
-// Priority comparison: ((col >> 26) & 0x3F) - 6 bits (tie+pri), matches gbappu.h `col>>17` ordering.
-// 5-bit -> 8-bit channel expansion ((v << 3) | (v >> 2), v = 0..31), precomputed
-// so the per-pixel alpha/brightness paths cost one load instead of two shifts.
+// Scanline render: registers snapshotted at hblank; pixel loop does no IO reads.
+// XRGB8888 pixel encoding (32-bit UINT32):
+//   [31:29] = 5 - priority (higher wins)
+//   [28:26] = tie-breaker (BD=0, BG3=1..BG0=4, OBJ=7)
+//   [25]    = semi-transparent OBJ flag (forces alpha blend)
+//   [24]    = opaque flag
+//   [23:0]  = BGR888 color; sb_exp5[] = 5b->8b ((v<<3)|(v>>2)).
 static const UINT8 sb_exp5[32] = {
 	0, 8, 16, 24, 33, 41, 49, 57, 66, 74, 82, 90, 99, 107, 115, 123,
 	132, 140, 148, 156, 165, 173, 181, 189, 198, 206, 214, 222, 231, 239, 247, 255
 };
 
-static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT32 lcd_y)
+// Map a pixel's 3-bit tie code (BG0=4, BG1=3, BG2=2, BG3=1, OBJ=7, backdrop=0)
+// to its BLDCNT layer bit.
+static const UINT8 sb_tie_to_bldcnt_type[8] = { 5, 3, 2, 1, 0, 0, 0, 4 };
+
+// Ghosting strength -> Q8 blend factor in [0,76]; 0 disables the ghost blend.
+SB_ALWAYS_INLINE INT32 ppu_worker_ghost_q8_factor(float strength)
 {
-	UINT16 dispcnt    = ppu_worker_io_read16(ctx, GBA_DISPCNT);
+	INT32 q8 = (INT32)(strength * 76.8f + 0.5f);
+	if (q8 < 0)  q8 = 0;
+	if (q8 > 76) q8 = 76;
+	return q8;
+}
+
+static void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT32 lcd_y)
+{
+	// DISPCNT takes effect 2 scanlines late on hardware; gbappu.h reads
+	// dispcnt_pipeline[0], so use ctx->ppu's delayed value, not the raw register.
+	UINT16 dispcnt    = ctx->ppu->dispcnt_pipeline[0];
 	INT32  bg_mode    = SB_BFE(dispcnt, 0, 3);
 	INT32  forced_blank = SB_BFE(dispcnt, 7, 1);
-	INT32  frame_sel  = SB_BFE(dispcnt, 4, 1);
-	UINT16 mos_reg    = ppu_worker_io_read16(ctx, GBA_MOSAIC);
-	INT32  mos_x      = SB_BFE(mos_reg, 0, 4) + 1;
-	INT32  mos_y      = SB_BFE(mos_reg, 4, 4) + 1;
+	INT32  frame_select  = SB_BFE(dispcnt, 4, 1);
+	UINT16 mosaic_reg    = ppu_worker_io_read16(ctx, GBA_MOSAIC);
+	INT32  mosaic_x      = SB_BFE(mosaic_reg, 0, 4) + 1;
+	INT32  mosaic_y      = SB_BFE(mosaic_reg, 4, 4) + 1;
 	UINT16 bldcnt     = ppu_worker_io_read16(ctx, GBA_BLDCNT);
 	// Effective effect mode for this line (0 when the mode cannot apply).
-	INT32  eff_mode   = ctx->eff_bld_mode;
-	UINT16 bldy_reg   = ppu_worker_io_read16(ctx, GBA_BLDY);
+	INT32  eff_mode   = ctx->eff_blend_mode;
+	UINT16 bldy   = ppu_worker_io_read16(ctx, GBA_BLDY);
 	UINT16 bldalpha   = ppu_worker_io_read16(ctx, GBA_BLDALPHA);
 	UINT16 green_swap = ppu_worker_io_read16(ctx, GBA_GREENSWP);
-	// ctx is not mutated inside this function, so these scanline flags are
-	// loop-invariant; hoist them so the pixel loops read a register, not a load.
-	const bool need_second = ctx->need_second_buf;
-	const bool no_win      = ctx->no_windows;
-	// Backdrop initial fill: pri=0 (lowest), tie=0 (matches gbappu.h BD encoding).
-	UINT32 backdrop_col = (ctx->pal_xrgb32[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
+	// Loop-invariant scanline flags hoisted so pixel loops read registers.
+	// frame_second: any scanline this frame needs alpha tables (tables are per-line).
+	// line_second:  this scanline actually has semi-transparent content; only this
+	//               scanline pays the st_buf fill + dual-write cost.
+	const bool frame_second = ctx->frame_needs_second_buf;
+	const bool line_second  = ctx->need_second_this_line;
+	const bool no_win       = ctx->no_windows;
+	// Backdrop initial fill: pri=0 (lowest), tie=0.
+	UINT32 backdrop_col = (ctx->pal_xrgb[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
 
-	// Blend lookup tables - built per scanline (HBlank BLDALPHA/BLDY updates take effect).
-	// Only build tables actually used by this scanline's blend mode.
-	UINT8 bl_eva[32], bl_evb[32], bl_inc8[32], bl_dec8[32];
-	bool need_alpha_tbl  = (eff_mode == 1) || need_second;
-	bool need_bright_tbl = (eff_mode == 2) || (eff_mode == 3);
-	if (need_alpha_tbl) {
-		INT32 eva = SB_BFE(bldalpha, 0, 5); if (eva > 16) eva = 16;
-		INT32 evb = SB_BFE(bldalpha, 8, 5); if (evb > 16) evb = 16;
-		for (INT32 i = 0; i < 32; ++i) {
-			bl_eva[i] = (UINT8)((i * eva) >> 4);
-			bl_evb[i] = (UINT8)((i * evb) >> 4);
-		}
-	}
-	if (need_bright_tbl) {
-		INT32 evy = SB_BFE(bldy_reg,  0, 5); if (evy > 16) evy = 16;
+	// Blend tables, rebuilt per scanline so HBlank BLDALPHA/BLDY updates apply.
+	// Brighten/darken are pre-baked to 8-bit; alpha uses raw 0-16 EVA/EVB with
+	// (r*eva + r2*evb)>>4 per pixel, matching gbappu.h's integer divide.
+	UINT8 blend_inc8[32], blend_dec8[32];
+	INT32 blend_eva_q4, blend_evb_q4;
+	bool need_alpha_table  = (eff_mode == 1) || frame_second;
+	bool need_bright_table = (eff_mode == 2) || (eff_mode == 3);
+	if (need_alpha_table) {
+		blend_eva_q4 = SB_BFE(bldalpha, 0, 5); if (blend_eva_q4 > 16) blend_eva_q4 = 16;
+		blend_evb_q4 = SB_BFE(bldalpha, 8, 5); if (blend_evb_q4 > 16) blend_evb_q4 = 16;
+	} else { blend_eva_q4 = 0; blend_evb_q4 = 0; }
+	if (need_bright_table) {
+		INT32 evy = SB_BFE(bldy,  0, 5); if (evy > 16) evy = 16;
 		for (INT32 i = 0; i < 32; ++i) {
 			INT32 inc = i + (((31 - i) * evy) >> 4);
 			if (inc > 31) inc = 31;
-			bl_inc8[i] = sb_exp5[inc];
-			bl_dec8[i] = sb_exp5[i - ((i * evy) >> 4)];
+			blend_inc8[i] = sb_exp5[inc];
+			blend_dec8[i] = sb_exp5[(i * (16 - evy)) >> 4];
 		}
 	}
 
 	// Ghosting Q8 factor - frame-level constant, stored in ctx.
-	INT32 sbf_q8       = ctx->sbf_q8;
+	INT32 ghost_q8       = ctx->ghost_q8;
 	bool  ghost_fast   = ctx->ghost_fast;
-	INT32 one_m_sbf_q8 = ctx->one_m_sbf_q8;
+	INT32 one_minus_ghost_q8 = ctx->one_minus_ghost_q8;
 
 	bool render_bgs = bg_mode <= 5;
 	bool mode_ok[4]  = { false, false, false, false };
-	INT32 priority[4], char_addr[4], scr_addr[4], size_x[4], size_y[4], ssize[4];
-	INT32 hoff[4], voff[4], bgx[4], bgy[4], pa[4], pc[4];
-	bool  colors[4], mosaic_bg[4], rot_scale[4], overflow[4];
-	INT32 py0[4], trow_base[4], cached_tile_x[4], cached_py[4];
+	INT32 priority[4], char_base_addr[4], map_base_addr[4], bg_size_x[4], bg_size_y[4], size_sel[4];
+	INT32 hofs[4], vofs[4], aff_bgx[4], aff_bgy[4], aff_pa[4], aff_pc[4];
+	bool  colors[4], mosaic_bg[4], rot_scale[4], wrap_overflow[4];
+	INT32 tile_row_y[4], tile_row_base[4], cached_tile_x[4], cached_tile_row_y[4];
 	UINT16 cached_tile_data[4];
 	// Affine BG tilemap-entry cache (8-bit entries, no flip/palette bits).
 	INT32  cached_aff_tile_x[4];
@@ -974,7 +1087,6 @@ static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT3
 	UINT8  cached_aff_tile_data[4];
 	// BG priority codes - per-BG bits 24-31 (pri/tie/opaque) of composed col.
 	UINT32 bg_pri_code[4];
-	UINT32 max_bg_pri = 0;
 
 	for (INT32 bg = 0; bg < 4; ++bg) {
 		cached_tile_x[bg]     = -1;
@@ -984,14 +1096,12 @@ static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT3
 		cached_aff_tile_data[bg] = 0;
 	}
 
-	// Precompute per-BG state. Bitmap modes (3/4/5) only use BG2;
-	// FP-B fast path for them avoids BG0/1/3 state setup.
+	// Per-BG state. Bitmap modes (3/4/5) only use BG2 (BG0/1/3 skipped).
 	const bool is_bitmap_mode = (bg_mode >= 3 && bg_mode <= 5);
 	if (render_bgs) {
 		for (INT32 bg = 0; bg < 4; ++bg) {
 			if (is_bitmap_mode) {
-				// Bitmap modes: only BG2 is active; it is 256-color affine and
-				// ignores char/screen bases (VRAM is a linear framebuffer).
+				// Bitmap mode: BG2 is 256-colour affine over linear VRAM.
 				if (bg != 2) continue;
 			} else {
 				if ((bg < 2 && bg_mode == 2) || (bg == 3 && bg_mode == 1))
@@ -1003,420 +1113,417 @@ static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT3
 			rot_scale[bg] = bg_mode >= 1 && bg >= 2;
 			UINT16 bgcnt  = ppu_worker_io_read16(ctx, GBA_BG0CNT + bg * 2);
 			priority[bg]  = SB_BFE(bgcnt,  0, 2);
-			char_addr[bg] = SB_BFE(bgcnt,  2, 2) * 16 * 1024;
+			char_base_addr[bg] = SB_BFE(bgcnt,  2, 2) * 16 * 1024;
 			mosaic_bg[bg] = SB_BFE(bgcnt,  6, 1);
 			colors[bg]    = SB_BFE(bgcnt,  7, 1);
-			scr_addr[bg]  = SB_BFE(bgcnt,  8, 5) * 2048;
-			overflow[bg]  = SB_BFE(bgcnt, 13, 1);
-			ssize[bg]     = SB_BFE(bgcnt, 14, 2);
-			size_x[bg]    = (ssize[bg] & 1 ) ? 512 : 256;
-			size_y[bg]    = (ssize[bg] >= 2) ? 512 : 256;
+			map_base_addr[bg]  = SB_BFE(bgcnt,  8, 5) * 2048;
+			wrap_overflow[bg]  = SB_BFE(bgcnt, 13, 1);
+			size_sel[bg]     = SB_BFE(bgcnt, 14, 2);
+			bg_size_x[bg]    = (size_sel[bg] & 1 ) ? 512 : 256;
+			bg_size_y[bg]    = (size_sel[bg] >= 2) ? 512 : 256;
 			if (rot_scale[bg] || is_bitmap_mode) {
-				size_x[bg] = size_y[bg] = (16 * 8) << ssize[bg];
+				bg_size_x[bg] = bg_size_y[bg] = (16 * 8) << size_sel[bg];
 				if (bg_mode == 3 || bg_mode == 4) {
-					size_x[bg] = 240;
-					size_y[bg] = 160;
+					bg_size_x[bg] = 240;
+					bg_size_y[bg] = 160;
 				} else if (bg_mode == 5) {
-					size_x[bg] = 160;
-					size_y[bg] = 128;
+					bg_size_x[bg] = 160;
+					bg_size_y[bg] = 128;
 				}
 				colors[bg] = true;
-				bgx[bg] = ctx->ppu->aff[bg - 2].render_bgx;
-				bgy[bg] = ctx->ppu->aff[bg - 2].render_bgy;
-				pa[bg]  = (INT16)ppu_worker_io_read16(ctx, GBA_BG2PA + (bg - 2) * 0x10);
-				pc[bg]  = (INT16)ppu_worker_io_read16(ctx, GBA_BG2PC + (bg - 2) * 0x10);
+				aff_bgx[bg] = ctx->ppu->aff[bg - 2].render_bgx;
+				aff_bgy[bg] = ctx->ppu->aff[bg - 2].render_bgy;
+				aff_pa[bg]  = (INT16)ppu_worker_io_read16(ctx, GBA_BG2PA + (bg - 2) * 0x10);
+				aff_pc[bg]  = (INT16)ppu_worker_io_read16(ctx, GBA_BG2PC + (bg - 2) * 0x10);
 			} else {
 				INT16 h16 = ppu_worker_io_read16(ctx, GBA_BG0HOFS + bg * 4);
 				INT16 v16 = ppu_worker_io_read16(ctx, GBA_BG0VOFS + bg * 4);
-				hoff[bg] = (h16 << 7) >> 7;
-				voff[bg] = (v16 << 7) >> 7;
-				INT32 ly    = mosaic_bg[bg] ? (lcd_y / mos_y) * mos_y : lcd_y;
-				INT32 row_y = (voff[bg] + ly) & (size_y[bg] - 1);
-				py0[bg]     = row_y & 7;
+				hofs[bg] = (h16 << 7) >> 7;
+				vofs[bg] = (v16 << 7) >> 7;
+				INT32 ly    = mosaic_bg[bg] ? (lcd_y / mosaic_y) * mosaic_y : lcd_y;
+				INT32 row_y = (vofs[bg] + ly) & (bg_size_y[bg] - 1);
+				tile_row_y[bg]     = row_y & 7;
 				INT32 ty    = row_y >> 3;
-				trow_base[bg] = (ty & 31) * 32 + (ty >= 32 ? 32 * 32 * (ssize[bg] == 3 ? 2 : 1) : 0);
+				tile_row_base[bg] = (ty & 31) * 32 + (ty >= 32 ? 32 * 32 * (size_sel[bg] == 3 ? 2 : 1) : 0);
 			}
 			bg_pri_code[bg] = ((UINT32)(5 - priority[bg]) << 29)
 				                | ((UINT32)(4 - bg) << 26)
 			                | (1u << 24);
-			if (bg_pri_code[bg] > max_bg_pri)
-				max_bg_pri = bg_pri_code[bg];
 		}
 	}
 
-	UINT32* SB_RESTRICT fb_row_p = ctx->framebuffer + lcd_y * GBA_LCD_W;
-	UINT8*  SB_RESTRICT fb_row_b = (UINT8*)fb_row_p;
-	UINT32* SB_RESTRICT ft = ctx->first_target_buffer;
-	UINT32* SB_RESTRICT st = ctx->second_target_buffer;
-	UINT8*  SB_RESTRICT win_p = ctx->window;
+	UINT32* SB_RESTRICT fb_row = ctx->framebuffer + lcd_y * GBA_LCD_W;
+	UINT8*  SB_RESTRICT fb_row_bytes = (UINT8*)fb_row;
+	UINT32* SB_RESTRICT ft_buf = ctx->first_target_buffer;
+	UINT32* SB_RESTRICT st_buf = ctx->second_target_buffer;
+	UINT8*  SB_RESTRICT win_ptr = ctx->window;
 
-	// Build active-BG list for this scanline (max 4 BGs) - reduces inner loop
-	// iterations from 4 to actual active count (1-3 typical).
+	// Active-BG list: iterate only enabled BGs instead of all 4.
 	INT32 active_bg[4]; INT32 n_active_bg = 0;
 	for (INT32 bg = 0; bg < 4; ++bg)
 		if (mode_ok[bg]) active_bg[n_active_bg++] = bg;
 
-	// Fast-pixel path: text mode, no effects, no windows, no green swap, ghost_fast.
-	// Skips second buffer, blend/effect chain, obj_covers check. BGs render directly
-	// to ft with priority comparison; fb write is a direct 4-pixel copy.
-	// FP-D: extends fast-pixel to rows with opaque OBJs - render_objs already drew
-	// sprites onto ft; BG priority (tie 0-4) is lower than OBJ tie=7 so BGs won't
-	// overwrite sprites. Semi-transparent OBJs cause need_second_buf=true and fall
-	// through to generic path.
-	const bool fast_pixel_row = !is_bitmap_mode
-		&& (eff_mode == 0) && !need_second
-		&& no_win && !(green_swap & 1) && ghost_fast
-		&& (forced_blank == 0);
+	// Fast-pixel path: text mode, no effects/windows/green-swap, ghosting fast.
+	// BGs render to ft_buf by priority; opaque OBJs pre-drawn. When semi-transparent
+	// OBJs force need_second, BG loop also maintains st_buf and a final pass
+	// alpha-blends bit25 pixels against it.
+	const bool fast_pixel_ok = !is_bitmap_mode
+		&& (eff_mode == 0) && no_win && !(green_swap & 1)
+		&& ghost_fast && (forced_blank == 0);
+	const bool fast_pixel_row       = fast_pixel_ok && !line_second;
+	const bool fast_pixel_alpha_row = fast_pixel_ok &&  line_second;
 
-	if (fast_pixel_row) {
-		// When no OBJs on this line, fill ft with backdrop (4-pixel direct stores).
-		// When OBJs are present, render_objs already initialized ft with backdrop
-		// and drew sprites on top - re-filling would erase them.
-		INT32 xi;
+	// Helper: composite new pixel c against two-layer buffers ft/st.
+	// If c wins ft, displaced ft is a candidate for st; otherwise c is a
+	// candidate for st (layer below ft but above st).
+	#define PPU_COMPOSITE_PIXEL(c_, ftp_, stp_) do { \
+		UINT32 _c = (c_); \
+		UINT32* _ftp = (ftp_); \
+		UINT32* _stp = (stp_); \
+		if (((_c >> 26) & 0x3F) > (((*_ftp) >> 26) & 0x3F)) { \
+			UINT32 _displaced = *_ftp; \
+			*_ftp = _c; \
+			if (((_displaced >> 26) & 0x3F) > (((*_stp) >> 26) & 0x3F)) *_stp = _displaced; \
+		} else { \
+			if (((_c >> 26) & 0x3F) > (((*_stp) >> 26) & 0x3F)) *_stp = _c; \
+		} \
+	} while(0)
+
+	if (fast_pixel_row || fast_pixel_alpha_row) {
+		INT32 x;
+		UINT32* SB_RESTRICT st_ptr = fast_pixel_alpha_row ? st_buf : 0;
+		// ft_buf: backdrop when no OBJs; render_objs already seeded ft when any_obj.
+		// st_buf: always seeded with backdrop (OBJ never writes st); BG loop pushes
+		// displaced ft pixels into st as it layers up, matching generic path.
 		if (!ctx->has_any_obj_this_line) {
-			for (xi = 0; xi < GBA_LCD_W; xi += 8) {
-				ft[xi]     = backdrop_col;
-				ft[xi + 1] = backdrop_col;
-				ft[xi + 2] = backdrop_col;
-				ft[xi + 3] = backdrop_col;
-				ft[xi + 4] = backdrop_col;
-				ft[xi + 5] = backdrop_col;
-				ft[xi + 6] = backdrop_col;
-				ft[xi + 7] = backdrop_col;
-			}
+			ppu_worker_fill_row(ft_buf, backdrop_col);
+		}
+		if (fast_pixel_alpha_row) {
+			ppu_worker_fill_row(st_buf, backdrop_col);
 		}
 
-		// Render every active BG; the per-pixel (tie,pri) compare decides the
-		// winner, so iteration order is not significant. Pointer increment for ft.
-		for (INT32 bi = n_active_bg - 1; bi >= 0; --bi) {
-			INT32 bg = active_bg[bi];
+		// Render each active BG; the per-pixel (tie,pri) compare picks the winner.
+		for (INT32 bg_i = n_active_bg - 1; bg_i >= 0; --bg_i) {
+			INT32 bg = active_bg[bg_i];
+			if (fast_pixel_alpha_row) st_ptr = st_buf;
 			// BG mode dispatch: rot_scale vs text is determined per BG.
 			if (rot_scale[bg] || mosaic_bg[bg] || colors[bg]) {
-				// Complex BG (affine/mosaic/8bpp) - use generic per-pixel BG
-				// logic, but only for this single BG; pointer increment.
-				// Hoist loop-invariant rot_scale so the compiler can split the
-				// inner loop (loop unswitching) and drop the per-pixel branch.
+				// Complex BG (affine/mosaic/8bpp): generic per-pixel logic for this BG only;
+				// bg_rot is hoisted so the loop can be unswitched.
 				const bool bg_rot = rot_scale[bg];
-				UINT32* SB_RESTRICT ft_p = ft;
+				UINT32* SB_RESTRICT ft_ptr = ft_buf;
 				for (INT32 lcd_x = 0; lcd_x < 240; ++lcd_x) {
 					INT32 bg_x, bg_y;
 					if (bg_rot) {
-						INT32 sx = mosaic_bg[bg] ? (lcd_x / mos_x) * mos_x : lcd_x;
-						bg_x = (INT32)(((INT64)pa[bg] * sx + bgx[bg]) >> 8);
-						bg_y = (INT32)(((INT64)pc[bg] * sx + bgy[bg]) >> 8);
-						if (overflow[bg] == 0) {
-							if (bg_x < 0 || bg_x >= size_x[bg] || bg_y < 0 || bg_y >= size_y[bg])
-								{ ++ft_p; continue; }
-						} else {
-							bg_x &= size_x[bg] - 1;
-							bg_y &= size_y[bg] - 1;
+						INT32 src_x = mosaic_bg[bg] ? (lcd_x / mosaic_x) * mosaic_x : lcd_x;
+						bg_x = (INT32)(((INT64)aff_pa[bg] * src_x + aff_bgx[bg]) >> 8);
+						bg_y = (INT32)(((INT64)aff_pc[bg] * src_x + aff_bgy[bg]) >> 8);
+						// Bitmap modes treat out-of-bounds as transparent;
+						// affine tile BGs wrap when overflow bit is set.
+						if (bg_x < 0 || bg_x >= bg_size_x[bg] || bg_y < 0 || bg_y >= bg_size_y[bg]) {
+							if (wrap_overflow[bg] == 0 || is_bitmap_mode)
+								{ ++ft_ptr; if (fast_pixel_alpha_row) ++st_ptr; continue; }
+							bg_x &= bg_size_x[bg] - 1;
+							bg_y &= bg_size_y[bg] - 1;
 						}
 					} else {
 						if (mosaic_bg[bg]) {
-							bg_x = (hoff[bg] + (lcd_x / mos_x) * mos_x) & (size_x[bg] - 1);
-							bg_y = (voff[bg] + (lcd_y / mos_y) * mos_y) & (size_y[bg] - 1);
+							bg_x = (hofs[bg] + (lcd_x / mosaic_x) * mosaic_x) & (bg_size_x[bg] - 1);
+							bg_y = (vofs[bg] + (lcd_y / mosaic_y) * mosaic_y) & (bg_size_y[bg] - 1);
 						} else {
-							bg_x = (hoff[bg] + lcd_x) & (size_x[bg] - 1);
-							bg_y = (voff[bg] + lcd_y) & (size_y[bg] - 1);
+							bg_x = (hofs[bg] + lcd_x) & (bg_size_x[bg] - 1);
+							bg_y = (vofs[bg] + lcd_y) & (bg_size_y[bg] - 1);
 						}
 					}
 					INT32 bg_tile_x = bg_x >> 3;
 					UINT16 tile_data; INT32 px, py;
 					if (bg_rot) {
-						INT32 bg_ty = bg_y >> 3, bg_tiles_w = size_x[bg] >> 3;
+						INT32 bg_ty = bg_y >> 3, bg_tiles_w = bg_size_x[bg] >> 3;
 						INT32 tile_off = bg_ty * bg_tiles_w + bg_tile_x;
 						if (bg_tile_x != cached_aff_tile_x[bg] || bg_ty != cached_aff_tile_y[bg]) {
 							cached_aff_tile_x[bg] = bg_tile_x;
 							cached_aff_tile_y[bg] = bg_ty;
-							cached_aff_tile_data[bg] = ctx->vram[scr_addr[bg] + tile_off];
+							cached_aff_tile_data[bg] = ctx->vram[map_base_addr[bg] + tile_off];
 						}
 						tile_data = cached_aff_tile_data[bg];
 						px = bg_x & 7; py = bg_y & 7;
 					} else {
 						if (bg_tile_x != cached_tile_x[bg]) {
 							cached_tile_x[bg] = bg_tile_x;
-							INT32 toff = trow_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
-							tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + scr_addr[bg] + toff * 2));
+							INT32 toff = tile_row_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
+							tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + map_base_addr[bg] + toff * 2));
 							cached_tile_data[bg] = tile_data;
-							cached_py[bg] = SB_BFE(tile_data,11,1) ? 7 - py0[bg] : py0[bg];
+							cached_tile_row_y[bg] = SB_BFE(tile_data,11,1) ? 7 - tile_row_y[bg] : tile_row_y[bg];
 						} else { tile_data = cached_tile_data[bg]; }
 						px = bg_x & 7;
 						if (SB_BFE(tile_data,10,1)) px = 7 - px;
-						py = cached_py[bg];
+						py = cached_tile_row_y[bg];
 					}
 					INT32 tile_id = SB_BFE(tile_data,0,10);
 					INT32 palette = SB_BFE(tile_data,12,4);
-					UINT8 tile_d;
+					UINT8 color_idx;
 					if (!colors[bg]) {
-						INT32 addr = char_addr[bg] + tile_id*32 + py*4;
-						// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-						if (SB_UNLIKELY(addr >= 0x10000)) { ++ft_p; continue; }
-						if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-							ctx->fc_tile_key[bg] = addr;
-							UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
-							ctx->fc_tile_bytes[bg][0]=(UINT8)r32;
-							ctx->fc_tile_bytes[bg][1]=(UINT8)(r32>>8);
-							ctx->fc_tile_bytes[bg][2]=(UINT8)(r32>>16);
-							ctx->fc_tile_bytes[bg][3]=(UINT8)(r32>>24);
-							ctx->fc_tile_valid[bg] = true;
-						}
-						tile_d = (ctx->fc_tile_bytes[bg][px>>1]>>((px&1)*4))&0xf;
-						if (tile_d == 0) { ++ft_p; continue; }
-						tile_d += palette*16;
+						INT32 addr = char_base_addr[bg] + tile_id*32 + py*4;
+						// VRAM addr >= 0x10000: skip pixel.
+						if (SB_UNLIKELY(addr >= 0x10000)) { ++ft_ptr; if (fast_pixel_alpha_row) ++st_ptr; continue; }
+						const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile4(ctx, bg, addr);
+						color_idx = (tb[px >> 1] >> ((px & 1) * 4)) & 0xf;
+						if (color_idx == 0) { ++ft_ptr; if (fast_pixel_alpha_row) ++st_ptr; continue; }
+						color_idx += palette*16;
 					} else {
-						INT32 addr = char_addr[bg] + tile_id*64 + py*8;
-						// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-						if (SB_UNLIKELY(addr >= 0x10000)) { ++ft_p; continue; }
-						if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-							ctx->fc_tile_key[bg] = addr;
-							UINT64 r64 = BURN_ENDIAN_SWAP_INT64(*(const UINT64*)(ctx->vram + addr));
-							ctx->fc_tile_bytes[bg][0]=(UINT8)r64; ctx->fc_tile_bytes[bg][1]=(UINT8)(r64>>8);
-							ctx->fc_tile_bytes[bg][2]=(UINT8)(r64>>16); ctx->fc_tile_bytes[bg][3]=(UINT8)(r64>>24);
-							ctx->fc_tile_bytes[bg][4]=(UINT8)(r64>>32); ctx->fc_tile_bytes[bg][5]=(UINT8)(r64>>40);
-							ctx->fc_tile_bytes[bg][6]=(UINT8)(r64>>48); ctx->fc_tile_bytes[bg][7]=(UINT8)(r64>>56);
-							ctx->fc_tile_valid[bg] = true;
-						}
-						tile_d = ctx->fc_tile_bytes[bg][px];
-						if (tile_d == 0) { ++ft_p; continue; }
+						INT32 addr = char_base_addr[bg] + tile_id*64 + py*8;
+						if (SB_UNLIKELY(addr >= 0x10000)) { ++ft_ptr; if (fast_pixel_alpha_row) ++st_ptr; continue; }
+						const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile8(ctx, bg, addr);
+						color_idx = tb[px];
+						if (color_idx == 0) { ++ft_ptr; if (fast_pixel_alpha_row) ++st_ptr; continue; }
 					}
-					UINT32 col2 = (ctx->pal_xrgb32[tile_d] & 0x00FFFFFFu) | bg_pri_code[bg];
-					if (((col2 >> 26) & 0x3F) > (((*ft_p) >> 26) & 0x3F)) *ft_p = col2;
-					++ft_p;
+					UINT32 col2 = (ctx->pal_xrgb[color_idx] & 0x00FFFFFFu) | bg_pri_code[bg];
+					if (fast_pixel_alpha_row) {
+						PPU_COMPOSITE_PIXEL(col2, ft_ptr, st_ptr);
+					} else {
+						if (((col2 >> 26) & 0x3F) > (((*ft_ptr) >> 26) & 0x3F)) *ft_ptr = col2;
+					}
+					++ft_ptr;
+					if (fast_pixel_alpha_row) ++st_ptr;
 				}
 			} else {
-				// FP-E: Simple 4bpp text BG (no mosaic/rot/scale) - tile-aligned 8-pixel block decode.
-				// Tiles with h_flip fall back to per-pixel reverse read; non-flipped tiles decode
-				// all 8 pixels from one 4-byte VRAM read in a batch, skipping tilemap read/addr calc
-				// for 7 of 8 pixels.
-				UINT32* SB_RESTRICT ft_p = ft;
+				// 4bpp text BG fast path: 8-pixel unrolled tiles; head/tail stay per-pixel.
+				UINT32* SB_RESTRICT ft_ptr = ft_buf;
 				INT32 lcd_x = 0;
+				const UINT32* SB_RESTRICT pal = ctx->pal_xrgb;
+				UINT32 pri = bg_pri_code[bg];
 
 				// 1) Head: 0-7 pixels until tile boundary (px==0)
 				{
-					INT32 start_px = (hoff[bg] + 0) & 7;
+					INT32 start_px = (hofs[bg] + 0) & 7;
 					if (start_px != 0) {
 						INT32 head_count = 8 - start_px;
 						if (head_count > 240) head_count = 240;
 						for (INT32 i = 0; i < head_count; ++i) {
-							INT32 bg_x = (hoff[bg] + lcd_x) & (size_x[bg] - 1);
+							INT32 bg_x = (hofs[bg] + lcd_x) & (bg_size_x[bg] - 1);
 							INT32 bg_tile_x = bg_x >> 3, px = bg_x & 7;
 							UINT16 tile_data; INT32 py;
 							if (bg_tile_x != cached_tile_x[bg]) {
 								cached_tile_x[bg] = bg_tile_x;
-								INT32 toff = trow_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
-								tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + scr_addr[bg] + toff * 2));
+								INT32 toff = tile_row_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
+								tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + map_base_addr[bg] + toff * 2));
 								cached_tile_data[bg] = tile_data;
-								cached_py[bg] = SB_BFE(tile_data,11,1) ? 7 - py0[bg] : py0[bg];
+								cached_tile_row_y[bg] = SB_BFE(tile_data,11,1) ? 7 - tile_row_y[bg] : tile_row_y[bg];
 							} else { tile_data = cached_tile_data[bg]; }
 							bool hflip = SB_BFE(tile_data,10,1);
 							if (hflip) px = 7 - px;
-							py = cached_py[bg];
+							py = cached_tile_row_y[bg];
 							INT32 tile_id = SB_BFE(tile_data,0,10);
 							INT32 palette = SB_BFE(tile_data,12,4);
-							INT32 addr = char_addr[bg] + tile_id*32 + py*4;
-							// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
+							INT32 addr = char_base_addr[bg] + tile_id*32 + py*4;
 							if (SB_LIKELY(addr < 0x10000)) {
-								if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-									ctx->fc_tile_key[bg] = addr;
-									UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
-									ctx->fc_tile_bytes[bg][0]=(UINT8)r32;
-									ctx->fc_tile_bytes[bg][1]=(UINT8)(r32>>8);
-									ctx->fc_tile_bytes[bg][2]=(UINT8)(r32>>16);
-									ctx->fc_tile_bytes[bg][3]=(UINT8)(r32>>24);
-									ctx->fc_tile_valid[bg] = true;
-								}
-								UINT8 tile_d = (ctx->fc_tile_bytes[bg][px>>1]>>((px&1)*4))&0xf;
-								if (tile_d != 0) {
-									tile_d += palette*16;
-									UINT32 col = (ctx->pal_xrgb32[tile_d] & 0x00FFFFFFu) | bg_pri_code[bg];
-									if (((col >> 26) & 0x3F) > (((*ft_p) >> 26) & 0x3F)) *ft_p = col;
+								const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile4(ctx, bg, addr);
+								UINT8 color_idx = (tb[px >> 1] >> ((px & 1) * 4)) & 0xf;
+								if (color_idx != 0) {
+									color_idx += palette*16;
+									UINT32 col = (pal[color_idx] & 0x00FFFFFFu) | pri;
+									if (fast_pixel_alpha_row) {
+										PPU_COMPOSITE_PIXEL(col, ft_ptr, st_ptr);
+									} else {
+										if (((col >> 26) & 0x3F) > (((*ft_ptr) >> 26) & 0x3F)) *ft_ptr = col;
+									}
 								}
 							}
-							++ft_p; ++lcd_x;
+							++ft_ptr; ++lcd_x;
+							if (fast_pixel_alpha_row) ++st_ptr;
 						}
 					}
 				}
 
 				// 2) Main: 8-pixel aligned tile blocks
 				for (; lcd_x <= 240 - 8; lcd_x += 8) {
-					INT32 bg_x_base = (hoff[bg] + lcd_x) & (size_x[bg] - 1);
+					INT32 bg_x_base = (hofs[bg] + lcd_x) & (bg_size_x[bg] - 1);
 					INT32 bg_tile_x = bg_x_base >> 3;
 					UINT16 tile_data; INT32 py;
 					if (bg_tile_x != cached_tile_x[bg]) {
 						cached_tile_x[bg] = bg_tile_x;
-						INT32 toff = trow_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
-						tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + scr_addr[bg] + toff * 2));
+						INT32 toff = tile_row_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
+						tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + map_base_addr[bg] + toff * 2));
 						cached_tile_data[bg] = tile_data;
-						cached_py[bg] = SB_BFE(tile_data,11,1) ? 7 - py0[bg] : py0[bg];
+						cached_tile_row_y[bg] = SB_BFE(tile_data,11,1) ? 7 - tile_row_y[bg] : tile_row_y[bg];
 					} else { tile_data = cached_tile_data[bg]; }
 
 					bool hflip = SB_BFE(tile_data,10,1);
-					py = cached_py[bg];
+					py = cached_tile_row_y[bg];
 					INT32 tile_id = SB_BFE(tile_data,0,10);
 					INT32 palette = SB_BFE(tile_data,12,4);
+					INT32 addr = char_base_addr[bg] + tile_id*32 + py*4;
+					UINT32 pal_bank = (UINT32)(palette * 16);
 
-					if (hflip) {
-						// H-flip: per-pixel reverse read (px=7..0)
-						for (INT32 i = 0; i < 8; ++i) {
-							INT32 px = 7 - i;
-							INT32 addr = char_addr[bg] + tile_id*32 + py*4;
-							// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-							if (SB_LIKELY(addr < 0x10000)) {
-								if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-									ctx->fc_tile_key[bg] = addr;
-									UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
-									ctx->fc_tile_bytes[bg][0]=(UINT8)r32;
-									ctx->fc_tile_bytes[bg][1]=(UINT8)(r32>>8);
-									ctx->fc_tile_bytes[bg][2]=(UINT8)(r32>>16);
-									ctx->fc_tile_bytes[bg][3]=(UINT8)(r32>>24);
-									ctx->fc_tile_valid[bg] = true;
-								}
-								UINT8 tile_d = (ctx->fc_tile_bytes[bg][px>>1]>>((px&1)*4))&0xf;
-								if (tile_d != 0) {
-									tile_d += palette*16;
-									UINT32 col = (ctx->pal_xrgb32[tile_d] & 0x00FFFFFFu) | bg_pri_code[bg];
-									if (((col >> 26) & 0x3F) > (((*ft_p) >> 26) & 0x3F)) *ft_p = col;
-								}
-							}
-							++ft_p;
-						}
-					} else {
-						// FP-E fast: 8 pixels from one 4-byte VRAM read, unrolled
-						INT32 addr = char_addr[bg] + tile_id*32 + py*4;
-						// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-						if (SB_LIKELY(addr < 0x10000)) {
-							if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-								ctx->fc_tile_key[bg] = addr;
-								UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
-								ctx->fc_tile_bytes[bg][0]=(UINT8)r32;
-								ctx->fc_tile_bytes[bg][1]=(UINT8)(r32>>8);
-								ctx->fc_tile_bytes[bg][2]=(UINT8)(r32>>16);
-								ctx->fc_tile_bytes[bg][3]=(UINT8)(r32>>24);
-								ctx->fc_tile_valid[bg] = true;
-							}
-							UINT32 pal_bank = (UINT32)(palette * 16);
-							UINT32 pri = bg_pri_code[bg];
-							const UINT32* SB_RESTRICT pal = ctx->pal_xrgb32;
-							const UINT8* SB_RESTRICT fb = ctx->fc_tile_bytes[bg];
+					if (SB_UNLIKELY(addr >= 0x10000)) { ft_ptr += 8; if (fast_pixel_alpha_row) st_ptr += 8; continue; }
 
-							#define FP_E_PX(px) do { \
-								UINT8 t = (fb[(px)>>1] >> (((px)&1)*4)) & 0xf; \
-								if (t != 0) { \
-									UINT32 c = (pal[t + pal_bank] & 0x00FFFFFFu) | pri; \
-									if (((c >> 26) & 0x3F) > (((*ft_p) >> 26) & 0x3F)) *ft_p = c; \
+					const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile4(ctx, bg, addr);
+					// Skip fully transparent tile
+					if (tb[0]==0 && tb[1]==0 && tb[2]==0 && tb[3]==0) {
+						ft_ptr += 8; if (fast_pixel_alpha_row) st_ptr += 8; continue;
+					}
+
+					if (SB_UNLIKELY(hflip)) {
+						// h-flip: nibble-swap + byte-reverse, then the 8-pixel unrolled decode.
+						UINT8 b0 = tb[0], b1 = tb[1], b2 = tb[2], b3 = tb[3];
+						UINT8 flip_bytes[4];
+						flip_bytes[0] = (UINT8)(((b3 & 0x0F) << 4) | (b3 >> 4));
+						flip_bytes[1] = (UINT8)(((b2 & 0x0F) << 4) | (b2 >> 4));
+						flip_bytes[2] = (UINT8)(((b1 & 0x0F) << 4) | (b1 >> 4));
+						flip_bytes[3] = (UINT8)(((b0 & 0x0F) << 4) | (b0 >> 4));
+						#define PPU_EMIT_HFLIP_PIXEL(px_) do { \
+							UINT8 nibble = (flip_bytes[(px_)>>1] >> (((px_)&1)*4)) & 0xf; \
+							if (nibble != 0) { \
+								UINT32 c = (pal[nibble + pal_bank] & 0x00FFFFFFu) | pri; \
+								if (fast_pixel_alpha_row) { \
+									PPU_COMPOSITE_PIXEL(c, ft_ptr, st_ptr); \
+								} else { \
+									if (((c >> 26) & 0x3F) > (((*ft_ptr) >> 26) & 0x3F)) *ft_ptr = c; \
 								} \
-								++ft_p; \
-							} while(0)
-							FP_E_PX(0); FP_E_PX(1); FP_E_PX(2); FP_E_PX(3);
-							FP_E_PX(4); FP_E_PX(5); FP_E_PX(6); FP_E_PX(7);
-							#undef FP_E_PX
-						} else {
-							ft_p += 8;
-						}
+							} \
+							++ft_ptr; \
+							if (fast_pixel_alpha_row) ++st_ptr; \
+						} while(0)
+						PPU_EMIT_HFLIP_PIXEL(0); PPU_EMIT_HFLIP_PIXEL(1); PPU_EMIT_HFLIP_PIXEL(2); PPU_EMIT_HFLIP_PIXEL(3);
+						PPU_EMIT_HFLIP_PIXEL(4); PPU_EMIT_HFLIP_PIXEL(5); PPU_EMIT_HFLIP_PIXEL(6); PPU_EMIT_HFLIP_PIXEL(7);
+						#undef PPU_EMIT_HFLIP_PIXEL
+					} else {
+						// 8 pixels from cached raw bytes, unrolled.
+						#define PPU_EMIT_NORMAL_PIXEL(px_) do { \
+							UINT8 nibble = (tb[(px_)>>1] >> (((px_)&1)*4)) & 0xf; \
+							if (nibble != 0) { \
+								UINT32 c = (pal[nibble + pal_bank] & 0x00FFFFFFu) | pri; \
+								if (fast_pixel_alpha_row) { \
+									PPU_COMPOSITE_PIXEL(c, ft_ptr, st_ptr); \
+								} else { \
+									if (((c >> 26) & 0x3F) > (((*ft_ptr) >> 26) & 0x3F)) *ft_ptr = c; \
+								} \
+							} \
+							++ft_ptr; \
+							if (fast_pixel_alpha_row) ++st_ptr; \
+						} while(0)
+						PPU_EMIT_NORMAL_PIXEL(0); PPU_EMIT_NORMAL_PIXEL(1); PPU_EMIT_NORMAL_PIXEL(2); PPU_EMIT_NORMAL_PIXEL(3);
+						PPU_EMIT_NORMAL_PIXEL(4); PPU_EMIT_NORMAL_PIXEL(5); PPU_EMIT_NORMAL_PIXEL(6); PPU_EMIT_NORMAL_PIXEL(7);
+						#undef PPU_EMIT_NORMAL_PIXEL
 					}
 				}
 
 				// 3) Tail: remaining 0-7 pixels
 				for (; lcd_x < 240; ++lcd_x) {
-					INT32 bg_x = (hoff[bg] + lcd_x) & (size_x[bg] - 1);
+					INT32 bg_x = (hofs[bg] + lcd_x) & (bg_size_x[bg] - 1);
 					INT32 bg_tile_x = bg_x >> 3, px = bg_x & 7;
 					UINT16 tile_data; INT32 py;
 					if (bg_tile_x != cached_tile_x[bg]) {
 						cached_tile_x[bg] = bg_tile_x;
-						INT32 toff = trow_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
-						tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + scr_addr[bg] + toff * 2));
+						INT32 toff = tile_row_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
+						tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + map_base_addr[bg] + toff * 2));
 						cached_tile_data[bg] = tile_data;
-						cached_py[bg] = SB_BFE(tile_data,11,1) ? 7 - py0[bg] : py0[bg];
+						cached_tile_row_y[bg] = SB_BFE(tile_data,11,1) ? 7 - tile_row_y[bg] : tile_row_y[bg];
 					} else { tile_data = cached_tile_data[bg]; }
 					bool hflip = SB_BFE(tile_data,10,1);
 					if (hflip) px = 7 - px;
-					py = cached_py[bg];
+					py = cached_tile_row_y[bg];
 					INT32 tile_id = SB_BFE(tile_data,0,10);
 					INT32 palette = SB_BFE(tile_data,12,4);
-					INT32 addr = char_addr[bg] + tile_id*32 + py*4;
-					// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
+					INT32 addr = char_base_addr[bg] + tile_id*32 + py*4;
 					if (SB_LIKELY(addr < 0x10000)) {
-						if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-							ctx->fc_tile_key[bg] = addr;
-							UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
-							ctx->fc_tile_bytes[bg][0]=(UINT8)r32;
-							ctx->fc_tile_bytes[bg][1]=(UINT8)(r32>>8);
-							ctx->fc_tile_bytes[bg][2]=(UINT8)(r32>>16);
-							ctx->fc_tile_bytes[bg][3]=(UINT8)(r32>>24);
-							ctx->fc_tile_valid[bg] = true;
-						}
-						UINT8 tile_d = (ctx->fc_tile_bytes[bg][px>>1]>>((px&1)*4))&0xf;
-						if (tile_d != 0) {
-							tile_d += palette*16;
-							UINT32 col = (ctx->pal_xrgb32[tile_d] & 0x00FFFFFFu) | bg_pri_code[bg];
-							if (((col >> 26) & 0x3F) > (((*ft_p) >> 26) & 0x3F)) *ft_p = col;
+						const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile4(ctx, bg, addr);
+						UINT8 color_idx = (tb[px >> 1] >> ((px & 1) * 4)) & 0xf;
+						if (color_idx != 0) {
+							color_idx += palette*16;
+							UINT32 col = (pal[color_idx] & 0x00FFFFFFu) | pri;
+							if (fast_pixel_alpha_row) {
+								PPU_COMPOSITE_PIXEL(col, ft_ptr, st_ptr);
+							} else {
+								if (((col >> 26) & 0x3F) > (((*ft_ptr) >> 26) & 0x3F)) *ft_ptr = col;
+							}
 						}
 					}
-					++ft_p;
+					++ft_ptr;
+					if (fast_pixel_alpha_row) ++st_ptr;
 				}
 			}
 		}
 
-		// Fast direct write to framebuffer: strip priority/opaque flags (bits 24-31)
-		// so that the framebuffer contains pure XRGB8888 colors (alpha byte = 0).
-		// This matches the generic path which writes (rr<<16)|(gg<<8)|bb directly.
-		UINT32* SB_RESTRICT fbs = fb_row_p;
-		UINT32* SB_RESTRICT fts = ft;
-		for (xi = 0; xi < 240; xi += 8) {
-			fbs[0] = fts[0] & 0x00FFFFFFu;
-			fbs[1] = fts[1] & 0x00FFFFFFu;
-			fbs[2] = fts[2] & 0x00FFFFFFu;
-			fbs[3] = fts[3] & 0x00FFFFFFu;
-			fbs[4] = fts[4] & 0x00FFFFFFu;
-			fbs[5] = fts[5] & 0x00FFFFFFu;
-			fbs[6] = fts[6] & 0x00FFFFFFu;
-			fbs[7] = fts[7] & 0x00FFFFFFu;
-			fbs += 8; fts += 8;
+		// Write framebuffer: strip flags only (8-pixel unrolled);
+		// semi-transparent pixels (bit25) are alpha-blended against st_buf.
+		if (fast_pixel_row) {
+			UINT32* SB_RESTRICT fb_dst = fb_row;
+			UINT32* SB_RESTRICT ft_src = ft_buf;
+			for (x = 0; x < 240; x += 8) {
+				fb_dst[0] = ft_src[0] & 0x00FFFFFFu;
+				fb_dst[1] = ft_src[1] & 0x00FFFFFFu;
+				fb_dst[2] = ft_src[2] & 0x00FFFFFFu;
+				fb_dst[3] = ft_src[3] & 0x00FFFFFFu;
+				fb_dst[4] = ft_src[4] & 0x00FFFFFFu;
+				fb_dst[5] = ft_src[5] & 0x00FFFFFFu;
+				fb_dst[6] = ft_src[6] & 0x00FFFFFFu;
+				fb_dst[7] = ft_src[7] & 0x00FFFFFFu;
+				fb_dst += 8; ft_src += 8;
+			}
+		} else {
+			// Alpha blend against st_buf, gated by the BLDCNT second-target mask.
+			for (x = 0; x < 240; ++x) {
+				UINT32 cf = ft_buf[x];
+				UINT32 out = cf & 0x00FFFFFFu;
+				if ((cf >> 25) & 1) {
+					UINT32 cs = st_buf[x];
+					UINT8  type2 = sb_tie_to_bldcnt_type[(cs >> 26) & 7];
+					if (SB_BFE(bldcnt, 8 + type2, 1)) {
+						INT32 red1   = (INT32)(out >> 16) & 0xFF;
+						INT32 green1 = (INT32)(out >> 8)  & 0xFF;
+						INT32 blue1  = (INT32)out & 0xFF;
+						INT32 red2   = (INT32)(cs >> 16) & 0xFF;
+						INT32 green2 = (INT32)(cs >> 8)  & 0xFF;
+						INT32 blue2  = (INT32)cs & 0xFF;
+						INT32 red    = ((red1   >> 3) * blend_eva_q4 + (red2   >> 3) * blend_evb_q4) >> 4;
+						INT32 green  = ((green1 >> 3) * blend_eva_q4 + (green2 >> 3) * blend_evb_q4) >> 4;
+						INT32 blue   = ((blue1  >> 3) * blend_eva_q4 + (blue2  >> 3) * blend_evb_q4) >> 4;
+						if (red   > 31) red   = 31;
+						if (green > 31) green = 31;
+						if (blue  > 31) blue  = 31;
+						out = ((UINT32)sb_exp5[red] << 16) | ((UINT32)sb_exp5[green] << 8) | (UINT32)sb_exp5[blue];
+					}
+				}
+				fb_row[x] = out;
+			}
 		}
+		#undef PPU_COMPOSITE_PIXEL
 	} else {
-		UINT32* SB_RESTRICT ft_p = ft;
-		UINT32* SB_RESTRICT st_p = st;
-		UINT8*  SB_RESTRICT win_pp = win_p;
+		UINT32* SB_RESTRICT ft_ptr = ft_buf;
+		UINT32* SB_RESTRICT st_ptr = line_second ? st_buf : 0;
+		UINT8*  SB_RESTRICT win_cur = win_ptr;
 		for (INT32 lcd_x = 0; lcd_x < GBA_LCD_W; ++lcd_x) {
-		UINT8 window_control = no_win ? (UINT8)0x3F : *win_pp;
+		UINT8 window_control = no_win ? (UINT8)0x3F : *win_cur;
 		bool  any_bg_visible = render_bgs && (window_control & 0x0F) != 0;
 
-		// BG early-exit: opaque OBJ already on top with pri > max_bg_pri
-		// can't be beaten by any BG - skip all BG composition.
-		// obj_covers: opaque non-semi OBJ whose (tie,pri) beats all BGs -> skip BG loop.
-		// (first_col >> 26) & 7 == 7 selects OBJ (tie=7); BD/BG ties are 0-4, so they fail.
-		UINT32 first_col = *ft_p;
-		bool obj_covers  = (((first_col >> 26) & 7) == 7)
-		                && ((first_col >> 25) & 1) == 0
-		                && ((first_col >> 24) & 1) == 1
-		                && ((first_col >> 26) & 0x3F) > (max_bg_pri >> 26);
-
-		if (any_bg_visible && !obj_covers) {
-			for (INT32 bi = n_active_bg - 1; bi >= 0; --bi) {
-				INT32 bg = active_bg[bi];
+		if (any_bg_visible) {
+			for (INT32 bg_i = n_active_bg - 1; bg_i >= 0; --bg_i) {
+				INT32 bg = active_bg[bg_i];
 				if (SB_BFE(window_control, bg, 1) == 0)
 					continue;
 				UINT32 col  = 0;
 				INT32  bg_x = 0, bg_y = 0;
 
 				if (rot_scale[bg]) {
-					INT32 sx = mosaic_bg[bg] ? (lcd_x / mos_x) * mos_x : lcd_x;
-					bg_x = (INT32)(((INT64)pa[bg] * sx + bgx[bg]) >> 8);
-					bg_y = (INT32)(((INT64)pc[bg] * sx + bgy[bg]) >> 8);
-					if (overflow[bg] == 0) {
-						if (bg_x < 0 || bg_x >= size_x[bg] || bg_y < 0 || bg_y >= size_y[bg])
+					INT32 src_x = mosaic_bg[bg] ? (lcd_x / mosaic_x) * mosaic_x : lcd_x;
+					bg_x = (INT32)(((INT64)aff_pa[bg] * src_x + aff_bgx[bg]) >> 8);
+					bg_y = (INT32)(((INT64)aff_pc[bg] * src_x + aff_bgy[bg]) >> 8);
+					// Bitmap modes treat out-of-bounds as transparent;
+					// affine tile BGs wrap when overflow bit is set.
+					if (bg_x < 0 || bg_x >= bg_size_x[bg] || bg_y < 0 || bg_y >= bg_size_y[bg]) {
+						if (wrap_overflow[bg] == 0 || is_bitmap_mode)
 							continue;
-					} else {
-						bg_x &= size_x[bg] - 1;
-						bg_y &= size_y[bg] - 1;
+						bg_x &= bg_size_x[bg] - 1;
+						bg_y &= bg_size_y[bg] - 1;
 					}
 				} else {
 					if (mosaic_bg[bg]) {
-						bg_x = hoff[bg] + (lcd_x / mos_x) * mos_x;
-						bg_y = voff[bg] + (lcd_y / mos_y) * mos_y;
+						bg_x = hofs[bg] + (lcd_x / mosaic_x) * mosaic_x;
+						bg_y = vofs[bg] + (lcd_y / mosaic_y) * mosaic_y;
 					} else {
-						bg_x = hoff[bg] + lcd_x;
-						bg_y = voff[bg] + lcd_y;
+						bg_x = hofs[bg] + lcd_x;
+						bg_y = vofs[bg] + lcd_y;
 					}
 				}
 
@@ -1424,34 +1531,34 @@ static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT3
 					if (bg_mode == 3) {
 						UINT16 c16 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + (bg_x + bg_y * 240) * 2));
 						if (c16 == 0x8000) continue;
-						{ UINT32 rb=c16&0x1F,gb=(c16>>5)&0x1F,bb=(c16>>10)&0x1F;
-						  col = ((rb<<3)|(rb>>2)) | (((gb<<3)|(gb>>2))<<8) | (((bb<<3)|(bb>>2))<<16); }
+						{ UINT32 r5=c16&0x1F, g5=(c16>>5)&0x1F, b5=(c16>>10)&0x1F;
+						  col = ((UINT32)sb_exp5[r5] << 16) | ((UINT32)sb_exp5[g5] << 8) | (UINT32)sb_exp5[b5]; }
 					} else if (bg_mode == 4) {
-						UINT8 palette_id = ctx->vram[bg_x + bg_y * 240 + 0xa000 * frame_sel];
+						UINT8 palette_id = ctx->vram[bg_x + bg_y * 240 + 0xa000 * frame_select];
 						if (palette_id == 0) continue;
-						col = ctx->pal_xrgb32[palette_id] & 0x00FFFFFFu;
+						col = ctx->pal_xrgb[palette_id] & 0x00FFFFFFu;
 					} else { // bg_mode == 5
-						UINT16 c16 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + (bg_x + bg_y * 160) * 2 + 0xa000 * frame_sel));
+						UINT16 c16 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + (bg_x + bg_y * 160) * 2 + 0xa000 * frame_select));
 						if (c16 == 0x8000) continue;
-						{ UINT32 rb=c16&0x1F,gb=(c16>>5)&0x1F,bb=(c16>>10)&0x1F;
-						  col = ((rb<<3)|(rb>>2)) | (((gb<<3)|(gb>>2))<<8) | (((bb<<3)|(bb>>2))<<16); }
+						{ UINT32 r5=c16&0x1F, g5=(c16>>5)&0x1F, b5=(c16>>10)&0x1F;
+						  col = ((UINT32)sb_exp5[r5] << 16) | ((UINT32)sb_exp5[g5] << 8) | (UINT32)sb_exp5[b5]; }
 					}
 				} else {
-					// Text BG: wrap coordinates into BG map area (mirrors fast-pixel branch).
-					bg_x = bg_x & (size_x[bg] - 1);
-					bg_y = bg_y & (size_y[bg] - 1);
+					// Text BG: wrap coords into the BG map (mirrors fast-pixel branch).
+					bg_x = bg_x & (bg_size_x[bg] - 1);
+					bg_y = bg_y & (bg_size_y[bg] - 1);
 					INT32 bg_tile_x = bg_x >> 3;
 
 					UINT16 tile_data;
 					INT32 px, py;
 					if (rot_scale[bg]) {
 						INT32 bg_ty      = bg_y >> 3;
-						INT32 bg_tiles_w = size_x[bg] >> 3;
+						INT32 bg_tiles_w = bg_size_x[bg] >> 3;
 						INT32 tile_off   = bg_ty * bg_tiles_w + bg_tile_x;
 						if (bg_tile_x != cached_aff_tile_x[bg] || bg_ty != cached_aff_tile_y[bg]) {
 							cached_aff_tile_x[bg] = bg_tile_x;
 							cached_aff_tile_y[bg] = bg_ty;
-							cached_aff_tile_data[bg] = ctx->vram[scr_addr[bg] + tile_off];
+							cached_aff_tile_data[bg] = ctx->vram[map_base_addr[bg] + tile_off];
 						}
 						tile_data = cached_aff_tile_data[bg];
 						px = bg_x & 7;
@@ -1459,199 +1566,165 @@ static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT3
 					} else {
 						if (bg_tile_x != cached_tile_x[bg]) {
 							cached_tile_x[bg] = bg_tile_x;
-							INT32 toff = trow_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32 * 32 : 0);
-							tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + scr_addr[bg] + toff * 2));
+							INT32 toff = tile_row_base[bg] + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32 * 32 : 0);
+							tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(ctx->vram + map_base_addr[bg] + toff * 2));
 							cached_tile_data[bg] = tile_data;
-							cached_py[bg] = SB_BFE(tile_data, 11, 1) ? 7 - py0[bg] : py0[bg];
+							cached_tile_row_y[bg] = SB_BFE(tile_data, 11, 1) ? 7 - tile_row_y[bg] : tile_row_y[bg];
 							ctx->cached_pal_bank[bg] = SB_BFE(tile_data, 12, 4) * 16;  // pal_bank cached at tile boundary
 						} else {
 							tile_data = cached_tile_data[bg];
 						}
 						px = bg_x & 7;
 						if (SB_BFE(tile_data, 10, 1)) px = 7 - px;
-						py = cached_py[bg];
+						py = cached_tile_row_y[bg];
 					}
 
 					INT32 tile_id = SB_BFE(tile_data,  0, 10);
-					UINT8 tile_d;
-					INT32 pal_bank_g = ctx->cached_pal_bank[bg];
+					UINT8 color_idx;
+					// affine BGs force 8bpp (colors[bg]=true); pal_bank is unused in that branch.
+					INT32 pal_bank_g = rot_scale[bg] ? 0 : ctx->cached_pal_bank[bg];
 
 					if (!colors[bg]) {
 						// 4bpp: 32 bytes/tile, 4 bytes/row
-						INT32 addr = char_addr[bg] + tile_id * 32 + py * 4;
-						// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
+						INT32 addr = char_base_addr[bg] + tile_id * 32 + py * 4;
 						if (SB_UNLIKELY(addr >= 0x10000))
 							continue;
-						if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-							ctx->fc_tile_key[bg] = addr;
-							UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(ctx->vram + addr));
-							ctx->fc_tile_bytes[bg][0] = (UINT8)(r32);
-							ctx->fc_tile_bytes[bg][1] = (UINT8)(r32 >> 8);
-							ctx->fc_tile_bytes[bg][2] = (UINT8)(r32 >> 16);
-							ctx->fc_tile_bytes[bg][3] = (UINT8)(r32 >> 24);
-							ctx->fc_tile_valid[bg] = true;
-						}
-						tile_d = (ctx->fc_tile_bytes[bg][px >> 1] >> ((px & 1) * 4)) & 0xf;
-						if (tile_d == 0) continue;
-						tile_d += pal_bank_g;
+						const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile4(ctx, bg, addr);
+						color_idx = (tb[px >> 1] >> ((px & 1) * 4)) & 0xf;
+						if (color_idx == 0) continue;
+						color_idx += pal_bank_g;
 					} else {
 						// 8bpp: 64 bytes/tile, 8 bytes/row
-						INT32 addr = char_addr[bg] + tile_id * 64 + py * 8;
-						// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
+						INT32 addr = char_base_addr[bg] + tile_id * 64 + py * 8;
 						if (SB_UNLIKELY(addr >= 0x10000))
 							continue;
-						if (!ctx->fc_tile_valid[bg] || ctx->fc_tile_key[bg] != addr) {
-							ctx->fc_tile_key[bg] = addr;
-							UINT64 r64 = BURN_ENDIAN_SWAP_INT64(*(const UINT64*)(ctx->vram + addr));
-							ctx->fc_tile_bytes[bg][0] = (UINT8)r64;
-							ctx->fc_tile_bytes[bg][1] = (UINT8)(r64 >> 8);
-							ctx->fc_tile_bytes[bg][2] = (UINT8)(r64 >> 16);
-							ctx->fc_tile_bytes[bg][3] = (UINT8)(r64 >> 24);
-							ctx->fc_tile_bytes[bg][4] = (UINT8)(r64 >> 32);
-							ctx->fc_tile_bytes[bg][5] = (UINT8)(r64 >> 40);
-							ctx->fc_tile_bytes[bg][6] = (UINT8)(r64 >> 48);
-							ctx->fc_tile_bytes[bg][7] = (UINT8)(r64 >> 56);
-							ctx->fc_tile_valid[bg] = true;
-						}
-						tile_d = ctx->fc_tile_bytes[bg][px];
-						if (tile_d == 0) continue;
+						const UINT8* SB_RESTRICT tb = ppu_worker_fetch_tile8(ctx, bg, addr);
+						color_idx = tb[px];
+						if (color_idx == 0) continue;
 					}
-					col = ctx->pal_xrgb32[tile_d] & 0x00FFFFFFu;
+					col = ctx->pal_xrgb[color_idx] & 0x00FFFFFFu;
 				}
-				col |= ((UINT32)(5 - priority[bg]) << 29) | ((UINT32)(4 - bg) << 26) | (1u << 24);
+				col |= bg_pri_code[bg];
 
-				if (((col >> 26) & 0x3F) > ((*ft_p >> 26) & 0x3F)) {
-					UINT32 t = *ft_p;
-					*ft_p = col;
-					col = t;
+				if (((col >> 26) & 0x3F) > ((*ft_ptr >> 26) & 0x3F)) {
+					UINT32 swap_col = *ft_ptr;
+					*ft_ptr = col;
+					col = swap_col;
 				}
-				if (need_second && ((col >> 26) & 0x3F) > ((*st_p >> 26) & 0x3F))
-					*st_p = col;
+				if (line_second && ((col >> 26) & 0x3F) > ((*st_ptr >> 26) & 0x3F))
+					*st_ptr = col;
 			}
 		}
 
-		// Color decode + special effects + framebuffer write.
-		// tie_to_type maps XRGB tie-code (bits26-28) to BLDCNT bit index:
-		//   tie=0 -> BD (bit5), tie=1 -> BG3 (bit3), tie=2 -> BG2 (bit2),
-		//   tie=3 -> BG1 (bit1), tie=4 -> BG0 (bit0), tie=7 -> OBJ (bit4).
-		// BGs use (4-bg) tie; gbappu.h type=bg, BLDCNT first target bit = bg for BGs, 4 for OBJ, 5 for BD.
-		UINT32 col  = *ft_p;
-		static const UINT8 tie_to_type[8] = {5, 3, 2, 1, 0, 0, 0, 4};
-		INT32  b8   = (INT32)(col & 0xFF);
-		INT32  g8   = (INT32)((col >> 8)  & 0xFF);
-		INT32  r8   = (INT32)((col >> 16) & 0xFF);
-		UINT32 type = tie_to_type[(col >> 26) & 7];
+		// Decode to XRGB, apply special effects, write framebuffer; sb_tie_to_bldcnt_type[] maps
+		// the tie-code to its BLDCNT bit (BGs use 4-bg), matching gbappu.h.
+		UINT32 col  = *ft_ptr;
+		INT32  pix_b   = (INT32)(col & 0xFF);
+		INT32  pix_g   = (INT32)((col >> 8)  & 0xFF);
+		INT32  pix_r   = (INT32)((col >> 16) & 0xFF);
+		UINT32 type = sb_tie_to_bldcnt_type[(col >> 26) & 7];
 
-		INT32 mode = eff_mode;
-		// effect_enable initialized from window_control bit 5 (special-effects enable
-		// inside this window region), then AND'd with BLDCNT first-target mask.
-		bool  effect_enable = SB_BFE(window_control, 5, 1);
+		INT32 blend_mode = eff_mode;
+		// Special-effect enable: window bit 5 AND BLDCNT first-target mask.
+		bool  effect_enabled = SB_BFE(window_control, 5, 1);
 
 		if ((col >> 25) & 1) {
-			// Semi-transparent OBJ: alpha-blend with second-target pixel in st.
-			UINT32 col2  = *st_p;
-			UINT32 type2 = tie_to_type[(col2 >> 26) & 7];
+			// Semi-transparent OBJ: alpha-blend with second-target pixel in st_buf.
+			UINT32 col2  = *st_ptr;
+			UINT32 type2 = sb_tie_to_bldcnt_type[(col2 >> 26) & 7];
 			bool   blend = SB_BFE(bldcnt, 8 + type2, 1);
 			if (blend) {
-				mode          = 1;
-				effect_enable = true;
+				blend_mode          = 1;
+				effect_enabled = true;
 			} else {
-				effect_enable &= SB_BFE(bldcnt, type, 1);
+				effect_enabled &= SB_BFE(bldcnt, type, 1);
 			}
 		} else {
-			effect_enable &= SB_BFE(bldcnt, type, 1);
+			effect_enabled &= SB_BFE(bldcnt, type, 1);
 		}
 
-		if (effect_enable) {
-			INT32 r = r8 >> 3, g = g8 >> 3, b = b8 >> 3;
-			switch (mode) {
+		if (effect_enabled) {
+			INT32 red = pix_r >> 3, green = pix_g >> 3, blue = pix_b >> 3;
+			switch (blend_mode) {
 				case 1: {
-					UINT32 col2  = *st_p;
-					UINT32 type2 = tie_to_type[(col2 >> 26) & 7];
+					UINT32 col2  = *st_ptr;
+					UINT32 type2 = sb_tie_to_bldcnt_type[(col2 >> 26) & 7];
 					bool  blend  = SB_BFE(bldcnt, 8 + type2, 1);
 					if (blend) {
-						INT32 b2 = (INT32)(col2 & 0xFF) >> 3;
-						INT32 g2 = (INT32)((col2 >> 8) & 0xFF) >> 3;
-						INT32 r2 = (INT32)((col2 >> 16) & 0xFF) >> 3;
-						r = bl_eva[r] + bl_evb[r2];
-						g = bl_eva[g] + bl_evb[g2];
-						b = bl_eva[b] + bl_evb[b2];
-						if (r > 31) r = 31;
-						if (g > 31) g = 31;
-						if (b > 31) b = 31;
-						r8 = sb_exp5[r];
-						g8 = sb_exp5[g];
-						b8 = sb_exp5[b];
+						INT32 blue2  = (INT32)(col2 & 0xFF) >> 3;
+						INT32 green2 = (INT32)((col2 >> 8) & 0xFF) >> 3;
+						INT32 red2   = (INT32)((col2 >> 16) & 0xFF) >> 3;
+						red   = (red   * blend_eva_q4 + red2   * blend_evb_q4) >> 4;
+						green = (green * blend_eva_q4 + green2 * blend_evb_q4) >> 4;
+						blue  = (blue  * blend_eva_q4 + blue2  * blend_evb_q4) >> 4;
+						if (red   > 31) red   = 31;
+						if (green > 31) green = 31;
+						if (blue  > 31) blue  = 31;
+						pix_r = sb_exp5[red];
+						pix_g = sb_exp5[green];
+						pix_b = sb_exp5[blue];
 					}
 				}
 					break;
 				case 2:
-					r8 = bl_inc8[r];
-					g8 = bl_inc8[g];
-					b8 = bl_inc8[b];
+					pix_r = blend_inc8[red];
+					pix_g = blend_inc8[green];
+					pix_b = blend_inc8[blue];
 					break;
 				case 3:
-					r8 = bl_dec8[r];
-					g8 = bl_dec8[g];
-					b8 = bl_dec8[b];
+					pix_r = blend_dec8[red];
+					pix_g = blend_dec8[green];
+					pix_b = blend_dec8[blue];
 					break;
 			}
 		}
 
-		*ft_p = backdrop_col;
-		if (need_second)
-			*st_p = backdrop_col;
-
 		if (forced_blank) {
-			if (ctx->stop_mode) { r8 = g8 = b8 = 0; }
-			else                { r8 = g8 = b8 = 255; }
+			if (ctx->stop_mode) { pix_r = pix_g = pix_b = 0; }
+			else                { pix_r = pix_g = pix_b = 255; }
 		}
 
-		INT32 rr = r8;
-		INT32 gg = g8;
-		INT32 bb = b8;
+		INT32 out_r = pix_r;
+		INT32 out_g = pix_g;
+		INT32 out_b = pix_b;
 
 		if (green_swap & 1) {
 			// Green-swap: G written to adjacent pixel's G byte
-			UINT8* SB_RESTRICT fb_b = fb_row_b;
-			INT32 p = lcd_x * 4;
+			UINT8* SB_RESTRICT fb_b = fb_row_bytes;
+			INT32 pix_ofs = lcd_x * 4;
 			if (ghost_fast) {
-				fb_b[p + 0] = (UINT8)bb;
-				fb_b[p + 2] = (UINT8)rr;
-				fb_b[p + 3] = 0x00;
-				INT32 g_off = (p & 4) ? (p + 1 - 4) : (p + 1 + 4);
-				fb_b[g_off] = (UINT8)gg;
+				fb_b[pix_ofs + 0] = (UINT8)out_b;
+				fb_b[pix_ofs + 2] = (UINT8)out_r;
+				fb_b[pix_ofs + 3] = 0x00;
+				INT32 green_ofs = (pix_ofs & 4) ? (pix_ofs + 1 - 4) : (pix_ofs + 1 + 4);
+				fb_b[green_ofs] = (UINT8)out_g;
 			} else {
-				INT32 old_b = (INT32)(UINT8)fb_b[p + 0];
-				INT32 old_r = (INT32)(UINT8)fb_b[p + 2];
-				fb_b[p + 0] = (UINT8)((bb * one_m_sbf_q8 + old_b * sbf_q8) >> 8);
-				fb_b[p + 2] = (UINT8)((rr * one_m_sbf_q8 + old_r * sbf_q8) >> 8);
-				fb_b[p + 3] = 0x00;
-				INT32 g_off = (p & 4) ? (p + 1 - 4) : (p + 1 + 4);
-				INT32 old_g = (INT32)(UINT8)fb_b[g_off];
-				fb_b[g_off] = (UINT8)((gg * one_m_sbf_q8 + old_g * sbf_q8) >> 8);
+				INT32 prev_b = (INT32)(UINT8)fb_b[pix_ofs + 0];
+				INT32 prev_r = (INT32)(UINT8)fb_b[pix_ofs + 2];
+				fb_b[pix_ofs + 0] = (UINT8)((out_b * one_minus_ghost_q8 + prev_b * ghost_q8) >> 8);
+				fb_b[pix_ofs + 2] = (UINT8)((out_r * one_minus_ghost_q8 + prev_r * ghost_q8) >> 8);
+				fb_b[pix_ofs + 3] = 0x00;
+				INT32 green_ofs = (pix_ofs & 4) ? (pix_ofs + 1 - 4) : (pix_ofs + 1 + 4);
+				INT32 prev_g = (INT32)(UINT8)fb_b[green_ofs];
+				fb_b[green_ofs] = (UINT8)((out_g * one_minus_ghost_q8 + prev_g * ghost_q8) >> 8);
 			}
 		} else if (ghost_fast) {
-			// Fast path: single UINT32 write
-			fb_row_p[lcd_x] = ((UINT32)rr << 16) | ((UINT32)gg << 8) | (UINT32)bb;
+			fb_row[lcd_x] = ((UINT32)out_r << 16) | ((UINT32)out_g << 8) | (UINT32)out_b;
 		} else {
-			// Ghosting blend
-			UINT32 old_pix = fb_row_p[lcd_x];
-			INT32 old_b = (INT32)(old_pix & 0xFF);
-			INT32 old_g = (INT32)((old_pix >> 8) & 0xFF);
-			INT32 old_r = (INT32)((old_pix >> 16) & 0xFF);
-			INT32 nb = (bb * one_m_sbf_q8 + old_b * sbf_q8) >> 8;
-			INT32 ng = (gg * one_m_sbf_q8 + old_g * sbf_q8) >> 8;
-			INT32 nr = (rr * one_m_sbf_q8 + old_r * sbf_q8) >> 8;
-			fb_row_p[lcd_x] = ((UINT32)nr << 16) | ((UINT32)ng << 8) | (UINT32)nb;
+			UINT32 prev_pix = fb_row[lcd_x];
+			INT32 prev_b = (INT32)(prev_pix & 0xFF);
+			INT32 prev_g = (INT32)((prev_pix >> 8) & 0xFF);
+			INT32 prev_r = (INT32)((prev_pix >> 16) & 0xFF);
+			INT32 new_b = (out_b * one_minus_ghost_q8 + prev_b * ghost_q8) >> 8;
+			INT32 new_g = (out_g * one_minus_ghost_q8 + prev_g * ghost_q8) >> 8;
+			INT32 new_r = (out_r * one_minus_ghost_q8 + prev_r * ghost_q8) >> 8;
+			fb_row[lcd_x] = ((UINT32)new_r << 16) | ((UINT32)new_g << 8) | (UINT32)new_b;
 		}
-		++ft_p; ++st_p; ++win_pp;
+		++ft_ptr; if (line_second) ++st_ptr; ++win_cur;
 		}
 	}
 
-	// Per-scanline direct output: convert to out_bpp and write to out_ptr after
-	// the full 240-pixel loop - green_swap writes the G byte to the neighbour
-	// pixel, so a pixel is only final once its pair is processed.
+	// Per-scanline output: convert after the pixel loop (green_swap pairs pixels).
 	if (ctx->out_ptr) {
 		UINT8* SB_RESTRICT dst = ctx->out_ptr + lcd_y * GBA_LCD_W * ctx->out_bpp;
 		const UINT32* SB_RESTRICT src = ctx->framebuffer + lcd_y * GBA_LCD_W;
@@ -1659,167 +1732,68 @@ static inline void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT3
 	}
 }
 
-// FP-C: Single-layer text BG fast path (mode 0, exactly 1 BG, no OBJ/window/blend/
-// green-swap/ghosting, no mosaic on BG, 4-pixel unroll).
-static inline void ppu_worker_render_scanline_single_bg(ppu_worker_render_ctx_t* ctx, INT32 lcd_y, INT32 bg_en_mask)
+// Whether sprite obj_idx covers scanline y (mirrors the OBJ Y-bucket builder).
+SB_ALWAYS_INLINE bool ppu_worker_obj_row_covers(const UINT8* oam_row, INT32 obj_idx, INT32 y)
 {
-	UINT16 dispcnt = ppu_worker_io_read16(ctx, GBA_DISPCNT);
-	if (SB_BFE(dispcnt, 7, 1)) {  // forced blank: defer to generic path (handles stop_mode)
-		ppu_worker_render_scanline(ctx, lcd_y); return;
-	}
-	INT32 bg = 0;
-	switch (bg_en_mask) { case 1: bg=0; break; case 2: bg=1; break; case 4: bg=2; break; case 8: bg=3; break; default: ppu_worker_render_scanline(ctx,lcd_y); return; }
-
-	UINT16 bgcnt   = ppu_worker_io_read16(ctx, GBA_BG0CNT + bg * 2);
-	INT32  cbase   = SB_BFE(bgcnt, 2, 2) * 16 * 1024;
-	bool   mosaic  = SB_BFE(bgcnt, 6, 1);
-	bool   c256    = SB_BFE(bgcnt, 7, 1);
-	INT32  sbase   = SB_BFE(bgcnt, 8, 5) * 2048;
-	INT32  ssize   = SB_BFE(bgcnt, 14, 2);
-	INT32  sx_max  = (ssize & 1 ) ? 512 : 256;
-	INT32  sy_max  = (ssize >= 2) ? 512 : 256;
-	INT32  hoff    = ((INT16)ppu_worker_io_read16(ctx, GBA_BG0HOFS + bg * 4));
-	INT32  voff    = ((INT16)ppu_worker_io_read16(ctx, GBA_BG0VOFS + bg * 4));
-	hoff = (hoff << 7) >> 7; voff = (voff << 7) >> 7;
-	if (mosaic) { ppu_worker_render_scanline(ctx, lcd_y); return; }
-
-	INT32 row_y  = (voff + lcd_y) & (sy_max - 1);
-	INT32 py     = row_y & 7;
-	INT32 ty     = row_y >> 3;
-	INT32 s_stride = (ty >= 32) ? 32*32 : 0;
-	if (ssize == 3) s_stride *= 2;
-	INT32 trow_base = (ty & 31) * 32 + s_stride;
-
-	UINT32 bd_xrgb = ctx->pal_xrgb32[0] & 0x00FFFFFFu;
-	UINT32* SB_RESTRICT fb   = ctx->framebuffer + lcd_y * GBA_LCD_W;
-	const UINT32* SB_RESTRICT pal   = ctx->pal_xrgb32;
-	const UINT8*  SB_RESTRICT vram  = ctx->vram;
-
-	INT32 cached_tile_x = -1;
-	UINT16 cached_tile_data = 0;
-	INT32  cached_py = 0;
-	INT32  fc_key = -1;
-	UINT8  fc_bytes[8];
-	bool   fc_valid = false;
-
-	INT32 x = 0;
-	for (; x <= GBA_LCD_W - 4; x += 4) {
-		UINT32 out[4] = { bd_xrgb, bd_xrgb, bd_xrgb, bd_xrgb };
-		for (INT32 k = 0; k < 4; ++k) {
-			INT32 lx = x + k;
-			INT32 bg_x = (hoff + lx) & (sx_max - 1);
-			INT32 bg_tile_x = bg_x >> 3;
-			UINT16 tile_data;
-			INT32 px;
-			if (bg_tile_x != cached_tile_x) {
-				cached_tile_x = bg_tile_x;
-				INT32 toff = trow_base + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
-				tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(vram + sbase + toff * 2));
-				cached_tile_data = tile_data;
-				cached_py = SB_BFE(tile_data,11,1) ? (7 - py) : py;
-			} else {
-				tile_data = cached_tile_data;
-			}
-			px = bg_x & 7;
-			if (SB_BFE(tile_data, 10, 1)) px = 7 - px;
-			INT32 tile_id = SB_BFE(tile_data, 0, 10);
-			INT32 palette = SB_BFE(tile_data, 12, 4);
-			UINT8 pidx;
-			if (!c256) {
-				INT32 addr = cbase + tile_id * 32 + cached_py * 4;
-				// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-				if (SB_UNLIKELY(addr >= 0x10000)) continue;
-				if (!fc_valid || fc_key != addr) {
-					fc_key = addr;
-					UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(vram + addr));
-					fc_bytes[0]=(UINT8)r32; fc_bytes[1]=(UINT8)(r32>>8);
-					fc_bytes[2]=(UINT8)(r32>>16); fc_bytes[3]=(UINT8)(r32>>24); fc_valid=true;
-				}
-				pidx = (fc_bytes[px >> 1] >> ((px & 1) * 4)) & 0xF;
-				if (pidx == 0) continue;
-				pidx += palette * 16;
-			} else {
-				INT32 addr = cbase + tile_id * 64 + cached_py * 8;
-				// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-				if (SB_UNLIKELY(addr >= 0x10000)) continue;
-				if (!fc_valid || fc_key != addr) {
-					fc_key = addr;
-					UINT64 r64 = BURN_ENDIAN_SWAP_INT64(*(const UINT64*)(vram + addr));
-					fc_bytes[0]=(UINT8)r64; fc_bytes[1]=(UINT8)(r64>>8);
-					fc_bytes[2]=(UINT8)(r64>>16); fc_bytes[3]=(UINT8)(r64>>24);
-					fc_bytes[4]=(UINT8)(r64>>32); fc_bytes[5]=(UINT8)(r64>>40);
-					fc_bytes[6]=(UINT8)(r64>>48); fc_bytes[7]=(UINT8)(r64>>56);
-					fc_valid=true;
-				}
-				pidx = fc_bytes[px];
-				if (pidx == 0) continue;
-			}
-			out[k] = pal[pidx] & 0x00FFFFFFu;
-		}
-		{
-			UINT32* SB_RESTRICT fb_p = fb + x;
-			fb_p[0] = out[0]; fb_p[1] = out[1]; fb_p[2] = out[2]; fb_p[3] = out[3];
-		}
-	}
-	for (; x < GBA_LCD_W; ++x) {
-		INT32 bg_x = (hoff + x) & (sx_max - 1);
-		INT32 bg_tile_x = bg_x >> 3;
-		UINT16 tile_data; INT32 px;
-		if (bg_tile_x != cached_tile_x) {
-			cached_tile_x = bg_tile_x;
-			INT32 toff = trow_base + (bg_tile_x & 31) + (bg_tile_x >= 32 ? 32*32 : 0);
-			tile_data = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(vram + sbase + toff * 2));
-			cached_tile_data = tile_data;
-			cached_py = SB_BFE(tile_data,11,1) ? (7 - py) : py;
-		} else { tile_data = cached_tile_data; }
-		px = bg_x & 7;
-		if (SB_BFE(tile_data, 10, 1)) px = 7 - px;
-		INT32 tile_id = SB_BFE(tile_data, 0, 10);
-		INT32 palette = SB_BFE(tile_data, 12, 4);
-		UINT8 pidx;
-		if (!c256) {
-			INT32 addr = cbase + tile_id * 32 + cached_py * 4;
-			// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-			if (SB_UNLIKELY(addr >= 0x10000)) { fb[x] = bd_xrgb; continue; }
-			if (!fc_valid || fc_key != addr) {
-				fc_key = addr;
-				UINT32 r32 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(vram + addr));
-				fc_bytes[0]=(UINT8)r32; fc_bytes[1]=(UINT8)(r32>>8);
-				fc_bytes[2]=(UINT8)(r32>>16); fc_bytes[3]=(UINT8)(r32>>24); fc_valid=true;
-			}
-			pidx = (fc_bytes[px>>1]>>((px&1)*4))&0xF;
-			if (pidx == 0) { fb[x] = bd_xrgb; continue; }
-			pidx += palette * 16;
-		} else {
-			INT32 addr = cbase + tile_id * 64 + cached_py * 8;
-			// VRAM addr >= 0x10000: skip pixel (matches gbappu.h).
-			if (SB_UNLIKELY(addr >= 0x10000)) { fb[x] = bd_xrgb; continue; }
-			if (!fc_valid || fc_key != addr) {
-				fc_key = addr;
-				UINT64 r64 = BURN_ENDIAN_SWAP_INT64(*(const UINT64*)(vram + addr));
-				fc_bytes[0]=(UINT8)r64; fc_bytes[1]=(UINT8)(r64>>8);
-				fc_bytes[2]=(UINT8)(r64>>16); fc_bytes[3]=(UINT8)(r64>>24);
-				fc_bytes[4]=(UINT8)(r64>>32); fc_bytes[5]=(UINT8)(r64>>40);
-				fc_bytes[6]=(UINT8)(r64>>48); fc_bytes[7]=(UINT8)(r64>>56);
-				fc_valid=true;
-			}
-			pidx = fc_bytes[px];
-			if (pidx == 0) { fb[x] = bd_xrgb; continue; }
-		}
-		fb[x] = pal[pidx] & 0x00FFFFFFu;
-	}
-
-	// Per-scanline output directly (no ghosting, no green swap under FP-C conditions).
-	if (ctx->out_ptr) {
-		UINT8* SB_RESTRICT dst = ctx->out_ptr + lcd_y * GBA_LCD_W * ctx->out_bpp;
-		const UINT32* SB_RESTRICT src = fb;
-		ppu_worker_write_scanline_out(dst, src, ctx->out_bpp);
-	}
+	UINT32 attr01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(oam_row + obj_idx * 8));
+	UINT16 attr0 = (UINT16)attr01;
+	UINT16 attr1 = (UINT16)(attr01 >> 16);
+	if (SB_BFE(attr0, 9, 1) && !SB_BFE(attr0, 8, 1)) return false;
+	bool  rot_scale   = SB_BFE(attr0, 8, 1);
+	bool  double_size = SB_BFE(attr0, 9, 1) && rot_scale;
+	INT32 y_coord   = SB_BFE(attr0, 0, 8);
+	INT32 obj_shape = SB_BFE(attr0, 14, 2);
+	INT32 obj_size  = SB_BFE(attr1, 14, 2);
+	INT32 y_size    = gba_obj_ysize[obj_size * 4 + obj_shape] * (double_size ? 2 : 1);
+	INT32 y_start   = ppu_worker_obj_y_wrap(y_coord, y_size);
+	return (y >= y_start && y < y_start + y_size);
 }
 
-// Worker pixel composition - reads snapshot, writes backbuf + out_ptr (when out_bpp!=4).
-static void ppu_worker_render_frame_into(ppu_worker_snapshot_t* snap, UINT32* out_fb,
-                                         UINT32* ghost_fb, ppu_worker_t* w, INT32 ridx)
+// True when scanline y renders identically to the same scanline of prev_snap:
+// same registers, affine state, DISPCNT pipeline, palette and OBJ content. The
+// OBJ side only inspects sprites that actually cover this scanline.
+static bool ppu_worker_line_reusable(const ppu_worker_snapshot_t* snap,
+                                     const ppu_worker_snapshot_t* prev_snap, INT32 y)
+{
+	const ppu_worker_line_state_t* current_line  = &snap->line_state[y];
+	const ppu_worker_line_state_t* previous_line = &prev_snap->line_state[y];
+	if (memcmp(current_line->io, previous_line->io, GBAPPU_WORKER_IO_SIZE) != 0) return false;
+	if (current_line->aff_bgx[0] != previous_line->aff_bgx[0]
+	 || current_line->aff_bgy[0] != previous_line->aff_bgy[0]
+	 || current_line->aff_bgx[1] != previous_line->aff_bgx[1]
+	 || current_line->aff_bgy[1] != previous_line->aff_bgy[1]) return false;
+	if (current_line->dispcnt_pipeline[0] != previous_line->dispcnt_pipeline[0]
+	 || current_line->dispcnt_pipeline[1] != previous_line->dispcnt_pipeline[1]
+	 || current_line->dispcnt_pipeline[2] != previous_line->dispcnt_pipeline[2]) return false;
+	if (memcmp(ppu_worker_line_palette(snap, y), ppu_worker_line_palette(prev_snap, y), 1024) != 0)
+		return false;
+	const UINT8* current_oam  = ppu_worker_line_oam(snap, y);
+	const UINT8* previous_oam = ppu_worker_line_oam(prev_snap, y);
+	if (memcmp(current_oam, previous_oam, 1024) == 0) return true;
+	for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+		if (memcmp(current_oam + obj_idx * 8, previous_oam + obj_idx * 8, 8) == 0) continue;
+		if (ppu_worker_obj_row_covers(current_oam, obj_idx, y)
+		 || ppu_worker_obj_row_covers(previous_oam, obj_idx, y)) return false;
+	}
+	// Rot/scale matrices referenced by sprites that cover this line; their parameter
+	// words live in the OAM area and can change without touching the OBJ entry.
+	for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+		UINT32 attr01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(current_oam + obj_idx * 8));
+		if (!SB_BFE((UINT16)attr01, 8, 1)) continue;
+		if (!ppu_worker_obj_row_covers(current_oam, obj_idx, y)) continue;
+		UINT32 param_base = (UINT32)SB_BFE((UINT16)(attr01 >> 16), 9, 5) * 0x20;
+		for (INT32 word_offset = 0x6; word_offset <= 0x1e; word_offset += 8) {
+			if (memcmp(current_oam + param_base + word_offset,
+			           previous_oam + param_base + word_offset, 2) != 0)
+				return false;
+		}
+	}
+	return true;
+}
+
+// Render one captured snapshot into out_fb (XRGB8888, GBA_LCD_W*GBA_LCD_H).
+static bool ppu_worker_render_frame_into(ppu_worker_snapshot_t* snap, UINT32* out_fb,
+                                                const UINT32* ghost_fb, ppu_worker_t* worker, INT32 slot_idx)
 {
 	gba_ppu_t ppu_state;
 	UINT32    first_buf[GBA_LCD_W];
@@ -1827,11 +1801,18 @@ static void ppu_worker_render_frame_into(ppu_worker_snapshot_t* snap, UINT32* ou
 	UINT8     win_buf[GBA_LCD_W];
 
 	memset(&ppu_state, 0, sizeof(ppu_state));
-	ppu_state.ghosting_strength = snap->ghosting_strength;
-	ppu_state.render_per_pixel  = false;
 
 	ppu_worker_render_ctx_t ctx;
-	ctx.vram                 = snap->vram;
+	UINT8* vram_work = NULL;
+	if (snap->vram_journal && !snap->vram_journal_overflow) {
+		// Mid-frame VRAM writes: replay the journal onto the line-0 base.
+		memcpy(worker->vram_scratch, worker->vram_shadow, 128 * 1024);
+		vram_work = worker->vram_scratch;
+		ctx.vram  = vram_work;
+	} else {
+		// No mid-frame writes (or journal overflow): read the vblank baseline directly.
+		ctx.vram  = worker->vram_shadow;
+	}
 	ctx.oam                  = NULL;
 	ctx.palette              = NULL;
 	ctx.io                   = NULL;
@@ -1840,205 +1821,265 @@ static void ppu_worker_render_frame_into(ppu_worker_snapshot_t* snap, UINT32* ou
 	ctx.second_target_buffer = second_buf;
 	ctx.window               = win_buf;
 	ctx.framebuffer          = out_fb;
-	ctx.out_ptr              = (w->out_bpp == 4) ? NULL : w->out_buf[ridx];
-	ctx.out_bpp              = w->out_bpp;
+	ctx.out_ptr              = (worker->out_bpp == 4) ? NULL : worker->out_buf[slot_idx];
+	ctx.out_bpp              = worker->out_bpp;
 	ctx.stop_mode            = snap->stop_mode;
 	{
-		// OAM uniformity: does every scanline's OAM equal line 0's (no mid-frame
-		// OAM write)? 159 x 1 KB reads per frame replace the per-line 128-sprite
-		// rescans in render_objs.
-		const UINT8* oam_ref = snap->line_state[0].oam;
+		// Frame-level OAM uniformity: all scanlines equal line 0.
 		bool uniform = true;
-		for (INT32 y = 1; y < GBA_LCD_H; ++y) {
-			if (memcmp(snap->line_state[y].oam, oam_ref, 1024) != 0) { uniform = false; break; }
+		if (snap->oam_per_line) {
+			const UINT8* oam_ref = snap->line_state[0].oam;
+			for (INT32 y = 1; y < GBA_LCD_H; ++y) {
+				if (memcmp(snap->line_state[y].oam, oam_ref, 1024) != 0) { uniform = false; break; }
+			}
 		}
 		ctx.oam_uniform = uniform;
 	}
-
-	// Per-frame ghosting Q8 factor - frame-level constant, compute once.
-	INT32 frame_sbf_q8 = (INT32)(snap->ghosting_strength * 76.8f + 0.5f);
-	if (frame_sbf_q8 < 0) frame_sbf_q8 = 0;
-	if (frame_sbf_q8 > 76) frame_sbf_q8 = 76;
-	ctx.sbf_q8       = frame_sbf_q8;
-	ctx.one_m_sbf_q8 = 256 - frame_sbf_q8;
-	ctx.ghost_fast   = (frame_sbf_q8 == 0);
-
-	// Per-frame OBJ Y bucketing: pre-sort the 128 sprites into per-line
-	// buckets, so each scanline only iterates its own list. 64 sprites/line cap.
-	INT32 obj_bucket[GBA_LCD_H][64];
-	INT32 obj_bucket_n[GBA_LCD_H] = {0};
 	{
-		const UINT8* oam_seed = snap->line_state[0].oam;
-		for (INT32 o = 0; o < 128; ++o) {
-			UINT32 attr01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(oam_seed + o * 8));
-			UINT16 attr0 = (UINT16)attr01;
-			UINT16 attr1 = (UINT16)(attr01 >> 16);
-			if (SB_BFE(attr0, 9, 1) && !SB_BFE(attr0, 8, 1))
-				continue;
-			bool  rot_scale = SB_BFE(attr0, 8, 1);
-			bool  dbl_size  = SB_BFE(attr0, 9, 1) && rot_scale;
-			INT32 y_coord   = SB_BFE(attr0, 0, 8);
-			INT32 obj_shape = SB_BFE(attr0, 14, 2);
-			INT32 obj_size  = SB_BFE(attr1, 14, 2);
-			INT32 y_size    = gba_obj_ysize[obj_size * 4 + obj_shape] * (dbl_size ? 2 : 1);
-			INT32 y_start = y_coord;
-			if (y_start >= GBA_LCD_H) y_start -= 256;
-			INT32 y_end = y_start + y_size;
-			if (y_end <= 0 || y_start >= GBA_LCD_H)
-				continue;
-			if (y_start < 0) y_start = 0;
-			if (y_end > GBA_LCD_H) y_end = GBA_LCD_H;
-			for (INT32 yy = y_start; yy < y_end; ++yy) {
-				if (obj_bucket_n[yy] < 64)
-					obj_bucket[yy][obj_bucket_n[yy]++] = o;
+		// Frame-level OAM regularity: every enabled OBJ is regular normal (non-rot/scale,
+		// mosaic off, obj_mode=0 normal, no OBJ window sprites); pre-count visible
+		// OBJs per scanline.
+		UINT16 dispcnt0 = BURN_ENDIAN_SWAP_INT16(*(const UINT16*)(snap->line_state[0].io + (GBA_DISPCNT & 0x3FF)));
+		bool   obj_window_enable = SB_BFE(dispcnt0, 15, 1);
+		bool   all_regular = !obj_window_enable;
+		const UINT8* oam0 = snap->line_state[0].oam;
+		for (INT32 y = 0; y < GBA_LCD_H; ++y) ctx.obj_count[y] = 0;
+		if (all_regular) {
+			for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+				UINT32 attr01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(oam0 + obj_idx * 8));
+				UINT16 attr0 = (UINT16)attr01;
+				UINT16 attr1 = (UINT16)(attr01 >> 16);
+				bool rot_scale   = SB_BFE(attr0, 8, 1);
+				bool obj_disable = SB_BFE(attr0, 9, 1) && !rot_scale;
+				if (obj_disable) continue;
+				INT32 obj_mode   = SB_BFE(attr0, 10, 2);
+				if (SB_BFE(attr0, 12, 1)) { all_regular = false; break; }
+				if (rot_scale) { all_regular = false; break; }
+				if (obj_mode != 0) { all_regular = false; break; }
+				INT32 obj_shape = SB_BFE(attr0, 14, 2);
+				INT32 obj_size  = SB_BFE(attr1, 14, 2);
+				INT32 y_size    = gba_obj_ysize[obj_size * 4 + obj_shape];
+				INT32 y_coord   = SB_BFE(attr0, 0, 8);
+				INT32 y_start   = ppu_worker_obj_y_wrap(y_coord, y_size);
+				for (INT32 y = y_start; y < y_start + y_size; ++y) {
+					if (y < 0 || y >= GBA_LCD_H) {
+						if (y < 0) continue;
+						break;
+					}
+					ctx.obj_count[y] += 1;
+				}
 			}
 		}
+		ctx.oam_all_regular = all_regular;
 	}
 
+	// Per-frame ghosting Q8 factor - frame-level constant, compute once.
+	INT32 frame_ghost_q8 = ppu_worker_ghost_q8_factor(snap->ghosting_strength);
+	ctx.ghost_q8           = frame_ghost_q8;
+	ctx.one_minus_ghost_q8 = 256 - frame_ghost_q8;
+	ctx.ghost_fast         = (frame_ghost_q8 == 0);
+
+	// Per-frame OBJ Y buckets: 64 sprites/line cap, rebuilt per scanline from
+	// that line's OAM snapshot so HBlank DMA moves/creates sprites are seen.
+	INT32 obj_bucket[GBA_LCD_H][64];
+	INT32 obj_bucket_n[GBA_LCD_H];
+
 	// Initialize frame-level tile cache (per BG; invalidated on tile/py change).
-	ctx.fc_tile_key[0] = ctx.fc_tile_key[1] = ctx.fc_tile_key[2] = ctx.fc_tile_key[3] = -1;
-	ctx.fc_tile_valid[0] = ctx.fc_tile_valid[1] = ctx.fc_tile_valid[2] = ctx.fc_tile_valid[3] = false;
+	ctx.tile_fetch_key[0] = ctx.tile_fetch_key[1] = ctx.tile_fetch_key[2] = ctx.tile_fetch_key[3] = -1;
+	ctx.tile_fetch_valid[0] = ctx.tile_fetch_valid[1] = ctx.tile_fetch_valid[2] = ctx.tile_fetch_valid[3] = false;
 	ctx.cached_pal_bank[0]=ctx.cached_pal_bank[1]=ctx.cached_pal_bank[2]=ctx.cached_pal_bank[3] = 0;
 	ctx.obj_bucket   = (const INT32(*)[64])obj_bucket;
 	ctx.obj_bucket_n = obj_bucket_n;
 	ctx.no_windows   = false;
-	ctx.need_second_buf = false;
-	ctx.pal_valid        = false;
+	ctx.frame_needs_second_buf = false;
+	ctx.need_second_this_line  = false;
+	// Seed the ctx palette cache from the pre-expanded frame-level palette
+	// when palette_per_line is false.
+	if (!snap->palette_per_line) {
+		memcpy(ctx.pal_snapshot, snap->line_state[0].palette, 1024);
+		memcpy(ctx.pal_xrgb,     snap->pal_xrgb,              512 * sizeof(UINT32));
+		ctx.pal_valid = true;
+	} else {
+		ctx.pal_valid = false;
+	}
 
-	// Seed backbuf with previous frame if ghosting is on (both XRGB8888).
-	// For out_bpp=2/3, out_buf is fully overwritten by per-scanline output,
-	// so no per-frame zero-init is needed.
+	// Seed backbuf from the previous frame when ghosting is on; out_buf needs
+	// no zero-init (overwritten per scanline at bpp 2/3).
 	const INT32 fb_bytes = GBA_LCD_W * GBA_LCD_H * 4;
-	if (frame_sbf_q8 > 0 && ghost_fb)
+	if (frame_ghost_q8 > 0 && ghost_fb)
 		memcpy(out_fb, ghost_fb, fb_bytes);
 
-	for (INT32 y = 0; y < GBA_LCD_H; ++y) {
-		if ((y & 7) == 0 && w->exiting) return;
+	// Per-line reuse source: the previously presented frame's row, used only when
+	// neither frame has mid-frame VRAM writes.
+	const UINT32* prev_rows = NULL;
+	ppu_worker_snapshot_t* prev_snap = NULL;
+	if (frame_ghost_q8 == 0 && worker->have_first_frame
+	    && !snap->vram_journal && !snap->vram_journal_overflow) {
+		int front_slot = worker->front_idx;
+		if (front_slot >= 0 && front_slot != slot_idx) {
+			ppu_worker_snapshot_t* candidate = &worker->snapshots[front_slot];
+			INT32 prev_ghost_q8 = ppu_worker_ghost_q8_factor(candidate->ghosting_strength);
+			if (prev_ghost_q8 == 0 && !candidate->vram_journal && !candidate->vram_journal_overflow
+			    && candidate->stop_mode == snap->stop_mode) {
+				prev_snap = candidate;
+				prev_rows = worker->backbuf[front_slot];
+			}
+		}
+	}
 
+	for (INT32 y = 0; y < GBA_LCD_H; ++y) {
+		if (worker->exiting || worker->cancel_render) return false;
+		if (prev_snap != NULL && ppu_worker_line_reusable(snap, prev_snap, y)) {
+			// Identical inputs: the previously presented row is the rendered row.
+			UINT32*       dst_row = out_fb + y * GBA_LCD_W;
+			const UINT32* src_row = prev_rows + y * GBA_LCD_W;
+			memcpy(dst_row, src_row, GBA_LCD_W * 4);
+			if (ctx.out_ptr)
+				ppu_worker_write_scanline_out(ctx.out_ptr + y * GBA_LCD_W * ctx.out_bpp,
+				                              dst_row, ctx.out_bpp);
+			continue;
+		}
+		if (vram_work != NULL && y > 0) {
+			// Writes captured during hblank of line (y-1) become visible at line y.
+			UINT32 lo = snap->vram_line_lo[y-1];
+			UINT32 hi = snap->vram_line_hi[y-1];
+			if (lo < hi)
+				memcpy(vram_work + lo, snap->vram_pool + snap->vram_line_off[y-1], hi - lo);
+		}
 		ppu_worker_install_io(&ctx, &snap->line_state[y], snap->stop_mode);
-		// FP-A: pre-expand palette into XRGB8888 UINT32 table once per scanline.
-		// Upper byte MUST stay 0 here - bits 24-31 are reserved for priority/semi/opaque
-		// flags that are OR'ed in per-pixel during BG/OBJ rendering. Writing 0xFF here
-		// would mark every pixel as semi-transparent + max priority, triggering bogus
-		// alpha blends and washing out colors.
+		ctx.oam     = (UINT8*)ppu_worker_line_oam(snap, y);
+		ctx.palette = (UINT8*)ppu_worker_line_palette(snap, y);
 		{
-			// Dirty-check: exact memcmp vs the stored palette copy (1 KB,
-			// ~16x cheaper than the old 512-entry XOR+mult hash).
-			if (!ctx.pal_valid || memcmp(ctx.last_palette, ctx.palette, 1024) != 0) {
-				memcpy(ctx.last_palette, ctx.palette, 1024);
+			if (!ctx.pal_valid || memcmp(ctx.pal_snapshot, ctx.palette, 1024) != 0) {
+				memcpy(ctx.pal_snapshot, ctx.palette, 1024);
 				ctx.pal_valid = true;
-				const UINT16* p16 = (const UINT16*)ctx.palette;
-				for (INT32 pi = 0; pi < 512; ++pi) {
-					UINT16 c = BURN_ENDIAN_SWAP_INT16(p16[pi]);
-					UINT32 r = c & 0x1Fu;
-					UINT32 g = (c >> 5) & 0x1Fu;
-					UINT32 b = (c >> 10) & 0x1Fu;
-					r = (r << 3) | (r >> 2);
-					g = (g << 3) | (g >> 2);
-					b = (b << 3) | (b >> 2);
-					ctx.pal_xrgb32[pi] = (r << 16) | (g << 8) | b;
+				ppu_worker_expand_palette(ctx.pal_xrgb, ctx.palette);
+			}
+		}
+		// Build OBJ Y bucket for this scanline from its own OAM snapshot; the
+		// per-line rebuild makes HBlank DMA OAM writes visible.
+		obj_bucket_n[y] = 0;
+		{
+			const UINT8* oam_row = ctx.oam;
+			for (INT32 obj_idx = 0; obj_idx < 128; ++obj_idx) {
+				UINT32 attr01 = BURN_ENDIAN_SWAP_INT32(*(const UINT32*)(oam_row + obj_idx * 8));
+				UINT16 attr0 = (UINT16)attr01;
+				UINT16 attr1 = (UINT16)(attr01 >> 16);
+				if (SB_BFE(attr0, 9, 1) && !SB_BFE(attr0, 8, 1))
+					continue;
+				bool  rot_scale_r = SB_BFE(attr0, 8, 1);
+				bool  double_size_r = SB_BFE(attr0, 9, 1) && rot_scale_r;
+				INT32 y_coord_r   = SB_BFE(attr0, 0, 8);
+				INT32 obj_shape_r = SB_BFE(attr0, 14, 2);
+				INT32 obj_size_r  = SB_BFE(attr1, 14, 2);
+				INT32 y_size_r    = gba_obj_ysize[obj_size_r * 4 + obj_shape_r] * (double_size_r ? 2 : 1);
+				INT32 y_start_r = ppu_worker_obj_y_wrap(y_coord_r, y_size_r);
+				INT32 y_end_r = y_start_r + y_size_r;
+				if (y >= y_start_r && y < y_end_r && obj_bucket_n[y] < 64) {
+					obj_bucket[y][obj_bucket_n[y]++] = obj_idx;
 				}
 			}
 		}
-
-		// Backdrop = BG palette entry 0 (changes per-line if palette changes).
-		// BD: pri=0 (lowest, bits29-31=0), tie=0 (bits26-28=000, matches gbappu.h BD encoding).
-		UINT32 backdrop = (ctx.pal_xrgb32[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
-
-		// first_buf = backdrop (wide UINT64 stores). second_buf backdrop
-		// fill deferred until after render_objs knows need_second_buf.
-		{
-			UINT32* SB_RESTRICT ft_fill = first_buf;
-			INT32 x;
-			for (x = 0; x < GBA_LCD_W; x += 4) {
-				ft_fill[x]     = backdrop;
-				ft_fill[x + 1] = backdrop;
-				ft_fill[x + 2] = backdrop;
-				ft_fill[x + 3] = backdrop;
-			}
-		}
-		// win_buf is initialized by ppu_worker_render_objs with default_window_control.
-
+		UINT32 backdrop = (ctx.pal_xrgb[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
+		ppu_worker_fill_row(first_buf, backdrop);
 		bool any_obj = ppu_worker_render_objs(&ctx, y);
 		ctx.has_any_obj_this_line = any_obj;
+		if (ctx.need_second_this_line) ppu_worker_fill_row(second_buf, backdrop);
+		ppu_worker_render_scanline(&ctx, y);
+	}
+	return true;
+}
 
-		// Second-buffer backdrop fill (deferred): only if actually needed this scanline.
-		if (ctx.need_second_buf) {
-			UINT32* SB_RESTRICT st_fill = second_buf;
-			for (INT32 x = 0; x < GBA_LCD_W; x += 4) {
-				st_fill[x]     = backdrop;
-				st_fill[x + 1] = backdrop;
-				st_fill[x + 2] = backdrop;
-				st_fill[x + 3] = backdrop;
+// --- Snapshot capture (main thread) --------------------------------------
+
+// HBlank snapshot: IO (96B) + OAM (1KB) + palette (1KB) + this line's VRAM
+// delta (vram_shadow is seeded at publish; later lines append their dirty range).
+static void ppu_worker_hblank_snapshot(ppu_worker_t* worker, gba_t* gba, INT32 lcd_y)
+{
+	if (lcd_y < 0 || lcd_y >= GBA_LCD_H) return;
+
+	ppu_worker_snapshot_t* snap = &worker->snapshots[worker->write_snap_idx];
+	ppu_worker_line_state_t* line  = &snap->line_state[lcd_y];
+	// IO (96B): always copied - HBlank DMA can change WIN/BGxHOFS/BLDCNT/MOSAIC.
+	memcpy(line->io, gba->mem.io, GBAPPU_WORKER_IO_SIZE);
+
+	// OAM (1KB) / palette (1KB): line 0 stores the frame-level copy; later lines
+	// store their own only after a mid-frame write, and already-captured lines are
+	// backfilled with line 0's copy before switching to per-line capture.
+	if (lcd_y == 0) {
+		snap->oam_per_line     = false;
+		snap->palette_per_line = false;
+		worker->oam_write_base      = worker->oam_write_seq;
+		worker->palette_write_base  = worker->palette_write_seq;
+		memcpy(line->oam,     gba->mem.oam,     1024);
+		memcpy(line->palette, gba->mem.palette, 1024);
+		// Pre-expand the frame-level palette from the line-0 snapshot.
+		ppu_worker_expand_palette(snap->pal_xrgb, line->palette);
+	} else {
+		INT32 yy;
+		if (snap->oam_per_line || worker->oam_write_seq != worker->oam_write_base) {
+			if (!snap->oam_per_line) {
+				for (yy = 1; yy < lcd_y; ++yy)
+					memcpy(snap->line_state[yy].oam, snap->line_state[0].oam, 1024);
+				snap->oam_per_line = true;
 			}
+			memcpy(line->oam, gba->mem.oam, 1024);
 		}
+		if (snap->palette_per_line || worker->palette_write_seq != worker->palette_write_base) {
+			if (!snap->palette_per_line) {
+				for (yy = 1; yy < lcd_y; ++yy)
+					memcpy(snap->line_state[yy].palette, snap->line_state[0].palette, 1024);
+				snap->palette_per_line = true;
+			}
+			memcpy(line->palette, gba->mem.palette, 1024);
+		}
+	}
 
-		// FP-C dispatch: single-layer text BG fast path (mode 0, 1 BG, no OBJ/windows/blend).
-		// FP-D (fast-pixel + opaque OBJ) is handled inside render_scanline's fast-pixel branch.
-		{
-			UINT16 dispcnt_f  = ppu_worker_io_read16(&ctx, GBA_DISPCNT);
-			INT32  bg_mode_f  = SB_BFE(dispcnt_f, 0, 3);
-			INT32  bg_en_mask = (dispcnt_f >> 8) & 0xF;
-			UINT16 bldcnt_f   = ppu_worker_io_read16(&ctx, GBA_BLDCNT);
-			INT32  bld_mode_f = SB_BFE(bldcnt_f, 6, 2);
-			bool   single_bg  = (bg_mode_f == 0) && (bg_en_mask != 0)
-			                  && ((bg_en_mask & (bg_en_mask - 1)) == 0);
-			bool   no_effects = (bld_mode_f == 0 || (bldcnt_f & 0x3F) == 0) && !ctx.need_second_buf
-			                  && ctx.no_windows && ctx.ghost_fast
-			                  && (ppu_worker_io_read16(&ctx, GBA_GREENSWP) == 0);
-			if (single_bg && no_effects && !any_obj) {
-				ppu_worker_render_scanline_single_bg(&ctx, y, bg_en_mask);
+	// VRAM checkpoint: writes since the last hblank belong to the next line.
+	{
+		UINT32 lo = gba->ppu.vram_dirty_lo;
+		UINT32 hi = gba->ppu.vram_dirty_hi;
+		gba->ppu.vram_dirty_lo = 0xFFFFFFFFu;
+		gba->ppu.vram_dirty_hi = 0u;
+		snap->vram_line_lo[lcd_y] = 1;
+		snap->vram_line_hi[lcd_y] = 0;
+		if (lo < hi && !snap->vram_journal_overflow) {
+			UINT32 len = hi - lo;
+			if (snap->vram_pool_used + len <= PPW_VRAM_POOL) {
+				snap->vram_line_lo[lcd_y]  = lo;
+				snap->vram_line_hi[lcd_y]  = hi;
+				snap->vram_line_off[lcd_y] = snap->vram_pool_used;
+				memcpy(snap->vram_pool + snap->vram_pool_used, gba->mem.vram + lo, len);
+				snap->vram_pool_used += len;
+				snap->vram_journal = true;
 			} else {
-				ppu_worker_render_scanline(&ctx, y);
+				// Pool full: stop recording mid-frame writes for this frame.
+				snap->vram_journal_overflow = true;
 			}
 		}
 	}
 }
 
-// --- Snapshot capture (main thread) --------------------------------------
-
-// HBlank snapshot: IO (96B) + OAM (1KB) + palette (1KB). VRAM is bulk-copied
-// once at VBlank publish (128 KB).
-static void ppu_worker_hblank_snapshot(ppu_worker_t* w, gba_t* gba, INT32 lcd_y)
-{
-	if (lcd_y < 0 || lcd_y >= GBA_LCD_H) return;
-
-	ppu_worker_snapshot_t* snap = &w->snapshots[w->w_idx];
-	ppu_worker_line_state_t* ls  = &snap->line_state[lcd_y];
-	// IO (96B) - always copied; HBlank DMA can change WIN0H/WIN1H/BGxHOFS/
-	// BGxVOFS/BLDCNT/MOSAIC mid-frame.
-	memcpy(ls->io, gba->mem.io, GBAPPU_WORKER_IO_SIZE);
-
-	// OAM (1KB): unconditional copy. A memcmp pre-check would save the write
-	// when OAM is unchanged, but cost an extra 1KB read when it did change.
-	memcpy(ls->oam, gba->mem.oam, 1024);
-
-	// Palette (1KB): same as OAM above.
-	memcpy(ls->palette, gba->mem.palette, 1024);
-}
-
 // Line-start snapshot: affine reference points + DISPCNT pipeline.
-static void ppu_worker_line_start_snapshot(ppu_worker_t* w, gba_t* gba, INT32 lcd_y)
+static void ppu_worker_line_start_snapshot(ppu_worker_t* worker, gba_t* gba, INT32 lcd_y)
 {
 	if (lcd_y < 0 || lcd_y >= GBA_LCD_H) return;
 
-	ppu_worker_snapshot_t* snap = &w->snapshots[w->w_idx];
-	ppu_worker_line_state_t* ls = &snap->line_state[lcd_y];
-	ls->bgx[0] = gba->ppu.aff[0].render_bgx;
-	ls->bgy[0] = gba->ppu.aff[0].render_bgy;
-	ls->bgx[1] = gba->ppu.aff[1].render_bgx;
-	ls->bgy[1] = gba->ppu.aff[1].render_bgy;
-	ls->dispcnt_pipeline[0] = gba->ppu.dispcnt_pipeline[0];
-	ls->dispcnt_pipeline[1] = gba->ppu.dispcnt_pipeline[1];
-	ls->dispcnt_pipeline[2] = gba->ppu.dispcnt_pipeline[2];
+	ppu_worker_snapshot_t* snap = &worker->snapshots[worker->write_snap_idx];
+	ppu_worker_line_state_t* line = &snap->line_state[lcd_y];
+	line->aff_bgx[0] = gba->ppu.aff[0].render_bgx;
+	line->aff_bgy[0] = gba->ppu.aff[0].render_bgy;
+	line->aff_bgx[1] = gba->ppu.aff[1].render_bgx;
+	line->aff_bgy[1] = gba->ppu.aff[1].render_bgy;
+	line->dispcnt_pipeline[0] = gba->ppu.dispcnt_pipeline[0];
+	line->dispcnt_pipeline[1] = gba->ppu.dispcnt_pipeline[1];
+	line->dispcnt_pipeline[2] = gba->ppu.dispcnt_pipeline[2];
 }
 
-// VBlank entry: capture frame-level render settings. VRAM is bulk-copied at
-// vblank_publish (after VBlank DMA); line_state[0] OAM/palette is seeded by
-// reset_slot when the write slot is advanced.
-static void ppu_worker_vblank_entry(ppu_worker_t* w, gba_t* gba)
+// VBlank entry: capture frame-level render settings (VRAM is copied at publish).
+static void ppu_worker_vblank_entry(ppu_worker_t* worker, gba_t* gba)
 {
-	ppu_worker_snapshot_t* snap = &w->snapshots[w->w_idx];
+	ppu_worker_snapshot_t* snap = &worker->snapshots[worker->write_snap_idx];
 	snap->ghosting_strength = gba->ppu.ghosting_strength;
 	snap->stop_mode         = gba->stop_mode;
 }
@@ -2046,148 +2087,144 @@ static void ppu_worker_vblank_entry(ppu_worker_t* w, gba_t* gba)
 // --- Job/done event signaling (counting semaphore) -----------------------
 #if GBAPPU_WORKER_HAVE_PTHREAD
 
-static inline void ppu_worker_evt_wait(ppu_worker_evt_t* e) {
-	pthread_mutex_lock(&e->mutex);
-	while (e->count == 0)
-		pthread_cond_wait(&e->cond, &e->mutex);
-	e->count--;
-	pthread_mutex_unlock(&e->mutex);
+static inline void ppu_worker_evt_wait(ppu_worker_evt_t* evt) {
+	pthread_mutex_lock(&evt->mutex);
+	while (evt->count == 0)
+		pthread_cond_wait(&evt->cond, &evt->mutex);
+	evt->count--;
+	pthread_mutex_unlock(&evt->mutex);
 }
-static inline bool ppu_worker_evt_trywait(ppu_worker_evt_t* e) {
-	pthread_mutex_lock(&e->mutex);
-	bool ok = (e->count > 0);
-	if (ok) e->count--;
-	pthread_mutex_unlock(&e->mutex);
+static inline bool ppu_worker_evt_trywait(ppu_worker_evt_t* evt) {
+	pthread_mutex_lock(&evt->mutex);
+	bool ok = (evt->count > 0);
+	if (ok) evt->count--;
+	pthread_mutex_unlock(&evt->mutex);
 	return ok;
 }
-static inline void ppu_worker_evt_post(ppu_worker_evt_t* e) {
-	pthread_mutex_lock(&e->mutex);
-	if (e->count < GBAPPU_WORKER_N_BUFFERS + 1)
-		e->count++;
-	pthread_cond_signal(&e->cond);
-	pthread_mutex_unlock(&e->mutex);
+static inline void ppu_worker_evt_post(ppu_worker_evt_t* evt) {
+	pthread_mutex_lock(&evt->mutex);
+	if (evt->count < GBAPPU_WORKER_N_BUFFERS + 1)
+		evt->count++;
+	pthread_cond_signal(&evt->cond);
+	pthread_mutex_unlock(&evt->mutex);
 }
-static inline void ppu_worker_evt_init(ppu_worker_evt_t* e) {
-	pthread_mutex_init(&e->mutex, NULL);
-	pthread_cond_init(&e->cond, NULL);
-	e->count = 0;
+static inline void ppu_worker_evt_init(ppu_worker_evt_t* evt) {
+	pthread_mutex_init(&evt->mutex, NULL);
+	pthread_cond_init(&evt->cond, NULL);
+	evt->count = 0;
 }
-static inline void ppu_worker_evt_destroy(ppu_worker_evt_t* e) {
-	pthread_cond_destroy(&e->cond);
-	pthread_mutex_destroy(&e->mutex);
+static inline void ppu_worker_evt_destroy(ppu_worker_evt_t* evt) {
+	pthread_cond_destroy(&evt->cond);
+	pthread_mutex_destroy(&evt->mutex);
 }
 
-static inline void ppu_worker_plat_wait_job(ppu_worker_t* w)     { ppu_worker_evt_wait(&w->job_evt); }
-static inline void ppu_worker_plat_release_done(ppu_worker_t* w) { ppu_worker_evt_post(&w->done_evt); }
-static inline bool ppu_worker_plat_trywait_done(ppu_worker_t* w) { return ppu_worker_evt_trywait(&w->done_evt); }
-static inline void ppu_worker_plat_wait_done(ppu_worker_t* w)    { ppu_worker_evt_wait(&w->done_evt); }
-static inline void ppu_worker_plat_release_job(ppu_worker_t* w)  { ppu_worker_evt_post(&w->job_evt); }
+static inline void ppu_worker_plat_wait_job(ppu_worker_t* worker)     { ppu_worker_evt_wait(&worker->job_evt); }
+static inline void ppu_worker_plat_release_done(ppu_worker_t* worker) { ppu_worker_evt_post(&worker->done_evt); }
+static inline bool ppu_worker_plat_trywait_done(ppu_worker_t* worker) { return ppu_worker_evt_trywait(&worker->done_evt); }
+static inline void ppu_worker_plat_wait_done(ppu_worker_t* worker)    { ppu_worker_evt_wait(&worker->done_evt); }
+static inline void ppu_worker_plat_release_job(ppu_worker_t* worker)  { ppu_worker_evt_post(&worker->job_evt); }
 static inline void ppu_worker_plat_mb(void)                      { __sync_synchronize(); }
 
 #elif GBAPPU_WORKER_HAVE_WINTHREAD
 
-static inline void ppu_worker_plat_wait_job(ppu_worker_t* w)     { WaitForSingleObject(w->job_evt, INFINITE); }
-static inline void ppu_worker_plat_release_done(ppu_worker_t* w) { ReleaseSemaphore(w->done_evt, 1, NULL); }
-static inline bool ppu_worker_plat_trywait_done(ppu_worker_t* w) { return (WaitForSingleObject(w->done_evt, 0) == WAIT_OBJECT_0); }
-static inline void ppu_worker_plat_wait_done(ppu_worker_t* w)    { WaitForSingleObject(w->done_evt, INFINITE); }
-static inline void ppu_worker_plat_release_job(ppu_worker_t* w)  { ReleaseSemaphore(w->job_evt, 1, NULL); }
+static inline void ppu_worker_plat_wait_job(ppu_worker_t* worker)     { WaitForSingleObject(worker->job_evt, INFINITE); }
+static inline void ppu_worker_plat_release_done(ppu_worker_t* worker) { ReleaseSemaphore(worker->done_evt, 1, NULL); }
+static inline bool ppu_worker_plat_trywait_done(ppu_worker_t* worker) { return (WaitForSingleObject(worker->done_evt, 0) == WAIT_OBJECT_0); }
+static inline void ppu_worker_plat_wait_done(ppu_worker_t* worker)    { WaitForSingleObject(worker->done_evt, INFINITE); }
+static inline void ppu_worker_plat_release_job(ppu_worker_t* worker)  { ReleaseSemaphore(worker->job_evt, 1, NULL); }
 static inline void ppu_worker_plat_mb(void)                      { MemoryBarrier(); }
 
 #endif
 
-// Wait for the single in-flight job and consume its done event; the caller
-// advances front_idx. Always blocks, so the slot is free for the next submit.
-static inline void ppu_worker_collect_done(ppu_worker_t* w)
+// Collect the single in-flight job if any; advances front_idx to the completed slot.
+static inline void ppu_worker_collect_inflight(ppu_worker_t* worker)
 {
-	ppu_worker_plat_wait_done(w);
+	if (worker->inflight <= 0) return;
+	ppu_worker_plat_wait_done(worker);
+	worker->inflight    = worker->inflight - 1;
+	worker->worker_busy = false;
+	worker->front_idx   = worker->ready_back_idx;
 }
 
 // --- Worker thread main loop ---------------------------------------------
 
-static inline void ppu_worker_process_job(ppu_worker_t* w)
+static inline void ppu_worker_process_job(ppu_worker_t* worker)
 {
-	int ridx  = w->r_idx;
-	int front = w->front_idx;
-	UINT32* ghost_src = (front >= 0 && w->have_first_frame)
-		? w->backbuf[front] : NULL;
-	// Render into backbuf (XRGB8888 for ghosting & precision). For
-	// out_bpp=2/3 the scanline renderer writes native pixels to out_buf
-	// per-line - no post-render pass.
-	ppu_worker_render_frame_into(&w->snapshots[ridx],
-	                             w->backbuf[ridx], ghost_src, w, ridx);
+	int slot_idx  = worker->read_snap_idx;
+	int front_slot = worker->front_idx;
+	UINT32* ghost_src = (front_slot >= 0 && worker->have_first_frame)
+		? worker->backbuf[front_slot] : NULL;
+	// Render into backbuf (XRGB8888); at out_bpp 2/3 the scanline renderer
+	// writes native pixels to out_buf directly.
+	bool completed = ppu_worker_render_frame_into(&worker->snapshots[slot_idx],
+	                             worker->backbuf[slot_idx], ghost_src, worker, slot_idx);
 
 	ppu_worker_plat_mb();
-	w->ready_back_idx = ridx;
-	ppu_worker_plat_release_done(w);
+	// Cancelled renders still signal done (ready_back_idx = -1); main thread
+	// does not advance front_slot and overwrites backbuf on the next load.
+	worker->ready_back_idx = completed ? slot_idx : -1;
+	ppu_worker_plat_release_done(worker);
 }
 
-// VBlank publish - single in-flight job (triple-buffered):
-//   1. Bulk-copy VRAM into the write slot (OAM/palette seeded by reset_slot).
-//   2. Wait for the previous job and collect it (front_idx = ready_back_idx):
-//      no frame is ever skipped, at the cost of waiting when the worker is behind.
-//   3. Submit this frame as a new job, rotating the write/render/front slots.
-//   4. Present: point gba->framebuffer at the finished output (zero-copy), else
-//      fall back to scratch on the first frame.
-static void ppu_worker_vblank_publish(ppu_worker_t* w, gba_t* gba,
+// VBlank publish - one in-flight job, triple-buffered: copy VRAM, collect the
+// previous job (blocking), submit, then present zero-copy (scratch on frame 0).
+static void ppu_worker_vblank_publish(ppu_worker_t* worker, gba_t* gba,
                                       gba_scratch_t* scratch, bool want_render)
 {
-	if (!w->enabled) {
+	if (!worker->enabled) {
 		gba->framebuffer = scratch->framebuffer;
 		gba->framebuffer_is_direct_copy = false;
 		return;
 	}
 
-	int wi = w->w_idx;
-	// VRAM: unconditional full copy (the old dirty-page bitmap never narrowed it).
-	memcpy(w->snapshots[wi].vram, gba->mem.vram, 128 * 1024);
-	// line_state[0] OAM/palette was already seeded by ppu_worker_reset_slot when
-	// this slot was queued in the previous publish. No redundant copy needed.
+	int write_idx = worker->write_snap_idx;
 
-	// Collect the previous job, waiting for it to finish so the submit below
-	// always has a free slot.
-	if (w->inflight > 0) {
-		ppu_worker_collect_done(w);
-		w->inflight--;
-		w->worker_busy = false;
-		w->front_idx   = w->ready_back_idx;
-	}
+	// Wait for the previous job so the submit below has a free slot.
+	ppu_worker_collect_inflight(worker);
 
-	// Submit this frame as a new render job. At most 1 in-flight (triple-
-	// buffered: write + render + front slots). After collect_done, inflight
-	// is always 0 here, so submission always proceeds when wanted.
-	bool should_submit = want_render || !w->have_first_frame;
+	// Seed the shared line-0 VRAM baseline from the current state.
+	memcpy(worker->vram_shadow, gba->mem.vram, 128 * 1024);
+	// The journal/pool of the slot being published were filled by this frame's
+	// line snapshots and must survive until the worker renders it; the slot is
+	// cleared by ppu_worker_reset_slot when it is recycled as write slot.
+	gba->ppu.vram_dirty_lo                        = 0xFFFFFFFFu;
+	gba->ppu.vram_dirty_hi                        = 0u;
+	// line_state[0] OAM/palette was seeded by ppu_worker_reset_slot at submit.
+
+	// Submit as a new job (inflight is 0 after the collect above).
+	bool should_submit = want_render || !worker->have_first_frame;
 
 	if (should_submit) {
-		if (!w->have_first_frame) {
-			// First frame: clear scratch to black so DrvDraw has valid pixels
-			// before the worker finishes its first job.
+		if (!worker->have_first_frame) {
+			// First frame: black scratch until the worker finishes.
 			memset(scratch->framebuffer, 0, sizeof(scratch->framebuffer));
 			gba->framebuffer = scratch->framebuffer;
 			gba->framebuffer_is_direct_copy = false;
 		}
 
-		w->r_idx = wi;
-		w->w_idx = (wi + 1) % GBAPPU_WORKER_N_BUFFERS;
-		ppu_worker_reset_slot(w, w->w_idx, gba);
-		w->worker_busy = true;
-		w->inflight++;
+		worker->read_snap_idx = write_idx;
+		worker->write_snap_idx = (write_idx + 1) % GBAPPU_WORKER_N_BUFFERS;
+		ppu_worker_reset_slot(worker, worker->write_snap_idx, gba);
+		worker->worker_busy = true;
+		worker->inflight = worker->inflight + 1;
 		ppu_worker_plat_mb();
-		ppu_worker_plat_release_job(w);
-		w->have_first_frame = true;
+		ppu_worker_plat_release_job(worker);
+		worker->have_first_frame = true;
 	} else {
-		w->w_idx = wi;  // keep slot - next frame overwrites it
+		// Keep the slot: the next frame overwrites it, so its journal and pool
+		// are recycled here instead of at publish.
+		worker->write_snap_idx = write_idx;
+		ppu_worker_reset_slot(worker, write_idx, gba);
 	}
 
-	// Zero-copy present: point gba->framebuffer at the worker's finished
-	// output (already in BurnHighCol->PutPix byte layout). Slot stays valid
-	// until next vblank_publish - safe for DrvDraw.
-	if (w->have_first_frame && w->front_idx >= 0) {
-		if (w->out_bpp == 4) {
+	// Zero-copy present: point gba->framebuffer at the finished output.
+	if (worker->have_first_frame && worker->front_idx >= 0) {
+		if (worker->out_bpp == 4) {
 			// 32bpp: backbuf already matches output format (zero-copy).
-			gba->framebuffer = (UINT8*)w->backbuf[w->front_idx];
+			gba->framebuffer = (UINT8*)worker->backbuf[worker->front_idx];
 		} else {
 			// 16/24bpp: per-scanline output lives in out_buf.
-			gba->framebuffer = w->out_buf[w->front_idx];
+			gba->framebuffer = worker->out_buf[worker->front_idx];
 		}
 		gba->framebuffer_is_direct_copy = true;
 	} else if (!gba->framebuffer || gba->framebuffer == (UINT8*)0xCDCDCDCD) {
@@ -2197,82 +2234,96 @@ static void ppu_worker_vblank_publish(ppu_worker_t* w, gba_t* gba,
 	}
 }
 
-static void ppu_worker_drain_for_mode_switch(ppu_worker_t* w)
+static void ppu_worker_drain_for_mode_switch(ppu_worker_t* worker)
 {
-	if (!w->enabled) return;
-	if (w->inflight > 0) {
-		ppu_worker_plat_wait_done(w);
-		w->inflight--;
-		w->front_idx = w->ready_back_idx;
+	if (!worker->enabled) return;
+	if (worker->inflight > 0) {
+		// Request early cancellation; result is about to be discarded.
+		worker->cancel_render = true;
+		ppu_worker_plat_mb();
+		ppu_worker_plat_wait_done(worker);
+		worker->inflight = worker->inflight - 1;
+		// Advance front_slot only when the frame completed; cancelled jobs have ready_back_idx == -1.
+		if (worker->ready_back_idx >= 0)
+			worker->front_idx = worker->ready_back_idx;
+		// Clear stale done signals and reset cancel flag.
+		while (ppu_worker_plat_trywait_done(worker)) {}
+		worker->cancel_render = false;
 	}
-	w->worker_busy = false;
+	worker->worker_busy = false;
 }
 
 // Configure output pixel format (2=RGB565, 3=BGR24, 4=XRGB8888).
 // Called once at driver init (after ppu_worker_init). Drains in-flight work.
-static inline void ppu_worker_set_output_bpp(ppu_worker_t* w, INT32 bpp)
+static inline void ppu_worker_set_output_bpp(ppu_worker_t* worker, INT32 bpp)
 {
-	if (!w->enabled) return;
+	if (!worker->enabled) return;
 	if (bpp != 2 && bpp != 3 && bpp != 4) bpp = 4;
-	// Drain so no worker job is mid-conversion when format changes.
-	ppu_worker_drain_for_mode_switch(w);
-	if (bpp == w->out_bpp) return;
+	ppu_worker_drain_for_mode_switch(worker);
+	if (bpp == worker->out_bpp) return;
 	// Lazy (re)allocate out_buf for 16/24bpp; free when switching to 32bpp.
 	if (bpp == 4) {
-		for (int _si = 0; _si < GBAPPU_WORKER_N_BUFFERS; ++_si) {
-			if (w->out_buf[_si]) { free(w->out_buf[_si]); w->out_buf[_si] = NULL; }
+		for (int slot_i = 0; slot_i < GBAPPU_WORKER_N_BUFFERS; ++slot_i) {
+			if (worker->out_buf[slot_i]) { free(worker->out_buf[slot_i]); worker->out_buf[slot_i] = NULL; }
 		}
-		w->out_bpp = 4;
+		worker->out_bpp = 4;
 		return;
 	}
-	// Two-phase commit to avoid partial failure.
-	// Phase 1: alloc all slots into a local array. If any fails, roll back -
-	// old bpp and buffers stay valid (realloc keeps old block on failure).
+	// Two-phase commit: allocate all slots first, roll back on failure (realloc
+	// keeps the old block, so the previous bpp and buffers stay valid).
 	INT32 slot_bytes = GBA_LCD_W * GBA_LCD_H * bpp;
 	UINT8* new_buf[GBAPPU_WORKER_N_BUFFERS];
-	int _si;
-	for (_si = 0; _si < GBAPPU_WORKER_N_BUFFERS; ++_si) {
-		void* nb = realloc(w->out_buf[_si], slot_bytes);
-		if (!nb) break;
-		new_buf[_si] = (UINT8*)nb;
-		memset(new_buf[_si], 0, slot_bytes);
+	int slot_i;
+	for (slot_i = 0; slot_i < GBAPPU_WORKER_N_BUFFERS; ++slot_i) {
+		void* new_slot = realloc(worker->out_buf[slot_i], slot_bytes);
+		if (!new_slot) break;
+		new_buf[slot_i] = (UINT8*)new_slot;
+		memset(new_buf[slot_i], 0, slot_bytes);
 	}
-	if (_si < GBAPPU_WORKER_N_BUFFERS) {
+	if (slot_i < GBAPPU_WORKER_N_BUFFERS) {
 		// Rollback: realloc failed - free newly allocated slots.
-		for (int _rj = 0; _rj < _si; ++_rj) { free(new_buf[_rj]); new_buf[_rj] = NULL; }
+		for (int roll_i = 0; roll_i < slot_i; ++roll_i) { free(new_buf[roll_i]); new_buf[roll_i] = NULL; }
 		return; // keep old out_bpp and old buffers
 	}
 	// Phase 2: all allocations succeeded - commit.
-	for (_si = 0; _si < GBAPPU_WORKER_N_BUFFERS; ++_si) {
-		w->out_buf[_si] = new_buf[_si];
+	for (slot_i = 0; slot_i < GBAPPU_WORKER_N_BUFFERS; ++slot_i) {
+		worker->out_buf[slot_i] = new_buf[slot_i];
 	}
-	w->out_bpp = bpp;
+	worker->out_bpp = bpp;
 }
 
-static void ppu_worker_reset(ppu_worker_t* w)
+static void ppu_worker_reset(ppu_worker_t* worker)
 {
-	if (!w->enabled) return;
-	ppu_worker_drain_for_mode_switch(w);
+	if (!worker->enabled) return;
+	ppu_worker_drain_for_mode_switch(worker);
 	// Drain any extra stale signals the semaphore may carry.
-	while (ppu_worker_plat_trywait_done(w)) {}
+	while (ppu_worker_plat_trywait_done(worker)) {}
 
-	w->exiting          = false;
-	w->worker_busy      = false;
-	w->have_first_frame = false;
-	w->inflight         = 0;
-	w->ready_back_idx   = -1;
-	w->front_idx        = -1;
-	w->w_idx = w->r_idx = 0;
+	worker->exiting          = false;
+	worker->worker_busy      = false;
+	worker->have_first_frame = false;
+	worker->inflight         = 0;
+	worker->cancel_render    = false;
+	worker->ready_back_idx   = -1;
+	worker->front_idx        = -1;
+	worker->read_snap_idx    = 0;
+	worker->write_snap_idx   = 0;
+	worker->oam_write_seq      = 0;
+	worker->oam_write_base     = 0;
+	worker->palette_write_seq  = 0;
+	worker->palette_write_base = 0;
+	memset(worker->vram_shadow,  0, sizeof(worker->vram_shadow));
+	memset(worker->vram_scratch, 0, sizeof(worker->vram_scratch));
 
-	memset(w->backbuf,   0, sizeof(w->backbuf));
-	for (int _si = 0; _si < GBAPPU_WORKER_N_BUFFERS; ++_si)
-		if (w->out_buf[_si]) memset(w->out_buf[_si], 0, GBA_LCD_W * GBA_LCD_H * w->out_bpp);
-	memset((void*)w->snapshots, 0, sizeof(w->snapshots));
+	memset(worker->backbuf,   0, sizeof(worker->backbuf));
+	for (int slot_i = 0; slot_i < GBAPPU_WORKER_N_BUFFERS; ++slot_i)
+		if (worker->out_buf[slot_i]) memset(worker->out_buf[slot_i], 0, GBA_LCD_W * GBA_LCD_H * worker->out_bpp);
+	memset((void*)worker->snapshots, 0, sizeof(worker->snapshots));
 }
 
 // --- PPU state machine (main thread) --------------------------------------
-// Parallel twin of the single-threaded handler. Fast-forwards through idle
-// cycles and captures snapshots for the worker at line boundaries.
+// Parallel twin of the single-threaded handler; captures worker snapshots at
+// line boundaries and fast-forwards idle cycles.
 
 static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late)
 {
@@ -2286,9 +2337,8 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 	gba->ppu.scan_clock++;
 
 	ppu_worker_render_ctx_t fwd_ctx = {0};
-	fwd_ctx.ppu       = &gba->ppu;
-	fwd_ctx.stop_mode = gba->stop_mode;
-	INT32 fast_forward_ticks = ppu_worker_compute_max_fast_forward(&fwd_ctx, false) + 1;
+	fwd_ctx.ppu = &gba->ppu;
+	INT32 fast_forward_ticks = ppu_worker_compute_max_fast_forward(&fwd_ctx) + 1;
 	gba->ppu.scan_clock += fast_forward_ticks;
 
 	bool hblank = (lcd_x >= GBA_LCD_HBLANK_START) && (lcd_x < GBA_LCD_HBLANK_END);
@@ -2340,9 +2390,12 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 				}
 			}
 			gba->ppu.last_lcd_y = lcd_y;
-			if (vcount == (INT32)vcount_cmp && vcount_irq_en)
-				gba_send_interrupt(gba, 3, 1 << GBA_INT_LCD_VCOUNT);
 		}
+		// VCount match edge detection.
+		bool vcount_match_cur = (vcount == (INT32)vcount_cmp);
+		if (vcount_match_cur && !gba->ppu.last_vcount_match && vcount_irq_en)
+			gba_send_interrupt(gba, 3, 1 << GBA_INT_LCD_VCOUNT);
+		gba->ppu.last_vcount_match = vcount_match_cur;
 	}
 
 	// Affine PB/PD advance + BG2X/Y reload at lcd_x == 0.
@@ -2354,21 +2407,21 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 			for (INT32 aff = 0; aff < 2; ++aff) {
 				if (!SB_BFE(dispcnt, 8 + aff + 2, 1)) continue;
 
-				INT32  pb = (INT16)gba_io_read16(gba, GBA_BG2PB + aff * 0x10);
-				INT32  pd = (INT16)gba_io_read16(gba, GBA_BG2PD + aff * 0x10);
+				INT32  aff_pb = (INT16)gba_io_read16(gba, GBA_BG2PB + aff * 0x10);
+				INT32  aff_pd = (INT16)gba_io_read16(gba, GBA_BG2PD + aff * 0x10);
 				UINT16 bgcnt = gba_io_read16(gba, GBA_BG2CNT + aff * 2);
 				bool mosaic = SB_BFE(bgcnt, 6, 1);
 
 				if (mosaic) {
-					UINT16 mos_reg = gba_io_read16(gba, GBA_MOSAIC);
-					INT32  mos_y   = SB_BFE(mos_reg, 4, 4) + 1;
-					if ((lcd_y % mos_y) == 0) {
-						gba->ppu.aff[aff].render_bgx += pb * mos_y;
-						gba->ppu.aff[aff].render_bgy += pd * mos_y;
+					UINT16 mosaic_reg = gba_io_read16(gba, GBA_MOSAIC);
+					INT32  mosaic_y   = SB_BFE(mosaic_reg, 4, 4) + 1;
+					if ((lcd_y % mosaic_y) == 0) {
+						gba->ppu.aff[aff].render_bgx += aff_pb * mosaic_y;
+						gba->ppu.aff[aff].render_bgy += aff_pd * mosaic_y;
 					}
 				} else {
-					gba->ppu.aff[aff].render_bgx += pb;
-					gba->ppu.aff[aff].render_bgy += pd;
+					gba->ppu.aff[aff].render_bgx += aff_pb;
+					gba->ppu.aff[aff].render_bgy += aff_pd;
 				}
 			}
 		}
@@ -2402,7 +2455,7 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 
 static void* ppu_worker_thread(void* arg)
 {
-	ppu_worker_t* w = (ppu_worker_t*)arg;
+	ppu_worker_t* worker = (ppu_worker_t*)arg;
 
 #if defined(__APPLE__) || defined(__FreeBSD__) || defined(__OpenBSD__) \
  || defined(__NetBSD__) || defined(__DragonFly__)
@@ -2410,56 +2463,54 @@ static void* ppu_worker_thread(void* arg)
 #endif
 
 	for (;;) {
-		ppu_worker_plat_wait_job(w);
-		if (w->exiting) break;
-		ppu_worker_process_job(w);
+		ppu_worker_plat_wait_job(worker);
+		if (worker->exiting) break;
+		ppu_worker_process_job(worker);
 	}
 	return NULL;
 }
 
-static INT32 ppu_worker_init(ppu_worker_t* w)
+static INT32 ppu_worker_init(ppu_worker_t* worker)
 {
-	memset(w, 0, sizeof(*w));
-	w->ready_back_idx = -1;
-	w->front_idx      = -1;
+	memset(worker, 0, sizeof(*worker));
+	worker->ready_back_idx = -1;
+	worker->front_idx      = -1;
 	// Default 32bpp; driver calls set_output_bpp(nBurnBpp) at init.
-	w->out_bpp        = 4;
+	worker->out_bpp        = 4;
 
-	ppu_worker_evt_init(&w->job_evt);
-	ppu_worker_evt_init(&w->done_evt);
-
-	w->out_buf[0] = w->out_buf[1] = w->out_buf[2] = NULL;
+	ppu_worker_evt_init(&worker->job_evt);
+	ppu_worker_evt_init(&worker->done_evt);
 
 	pthread_attr_t attr;
 	pthread_attr_init(&attr);
 	pthread_attr_setstacksize(&attr, GBAPPU_WORKER_STACK_SIZE);
-	int rc = pthread_create(&w->worker, &attr, ppu_worker_thread, w);
+	int rc = pthread_create(&worker->worker, &attr, ppu_worker_thread, worker);
 	pthread_attr_destroy(&attr);
 	if (rc != 0) {
-		ppu_worker_evt_destroy(&w->job_evt);
-		ppu_worker_evt_destroy(&w->done_evt);
+		ppu_worker_evt_destroy(&worker->job_evt);
+		ppu_worker_evt_destroy(&worker->done_evt);
 		return 1;
 	}
 
 #if defined(__linux__)
-	pthread_setname_np(w->worker, "FBNeo-GBA-PPU");
+	pthread_setname_np(worker->worker, "FBNeo-GBA-PPU");
 #endif
 
-	w->enabled = true;
+	worker->enabled = true;
 	return 0;
 }
 
-static void ppu_worker_exit(ppu_worker_t* w)
+static void ppu_worker_exit(ppu_worker_t* worker)
 {
-	if (!w->enabled) return;
-	w->exiting = true;
+	if (!worker->enabled) return;
+	worker->exiting = true;
 	ppu_worker_plat_mb();
-	ppu_worker_plat_release_job(w);
-	pthread_join(w->worker, NULL);
-	ppu_worker_evt_destroy(&w->job_evt);
-	ppu_worker_evt_destroy(&w->done_evt);
-	for (int _si = 0; _si < GBAPPU_WORKER_N_BUFFERS; ++_si) { if (w->out_buf[_si]) { free(w->out_buf[_si]); w->out_buf[_si] = NULL; } }
-	w->enabled = false;
+	ppu_worker_plat_release_job(worker);
+	pthread_join(worker->worker, NULL);
+	ppu_worker_evt_destroy(&worker->job_evt);
+	ppu_worker_evt_destroy(&worker->done_evt);
+	for (int slot_i = 0; slot_i < GBAPPU_WORKER_N_BUFFERS; ++slot_i) { if (worker->out_buf[slot_i]) { free(worker->out_buf[slot_i]); worker->out_buf[slot_i] = NULL; } }
+	worker->enabled = false;
 }
 
 // --- Win32 back-end -------------------------------------------------------
@@ -2467,7 +2518,7 @@ static void ppu_worker_exit(ppu_worker_t* w)
 
 static DWORD WINAPI ppu_worker_thread_win32(LPVOID arg)
 {
-	ppu_worker_t* w = (ppu_worker_t*)arg;
+	ppu_worker_t* worker = (ppu_worker_t*)arg;
 
 #if defined(_MSC_VER)
 	// Set thread name for debugger (MSVC convention via RaiseException).
@@ -2486,75 +2537,67 @@ static DWORD WINAPI ppu_worker_thread_win32(LPVOID arg)
 #endif
 
 	for (;;) {
-		ppu_worker_plat_wait_job(w);
-		if (w->exiting) break;
-		ppu_worker_process_job(w);
+		ppu_worker_plat_wait_job(worker);
+		if (worker->exiting) break;
+		ppu_worker_process_job(worker);
 	}
 	return 0;
 }
 
-static INT32 ppu_worker_init(ppu_worker_t* w)
+static INT32 ppu_worker_init(ppu_worker_t* worker)
 {
-	memset(w, 0, sizeof(*w));
-	w->ready_back_idx = -1;
-	w->front_idx      = -1;
+	memset(worker, 0, sizeof(*worker));
+	worker->ready_back_idx = -1;
+	worker->front_idx      = -1;
 	// Default 32bpp; driver calls set_output_bpp(nBurnBpp) at init.
-	w->out_bpp        = 4;
-	w->worker  = NULL;
-	w->job_evt = w->done_evt = NULL;
+	worker->out_bpp        = 4;
+	worker->worker  = NULL;
+	worker->job_evt = worker->done_evt = NULL;
 
-	w->job_evt  = CreateSemaphoreA(NULL, 0, GBAPPU_WORKER_N_BUFFERS + 1, NULL);
-	w->done_evt = CreateSemaphoreA(NULL, 0, GBAPPU_WORKER_N_BUFFERS + 1, NULL);
-	if (!w->job_evt || !w->done_evt) {
-		if (w->job_evt)  { CloseHandle(w->job_evt);  w->job_evt  = NULL; }
-		if (w->done_evt) { CloseHandle(w->done_evt); w->done_evt = NULL; }
+	worker->job_evt  = CreateSemaphoreA(NULL, 0, GBAPPU_WORKER_N_BUFFERS + 1, NULL);
+	worker->done_evt = CreateSemaphoreA(NULL, 0, GBAPPU_WORKER_N_BUFFERS + 1, NULL);
+	if (!worker->job_evt || !worker->done_evt) {
+		if (worker->job_evt)  { CloseHandle(worker->job_evt);  worker->job_evt  = NULL; }
+		if (worker->done_evt) { CloseHandle(worker->done_evt); worker->done_evt = NULL; }
 		return 1;
 	}
-
-	w->out_buf[0] = w->out_buf[1] = w->out_buf[2] = NULL;
 
 	DWORD tid = 0;
-	w->worker = CreateThread(NULL, GBAPPU_WORKER_STACK_SIZE,
-	                          ppu_worker_thread_win32, w, 0, &tid);
-	if (!w->worker) {
-		CloseHandle(w->job_evt);
-		CloseHandle(w->done_evt);
-		w->job_evt = w->done_evt = NULL;
+	worker->worker = CreateThread(NULL, GBAPPU_WORKER_STACK_SIZE,
+	                          ppu_worker_thread_win32, worker, 0, &tid);
+	if (!worker->worker) {
+		CloseHandle(worker->job_evt);
+		CloseHandle(worker->done_evt);
+		worker->job_evt = worker->done_evt = NULL;
 		return 1;
 	}
-	SetThreadPriority(w->worker, THREAD_PRIORITY_NORMAL);
-	w->enabled = true;
+	SetThreadPriority(worker->worker, THREAD_PRIORITY_NORMAL);
+	worker->enabled = true;
 	return 0;
 }
 
-static void ppu_worker_exit(ppu_worker_t* w)
+static void ppu_worker_exit(ppu_worker_t* worker)
 {
-	if (!w->enabled) return;
-	w->exiting = true;
+	if (!worker->enabled) return;
+	worker->exiting = true;
 	ppu_worker_plat_mb();
-	ppu_worker_plat_release_job(w);
-	WaitForSingleObject(w->worker, INFINITE);
-	CloseHandle(w->worker); w->worker = NULL;
-	if (w->job_evt)  { CloseHandle(w->job_evt);  w->job_evt  = NULL; }
-	if (w->done_evt) { CloseHandle(w->done_evt); w->done_evt = NULL; }
-	for (int _si = 0; _si < GBAPPU_WORKER_N_BUFFERS; ++_si) { if (w->out_buf[_si]) { free(w->out_buf[_si]); w->out_buf[_si] = NULL; } }
-	w->enabled = false;
+	ppu_worker_plat_release_job(worker);
+	WaitForSingleObject(worker->worker, INFINITE);
+	CloseHandle(worker->worker); worker->worker = NULL;
+	if (worker->job_evt)  { CloseHandle(worker->job_evt);  worker->job_evt  = NULL; }
+	if (worker->done_evt) { CloseHandle(worker->done_evt); worker->done_evt = NULL; }
+	for (int slot_i = 0; slot_i < GBAPPU_WORKER_N_BUFFERS; ++slot_i) { if (worker->out_buf[slot_i]) { free(worker->out_buf[slot_i]); worker->out_buf[slot_i] = NULL; } }
+	worker->enabled = false;
 }
 
 #endif // back-end selection
 
 // --- Save-state serialization ------------------------------------------------
-// Carries the presented frame and slot indices (worker-owned, outside gba_t);
-// thread handles and scratch slots are not serialized.
+// Presented frame + slot indices (worker-owned, outside gba_t).
 
-static inline size_t ppu_worker_state_size(void)
-{
-	return PPW_BLOB_MAX;
-}
+static inline size_t ppu_worker_state_size(void) { return PPW_BLOB_MAX; }
 
-// Inverse of ppu_worker_write_scanline_out: decode one scanline from the
-// worker's native output layout (4: XRGB8888, 3: BGR triplets, 2: RGB565)
-// back to XRGB8888. Width is fixed at one GBA scanline.
+// Inverse of ppu_worker_write_scanline_out: decode one scanline back to XRGB8888.
 static inline void ppu_worker_decode_scanline_to_xrgb8888(UINT32* dst, const UINT8* src, INT32 src_bpp)
 {
 	if (src_bpp == 4) {
@@ -2579,11 +2622,12 @@ static inline void ppu_worker_decode_scanline_to_xrgb8888(UINT32* dst, const UIN
 	} else { // src_bpp == 2, RGB565 little-endian
 		const UINT16* s16 = (const UINT16*)src;
 		for (INT32 i = 0; i < GBA_LCD_W; ) {
-			// 4-pixel unroll keeps values in registers. 5-bit components expand
-			// (v<<3)|(v>>2) and 6-bit (v<<2)|(v>>4), matching the render path.
+			// 4-pixel unroll; 5-bit -> (v<<3)|(v>>2), 6-bit -> (v<<2)|(v>>4).
 			if (GBA_LCD_W - i >= 4) {
 				UINT16 p0=s16[0], p1=s16[1], p2=s16[2], p3=s16[3];
-				#define EXP565(p) do { UINT32 rr=(UINT32)(((p)>>11)&0x1F); UINT32 gg=(UINT32)(((p)>>5)&0x3F); UINT32 bb=(UINT32)((p)&0x1F); 				                            *dst++ = ((rr<<3)|(rr>>2))<<16 | ((gg<<2)|(gg>>4))<<8 | ((bb<<3)|(bb>>2)); } while(0)
+				#define EXP565(p) do { \
+				UINT32 rr=(UINT32)(((p)>>11)&0x1F); UINT32 gg=(UINT32)(((p)>>5)&0x3F); UINT32 bb=(UINT32)((p)&0x1F); \
+				*dst++ = ((rr<<3)|(rr>>2))<<16 | ((gg<<2)|(gg>>4))<<8 | ((bb<<3)|(bb>>2)); } while(0)
 				EXP565(p0); EXP565(p1); EXP565(p2); EXP565(p3);
 				#undef EXP565
 				s16 += 4; i += 4;
@@ -2597,38 +2641,37 @@ static inline void ppu_worker_decode_scanline_to_xrgb8888(UINT32* dst, const UIN
 	}
 }
 
-static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)
+static inline size_t ppu_worker_save_state(ppu_worker_t* worker, UINT8* dst)
 {
-	// front_idx normalised: out-of-range or "nothing presented yet" becomes -1,
-	// which writes a header-only blob.
-	const INT32  front = w->front_idx;
-	const INT32  idx   = (front >= 0 && front < GBAPPU_WORKER_N_BUFFERS) ? front : -1;
-	const size_t slot  = (w->out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
-	                                       : (size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp;
+	// Complete the in-flight render before capturing, so the captured frame is
+	// deterministic regardless of worker thread scheduling.
+	ppu_worker_collect_inflight(worker);
+	const INT32 front_slot = worker->front_idx;
+	const INT32 idx   = (front_slot >= 0 && front_slot < GBAPPU_WORKER_N_BUFFERS) ? front_slot : -1;
+	const size_t frame_bytes  = (size_t)GBA_LCD_W * GBA_LCD_H * worker->out_bpp;
 	ppw_blob_hdr_t hdr;
-	memset(&hdr, 0, sizeof(hdr));
 	hdr.magic     = PPW_BLOB_MAGIC;
 	hdr.version   = PPW_BLOB_VERSION;
-	hdr.out_bpp   = w->out_bpp;
+	hdr.out_bpp   = worker->out_bpp;
 	hdr.front_idx = idx;
 	memcpy(dst, &hdr, sizeof(hdr));
 	if (idx >= 0) {
-		const UINT8* src = (w->out_bpp == 4) ? (const UINT8*)w->backbuf[idx]
-		                                     : (const UINT8*)w->out_buf[idx];
-		if (src != NULL) memcpy(dst + PPW_BLOB_HEADER, src, slot);
-		else             memset(dst + PPW_BLOB_HEADER, 0, slot);
+		const UINT8* src = (worker->out_bpp == 4) ? (const UINT8*)worker->backbuf[idx]
+		                                     : (const UINT8*)worker->out_buf[idx];
+		if (src != NULL) memcpy(dst + PPW_BLOB_HEADER, src, frame_bytes);
+		else             memset(dst + PPW_BLOB_HEADER, 0, frame_bytes);
 	}
-	// Zero the unused tail: state_size reports the bpp=4 bound, so at bpp<4 the
-	// remainder would otherwise leak stale bytes.
-	const size_t written = (size_t)PPW_BLOB_HEADER + (idx >= 0 ? slot : 0);
+	// state_size reports the bpp=4 bound, so zero the unused tail at bpp<4.
+	const size_t written = (size_t)PPW_BLOB_HEADER + (idx >= 0 ? frame_bytes : 0);
 	if (written < (size_t)PPW_BLOB_MAX)
 		memset(dst + written, 0, (size_t)PPW_BLOB_MAX - written);
 	return written;
 }
 
-static inline bool ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size_t len,
+static inline bool ppu_worker_load_state(ppu_worker_t* worker, const UINT8* src, size_t len,
                                          UINT8** out_fb, bool* out_direct)
 {
+	if (!worker->enabled) return false;   // worker never started: nothing to restore
 	ppw_blob_hdr_t hdr;
 	if (len < (size_t)PPW_BLOB_HEADER) return false;
 	memcpy(&hdr, src, sizeof(hdr));
@@ -2638,73 +2681,85 @@ static inline bool ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size
 
 	const INT32 idx = hdr.front_idx;
 	// Payload length comes from the SAVED depth, so any depth can be loaded.
-	const size_t src_slot = (hdr.out_bpp == 4) ? (size_t)GBA_LCD_W * GBA_LCD_H * 4
-	                                           : (size_t)GBA_LCD_W * GBA_LCD_H * hdr.out_bpp;
-	if (len < (size_t)PPW_BLOB_HEADER + (idx >= 0 ? src_slot : 0)) return false;
+	const size_t src_frame_bytes = (size_t)GBA_LCD_W * GBA_LCD_H * hdr.out_bpp;
+	if (len < (size_t)PPW_BLOB_HEADER + (idx >= 0 ? src_frame_bytes : 0)) return false;
 
 	// Quiesce the worker and drain stale done signals before touching buffers.
-	ppu_worker_drain_for_mode_switch(w);
-	while (ppu_worker_plat_trywait_done(w)) {}
+	ppu_worker_drain_for_mode_switch(worker);
+	while (ppu_worker_plat_trywait_done(worker)) {}
 
-	// front_idx == -1: no frame was presented when the state was saved.
-	// Normalise the indices (runahead callers skip ppu_worker_reset) and report
-	// failure; the return also keeps out_fb from indexing backbuf[-1].
+	// No frame was presented. Normalise the indices (runahead callers skip
+	// ppu_worker_reset) and fail; the return also keeps out_fb off backbuf[-1].
 	if (idx < 0) {
-		w->front_idx        = -1;
-		w->r_idx            = 0;
-		w->w_idx            = 0;
-		w->ready_back_idx   = -1;
-		w->have_first_frame = false;
+		worker->front_idx        = -1;
+		worker->read_snap_idx            = 0;
+		worker->write_snap_idx            = 0;
+		worker->ready_back_idx   = -1;
+		worker->have_first_frame = false;
 		return false;
 	}
 
 	{
-		// Lazily ensure out_buf[idx] exists: backbuf is inline, out_buf is
-		// malloc'd by set_output_bpp; a load before any vblank can see NULL.
-		if (w->out_bpp != 4 && w->out_buf[idx] == NULL) {
-			w->out_buf[idx] = (UINT8*)malloc((size_t)GBA_LCD_W * GBA_LCD_H * w->out_bpp);
-			if (w->out_buf[idx] == NULL) return false;
+		// out_buf is malloc'd by set_output_bpp; a load before any vblank sees NULL.
+		if (worker->out_bpp != 4 && worker->out_buf[idx] == NULL) {
+			worker->out_buf[idx] = (UINT8*)malloc((size_t)GBA_LCD_W * GBA_LCD_H * worker->out_bpp);
+			if (worker->out_buf[idx] == NULL) return false;
 		}
-		const UINT8* sp = src + PPW_BLOB_HEADER;
-		if (hdr.out_bpp == w->out_bpp) {
+		const UINT8* src_p = src + PPW_BLOB_HEADER;
+		if (hdr.out_bpp == worker->out_bpp) {
 			// Same depth: native layout, single bulk copy.
-			if (w->out_bpp == 4) memcpy(w->backbuf[idx], sp, src_slot);
-			else                 memcpy(w->out_buf[idx], sp, src_slot);
+			if (worker->out_bpp == 4) memcpy(worker->backbuf[idx], src_p, src_frame_bytes);
+			else                 memcpy(worker->out_buf[idx], src_p, src_frame_bytes);
 		} else {
 			// Cross-depth: decode to XRGB8888, then re-encode to native depth.
-			UINT32 tmp[GBA_LCD_W];
-			if (w->out_bpp == 4) {
+			UINT32 line_xrgb[GBA_LCD_W];
+			if (worker->out_bpp == 4) {
 				for (INT32 y = 0; y < GBA_LCD_H; ++y) {
-					ppu_worker_decode_scanline_to_xrgb8888(tmp, sp, hdr.out_bpp);
-					memcpy(w->backbuf[idx] + y*(size_t)GBA_LCD_W, tmp, sizeof(tmp));
-					sp += GBA_LCD_W * hdr.out_bpp;
+					ppu_worker_decode_scanline_to_xrgb8888(line_xrgb, src_p, hdr.out_bpp);
+					memcpy(worker->backbuf[idx] + y*(size_t)GBA_LCD_W, line_xrgb, sizeof(line_xrgb));
+					src_p += GBA_LCD_W * hdr.out_bpp;
 				}
 			} else {
-				UINT8* dp = w->out_buf[idx];
+				UINT8* dst_p = worker->out_buf[idx];
 				for (INT32 y = 0; y < GBA_LCD_H; ++y) {
-					ppu_worker_decode_scanline_to_xrgb8888(tmp, sp, hdr.out_bpp);
-					ppu_worker_write_scanline_out(dp, tmp, w->out_bpp);
-					sp += GBA_LCD_W * hdr.out_bpp;
-					dp += GBA_LCD_W * w->out_bpp;
+					ppu_worker_decode_scanline_to_xrgb8888(line_xrgb, src_p, hdr.out_bpp);
+					ppu_worker_write_scanline_out(dst_p, line_xrgb, worker->out_bpp);
+					src_p += GBA_LCD_W * hdr.out_bpp;
+					dst_p += GBA_LCD_W * worker->out_bpp;
 				}
 			}
 		}
 	}
 
-	// Present the restored frame and advance the write slot so the next publish
-	// cannot overwrite the slot being shown.
-	w->front_idx        = idx;
-	w->r_idx            = 0;
-	w->w_idx            = (idx + 1) % GBAPPU_WORKER_N_BUFFERS;
-	w->ready_back_idx   = -1;
-	w->have_first_frame = true;
-	w->inflight         = 0;
-	w->worker_busy      = false;
+	// Present the restored frame; advance the write slot past it. inflight and
+	// worker_busy are already clear after the drain above.
+	worker->front_idx        = idx;
+	worker->read_snap_idx            = 0;
+	worker->write_snap_idx            = (idx + 1) % GBAPPU_WORKER_N_BUFFERS;
+	worker->ready_back_idx   = -1;
+
+	// Reset the shared VRAM buffers and every slot's journal state.
+	memset(worker->vram_shadow, 0, sizeof(worker->vram_shadow));
+	memset(worker->vram_scratch, 0, sizeof(worker->vram_scratch));
+	for (INT32 i = 0; i < GBAPPU_WORKER_N_BUFFERS; ++i) {
+		worker->snapshots[i].vram_journal          = false;
+		worker->snapshots[i].vram_journal_overflow = false;
+		worker->snapshots[i].vram_pool_used        = 0;
+		worker->snapshots[i].oam_per_line          = false;
+		worker->snapshots[i].palette_per_line      = false;
+		// No dirty line (lo >= hi), the same default used by ppu_worker_hblank_snapshot.
+		for (INT32 line_y = 0; line_y < GBA_LCD_H; ++line_y) {
+			worker->snapshots[i].vram_line_lo[line_y] = 1;
+			worker->snapshots[i].vram_line_hi[line_y] = 0;
+		}
+	}
+
+	worker->have_first_frame = true;
 
 	// Hand the restored slot back to the caller; 32bpp is zero-copy.
-	if (w->out_bpp == 4) *out_fb = (UINT8*)w->backbuf[idx];
-	else                 *out_fb = w->out_buf[idx];
-	*out_direct = (w->out_bpp == 4);
+	if (worker->out_bpp == 4) *out_fb = (UINT8*)worker->backbuf[idx];
+	else                 *out_fb = worker->out_buf[idx];
+	*out_direct = (worker->out_bpp == 4);
 	return true;
 }
 
@@ -2712,10 +2767,9 @@ static inline bool ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size
 
 typedef struct ppu_worker_snapshot_t { } ppu_worker_snapshot_t;
 
-// Stub ppu_worker_t: just enough fields for the generic code in gba.cpp /
-// d_gba.cpp to compile. front_idx stays -1 (vblank_publish is a no-op) and
-// out_buf is NULL, so no worker buffer is used; single-thread mode renders
-// through the standard gba_ppu_event path into gba->framebuffer.
+// Stub ppu_worker_t: just enough fields for gba.cpp / d_gba.cpp to compile.
+// front_idx stays -1 (vblank_publish no-op) and out_buf is NULL; single-thread
+// mode renders through the standard gba_ppu_event path into gba->framebuffer.
 typedef struct ppu_worker_t {
 	bool enabled;
 	bool worker_busy;
@@ -2725,42 +2779,38 @@ typedef struct ppu_worker_t {
 	UINT8*  out_buf[1];        // unused in stub; always NULL
 } ppu_worker_t;
 
-static inline INT32 ppu_worker_init(ppu_worker_t* w)
+static inline INT32 ppu_worker_init(ppu_worker_t* worker)
 {
-	w->enabled     = false;
-	w->worker_busy = false;
-	w->out_bpp     = 4;
-	w->front_idx   = -1;
-	w->backbuf[0]  = NULL;
-	w->out_buf[0]  = NULL;
+	worker->enabled        = false;
+	worker->worker_busy    = false;
+	worker->out_bpp        = 4;
+	worker->front_idx      = -1;
+	worker->backbuf[0]     = NULL;
+	worker->out_buf[0]     = NULL;
 	return 1;
 }
-static inline void  ppu_worker_exit(ppu_worker_t* w)                                  { (void)w; }
-static inline void  ppu_worker_reset(ppu_worker_t* w)                                 { w->front_idx = -1; w->backbuf[0] = NULL; w->out_buf[0] = NULL; }
-static inline void  ppu_worker_set_output_bpp(ppu_worker_t* w, INT32 bpp)             { w->out_bpp = bpp; (void)bpp; }
-static inline void  ppu_worker_hblank_snapshot(ppu_worker_t* w, gba_t* g, INT32 y)     { (void)w; (void)g; (void)y; }
-static inline void  ppu_worker_line_start_snapshot(ppu_worker_t* w, gba_t* g, INT32 y) { (void)w; (void)g; (void)y; }
-static inline void  ppu_worker_vblank_entry(ppu_worker_t* w, gba_t* g)                 { (void)w; (void)g; }
-static inline void  ppu_worker_vblank_publish(ppu_worker_t* w, gba_t* g, gba_scratch_t* s, bool want_render)
-                                                                                       { (void)w; (void)g; (void)s; (void)want_render; }
-static inline void  ppu_worker_drain_for_mode_switch(ppu_worker_t* w)                  { (void)w; }
-static inline bool  ppu_worker_enabled(const ppu_worker_t* w)                          { (void)w; return false; }
+static inline void  ppu_worker_exit(ppu_worker_t* worker)                                  { (void)worker; }
+static inline void  ppu_worker_reset(ppu_worker_t* worker)                                 { worker->front_idx = -1; worker->backbuf[0] = NULL; worker->out_buf[0] = NULL; }
+static inline void  ppu_worker_set_output_bpp(ppu_worker_t* worker, INT32 bpp)             { worker->out_bpp = bpp; (void)bpp; }
+static inline void  gba_ppu_worker_note_mem_write(gba_t* gba, UINT32 bank)   { (void)gba; (void)bank; }
+static inline void  ppu_worker_hblank_snapshot(ppu_worker_t* worker, gba_t* gba, INT32 lcd_y)     { (void)worker; (void)gba; (void)lcd_y; }
+static inline void  ppu_worker_line_start_snapshot(ppu_worker_t* worker, gba_t* gba, INT32 lcd_y) { (void)worker; (void)gba; (void)lcd_y; }
+static inline void  ppu_worker_vblank_entry(ppu_worker_t* worker, gba_t* gba)                 { (void)worker; (void)gba; }
+static inline void  ppu_worker_vblank_publish(ppu_worker_t* worker, gba_t* gba, gba_scratch_t* scratch, bool want_render)
+                                                                                       { (void)worker; (void)gba; (void)scratch; (void)want_render; }
+static inline void  ppu_worker_drain_for_mode_switch(ppu_worker_t* worker)                  { (void)worker; }
+static inline bool  ppu_worker_enabled(const ppu_worker_t* worker)                          { (void)worker; return false; }
 
 static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late)
 {
 	gba_ppu_event(gba, emu, cycles_late);
 }
 
-// Single-thread builds present no worker buffer, so the payload is zeroed.
-// Size must still match the worker build: FBNeo's ScanVar matches by length +
-// name hash, so a mismatch would silently skip gba_machine across builds.
+// Zero-filled payload: the size must still match the worker build, or FBNeo's
+// ScanVar (length + name hash) would silently skip gba_machine across builds.
 static inline size_t ppu_worker_state_size()                                                           { return PPW_BLOB_MAX; }
-static inline size_t ppu_worker_save_state(const ppu_worker_t* w, UINT8* dst)                          { (void)w; memset(dst, 0, PPW_BLOB_MAX); return PPW_BLOB_MAX; }
-static inline bool   ppu_worker_load_state(ppu_worker_t* w, const UINT8* src, size_t len,
-                                           UINT8** fb, bool* direct)                                   { (void)w; (void)src; (void)len; (void)fb; (void)direct; return false; }
+static inline size_t ppu_worker_save_state(ppu_worker_t* worker, UINT8* dst)                                { (void)worker; memset(dst, 0, PPW_BLOB_MAX); return PPW_BLOB_MAX; }
+static inline bool   ppu_worker_load_state(ppu_worker_t* worker, const UINT8* src, size_t len,
+                                           UINT8** fb, bool* direct)                                   { (void)worker; (void)src; (void)len; (void)fb; (void)direct; return false; }
 
 #endif // GBAPPU_WORKER_ENABLED
-
-#ifdef __cplusplus
-}
-#endif

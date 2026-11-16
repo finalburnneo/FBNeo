@@ -67,6 +67,7 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 	bool  display_obj        = SB_BFE(dispcnt, 12, 1);
 	if (display_obj) {
 		INT32 sprite_cycles  = SB_BFE(dispcnt, 5, 1) ? 954 : 1210;
+		INT32 last_obj = 0;
 		for (INT32 o = 0; o < 128; ++o) {
 			UINT16 attr0 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + o * 8 + 0));
 			//Attr0
@@ -74,6 +75,12 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 			bool  rot_scale   = SB_BFE(attr0, 8, 1);
 			bool  double_size = SB_BFE(attr0, 9, 1) && rot_scale;
 			bool  obj_disable = SB_BFE(attr0, 9, 1) && !rot_scale;
+
+			// OAM scan gap: 2 cycles per skipped slot between adjacent OBJs.
+			sprite_cycles -= 2 * (o - last_obj);
+			last_obj = o;
+			if (sprite_cycles <= 0)
+				break;
 			if (obj_disable)
 				continue;
 
@@ -106,22 +113,43 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 			};
 
 			INT32 y_size = ysize_lookup[obj_size * 4 + obj_shape];
+			INT32 x_size = xsize_lookup[obj_size * 4 + obj_shape];
 
-			if (((sprite_lcd_y - y_coord) & 0xff) < y_size * (double_size ? 2 : 1)) {
+			// Y+height > 256 wraps the OBJ up by 256.
+			INT32 y_size_eff = y_size * (double_size ? 2 : 1);
+			INT32 x_draw_w   = x_size * (double_size ? 2 : 1);
+			// Fully off-screen horizontally: costs no draw cycles.
+			UINT16 x_raw     = SB_BFE(attr1, 0, 9);
+			if (x_raw >= 240 && x_raw + x_draw_w < 512)
+				continue;
+			INT32 y_wrap     = (y_coord + y_size_eff > 256) ? (y_coord - 256) : y_coord;
+			INT32 y_vis      = sprite_lcd_y - y_wrap;
+			if (y_vis >= 0 && y_vis < y_size_eff) {
 				INT16 x_coord = SB_BFE(attr1, 0, 9);
 				if (SB_BFE(x_coord, 8, 1))
 					x_coord |= 0xfe00;
 
-				INT32 x_size  = xsize_lookup[obj_size * 4 + obj_shape];
-				if (rot_scale)
-					sprite_cycles -= 10 + (x_size << double_size) * 2;
-				else
-					sprite_cycles -= x_size;
-				if (sprite_cycles <= 0)
-					break;
-				INT32 x_start = x_coord >= 0 ? x_coord : 0;
-				INT32 x_end   = x_coord + x_size * (double_size ? 2 : 1);
-				if (x_end >= 240)x_end = 240;
+				// Draw cost: rot/scale pays 8+2*full_width; normal pays width-2.
+				// A left overhang reduces the cost; a fully-left normal OBJ is skipped.
+				if (rot_scale) {
+					INT32 obj_cycles = 8 + x_draw_w * 2;
+					if (x_coord < 0)
+						obj_cycles += x_coord;
+					sprite_cycles -= obj_cycles;
+				} else {
+					if (x_coord < 0 && x_coord + x_size < 0)
+						continue;
+					INT32 obj_cycles = x_size - 2;
+					if (x_coord < 0)
+						obj_cycles += x_coord >> 1;
+					sprite_cycles -= obj_cycles;
+				}
+				INT32 x_clip_lo = x_coord < 0 ? 0 : (x_coord >= 240 ? 240 : x_coord);
+				INT32 x_clip_hi = (x_coord + x_draw_w) > 240 ? 240 : ((x_coord + x_draw_w) < 0 ? 0 : (x_coord + x_draw_w));
+				if (x_clip_hi <= x_clip_lo)
+					continue;
+				INT32 x_start = x_clip_lo;
+				INT32 x_end   = x_clip_hi;
 				//Attr2
 				//Skip objects disabled by window
 				UINT16 attr2 = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.oam + o * 8 + 4));
@@ -232,21 +260,31 @@ static inline void gba_ppu_render_objs(gba_t* gba, INT32 sprite_lcd_y)
 			INT32  win_xmax = SB_BFE(WINH, 0, 8);
 			INT32  win_ymin = SB_BFE(WINV, 8, 8);
 			INT32  win_ymax = SB_BFE(WINV, 0, 8);
-			// Hardware clamps: X2>240 or X1>X2 -> X2=240; Y2>160 or Y1>Y2 -> Y2=160
-			if (win_xmin > win_xmax)
+			// An X1>X2 range wraps and covers [0,X2) plus [X1,240); X2>240
+			// clamps to 240 and a larger X1 collapses to 0. Y uses the same rule.
+			if (win_xmin > 240 && win_xmin > win_xmax)
+				win_xmin = 0;
+			if (win_xmax > 240) {
 				win_xmax = 240;
-			if (win_ymin > win_ymax)
-				win_ymax = 160;
-			if (win_xmax > 240)
-				win_xmax = 240;
-			if (win_ymax > 160)
-				win_ymax = 160;
-			if (sprite_lcd_y < win_ymin || sprite_lcd_y >= win_ymax)
+				if (win_xmin > 240)
+					win_xmin = 240;
+			}
+			bool y_in_window = (win_ymin > win_ymax)
+				? (sprite_lcd_y < win_ymax || sprite_lcd_y >= win_ymin)
+				: (sprite_lcd_y >= win_ymin && sprite_lcd_y < win_ymax);
+			if (!y_in_window)
 				continue;
 			UINT16 winin = gba_io_read16(gba, GBA_WININ);
 			UINT8  win_value = SB_BFE(winin, win * 8, 6);
-			for (INT32 x = win_xmin; x < win_xmax; ++x)
-				gba->window[x] = win_value;
+			if (win_xmin > win_xmax) {
+				for (INT32 x = 0; x < win_xmax; ++x)
+					gba->window[x] = win_value;
+				for (INT32 x = win_xmin; x < 240; ++x)
+					gba->window[x] = win_value;
+			} else {
+				for (INT32 x = win_xmin; x < win_xmax; ++x)
+					gba->window[x] = win_value;
+			}
 		}
 		INT32  backdrop_type = 5;
 		UINT32 backdrop_col  = (BURN_ENDIAN_SWAP_INT16(*(UINT16*)(gba->mem.palette + GBA_BG_PALETTE + 0 * 2))) | (backdrop_type << 17);
@@ -324,11 +362,11 @@ static inline void gba_ppu_render_pixel(gba_t* gba, INT32 lcd_x, INT32 lcd_y)
 				bg_x = (x2 >> 8);
 				bg_y = (y2 >> 8);
 
-				if (display_overflow == 0) {
-					if (bg_x < 0 || bg_x >= screen_size_x || bg_y < 0 || bg_y >= screen_size_y)
+				// Bitmap modes (3/4/5) treat out-of-bounds as transparent;
+				// affine tile BGs wrap only when overflow bit is set.
+				if (bg_x < 0 || bg_x >= screen_size_x || bg_y < 0 || bg_y >= screen_size_y) {
+					if (display_overflow == 0 || bg_mode >= 3)
 						continue;
-				} else {
-					// wraparound: hardware uses bitwise mask, not %
 					bg_x &= screen_size_x - 1;
 					bg_y &= screen_size_y - 1;
 				}
@@ -618,11 +656,11 @@ static inline void gba_ppu_render_scanline(gba_t* gba, INT32 lcd_y)
 					INT64 y2 = (INT64)pc[bg] * sx + (((INT64)bgy[bg]));
 					bg_x = (INT32)(x2 >> 8);
 					bg_y = (INT32)(y2 >> 8);
-					if (overflow[bg] == 0) {
-						if (bg_x < 0 || bg_x >= size_x[bg] || bg_y < 0 || bg_y >= size_y[bg])
+					// Bitmap modes treat out-of-bounds as transparent;
+					// affine tile BGs wrap when overflow bit is set.
+					if (bg_x < 0 || bg_x >= size_x[bg] || bg_y < 0 || bg_y >= size_y[bg]) {
+						if (overflow[bg] == 0 || bg_mode >= 3)
 							continue;
-					} else {
-						// mask instead of %: % keeps negative values negative
 						bg_x &= size_x[bg] - 1;
 						bg_y &= size_y[bg] - 1;
 					}
@@ -862,12 +900,15 @@ static inline void gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_
 					new_if |= (1 << GBA_INT_LCD_VBLANK);
 			}
 			gba->ppu.last_lcd_y = lcd_y;
-			if (lcd_y == vcount_cmp) {
-				bool vcnt_irq_en = SB_BFE(disp_stat, 5, 1);
-				if (vcnt_irq_en)
-					new_if |= (1 << GBA_INT_LCD_VCOUNT);
-			}
 		}
+		// VCount match is a level flag; the IRQ fires only on 0->1 edge.
+		bool vcount_match_cur = (vcount == (INT32)vcount_cmp);
+		if (vcount_match_cur && !gba->ppu.last_vcount_match) {
+			bool vcnt_irq_en = SB_BFE(disp_stat, 5, 1);
+			if (vcnt_irq_en)
+				new_if |= (1 << GBA_INT_LCD_VCOUNT);
+		}
+		gba->ppu.last_vcount_match = vcount_match_cur;
 		gba_send_interrupt(gba, 3, new_if);
 	}
 
@@ -917,6 +958,11 @@ static inline void gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_
 				gba->ppu.aff[aff].wrote_bgy  = false;
 			}
 		}
+		// Render the scanline at line-start using line-start register state.
+		if (!gba->ppu.render_per_pixel && lcd_y < 160) {
+			gba_ppu_render_objs(gba, lcd_y);
+			gba_ppu_render_scanline(gba, lcd_y);
+		}
 	}
 	if (gba->ppu.render_per_pixel) {
 		//Render sprites over scanline when it completes
@@ -924,10 +970,6 @@ static inline void gba_ppu_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_
 			gba_ppu_render_objs(gba, (lcd_y + 1) % 228);
 		if (lcd_x < 240 && lcd_y < 160)
 			gba_ppu_render_pixel(gba, lcd_x, lcd_y);
-	} else if (lcd_y < 160 && lcd_x == GBA_LCD_HBLANK_START) {
-		// Composite the row at hblank start before hblank DMA/IRQ take effect
-		gba_ppu_render_objs(gba, lcd_y);
-		gba_ppu_render_scanline(gba, lcd_y);
 	}
 
 	// next boundary: keep the absolute scanline grid regardless of dispatch lateness

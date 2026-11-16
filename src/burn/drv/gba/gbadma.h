@@ -147,7 +147,6 @@ static inline INT32 gba_tick_dma(gba_t*gba, INT32 cycle_delta)
 						ticks += gba_compute_access_cycles_dma(gba, gba->dma[i].source_addr, 2) <= 4;
 				}
 				gba->last_transaction_dma = true;
-				UINT32 cnt = gba->dma[i].latched_count;	// latched at enable / last completion
 
 				static const UINT32 src_mask[] = { 0x07FFFFFF, 0x0FFFFFFF, 0x0FFFFFFF, 0x0FFFFFFF };
 				static const UINT32 dst_mask[] = { 0x07FFFFFF, 0x07FFFFFF, 0x07FFFFFF, 0x0FFFFFFF };

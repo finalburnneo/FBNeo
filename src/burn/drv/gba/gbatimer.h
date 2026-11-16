@@ -73,12 +73,17 @@ static void gba_compute_timers(gba_t* gba)
 						INT32 timer = SB_BFE(soundcnt_h, 10 + i * 4, 1);
 						if (timer != t)
 							continue;
-						INT32 samples_to_pop = last_timer_overflow;
-						INT32 size = (gba->audio.fifo[i].write_ptr - gba->audio.fifo[i].read_ptr) & 0x1f;
-						while (samples_to_pop-- && size) {
-							gba->audio.fifo[i].read_ptr = (gba->audio.fifo[i].read_ptr + 1) & 0x1f;
-							--size;
+						INT32 pops = last_timer_overflow;
+						while (pops--) {
+							INT32 size = (gba->audio.fifo[i].write_ptr - gba->audio.fifo[i].read_ptr) & 0x1f;
+							if (size > 0) {
+								gba->audio.fifo[i].latch = gba->audio.fifo[i].data[gba->audio.fifo[i].read_ptr & 0x1f];
+								gba->audio.fifo[i].read_ptr = (gba->audio.fifo[i].read_ptr + 1) & 0x1f;
+							} else {
+								gba->audio.fifo[i].latch = 0;
+							}
 						}
+						INT32 size = (gba->audio.fifo[i].write_ptr - gba->audio.fifo[i].read_ptr) & 0x1f;
 						if (size < GBA_AUDIO_DMA_ACTIVATE_THRESHOLD) {
 							gba->dma[i + 1].activate_audio_dma = gba->activate_dmas = true;
 						}

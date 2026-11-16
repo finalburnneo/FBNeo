@@ -3,11 +3,6 @@
 
 // Forward declarations for cross-header calls within this single translation unit
 
-// gbaapu.h
-static inline void    gba_process_audio_writes(gba_t* gba);
-static inline UINT8   gba_audio_process_byte_write(gba_t* gba, UINT32 addr, UINT8 value);
-static inline void    gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
-
 // gbabus.h
 static inline void    gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt);
 static inline void    gba_recompute_mmio_mask_table(gba_t* gba);
@@ -42,6 +37,12 @@ static inline void    gba_ppu_refresh_status(gba_t* gba);
 #define GBA_SIO_TRANSFER_TICKS	(8 * 8)
 static inline void    gba_sio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
 
+// gbaapu.h
+static inline void    gba_audio_fifo_push(gba_t* gba, INT32 fifo, INT8 data);
+static inline UINT8   gba_audio_process_reg_write(gba_t* gba, UINT32 addr, UINT8 value);
+static inline void    gba_audio_apply_writes(gba_t* gba);
+static inline void    gba_audio_event(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late);
+
 #include "gbagpio.h"
 #include "gbacart.h"
 #include "gbabus.h"
@@ -58,9 +59,223 @@ void gba_cpu_trigger_breakpoint(void* data);
 void gba_ptrs_init(gba_t* gba, gba_scratch_t* scratch, UINT8* rom_data);
 void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worker_t* worker);
 
-// Fast variant of gbacpu.h's arm7_exec_instruction: the tail prefetch reads call
-// arm7_read{32,16}_seq directly (static inline here, after gbabus.h) instead of
-// going through cpu->read*_seq.
+// Fast exec path: same semantics as gbacpu.h equivalents, but all prefetches
+// call arm7_read{32,16}_seq directly (visible here after gbabus.h) instead of
+// through the cpu->read*_seq function pointer set by gba_ptrs_init.
+static inline void arm7_fill_pipeline_fast(arm7_t* cpu, gba_t* gba)
+{
+	if (arm7_get_thumb_bit(cpu)) {
+		cpu->registers[PC] &= ~1;
+		cpu->prefetch_opcode[cpu->phase] = arm7_read16_seq(gba, cpu->registers[PC] + 2 * cpu->phase, cpu->phase != 0);
+	} else {
+		cpu->registers[PC] &= ~3;
+		cpu->prefetch_opcode[cpu->phase] = arm7_read32_seq(gba, cpu->registers[PC] + 4 * cpu->phase, cpu->phase != 0);
+	}
+	++cpu->phase;
+	if (cpu->phase != 2)
+		return;
+	cpu->phase        = 0;
+	cpu->phased_op_id = 0;
+	cpu->prefetch_pc  = cpu->registers[PC];
+	cpu->next_fetch_sequential = true;
+}
+
+// Fast ARM load/store and block-transfer handlers: bus accesses go through
+// the inline arm7_read/write helpers (visible after gbabus.h) instead of
+// cpu->read*/write* function pointers; SDT/BDT dominate BIOS decompression.
+static inline void arm7_single_word_transfer_fast(arm7_t* cpu, gba_t* gba, UINT32 opcode)
+{
+	bool I   = ARM7_BFE(opcode, 25, 1);
+	bool P   = ARM7_BFE(opcode, 24, 1);
+	bool U   = ARM7_BFE(opcode, 23, 1);
+	bool B   = ARM7_BFE(opcode, 22, 1);
+	bool W   = ARM7_BFE(opcode, 21, 1);
+	bool L   = ARM7_BFE(opcode, 20, 1);
+	INT32 Rn = ARM7_BFE(opcode, 16, 4);
+	INT32 carry;
+	INT32 offset = I == 0 ? ARM7_BFE(opcode, 0, 12) :
+	arm7_load_shift_reg(cpu, opcode, &carry);
+
+	UINT64 Rd = ARM7_BFE(opcode, 12, 4);
+	UINT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
+	INT32 increment = U ? offset : -offset;
+
+	if (P)
+		addr += increment;
+
+	if (L == 0) {
+		UINT32 data = arm7_reg_read_r15_adj(cpu, Rd, 8);
+		if (B == 1)
+			arm7_write8(gba, addr, (UINT8)data);
+		else
+			arm7_write32(gba, addr, data);
+	}
+
+	UINT32 write_back_addr = addr;
+	if (!P) {
+		write_back_addr += increment;
+		W = true;
+	}
+	if (W)
+		arm7_reg_write(cpu, Rn, write_back_addr);
+
+	if (L == 1) {
+		UINT32 data = B ? arm7_read8(gba, addr) : arm7_rotr(arm7_read32(gba, addr), (addr & 0x3) * 8);
+		arm7_reg_write(cpu, Rd, data);
+		cpu->i_cycles += 1;
+	}
+}
+
+SB_ALWAYS_INLINE void arm7_block_transfer_decoded_fast(arm7_t* cpu, gba_t* gba,
+	INT32 P, INT32 U, INT32 S, INT32 W, INT32 L, INT32 Rn, UINT32 reglist)
+{
+	if (cpu->phase == 0) {
+		INT32 addr = arm7_reg_read_r15_adj(cpu, Rn, 4);
+		INT32 increment = U ? 4 : -4;
+		INT32 base_addr = addr;
+		// Register count is needed for the writeback target (W=1) or, when U=0,
+		// for the starting address. An empty list transfers R15.
+		if (W || !U) {
+			INT32 num_regs;
+			if (reglist == 0) {
+				num_regs = 16;
+			} else {
+				num_regs = 0;
+				for (INT32 i = 0; i < 16; ++i)
+					if (ARM7_BFE(reglist, i, 1) == 1)
+						num_regs += 1;
+			}
+			if (W) {
+				if (!U)
+					base_addr += num_regs * increment;
+				addr = base_addr;
+				if (U)
+					base_addr += num_regs * increment;
+			} else if (!U) {
+				addr += num_regs * increment;
+			}
+		}
+		cpu->block.base_addr = base_addr;
+
+		if (reglist == 0)
+			reglist = 1 << 15;
+
+		if (!(P ^ U))
+			addr += 4;
+		cpu->block.cycle     = 0;
+		cpu->block.addr      = addr;
+		cpu->block.r15_off   = arm7_get_thumb_bit(cpu) ? 4 : 8;
+		cpu->block.last_bank = -1;
+	}
+	bool user_bank_transfer;
+	if (SB_UNLIKELY(cpu->phase != 0)) {
+		user_bank_transfer = cpu->block.decoded_user_bank_transfer;
+	} else {
+		user_bank_transfer = S && (!L || !SB_BFE(reglist, 15, 1));
+		cpu->block.decoded_user_bank_transfer = user_bank_transfer;
+		cpu->block.decoded_psr_bit            = (UINT32)S;
+		cpu->block.decoded_writeback_bit      = (UINT32)W;
+		cpu->block.decoded_load_bit           = (UINT32)L;
+		cpu->block.decoded_base_register      = (UINT32)Rn;
+		cpu->block.decoded_register_list      = reglist;
+		cpu->block.decoded_resume_opcode      = (0xeu << 28) | (4u << 25)
+			| ((UINT32)P << 24) | ((UINT32)U << 23) | ((UINT32)S << 22)
+			| ((UINT32)W << 21) | ((UINT32)L << 20) | ((UINT32)Rn << 16) | reglist;
+	}
+
+	for (INT32 i = cpu->phase; i < 16; ++i) {
+		if (ARM7_BFE(reglist, i, 1) == 0)
+			continue;
+
+		INT32 reg_index = user_bank_transfer ? i : arm7_reg_index(cpu, i);
+		INT32 a = cpu->block.addr;
+		if ((a & 0xfe000000) != 0x0e000000)
+			a &= ~3;
+		if (!L)
+			arm7_write32(gba, a, cpu->registers[reg_index] + (i == 15 ? cpu->block.r15_off : 0));
+
+		if (++cpu->block.cycle == 1 && W) {
+			arm7_reg_write(cpu, Rn, cpu->block.base_addr);
+		}
+
+		if (L) {
+			INT32 bank = ARM7_BFE(a, 24, 8);
+			cpu->registers[reg_index] = arm7_read32_seq(gba, a, bank == cpu->block.last_bank);
+			cpu->block.last_bank = bank;
+		}
+
+		cpu->block.addr += 4;
+
+		if (L && S && i == 15) {
+			cpu->registers[CPSR] = arm7_reg_read(cpu, SPSR);
+		}
+		cpu->phased_op_id   = ARM_PHASED_BLOCK_TRANSFER;
+		cpu->phased_opcode  = cpu->block.decoded_resume_opcode;
+		cpu->phase = i + 1;
+		return;
+	}
+	if (L)
+		cpu->i_cycles += 1;
+	cpu->phase = 0;
+	cpu->phased_op_id = 0;
+}
+
+static inline void arm7_block_transfer_fast(arm7_t* cpu, gba_t* gba, UINT32 opcode)
+{
+	INT32 P       = ARM7_BFE(opcode, 24,  1);
+	INT32 U       = ARM7_BFE(opcode, 23,  1);
+	INT32 S       = ARM7_BFE(opcode, 22,  1);
+	INT32 w       = ARM7_BFE(opcode, 21,  1);
+	INT32 L       = ARM7_BFE(opcode, 20,  1);
+	INT32 Rn      = ARM7_BFE(opcode, 16,  4);
+	INT32 reglist = ARM7_BFE(opcode,  0, 16);
+	arm7_block_transfer_decoded_fast(cpu, gba, P, U, S, w, L, Rn, (UINT32)reglist);
+}
+
+// Resume a suspended block transfer from the cached decoded fields. P and U
+// were consumed during phase-0 to set base_addr and iteration direction.
+static inline void arm7_block_transfer_resume_fast(arm7_t* cpu, gba_t* gba)
+{
+	arm7_block_transfer_decoded_fast(cpu, gba, 0, 0,
+		(INT32)cpu->block.decoded_psr_bit, (INT32)cpu->block.decoded_writeback_bit,
+		(INT32)cpu->block.decoded_load_bit, (INT32)cpu->block.decoded_base_register,
+		cpu->block.decoded_register_list);
+}
+
+// Route ARM SDT (top3=2, or top3=3 with bit4=0) and BDT (top3=4) to the
+// fast handlers; everything else falls back to the shared lookup table.
+static inline bool arm7_dispatch_opcode_fast(arm7_t* cpu, gba_t* gba, UINT32 opcode)
+{
+	UINT32 top3 = (opcode >> 25) & 0x7;
+	if (SB_LIKELY(top3 == 2 || (top3 == 3 && !(opcode & 0x10)))) {
+		arm7_single_word_transfer_fast(cpu, gba, opcode);
+		return true;
+	}
+	if (SB_LIKELY(top3 == 4)) {
+		arm7_block_transfer_fast(cpu, gba, opcode);
+		return true;
+	}
+	return false;
+}
+
+static inline bool arm7_run_phased_opcode_fast(arm7_t* cpu, gba_t* gba)
+{
+	switch (cpu->phased_op_id) {
+		case ARM_PHASED_NONE:
+			return true;
+		case ARM_PHASED_FILL_PIPE:
+			arm7_fill_pipeline_fast(cpu, gba);
+			break;
+		case ARM_PHASED_BLOCK_TRANSFER:
+			arm7_block_transfer_resume_fast(cpu, gba);
+			break;
+		default:
+			cpu->phased_op_id = 0;
+			return true;
+	}
+	return false;
+}
+
 static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 {
 	gba_t* gba = (gba_t*)cpu->user_data;
@@ -68,8 +283,8 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 	UINT32 cpsr = cpu->registers[CPSR];
 	bool thumb  = SB_BFE(cpsr, 5, 1);
 	bool run_opcode = true;
-	if (SB_UNLIKELY(cpu->phased_op_id != ARM_PHASED_NONE)) {
-		run_opcode = arm7_run_phased_opcode(cpu);
+	if (cpu->phased_op_id != ARM_PHASED_NONE) {
+		run_opcode = arm7_run_phased_opcode_fast(cpu, gba);
 	}
 	if (run_opcode) {
 		if (SB_UNLIKELY(cpu->wait_for_interrupt)) {
@@ -81,13 +296,15 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 		cpu->prefetch_opcode[0] = cpu->prefetch_opcode[1];
 		cpu->prefetch_opcode[1] = cpu->prefetch_opcode[2];
 		UINT32 pc;
-		if (thumb == false) {
+		if (SB_UNLIKELY(thumb == false)) {
 			pc = cpu->registers[PC] + 4;
 			cpu->registers[PC] = pc;
 			cpu->prefetch_pc = pc;
 			if (SB_LIKELY(arm7_check_cond_code_cpsr(cpsr, opcode))) {
-				UINT32 key = ((opcode >> 4) & 0xf) | ((opcode >> 16) & 0xff0);
-				arm7_lookup_table[key](cpu, opcode);
+				if (!arm7_dispatch_opcode_fast(cpu, gba, opcode)) {
+					UINT32 key = ((opcode >> 4) & 0xf) | ((opcode >> 16) & 0xff0);
+					arm7_lookup_table[key](cpu, opcode);
+				}
 			}
 		} else {
 			pc = cpu->registers[PC] + 2;
@@ -107,7 +324,7 @@ static inline void arm7_exec_instruction_fast(arm7_t* cpu)
 	if (SB_UNLIKELY(cpu->phased_op_id))
 		return;
 	bool pc_match = SB_LIKELY(cpu->prefetch_pc == cpu->registers[PC]);
-	if (thumb == false) {
+	if (SB_UNLIKELY(thumb == false)) {
 		if (pc_match) {
 			cpu->prefetch_opcode[2] = arm7_read32_seq(gba, cpu->registers[PC] + 8, cpu->next_fetch_sequential);
 		} else {
@@ -670,11 +887,15 @@ bool GbaCoreFramebufferIsDirectCopyable(const GbaCore *core)
 	return core != NULL && core->state.framebuffer_is_direct_copy;
 }
 
-UINT32 GbaCoreGetFramebufferPitch()
+UINT32 GbaCoreGetFramebufferPitch(const GbaCore *core)
 {
-	// Pitch is always GBA_WIDTH*4 from the core's perspective; DrvDraw
-	// does row-by-row memcpy respecting nBurnPitch, so this value is
-	// only used by non-DrvDraw consumers (e.g. screenshots).
+	// Byte stride of a row in the buffer returned by GbaCoreGetFramebuffer.
+	// Packed 16/24bpp worker output uses GBA_WIDTH * out_bpp with no row
+	// padding; all other paths use 4 bytes per pixel.
+	if (core == NULL)
+		return 0;
+	if (core->state.framebuffer_is_direct_copy && core->worker.out_bpp != 4)
+		return GBA_WIDTH * (UINT32)core->worker.out_bpp;
 	return GBA_WIDTH * sizeof(UINT32);
 }
 
@@ -697,8 +918,8 @@ INT32 GbaCoreRenderAudio(GbaCore *core, INT16 *stereo, INT32 frames)
 	INT32 available = GbaCoreSourceFramesAvailable(core);
 	INT32 produced  = available < frames ? available : frames;
 	for (INT32 i = 0; i < produced; i++) {
-		UINT32 left  = ring->read_ptr++ % SB_AUDIO_RING_BUFFER_SIZE;
-		UINT32 right = ring->read_ptr++ % SB_AUDIO_RING_BUFFER_SIZE;
+		UINT32 left  = ring->read_ptr++ & (SB_AUDIO_RING_BUFFER_SIZE - 1);
+		UINT32 right = ring->read_ptr++ & (SB_AUDIO_RING_BUFFER_SIZE - 1);
 		if (stereo != NULL) {
 			stereo[i * 2 + 0] = ring->data[left];
 			stereo[i * 2 + 1] = ring->data[right];
@@ -710,6 +931,8 @@ INT32 GbaCoreRenderAudio(GbaCore *core, INT16 *stereo, INT32 frames)
 			memset(stereo + produced * 2, 0, missing * 2 * sizeof(INT16));
 		ring->read_ptr  += (UINT32)missing * 2;
 		ring->write_ptr += (UINT32)missing * 2;
+		// Re-normalise the pointers past the ring size.
+		(void)sb_ring_buffer_size(ring);
 	}
 	return frames;
 }
@@ -772,8 +995,9 @@ void GbaCoreClearBatteryDirty(GbaCore *core)
 
 size_t GbaCoreStateSize()
 {
-	// gba_t plus the worker blob (zero-filled payload in single-thread builds).
-	return sizeof(gba_t) + ppu_worker_state_size();
+	// gba_t, the worker blob (zero-filled payload in single-thread builds),
+	// and the host audio output queue.
+	return sizeof(gba_t) + ppu_worker_state_size() + sizeof(sb_ring_buffer_t);
 }
 
 INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
@@ -783,7 +1007,7 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	memcpy(data, &core->state, sizeof(gba_t));
 	UINT8 *state = (UINT8 *)data;
 	// pointer fields: nulls the pointer, not the pointee
-#define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, sizeof(((type *)0)->field))
+#define GBA_CLEAR_STATE_FIELD(type, base, field)	memset(state + (base) + offsetof(type, field), 0, (size_t)sizeof(((type *)0)->field))
 	const size_t mem = offsetof(gba_t, mem);
 	const size_t cpu = offsetof(gba_t, cpu);
 	GBA_CLEAR_STATE_FIELD(gba_mem_t, mem, bios);
@@ -815,13 +1039,15 @@ INT32 GbaCoreSaveState(const GbaCore *core, void *data, size_t size)
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   dma_event.callback);
 	GBA_CLEAR_STATE_FIELD(gba_t,     0,   timing.head);
 #undef GBA_CLEAR_STATE_FIELD
-	// Append the worker blob (zero-filled in single-thread builds; see worker.h).
-	{
-		ppu_worker_t* wk = (ppu_worker_t*)&core->worker;
-		size_t wsz = ppu_worker_state_size();
-		if (wsz > 0)
-			ppu_worker_save_state(wk, (UINT8*)data + sizeof(gba_t));
-	}
+	// Append the worker blob (zero-filled in single-thread builds; see worker.h)
+	// and the host audio output queue.
+	// Reject a short buffer instead of writing past it.
+	const size_t blob = sizeof(gba_t) + ppu_worker_state_size();
+	if (size < blob + sizeof(sb_ring_buffer_t)) return 1;
+	ppu_worker_save_state((ppu_worker_t*)&core->worker, (UINT8*)data + sizeof(gba_t));
+	// The audio ring is cross-frame host state (samples the APU produced but the
+	// caller has not pulled yet); serialize it so a roundtrip stays bit-exact.
+	memcpy((UINT8*)data + blob, &core->host.audio_ring_buff, sizeof(sb_ring_buffer_t));
 	return 0;
 }
 
@@ -857,6 +1083,11 @@ INT32 GbaCoreLoadState(GbaCore *core, const void *data, size_t size, INT32 prese
 			GbaCoreClearAudio(core);
 		}
 	}
+	// Restore the host audio output queue that pairs with the worker blob.
+	if (size >= sizeof(gba_t) + ppu_worker_state_size() + sizeof(sb_ring_buffer_t))
+		memcpy(&core->host.audio_ring_buff,
+		       (const UINT8*)data + sizeof(gba_t) + ppu_worker_state_size(),
+		       sizeof(sb_ring_buffer_t));
 	return 0;
 }
 
@@ -881,6 +1112,7 @@ void gba_cpu_trigger_breakpoint(void* data)
 void gba_timing_init(gba_t* gba)
 {
 	gba->timing.head          = NULL;
+	gba->next_event_tick      = 0xFFFFFFFFu;
 	gba->timer_settle_clock   = gba->global_timer - 1;
 	gba->timer_event.next     = NULL;
 	gba->timer_event.when     = 0;
@@ -931,51 +1163,22 @@ void gba_timing_rebind(gba_t* gba)
 	gba_update_interrupt_pending(gba);
 }
 
-// Fast-forward lead-in matching the per-cycle horizon; due events settle immediately
-static inline INT32 gba_timing_ff(gba_t* gba, INT32 ticks)
+// event-free span: no dispatch fires, so pipeline shifts settle in one batch
+static void gba_advance_event_free(gba_t* gba, INT32 ticks)
 {
-	INT32 ff = ticks;
-	if (gba->ppu_event.active) {
-		INT32 d = (INT32)(gba->ppu_event.when - gba->global_timer);
-		if (d < 0)
-			d = 0;
-		if (d < ff)
-			ff = d;
+	gba->global_timer += ticks;
+	if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
+		for (INT32 i = 0; i < ticks; ++i)
+			gba_tick_interrupts(gba);
 	}
-	if (gba->audio_event.active) {
-		INT32 d = (INT32)(gba->audio_event.when - gba->global_timer);
-		if (d < 0)
-			d = 0;
-		if (d < ff)
-			ff = d;
-	}
-	if (gba->dma_event.active) {
-		INT32 d = (INT32)(gba->dma_event.when - gba->global_timer);
-		if (d < 0)
-			d = 0;
-		if (d < ff)
-			ff = d;
-	}
-	if (gba->timer_event.active) {
-		INT32 d = (INT32)(gba->timer_event.when - gba->global_timer);
-		d = d <= 0 ? 0 : d + 1;
-		if (d < ff)
-			ff = d;
-	}
-	return ff;
 }
 
 // Advance the master clock by ticks, firing due events; per-cycle IF shifts precede events
-static inline void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
+static void gba_advance(gba_t* gba, sb_emu_state_t* emu, INT32 ticks)
 {
-	INT32 event_free = gba_timing_ff(gba, ticks);
+	INT32 event_free = gba_timing_horizon(gba);
 	if (ticks <= event_free) {
-		// event-free span: no dispatch, so shifts settle in one batch
-		gba->global_timer += ticks;
-		if (gba->active_if_pipe_stages) {
-			for (INT32 i = 0; i < ticks; ++i)
-				gba_tick_interrupts(gba);
-		}
+		gba_advance_event_free(gba, ticks);
 		return;
 	}
 	INT32 advanced   = 0;
@@ -1104,21 +1307,13 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worke
 				gba->last_cpu_tick = ticks = gba->mem.requests + gba->cpu.i_cycles;
 			}
 		}
-		// Inlined gba_advance fast path (event-free span). Everything the full
-		// routine does up to its first event dispatch is done here, so the common
-		// no-event case avoids a call; spans that contain an event fall through to
-		// gba_advance, which re-derives the same event_free and takes the slow path.
+		// cached event horizon; the timer latch is skipped on a shared tick
 		{
-			INT32 event_free = gba_timing_ff(gba, ticks);
-			if (SB_LIKELY(ticks <= event_free)) {
-				gba->global_timer += ticks;
-				if (SB_UNLIKELY(gba->active_if_pipe_stages)) {
-					for (INT32 i = 0; i < ticks; ++i)
-						gba_tick_interrupts(gba);
-				}
-			} else {
+			INT32 event_free = gba_timing_horizon(gba);
+			if (SB_LIKELY(ticks <= event_free))
+				gba_advance_event_free(gba, ticks);
+			else
 				gba_advance(gba, emu, ticks);
-			}
 		}
 	}
 	// VBlank: publish worker framebuffer (scanline mode) or use scratch directly.

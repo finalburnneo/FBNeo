@@ -69,6 +69,12 @@ BEGIN
 	IDS_SSHOT_SAVED				"PNG saved"
 	IDS_STSHOT_SAVED			"PNG saved as title"
 	IDS_SPSHOT_SAVED			"PNG saved as preview"
+	IDS_SEL_HWPRESET_TIP		"Hold Shift and press this button to lock in your current Hardware filter selection as this preset!\nRight-click for more options."
+	IDS_SEL_HWPRESET_CONFIRM	"Overwrite ""%s"" with the current Hardware filter selection?"
+	IDS_SEL_HWPRESET_TITLE		"Save Hardware Preset"
+	IDS_SEL_HWPRESET_MENU_SET	"Set preset"
+	IDS_SEL_HWPRESET_MENU_RENAME	"Rename button..."
+	IDS_SEL_HWPRESET_DEFNAME	"Preset %d"
 	IDS_SSHOT_ERROR				"PNG error %1d"
 
 	IDS_REC_AVI				"Rec AVI ON"

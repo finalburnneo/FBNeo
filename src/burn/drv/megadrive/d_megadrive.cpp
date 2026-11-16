@@ -388,9 +388,9 @@ static struct BurnDIPInfo AutoDetectRegion3pPapriumDIPList[] = {
 	{0x25,	0xff,  0xff,	0x21,   NULL},
 	{0x27,	0xff,  0xff,	0x00,   NULL},
 
-	{0,	0xfe, 0,           2, "Song Preload"      },
-	{0x27,	0x01, 0x01, 0x00, "Yes (Seamless playback, req: 2gigs memory)" },
-	{0x27,	0x01, 0x01, 0x01, "On Demand (Lag when changing song, low memory usage)" },
+	{0,	0xfe, 0,           2, "Mega CD (CPU MATE, needs a restart)" },
+	{0x27,	0x01, 0x04, 0x00, "None"              },
+	{0x27,	0x01, 0x04, 0x04, "Attached (needs the Mega CD bios)" },
 };
 
 static struct BurnDIPInfo Megadrive4pDIPList[] = {
@@ -42914,145 +42914,6 @@ struct BurnDriver BurnDrvmd_papirium = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// PAPRIUM_SAMPLE_CFG
-// use (SAMPLE_NOSTORE) to load music on demand
-// use (0) to preload everything as the game loads.  (this avoids hiccups when game changes songs)
-#define PAPRIUM_SAMPLE_CFG (0)
-
-static struct BurnSampleInfo PapriumSampleDesc[] = {
-	{ "01 Theme of Paprium", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "02 90's Acid Dub Character Select", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "03 Bone Crusher", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "04 Drumbass Boss", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "05 Asian Chill", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "06 Techno Beats", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "07 Cool Groove", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "08 90's Dance", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "09 Retro Beat", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "10 Spiral", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "11 Hardcore BP2", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "12 Stage Clear", SAMPLE_NOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "13 Hard Rock", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "14 Neon Rider", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "15 Electro Acid Funk", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "16 Jazzy Shuffle", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "17 Indie Shuffle", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "18 Slow Asian Beat", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "19 Neo Metal", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "20 Sadness", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "21 Cyborg Invasion", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "22 Hardcore BP1", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "23 Continue", SAMPLE_NOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "24 Intro", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "25 Indie Break Beat", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "26 Club Shuffle", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "27 Dark Rock", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "28 Evolve", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "29 Dark & Power Mad", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "30 Cyber Interlude", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "31 Bad Dudes vs Paprium", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "32 Summer Breeze", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "33 Funk Enhanced Mix", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "34 Transe", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "35 Cyberpunk Funk", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "36 Cyberpunk Ninja", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "37 Urban", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "38 Hardcore BP3", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "39 Ending", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "40 Score", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "41 Game Over", SAMPLE_NOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "42 1988 Commercial", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "43 Blade FM", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "44 Dark Alley", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "45 Dubstep Groove", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "46 Gothic", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "47 House", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "48 Slow Mood", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "49 Smooth Coords", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "50 Tension", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "51 Water", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "52 Waterfront Beat", SAMPLE_AUTOLOOP | PAPRIUM_SAMPLE_CFG },
-	{ "", 0 }
-};
-
-STD_SAMPLE_PICK(Paprium)
-STD_SAMPLE_FN(Paprium)
-
-// Paprium (World) (HB)
-
-static struct BurnRomInfo md_papriumRomDesc[] = {
-	{ "Paprium (World)(2020)(WaterMelon).bin", 8388608, 0x28f16e0b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_paprium)
-STD_ROM_FN(md_paprium)
-
-struct BurnDriver BurnDrvmd_paprium = {
-	"md_paprium", NULL, NULL, "paprium", "2020",
-	"Paprium (World) (HB)\0", "NB: at first boot hit 'reset' after selecting language.", "WaterMelon", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_papriumRomInfo, md_papriumRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
-	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Paprium Minigame (HB)
-static struct BurnRomInfo md_papriuminiRomDesc[] = {
-	{ "Paprium Minigame (2020)(WaterMelon).bin", 524288, 0x57b0ffa4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_papriumini)
-STD_ROM_FN(md_papriumini)
-
-struct BurnDriver BurnDrvmd_papriumini = {
-	"md_papriumini", "md_paprium", NULL, NULL, "2025",
-	"Paprium Minigame (HB)\0", NULL, "WaterMelon", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_papriuminiRomInfo, md_papriuminiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Paprium (Arcade Mode) (World) (HB, Hack)
-// https://www.romhacking.net/hacks/9792/
-static struct BurnRomInfo md_papriumarcRomDesc[] = {
-	{ "Paprium (Arcade Mode)(World)(2026)(adroxe).bin", 8388608, 0x755caf5e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_papriumarc)
-STD_ROM_FN(md_papriumarc)
-
-struct BurnDriver BurnDrvmd_papriumarc = {
-	"md_papriumarc", "md_paprium", NULL, "paprium", "2026",
-	"Paprium (Arcade Mode) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "adroxe", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_papriumarcRomInfo, md_papriumarcRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
-	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Paprium (Unlocked) (World) (HB, Hack)
-// https://archive.org/details/paprium-custom-ver.-7z
-static struct BurnRomInfo md_papriumunlckRomDesc[] = {
-	{ "Paprium (Unlocked)(World)(2025)(knightofthewind89).bin", 8388608, 0x868dd234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_papriumunlck)
-STD_ROM_FN(md_papriumunlck)
-
-struct BurnDriver BurnDrvmd_papriumunlck = {
-	"md_papriumunlck", "md_paprium", NULL, "paprium", "2025",
-	"Paprium (Unlocked) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "knightofthewind89", "Genesis / Mega Drive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_papriumunlckRomInfo, md_papriumunlckRomName, NULL, NULL, PapriumSampleInfo, PapriumSampleName, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
-	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Parasol Stars (HB, v1.0.2)
 // https://mlouvet.itch.io/parasol-stars-megadrive-genesis
 static struct BurnRomInfo md_parasolRomDesc[] = {
@@ -56027,6 +55888,109 @@ struct BurnDriver BurnDrvmd_psolar = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_RPG, 0,
 	MegadriveGetZipName, md_psolarcdRomInfo, md_psolarRomName, md_psolarHDDInfo, md_psolarHDDName, NULL, NULL, MegadriveInputInfo, PsolarDIPInfo,
 	MegadriveInitPsolar, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Paprium (World) (HB)
+
+static struct BurnRomInfo md_papriumRomDesc[] = {
+	{ "Paprium (World)(2020)(WaterMelon).bin", 8388608, 0x28f16e0b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+
+	{ "little_man_firmware.bin", 0x40000, 0x9c2025cb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(md_paprium, md_paprium, md_segacd)
+STD_ROM_FN(md_paprium)
+
+// the mega cd bios is only needed with the mega cd attached (cpu mate)
+static INT32 md_papriumcdRomInfo(struct BurnRomInfo* pri, UINT32 i)
+{
+	INT32 nRet = md_papriumRomInfo(pri, i);
+	if (nRet == 0 && pri && i >= 0x80) pri->nType |= BRF_OPT;
+	return nRet;
+}
+
+struct BurnDriver BurnDrvmd_paprium = {
+	"md_paprium", NULL, "md_segacd", NULL, "2020",
+	"Paprium (World) (HB)\0", "NB: at first boot hit 'reset' after selecting language.", "WaterMelon", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriumcdRomInfo, md_papriumRomName, NULL, NULL, NULL, NULL, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
+	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Paprium Minigame (HB)
+static struct BurnRomInfo md_papriuminiRomDesc[] = {
+	{ "Paprium Minigame (2020)(WaterMelon).bin", 524288, 0x57b0ffa4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_papriumini)
+STD_ROM_FN(md_papriumini)
+
+struct BurnDriver BurnDrvmd_papriumini = {
+	"md_papriumini", "md_paprium", NULL, NULL, "2025",
+	"Paprium Minigame (HB)\0", NULL, "WaterMelon", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriuminiRomInfo, md_papriuminiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Paprium (Arcade Mode) (World) (HB, Hack)
+// https://www.romhacking.net/hacks/9792/
+static struct BurnRomInfo md_papriumarcRomDesc[] = {
+	{ "Paprium (Arcade Mode)(World)(2026)(adroxe).bin", 8388608, 0x755caf5e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+
+	{ "little_man_firmware.bin", 0x40000, 0x9c2025cb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(md_papriumarc, md_papriumarc, md_segacd)
+STD_ROM_FN(md_papriumarc)
+
+static INT32 md_papriumarccdRomInfo(struct BurnRomInfo* pri, UINT32 i)
+{
+	INT32 nRet = md_papriumarcRomInfo(pri, i);
+	if (nRet == 0 && pri && i >= 0x80) pri->nType |= BRF_OPT;
+	return nRet;
+}
+
+struct BurnDriver BurnDrvmd_papriumarc = {
+	"md_papriumarc", "md_paprium", "md_segacd", NULL, "2026",
+	"Paprium (Arcade Mode) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "adroxe", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriumarccdRomInfo, md_papriumarcRomName, NULL, NULL, NULL, NULL, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
+	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Paprium (Unlocked) (World) (HB, Hack)
+// https://archive.org/details/paprium-custom-ver.-7z
+static struct BurnRomInfo md_papriumunlckRomDesc[] = {
+	{ "Paprium (Unlocked)(World)(2025)(knightofthewind89).bin", 8388608, 0x868dd234, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+
+	{ "little_man_firmware.bin", 0x40000, 0x9c2025cb, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(md_papriumunlck, md_papriumunlck, md_segacd)
+STD_ROM_FN(md_papriumunlck)
+
+static INT32 md_papriumunlckcdRomInfo(struct BurnRomInfo* pri, UINT32 i)
+{
+	INT32 nRet = md_papriumunlckRomInfo(pri, i);
+	if (nRet == 0 && pri && i >= 0x80) pri->nType |= BRF_OPT;
+	return nRet;
+}
+
+struct BurnDriver BurnDrvmd_papriumunlck = {
+	"md_papriumunlck", "md_paprium", "md_segacd", NULL, "2025",
+	"Paprium (Unlocked) (World) (HB, Hack)\0", "NB: at first boot hit 'reset' after selecting language.", "knightofthewind89", "Genesis / Mega Drive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HOMEBREW | BDF_HACK, 3, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_papriumunlckcdRomInfo, md_papriumunlckRomName, NULL, NULL, NULL, NULL, Megadrive3pInputInfo, MegadrivePapriumDIPInfo,
+	MegadriveInitPaprium, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 

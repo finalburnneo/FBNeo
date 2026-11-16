@@ -38,6 +38,7 @@ all_cpu = {
     'mips3': {'desc': 'MIPS III', 'sources': ['mips3/cop0.cpp', 'mips3/cop1.cpp', 'mips3/mips3.cpp', 'mips3_intf.cpp'], 'inc': ['mips3']},
     'nec': {'desc': 'NEC V30 / V33', 'sources': ['nec/nec.cpp', 'nec/v25.cpp', 'nec_intf.cpp'], 'inc': ['nec']},
     'pic16c5x': {'desc': 'Microchip PIC16C5x', 'sources': ['pic16c5x/pic16c5x.cpp', 'pic16c5x_intf.cpp'], 'inc': ['pic16c5x']},
+    'rv32': {'desc': 'RISC-V RV32IM', 'sources': ['rv32/rv32.cpp'], 'inc': ['rv32']},
     's2650': {'desc': 'Signetics S2650', 'sources': ['s2650/s2650.cpp', 's2650_intf.cpp'], 'inc': ['s2650']},
     'sh2': {'desc': 'Hitachi SH-2', 'sources': ['sh2/sh2.cpp'], 'inc': ['sh2']},
     'sh4': {'desc': 'Hitachi SH-4', 'sources': ['sh4/sh4.cpp'], 'inc': ['sh4']},

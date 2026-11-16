@@ -16,10 +16,44 @@ if cpp.get_id() in ['gcc', 'clang']
     add_project_arguments('-D_GNU_SOURCE', language: 'cpp')
 endif
 
+if cc.get_id() in ['gcc', 'clang']
+    add_project_arguments(
+        cc.get_supported_arguments([
+            '-Wno-incompatible-pointer-types',
+            '-Wno-implicit-function-declaration',
+            '-Wno-int-conversion',
+        ]),
+        language: 'c',
+    )
+endif
+
 if cpp.get_id() in ['gcc', 'clang']
-    add_project_arguments('-Wno-write-strings', language: 'cpp')
+    add_project_arguments(
+        cpp.get_supported_arguments([
+            '-Wno-write-strings',
+            '-Wno-narrowing',
+            '-Wno-unused-but-set-variable',
+            '-Wno-deprecated-declarations',
+        ]),
+        language: 'cpp',
+    )
 elif cpp.get_id() == 'msvc'
     add_project_arguments('/Zc:strictStrings-', language: 'cpp')
+endif
+
+if host_machine.cpu_family() in ['arm', 'aarch64']
+    if cc.get_id() in ['gcc', 'clang']
+        add_project_arguments(
+            cc.get_supported_arguments(['-fsigned-char', '-D_FILE_OFFSET_BITS=64', '-D_LARGEFILE64_SOURCE']),
+            language: 'c',
+        )
+    endif
+    if cpp.get_id() in ['gcc', 'clang']
+        add_project_arguments(
+            cpp.get_supported_arguments(['-fsigned-char', '-D_FILE_OFFSET_BITS=64', '-D_LARGEFILE64_SOURCE']),
+            language: 'cpp',
+        )
+    endif
 endif
 
 include_7z = get_option('include_7z')

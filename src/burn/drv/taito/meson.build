@@ -72,4 +72,5 @@ drivers = {
     'd_tnzs.cpp': ['ay8910', 'dac', 'eeprom', 'es5506', 'm68000', 'mb87078', 'msm5205', 'msm6295', 'upd7810', 'ym2151', 'ym2203', 'ym2610', 'z80'],
     'd_undrfire.cpp': ['ay8910', 'eeprom', 'es5506', 'm68000', 'mb87078', 'msm5205', 'msm6295', 'upd7810', 'watchdog', 'ym2151', 'ym2203', 'ym2610', 'z80'],
     'd_wyvernf0.cpp': ['ay8910', 'eeprom', 'es5506', 'm68000', 'm6805', 'mb87078', 'msm5205', 'msm5232', 'msm6295', 'taito_m68705', 'upd7810', 'ym2151', 'ym2203', 'ym2610', 'z80'],
+    'd_sbowling.cpp': ['ay8910', 'dac', 'eeprom', 'es5506', 'm68000', 'm6805', 'mb87078', 'msm5205', 'msm5232', 'msm6295', 'taito_m68705', 'upd7810', 'watchdog', 'ym2151', 'ym2203', 'ym2610', 'z80'],
 }

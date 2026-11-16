@@ -22,6 +22,8 @@ fbneo_burner_sources = [
     '../intf/audio/lowpass2.cpp',
     '../intf/cd/cd_interface.cpp',
     '../intf/cd/cd_chd.cpp',
+    '../burn/burn_hdd.cpp',
+    '../burn/snd/burn_ost.cpp',
     '../intf/input/inp_interface.cpp',
     '../intf/interface.cpp',
     '../intf/video/vid_interface.cpp',
@@ -74,7 +76,7 @@ burner_lib = static_library(
     fbneo_burner_sources,
     include_directories: [include_directories(burner_lib_inc), global_inc],
     dependencies: burner_lib_deps,
-    c_args: burner_lib_defs,
+    c_args: burner_lib_defs + cc.get_supported_arguments(['-Wno-incompatible-pointer-types', '-Wno-implicit-function-declaration', '-Wno-int-conversion']),
     cpp_args: burner_lib_defs,
 )
 

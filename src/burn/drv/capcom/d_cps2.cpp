@@ -17527,12 +17527,12 @@ struct BurnDriver BurnDrvCpsSfa2gl = {
 // Street Fighter Zero 2 Dash (Asia, PS2 Backport RC9)
 // 2026-11-14
 static struct BurnRomInfo Sfz2dsaRomDesc[] = {
-	{ "sz2dsa.03a",		0x080000, 0xfb6d1338, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz2dsa.04a",		0x080000, 0x2d077581, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dsa.03",		0x080000, 0xfb6d1338, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dsa.04",		0x080000, 0x2d077581, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sz2ds.05",		0x080000, 0xb1c15635, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "szaa.06",		0x080000, 0xcfc0e7a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz2dsa.07a",		0x080000, 0x74b0a2d0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "sz2dsa.08a",		0x080000, 0x531ceaf5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dsa.07",		0x080000, 0x74b0a2d0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sz2dsa.08",		0x080000, 0x531ceaf5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
 	{ "sz2dsa.13m",		0x400000, 0xe35cbaae, CPS2_GFX | BRF_GRA },
 	{ "sz2dsa.15m",		0x400000, 0x045e1960, CPS2_GFX | BRF_GRA },

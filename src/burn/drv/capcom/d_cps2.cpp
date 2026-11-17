@@ -18146,3 +18146,45 @@ struct BurnDriver BurnDrvCpsUsf2j = {
 	Usf2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+// X-Men Vs. Street Fighter (Hack, English Restoration RC1)
+// 2026-11-16
+static struct BurnRomInfo XmvsfreRomDesc[] = {
+	{ "xvsre.03m",		0x080000, 0x4ae5878b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsre.04m",		0x080000, 0x97cb4c9c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsre.05a",		0x080000, 0x82dc383d, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsre.06a",		0x080000, 0xb71c0900, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.07",			0x080000, 0x08f0abed, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvs.08",			0x080000, 0x81929675, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xvsre.09",		0x080000, 0xf239c68b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "xvs.13m",		0x400000, 0xf6684efd, CPS2_GFX | BRF_GRA },
+	{ "xvs.15m",		0x400000, 0x29109221, CPS2_GFX | BRF_GRA },
+	{ "xvs.17m",		0x400000, 0x92db3474, CPS2_GFX | BRF_GRA },
+	{ "xvs.19m",		0x400000, 0x3733473c, CPS2_GFX | BRF_GRA },
+	{ "xvs.14m",		0x400000, 0xbcac2e41, CPS2_GFX | BRF_GRA },
+	{ "xvs.16m",		0x400000, 0xea04a272, CPS2_GFX | BRF_GRA },
+	{ "xvs.18m",		0x400000, 0xb0def86a, CPS2_GFX | BRF_GRA },
+	{ "xvs.20m",		0x400000, 0x4b40ff9f, CPS2_GFX | BRF_GRA },
+
+	{ "xvs.01",			0x020000, 0x3999e93a, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xvs.02",			0x020000, 0x101bdee9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xvs.11m",		0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
+	{ "xvs.12m",		0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfj.key",		0x000014, 0x87576cda, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Xmvsfre)
+STD_ROM_FN(Xmvsfre)
+
+struct BurnDriver BurnDrvCpsXmvsfre = {
+	"xmvsfre", "xmvsf", NULL, NULL, "2026",
+	"X-Men Vs. Street Fighter (Hack, English Restoration RC1)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, XmvsfreRomInfo, XmvsfreRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};

@@ -2203,16 +2203,27 @@ static INT32 scd_detect_region()
 }
 
 // a sega cd 32x disc checks the 32x id ("MARS" at $a130ec) in its initial program
+// 32x discs: "SEGA 32X" system name in the disc header, or a check of the "MARS" id at $a130ec
+// (absolute address, or cmpi.l #'MARS',$30ec(an) with an = $a10000, followed by a bne: the
+// game stops without the 32x. a beq is a disc that only behaves differently with the 32x,
+// like the Fahrenheit key disc which then asks for the 32x disc)
 INT32 SegaCDDiscNeeds32X()
 {
 	UINT8 sector[2048];
 
-	for (INT32 lba = 0; lba < 16; lba++) {
+	for (INT32 lba = 0; lba < 64; lba++) {
 		if (CDEmuReadDataSector(lba, sector)) return 0;
-		if (lba == 0 && memcmp(sector, "SEGADISCSYSTEM", 14) && memcmp(sector, "SEGABOOTDISC", 12)) return 0;
+		if (lba == 0) {
+			if (memcmp(sector, "SEGADISCSYSTEM", 14) && memcmp(sector, "SEGABOOTDISC", 12)) return 0;
+			if (memcmp(sector + 0x100, "SEGA 32X", 8) == 0) return 1;
+		}
 
 		for (INT32 i = 0; i < 2048 - 4; i++) {
 			if (memcmp(sector + i, "MARS", 4)) continue;
+			if (i + 7 <= 2048 && sector[i + 4] == 0x30 && sector[i + 5] == 0xec) {
+				if (sector[i + 6] == 0x66) return 1;
+				continue;
+			}
 			for (INT32 j = ((i > 16) ? i - 16 : 0); j < i + 16 && j < 2048 - 4; j++) {
 				if (sector[j] == 0x00 && sector[j + 1] == 0xa1 && sector[j + 2] == 0x30 && sector[j + 3] == 0xec) return 1;
 			}

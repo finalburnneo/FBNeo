@@ -368,21 +368,64 @@ static TCHAR SegaCDSecurityRegion(const UINT8* pSector)
 	return _T('U');
 }
 
-// discs of several regions can share the same toc, the security code region tells them apart
-static const sega_cd_game* FindSegaCDGame(const TCHAR* pszSha1, TCHAR cRegion)
+// text field of the disc header, trailing spaces removed
+static void SegaCDHeaderField(const UINT8* pSector, INT32 nOffset, INT32 nLen, char* pszText)
+{
+	memcpy(pszText, pSector + nOffset, nLen);
+	while (nLen > 0 && (pszText[nLen - 1] == ' ' || pszText[nLen - 1] == 0)) nLen--;
+	pszText[nLen] = 0;
+}
+
+static void SegaCDSerial(const UINT8* pSector, char* pszSerial)
+{
+	SegaCDHeaderField(pSector, 0x180, 14, pszSerial);
+}
+
+static INT32 SegaCDFieldMatch(const char* pszHeader, const TCHAR* pszEntry)
+{
+	INT32 i = 0;
+	for (; pszEntry[i]; i++) {
+		if (pszHeader[i] != (char)pszEntry[i]) return 0;
+	}
+	return pszHeader[i] == 0;
+}
+
+// discs can share the same toc: the product code, the date and the security code region of
+// the disc header (sector 0, NULL when unreadable) tell them apart
+static const sega_cd_game* FindSegaCDGame(const TCHAR* pszSha1, const UINT8* pHeader)
 {
 	if (!pszSha1 || !pszSha1[0])
 		return NULL;
 
+	TCHAR cRegion = pHeader ? SegaCDSecurityRegion(pHeader) : _T('U');
+	char szSerial[16] = { 0 };
+	char szDate[20] = { 0 };
+	if (pHeader) {
+		SegaCDSerial(pHeader, szSerial);
+		SegaCDHeaderField(pHeader, 0x110, 16, szDate);
+	}
+
 	const sega_cd_game* pFound = NULL;
+	INT32 nBest = -100;
 	for (UINT32 i = 0; i < sizeof(segacd_games) / sizeof(segacd_games[0]); i++) {
 		const sega_cd_game* pGame = &segacd_games[i];
 		if (!pGame->sha1[0] || _tcscmp(pGame->sha1, pszSha1))
 			continue;
-		if (!pGame->region || pGame->region[0] == cRegion)
-			return pGame;
-		if (!pFound)
+
+		INT32 nScore = 0;
+		if (pGame->serial) {
+			nScore += (pHeader && SegaCDFieldMatch(szSerial, pGame->serial)) ? 8 : -16;
+		}
+		if (pGame->date) {
+			nScore += (pHeader && SegaCDFieldMatch(szDate, pGame->date)) ? 4 : -8;
+		}
+		if (pGame->region) {
+			nScore += (pGame->region[0] == cRegion) ? 2 : -1;
+		}
+		if (nScore > nBest) {
+			nBest = nScore;
 			pFound = pGame;
+		}
 	}
 	return pFound;
 }
@@ -463,8 +506,8 @@ INT32 CDListIdentifyEx(const TCHAR* pszPath, CDListResult* pResult, UINT32 nFlag
 			UINT8 sector[2448] = { 0 };
 			INT32 nSize = 0;
 			const CDImageTrack* pTrack = FindDataTrack(pImage);
-			TCHAR cRegion = (pTrack && ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 0x200) ? SegaCDSecurityRegion(sector) : _T('U');
-			const sega_cd_game* pGame = FindSegaCDGame(pResult->szTOCSha1, cRegion);
+			INT32 bHeader = (pTrack && ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 0x200);
+			const sega_cd_game* pGame = FindSegaCDGame(pResult->szTOCSha1, bHeader ? sector : NULL);
 			if (pGame) {
 				CopyText(pResult->Metadata.szTitle,   CDLIST_TEXT_SIZE, pGame->name);
 				CopyText(pResult->Metadata.szName,    CDLIST_TEXT_SIZE, pGame->id);
@@ -730,8 +773,17 @@ INT32 SegaCDInfo_Init()
 	}
 
 	UINT8 sector[2048] = { 0 };
-	TCHAR cRegion = (CDEmuReadDataSector(0, sector) == 0) ? SegaCDSecurityRegion(sector) : _T('U');
-	const sega_cd_game* pGame = FindSegaCDGame(ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0), cRegion);
+	INT32 bHeader = (CDEmuReadDataSector(0, sector) == 0);
+	if (bHeader) {
+		char szSerial[16], szDate[20];
+		TCHAR szSerialT[16], szDateT[20];
+		SegaCDSerial(sector, szSerial);
+		SegaCDHeaderField(sector, 0x110, 16, szDate);
+		for (INT32 i = 0; i < 16; i++) szSerialT[i] = (UINT8)szSerial[i];
+		for (INT32 i = 0; i < 20; i++) szDateT[i] = (UINT8)szDate[i];
+		bprintf(0, _T("Disc Serial: %s, region %c, date %s\n"), szSerialT, SegaCDSecurityRegion(sector), szDateT);
+	}
+	const sega_cd_game* pGame = FindSegaCDGame(ANSIToTCHAR((char*)CDEmuImageTOCSHA1, NULL, 0), bHeader ? sector : NULL);
 	if (pGame) {
 		bprintf(0, _T("segacdlist_games db: found entry %s\n"), pGame->id);
 		CopyText(SegaCdInfo.szTitle,   CDLIST_TEXT_SIZE, pGame->name);
@@ -853,8 +905,8 @@ INT32 CDInfo_ImageDiscGroup(const TCHAR* pszPath, TCHAR* pszGroup, UINT32 nGroup
 			UINT8 sector[2448] = { 0 };
 			INT32 nSize = 0;
 			const CDImageTrack* pTrack = FindDataTrack(pImage);
-			TCHAR cRegion = (pTrack && ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 0x200) ? SegaCDSecurityRegion(sector) : _T('U');
-			const sega_cd_game* pGame = FindSegaCDGame(_AtoT((char*)sha1s), cRegion);
+			INT32 bHeader = (pTrack && ReadSector(pImage, pTrack->nIndex1LBA, sector, &nSize) && nSize >= 0x200);
+			const sega_cd_game* pGame = FindSegaCDGame(_AtoT((char*)sha1s), bHeader ? sector : NULL);
 			if (pGame && pGame->nvram) {
 				if (pszGroup) CopyText(pszGroup, nGroupLen, pGame->nvram);
 				if (pszTitle) CopyText(pszTitle, nTitleLen, pGame->name);

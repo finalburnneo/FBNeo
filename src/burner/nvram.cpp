@@ -10,10 +10,17 @@ static INT32 __cdecl StateLenAcb(struct BurnArea* pba)
 	return 0;
 }
 
+static INT32 nNvramLeft = 0;
+
 static INT32 __cdecl NvramLoadAcb(struct BurnArea* pba)
 {
-	memcpy(pba->Data, pNvramData, pba->nLen);
-	pNvramData += pba->nLen;
+	// a file shorter than the areas (saved before an area was added) only fills what it holds
+	INT32 nLen = ((INT32)pba->nLen < nNvramLeft) ? (INT32)pba->nLen : nNvramLeft;
+	if (nLen > 0) {
+		memcpy(pba->Data, pNvramData, nLen);
+		pNvramData += nLen;
+		nNvramLeft -= nLen;
+	}
 	return 0;
 }
 
@@ -70,6 +77,7 @@ INT32 BurnNvramLoad(TCHAR* szName)
 
 	BurnAcb = NvramLoadAcb;
 	pNvramData = data;
+	nNvramLeft = nLen;
 	BurnAreaScan(ACB_NVRAM | ACB_WRITE, NULL);
 
 	if (data) {

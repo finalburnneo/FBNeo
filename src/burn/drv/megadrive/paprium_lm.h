@@ -1967,8 +1967,9 @@ static void lm_scan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {
 		if (nAction & ACB_WRITE) lm_idle_forget();
 
-		// the reference for the big memories is the power-on boot: do it now if it is still due
-		if (!lm_tracking && lm.boot_pending == 1) lm_boot_mcu();
+		// the reference for the big memories is the power-on boot: do it now if it is still due, but not
+		// for a scan that only lists the areas (done by some frontends before the nv ram is loaded)
+		if ((nAction & ACB_ACCESSMASK) && !lm_tracking && lm.boot_pending == 1) lm_boot_mcu();
 
 		SCAN_VAR(lm);
 		SCAN_VAR(lm_cpu);

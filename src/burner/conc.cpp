@@ -528,6 +528,7 @@ static INT32 ConfigParseMAMEFile_internal(FILE *fz, const TCHAR *pszFileHeading,
 #define AddressInfo()	\
 	INT32 k = (flags >> 20) & 3;	\
 	INT32 cpu = (flags >> 24) & 0x1f; \
+	if ((flags & 0xf0000000) == 0x80000000) cpu = (flags >> 26) & 3; \
 	if (cpu > 3) cpu = 0; \
 	for (INT32 i = 0; i < k+1; i++) {	\
 		pCurrentCheat->pOption[n]->AddressInfo[nCurrentAddress].nCPU = cpu;	\

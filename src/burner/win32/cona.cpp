@@ -429,6 +429,7 @@ int ConfigAppLoad()
 		STR(szLoadMenuHwButtonName[1]);
 		STR(szLoadMenuHwButtonName[2]);
 		STR(szLoadMenuHwButtonName[3]);
+		VAR(nLoadMenuHwActiveBtn);
 		VAR(nLoadMenuShowY);
 		VAR(nLoadMenuExpand);
 		VAR(nLoadMenuBoardTypeFilter);
@@ -920,6 +921,7 @@ int ConfigAppSave()
 	STR(szLoadMenuHwButtonName[1]);
 	STR(szLoadMenuHwButtonName[2]);
 	STR(szLoadMenuHwButtonName[3]);
+	VAR(nLoadMenuHwActiveBtn);
 	VAR(nLoadMenuShowY);
 	VAR(nLoadMenuExpand);
 

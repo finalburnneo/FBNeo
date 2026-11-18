@@ -337,6 +337,7 @@ UINT64 nLoadMenuShowX			= 0; // hardware etc
 #define HWBTN_DEFAULT			((UINT64)1 << 62)
 UINT64 nLoadMenuHwButton[4]		= { HWBTN_DEFAULT, HWBTN_DEFAULT, HWBTN_DEFAULT, HWBTN_DEFAULT };
 TCHAR szLoadMenuHwButtonName[4][MAX_PATH] = { _T(""), _T(""), _T(""), _T("") }; // custom button text, empty = default name
+INT32 nLoadMenuHwActiveBtn		= -1; // last pressed button (drawn blue) until the filters change, -1 = none
 int nLoadMenuShowY				= AVAILABLE; // selector options, default to show available
 int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
@@ -2287,6 +2288,96 @@ static void HwPresetUpdateButtonText()
 	}
 }
 
+// The Hardware selection a button applies (set bit = hidden)
+static UINT64 HwPresetGetMask(INT32 nBtn)
+{
+	if (nLoadMenuHwButton[nBtn] & HWBTN_DEFAULT) {
+		switch (nBtn) {
+			case 0:  return MASKALL & ~MASKARCADE;
+			case 1:  return MASKALL & ~MASKCONSOLE;
+			default: return 0;
+		}
+	}
+
+	return nLoadMenuHwButton[nBtn] & MASKALL;
+}
+
+// Mark a button as the active one (blue), -1 = none
+static void HwPresetSetActive(INT32 nBtn)
+{
+	if (nBtn == nLoadMenuHwActiveBtn) return;
+
+	nLoadMenuHwActiveBtn = nBtn;
+
+	if (hSelDlg) {
+		for (INT32 i = 0; i < HWBTN_COUNT; i++) {
+			InvalidateRect(GetDlgItem(hSelDlg, nHwPresetBtnIDs[i]), NULL, TRUE);
+		}
+	}
+}
+
+// Drop the blue state if the active button no longer matches the Hardware filter
+// (config edited, button re-set / reset to default, etc.)
+static void HwPresetValidateActive()
+{
+	if (nLoadMenuHwActiveBtn < 0 || nLoadMenuHwActiveBtn >= HWBTN_COUNT || HwPresetGetMask(nLoadMenuHwActiveBtn) != (nLoadMenuShowX & MASKALL)) {
+		HwPresetSetActive(-1);
+	}
+}
+
+// NM_CUSTOMDRAW for the active (blue) button. returns true if we handled the drawing
+static bool HwPresetCustomDraw(LPNMCUSTOMDRAW pnmcd)
+{
+	INT32 nBtn = -1;
+	for (INT32 i = 0; i < HWBTN_COUNT; i++) {
+		if ((INT32)pnmcd->hdr.idFrom == nHwPresetBtnIDs[i]) nBtn = i;
+	}
+
+	if (nBtn < 0 || nBtn != nLoadMenuHwActiveBtn) return false; // not ours / not active: normal themed drawing
+
+	if (pnmcd->dwDrawStage != CDDS_PREPAINT) return false; // (CDDS_PREERASE: default, we paint over all of it anyway)
+
+	HDC hDC = pnmcd->hdc;
+	RECT rect = pnmcd->rc;
+
+	COLORREF nFill = RGB(0xcc, 0xe4, 0xf7);							// light blue
+	if (pnmcd->uItemState & CDIS_HOT)      nFill = RGB(0xb3, 0xd7, 0xf3);	// a bit darker on hover
+	if (pnmcd->uItemState & CDIS_SELECTED) nFill = RGB(0x99, 0xc9, 0xef);	// darker yet while held down
+
+	HBRUSH hBrush = CreateSolidBrush(nFill);
+	HPEN hPen = CreatePen(PS_SOLID, 1, RGB(0x00, 0x78, 0xd7));		// blue border
+	HGDIOBJ hOldBrush = SelectObject(hDC, hBrush);
+	HGDIOBJ hOldPen = SelectObject(hDC, hPen);
+
+	Rectangle(hDC, rect.left, rect.top, rect.right, rect.bottom);
+
+	SelectObject(hDC, hOldPen);
+	SelectObject(hDC, hOldBrush);
+	DeleteObject(hPen);
+	DeleteObject(hBrush);
+
+	// caption
+	TCHAR szText[MAX_PATH];
+	GetWindowText(pnmcd->hdr.hwndFrom, szText, MAX_PATH);
+
+	HGDIOBJ hOldFont = SelectObject(hDC, (HFONT)SendMessage(pnmcd->hdr.hwndFrom, WM_GETFONT, 0, 0));
+	SetBkMode(hDC, TRANSPARENT);
+	SetTextColor(hDC, GetSysColor(COLOR_BTNTEXT));
+	RECT rcText = rect;
+	if (pnmcd->uItemState & CDIS_SELECTED) OffsetRect(&rcText, 1, 1);
+	DrawText(hDC, szText, -1, &rcText, DT_CENTER | DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS);
+	SelectObject(hDC, hOldFont);
+
+	if ((pnmcd->uItemState & CDIS_FOCUS) && !(SendMessage(pnmcd->hdr.hwndFrom, WM_QUERYUISTATE, 0, 0) & UISF_HIDEFOCUS)) {
+		RECT rcFocus = rect;
+		InflateRect(&rcFocus, -3, -3);
+		DrawFocusRect(hDC, &rcFocus);
+	}
+
+	SetWindowLongPtr(hSelDlg, DWLP_MSGRESULT, CDRF_SKIPDEFAULT);
+	return true;
+}
+
 // OK / Cancel confirmation, nMsgID is a format string taking the button name (%s)
 static bool HwPresetConfirm(INT32 nBtn, UINT nMsgID)
 {
@@ -2303,6 +2394,7 @@ static void HwPresetSave(INT32 nBtn)
 {
 	if (HwPresetConfirm(nBtn, IDS_SEL_HWPRESET_CONFIRM)) {
 		nLoadMenuHwButton[nBtn] = nLoadMenuShowX & MASKALL;
+		HwPresetValidateActive();
 	}
 }
 
@@ -2313,6 +2405,7 @@ static void HwPresetReset(INT32 nBtn)
 		nLoadMenuHwButton[nBtn] = HWBTN_DEFAULT;
 		szLoadMenuHwButtonName[nBtn][0] = 0;
 		HwPresetUpdateButtonText();
+		HwPresetValidateActive();
 	}
 }
 
@@ -2332,6 +2425,8 @@ static void HwPresetButton(INT32 nBtn)
 	} else {
 		SetHardwareFilter(nLoadMenuHwButton[nBtn]);
 	}
+
+	HwPresetSetActive(nBtn);
 }
 
 // Rename dialog -----------------------------------
@@ -2556,6 +2651,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		CreateFilters();
 		HwPresetToolTipInit();
 		HwPresetUpdateButtonText();
+		HwPresetValidateActive();
 
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_APPLYIPS), FALSE);
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_IPSMANAGER), FALSE);
@@ -2973,6 +3069,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterCard)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_CARD);
 		if (hItemChanged == hFilterBoard)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_BOARD);
 
+		HwPresetSetActive(-1); // filters changed: quick-select buttons are no longer "active"
+
 		RebuildEverything();
 	}
 
@@ -3328,6 +3426,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			// disable double-click node-expand
 			SetWindowLongPtr(hSelDlg, DWLP_MSGRESULT, 1);
 
+			return 1;
+		}
+
+		if (pNmHdr->code == NM_CUSTOMDRAW && HwPresetCustomDraw((LPNMCUSTOMDRAW)lParam)) {
 			return 1;
 		}
 

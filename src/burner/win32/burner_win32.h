@@ -360,6 +360,7 @@ bool unzip_exists_context(zip_t **zip_context, char *szFn);
 extern UINT64 nLoadMenuShowX;
 extern UINT64 nLoadMenuHwButton[4];
 extern TCHAR szLoadMenuHwButtonName[4][MAX_PATH];
+extern INT32 nLoadMenuHwActiveBtn;
 extern int nLoadMenuShowY;
 extern int nLoadMenuExpand;
 extern int nLoadMenuBoardTypeFilter;

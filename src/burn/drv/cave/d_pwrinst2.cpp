@@ -1070,7 +1070,7 @@ static struct BurnRomInfo pwrinst2jaRomDesc[] = {
 	{ "g02_u43-j.u43",		0x080000, 0xc94c596b, BRF_ESS | BRF_PRG }, //  2
 	{ "g02_u42-j.u42",		0x080000, 0x4f4c8270, BRF_ESS | BRF_PRG }, //  3
 	
-	{ "g02_u3-j.u3a",		0x020000, 0xeead01f1, BRF_ESS | BRF_PRG }, //  4 Z80 Code
+	{ "g02_u3-j.u3",		0x020000, 0xeead01f1, BRF_ESS | BRF_PRG }, //  4 Z80 Code
 
 	{ "g02.u61",			0x200000, 0x91e30398, BRF_GRA },           //  5 Sprite data
 	{ "g02.u62",			0x200000, 0xd9455dd7, BRF_GRA },           //  6
@@ -1292,7 +1292,7 @@ struct BurnDriver BurnDrvPwrinst2ja = {
 
 struct BurnDriver BurnDrvPwrinst2k = {
 	"pwrinst2k", "pwrinst2", NULL, NULL, "1994",
-	"Power instinct 2 (Korea, Ver. 94/04/08)\0", NULL, "Atlus", "Cave",
+	"Power Instinct 2 (Korea, Ver. 94.04.08)\0", NULL, "Atlus", "Cave",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_VSFIGHT, FBF_PWRINST,
 	NULL, pwrinst2kRomInfo, pwrinst2kRomName, NULL, NULL, NULL, NULL, pwrinst2InputInfo, NULL,

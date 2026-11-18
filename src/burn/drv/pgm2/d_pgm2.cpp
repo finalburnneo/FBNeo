@@ -84,93 +84,88 @@ STDINPUTINFOEXT(	pgm2dc,	pgm2Default,	pgm2dc	)	// Region (Fake) & Cardless Mode
 // You may ignore any additions or deletions of list items in the future and count from bottom to top
 #define DIPSW_IDX	(ARRAY_SIZE(pgm2DefaultInputList))
 
-#define CRDSW_IDX	(DIPSW_IDX + 1)
 static struct BurnDIPInfo pgm2DIPList[] = {
-	{ DIPSW_IDX,	0xFF, 0xFF,	0xff, NULL				},
+	DIP_OFFSET(DIPSW_IDX)
+	{ 0x00,			0xFF, 0xFF,	0xff, NULL				},
 	{ 0,			0xFE, 0,	2,    "Service Mode"	},
-	{ DIPSW_IDX,	0x01, 0x01,	0x01, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x01,	0x00, "On"				},
+	{ 0x00,			0x01, 0x01,	0x01, "Off"				},
+	{ 0x00,			0x01, 0x01,	0x00, "On"				},
 	{ 0,			0xFE, 0,	2,    "Music"			},
-	{ DIPSW_IDX,	0x01, 0x02,	0x00, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x02,	0x02, "On"				},
+	{ 0x00,			0x01, 0x02,	0x00, "Off"				},
+	{ 0x00,			0x01, 0x02,	0x02, "On"				},
 	{ 0,			0xFE, 0,	2,    "Voice"			},
-	{ DIPSW_IDX,	0x01, 0x04,	0x00, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x04,	0x04, "On"				},
+	{ 0x00,			0x01, 0x04,	0x00, "Off"				},
+	{ 0x00,			0x01, 0x04,	0x04, "On"				},
 	{ 0,			0xFE, 0,	2,    "Free Play"		},
-	{ DIPSW_IDX,	0x01, 0x08,	0x08, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x08,	0x00, "On"				},
+	{ 0x00,			0x01, 0x08,	0x08, "Off"				},
+	{ 0x00,			0x01, 0x08,	0x00, "On"				},
 	{ 0,			0xFE, 0,	2,    "Stop"			},
-	{ DIPSW_IDX,	0x01, 0x10,	0x10, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x10,	0x00, "On"				},
+	{ 0x00,			0x01, 0x10,	0x10, "Off"				},
+	{ 0x00,			0x01, 0x10,	0x00, "On"				},
 	{ 0,			0xFE, 0,	2,    "Unused SW1:6"	},
-	{ DIPSW_IDX,	0x01, 0x20,	0x20, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x20,	0x00, "On"				},
+	{ 0x00,			0x01, 0x20,	0x20, "Off"				},
+	{ 0x00,			0x01, 0x20,	0x00, "On"				},
 	{ 0,			0xFE, 0,	2,    "Unused SW1:7"	},
-	{ DIPSW_IDX,	0x01, 0x40,	0x40, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x40,	0x00, "On"				},
+	{ 0x00,			0x01, 0x40,	0x40, "Off"				},
+	{ 0x00,			0x01, 0x40,	0x00, "On"				},
 	{ 0,			0xFE, 0,	2,    "Debug"			},
-	{ DIPSW_IDX,	0x01, 0x80,	0x80, "Off"				},
-	{ DIPSW_IDX,	0x01, 0x80,	0x00, "On"				},
+	{ 0x00,			0x01, 0x80,	0x80, "Off"				},
+	{ 0x00,			0x01, 0x80,	0x00, "On"				},
 };
 STDDIPINFO(pgm2)
 
 static struct BurnDIPInfo pgm2cDIPList[] = {
-	{ CRDSW_IDX,	0xFF, 0xFF, 0x00, NULL				},
-	{ 0,			0xFE, 0,	2,    "Cardless Mode"	},
-	{ CRDSW_IDX,	0x01, 0x01, 0x00, "Off"				},
-	{ CRDSW_IDX,	0x01, 0x01, 0x01, "On"				},
+	{ 0x01,			0xFF, 0xFF, 0x00, NULL				},
+	{ 0,			0xFD, 0,	2,    "Cardless Mode"	},
+	{ 0x01,			0x01, 0x01, 0x00, "Off"				},
+	{ 0x01,			0x01, 0x01, 0x01, "On"				},
 };
-#undef CRDSW_IDX
 
-#define REGSW_IDX	(DIPSW_IDX + 1)
-#define CRDSW_IDX	(DIPSW_IDX + 2)
 // Excludes Korea
 // No card
 static struct BurnDIPInfo pgm2dDIPList[] = {
-	{ REGSW_IDX,	0xFF, 0xFF,	0x04, NULL				},
-	{ 0,			0xFE, 0,	5,    "Region (Fake)"	},
-	{ REGSW_IDX,	0x01, 0x0F,	0x00, "China"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x01, "Taiwan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x02, "Japan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x03, "Hong Kong"		},
-	{ REGSW_IDX,	0x01, 0x0F,	0x04, "Overseas"		},
+	{ 0x01,			0xFF, 0xFF,	0x04, NULL				},
+	{ 0,			0xFD, 0,	5,    "Region (Fake)"	},
+	{ 0x01,			0x01, 0x0F,	0x00, "China"			},
+	{ 0x01,			0x01, 0x0F,	0x01, "Taiwan"			},
+	{ 0x01,			0x01, 0x0F,	0x02, "Japan"			},
+	{ 0x01,			0x01, 0x0F,	0x03, "Hong Kong"		},
+	{ 0x01,			0x01, 0x0F,	0x04, "Overseas"		},
 };
 
 // Excludes Korea
 static struct BurnDIPInfo pgm2dcDIPList[] = {
-	{ REGSW_IDX,	0xFF, 0xFF,	0x04, NULL				},
-	{ 0,			0xFE, 0,	5,    "Region (Fake)"	},
-	{ REGSW_IDX,	0x01, 0x0F,	0x00, "China"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x01, "Taiwan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x02, "Japan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x03, "Hong Kong"		},
-	{ REGSW_IDX,	0x01, 0x0F,	0x04, "Overseas"		},
+	{ 0x01,			0xFF, 0xFF,	0x04, NULL				},
+	{ 0,			0xFD, 0,	5,    "Region (Fake)"	},
+	{ 0x01,			0x01, 0x0F,	0x00, "China"			},
+	{ 0x01,			0x01, 0x0F,	0x01, "Taiwan"			},
+	{ 0x01,			0x01, 0x0F,	0x02, "Japan"			},
+	{ 0x01,			0x01, 0x0F,	0x03, "Hong Kong"		},
+	{ 0x01,			0x01, 0x0F,	0x04, "Overseas"		},
 
-	{ CRDSW_IDX,	0xFF, 0xFF, 0x00, NULL				},
-	{ 0,			0xFE, 0,	2,    "Cardless Mode"	},
-	{ CRDSW_IDX,	0x01, 0x01, 0x00, "Off"				},
-	{ CRDSW_IDX,	0x01, 0x01, 0x01, "On"				},
+	{ 0x02,			0xFF, 0xFF, 0x00, NULL				},
+	{ 0,			0xFD, 0,	2,    "Cardless Mode"	},
+	{ 0x02,			0x01, 0x01, 0x00, "Off"				},
+	{ 0x02,			0x01, 0x01, 0x01, "On"				},
 };
 
 // Knights of Valour 2 New Legend
 // Includes Korea
 static struct BurnDIPInfo pgm2dkcDIPList[] = {
-	{ REGSW_IDX,	0xFF, 0xFF,	0x05, NULL				},
-	{ 0,			0xFE, 0,	6,    "Region (Fake)"	},
-	{ REGSW_IDX,	0x01, 0x0F,	0x00, "China"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x01, "Taiwan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x02, "Japan"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x03, "Korea"			},
-	{ REGSW_IDX,	0x01, 0x0F,	0x04, "Hong Kong"		},
-	{ REGSW_IDX,	0x01, 0x0F,	0x05, "Overseas"		},
+	{ 0x01,			0xFF, 0xFF,	0x05, NULL				},
+	{ 0,			0xFD, 0,	6,    "Region (Fake)"	},
+	{ 0x01,			0x01, 0x0F,	0x00, "China"			},
+	{ 0x01,			0x01, 0x0F,	0x01, "Taiwan"			},
+	{ 0x01,			0x01, 0x0F,	0x02, "Japan"			},
+	{ 0x01,			0x01, 0x0F,	0x03, "Korea"			},
+	{ 0x01,			0x01, 0x0F,	0x04, "Hong Kong"		},
+	{ 0x01,			0x01, 0x0F,	0x05, "Overseas"		},
 
-	{ CRDSW_IDX,	0xFF, 0xFF, 0x00, NULL				},
-	{ 0,			0xFE, 0,	2,    "Cardless Mode"	},
-	{ CRDSW_IDX,	0x01, 0x01, 0x00, "Off"				},
-	{ CRDSW_IDX,	0x01, 0x01, 0x01, "On"				},
+	{ 0x02,			0xFF, 0xFF, 0x00, NULL				},
+	{ 0,			0xFD, 0,	2,    "Cardless Mode"	},
+	{ 0x02,			0x01, 0x01, 0x00, "Off"				},
+	{ 0x02,			0x01, 0x01, 0x01, "On"				},
 };
-#undef CRDSW_IDX
-#undef REGSW_IDX
 
 STDDIPINFOEXT(	pgm2c,		pgm2,	pgm2c	)
 STDDIPINFOEXT(	pgm2d,		pgm2,	pgm2d	)
@@ -491,7 +486,7 @@ static INT32 kof98umhInit()
 
 // orleg2 family
 #define ORLEG2_INTERNAL_CHINA \
-	{ "xyj2_igs036_china.rom",       0x0004000, 0xbcce7641, BRF_PRG | BRF_ESS }, \
+	{ "xyj2_cn.igs036",              0x0004000, 0xbcce7641, BRF_PRG | BRF_ESS }, \
 	{ "blank_orleg2_china_card.pg2", 0x0000108, 0xdc29556f, BRF_OPT },
 #define ORLEG2_INTERNAL_HONGKONG \
 	{ "xyj2_hk.igs036",               0x0004000, 0xee7343c6, BRF_PRG | BRF_ESS }, \
@@ -880,7 +875,7 @@ static struct BurnRomInfo ddpdojtRomDesc[] = {
 	{ "ddpdoj_spa0.u9",          0x1000000, 0x1232c1b4, BRF_GRA },
 	{ "ddpdoj_spb0.u18",         0x1000000, 0x6a9e2cbf, BRF_GRA },
 	{ "ddpdoj_wave0.u12",        0x1000000, 0x2b71a324, BRF_SND },
-	{ "ddpdojh_sram",            0x0010000, 0xaf99e304, BRF_OPT },
+	{ "ddpdojt_sram",            0x0010000, 0xaf99e304, BRF_OPT },
 };
 STD_ROM_PICK(ddpdojt)
 STD_ROM_FN(ddpdojt)
@@ -905,7 +900,7 @@ STD_ROM_FN(kof98umh)
 // BurnDriver declarations
 struct BurnDriver BurnDrvorleg2 = {
 	"orleg2", NULL, NULL, NULL, "2007",
-	"Oriental Legend 2 (V104, Overseas)\0", NULL,
+	"Oriental Legend 2 (V104, Oversea)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -917,7 +912,7 @@ struct BurnDriver BurnDrvorleg2 = {
 
 struct BurnDriver BurnDrvorleg2_103 = {
 	"orleg2_103", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 (V103, Overseas)\0", NULL,
+	"Oriental Legend 2 (V103, Oversea)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -929,7 +924,7 @@ struct BurnDriver BurnDrvorleg2_103 = {
 
 struct BurnDriver BurnDrvorleg2_101 = {
 	"orleg2_101", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 (V101, Overseas)\0", NULL,
+	"Oriental Legend 2 (V101, Oversea)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1013,8 +1008,8 @@ struct BurnDriver BurnDrvorleg2_101hk = {
 
 struct BurnDriver BurnDrvorleg2_104jp = {
 	"orleg2_104jp", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 (V104, Japan)\0", NULL,
-	"IGS", "PolyGame Master 2",
+	"Saiyuu Shakuyakuden 2 (V104, Japan)\0", NULL,
+	"IGS (Alta license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, orleg2_104jpRomInfo, orleg2_104jpRomName, NULL, NULL, NULL, NULL,
@@ -1025,8 +1020,8 @@ struct BurnDriver BurnDrvorleg2_104jp = {
 
 struct BurnDriver BurnDrvorleg2_103jp = {
 	"orleg2_103jp", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 (V103, Japan)\0", NULL,
-	"IGS", "PolyGame Master 2",
+	"Saiyuu Shakuyakuden 2 (V103, Japan)\0", NULL,
+	"IGS (Alta license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, orleg2_103jpRomInfo, orleg2_103jpRomName, NULL, NULL, NULL, NULL,
@@ -1037,8 +1032,8 @@ struct BurnDriver BurnDrvorleg2_103jp = {
 
 struct BurnDriver BurnDrvorleg2_101jp = {
 	"orleg2_101jp", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 (V101, Japan)\0", NULL,
-	"IGS", "PolyGame Master 2",
+	"Saiyuu Shakuyakuden 2 (V101, Japan)\0", NULL,
+	"IGS (Alta license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, orleg2_101jpRomInfo, orleg2_101jpRomName, NULL, NULL, NULL, NULL,
@@ -1085,7 +1080,7 @@ struct BurnDriver BurnDrvorleg2_101tw = {
 
 struct BurnDriver BurnDrvkov2nl = {
 	"kov2nl", NULL, NULL, NULL, "2008",
-	"Knights of Valour 2 New Legend (V302, Overseas)\0", NULL,
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qian Jun (V302, Oversea)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1097,7 +1092,7 @@ struct BurnDriver BurnDrvkov2nl = {
 
 struct BurnDriver BurnDrvkov2nl_301 = {
 	"kov2nl_301", "kov2nl", NULL, NULL, "2008",
-	"Knights of Valour 2 New Legend (V301, Overseas)\0", NULL,
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qian Jun (V301, Oversea)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1109,7 +1104,7 @@ struct BurnDriver BurnDrvkov2nl_301 = {
 
 struct BurnDriver BurnDrvkov2nl_300 = {
 	"kov2nl_300", "kov2nl", NULL, NULL, "2008",
-	"Knights of Valour 2 New Legend (V300, Overseas)\0", NULL,
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qian Jun (V300, Oversea)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1265,7 +1260,7 @@ struct BurnDriver BurnDrvkov2nl_300tw = {
 
 struct BurnDriver BurnDrvkov3 = {
 	"kov3", NULL, NULL, NULL, "2011",
-	"Knights of Valour 3 (V104, China)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V104, China, Hong Kong, Taiwan)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1277,7 +1272,7 @@ struct BurnDriver BurnDrvkov3 = {
 
 struct BurnDriver BurnDrvkov3_102 = {
 	"kov3_102", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 (V102, China)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V102, China, Hong Kong, Taiwan)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1289,7 +1284,7 @@ struct BurnDriver BurnDrvkov3_102 = {
 
 struct BurnDriver BurnDrvkov3_101 = {
 	"kov3_101", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 (V101, China)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V101, China, Hong Kong, Taiwan)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1301,7 +1296,7 @@ struct BurnDriver BurnDrvkov3_101 = {
 
 struct BurnDriver BurnDrvkov3_100 = {
 	"kov3_100", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 (V100, China)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V100, China, Hong Kong, Taiwan)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1325,7 +1320,7 @@ struct BurnDriver BurnDrvddpdojt = {
 
 struct BurnDriver BurnDrvkof98umh = {
 	"kof98umh", NULL, NULL, NULL, "2009",
-	"The King of Fighters '98: Ultimate Match HERO (China, V100)\0", NULL,
+	"The King of Fighters '98: Ultimate Match HERO (China, V100, 09-08-23)\0", NULL,
 	"IGS / SNK Playmore / New Channel", "PolyGame Master 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IGS_PGM2, GBF_VSFIGHT, FBF_KOF,
@@ -1445,7 +1440,7 @@ static INT32 orleg2dInit()
 
 struct BurnDriver BurnDrvororleg2d = {
 	"orleg2d", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 / Xi You Shi E Zhuan 2 (V104, Decrypted)\0", NULL,
+	"Oriental Legend 2 / Xiyou Shi E Zhuan 2 (V104, Decrypted)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	L"Oriental Legend 2 (V104, Decrypted)\0\u897f\u6e38\u91ca\u5384\u4f20 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1456,7 +1451,7 @@ struct BurnDriver BurnDrvororleg2d = {
 };
 struct BurnDriver BurnDrvorleg2d_101 = {
 	"orleg2d_101", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 / Xi You Shi E Zhuan 2 (V101, Decrypted)\0", NULL,
+	"Oriental Legend 2 / Xiyou Shi E Zhuan 2 (V101, Decrypted)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	L"Oriental Legend 2 (V101, Decrypted)\0\u897f\u6e38\u91ca\u5384\u4f20 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1468,7 +1463,7 @@ struct BurnDriver BurnDrvorleg2d_101 = {
 
 struct BurnDriver BurnDrvorleg2d_103 = {
 	"orleg2d_103", "orleg2", NULL, NULL, "2007",
-	"Oriental Legend 2 / Xi You Shi E Zhuan 2 (V103, Decrypted)\0", NULL,
+	"Oriental Legend 2 / Xiyou Shi E Zhuan 2 (V103, Decrypted)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
 	L"Oriental Legend 2 (V103, Decrypted)\0\u897f\u6e38\u91ca\u5384\u4f20 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1553,7 +1548,7 @@ static INT32 kov2nldInit()
 
 struct BurnDriver BurnDrvkov2nld = {
 	"kov2nld", "kov2nl", NULL, NULL, "2008",
-	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qianjun (V302, Decrypted)\0", NULL,
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qian Jun (V302, Decrypted)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	L"Knights of Valour 2 New Legend (V302, Decrypted)\0\u4e09\u570b\u6230\u7d00 2 - \u6a6b\u6383\u5343\u8ecd\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1565,7 +1560,7 @@ struct BurnDriver BurnDrvkov2nld = {
 
 struct BurnDriver BurnDrvkov2nld_300 = {
 	"kov2nld_300", "kov2nl", NULL, NULL, "2008",
-	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qianjun (V300, Decrypted)\0", NULL,
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qian Jun (V300, Decrypted)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	L"Knights of Valour 2 New Legend (V300, Decrypted)\0\u4e09\u570b\u6230\u7d00 2 - \u6a6b\u6383\u5343\u8ecd\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1577,7 +1572,7 @@ struct BurnDriver BurnDrvkov2nld_300 = {
 
 struct BurnDriver BurnDrvkov2nld_301 = {
 	"kov2nld_301", "kov2nl", NULL, NULL, "2008",
-	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qianjun (V301, Decrypted)\0", NULL,
+	"Knights of Valour 2 New Legend / Sanguo Zhan Ji 2 Hengsao Qian Jun (V301, Decrypted)\0", NULL,
 	"IGS", "PolyGame Master 2",
 	L"Knights of Valour 2 New Legend (V301, Decrypted)\0\u4e09\u570b\u6230\u7d00 2 - \u6a6b\u6383\u5343\u8ecd\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
@@ -1659,9 +1654,9 @@ static INT32 kov3dInit()
 
 struct BurnDriver BurnDrvkov3d = {
 	"kov3d", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V104, China, Hong kong, Taiwan, Decrypted)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V104, China, Hong Kong, Taiwan, Decrypted)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
-	L"Knights of Valour 3 (V104, China, Hong kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	L"Knights of Valour 3 (V104, China, Hong Kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, kov3dRomInfo, kov3dRomName, NULL, NULL, NULL, NULL,
 	pgm2cInputInfo, pgm2cDIPInfo,
@@ -1671,9 +1666,9 @@ struct BurnDriver BurnDrvkov3d = {
 
 struct BurnDriver BurnDrvkov3d_100 = {
 	"kov3d_100", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V100, China, Hong kong, Taiwan, Decrypted)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V100, China, Hong Kong, Taiwan, Decrypted)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
-	L"Knights of Valour 3 (V100, China, Hong kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	L"Knights of Valour 3 (V100, China, Hong Kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, kov3d_100RomInfo, kov3d_100RomName, NULL, NULL, NULL, NULL,
 	pgm2cInputInfo, pgm2cDIPInfo,
@@ -1683,9 +1678,9 @@ struct BurnDriver BurnDrvkov3d_100 = {
 
 struct BurnDriver BurnDrvkov3d_101 = {
 	"kov3d_101", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V101, China, Hong kong, Taiwan, Decrypted)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V101, China, Hong Kong, Taiwan, Decrypted)\0", NULL,
 	"IGS (Huatong license)", "PolyGame Master 2",
-	L"Knights of Valour 3 (V101, China, Hong kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	L"Knights of Valour 3 (V101, China, Hong Kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, kov3d_101RomInfo, kov3d_101RomName, NULL, NULL, NULL, NULL,
 	pgm2cInputInfo, pgm2cDIPInfo,
@@ -1695,9 +1690,9 @@ struct BurnDriver BurnDrvkov3d_101 = {
 
 struct BurnDriver BurnDrvkov3d_102 = {
 	"kov3d_102", "kov3", NULL, NULL, "2011",
-	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V102, China, Hong kong, Taiwan, Decrypted)\0", NULL,
+	"Knights of Valour 3 / Sanguo Zhan Ji 3 (V102, China, Hong Kong, Taiwan, Decrypted)\0", NULL,
 	"IGS", "PolyGame Master 2",
-	L"Knights of Valour 3 (V102, China, Hong kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
+	L"Knights of Valour 3 (V102, China, Hong Kong, Taiwan, Decrypted)\0\u4e09\u56fd\u6218\u7eaa 3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM2, GBF_SCRFIGHT, 0,
 	NULL, kov3d_102RomInfo, kov3d_102RomName, NULL, NULL, NULL, NULL,
 	pgm2cInputInfo, pgm2cDIPInfo,

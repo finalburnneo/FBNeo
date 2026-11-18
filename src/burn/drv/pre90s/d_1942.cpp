@@ -1098,3 +1098,53 @@ struct BurnDriver BurnDrvNineteen42c64 = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
+
+// Fix-It Felix Jr. (homebrew on 1942 hardware)
+
+static struct BurnRomInfo FixfelixRomDesc[] = {
+	{ "sra-03.m3",     0x04000, 0xdd8674bc, BRF_ESS | BRF_PRG },    //  0 Z80 #1 Program Code
+	{ "sr-04.m4",      0x04000, 0x5132aa07, BRF_ESS | BRF_PRG },    //  1
+	{ "sr-05.m5",      0x04000, 0x577c67b7, BRF_ESS | BRF_PRG },    //  2
+	{ "sr-06.m6",      0x02000, 0x821c6481, BRF_ESS | BRF_PRG },    //  3
+	{ "sr-07.m7",      0x04000, 0x5df525e1, BRF_ESS | BRF_PRG },    //  4
+
+	{ "sr-01.c11",     0x04000, 0xc5bc3c50, BRF_ESS | BRF_PRG },    //  5 Z80 #2 Program Code
+
+	{ "sr-02.f2",      0x02000, 0x4ad5d2da, BRF_GRA },              //  6 Characters
+
+	{ "sr-08.a1",      0x02000, 0xb680a87e, BRF_GRA },              //  7 Tiles
+	{ "sr-09.a2",      0x02000, 0x7012777b, BRF_GRA },              //  8
+	{ "sr-10.a3",      0x02000, 0x6f66de6f, BRF_GRA },              //  9
+	{ "sr-11.a4",      0x02000, 0x82a48938, BRF_GRA },              // 10
+	{ "sr-12.a5",      0x02000, 0x47b9c9bc, BRF_GRA },              // 11
+	{ "sr-13.a6",      0x02000, 0x334ffec6, BRF_GRA },              // 12
+
+	{ "sr-14.l1",      0x04000, 0xf6eafcf0, BRF_GRA },              // 13 Sprites
+	{ "sr-15.l2",      0x04000, 0xda769a27, BRF_GRA },              // 14
+	{ "sr-16.n1",      0x04000, 0x102856b3, BRF_GRA },              // 15
+	{ "sr-17.n2",      0x04000, 0xe9944bee, BRF_GRA },              // 16
+
+	{ "sb-5.e8",       0x00100, 0x353aa3a5, BRF_GRA },              // 17 PROMs
+	{ "sb-6.e9",       0x00100, 0x1eeca407, BRF_GRA },              // 18
+	{ "sb-7.e10",      0x00100, 0x2ea68c66, BRF_GRA },              // 19
+	{ "sb-0.f1",       0x00100, 0xa7221b0c, BRF_GRA },              // 20
+	{ "sb-4.d6",       0x00100, 0x16c50185, BRF_GRA },              // 21
+	{ "sb-8.k3",       0x00100, 0x17301db2, BRF_GRA },              // 22
+	{ "sb-2.d1",       0x00100, 0x8bb8b3df, BRF_GRA },              // 23
+	{ "sb-3.d2",       0x00100, 0x3b0c99af, BRF_GRA },              // 24
+	{ "sb-1.k6",       0x00100, 0x712ac508, BRF_GRA },              // 25
+	{ "sb-9.m11",      0x00100, 0x4921635c, BRF_GRA },              // 26
+};
+
+STD_ROM_PICK(Fixfelix)
+STD_ROM_FN(Fixfelix)
+
+struct BurnDriver BurnDrvFixfelix = {
+	"fixfelix", NULL, NULL, NULL, "2026",
+	"Fix-It Felix Jr. (homebrew, 1942 hardware)\0", NULL, "homebrew", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CAPCOM_MISC, GBF_PLATFORM, 0,
+	NULL, FixfelixRomInfo, FixfelixRomName, NULL, NULL, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
+};

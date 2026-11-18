@@ -604,6 +604,7 @@ struct lcomponent {
 	INT32 loaded;		// image: 0 = not yet, 1 = ok, -1 = failed
 	abitmap img;		// PNG
 	plutosvg_document_t *svg;	// SVG: rendered at the size it's drawn at, owned by the element
+	std::map<UINT64, abitmap> raster;	// image rasterized / scaled per size (w << 32 | h), so a new state only blends
 	lcomponent() : type(COMP_RECT), state(-1), statemask(~0), loaded(0), svg(NULL) { }
 };
 
@@ -633,8 +634,9 @@ struct litem {
 	INT32 px0, py0, px1, py1;
 	INT32 last_state;
 	std::map<INT32, abitmap> cache;
+	INT32 cache_max;	// states kept before the cache is flushed
 
-	litem() : is_screen(0), screen_index(0), elem(NULL), output(-1), blend(BLEND_DEFAULT), orient(0), px0(0), py0(0), px1(0), py1(0), last_state(-0x7fffffff) { }
+	litem() : is_screen(0), screen_index(0), elem(NULL), output(-1), blend(BLEND_DEFAULT), orient(0), px0(0), py0(0), px1(0), py1(0), last_state(-0x7fffffff), cache_max(64) { }
 };
 
 struct layer_lists {
@@ -1209,6 +1211,38 @@ static void comp_load(lcomponent &c)
 	c.loaded = 1;
 }
 
+// an image component at its drawn size: SVGs are rasterized (always sharp), PNGs
+// scaled. done once per size and kept, rasterizing is far too slow to do mid-game
+static abitmap *comp_raster(lcomponent &c, INT32 cw, INT32 ch)
+{
+	comp_load(c);
+	if (c.loaded != 1) return NULL;
+
+	UINT64 key = ((UINT64)cw << 32) | (UINT32)ch;
+	std::map<UINT64, abitmap>::iterator r = c.raster.find(key);
+	if (r != c.raster.end()) return r->second.p.empty() ? NULL : &r->second;
+
+	abitmap &s = c.raster[key];
+	if (c.svg) {
+		if (svg_render(c.svg, cw, ch, s)) { s.alloc(0, 0); return NULL; }	// remember the failure
+	} else {
+		resample(c.img, cw, ch, s);
+	}
+	return &s;
+}
+
+// a component's pixel rectangle inside a w x h element, returns 0 if empty
+static INT32 comp_rect(const lcomponent &c, INT32 w, INT32 h, INT32 &x0, INT32 &y0, INT32 &x1, INT32 &y1)
+{
+	x0 = (INT32)floorf(c.bounds.x0 * w + 0.5f); x1 = (INT32)floorf(c.bounds.x1 * w + 0.5f);
+	y0 = (INT32)floorf(c.bounds.y0 * h + 0.5f); y1 = (INT32)floorf(c.bounds.y1 * h + 0.5f);
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 > w) x1 = w;
+	if (y1 > h) y1 = h;
+	return (x1 > x0 && y1 > y0);
+}
+
 static void element_render(lelement *e, INT32 state, INT32 w, INT32 h, abitmap &out)
 {
 	out.alloc(w, h);
@@ -1218,14 +1252,9 @@ static void element_render(lelement *e, INT32 state, INT32 w, INT32 h, abitmap &
 
 		if (c.state != -1 && (state & c.statemask) != c.state) continue;
 
-		INT32 x0 = (INT32)floorf(c.bounds.x0 * w + 0.5f), x1 = (INT32)floorf(c.bounds.x1 * w + 0.5f);
-		INT32 y0 = (INT32)floorf(c.bounds.y0 * h + 0.5f), y1 = (INT32)floorf(c.bounds.y1 * h + 0.5f);
-		if (x0 < 0) x0 = 0;
-		if (y0 < 0) y0 = 0;
-		if (x1 > w) x1 = w;
-		if (y1 > h) y1 = h;
+		INT32 x0, y0, x1, y1;
+		if (!comp_rect(c, w, h, x0, y0, x1, y1)) continue;
 		INT32 cw = x1 - x0, ch = y1 - y0;
-		if (cw <= 0 || ch <= 0) continue;
 
 		switch (c.type)
 		{
@@ -1254,14 +1283,9 @@ static void element_render(lelement *e, INT32 state, INT32 w, INT32 h, abitmap &
 			break;
 
 			case COMP_IMAGE: {
-				comp_load(c);
-				if (c.loaded != 1) break;
-				abitmap s;
-				if (c.svg) {
-					if (svg_render(c.svg, cw, ch, s)) break;	// vector: drawn at the final size, always sharp
-				} else {
-					resample(c.img, cw, ch, s);
-				}
+				abitmap *sp = comp_raster(c, cw, ch);
+				if (sp == NULL) break;
+				abitmap &s = *sp;
 				INT32 white = is_white(c.color);
 				for (INT32 y = 0; y < ch; y++)
 					for (INT32 x = 0; x < cw; x++) {
@@ -1391,7 +1415,7 @@ static abitmap *item_bitmap(litem &it, INT32 state)
 	std::map<INT32, abitmap>::iterator c = it.cache.find(state);
 	if (c != it.cache.end()) return &c->second;
 
-	if (it.cache.size() > 64) it.cache.clear();
+	if (it.cache.size() > (size_t)it.cache_max) it.cache.clear();
 
 	INT32 w = it.px1 - it.px0, h = it.py1 - it.py0;
 	if (w <= 0 || h <= 0) return NULL;
@@ -1696,6 +1720,44 @@ static void art_get_scale(INT32 mode, float *psx, float *psy)
 	*psy = sy;
 }
 
+static abitmap *item_bitmap(litem &it, INT32 state);
+
+// draw everything up front (at startup and after every resize), so a scene
+// change mid-game only blends bitmaps that are already there:
+//  - every image component is rasterized at the size it's drawn at
+//  - every item's states (its components' state values + defstate) are rendered
+static void art_predraw()
+{
+	// sizes from a previous layout aren't needed any more
+	for (std::map<std::string, lelement*>::iterator e = elements.begin(); e != elements.end(); ++e)
+		for (UINT32 i = 0; i < e->second->comps.size(); i++) e->second->comps[i].raster.clear();
+
+	INT32 nstates = 0;
+	for (UINT32 i = 0; i < view->items.size(); i++) {
+		litem &it = view->items[i];
+		if (it.is_screen || it.elem == NULL) continue;
+
+		INT32 w = it.px1 - it.px0, h = it.py1 - it.py0;
+		if (w <= 0 || h <= 0) continue;
+		if (it.orient & 1) { INT32 t = w; w = h; h = t; }
+
+		lelement *e = it.elem;
+		std::vector<INT32> states;
+		states.push_back(e->defstate);
+		for (UINT32 k = 0; k < e->comps.size(); k++) {
+			lcomponent &c = e->comps[k];
+			INT32 x0, y0, x1, y1;
+			if (c.type == COMP_IMAGE && comp_rect(c, w, h, x0, y0, x1, y1)) comp_raster(c, x1 - x0, y1 - y0);
+			if (c.state != -1 && std::find(states.begin(), states.end(), c.state) == states.end()) states.push_back(c.state);
+		}
+
+		it.cache_max = states.size() + 64;
+		for (UINT32 k = 0; k < states.size(); k++) item_bitmap(it, states[k]);
+		nstates += states.size();
+	}
+	bprintf(PRINT_NORMAL, _T("Artwork: %d item states drawn\n"), nstates);
+}
+
 // work out output size and item pixel rectangles
 static void art_layout()
 {
@@ -1738,6 +1800,8 @@ static void art_layout()
 	disp.assign((size_t)disp_w * disp_h, 0);
 	bg_dirty = 1;
 	full_dirty = 1;
+
+	art_predraw();
 
 	bprintf(PRINT_NORMAL, _T("Artwork: view \"%S\", %dx%d (game screen %dx%d px)\n"), view->name.c_str(), disp_w, disp_h,
 		view->items[first_screen].px1 - view->items[first_screen].px0, view->items[first_screen].py1 - view->items[first_screen].py0);
@@ -1982,14 +2046,52 @@ static void compose_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
 	}
 }
 
+// redraw the static background in one rectangle
+static void bg_rebuild_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
+{
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 > disp_w) x1 = disp_w;
+	if (y1 > disp_h) y1 = disp_h;
+	if (x1 <= x0 || y1 <= y0) return;
+
+	clip_x0 = x0; clip_y0 = y0; clip_x1 = x1; clip_y1 = y1;
+	for (INT32 y = y0; y < y1; y++)
+		memset(&bg[(size_t)y * disp_w + x0], 0, (x1 - x0) * sizeof(UINT32));
+
+	for (INT32 i = 0; i < first_screen; i++) {
+		litem &it = view->items[i];
+		if (it.is_screen || it.px1 <= x0 || it.px0 >= x1 || it.py1 <= y0 || it.py0 >= y1) continue;
+		apply_bitmap(bg, it, item_bitmap(it, item_state(it)));
+	}
+}
+
 static void art_compose()
 {
 	fmt_update();
 
-	// static part: rebuild when an output-bound item changes state
+	// static part (below the screen): redo just the areas of items that changed
+	// state, or everything if a lot changed at once
+	std::vector<INT32> bg_changed;
+	INT64 bg_area = 0;
 	for (INT32 i = 0; i < first_screen; i++) {
 		litem &it = view->items[i];
-		if (it.elem && item_state(it) != it.last_state) { bg_dirty = 1; break; }
+		if (it.elem && item_state(it) != it.last_state) {
+			bg_changed.push_back(i);
+			bg_area += (INT64)(it.px1 - it.px0) * (it.py1 - it.py0);
+		}
+	}
+	if (bg_changed.size() > 8 || bg_area * 3 > (INT64)disp_w * disp_h) bg_dirty = 1;
+
+	if (!bg_dirty) {
+		for (UINT32 k = 0; k < bg_changed.size(); k++) {
+			litem &c = view->items[bg_changed[k]];
+			bg_rebuild_area(c.px0, c.py0, c.px1, c.py1);
+		}
+		for (UINT32 k = 0; k < bg_changed.size(); k++) {
+			litem &c = view->items[bg_changed[k]];
+			c.last_state = item_state(c);
+		}
 	}
 
 	if (bg_dirty) {
@@ -2025,6 +2127,12 @@ static void art_compose()
 		for (UINT32 k = 0; k < changed.size(); k++) {
 			litem &it = view->items[changed[k]];
 			it.last_state = item_state(it);
+		}
+
+		// background areas that changed
+		for (UINT32 k = 0; k < bg_changed.size(); k++) {
+			litem &c = view->items[bg_changed[k]];
+			compose_area(c.px0, c.py0, c.px1, c.py1);
 		}
 
 		// everything else is static, redo the game screen area(s) only

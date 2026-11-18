@@ -37,8 +37,8 @@ struct _es8712_state
 	UINT32 sample;			/* current sample number */
 	UINT32 count;			/* total samples to play */
 
-	UINT32 signal;			/* current ADPCM signal */
-	UINT32 step;			/* current ADPCM step */
+	INT32 signal;			/* current ADPCM signal */
+	INT32 step;				/* current ADPCM step */
 
 	UINT32 start;			/* starting address for the next loop */
 	UINT32 end;				/* ending address for the next loop */
@@ -231,7 +231,7 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, INT32 addSignal)
 	chip->region_base = (UINT8*)rom;
 
 	/* initialize the rest of the structure */
-	chip->signal = (UINT32)-2;
+	chip->signal = -2;
 
 	chip->sample_rate = sample_rate;
 
@@ -252,6 +252,14 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, INT32 addSignal)
 void es8712SetBuffered(INT32 (*pCPUCyclesCB)(), INT32 nCpuMhz)
 {
 	stream.set_buffered(pCPUCyclesCB, nCpuMhz);
+}
+
+// render up to the current cpu position, call it often so the end of sample irq isn't late
+void es8712Sync(INT32 device)
+{
+	if (device >= MAX_ES8712_CHIPS) return;
+
+	stream.update();
 }
 
 void es8712SetIRQ(void (*pIRQCB)(INT32))
@@ -378,9 +386,9 @@ void es8712Play(INT32 device)
 			chip->repeat = 0;
 			//bprintf(0, _T("playing.. start %x\tend %x \tcount %x\n"), chip->start, chip->end, chip->count);
 
-			/* also reset the ADPCM parameters */
-			//chip->signal = (UINT32)-2;  // makes clicks (dink)
-			//chip->step = 0;
+			/* also reset the ADPCM parameters: the msm6585 is held in reset between samples, sample data relies on it */
+			chip->signal = 0;
+			chip->step = 0;
 			reset_handler(0);
 		}
 	}

@@ -1159,6 +1159,12 @@ static struct BurnRomInfo monymonyRomDesc[] = {
 
 	{ "9g",				0x0200, 0xfc9a0f21, 5 | BRF_GRA },           // 13 Color PROMs
 	{ "9f",				0x0200, 0x93106704, 5 | BRF_GRA },           // 14
+
+	{ "82s100.ic8c",	0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 15 plds
+	{ "82s100.ic8n",	0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 16
+	{ "01_pal.ic6j",	0x0117, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 17
+	{ "01_pal.ic6k",	0x0117, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 18
+	{ "02_pal.1a",		0x0117, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 19
 };
 
 STD_ROM_PICK(monymony)
@@ -1204,6 +1210,12 @@ static struct BurnRomInfo monymony2RomDesc[] = {
 
 	{ "9g",				0x0200, 0xfc9a0f21, 5 | BRF_GRA },           // 13 Color PROMs
 	{ "9f",				0x0200, 0x93106704, 5 | BRF_GRA },           // 14
+
+	{ "82s100.ic8c",	0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 15 plds
+	{ "82s100.ic8n",	0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 16
+	{ "01_pal.ic6j",	0x0117, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 17
+	{ "01_pal.ic6k",	0x0117, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 18
+	{ "02_pal.1a",		0x0117, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 19
 };
 
 STD_ROM_PICK(monymony2)
@@ -1215,6 +1227,51 @@ struct BurnDriver BurnDrvMonymony2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
 	NULL, monymony2RomInfo, monymony2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, MonymonyDIPInfo,
+	monymonyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Money Money (set 3)
+// Original Zaccaria PCBs, ASSA (Automave) stickers on ROMs, only one byte of cpu1.1a differs from set 2
+
+static struct BurnRomInfo monymony3RomDesc[] = {
+	{ "cpu1.1a",			0x2000, 0x932006cd, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "a-00281_assa_m5.1b",	0x2000, 0x87372545, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a-00281_assa_m5.1c",	0x2000, 0x3c874c16, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a-00281_assa_m5.1d",	0x2000, 0x5fdec451, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a-00281_assa_m5.2a",	0x2000, 0xaf830e3c, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "a-00281_assa_m5.2c",	0x2000, 0x31da62b1, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "a-00281_assa_m5.2g",	0x2000, 0x78b01b98, 2 | BRF_PRG | BRF_ESS }, //  6 M6802 Code (Melody)
+	{ "a-00281_assa_m5.1i",	0x2000, 0x94e3858b, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "a-00281_assa_m5.1h",	0x2000, 0xaad76193, 3 | BRF_PRG | BRF_ESS }, //  8 M6802 Code (Speech)
+	{ "a-00281_assa_m5.1g",	0x2000, 0x1e8ffe3e, 3 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "a-00281_assa_m5.2d",	0x2000, 0x82ab4d1a, 4 | BRF_GRA },           // 10 Graphics
+	{ "a-00281_assa_m5.1f",	0x2000, 0x40d4e4d1, 4 | BRF_GRA },           // 11
+	{ "a-00281_assa_m5.1e",	0x2000, 0x36980455, 4 | BRF_GRA },           // 12
+
+	{ "82s123.ic9g",		0x0200, 0xfc9a0f21, 5 | BRF_GRA },           // 13 Color PROMs
+	{ "82s123.ic9f",		0x0200, 0x93106704, 5 | BRF_GRA },           // 14
+
+	{ "82s100.ic8c",		0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 15 plds
+	{ "82s100.ic8n",		0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 16
+	{ "01_pal16v8.ic6j",	0x0117, 0x38097d9b, 6 | BRF_OPT },           // 17 bad dump (bruteforced)
+	{ "01_pal16v8.ic6k",	0x0117, 0xb8f87879, 6 | BRF_OPT },           // 18 bad dump (bruteforced)
+	{ "a-00281_assa_m5_pal16l8.1a",	0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 19
+};
+
+STD_ROM_PICK(monymony3)
+STD_ROM_FN(monymony3)
+
+struct BurnDriver BurnDrvMonymony3 = {
+	"monymony3", "monymony", NULL, NULL, "1983",
+	"Money Money (set 3)\0", NULL, "Zaccaria", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_MAZE, 0,
+	NULL, monymony3RomInfo, monymony3RomName, NULL, NULL, NULL, NULL, DrvInputInfo, MonymonyDIPInfo,
 	monymonyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
@@ -1248,8 +1305,11 @@ static struct BurnRomInfo jackrabtRomDesc[] = {
 	{ "jr-ic9g",		0x0200, 0x85577107, 5 | BRF_GRA },           // 18 Color PROMs
 	{ "jr-ic9f",		0x0200, 0x085914d1, 5 | BRF_GRA },           // 19
 
-	{ "jr-pal16l8.6j",	0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT },           // 20 plds
-	{ "jr-pal16l8.6k",	0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT },           // 21
+	{ "82s100.ic8c",	0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 20 plds
+	{ "82s100.ic8n",	0x00f5, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 21
+	{ "jr-pal16l8.6j",	0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 22
+	{ "jr-pal16l8.6k",	0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 23
+	{ "jr-pal.1a",		0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 24
 };
 
 STD_ROM_PICK(jackrabt)
@@ -1293,13 +1353,14 @@ static struct BurnRomInfo jackrabt2RomDesc[] = {
 	{ "2bg.1f",			0x2000, 0xafc04cd7, 4 | BRF_GRA },           // 11
 	{ "3bg.1e",			0x2000, 0x14f23cdd, 4 | BRF_GRA },           // 12
 
-	{ "jr-ic9g",		0x0200, 0x85577107, 5 | BRF_GRA },           // 13 Color PROMs
-	{ "jr-ic9f",		0x0200, 0x085914d1, 5 | BRF_GRA },           // 14
+	{ "jr.ic9g",		0x0200, 0x85577107, 5 | BRF_GRA },           // 13 Color PROMs
+	{ "jr.ic9f",		0x0200, 0x085914d1, 5 | BRF_GRA },           // 14
 
-	{ "pal16l8.6j",		0x0104, 0xa88e52d6, 6 | BRF_OPT },           // 15 plds
-	{ "pal16l8.6k",		0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT },           // 16
-	{ "82s100.8c",		0x00f5, 0x70ddfa6d, 6 | BRF_OPT },           // 17
-	{ "82s100.8n",		0x00f5, 0xe00625ee, 6 | BRF_OPT },           // 18
+	{ "82s100.ic8c",	0x00f5, 0x70ddfa6d, 6 | BRF_OPT },           // 15 plds
+	{ "82s100.ic8n",	0x00f5, 0xe00625ee, 6 | BRF_OPT },           // 16
+	{ "pal16l8.6j",		0x0104, 0xa88e52d6, 6 | BRF_OPT },           // 17
+	{ "pal16l8.6k",		0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 18
+	{ "pal.1a",			0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 19
 };
 
 STD_ROM_PICK(jackrabt2)
@@ -1343,8 +1404,14 @@ static struct BurnRomInfo jackrabtsRomDesc[] = {
 	{ "2bg.1f",			0x2000, 0xafc04cd7, 4 | BRF_GRA },           // 11
 	{ "3bg.1e",			0x2000, 0x14f23cdd, 4 | BRF_GRA },           // 12
 
-	{ "jr-ic9g",		0x0200, 0x85577107, 5 | BRF_GRA },           // 13 Color PROMs
-	{ "jr-ic9f",		0x0200, 0x085914d1, 5 | BRF_GRA },           // 14
+	{ "jr.ic9g",		0x0200, 0x85577107, 5 | BRF_GRA },           // 13 Color PROMs
+	{ "jr.ic9f",		0x0200, 0x085914d1, 5 | BRF_GRA },           // 14
+
+	{ "82s100.ic8c",	0x00f5, 0x70ddfa6d, 6 | BRF_OPT },           // 15 plds
+	{ "82s100.ic8n",	0x00f5, 0xe00625ee, 6 | BRF_OPT },           // 16
+	{ "pal.6j",			0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 17
+	{ "pal.6k",			0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 18
+	{ "pal.1a",			0x0104, 0x00000000, 6 | BRF_NODUMP | BRF_OPT }, // 19
 };
 
 STD_ROM_PICK(jackrabts)

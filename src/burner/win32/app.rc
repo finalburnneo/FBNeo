@@ -1263,6 +1263,10 @@ BEGIN
              MENUITEM "&Quadruple size",				MENU_QUADSIZEWINDOW
              MENUITEM "&Maximum size",					MENU_MAXIMUMSIZEWINDOW
         END
+        POPUP "A&rtwork"
+        BEGIN
+             MENUITEM "(no artwork loaded)",				MENU_ARTWORK_NONE, GRAYED
+        END
         MENUITEM SEPARATOR
         MENUITEM "Toggle &fullscreen mode\tAlt+Enter",			MENU_FULL
         MENUITEM "Auto Switch to Fullscreen after loading",		MENU_AUTOSWITCHFULL

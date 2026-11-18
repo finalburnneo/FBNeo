@@ -18,6 +18,7 @@ HMENU hMenuPopup = NULL;
 HWND hMenubar = NULL;			  			// Handle to the Toolbar control comprising the menu
 static HMENU hBlitterMenu[8] = {NULL, };	// Handles to the blitter-specific sub-menus
 static HMENU hD3D11RecentMenu = NULL;		// "Recent shaders" sub-menu of the Direct3D 11 blitter
+static HMENU hArtworkMenu = NULL;			// "Video > Artwork" sub-menu
 
 // Find the (sub) menu that contains the item nID
 static HMENU MenuFindItemParent(HMENU hParent, UINT nID)
@@ -35,6 +36,51 @@ static HMENU MenuFindItemParent(HMENU hParent, UINT nID)
 		}
 	}
 	return NULL;
+}
+
+// Rebuild the "Artwork" sub-menu: the artwork's views and its on/off parts
+// (MAME layout collections: overlay, backdrop, bezel, marquee, control panel...)
+static void MenuUpdateArtwork()
+{
+	if (hArtworkMenu == NULL) {
+		return;
+	}
+
+	while (GetMenuItemCount(hArtworkMenu) > 0) {
+		DeleteMenu(hArtworkMenu, 0, MF_BYPOSITION);
+	}
+
+	if (!bDrvOkay || !BurnArtworkActive()) {
+		AppendMenu(hArtworkMenu, MF_STRING | MF_GRAYED, MENU_ARTWORK_NONE, _T("(no artwork loaded)"));
+		return;
+	}
+
+	TCHAR szItem[128];
+	int nViews = BurnArtworkGetViewCount();
+	if (nViews > 1) {
+		for (int i = 0; i < nViews && i < 32; i++) {
+			_sntprintf(szItem, 127, _T("%s"), ANSIToTCHAR(BurnArtworkGetViewName(i), NULL, 0));
+			szItem[127] = 0;
+			for (TCHAR* p = szItem; *p; p++) if (*p == _T('_')) *p = _T(' ');
+			AppendMenu(hArtworkMenu, MF_STRING, MENU_ARTWORK_VIEW + i, szItem);
+		}
+		CheckMenuRadioItem(hArtworkMenu, MENU_ARTWORK_VIEW, MENU_ARTWORK_VIEW + nViews - 1, MENU_ARTWORK_VIEW + BurnArtworkGetView(), MF_BYCOMMAND);
+		AppendMenu(hArtworkMenu, MF_SEPARATOR, 0, NULL);
+	}
+
+	int nToggles = BurnArtworkGetToggleCount();
+	for (int i = 0; i < nToggles && i < 32; i++) {
+		_sntprintf(szItem, 127, _T("%s"), ANSIToTCHAR(BurnArtworkGetToggleName(i), NULL, 0));
+		szItem[127] = 0;
+		for (TCHAR* p = szItem; *p; p++) if (*p == _T('_')) *p = _T(' ');
+		AppendMenu(hArtworkMenu, MF_STRING | (BurnArtworkGetToggle(i) ? MF_CHECKED : MF_UNCHECKED), MENU_ARTWORK_TOGGLE + i, szItem);
+	}
+	if (nToggles == 0) {
+		AppendMenu(hArtworkMenu, MF_STRING | MF_GRAYED, MENU_ARTWORK_NONE, _T("(nothing to switch in this view)"));
+	}
+
+	AppendMenu(hArtworkMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenu(hArtworkMenu, MF_STRING, MENU_ARTWORK_RESET, _T("Reset to defaults"));
 }
 
 // Rebuild the list of recently used Direct3D 11 shaders
@@ -725,6 +771,7 @@ int MenuCreate()
 		hBlitterMenu[4] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_5));	// DirectX 9 Alt
 		hBlitterMenu[5] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_BLITTER_6));	// Direct3D 11
 		hD3D11RecentMenu = MenuFindItemParent(hBlitterMenu[5], MENU_D3D11_SHADER_MRU);
+		hArtworkMenu = MenuFindItemParent(hMenu, MENU_ARTWORK_NONE);		// NULL with an older translated menu
 
 		hAudioPluginMenu[0] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_1));
 		hAudioPluginMenu[1] = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_AUD_PLUGIN_2));
@@ -1043,6 +1090,7 @@ void MenuUpdate()
 //	}
 
 	CreateStateslotItems();
+	MenuUpdateArtwork();
 
 	CheckMenuItem(hMenu, MENU_PAUSE, bAltPause ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_ALLRAM, bDrvSaveAll ? MF_CHECKED : MF_UNCHECKED);

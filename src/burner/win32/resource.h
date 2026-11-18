@@ -1156,6 +1156,11 @@
 
 #define MENU_HOTKEYS                        11960
 
+#define MENU_ARTWORK_NONE					12100	// "Artwork" sub-menu, rebuilt for each game
+#define MENU_ARTWORK_RESET					12101
+#define MENU_ARTWORK_VIEW					12110	// 12110 - 12141: views
+#define MENU_ARTWORK_TOGGLE					12150	// 12150 - 12181: collections (overlay, bezel, ...)
+
 // Next default values for new objects
 //
 #ifdef APSTUDIO_INVOKED

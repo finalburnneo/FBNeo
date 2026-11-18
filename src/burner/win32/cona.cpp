@@ -506,6 +506,7 @@ int ConfigAppLoad()
 		VAR(nBurnArtworkView);
 		VAR(nBurnArtworkMaxHeight);
 		VAR(nBurnArtworkScale);
+		STR(szBurnArtworkToggles);
 		VAR(BurnShiftEnabled);
 		VAR(bBurnGunDrawReticles);
 		VAR(bBurnGunPositionalMode);
@@ -1044,6 +1045,8 @@ int ConfigAppSave()
 	VAR(nBurnArtworkMaxHeight);
 	_ftprintf(h, _T("// Artwork render size: -1 = match the window / fullscreen size (sharpest), 1 = game screen at the game's own\n// resolution, 2-4 = game screen at 2x-4x, 0 = largest integer size that fits nBurnArtworkMaxHeight.\n"));
 	VAR(nBurnArtworkScale);
+	_ftprintf(h, _T("// Default on/off for the artwork's parts (MAME layout collections), for games without their own\n// config/games/<game>_art.ini (Video > Artwork writes that). Comma separated, applied in order, '-' = off,\n// * and ? wildcards, not case sensitive, '_' = ' '. Empty = as the layout says. Examples:\n//   -Marquee*, -Control*     (no marquees or control panels)\n//   -*, Bezel*, Overlay*     (only bezels and overlays)\n"));
+	STR(szBurnArtworkToggles);
 
 	_ftprintf(h, _T("\n// If non-zero, enable gear shifter display support.\n"));
 	VAR(BurnShiftEnabled);

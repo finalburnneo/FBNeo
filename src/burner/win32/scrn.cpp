@@ -2447,8 +2447,28 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_ARTWORK_RESET:
+			if (bDrvOkay && BurnArtworkResetSettings()) {
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+
 		// PGM2 per-slot card operations (IDs 10040..10055)
 		default:
+			// Artwork views / parts (the artwork's size can change: re-initialise like a window size change)
+			if (id >= MENU_ARTWORK_VIEW && id < MENU_ARTWORK_VIEW + 32) {
+				if (bDrvOkay && BurnArtworkSetView(id - MENU_ARTWORK_VIEW)) {
+					POST_INITIALISE_MESSAGE;
+				}
+				break;
+			}
+			if (id >= MENU_ARTWORK_TOGGLE && id < MENU_ARTWORK_TOGGLE + 32) {
+				int n = id - MENU_ARTWORK_TOGGLE;
+				if (bDrvOkay && BurnArtworkSetToggle(n, !BurnArtworkGetToggle(n))) {
+					POST_INITIALISE_MESSAGE;
+				}
+				break;
+			}
 #ifdef BUILD_PGM2
 			if (id >= MENU_MEMCARD_PGM2_BASE && id < MENU_MEMCARD_PGM2_BASE + 16) {
 				int slot = (id - MENU_MEMCARD_PGM2_BASE) / 4;

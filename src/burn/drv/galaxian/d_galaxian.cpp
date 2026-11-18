@@ -22339,7 +22339,8 @@ void __fastcall DarkplntZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
+			if ((a&0xff00) != 0x8900) // lots of useless writes here
+				bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
 		}
 	}
 }

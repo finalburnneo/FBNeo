@@ -63,6 +63,8 @@ PNG functionality provided by libspng (https://libspng.org/).
 Zip functionality provided by zlib (http://www.zlib.net).
 Zip functionality also provided by kuba zip (https://github.com/kuba--/zip)
 FLAC and MP3 functionality provided by dr_libs (https://github.com/mackron/dr_libs).
+SVG functionality by Plutovg and plutosvg (https://github.com/sammycage/plutovg, https://github.com/sammycage/plutosvg)
+FreeType functionality by The FreeType Project (www.freetype.org)
 
 Uses Xbyak (JIT assembler for x86/x64) by Herumi (https://github.com/herumi/xbyak)
 

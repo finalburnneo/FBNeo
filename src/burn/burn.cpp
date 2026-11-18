@@ -692,9 +692,33 @@ extern "C" INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka)		// For
 	}
 }
 
+// artwork: while a driver callback runs the driver sees its own (native) size,
+// everything else (the frontend) sees the size of the composited artwork view
+static INT32 bArtworkInDriver = 0;
+
+#define ARTWORK_DRIVER_CALL(call) do { INT32 bSave = bArtworkInDriver; bArtworkInDriver = 1; call; bArtworkInDriver = bSave; } while (0)
+
+// unrotated size of the driver's own framebuffer, regardless of artwork
+extern "C" INT32 BurnDrvGetNativeSize(INT32* pnWidth, INT32* pnHeight)
+{
+	if (pDriver[nBurnDrvActive]->Flags & BDF_ORIENTATION_VERTICAL) {
+		*pnWidth =pDriver[nBurnDrvActive]->nHeight;
+		*pnHeight=pDriver[nBurnDrvActive]->nWidth;
+	} else {
+		*pnWidth =pDriver[nBurnDrvActive]->nWidth;
+		*pnHeight=pDriver[nBurnDrvActive]->nHeight;
+	}
+
+	return 0;
+}
+
 // Get the screen size
 extern "C" INT32 BurnDrvGetVisibleSize(INT32* pnWidth, INT32* pnHeight)
 {
+	if (!bArtworkInDriver && BurnArtworkGetDisplaySize(pnWidth, pnHeight)) {
+		return 0;
+	}
+
 	*pnWidth =pDriver[nBurnDrvActive]->nWidth;
 	*pnHeight=pDriver[nBurnDrvActive]->nHeight;
 
@@ -711,6 +735,13 @@ extern "C" INT32 BurnDrvGetVisibleOffs(INT32* pnLeft, INT32* pnTop)
 
 extern "C" INT32 BurnDrvGetFullSize(INT32* pnWidth, INT32* pnHeight)
 {
+	if (!bArtworkInDriver && BurnArtworkGetDisplaySize(pnWidth, pnHeight)) {
+		if (pDriver[nBurnDrvActive]->Flags & BDF_ORIENTATION_VERTICAL) {
+			INT32 t = *pnWidth; *pnWidth = *pnHeight; *pnHeight = t;
+		}
+		return 0;
+	}
+
 	if (pDriver[nBurnDrvActive]->Flags & BDF_ORIENTATION_VERTICAL) {
 		*pnWidth =pDriver[nBurnDrvActive]->nHeight;
 		*pnHeight=pDriver[nBurnDrvActive]->nWidth;
@@ -725,6 +756,10 @@ extern "C" INT32 BurnDrvGetFullSize(INT32* pnWidth, INT32* pnHeight)
 // Get screen aspect ratio
 extern "C" INT32 BurnDrvGetAspect(INT32* pnXAspect, INT32* pnYAspect)
 {
+	if (!bArtworkInDriver && BurnArtworkGetAspect(pnXAspect, pnYAspect)) {
+		return 0;
+	}
+
 	*pnXAspect = pDriver[nBurnDrvActive]->nXAspect;
 	*pnYAspect = pDriver[nBurnDrvActive]->nYAspect;
 
@@ -739,6 +774,13 @@ extern "C" INT32 BurnDrvSetVisibleSize(INT32 pnWidth, INT32 pnHeight)
 	} else {
 		pDriver[nBurnDrvActive]->nWidth = pnWidth;
 		pDriver[nBurnDrvActive]->nHeight = pnHeight;
+	}
+
+	if (BurnArtworkActive()) {
+		// driver changed its resolution: re-fit the artwork, and let the
+		// Reinitialise() that usually follows see the artwork's new size
+		BurnArtworkNativeSizeChanged();
+		bArtworkInDriver = 0;
 	}
 
 	return 0;
@@ -903,7 +945,13 @@ extern "C" INT32 BurnDrvInit()
 	BurnSoundDCFilterReset();
 	BurnTimerPreInit();
 
-	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
+	BurnOutputReset();
+
+	ARTWORK_DRIVER_CALL(nReturnValue = pDriver[nBurnDrvActive]->Init());	// Forward to drivers function
+
+	if (nReturnValue == 0) {
+		BurnArtworkInit();
+	}
 
 	if (-1 != nBurnDrvSubActive) {
 		BurnLocalisationSetNameEx();
@@ -976,7 +1024,12 @@ extern "C" INT32 BurnDrvExit()
 #endif
 	}
 
-	INT32 nRet = pDriver[nBurnDrvActive]->Exit();			// Forward to drivers function
+	BurnArtworkExit();
+
+	INT32 nRet;
+	ARTWORK_DRIVER_CALL(nRet = pDriver[nBurnDrvActive]->Exit());	// Forward to drivers function
+
+	BurnOutputReset();
 
 	nBurnDrvSubActive = -1;	// Rest to -1;
 
@@ -1044,14 +1097,24 @@ extern "C" INT32 BurnDrvFrame()
 {
 	CheatApply();									// Apply cheats (if any)
 	HiscoreApply();
-	return pDriver[nBurnDrvActive]->Frame();		// Forward to drivers function
+
+	INT32 nRet;
+	BurnArtworkFrameBegin();
+	ARTWORK_DRIVER_CALL(nRet = pDriver[nBurnDrvActive]->Frame());		// Forward to drivers function
+	BurnArtworkFrameEnd();
+
+	return nRet;
 }
 
 // Force redraw of the screen
 extern "C" INT32 BurnDrvRedraw()
 {
 	if (pDriver[nBurnDrvActive]->Redraw) {
-		return pDriver[nBurnDrvActive]->Redraw();	// Forward to drivers function
+		INT32 nRet;
+		BurnArtworkFrameBegin();
+		ARTWORK_DRIVER_CALL(nRet = pDriver[nBurnDrvActive]->Redraw());	// Forward to drivers function
+		BurnArtworkFrameEnd();
+		return nRet;
 	}
 
 	return 1;										// No funtion provide, so simply return
@@ -1246,8 +1309,10 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 
 	// Forward to the driver
 	if (pDriver[nBurnDrvActive]->AreaScan) {
-		nRet |= pDriver[nBurnDrvActive]->AreaScan(nAction, pnMin);
+		ARTWORK_DRIVER_CALL(nRet |= pDriver[nBurnDrvActive]->AreaScan(nAction, pnMin));
 	}
+
+	BurnArtworkScan(nAction);
 
 #ifdef __LIBRETRO__
 	// standalone method to handle hiscores with runahead

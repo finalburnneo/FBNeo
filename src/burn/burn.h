@@ -65,6 +65,7 @@ extern TCHAR szAppBlendPath[MAX_PATH];
 extern TCHAR szAppEEPROMPath[MAX_PATH];
 extern TCHAR szAppSnesMsu1Path[MAX_PATH];	// SNES MSU-1 media root
 extern TCHAR szAppOstPath[MAX_PATH];		// OST packs (burn_ost)
+extern TCHAR szAppArtworkPath[MAX_PATH];	// MAME artwork packs (burn_artwork)
 
 // Macro to determine the size of a struct up to and including "member"
 #define STRUCT_SIZE_HELPER(type, member) offsetof(type, member) + sizeof(((type*)0)->member)
@@ -346,6 +347,16 @@ extern bool bSpeedLimit60hz;
 extern double dForcedFrameRate;
 
 extern bool bBurnUseBlend;
+
+// MAME artwork (.lay) support, see burn_artwork.h
+extern INT32 bBurnArtworkEnable;			// load MAME artwork packs (default 1)
+extern INT32 nBurnArtworkView;				// artwork view to use (0 = first view with a screen)
+extern INT32 nBurnArtworkMaxHeight;		// cap for the composited artwork height (default 2160)
+extern INT32 nBurnArtworkScale;			// game screen size: -1 = fit the frontend's window / fullscreen (default),
+											// N = N x native, 0 = fit nBurnArtworkMaxHeight
+INT32 BurnArtworkActive();
+INT32 BurnArtworkGetBaseSize(INT32 *pnWidth, INT32 *pnHeight);	// size to base the window size on (1 if active)
+INT32 BurnArtworkSetTargetSize(INT32 nWidth, INT32 nHeight);		// output area, display orientation (1 if size changed)
 
 extern INT32 nBurnFPS;
 extern INT32 nBurnCPUSpeedAdjust;

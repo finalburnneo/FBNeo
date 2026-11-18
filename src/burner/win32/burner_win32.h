@@ -289,6 +289,7 @@ extern int nSavestateSlot;
 int ScrnInit();
 int ScrnExit();
 int ScrnSize();
+void ScrnSetArtworkTarget();
 int ScrnTitle();
 void SetPauseMode(bool bPause);
 int ActivateChat();

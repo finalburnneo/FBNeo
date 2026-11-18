@@ -4,7 +4,7 @@ alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/atari burn/drv/capcom bur
 			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/arm9 cpu/e132xs cpu/f8 cpu/h6280 cpu/hd6309 cpu/hmcs40 cpu/i386 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/i8085 cpu/adsp2100 cpu/konami cpu/m377 cpu/mips3 cpu/m68k \
 			cpu/mb88xx cpu/m6502 cpu/m6800 cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/rv32 cpu/s2650 cpu/tlcs90 cpu/tlcs900 cpu/sh2 cpu/sh4 cpu/t11 cpu/tms32010 cpu/tms34 cpu/upd7725 cpu/upd7810 \
 			cpu/v60 cpu/xa cpu/z80 cpu/z180 cpu/z8000 \
-			dep/libs/dr_libs dep/libs/stb_vorbis dep/libs/r8brain dep/libs/r8brain/fft dep/libs/libchdr dep/libs/libchdr/include dep/libs/lzma dep/libs/lzma/include dep/libs/zstd
+			dep/libs/dr_libs dep/libs/stb_vorbis dep/libs/r8brain dep/libs/r8brain/fft dep/libs/libchdr dep/libs/libchdr/include dep/libs/lzma dep/libs/lzma/include dep/libs/zstd dep/libs/plutosvg
 
 drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atari2600.o d_atarig1.o d_atarisy1.o d_atarisy2.o d_badlands.o d_batman.o d_blstroid.o d_eprom.o d_gauntlet.o d_klax.o d_marblmd2.o d_missile.o d_offtwall.o d_rampart.o \
 			d_relief.o d_shuuz.o d_skullxbo.o d_thunderj.o d_toobin.o d_tunhunt.o d_vindictr.o d_xybots.o \
@@ -65,7 +65,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atari2600.o d_atarig1.o d_atarisy1.o d_ata
 			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_akazukin.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_amspdwy.o d_arabian.o d_argus.o d_armedf.o \
 			d_asteroids.o d_astrocde.o d_atetris.o d_aztarac.o d_bagman.o d_baraduke.o d_battlane.o d_battlex.o d_bbusters.o d_beaminv.o d_berzerk.o d_bionicc.o d_blktiger.o \
 			d_blockade.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_bwidow.o d_bzone.o d_cabal.o d_calorie.o d_canyon.o d_capbowl.o \
-			d_carjmbre.o d_cbasebal.o d_ccastles.o d_cclimber.o d_champbas.o d_cheekyms.o d_chinagat.o d_circus.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
+			d_carjmbre.o d_cbasebal.o d_ccastles.o d_cclimber.o d_champbas.o d_cheekyms.o d_chinagat.o d_cinemat.o d_circus.o d_citycon.o d_cloak.o d_cloud9.o d_clshroad.o d_commando.o d_cop01.o d_copsnrob.o \
 			d_cybertnk.o d_dacholer.o d_darkmist.o d_dday.o d_ddayjlc.o d_ddragon.o d_deadang.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_dorachan.o d_dribling.o d_drmicro.o \
 			d_dynduke.o d_efdt.o d_epos.o d_equites.o d_espial.o d_ettrivia.o d_exedexes.o d_exerion.o d_exidy.o d_exidy440.o d_exprraid.o d_exterm.o d_fantland.o d_fastfred.o d_fcombat.o d_firetrap.o d_flipjack.o d_flower.o d_foodf.o \
 			d_freekick.o d_funkybee.o d_galaga.o d_galgame.o d_galivan.o d_gaplus.o d_ginganin.o d_gng.o d_goindol.o d_gotya.o d_gridlee.o d_gunsmoke.o d_headonb.o d_higemaru.o \
@@ -106,7 +106,7 @@ drvsrc	= 	d_akkaarrh.o d_arcadecl.o d_atari2600.o d_atarig1.o d_atarisy1.o d_ata
 			\
 			d_spectrum.o spectrum.o
 			
-depobj	= 	burn.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o \
+depobj	= 	burn.o burn_artwork.o plutosvg_all.o burn_bitmap.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o \
 			load.o burn_sha1.o tilemap_generic.o tiles_generic.o timer.o vector.o burn_hdd.o \
 			\
 			6821pia.o 6840ptm.o 74259.o i8255.o 8255ppi.o 8257dma.o alpha8201.o ad59mc07.o c169.o cxd1095.o atariic.o atarijsa.o atarimo.o atarirle.o atarivad.o avgdvg.o bsmt2000.o decobsmt.o ds2404.o dtimer.o earom.o eeprom.o epic12.o gaelco_crypt.o i2ceeprom.o i4x00.o i8155.o i8255.o intelfsh.o \

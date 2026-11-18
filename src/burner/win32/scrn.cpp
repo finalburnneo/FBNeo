@@ -868,9 +868,69 @@ INT32 CreateAllDatfilesWindows(bool bSilent, const TCHAR* pszSpecDir)
 	return nRet;
 }
 
+// MAME artwork in auto-size mode (nBurnArtworkScale < 0) is rendered at the size
+// of the window / fullscreen, so the blitter shows it 1:1 and it stays crisp.
+static bool bInSizeMove = false;
+static int nArtTargetW = 0, nArtTargetH = 0;
+
+static bool ScrnGetArtworkTarget(int *pw, int *ph)
+{
+	if (!bDrvOkay || nBurnArtworkScale >= 0 || !BurnArtworkActive() || hScrnWnd == NULL) {
+		return false;
+	}
+
+	int w, h;
+	if (nVidFullscreen) {
+		MONITORINFO mi;
+		memset(&mi, 0, sizeof(mi));
+		mi.cbSize = sizeof(mi);
+		GetMonitorInfo(MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTOPRIMARY), &mi);
+		w = mi.rcMonitor.right - mi.rcMonitor.left;
+		h = mi.rcMonitor.bottom - mi.rcMonitor.top;
+	} else {
+		RECT rect;
+		if (IsIconic(hScrnWnd) || !GetClientRect(hScrnWnd, &rect)) {
+			return false;
+		}
+		w = rect.right - rect.left;
+		h = rect.bottom - rect.top - nMenuHeight;
+	}
+
+	if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
+		int t = w; w = h; h = t;	// shown sideways
+	}
+
+	if (w < 16 || h < 16) {
+		return false;
+	}
+
+	*pw = w;
+	*ph = h;
+	return true;
+}
+
+// called by VidInit() before the blitter is initialised
+void ScrnSetArtworkTarget()
+{
+	int w, h;
+	if (ScrnGetArtworkTarget(&w, &h)) {
+		nArtTargetW = w;
+		nArtTargetH = h;
+		BurnArtworkSetTargetSize(w, h);
+	}
+}
+
 // Returns true if a VidInit is needed when the window is resized
 static bool VidInitNeeded()
 {
+	// artwork in auto-size mode: re-render at the new size (but not while dragging)
+	if (!bInSizeMove) {
+		int w, h;
+		if (ScrnGetArtworkTarget(&w, &h) && (w != nArtTargetW || h != nArtTargetH)) {
+			return true;
+		}
+	}
+
 	// D3D blitter needs to re-initialise only when auto-size RGB effects are enabled
 	if (nVidSelect == 1 && (nVidBlitterOpt[nVidSelect] & 0x00030000) == 0x00030000) {
 		return true;
@@ -4653,6 +4713,8 @@ static void OnEnterSizeMove(HWND)
 
 	AudBlankSound();
 
+	bInSizeMove = true;
+
 	GetClientRect(hScrnWnd, &rect);
 	nPrevWidth = rect.right;
 	nPrevHeight = rect.bottom;
@@ -4661,6 +4723,8 @@ static void OnEnterSizeMove(HWND)
 static void OnExitSizeMove(HWND)
 {
 	RECT rect;
+
+	bInSizeMove = false;
 
 	GetClientRect(hScrnWnd, &rect);
 	if (rect.right != nPrevWidth || rect.bottom != nPrevHeight) {
@@ -4756,9 +4820,11 @@ int ScrnSize()
 		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && (nVidRotationAdjust & 1)) {
 			BurnDrvGetVisibleSize(&nBmapHeight, &nBmapWidth);
 			BurnDrvGetAspect(&nGameAspectY, &nGameAspectX);
+			BurnArtworkGetBaseSize(&nBmapHeight, &nBmapWidth);	// artwork: size the window from the 1x artwork, not the window
 		} else {
 			BurnDrvGetVisibleSize(&nBmapWidth, &nBmapHeight);
 			BurnDrvGetAspect(&nGameAspectX, &nGameAspectY);
+			BurnArtworkGetBaseSize(&nBmapWidth, &nBmapHeight);
 		}
 
 		if (nBmapWidth <= 0 || nBmapHeight <= 0) {

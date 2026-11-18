@@ -20,15 +20,13 @@
 // dirtfoxj
 // finehour
 // luckywld
+// bubbletr	- needs artwork: support/artwork/bubbletr.zip homebrew https://github.com/Widge-5/bubbletr-mame-artwork
+// gollygho	- needs artwork: support/artwork/gollygho.zip
 
 // near-good:
 // fourtrax	- better now -dink 2021
 // finallap*
 // suzuka8*
-
-//wip:
-// bubbletr	- ok, missing artwork (flipped)
-// gollygho	- ok, missing artwork (flipped)
 
 //-timing notes- 240+16 fixes both
 //vbl@240 sgunner after coin up, add more coins and coins# flickers
@@ -158,6 +156,8 @@ static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
 static INT32 is_metlhawk = 0;
 static INT32 is_phelios = 0;
+static INT32 is_gollygho = 0; // golly ghost, bubble trouble: guns on an0-3, lamp/7seg outputs
+static void gollygho_outputs(INT32 offset, UINT8 data); // forward
 
 static INT32 weird_vbl = 0;
 
@@ -300,6 +300,27 @@ static struct BurnInputInfo SgunnerInputList[] = {
 
 STDINPUTINFO(Sgunner)
 
+static struct BurnInputInfo GollyghoInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    	"mouse x-axis"),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    	"mouse y-axis"),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"mouse button 1"},
+
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    	"p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    	"p2 y-axis"	),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",			BIT_DIPSWITCH,  DrvDips + 1,    "dip"       },
+};
+
+STDINPUTINFO(Gollygho)
+
 static struct BurnInputInfo DirtfoxInputList[] = {
 	{"Coin",			BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 
@@ -369,6 +390,30 @@ static struct BurnDIPInfo DefaultDIPList[]=
 };
 
 STDDIPINFO(Default)
+
+// Golly! Ghost! / Bubble Trouble (MAME: NAMCOS2_MCU_DIPSW_DEFAULT + PORT_C)
+// test mode is DSW bit 7; MCU port C bit 6 is the "Service Button" (MAME key 9),
+// hold it while entering test mode for the gun calibration
+static struct BurnDIPInfo GollyghoDIPList[]=
+{
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0xff, NULL				},
+	{0x01, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x00, 0x01, 0x01, 0x01, "Normal"			},
+	{0x00, 0x01, 0x01, 0x00, "Frozen"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x00, 0x01, 0x80, 0x80, "Off"				},
+	{0x00, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Button (hold)"	},
+	{0x01, 0x01, 0x40, 0x40, "Off"				},
+	{0x01, 0x01, 0x40, 0x00, "On"				},
+};
+
+STDDIPINFO(Gollygho)
 
 static struct BurnDIPInfo FinallapDIPList[]= // finallap 1-3
 {
@@ -733,6 +778,7 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xff0000) == 0x460000) {
 		DrvDPRAM[(address & 0xffe)/2] = data & 0xff;
+		if (is_gollygho) gollygho_outputs((address & 0xffe)/2, data & 0xff);
 		return;
 	}
 
@@ -791,6 +837,7 @@ static void __fastcall namcos2_68k_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xff0000) == 0x460000) {
 		DrvDPRAM[(address & 0xffe)/2] = data;
+		if (is_gollygho && (address & 1)) gollygho_outputs((address & 0xffe)/2, data);
 		return;
 	}
 
@@ -1096,7 +1143,16 @@ static void mcu_analog_ctrl_write(UINT8 data)
 	{
 		mcu_analog_complete = 2;
 
-		if (uses_gun && !is_luckywld) {
+		if (is_gollygho) {
+			switch ((data >> 2) & 7)
+			{
+				case 0: mcu_analog_data = 0xff - BurnGunReturnX(0); break; // an0
+				case 1: mcu_analog_data = 0xff - BurnGunReturnY(0); break; // an1
+				case 2: mcu_analog_data = 0xff - BurnGunReturnX(1); break; // an2
+				case 3: mcu_analog_data = 0xff - BurnGunReturnY(1); break; // an3
+				default: mcu_analog_data = 0xff; break; // an4-7 unused
+			}
+		} else if (uses_gun && !is_luckywld) {
 			switch ((data >> 2) & 7)
 			{
 				case 0: mcu_analog_data = 0; break; // an0
@@ -1153,6 +1209,50 @@ static void mcu_analog_ctrl_write(UINT8 data)
 		hd63705SetIrqLine(7, CPU_IRQSTATUS_ACK);
 		m6805Run(1);
 		hd63705SetIrqLine(7, CPU_IRQSTATUS_NONE);
+	}
+}
+
+// golly ghost / bubble trouble: lamps (dioramas), gun recoil and 7-segment
+// score displays for the artwork.  like MAME, this snoops the dpram writes
+static void gollygho_outputs(INT32 offset, UINT8 data)
+{
+	switch (offset)
+	{
+		case 0xc0/2: {
+			// golly ghost: 0 toybox, 1 bathroom, 2 bureau, 3 refrigerator, 4 porch, 5 backlight
+			// bubble trouble: 0 shell, 1 trapdoor, 2 ship, 3 chest, 4 unused?, 5 backlight
+			INT32 on = (data >> 7) & 1;
+			for (INT32 i = 0; i < 5; i++)
+				BurnOutputSetIndexed("diorama", i, on & (data >> i));
+			BurnOutputSetIndexed("diorama", 5, on);
+			BurnOutputSetIndexed("gun_recoil", 0, on & (data >> 5));
+			BurnOutputSetIndexed("gun_recoil", 1, on & (data >> 6));
+
+			// older artwork packs (e.g. Mr. Do's gollygho.zip) use MAME 0.2xx's names
+			BurnOutputSet("dollhouse",    on);
+			BurnOutputSet("toybox",       on & (data >> 0));
+			BurnOutputSet("bathroom",     on & (data >> 1));
+			BurnOutputSet("bureau",       on & (data >> 2));
+			BurnOutputSet("refrigerator", on & (data >> 3));
+			BurnOutputSet("porch",        on & (data >> 4));
+			BurnOutputSet("Player1_Gun_Recoil", on & (data >> 5));
+			BurnOutputSet("Player2_Gun_Recoil", on & (data >> 6));
+		}
+		break;
+
+		case 0xc4/2: case 0xc6/2: case 0xc8/2: case 0xca/2: {
+			// 6/9 have no roof/tail, so presume 7448
+			static const UINT8 ls48_map[0x10] = { 0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7c,0x07,0x7f,0x67,0x58,0x4c,0x62,0x69,0x78,0x00 };
+			INT32 group = (offset << 1) - 0xc4;
+			BurnOutputSetIndexed("digit", group | 0, ls48_map[(data >> 4) & 0xf]);
+			BurnOutputSetIndexed("digit", group | 1, ls48_map[data & 0xf]);
+
+			// older artwork packs: raw bcd digits by name
+			static const char *old_names[8] = { "zip100", "zip10", "zip1", "time10", "time1", "zap100", "zap10", "zap1" };
+			BurnOutputSet(old_names[group | 0], (data >> 4) & 0xf);
+			BurnOutputSet(old_names[group | 1], data & 0xf);
+		}
+		break;
 	}
 }
 
@@ -2299,6 +2399,7 @@ static INT32 Namcos2Exit()
 	is_luckywld = 0;
 	is_metlhawk = 0;
 	is_phelios = 0;
+	is_gollygho = 0;
 
 	weird_vbl = 0;
 
@@ -2465,8 +2566,9 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(ctrl[3 + layer * 4]) + y_offset) ^ flipscreen) % sizey_full;
 
 	if (flipscreen) {
-		scrolly += 256 + 16;
-		scrollx += 256;
+		// matches MAME's c123 (scroll = -(data & 0x1ff), flipped about the 288x224 visible area)
+		scrolly += 289;
+		scrollx += 225;
 
 		scrollx %= sizex_full;
 		scrolly %= sizey_full;
@@ -3609,8 +3711,13 @@ static INT32 DrvFrame()
 		}
 
 		if (uses_gun) {
-			BurnGunMakeInputs(0, (INT16)DrvGun0, (INT16)DrvGun1);
-			BurnGunMakeInputs(1, (INT16)DrvGun2, (INT16)DrvGun3);
+			if (is_gollygho) { // ROT180: reverse so the reticle follows the mouse on screen
+				BurnGunMakeInputs(0, -(INT16)DrvGun0, -(INT16)DrvGun1);
+				BurnGunMakeInputs(1, -(INT16)DrvGun2, -(INT16)DrvGun3);
+			} else {
+				BurnGunMakeInputs(0, (INT16)DrvGun0, (INT16)DrvGun1);
+				BurnGunMakeInputs(1, (INT16)DrvGun2, (INT16)DrvGun3);
+			}
 		}
 
 	}
@@ -6182,17 +6289,30 @@ static UINT16 gollygho_key_read(UINT8 offset)
 	return BurnRandom();
 }
 
+static INT32 GollyghoCommonInit(UINT16 (*key_read)(UINT8))
+{
+	INT32 nRet = Namcos2Init(NULL, key_read);
+
+	if (nRet == 0) {
+		is_gollygho = 1;
+		uses_gun = 1;
+		BurnGunInit(2, false);
+	}
+
+	return nRet;
+}
+
 static INT32 GollyghoInit()
 {
-	return Namcos2Init(NULL, gollygho_key_read);
+	return GollyghoCommonInit(gollygho_key_read);
 }
 
 struct BurnDriver BurnDrvGollygho = {
 	"gollygho", NULL, NULL, NULL, "1990",
-	"Golly! Ghost!\0", NULL, "Namco", "System 2",
+	"Golly! Ghost!\0", "Requires artwork", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, gollyghoRomInfo, gollyghoRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //GollyghoInputInfo, GollyghoDIPInfo,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, gollyghoRomInfo, gollyghoRomName, NULL, NULL, NULL, NULL, GollyghoInputInfo, GollyghoDIPInfo,
 	GollyghoInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -6221,7 +6341,7 @@ static struct BurnRomInfo bubbletrRomDesc[] = {
 
 	{ "bt1-chr0.11n",	0x80000, 0x11574c30, 0x06 | BRF_GRA },           // 11 Layer Tiles
 
-	{ "bt1-sha0.7n",	0x80000, 0xdc4664df, 0x07 | BRF_GRA },           // 12 Layer Tiles Mask Data
+	{ "bt1-sha0.7n",	0x80000, 0xdc4664df, 0x08 | BRF_GRA },           // 12 Layer Tiles Mask Data
 
 	{ "bt1_dat0.13s",	0x20000, 0x1001a14e, 0x09 | BRF_PRG | BRF_ESS }, // 13 Shared 68K Data
 	{ "bt1_dat1.13p",	0x20000, 0x7de6a839, 0x09 | BRF_PRG | BRF_ESS }, // 14
@@ -6251,15 +6371,15 @@ static UINT16 bubbletr_key_read(UINT8 offset)
 
 static INT32 BubbletrInit()
 {
-	return Namcos2Init(NULL, bubbletr_key_read);
+	return GollyghoCommonInit(bubbletr_key_read);
 }
 
 struct BurnDriver BurnDrvBubbletr = {
 	"bubbletr", NULL, NULL, NULL, "1992",
-	"Bubble Trouble - Golly! Ghost! 2 (World, Rev B)\0", NULL, "Namco", "System 2",
+	"Bubble Trouble - Golly! Ghost! 2 (World, Rev B)\0", "Requires artwork", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bubbletrRomInfo, bubbletrRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //BubbletrInputInfo, BubbletrDIPInfo,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bubbletrRomInfo, bubbletrRomName, NULL, NULL, NULL, NULL, GollyghoInputInfo, GollyghoDIPInfo,
 	BubbletrInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -6305,10 +6425,10 @@ STD_ROM_FN(bubbletrj)
 
 struct BurnDriver BurnDrvBubbletrj = {
 	"bubbletrj", "bubbletr", NULL, NULL, "1992",
-	"Bubble Trouble - Golly! Ghost! 2 (Japan, Rev C)\0", NULL, "Namco", "System 2",
+	"Bubble Trouble - Golly! Ghost! 2 (Japan, Rev C)\0", "Requires artwork", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bubbletrjRomInfo, bubbletrjRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //BubbletrInputInfo, BubbletrDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bubbletrjRomInfo, bubbletrjRomName, NULL, NULL, NULL, NULL, GollyghoInputInfo, GollyghoDIPInfo,
 	BubbletrInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };

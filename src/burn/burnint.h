@@ -16,6 +16,7 @@
 #include "burn_sound.h"
 #include "joyprocess.h"
 #include "burn_endian.h"
+#include "burn_artwork.h"
 
 // macros to prevent misaligned address access
 #define BURN_UNALIGNED_READ16(x) (\

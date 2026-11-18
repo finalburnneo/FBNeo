@@ -193,6 +193,10 @@ INT32 VidInit()
 
 	VidExit();
 
+#if defined (BUILD_WIN32)
+	ScrnSetArtworkTarget();		// MAME artwork: render at the window / fullscreen size
+#endif
+
 #if defined (BUILD_WIN32) && defined (ENABLE_PREVIEW)
 	if (!bDrvOkay) {
 		if (_tcslen(szPlaceHolder)) {

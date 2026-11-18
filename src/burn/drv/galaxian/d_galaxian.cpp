@@ -14684,6 +14684,22 @@ static struct BurnRomInfo CheckmanjRomDesc[] = {
 STD_ROM_PICK(Checkmanj)
 STD_ROM_FN(Checkmanj)
 
+static struct BurnRomInfo CheckmanfRomDesc[] = {
+	{ "cm_1.bin",      0x01000, 0x0ef21fbd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },	// (C)1982 only
+	{ "cm_2.bin",      0x01000, 0xedc58286, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },	// Zilec-Zenitone text removed
+	{ "cm_3.bin",      0x00800, 0x73e1c945, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "cm_4.bin",      0x01000, 0x923cffa1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "cm_6.bin",      0x00800, 0x476a7cc3, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "cm_5.bin",      0x00800, 0xb3df2b5f, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "checkman.clr",  0x00020, 0xecbe1b17, BRF_GRA | GAL_ROM_PROM },	// blue flyer colours
+};
+
+STD_ROM_PICK(Checkmanf)
+STD_ROM_FN(Checkmanf)
+
 static struct BurnRomInfo DingoRomDesc[] = {
 	{ "003.e7",        0x01000, 0xd088550f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "004.h7",        0x01000, 0xa228446a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -15188,6 +15204,16 @@ struct BurnDriver BurnDrvCheckmanj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, CheckmanjRomInfo, CheckmanjRomName, NULL, NULL, NULL, NULL, CheckmanjInputInfo, CheckmanjDIPInfo,
+	CheckmanjInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvCheckmanf = {
+	"checkmanf", "checkman", NULL, NULL, "2026",
+	"Check Man (Hack, Flyer version)\0", NULL, "hack", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED | BDF_HACK, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, CheckmanfRomInfo, CheckmanfRomName, NULL, NULL, NULL, NULL, CheckmanjInputInfo, CheckmanjDIPInfo,
 	CheckmanjInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

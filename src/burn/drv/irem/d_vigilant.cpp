@@ -5,6 +5,7 @@
 #include "burn_ym2151.h"
 #include "burn_ym2203.h"
 #include "dac.h"
+#include "bitswap.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -48,6 +49,13 @@ static INT32 nExtraCycles[2];
 
 static UINT8 DrvHasYM2203 = 0;
 static UINT8 DrvKikcubicDraw = 0;
+static UINT8 DrvBowmenDraw = 0;
+
+static INT32 DrvInterleave = 256;
+static INT32 DrvVblankLine = 255;
+static INT32 DrvSpriteMask = 0xfff;
+static INT32 DrvBackTileCount = 0x4000;
+static double DrvRefreshRate = 55.0;
 
 #define VECTOR_INIT		0
 #define YM2151_ASSERT	1
@@ -142,6 +150,37 @@ static struct BurnInputInfo BuccanrsaInputList[] =
 
 STDINPUTINFO(Buccanrsa)
 
+static struct BurnInputInfo BowmenInputList[] =
+{
+	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 4, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , DrvInputPort0 + 6, "p2 start"  },
+
+	{"P1 Up"             , BIT_DIGITAL  , DrvInputPort1 + 3, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , DrvInputPort1 + 2, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , DrvInputPort1 + 1, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 right"  },
+	{"P1 Button 1"       , BIT_DIGITAL  , DrvInputPort1 + 7, "p1 fire 1" },
+	{"P1 Button 2"       , BIT_DIGITAL  , DrvInputPort1 + 5, "p1 fire 2" },
+	{"P1 Button 3"       , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 fire 3" },
+
+	{"P2 Up"             , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , DrvInputPort2 + 2, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , DrvInputPort2 + 0, "p2 right"  },
+	{"P2 Button 1"       , BIT_DIGITAL  , DrvInputPort2 + 7, "p2 fire 1" },
+	{"P2 Button 2"       , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 fire 2" },
+	{"P2 Button 3"       , BIT_DIGITAL  , DrvInputPort2 + 6, "p2 fire 3" },
+
+	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, DrvDip + 1       , "dip"       },
+	{"Dip 3"             , BIT_DIPSWITCH, DrvDip + 2       , "dip"       },
+};
+
+STDINPUTINFO(Bowmen)
+
 static struct BurnInputInfo KikcubicInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 coin"   },
@@ -199,286 +238,368 @@ static inline void DrvMakeInputs()
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
+	DIP_OFFSET(0x12)
 	// Default Values
-	{0x12, 0xff, 0xff, 0xff, NULL                     },
-	{0x13, 0xff, 0xff, 0xfd, NULL                     },
+	{0x00, 0xff, 0xff, 0xff, NULL                     },
+	{0x01, 0xff, 0xff, 0xfd, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x12, 0x01, 0x03, 0x02, "2"                      },
-	{0x12, 0x01, 0x03, 0x03, "3"                      },
-	{0x12, 0x01, 0x03, 0x01, "4"                      },
-	{0x12, 0x01, 0x03, 0x00, "5"                      },
+	{0x00, 0x01, 0x03, 0x02, "2"                      },
+	{0x00, 0x01, 0x03, 0x03, "3"                      },
+	{0x00, 0x01, 0x03, 0x01, "4"                      },
+	{0x00, 0x01, 0x03, 0x00, "5"                      },
 	
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
-	{0x12, 0x01, 0x04, 0x04, "Normal"                 },
-	{0x12, 0x01, 0x04, 0x00, "Hard"                   },
+	{0x00, 0x01, 0x04, 0x04, "Normal"                 },
+	{0x00, 0x01, 0x04, 0x00, "Hard"                   },
 	
 	{0   , 0xfe, 0   , 2   , "Energy Decrease Rate"   },
-	{0x12, 0x01, 0x08, 0x08, "Slow"                   },
-	{0x12, 0x01, 0x08, 0x00, "Fast"                   },
+	{0x00, 0x01, 0x08, 0x08, "Slow"                   },
+	{0x00, 0x01, 0x08, 0x00, "Fast"                   },
 	
 	{0   , 0xfe, 0   , 16  , "Coinage"                },
-	{0x12, 0x01, 0xf0, 0xa0, "6 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0xb0, "5 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0xc0, "4 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0xd0, "3 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x10, "8 Coins 3 Plays"        },
-	{0x12, 0x01, 0xf0, 0xe0, "2 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x20, "5 Coins 3 Plays"        },
-	{0x12, 0x01, 0xf0, 0x30, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
-	{0x12, 0x01, 0xf0, 0x40, "2 Coins 3 Plays"        },
-	{0x12, 0x01, 0xf0, 0x90, "1 Coin  2 Plays"        },
-	{0x12, 0x01, 0xf0, 0x80, "1 Coin  3 Plays"        },
-	{0x12, 0x01, 0xf0, 0x70, "1 Coin  4 Plays"        },
-	{0x12, 0x01, 0xf0, 0x60, "1 Coin  5 Plays"        },
-	{0x12, 0x01, 0xf0, 0x50, "1 Coin  6 Plays"        },
-	{0x12, 0x01, 0xf0, 0x00, "Freeplay"               },
+	{0x00, 0x01, 0xf0, 0xa0, "6 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xb0, "5 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xc0, "4 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xd0, "3 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0x10, "8 Coins 3 Plays"        },
+	{0x00, 0x01, 0xf0, 0xe0, "2 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0x20, "5 Coins 3 Plays"        },
+	{0x00, 0x01, 0xf0, 0x30, "3 Coins 2 Plays"        },
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+	{0x00, 0x01, 0xf0, 0x40, "2 Coins 3 Plays"        },
+	{0x00, 0x01, 0xf0, 0x90, "1 Coin  2 Plays"        },
+	{0x00, 0x01, 0xf0, 0x80, "1 Coin  3 Plays"        },
+	{0x00, 0x01, 0xf0, 0x70, "1 Coin  4 Plays"        },
+	{0x00, 0x01, 0xf0, 0x60, "1 Coin  5 Plays"        },
+	{0x00, 0x01, 0xf0, 0x50, "1 Coin  6 Plays"        },
+	{0x00, 0x01, 0xf0, 0x00, "Freeplay"               },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x13, 0x01, 0x01, 0x01, "Off"                    },
-	{0x13, 0x01, 0x01, 0x00, "On"                     },
+	{0x01, 0x01, 0x01, 0x01, "Off"                    },
+	{0x01, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x13, 0x01, 0x02, 0x00, "Upright"                },
-	{0x13, 0x01, 0x02, 0x02, "Cocktail"               },
+	{0x01, 0x01, 0x02, 0x00, "Upright"                },
+	{0x01, 0x01, 0x02, 0x02, "Cocktail"               },
 	
 	{0   , 0xfe, 0   , 2   , "Coin Mode"              },
-	{0x13, 0x01, 0x04, 0x04, "Mode 1"                 },
-	{0x13, 0x01, 0x04, 0x00, "Mode 2"                 },
+	{0x01, 0x01, 0x04, 0x04, "Mode 1"                 },
+	{0x01, 0x01, 0x04, 0x00, "Mode 2"                 },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x13, 0x01, 0x08, 0x00, "Off"                    },
-	{0x13, 0x01, 0x08, 0x08, "On"                     },
+	{0x01, 0x01, 0x08, 0x00, "Off"                    },
+	{0x01, 0x01, 0x08, 0x08, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x13, 0x01, 0x10, 0x00, "Off"                    },
-	{0x13, 0x01, 0x10, 0x10, "On"                     },
+	{0x01, 0x01, 0x10, 0x00, "Off"                    },
+	{0x01, 0x01, 0x10, 0x10, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Stop Mode"              },
-	{0x13, 0x01, 0x20, 0x20, "Off"                    },
-	{0x13, 0x01, 0x20, 0x00, "On"                     },
+	{0x01, 0x01, 0x20, 0x20, "Off"                    },
+	{0x01, 0x01, 0x20, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Invulnerability"        },
-	{0x13, 0x01, 0x40, 0x40, "Off"                    },
-	{0x13, 0x01, 0x40, 0x00, "On"                     },
+	{0x01, 0x01, 0x40, 0x40, "Off"                    },
+	{0x01, 0x01, 0x40, 0x00, "On"                     },
 };
 
 STDDIPINFO(Drv)
 
 static struct BurnDIPInfo BuccanrsDIPList[]=
 {
+	DIP_OFFSET(0x11)
 	// Default Values
-	{0x11, 0xff, 0xff, 0x2f, NULL                     },
-	{0x12, 0xff, 0xff, 0xff, NULL                     },
-	{0x13, 0xff, 0xff, 0x7f, NULL                     },
+	{0x00, 0xff, 0xff, 0x2f, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
+	{0x02, 0xff, 0xff, 0x7f, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x11, 0x01, 0x01, 0x01, "Off"                    },
-	{0x11, 0x01, 0x01, 0x00, "On"                     },
+	{0x00, 0x01, 0x01, 0x01, "Off"                    },
+	{0x00, 0x01, 0x01, 0x00, "On"                     },
 	
 	// Dip 2	
 	{0   , 0xfe, 0   , 12  , "Coin A"                 },
-	{0x12, 0x01, 0x0f, 0x04, "4 Coins 1 Play"         },
-	{0x12, 0x01, 0x0f, 0x07, "3 Coins 1 Play"         },
-	{0x12, 0x01, 0x0f, 0x00, "5 Coins 2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0a, "2 Coins 1 Play"         },
-	{0x12, 0x01, 0x0f, 0x06, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x03, "4 Coins 3 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
-	{0x12, 0x01, 0x0f, 0x05, "3 Coins 5 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x04, "4 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x07, "3 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x00, "5 Coins 2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0a, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x06, "3 Coins 2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x03, "4 Coins 3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
+	{0x01, 0x01, 0x0f, 0x05, "3 Coins 5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
 	
 	{0   , 0xfe, 0   , 12  , "Coin B"                 },
-	{0x12, 0x01, 0xf0, 0x40, "4 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x70, "3 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x00, "5 Coins 2 Plays"        },
-	{0x12, 0x01, 0xf0, 0xa0, "2 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x60, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0xf0, 0x30, "4 Coins 3 Plays"        },
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
-	{0x12, 0x01, 0xf0, 0x50, "3 Coins 5 Plays"        },
-	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
-	{0x12, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
-	{0x12, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
-	{0x12, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
+	{0x01, 0x01, 0xf0, 0x40, "4 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x70, "3 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x00, "5 Coins 2 Plays"        },
+	{0x01, 0x01, 0xf0, 0xa0, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x60, "3 Coins 2 Plays"        },
+	{0x01, 0x01, 0xf0, 0x30, "4 Coins 3 Plays"        },
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+	{0x01, 0x01, 0xf0, 0x50, "3 Coins 5 Plays"        },
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x13, 0x01, 0x01, 0x01, "Off"                    },
-	{0x13, 0x01, 0x01, 0x00, "On"                     },
+	{0x02, 0x01, 0x01, 0x01, "Off"                    },
+	{0x02, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x13, 0x01, 0x06, 0x06, "2"                      },
-	{0x13, 0x01, 0x06, 0x04, "3"                      },
-	{0x13, 0x01, 0x06, 0x02, "4"                      },
-	{0x13, 0x01, 0x06, 0x00, "5"                      },
+	{0x02, 0x01, 0x06, 0x06, "2"                      },
+	{0x02, 0x01, 0x06, 0x04, "3"                      },
+	{0x02, 0x01, 0x06, 0x02, "4"                      },
+	{0x02, 0x01, 0x06, 0x00, "5"                      },
 	
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x13, 0x01, 0x18, 0x18, "Normal"                 },
-	{0x13, 0x01, 0x18, 0x08, "Medium"                 },
-	{0x13, 0x01, 0x18, 0x10, "Hard"                   },
-	{0x13, 0x01, 0x18, 0x00, "Invincibilty"           },
+	{0x02, 0x01, 0x18, 0x18, "Normal"                 },
+	{0x02, 0x01, 0x18, 0x08, "Medium"                 },
+	{0x02, 0x01, 0x18, 0x10, "Hard"                   },
+	{0x02, 0x01, 0x18, 0x00, "Invincibilty"           },
 	
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x13, 0x01, 0x20, 0x20, "Upright"                },
-	{0x13, 0x01, 0x20, 0x00, "Cocktail"               },
+	{0x02, 0x01, 0x20, 0x20, "Upright"                },
+	{0x02, 0x01, 0x20, 0x00, "Cocktail"               },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x13, 0x01, 0x40, 0x00, "Off"                    },
-	{0x13, 0x01, 0x40, 0x40, "On"                     },
+	{0x02, 0x01, 0x40, 0x00, "Off"                    },
+	{0x02, 0x01, 0x40, 0x40, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x13, 0x01, 0x80, 0x80, "Off"                    },
-	{0x13, 0x01, 0x80, 0x00, "On"                     },
+	{0x02, 0x01, 0x80, 0x80, "Off"                    },
+	{0x02, 0x01, 0x80, 0x00, "On"                     },
 };
 
 STDDIPINFO(Buccanrs)
 
+static struct BurnDIPInfo BowmenDIPList[]=
+{
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0x2f, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
+	{0x02, 0xff, 0xff, 0xff, NULL                     },
+
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x00, 0x01, 0x01, 0x01, "Off"                    },
+	{0x00, 0x01, 0x01, 0x00, "On"                     },
+
+	{0   , 0xfe, 0   , 16  , "Coin A"                 },
+	{0x01, 0x01, 0x0f, 0x00, "5 Coins 2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x01, "5 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x02, "4 Coins 5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x03, "4 Coins 3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x04, "4 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x05, "3 Coins 5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x06, "3 Coins 2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x07, "3 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x08, "2 Coins 5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x09, "2 Coins 3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0a, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
+
+	{0   , 0xfe, 0   , 16  , "Coin B"                 },
+	{0x01, 0x01, 0xf0, 0x00, "5 Coins 2 Plays"        },
+	{0x01, 0x01, 0xf0, 0x10, "5 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x20, "4 Coins 5 Plays"        },
+	{0x01, 0x01, 0xf0, 0x30, "4 Coins 3 Plays"        },
+	{0x01, 0x01, 0xf0, 0x40, "4 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x50, "3 Coins 5 Plays"        },
+	{0x01, 0x01, 0xf0, 0x60, "3 Coins 2 Plays"        },
+	{0x01, 0x01, 0xf0, 0x70, "3 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x80, "2 Coins 5 Plays"        },
+	{0x01, 0x01, 0xf0, 0x90, "2 Coins 3 Plays"        },
+	{0x01, 0x01, 0xf0, 0xa0, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+
+	{0   , 0xfe, 0   , 2   , "Screen Orientation"     },
+	{0x02, 0x01, 0x01, 0x01, "Normal Screen"          },
+	{0x02, 0x01, 0x01, 0x00, "Inverted Screen"        },
+
+	{0   , 0xfe, 0   , 2   , "Players"                },
+	{0x02, 0x01, 0x02, 0x02, "Two Players"            },
+	{0x02, 0x01, 0x02, 0x00, "One Player"             },
+
+	{0   , 0xfe, 0   , 4   , "Time for Round"         },
+	{0x02, 0x01, 0x0c, 0x00, "Free Time per Round"    },
+	{0x02, 0x01, 0x0c, 0x04, "30 Seconds per Round"   },
+	{0x02, 0x01, 0x0c, 0x08, "50 Seconds per Round"   },
+	{0x02, 0x01, 0x0c, 0x0c, "60 Seconds per Round"   },
+
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
+	{0x02, 0x01, 0x30, 0x00, "Very Hard"              },
+	{0x02, 0x01, 0x30, 0x10, "Hard"                   },
+	{0x02, 0x01, 0x30, 0x20, "Very Easy"              },
+	{0x02, 0x01, 0x30, 0x30, "Normal"                 },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
+	{0x02, 0x01, 0x40, 0x00, "No"                     },
+	{0x02, 0x01, 0x40, 0x40, "Yes"                    },
+
+	{0   , 0xfe, 0   , 2   , "Test Type"              },
+	{0x02, 0x01, 0x80, 0x80, "Easy Test"              },
+	{0x02, 0x01, 0x80, 0x00, "Advanced Test"          },
+};
+
+STDDIPINFO(Bowmen)
+
 static struct BurnDIPInfo BuccanrsaDIPList[]=
 {
+	DIP_OFFSET(0x11)
 	// Default Values
-	{0x11, 0xff, 0xff, 0xf4, NULL                     },
-	{0x12, 0xff, 0xff, 0xff, NULL                     },
-	{0x13, 0xff, 0xff, 0x7f, NULL                     },
+	{0x00, 0xff, 0xff, 0xf4, NULL                     },
+	{0x01, 0xff, 0xff, 0xff, NULL                     },
+	{0x02, 0xff, 0xff, 0x7f, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x11, 0x01, 0xf4, 0xf4, "Off"                    },
-	{0x11, 0x01, 0xf4, 0x00, "On"                     },
+	{0x00, 0x01, 0xf4, 0xf4, "Off"                    },
+	{0x00, 0x01, 0xf4, 0x00, "On"                     },
 	
 	// Dip 2	
 	{0   , 0xfe, 0   , 12  , "Coin A"                 },
-	{0x12, 0x01, 0x0f, 0x04, "4 Coins 1 Play"         },
-	{0x12, 0x01, 0x0f, 0x07, "3 Coins 1 Play"         },
-	{0x12, 0x01, 0x0f, 0x00, "5 Coins 2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0a, "2 Coins 1 Play"         },
-	{0x12, 0x01, 0x0f, 0x06, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x03, "4 Coins 3 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
-	{0x12, 0x01, 0x0f, 0x05, "3 Coins 5 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
-	{0x12, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x04, "4 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x07, "3 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x00, "5 Coins 2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0a, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0x0f, 0x06, "3 Coins 2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x03, "4 Coins 3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Play"         },
+	{0x01, 0x01, 0x0f, 0x05, "3 Coins 5 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0e, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  3 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0c, "1 Coin  4 Plays"        },
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  5 Plays"        },
 	
 	{0   , 0xfe, 0   , 12  , "Coin B"                 },
-	{0x12, 0x01, 0xf0, 0x40, "4 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x70, "3 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x00, "5 Coins 2 Plays"        },
-	{0x12, 0x01, 0xf0, 0xa0, "2 Coins 1 Play"         },
-	{0x12, 0x01, 0xf0, 0x60, "3 Coins 2 Plays"        },
-	{0x12, 0x01, 0xf0, 0x30, "4 Coins 3 Plays"        },
-	{0x12, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
-	{0x12, 0x01, 0xf0, 0x50, "3 Coins 5 Plays"        },
-	{0x12, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
-	{0x12, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
-	{0x12, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
-	{0x12, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
+	{0x01, 0x01, 0xf0, 0x40, "4 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x70, "3 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x00, "5 Coins 2 Plays"        },
+	{0x01, 0x01, 0xf0, 0xa0, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0xf0, 0x60, "3 Coins 2 Plays"        },
+	{0x01, 0x01, 0xf0, 0x30, "4 Coins 3 Plays"        },
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+	{0x01, 0x01, 0xf0, 0x50, "3 Coins 5 Plays"        },
+	{0x01, 0x01, 0xf0, 0xe0, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  3 Plays"        },
+	{0x01, 0x01, 0xf0, 0xc0, "1 Coin  4 Plays"        },
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  5 Plays"        },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x13, 0x01, 0x01, 0x01, "Off"                    },
-	{0x13, 0x01, 0x01, 0x00, "On"                     },
+	{0x02, 0x01, 0x01, 0x01, "Off"                    },
+	{0x02, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x13, 0x01, 0x06, 0x06, "2"                      },
-	{0x13, 0x01, 0x06, 0x04, "3"                      },
-	{0x13, 0x01, 0x06, 0x02, "4"                      },
-	{0x13, 0x01, 0x06, 0x00, "5"                      },
+	{0x02, 0x01, 0x06, 0x06, "2"                      },
+	{0x02, 0x01, 0x06, 0x04, "3"                      },
+	{0x02, 0x01, 0x06, 0x02, "4"                      },
+	{0x02, 0x01, 0x06, 0x00, "5"                      },
 	
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x13, 0x01, 0x18, 0x18, "Normal"                 },
-	{0x13, 0x01, 0x18, 0x08, "Medium"                 },
-	{0x13, 0x01, 0x18, 0x10, "Hard"                   },
-	{0x13, 0x01, 0x18, 0x00, "Invincibilty"           },
+	{0x02, 0x01, 0x18, 0x18, "Normal"                 },
+	{0x02, 0x01, 0x18, 0x08, "Medium"                 },
+	{0x02, 0x01, 0x18, 0x10, "Hard"                   },
+	{0x02, 0x01, 0x18, 0x00, "Invincibilty"           },
 	
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x13, 0x01, 0x20, 0x20, "Upright"                },
-	{0x13, 0x01, 0x20, 0x00, "Cocktail"               },
+	{0x02, 0x01, 0x20, 0x20, "Upright"                },
+	{0x02, 0x01, 0x20, 0x00, "Cocktail"               },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x13, 0x01, 0x40, 0x00, "Off"                    },
-	{0x13, 0x01, 0x40, 0x40, "On"                     },
+	{0x02, 0x01, 0x40, 0x00, "Off"                    },
+	{0x02, 0x01, 0x40, 0x40, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
-	{0x13, 0x01, 0x80, 0x80, "Off"                    },
-	{0x13, 0x01, 0x80, 0x00, "On"                     },
+	{0x02, 0x01, 0x80, 0x80, "Off"                    },
+	{0x02, 0x01, 0x80, 0x00, "On"                     },
 };
 
 STDDIPINFO(Buccanrsa)
 
 static struct BurnDIPInfo KikcubicDIPList[]=
 {
+	DIP_OFFSET(0x11)
 	// Default Values
-	{0x11, 0xff, 0xff, 0xff, NULL                     },
-	{0x12, 0xff, 0xff, 0xd5, NULL                     },
+	{0x00, 0xff, 0xff, 0xff, NULL                     },
+	{0x01, 0xff, 0xff, 0xd5, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 4   , "Difficulty"             },
-	{0x11, 0x01, 0x03, 0x02, "Easy"                   },
-	{0x11, 0x01, 0x03, 0x03, "Medium"                 },
-	{0x11, 0x01, 0x03, 0x01, "Hard"                   },
-	{0x11, 0x01, 0x03, 0x00, "Hardest"                },
+	{0x00, 0x01, 0x03, 0x02, "Easy"                   },
+	{0x00, 0x01, 0x03, 0x03, "Medium"                 },
+	{0x00, 0x01, 0x03, 0x01, "Hard"                   },
+	{0x00, 0x01, 0x03, 0x00, "Hardest"                },
 	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x11, 0x01, 0x0c, 0x08, "1"                      },
-	{0x11, 0x01, 0x0c, 0x04, "2"                      },
-	{0x11, 0x01, 0x0c, 0x0c, "3"                      },
-	{0x11, 0x01, 0x0c, 0x00, "4"                      },
+	{0x00, 0x01, 0x0c, 0x08, "1"                      },
+	{0x00, 0x01, 0x0c, 0x04, "2"                      },
+	{0x00, 0x01, 0x0c, 0x0c, "3"                      },
+	{0x00, 0x01, 0x0c, 0x00, "4"                      },
 	
 	{0   , 0xfe, 0   , 12  , "Coinage"                },
-	{0x11, 0x01, 0xf0, 0xa0, "6 Coins 1 Play"         },
-	{0x11, 0x01, 0xf0, 0xb0, "5 Coins 1 Play"         },
-	{0x11, 0x01, 0xf0, 0xc0, "4 Coins 1 Play"         },
-	{0x11, 0x01, 0xf0, 0xd0, "3 Coins 1 Play"         },
-	{0x11, 0x01, 0xf0, 0xe0, "2 Coins 1 Play"         },
-	{0x11, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
-	{0x11, 0x01, 0xf0, 0x70, "1 Coin  2 Plays"        },
-	{0x11, 0x01, 0xf0, 0x60, "1 Coin  3 Plays"        },
-	{0x11, 0x01, 0xf0, 0x50, "1 Coin  4 Plays"        },
-	{0x11, 0x01, 0xf0, 0x40, "1 Coin  5 Plays"        },
-	{0x11, 0x01, 0xf0, 0x30, "1 Coin  6 Plays"        },
-	{0x11, 0x01, 0xf0, 0x00, "Freeplay"               },
+	{0x00, 0x01, 0xf0, 0xa0, "6 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xb0, "5 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xc0, "4 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xd0, "3 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xe0, "2 Coins 1 Play"         },
+	{0x00, 0x01, 0xf0, 0xf0, "1 Coin  1 Play"         },
+	{0x00, 0x01, 0xf0, 0x70, "1 Coin  2 Plays"        },
+	{0x00, 0x01, 0xf0, 0x60, "1 Coin  3 Plays"        },
+	{0x00, 0x01, 0xf0, 0x50, "1 Coin  4 Plays"        },
+	{0x00, 0x01, 0xf0, 0x40, "1 Coin  5 Plays"        },
+	{0x00, 0x01, 0xf0, 0x30, "1 Coin  6 Plays"        },
+	{0x00, 0x01, 0xf0, 0x00, "Freeplay"               },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
-	{0x12, 0x01, 0x01, 0x01, "Off"                    },
-	{0x12, 0x01, 0x01, 0x00, "On"                     },
+	{0x01, 0x01, 0x01, 0x01, "Off"                    },
+	{0x01, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x12, 0x01, 0x02, 0x00, "Upright"                },
-	{0x12, 0x01, 0x02, 0x02, "Cocktail"               },
+	{0x01, 0x01, 0x02, 0x00, "Upright"                },
+	{0x01, 0x01, 0x02, 0x02, "Cocktail"               },
 	
 	{0   , 0xfe, 0   , 2   , "Coin Mode"              },
-	{0x12, 0x01, 0x04, 0x04, "Mode 1"                 },
-	{0x12, 0x01, 0x04, 0x00, "Mode 2"                 },
+	{0x01, 0x01, 0x04, 0x04, "Mode 1"                 },
+	{0x01, 0x01, 0x04, 0x00, "Mode 2"                 },
 	
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"            },
-	{0x12, 0x01, 0x08, 0x08, "Off"                    },
-	{0x12, 0x01, 0x08, 0x00, "On"                     },
+	{0x01, 0x01, 0x08, 0x08, "Off"                    },
+	{0x01, 0x01, 0x08, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Invulnerability"        },
-	{0x12, 0x01, 0x10, 0x10, "Off"                    },
-	{0x12, 0x01, 0x10, 0x00, "On"                     },
+	{0x01, 0x01, 0x10, 0x10, "Off"                    },
+	{0x01, 0x01, 0x10, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Level Select"           },
-	{0x12, 0x01, 0x20, 0x20, "Off"                    },
-	{0x12, 0x01, 0x20, 0x00, "On"                     },
+	{0x01, 0x01, 0x20, 0x20, "Off"                    },
+	{0x01, 0x01, 0x20, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Player Adding"          },
-	{0x12, 0x01, 0x40, 0x40, "Off"                    },
-	{0x12, 0x01, 0x40, 0x00, "On"                     },
+	{0x01, 0x01, 0x40, 0x40, "Off"                    },
+	{0x01, 0x01, 0x40, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x12, 0x01, 0x80, 0x80, "Off"                    },
-	{0x12, 0x01, 0x80, 0x00, "On"                     },
+	{0x01, 0x01, 0x80, 0x80, "Off"                    },
+	{0x01, 0x01, 0x80, 0x00, "On"                     },
 };
 
 STDDIPINFO(Kikcubic)
@@ -814,23 +935,26 @@ STD_ROM_PICK(Buccanrsb)
 STD_ROM_FN(Buccanrsb)
 
 static struct BurnRomInfo KikcubicRomDesc[] = {
-	{ "mqj-p0",        0x08000, 0x9cef394a, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
-	{ "mqj-b0",        0x10000, 0xd9bcf4cd, BRF_ESS | BRF_PRG },	//  1
-	{ "mqj-b1",        0x10000, 0x54a0abe1, BRF_ESS | BRF_PRG },	//  2
+	{ "mqj_a-p0-.ic4", 0x08000, 0x9cef394a, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "mqj_a-b0-.ic37", 0x10000, 0xd9bcf4cd, BRF_ESS | BRF_PRG },	//  1
+	{ "mqj_a-b1-.ic38", 0x10000, 0x54a0abe1, BRF_ESS | BRF_PRG },	//  2
 	
-	{ "mqj-sp",        0x10000, 0xbbcf3582, BRF_ESS | BRF_PRG },	//  3	Z80 #2 Program 
+	{ "mqj_a-sp-.ic34", 0x10000, 0xbbcf3582, BRF_ESS | BRF_PRG },	//  3	Z80 #2 Program 
 	
-	{ "mqj-c0",        0x10000, 0x975585c5, BRF_GRA },				//  4	Characters
-	{ "mqj-c1",        0x10000, 0x49d9936d, BRF_GRA },				//  5
+	{ "mqj_a-c0-.ic71", 0x10000, 0x975585c5, BRF_GRA },				//  4	Characters
+	{ "mqj_a-c1-.ic72", 0x10000, 0x49d9936d, BRF_GRA },				//  5
 	
-	{ "mqj-00",        0x40000, 0x7fb0c58f, BRF_GRA },				//  6	Sprites
-	{ "mqj-10",        0x40000, 0x3a189205, BRF_GRA },				//  7
+	{ "mqj_a-00-.ic97", 0x40000, 0x7fb0c58f, BRF_GRA },				//  6	Sprites
+	{ "mqj_a-10-.ic95", 0x40000, 0x3a189205, BRF_GRA },				//  7
 	
-	{ "mqj-v0",        0x10000, 0x54762956, BRF_SND },				//  8	Samples
+	{ "mqj_a-v0-.ic31", 0x10000, 0x54762956, BRF_SND },				//  8	Samples
 	
-	{ "8d",            0x00100, 0x7379bb12, BRF_GRA },				//  9	PROMs
-	{ "6h",            0x00020, 0xface0cbb, BRF_GRA },				// 10
-	{ "7s",            0x00020, 0xface0cbb, BRF_GRA },				// 11
+	{ "m77_a-8d-.ic80", 0x00100, 0x7379bb12, BRF_GRA },				//  9	PROMs
+	{ "m77_a-030-.ic59", 0x00020, 0xface0cbb, BRF_GRA },				// 10
+	{ "m77_a-030-.ic75", 0x00020, 0xface0cbb, BRF_GRA },				// 11
+
+	{ "m77_a_2h-.ic8",   0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	// 12	PALs
+	{ "m77_a_3p-.ic25",  0x00104, 0x00000000, BRF_GRA | BRF_NODUMP },	// 13
 };
 
 STD_ROM_PICK(Kikcubic)
@@ -841,17 +965,17 @@ static struct BurnRomInfo KikcubicbRomDesc[] = {
 	{ "4.bin",         0x10000, 0x9ae1e1a6, BRF_ESS | BRF_PRG },	//  1
 	{ "5.bin",         0x08000, 0xa5a6bffd, BRF_ESS | BRF_PRG },	//  2
 	
-	{ "mqj-sp",        0x10000, 0xbbcf3582, BRF_ESS | BRF_PRG },	//  3	Z80 #2 Program 
+	{ "2.bin",         0x10000, 0xbbcf3582, BRF_ESS | BRF_PRG },	//  3	Z80 #2 Program 
 	
 	{ "7.bin",         0x10000, 0x1788d51a, BRF_GRA },				//  4	Characters
-	{ "mqj-c1",        0x10000, 0x49d9936d, BRF_GRA },				//  5
+	{ "6.bin",         0x10000, 0x49d9936d, BRF_GRA },				//  5
 	
 	{ "11.bin",        0x10000, 0x0f0cac92, BRF_GRA },				//  6	Sprites
 	{ "10.bin",        0x10000, 0x7d3822a8, BRF_GRA },				//  7
 	{ "9.bin",         0x10000, 0x56fb4fa3, BRF_GRA },				//  8
 	{ "8.bin",         0x10000, 0x947dbd4e, BRF_GRA },				//  9
 	
-	{ "mqj-v0",        0x10000, 0x54762956, BRF_SND },				// 10	Samples
+	{ "3.bin",         0x10000, 0x54762956, BRF_SND },				// 10	Samples
 	
 	{ "8d",            0x00100, 0x7379bb12, BRF_GRA },				// 11	PROMs
 	{ "6h",            0x00020, 0xface0cbb, BRF_GRA },				// 12
@@ -860,6 +984,42 @@ static struct BurnRomInfo KikcubicbRomDesc[] = {
 
 STD_ROM_PICK(Kikcubicb)
 STD_ROM_FN(Kikcubicb)
+
+static struct BurnRomInfo BowmenRomDesc[] = {
+	{ "4_27256.bin",   0x08000, 0xe8dcabb6, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "3_27c512.bin",  0x10000, 0x9c8af1eb, BRF_ESS | BRF_PRG },	//  1
+
+	{ "2_27c512.bin",  0x10000, 0x477a5756, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program
+
+	{ "8_27c512.bin",  0x10000, 0x782b0b7f, BRF_GRA },				//  3	Characters
+	{ "7_27c512.bin",  0x10000, 0x449720ea, BRF_GRA },				//  4
+
+	{ "10_27c512.bin", 0x10000, 0x8cf4e040, BRF_GRA },				//  5	Sprites
+	{ "9_27c512.bin",  0x10000, 0x3c06fdf7, BRF_GRA },				//  6
+
+	{ "5_27c040.bin",  0x80000, 0x5bac2567, BRF_GRA },				//  7	Background
+	{ "6_27c4001.bin", 0x80000, 0x35b3b7bc, BRF_GRA },				//  8
+
+	{ "1_27c512.bin",  0x10000, 0x456c478b, BRF_SND },				//  9	Samples
+
+	{ "prom_4_82s129.bin", 0x00100, 0xc324835e, BRF_OPT },			// 10	PROMs
+	{ "prom_3_82s129.bin", 0x00100, 0xe6506ef4, BRF_OPT },			// 11
+	{ "prom_2_82s129.bin", 0x00100, 0xb43d094f, BRF_OPT },			// 12
+	{ "prom_1_82s129.bin", 0x00100, 0xe0aa8869, BRF_OPT },			// 13
+
+	{ "1_16v8.bin",    0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	// 14	PLDs
+	{ "2_22v10.bin",   0x00200, 0x00000000, BRF_OPT | BRF_NODUMP },	// 15
+	{ "3_20v8.bin",    0x00157, 0x00000000, BRF_OPT | BRF_NODUMP },	// 16
+	{ "4_16v8.bin",    0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	// 17
+	{ "5_22v10.bin",   0x00200, 0x00000000, BRF_OPT | BRF_NODUMP },	// 18
+	{ "6_16v8.bin",    0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	// 19
+	{ "7_22v10.bin",   0x00200, 0x00000000, BRF_OPT | BRF_NODUMP },	// 20
+	{ "8_16v8.bin",    0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	// 21
+	{ "9_16v8.bin",    0x00117, 0x00000000, BRF_OPT | BRF_NODUMP },	// 22
+};
+
+STD_ROM_PICK(Bowmen)
+STD_ROM_FN(Bowmen)
 
 static INT32 MemIndex()
 {
@@ -882,7 +1042,7 @@ static INT32 MemIndex()
 
 	DrvChars               = Next; Next += 0x1000 * 8 * 8;
 	DrvSprites             = Next; Next += 0x1000 * 16 * 16;
-	DrvBackTiles           = Next; Next += 0x4000 * 32;
+	DrvBackTiles           = Next; Next += DrvBackTileCount * 32;
 	
 	MemEnd                 = Next;
 
@@ -1160,6 +1320,31 @@ static void __fastcall VigilanteZ80PortWrite1(UINT16 a, UINT8 d)
 //			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
 		}
 	}
+}
+
+static void __fastcall BowmenZ80PortWrite1(UINT16 a, UINT8 d)
+{
+	a &= 0xff;
+
+	switch (a) {
+		case 0x12: {
+			DrvRearHorizScrollLo = d;
+			return;
+		}
+
+		case 0x13: {
+			DrvRearHorizScrollHi = (d & 0x1f) << 8;
+			return;
+		}
+
+		case 0x14: {
+			DrvRearColour = d & 0x0f;
+			DrvRearDisable = d & 0x40;
+			return;
+		}
+	}
+
+	VigilanteZ80PortWrite1(a, d);
 }
 
 static UINT8 __fastcall KikcubicZ80Read1(UINT16 a)
@@ -1454,7 +1639,7 @@ inline static void BuccanrsYM2203IRQHandler(INT32, INT32 nStatus)
 
 static INT32 VigilantSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nCyclesTotal[1] * 55.0000) / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nCyclesTotal[1] * DrvRefreshRate) / (nBurnFPS / 100.0000))));
 }
 
 static INT32 CharPlaneOffsets[4]         = { 0x80000, 0x80004, 0, 4 };
@@ -1898,6 +2083,114 @@ static INT32 BuccanrsInit()
 	return 0;
 }
 
+static INT32 BowmenInit()
+{
+	INT32 nRet = 0, nLen;
+
+	// 18MHz / 3 pixel clock, 384 x 284 total
+	DrvRefreshRate = 6000000.0 / (384 * 284);
+	BurnSetRefreshRate(DrvRefreshRate);
+
+	DrvInterleave = 284;
+	DrvSpriteMask = 0x3ff;
+	DrvBowmenDraw = 1;
+	DrvBackTileCount = 0x10000;
+
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	DrvTempRom = (UINT8 *)BurnMalloc(0x100000);
+
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x00000,  0, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvZ80Rom1 + 0x10000,  1, 1); if (nRet != 0) return 1;
+
+	for (INT32 i = 0; i < 0x28000; i++) {
+		DrvZ80Rom1[i] = BITSWAP08(DrvZ80Rom1[i], 2, 5, 0, 7, 6, 1, 4, 3);
+	}
+
+	nRet = BurnLoadRom(DrvZ80Rom2 + 0x00000,  2, 1); if (nRet != 0) return 1;
+
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000,  4, 1); if (nRet != 0) return 1;
+	GfxDecode(0x1000, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x80, DrvTempRom, DrvChars);
+
+	INT32 BowmenSpritePlaneOffsets[4] = { 0x80000, 0x80004, 0, 4 };
+	memset(DrvTempRom, 0, 0x100000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x10000,  6, 1); if (nRet != 0) return 1;
+	GfxDecode(0x0400, 4, 16, 16, BowmenSpritePlaneOffsets, BuccSpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvSprites);
+
+	memset(DrvTempRom, 0, 0x100000);
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x80000,  8, 1); if (nRet != 0) return 1;
+	GfxDecode(0x10000, 4, 32, 1, BuccBackTilePlaneOffsets, BackTileXOffsets, BackTileYOffsets, 0x80, DrvTempRom, DrvBackTiles);
+
+	BurnFree(DrvTempRom);
+
+	nRet = BurnLoadRom(DrvSamples + 0x00000,  9, 1); if (nRet != 0) return 1;
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetSetReadHandler(VigilanteZ80Read1);
+	ZetSetWriteHandler(VigilanteZ80Write1);
+	ZetSetInHandler(BuccanrsZ80PortRead1);
+	ZetSetOutHandler(BowmenZ80PortWrite1);
+	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
+	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
+	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
+	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
+	ZetMapArea(0xc800, 0xcfff, 0, DrvPaletteRam          );
+	ZetMapArea(0xc800, 0xcfff, 2, DrvPaletteRam          );
+	ZetMapArea(0xd000, 0xdfff, 0, DrvVideoRam            );
+	ZetMapArea(0xd000, 0xdfff, 1, DrvVideoRam            );
+	ZetMapArea(0xd000, 0xdfff, 2, DrvVideoRam            );
+	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
+	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
+	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
+	ZetClose();
+
+	ZetInit(1);
+	ZetOpen(1);
+	ZetSetReadHandler(VigilanteZ80Read2);
+	ZetSetWriteHandler(VigilanteZ80Write2);
+	ZetSetInHandler(BuccanrsZ80PortRead2);
+	ZetSetOutHandler(BuccanrsZ80PortWrite2);
+	ZetMapArea(0x0000, 0xefff, 0, DrvZ80Rom2             );
+	ZetMapArea(0x0000, 0xefff, 2, DrvZ80Rom2             );
+	ZetMapArea(0xf000, 0xffff, 0, DrvZ80Ram2             );
+	ZetMapArea(0xf000, 0xffff, 1, DrvZ80Ram2             );
+	ZetMapArea(0xf000, 0xffff, 2, DrvZ80Ram2             );
+	ZetClose();
+
+	nCyclesTotal[0] = (INT32)(6000000 / DrvRefreshRate);
+	nCyclesTotal[1] = (INT32)(6000000 / DrvRefreshRate);
+
+	GenericTilesInit();
+
+	DrvHasYM2203 = 1;
+	BurnYM2203Init(2, 3000000, &BuccanrsYM2203IRQHandler, 0);
+	BurnTimerAttachZet(6000000);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.35, BURN_SND_ROUTE_BOTH);
+
+	DACInit(0, 0, 1, VigilantSyncDAC);
+	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 KikcubicInit()
 {
 	INT32 nRet = 0, nLen;
@@ -2051,16 +2344,19 @@ static INT32 DrvExit()
 	
 	DrvHasYM2203 = 0;
 	DrvKikcubicDraw = 0;
+	DrvBowmenDraw = 0;
+
+	DrvInterleave = 256;
+	DrvVblankLine = 255;
+	DrvSpriteMask = 0xfff;
+	DrvBackTileCount = 0x4000;
+	DrvRefreshRate = 55.0;
 
 	return 0;
 }
 
-static void DrvRenderBackground()
+static void DrvCopyRearPalette()
 {
-	INT32 CharCode = 0;
-	INT32 Scroll = 0x17a - (DrvRearHorizScrollLo + DrvRearHorizScrollHi);
-	if (Scroll > 0) Scroll -= 2048;
-	
 	for (INT32 i = 0; i < 16; i++) {
 		INT32 r, g, b;
 
@@ -2076,7 +2372,16 @@ static void DrvRenderBackground()
 
 		DrvPalette[512 + 16 + i] = BurnHighCol(r, g, b, 0);
 	}
-	
+}
+
+static void DrvRenderBackground()
+{
+	INT32 CharCode = 0;
+	INT32 Scroll = 0x17a - (DrvRearHorizScrollLo + DrvRearHorizScrollHi);
+	if (Scroll > 0) Scroll -= 2048;
+
+	DrvCopyRearPalette();
+
 	for (INT32 Page = 0; Page < 4; Page++) {
 		for (INT32 Row = 0; Row < 256; Row++) {
 			for (INT32 Col = 0; Col < 512; Col += 32) {
@@ -2184,6 +2489,7 @@ static void DrvDrawSprites()
 		sy -= 16 * h;
 
 		Code &= ~(h - 1);
+		Code &= DrvSpriteMask;
 		
 		if (DrvKikcubicDraw) {
 			sx -= 64;
@@ -2253,6 +2559,62 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+// 16 pages of 512x256, a single colour bank
+static void BowmenRenderBackground()
+{
+	INT32 Scroll = 0x179 - (DrvRearHorizScrollLo + DrvRearHorizScrollHi);
+
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		UINT16 *pPixel = pTransDraw + (y * nScreenWidth);
+
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			INT32 sx = (x - Scroll) & 0x1fff;
+			INT32 Code = (((sx >> 9) * 256 + y) * 16) + ((sx & 0x1ff) >> 5);
+
+			pPixel[x] = DrvBackTiles[(Code * 32) + (sx & 0x1f)] | 512;
+		}
+	}
+}
+
+static void BowmenDrawForeground(INT32 Opaque)
+{
+	for (INT32 Offset = 0; Offset < 0x1000; Offset += 2) {
+		INT32 sy = 8 * ((Offset / 2) / 64);
+		INT32 sx = 8 * ((Offset / 2) % 64) - 128;
+		INT32 Attr = DrvVideoRam[Offset + 1];
+		INT32 Colour = Attr & 0x0f;
+		INT32 Tile = DrvVideoRam[Offset + 0] | ((Attr & 0xf0) << 4);
+
+		if (sx <= -8 || sx >= nScreenWidth) continue;
+
+		if (Opaque) {
+			Render8x8Tile_Clip(pTransDraw, Tile, sx, sy, Colour, 4, 256, DrvChars);
+		} else {
+			Render8x8Tile_Mask_Clip(pTransDraw, Tile, sx, sy, Colour, 4, 0, 256, DrvChars);
+		}
+	}
+}
+
+static INT32 BowmenDraw()
+{
+	BurnTransferClear();
+
+	DrvCopyRearPalette();
+
+	if (DrvRearDisable) {
+		BowmenDrawForeground(1);
+	} else {
+		BowmenRenderBackground();
+		BowmenDrawForeground(0);
+	}
+
+	DrvDrawSprites();
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
 static INT32 KikcubicDraw()
 {
 	BurnTransferClear();
@@ -2280,7 +2642,7 @@ static INT32 KikcubicDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 256; // dac needs 128 NMIs
+	INT32 nInterleave = DrvInterleave; // the dac runs on NMIs every other line
 
 	if (DrvReset) DrvDoReset();
 
@@ -2293,7 +2655,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		CPU_RUN(0, Zet);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == DrvVblankLine) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
 		ZetOpen(1);
@@ -2320,8 +2682,10 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		if (DrvKikcubicDraw) {
 			KikcubicDraw();
+		} else if (DrvBowmenDraw) {
+			BowmenDraw();
 		} else {
-			DrvDraw();	
+			DrvDraw();
 		}
 	}
 
@@ -2510,5 +2874,15 @@ struct BurnDriver BurnDrvBuccanrsb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_MISC, GBF_SCRFIGHT, 0,
 	NULL, BuccanrsbRomInfo, BuccanrsbRomName, NULL, NULL, NULL, NULL, BuccanrsInputInfo, BuccanrsDIPInfo,
 	BuccanrsInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 544, 256, 256, 4, 3
+};
+
+struct BurnDriver BurnDrvBowmen = {
+	"bowmen", NULL, NULL, NULL, "1994",
+	"Bowmen\0", NULL, "Ten-Level", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_MISC, GBF_PUZZLE, 0,
+	NULL, BowmenRomInfo, BowmenRomName, NULL, NULL, NULL, NULL, BowmenInputInfo, BowmenDIPInfo,
+	BowmenInit, DrvExit, DrvFrame, BowmenDraw, DrvScan,
 	NULL, 544, 256, 256, 4, 3
 };

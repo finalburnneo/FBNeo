@@ -421,10 +421,14 @@ int ConfigAppLoad()
 		VAR(nSelDlgWidth);
 		VAR(nSelDlgHeight);
 		VARI64(nLoadMenuShowX);
-		VARI64(nLoadMenuHwPreset[0]);
-		VARI64(nLoadMenuHwPreset[1]);
-		STR(szLoadMenuHwPresetName[0]);
-		STR(szLoadMenuHwPresetName[1]);
+		VARI64(nLoadMenuHwButton[0]);
+		VARI64(nLoadMenuHwButton[1]);
+		VARI64(nLoadMenuHwButton[2]);
+		VARI64(nLoadMenuHwButton[3]);
+		STR(szLoadMenuHwButtonName[0]);
+		STR(szLoadMenuHwButtonName[1]);
+		STR(szLoadMenuHwButtonName[2]);
+		STR(szLoadMenuHwButtonName[3]);
 		VAR(nLoadMenuShowY);
 		VAR(nLoadMenuExpand);
 		VAR(nLoadMenuBoardTypeFilter);
@@ -908,10 +912,14 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// Load game dialog options\n"));
 	VARI64(nLoadMenuShowX);
-	VARI64(nLoadMenuHwPreset[0]);
-	VARI64(nLoadMenuHwPreset[1]);
-	STR(szLoadMenuHwPresetName[0]);
-	STR(szLoadMenuHwPresetName[1]);
+	VARI64(nLoadMenuHwButton[0]);
+	VARI64(nLoadMenuHwButton[1]);
+	VARI64(nLoadMenuHwButton[2]);
+	VARI64(nLoadMenuHwButton[3]);
+	STR(szLoadMenuHwButtonName[0]);
+	STR(szLoadMenuHwButtonName[1]);
+	STR(szLoadMenuHwButtonName[2]);
+	STR(szLoadMenuHwButtonName[3]);
 	VAR(nLoadMenuShowY);
 	VAR(nLoadMenuExpand);
 

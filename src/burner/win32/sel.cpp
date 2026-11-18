@@ -332,15 +332,18 @@ static UINT64 MASKALL				= ((UINT64)MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 
 #define MASKCONSOLE				(MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM | MASKNES | MASKFDS | MASKSNES | MASKGBA | MASKNGP | MASKCHANNELF | MASKASTROHOME | MASKATARI2600)
 
 UINT64 nLoadMenuShowX			= 0; // hardware etc
-UINT64 nLoadMenuHwPreset[2]		= { 0, 0 }; // hardware presets, same format as nLoadMenuShowX (set bit = hidden)
-TCHAR szLoadMenuHwPresetName[2][MAX_PATH] = { _T(""), _T("") }; // custom button text, empty = default "Preset n"
+// Hardware quick-select buttons: 0 = Arcade, 1 = Console, 2 = Preset 1, 3 = Preset 2
+// value is the same format as nLoadMenuShowX (set bit = hidden), or HWBTN_DEFAULT for the button's default selection
+#define HWBTN_DEFAULT			((UINT64)1 << 62)
+UINT64 nLoadMenuHwButton[4]		= { HWBTN_DEFAULT, HWBTN_DEFAULT, HWBTN_DEFAULT, HWBTN_DEFAULT };
+TCHAR szLoadMenuHwButtonName[4][MAX_PATH] = { _T(""), _T(""), _T(""), _T("") }; // custom button text, empty = default name
 int nLoadMenuShowY				= AVAILABLE; // selector options, default to show available
 int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
 int nLoadMenuFavoritesFilter	= 0;
 int nLoadMenuFamilyFilter		= 0;
 
-static HWND hHwPresetToolTip	= NULL;	// "hold shift" tooltip for the Preset buttons
+static HWND hHwPresetToolTip	= NULL;	// "hold shift" tooltip for the quick-select buttons
 
 // expanded/collapsed state of filter nodes. default: expand main (0x01) & hardware (0x10)
 int nLoadMenuExpand             = 0x10 | 0x01;
@@ -2252,20 +2255,25 @@ static void SetHardwareFilter(UINT64 nHidden, bool bSegaGrpChecked = false)
 	RebuildEverything();
 }
 
-#define HWPRESET_NAME_MAXLEN	16	// max. characters for the Preset button text
+#define HWPRESET_NAME_MAXLEN	16	// max. characters for the button text
+#define HWBTN_COUNT				4
 
-static const INT32 nHwPresetBtnIDs[2] = { IDC_SEL_HW_PRESET1, IDC_SEL_HW_PRESET2 };
+static const INT32 nHwPresetBtnIDs[HWBTN_COUNT] = { IDC_SEL_HW_ARCADE, IDC_SEL_HW_CONSOLE, IDC_SEL_HW_PRESET1, IDC_SEL_HW_PRESET2 };
 
-// Returns the button text for a preset: the user's custom name, or the default "Preset n"
-static TCHAR* HwPresetGetName(INT32 nPreset)
+// Returns the button text: the user's custom name, or the default ("Arcade", "Console", "Preset n")
+static TCHAR* HwPresetGetName(INT32 nBtn)
 {
 	static TCHAR szName[MAX_PATH];
 
-	if (szLoadMenuHwPresetName[nPreset][0]) {
-		_tcsncpy(szName, szLoadMenuHwPresetName[nPreset], HWPRESET_NAME_MAXLEN);
+	if (szLoadMenuHwButtonName[nBtn][0]) {
+		_tcsncpy(szName, szLoadMenuHwButtonName[nBtn], HWPRESET_NAME_MAXLEN);
 		szName[HWPRESET_NAME_MAXLEN] = 0;
 	} else {
-		_sntprintf(szName, MAX_PATH, FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_DEFNAME, true), nPreset + 1);
+		switch (nBtn) {
+			case 0:  _sntprintf(szName, MAX_PATH, _T("%s"), FBALoadStringEx(hAppInst, IDS_SEL_HWBTN_ARCADE, true)); break;
+			case 1:  _sntprintf(szName, MAX_PATH, _T("%s"), FBALoadStringEx(hAppInst, IDS_SEL_HWBTN_CONSOLE, true)); break;
+			default: _sntprintf(szName, MAX_PATH, FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_DEFNAME, true), nBtn - 1); break;
+		}
 		szName[MAX_PATH - 1] = 0;
 	}
 
@@ -2274,30 +2282,55 @@ static TCHAR* HwPresetGetName(INT32 nPreset)
 
 static void HwPresetUpdateButtonText()
 {
-	for (INT32 i = 0; i < 2; i++) {
+	for (INT32 i = 0; i < HWBTN_COUNT; i++) {
 		SetDlgItemText(hSelDlg, nHwPresetBtnIDs[i], HwPresetGetName(i));
 	}
 }
 
-// Lock in the current Hardware filter selection as a preset (after OK/Cancel confirmation)
-static void HwPresetSave(INT32 nPreset)
+// OK / Cancel confirmation, nMsgID is a format string taking the button name (%s)
+static bool HwPresetConfirm(INT32 nBtn, UINT nMsgID)
 {
 	TCHAR szMsg[512];
-	TCHAR* pszName = HwPresetGetName(nPreset); // note: call before FBALoadStringEx(), it shares a static buffer w/GCC
-	_sntprintf(szMsg, 512, FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_CONFIRM, true), pszName);
+	TCHAR* pszName = HwPresetGetName(nBtn); // note: call before FBALoadStringEx(), it shares a static buffer w/GCC
+	_sntprintf(szMsg, 512, FBALoadStringEx(hAppInst, nMsgID, true), pszName);
 	szMsg[511] = 0;
 
-	if (MessageBox(hSelDlg, szMsg, FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_TITLE, true), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2) == IDOK) {
-		nLoadMenuHwPreset[nPreset] = nLoadMenuShowX & MASKALL;
+	return (MessageBox(hSelDlg, szMsg, FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_TITLE, true), MB_OKCANCEL | MB_ICONQUESTION | MB_DEFBUTTON2) == IDOK);
+}
+
+// Lock in the current Hardware filter selection for a button (after confirmation)
+static void HwPresetSave(INT32 nBtn)
+{
+	if (HwPresetConfirm(nBtn, IDS_SEL_HWPRESET_CONFIRM)) {
+		nLoadMenuHwButton[nBtn] = nLoadMenuShowX & MASKALL;
 	}
 }
 
-static void HwPresetButton(INT32 nPreset)
+// Back to the default name & selection (after confirmation)
+static void HwPresetReset(INT32 nBtn)
+{
+	if (HwPresetConfirm(nBtn, IDS_SEL_HWPRESET_RESETCONFIRM)) {
+		nLoadMenuHwButton[nBtn] = HWBTN_DEFAULT;
+		szLoadMenuHwButtonName[nBtn][0] = 0;
+		HwPresetUpdateButtonText();
+	}
+}
+
+static void HwPresetButton(INT32 nBtn)
 {
 	if (GetKeyState(VK_SHIFT) & 0x8000) {
-		HwPresetSave(nPreset);	// Shift + click
+		HwPresetSave(nBtn);	// Shift + click
+		return;
+	}
+
+	if (nLoadMenuHwButton[nBtn] & HWBTN_DEFAULT) {
+		switch (nBtn) {
+			case 0:  SetHardwareFilter(MASKALL & ~MASKARCADE, true);  break;	// show only arcade hardware
+			case 1:  SetHardwareFilter(MASKALL & ~MASKCONSOLE, true); break;	// show only console / computer hardware
+			default: SetHardwareFilter(0); break;								// show all hardware
+		}
 	} else {
-		SetHardwareFilter(nLoadMenuHwPreset[nPreset]);
+		SetHardwareFilter(nLoadMenuHwButton[nBtn]);
 	}
 }
 
@@ -2329,7 +2362,7 @@ static INT_PTR CALLBACK HwPresetNameProc(HWND hDlg, UINT Msg, WPARAM wParam, LPA
 					INT32 nLen = _tcslen(p);
 					while (nLen > 0 && p[nLen - 1] == _T(' ')) p[--nLen] = 0;
 
-					_tcscpy(szLoadMenuHwPresetName[nHwPresetRenaming], p);
+					_tcscpy(szLoadMenuHwButtonName[nHwPresetRenaming], p);
 					EndDialog(hDlg, 1);
 					return TRUE;
 				}
@@ -2347,25 +2380,25 @@ static INT_PTR CALLBACK HwPresetNameProc(HWND hDlg, UINT Msg, WPARAM wParam, LPA
 	return FALSE;
 }
 
-static void HwPresetRename(INT32 nPreset)
+static void HwPresetRename(INT32 nBtn)
 {
-	nHwPresetRenaming = nPreset;
+	nHwPresetRenaming = nBtn;
 
 	if (FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_SEL_PRESETNAME), hSelDlg, (DLGPROC)HwPresetNameProc) == 1) {
 		HwPresetUpdateButtonText();
 	}
 }
 
-// Right-click menu on the Preset buttons
-static void HwPresetContextMenu(INT32 nPreset, LPARAM lParam)
+// Right-click menu on the quick-select buttons
+static void HwPresetContextMenu(INT32 nBtn, LPARAM lParam)
 {
-	enum { HWMENU_SET = 1, HWMENU_RENAME };
+	enum { HWMENU_SET = 1, HWMENU_RENAME, HWMENU_RESET };
 
 	POINT pt = { GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam) };
 
 	if (lParam == -1) { // opened from the keyboard (menu key / shift+F10): show under the button
 		RECT rect;
-		GetWindowRect(GetDlgItem(hSelDlg, nHwPresetBtnIDs[nPreset]), &rect);
+		GetWindowRect(GetDlgItem(hSelDlg, nHwPresetBtnIDs[nBtn]), &rect);
 		pt.x = rect.left;
 		pt.y = rect.bottom;
 	}
@@ -2375,13 +2408,16 @@ static void HwPresetContextMenu(INT32 nPreset, LPARAM lParam)
 
 	AppendMenu(hMenu, MF_STRING, HWMENU_SET,    FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_MENU_SET, true));
 	AppendMenu(hMenu, MF_STRING, HWMENU_RENAME, FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_MENU_RENAME, true));
+	AppendMenu(hMenu, MF_SEPARATOR, 0, NULL);
+	AppendMenu(hMenu, MF_STRING, HWMENU_RESET,  FBALoadStringEx(hAppInst, IDS_SEL_HWPRESET_MENU_RESET, true));
 
 	INT32 nCmd = TrackPopupMenu(hMenu, TPM_LEFTALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD | TPM_NONOTIFY, pt.x, pt.y, 0, hSelDlg, NULL);
 	DestroyMenu(hMenu);
 
 	switch (nCmd) {
-		case HWMENU_SET:    HwPresetSave(nPreset);   break;
-		case HWMENU_RENAME: HwPresetRename(nPreset); break;
+		case HWMENU_SET:    HwPresetSave(nBtn);   break;
+		case HWMENU_RENAME: HwPresetRename(nBtn); break;
+		case HWMENU_RESET:  HwPresetReset(nBtn);  break;
 	}
 }
 
@@ -2392,8 +2428,7 @@ static void HwPresetToolTipInit()
 
 	SendMessage(hHwPresetToolTip, TTM_SETMAXTIPWIDTH, 0, 300); // allow word-wrap of longer tip
 
-
-	for (INT32 i = 0; i < 2; i++) {
+	for (INT32 i = 0; i < HWBTN_COUNT; i++) {
 		TOOLINFO toolinfo;
 		memset(&toolinfo, 0, sizeof(TOOLINFO));
 
@@ -3020,16 +3055,16 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					bDoIpsPatch = !bDoIpsPatch;
 					break;
 				case IDC_SEL_HW_ARCADE:
-					SetHardwareFilter(MASKALL & ~MASKARCADE, true);	// show only arcade hardware
-					break;
-				case IDC_SEL_HW_CONSOLE:
-					SetHardwareFilter(MASKALL & ~MASKCONSOLE, true);	// show only console / computer hardware
-					break;
-				case IDC_SEL_HW_PRESET1:
 					HwPresetButton(0);
 					break;
-				case IDC_SEL_HW_PRESET2:
+				case IDC_SEL_HW_CONSOLE:
 					HwPresetButton(1);
+					break;
+				case IDC_SEL_HW_PRESET1:
+					HwPresetButton(2);
+					break;
+				case IDC_SEL_HW_PRESET2:
+					HwPresetButton(3);
 					break;
 			}
 		}
@@ -3089,7 +3124,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	}
 
 	if (Msg == WM_CONTEXTMENU) {
-		for (INT32 i = 0; i < 2; i++) {
+		for (INT32 i = 0; i < HWBTN_COUNT; i++) {
 			if ((HWND)wParam == GetDlgItem(hDlg, nHwPresetBtnIDs[i])) {
 				HwPresetContextMenu(i, lParam);
 				return TRUE;

@@ -916,6 +916,17 @@ static INT32 DrvLoadRoms(bool bLoad)
 			continue;
 		}
 
+		if ((ri.nType & BRF_GRA) && (ri.nType & 0xf) == 7) { // 4x 8-bit EPROMs instead of 2x 16-bit mask ROMs
+			if (bLoad) {
+				for (INT32 j = 0; j < 4; j++) {
+					if (BurnLoadRom(gLoad[0] + j, i + j, 4)) return 1;
+				}
+			}
+			gLoad[0] += ri.nLen * 4;
+			i += 3;
+			continue;
+		}
+
 		if ((ri.nType & BRF_SND) && (ri.nType & 0xf) == 1) {
 			if (bLoad) {
 				if (BurnLoadRom(sLoad[(ri.nType & 0xf) - 1], i, 1)) return 1;
@@ -1239,6 +1250,16 @@ static UINT32 outfxies_cuskey_callback(UINT32 offset)
 	return 0;
 }
 
+// the mask ROMs are mirrored to keep the addressing of the former overdumps
+static void outfxies_mirror_masks()
+{
+	for (INT32 i = 0x080000; i < 0x200000; i += 0x080000) {
+		memcpy(DrvGfxROM[2] + i, DrvGfxROM[2], 0x080000);
+	}
+
+	memcpy(DrvGfxROM[5] + 0x100000, DrvGfxROM[5], 0x100000);
+}
+
 static INT32 OutfxiesInit()
 {
 	cuskey_callback = outfxies_cuskey_callback;
@@ -1246,7 +1267,10 @@ static INT32 OutfxiesInit()
 	c123_tile_callback = outfxies_tile_bank_callback;
 	roz_tile_callback = outfxies_roz_tile_callback;
 
-	return b2_common_init();
+	INT32 rc = b2_common_init();
+	if (!rc) outfxies_mirror_masks();
+
+	return rc;
 }
 
 static INT32 OutfxiesjaInit()
@@ -1257,6 +1281,7 @@ static INT32 OutfxiesjaInit()
 	roz_tile_callback = machbrkr_roz_tile_callback;
 
 	INT32 rc = b2_common_init();
+	if (!rc) outfxies_mirror_masks();
 	if (!rc) { // shuffle soundrom (c352)
 		UINT8 *tmp = (UINT8*)BurnMalloc(0x1000000);
 		memcpy(tmp, DrvSndROM, 0x400000);
@@ -2100,6 +2125,76 @@ struct BurnDriver BurnDrvNebulrayj = {
 };
 
 
+// Nebulas Ray (prototype)
+
+static struct BurnRomInfo nebulraypRomDesc[] = {
+	{ "prgl_1-17.15b",	0x080000, 0x9066aa9e, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "prgu_1-17.13b",	0x080000, 0xc77f06d3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sprg.5b",		0x080000, 0xe32c099f, 3 | BRF_PRG | BRF_ESS }, //  2 C75 Data
+
+	{ "rom0_e-30.ic5",	0x080000, 0xbeee81e6, 1 | BRF_SND },           //  3 C352 Samples
+	{ "rom1_a1.ic6",	0x080000, 0x91a88946, 1 | BRF_SND },           //  4
+	{ "rom2_22.ic7",	0x080000, 0xef492d2b, 1 | BRF_SND },           //  5
+	{ "rom3_w3.ic8",	0x080000, 0x5d4900e1, 1 | BRF_SND },           //  6
+
+	{ "a0.1a",			0x080000, 0xe6ecca1a, 7 | BRF_GRA },           //  7 C355 Sprite Data (byte interleaved)
+	{ "b0.1b",			0x080000, 0x004f6665, 7 | BRF_GRA },           //  8
+	{ "c0.1c",			0x080000, 0x58ce8745, 7 | BRF_GRA },           //  9
+	{ "d0.1d",			0x080000, 0x94913c00, 7 | BRF_GRA },           // 10
+	{ "a1.2a",			0x080000, 0x4681329b, 7 | BRF_GRA },           // 11
+	{ "b1.2b",			0x080000, 0x8464608d, 7 | BRF_GRA },           // 12
+	{ "c1.2c",			0x080000, 0x8d82b485, 7 | BRF_GRA },           // 13
+	{ "d1.2d",			0x080000, 0xf0b10fa7, 7 | BRF_GRA },           // 14
+	{ "a2.3a",			0x080000, 0x03908666, 7 | BRF_GRA },           // 15
+	{ "b2.3b",			0x080000, 0xebfeb8d6, 7 | BRF_GRA },           // 16
+	{ "c2.3c",			0x080000, 0x9b3c02dc, 7 | BRF_GRA },           // 17
+	{ "d2.3d",			0x080000, 0x07767b77, 7 | BRF_GRA },           // 18
+	{ "a3.4a",			0x080000, 0xac6502a0, 7 | BRF_GRA },           // 19
+	{ "b3.4b",			0x080000, 0x73eca091, 7 | BRF_GRA },           // 20
+	{ "c3.4c",			0x080000, 0xea718267, 7 | BRF_GRA },           // 21
+	{ "d3.4d",			0x080000, 0xb22d1d10, 7 | BRF_GRA },           // 22
+	{ "a4.5a",			0x080000, 0xc1da92b6, 7 | BRF_GRA },           // 23
+	{ "b4.5b",			0x080000, 0x7b00567d, 7 | BRF_GRA },           // 24
+	{ "c4.5c",			0x080000, 0xd46ef578, 7 | BRF_GRA },           // 25
+	{ "d4.5d",			0x080000, 0xffff82d9, 7 | BRF_GRA },           // 26
+	{ "a5.6a",			0x080000, 0x6b171a66, 7 | BRF_GRA },           // 27
+	{ "b5.6b",			0x080000, 0xce576891, 7 | BRF_GRA },           // 28
+	{ "c5.6c",			0x080000, 0xd04ebb7a, 7 | BRF_GRA },           // 29
+	{ "d5.6d",			0x080000, 0x96aa1d38, 7 | BRF_GRA },           // 30
+	{ "a6.7a",			0x080000, 0xc423ddd4, 7 | BRF_GRA },           // 31
+	{ "b6.7b",			0x080000, 0x4f51fc57, 7 | BRF_GRA },           // 32
+	{ "c6.7c",			0x080000, 0x0c763fdb, 7 | BRF_GRA },           // 33
+	{ "d6.7d",			0x080000, 0x82d6cef2, 7 | BRF_GRA },           // 34
+	{ "a7.8a",			0x080000, 0x811ccd6b, 7 | BRF_GRA },           // 35
+	{ "b7.8b",			0x080000, 0x2ee75fc6, 7 | BRF_GRA },           // 36
+	{ "c7.8c",			0x080000, 0xe22194fd, 7 | BRF_GRA },           // 37
+	{ "d7.8d",			0x080000, 0x4b682344, 7 | BRF_GRA },           // 38
+
+	{ "nr1-chr0",		0x100000, 0x8d5b54ea, 2 | BRF_GRA },           // 39 C123 Tiles
+	{ "nr1-chr1",		0x100000, 0xcd21630c, 2 | BRF_GRA },           // 40
+	{ "nr1-chr2",		0x100000, 0x70a11023, 2 | BRF_GRA },           // 41
+	{ "nr1-chr3",		0x100000, 0x8f4b1d51, 2 | BRF_GRA },           // 42
+
+	{ "nr1-sha0",		0x080000, 0xca667e13, 3 | BRF_GRA },           // 43 C123 Tile Mask
+
+	{ "c366.bin",		0x000020, 0x8c96f31d, 0 | BRF_OPT },           // 44 Unknown PROM
+};
+
+STDROMPICKEXT(nebulrayp, nebulrayp, namcoc75)
+STD_ROM_FN(nebulrayp)
+
+struct BurnDriver BurnDrvNebulrayp = {
+	"nebulrayp", "nebulray", "namcoc75", NULL, "1994",
+	"Nebulas Ray (prototype)\0", NULL, "Namco", "NB-1 / NB-2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, nebulraypRomInfo, nebulraypRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
+	NebulrayInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	224, 288, 3, 4
+};
+
+
 // Point Blank (World, GN2 Rev B, set 1)
 
 static struct BurnRomInfo ptblankRomDesc[] = {
@@ -2378,6 +2473,47 @@ struct BurnDriver BurnDrvGslgr94j = {
 };
 
 
+// Great Sluggers '94 (prototype?)
+
+static struct BurnRomInfo gslgr94uaRomDesc[] = {
+	{ "prg_l.15b",		0x080000, 0xd41b1692, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "prg_u.13b",		0x080000, 0x798276a0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "snd_prg_3.bin",	0x080000, 0xd9871f03, 3 | BRF_PRG | BRF_ESS }, //  2 C75 Data
+
+	{ "voice_3.bin",	0x200000, 0xd3480574, 1 | BRF_SND },           //  3 C352 Samples
+
+	{ "obj_a1_3.1a",	0x080000, 0x19cb42a0, 7 | BRF_GRA },           //  4 C355 Sprite Data (byte interleaved)
+	{ "obj_b1_3.1b",	0x080000, 0x3d179f07, 7 | BRF_GRA },           //  5
+	{ "obj_c1_3.1c",	0x080000, 0x90922cb0, 7 | BRF_GRA },           //  6
+	{ "obj_d1_3.1d",	0x080000, 0x5ffbd032, 7 | BRF_GRA },           //  7
+	{ "obj_a2_3.2a",	0x080000, 0x9de63c10, 7 | BRF_GRA },           //  8
+	{ "obj_b2_3.2b",	0x080000, 0x563548a0, 7 | BRF_GRA },           //  9
+	{ "obj_c2.2c",		0x080000, 0x022c2101, 7 | BRF_GRA },           // 10
+	{ "obj_d2.2d",		0x080000, 0x1d84f241, 7 | BRF_GRA },           // 11
+
+	{ "chr0.bin",		0x100000, 0x9314085d, 2 | BRF_GRA },           // 12 C123 Tiles
+	{ "chr1.bin",		0x100000, 0xc128a887, 2 | BRF_GRA },           // 13
+	{ "chr2.bin",		0x100000, 0x48f0a311, 2 | BRF_GRA },           // 14
+	{ "chr3.bin",		0x100000, 0xadbd1f88, 2 | BRF_GRA },           // 15
+
+	{ "shape_3",		0x080000, 0x6b2beabb, 3 | BRF_GRA },           // 16 C123 Tile Mask
+};
+
+STDROMPICKEXT(gslgr94ua, gslgr94ua, namcoc75)
+STD_ROM_FN(gslgr94ua)
+
+struct BurnDriver BurnDrvGslgr94ua = {
+	"gslgr94ua", "gslgr94u", "namcoc75", NULL, "1994",
+	"Great Sluggers '94 (prototype?)\0", NULL, "Namco", "NB-1 / NB-2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, gslgr94uaRomInfo, gslgr94uaRomName, NULL, NULL, NULL, NULL, Namconb1InputInfo, Namconb1DIPInfo,
+	Gslgr94jInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
 // Super World Stadium '95 (Japan)
 
 static struct BurnRomInfo sws95RomDesc[] = {
@@ -2545,9 +2681,9 @@ static struct BurnRomInfo outfxiesRomDesc[] = {
 
 	{ "ou1voi0.6n",		0x200000, 0x2d8fb271, 1 | BRF_SND },           //  3 c352
 
-	{ "ou1shas.12s",	0x200000, 0x9bcb0397, 3 | BRF_GRA },           //  4 c123tmap:mask
+	{ "ou1shas.12s",	0x080000, 0xe75e8cec, 3 | BRF_GRA },           //  4 c123tmap:mask
 
-	{ "ou1shar.18s",	0x200000, 0xfbb48194, 6 | BRF_GRA },           //  5 c169roz:mask
+	{ "ou1shar.18s",	0x100000, 0x40148bbb, 6 | BRF_GRA },           //  5 c169roz:mask
 
 	{ "ou1obj0l.4c",	0x200000, 0x1b4f7184, 1 | BRF_GRA },           //  6 c355spr
 	{ "ou1obj0u.8c",	0x200000, 0xd0a69794, 1 | BRF_GRA },           //  7
@@ -2594,9 +2730,9 @@ static struct BurnRomInfo outfxiesjRomDesc[] = {
 
 	{ "ou1voi0.6n",		0x200000, 0x2d8fb271, 1 | BRF_SND },           //  3 c352
 
-	{ "ou1shas.12s",	0x200000, 0x9bcb0397, 3 | BRF_GRA },           //  4 c123tmap:mask
+	{ "ou1shas.12s",	0x080000, 0xe75e8cec, 3 | BRF_GRA },           //  4 c123tmap:mask
 
-	{ "ou1shar.18s",	0x200000, 0xfbb48194, 6 | BRF_GRA },           //  5 c169roz:mask
+	{ "ou1shar.18s",	0x100000, 0x40148bbb, 6 | BRF_GRA },           //  5 c169roz:mask
 
 	{ "ou1obj0l.4c",	0x200000, 0x1b4f7184, 1 | BRF_GRA },           //  6 c355spr
 	{ "ou1obj0u.8c",	0x200000, 0xd0a69794, 1 | BRF_GRA },           //  7
@@ -2644,9 +2780,9 @@ static struct BurnRomInfo outfxiesjaRomDesc[] = {
 
 	{ "ou1voi0.6n",		0x200000, 0x2d8fb271, 1 | BRF_SND },           //  3 c352
 
-	{ "ou1shas.12s",	0x200000, 0x9bcb0397, 3 | BRF_GRA },           //  4 c123tmap:mask
+	{ "ou1shas.12s",	0x080000, 0xe75e8cec, 3 | BRF_GRA },           //  4 c123tmap:mask
 
-	{ "ou1shar.18s",	0x200000, 0xfbb48194, 6 | BRF_GRA },           //  5 c169roz:mask
+	{ "ou1shar.18s",	0x100000, 0x40148bbb, 6 | BRF_GRA },           //  5 c169roz:mask
 
 	{ "ou1obj0l.4c",	0x200000, 0xecf135e4, 1 | BRF_GRA },           //  6 c355spr
 	{ "ou1obj0u.8c",	0x200000, 0x229fe774, 1 | BRF_GRA },           //  7
@@ -2693,9 +2829,9 @@ static struct BurnRomInfo outfxiesaRomDesc[] = {
 
 	{ "ou1voi0.6n",		0x200000, 0x2d8fb271, 1 | BRF_SND },           //  3 c352
 
-	{ "ou1shas.12s",	0x200000, 0x9bcb0397, 3 | BRF_GRA },           //  4 c123tmap:mask
+	{ "ou1shas.12s",	0x080000, 0xe75e8cec, 3 | BRF_GRA },           //  4 c123tmap:mask
 
-	{ "ou1shar.18s",	0x200000, 0xfbb48194, 6 | BRF_GRA },           //  5 c169roz:mask
+	{ "ou1shar.18s",	0x100000, 0x40148bbb, 6 | BRF_GRA },           //  5 c169roz:mask
 
 	{ "ou1obj0l.4c",	0x200000, 0x1b4f7184, 1 | BRF_GRA },           //  6 c355spr
 	{ "ou1obj0u.8c",	0x200000, 0xd0a69794, 1 | BRF_GRA },           //  7

@@ -168,66 +168,67 @@ STDINPUTINFO(Locomotn)
 
 static struct BurnDIPInfo LocomotnDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x36, NULL		},
-	{0x11, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x10)
+	{0x00, 0xff, 0xff, 0x36, NULL		},
+	{0x01, 0xff, 0xff, 0xff, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x10, 0x01, 0x30, 0x30, "3"		},
-	{0x10, 0x01, 0x30, 0x20, "4"		},
-	{0x10, 0x01, 0x30, 0x10, "5"		},
-	{0x10, 0x01, 0x30, 0x00, "255"		},
+	{0x00, 0x01, 0x30, 0x30, "3"		},
+	{0x00, 0x01, 0x30, 0x20, "4"		},
+	{0x00, 0x01, 0x30, 0x10, "5"		},
+	{0x00, 0x01, 0x30, 0x00, "255"		},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x10, 0x01, 0x08, 0x00, "Upright"		},
-	{0x10, 0x01, 0x08, 0x08, "Cocktail"		},
+	{0x00, 0x01, 0x08, 0x00, "Upright"		},
+	{0x00, 0x01, 0x08, 0x08, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x10, 0x01, 0x04, 0x04, "Off"		},
-	{0x10, 0x01, 0x04, 0x00, "On"		},
+	{0x00, 0x01, 0x04, 0x04, "Off"		},
+	{0x00, 0x01, 0x04, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Intermissions"		},
-	{0x10, 0x01, 0x02, 0x00, "Off"		},
-	{0x10, 0x01, 0x02, 0x02, "On"		},
+	{0x00, 0x01, 0x02, 0x00, "Off"		},
+	{0x00, 0x01, 0x02, 0x02, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x10, 0x01, 0x01, 0x01, "Off"		},
-	{0x10, 0x01, 0x01, 0x00, "On"		},
+	{0x00, 0x01, 0x01, 0x01, "Off"		},
+	{0x00, 0x01, 0x01, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    16, "Coin A"		},
-	{0x11, 0x01, 0x0f, 0x04, "4 Coins 1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0a, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x01, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x02, "3 Coins 2 Credits"		},
-	{0x11, 0x01, 0x0f, 0x08, "4 Coins 3 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0c, "3 Coins 4 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0e, "2 Coins 3 Credits"		},
-	{0x11, 0x01, 0x0f, 0x07, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0b, "1 Coin  3 Credits"		},
-	{0x11, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"		},
-	{0x11, 0x01, 0x0f, 0x0d, "1 Coin  5 Credits"		},
-	{0x11, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"		},
-	{0x11, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
-	{0x11, 0x01, 0x0f, 0x00, "Free Play"		},
+	{0x01, 0x01, 0x0f, 0x04, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0a, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x01, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x02, "3 Coins 2 Credits"		},
+	{0x01, 0x01, 0x0f, 0x08, "4 Coins 3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0c, "3 Coins 4 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0e, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x07, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0b, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"		},
+	{0x01, 0x01, 0x0f, 0x0d, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"		},
+	{0x01, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
+	{0x01, 0x01, 0x0f, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x11, 0x01, 0xf0, 0x40, "4 Coins 1 Credits"		},
-	{0x11, 0x01, 0xf0, 0xa0, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0xf0, 0x10, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0xf0, 0x20, "3 Coins 2 Credits"		},
-	{0x11, 0x01, 0xf0, 0x80, "4 Coins 3 Credits"		},
-	{0x11, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0xf0, 0xc0, "3 Coins 4 Credits"		},
-	{0x11, 0x01, 0xf0, 0xe0, "2 Coins 3 Credits"		},
-	{0x11, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"		},
-	{0x11, 0x01, 0xf0, 0xb0, "1 Coin  3 Credits"		},
-	{0x11, 0x01, 0xf0, 0x30, "1 Coin  4 Credits"		},
-	{0x11, 0x01, 0xf0, 0xd0, "1 Coin  5 Credits"		},
-	{0x11, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
-	{0x11, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"		},
-	{0x11, 0x01, 0xf0, 0x00, "No Coin B"		},
+	{0x01, 0x01, 0xf0, 0x40, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0xa0, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x10, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0xf0, 0x20, "3 Coins 2 Credits"		},
+	{0x01, 0x01, 0xf0, 0x80, "4 Coins 3 Credits"		},
+	{0x01, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0xf0, 0xc0, "3 Coins 4 Credits"		},
+	{0x01, 0x01, 0xf0, 0xe0, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"		},
+	{0x01, 0x01, 0xf0, 0xb0, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0xf0, 0x30, "1 Coin  4 Credits"		},
+	{0x01, 0x01, 0xf0, 0xd0, "1 Coin  5 Credits"		},
+	{0x01, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
+	{0x01, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"		},
+	{0x01, 0x01, 0xf0, 0x00, "No Coin B"		},
 };
 
 STDDIPINFO(Locomotn)
@@ -262,66 +263,67 @@ STDINPUTINFO(Tactcian)
 
 static struct BurnDIPInfo TactcianDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x00, NULL		},
-	{0x13, 0xff, 0xff, 0x00, NULL		},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0x00, NULL		},
+	{0x01, 0xff, 0xff, 0x00, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x30, 0x00, "3"		},
-	{0x12, 0x01, 0x30, 0x10, "4"		},
-	{0x12, 0x01, 0x30, 0x20, "5"		},
-	{0x12, 0x01, 0x30, 0x30, "255"		},
+	{0x00, 0x01, 0x30, 0x00, "3"		},
+	{0x00, 0x01, 0x30, 0x10, "4"		},
+	{0x00, 0x01, 0x30, 0x20, "5"		},
+	{0x00, 0x01, 0x30, 0x30, "255"		},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x08, 0x00, "Upright"		},
-	{0x12, 0x01, 0x08, 0x08, "Cocktail"		},
+	{0x00, 0x01, 0x08, 0x00, "Upright"		},
+	{0x00, 0x01, 0x08, 0x08, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x12, 0x01, 0x06, 0x06, "4 Coins 1 Credits"		},
-	{0x12, 0x01, 0x06, 0x02, "2 Coins 1 Credits"		},
-	{0x12, 0x01, 0x06, 0x00, "1 Coin  1 Credits"		},
-	{0x12, 0x01, 0x06, 0x04, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x06, 0x06, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x06, 0x02, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x06, 0x00, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x06, 0x04, "1 Coin  2 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x12, 0x01, 0x06, 0x02, "2 Coins 1 Credits"		},
-	{0x12, 0x01, 0x06, 0x04, "A 2C/1C  B 1C/3C"		},
-	{0x12, 0x01, 0x06, 0x00, "1 Coin  1 Credits"		},
-	{0x12, 0x01, 0x06, 0x06, "A 1C/1C  B 1C/6C"		},
+	{0x00, 0x01, 0x06, 0x02, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x06, 0x04, "A 2C/1C  B 1C/3C"		},
+	{0x00, 0x01, 0x06, 0x00, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x06, 0x06, "A 1C/1C  B 1C/6C"		},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
-	{0x12, 0x01, 0x01, 0x00, "10k, 80k then every 100k"		},
-	{0x12, 0x01, 0x01, 0x01, "20k, 80k then every 100k"		},
+	{0x00, 0x01, 0x01, 0x00, "10k, 80k then every 100k"		},
+	{0x00, 0x01, 0x01, 0x01, "20k, 80k then every 100k"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
-	{0x13, 0x01, 0x01, 0x00, "Mode 1"		},
-	{0x13, 0x01, 0x01, 0x01, "Mode 2"		},
+	{0x01, 0x01, 0x01, 0x00, "Mode 1"		},
+	{0x01, 0x01, 0x01, 0x01, "Mode 2"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x02, 0x00, "Off"		},
-	{0x13, 0x01, 0x02, 0x02, "On"		},
+	{0x01, 0x01, 0x02, 0x00, "Off"		},
+	{0x01, 0x01, 0x02, 0x02, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x04, 0x00, "Off"		},
-	{0x13, 0x01, 0x04, 0x04, "On"		},
+	{0x01, 0x01, 0x04, 0x00, "Off"		},
+	{0x01, 0x01, 0x04, 0x04, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x08, 0x00, "Off"		},
-	{0x13, 0x01, 0x08, 0x08, "On"		},
+	{0x01, 0x01, 0x08, 0x00, "Off"		},
+	{0x01, 0x01, 0x08, 0x08, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x10, 0x00, "Off"		},
-	{0x13, 0x01, 0x10, 0x10, "On"		},
+	{0x01, 0x01, 0x10, 0x00, "Off"		},
+	{0x01, 0x01, 0x10, 0x10, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x20, 0x00, "Off"		},
-	{0x13, 0x01, 0x20, 0x20, "On"		},
+	{0x01, 0x01, 0x20, 0x00, "Off"		},
+	{0x01, 0x01, 0x20, 0x20, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x40, 0x00, "Off"		},
-	{0x13, 0x01, 0x40, 0x40, "On"		},
+	{0x01, 0x01, 0x40, 0x00, "Off"		},
+	{0x01, 0x01, 0x40, 0x40, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x13, 0x01, 0x80, 0x00, "Off"		},
-	{0x13, 0x01, 0x80, 0x80, "On"		},
+	{0x01, 0x01, 0x80, 0x00, "Off"		},
+	{0x01, 0x01, 0x80, 0x80, "On"		},
 };
 
 STDDIPINFO(Tactcian)
@@ -355,58 +357,59 @@ STDINPUTINFO(Commsega)
 
 static struct BurnDIPInfo CommsegaDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x3f, NULL		},
-	{0x12, 0xff, 0xff, 0x7f, NULL		},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0x3f, NULL		},
+	{0x01, 0xff, 0xff, 0x7f, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x11, 0x01, 0x20, 0x20, "Off"		},
-	{0x11, 0x01, 0x20, 0x00, "On"		},
+	{0x00, 0x01, 0x20, 0x20, "Off"		},
+	{0x00, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x11, 0x01, 0x10, 0x10, "Off"		},
-	{0x11, 0x01, 0x10, 0x00, "On"		},
+	{0x00, 0x01, 0x10, 0x10, "Off"		},
+	{0x00, 0x01, 0x10, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x11, 0x01, 0x08, 0x08, "Off"		},
-	{0x11, 0x01, 0x08, 0x00, "On"		},
+	{0x00, 0x01, 0x08, 0x08, "Off"		},
+	{0x00, 0x01, 0x08, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x11, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x05, "3 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0x07, 0x01, "2 Coins 3 Credits"		},
-	{0x11, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0x07, 0x02, "1 Coin  3 Credits"		},
-	{0x11, 0x01, 0x07, 0x00, "Free Play"		},
+	{0x00, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x05, "3 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x00, 0x01, 0x07, 0x01, "2 Coins 3 Credits"		},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  3 Credits"		},
+	{0x00, 0x01, 0x07, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x03, "3"		},
-	{0x12, 0x01, 0x03, 0x02, "4"		},
-	{0x12, 0x01, 0x03, 0x01, "5"		},
-	{0x12, 0x01, 0x03, 0x00, "6"		},
+	{0x01, 0x01, 0x03, 0x03, "3"		},
+	{0x01, 0x01, 0x03, 0x02, "4"		},
+	{0x01, 0x01, 0x03, 0x01, "5"		},
+	{0x01, 0x01, 0x03, 0x00, "6"		},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x12, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"		},
-	{0x12, 0x01, 0x1c, 0x14, "3 Coins 1 Credits"		},
-	{0x12, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"		},
-	{0x12, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
-	{0x12, 0x01, 0x1c, 0x04, "2 Coins 3 Credits"		},
-	{0x12, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"		},
-	{0x12, 0x01, 0x1c, 0x08, "1 Coin  3 Credits"		},
-	{0x12, 0x01, 0x1c, 0x00, "Free Play"		},
+	{0x01, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"		},
+	{0x01, 0x01, 0x1c, 0x14, "3 Coins 1 Credits"		},
+	{0x01, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"		},
+	{0x01, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
+	{0x01, 0x01, 0x1c, 0x04, "2 Coins 3 Credits"		},
+	{0x01, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"		},
+	{0x01, 0x01, 0x1c, 0x08, "1 Coin  3 Credits"		},
+	{0x01, 0x01, 0x1c, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
-	{0x12, 0x01, 0x20, 0x20, "Off"		},
-	{0x12, 0x01, 0x20, 0x00, "On"		},
+	{0x01, 0x01, 0x20, 0x20, "Off"		},
+	{0x01, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x12, 0x01, 0x40, 0x40, "Easy"		},
-	{0x12, 0x01, 0x40, 0x00, "Hard"		},
+	{0x01, 0x01, 0x40, 0x40, "Easy"		},
+	{0x01, 0x01, 0x40, 0x00, "Hard"		},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x80, 0x00, "Upright"		},
-	{0x12, 0x01, 0x80, 0x80, "Cocktail"		},
+	{0x01, 0x01, 0x80, 0x00, "Upright"		},
+	{0x01, 0x01, 0x80, 0x80, "Cocktail"		},
 };
 
 STDDIPINFO(Commsega)
@@ -444,119 +447,122 @@ static inline void JunglerMakeInputs()
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
+	DIP_OFFSET(0x10)
 	// Default Values
-	{0x10, 0xff, 0xff, 0x01, NULL                     },
-	{0x11, 0xff, 0xff, 0xcb, NULL                     },
+	{0x00, 0xff, 0xff, 0x01, NULL                     },
+	{0x01, 0xff, 0xff, 0xcb, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x01, 0x00, "Cocktail"               },
-	{0x10, 0x01, 0x01, 0x01, "Upright"                },
+	{0x00, 0x01, 0x01, 0x00, "Cocktail"               },
+	{0x00, 0x01, 0x01, 0x01, "Upright"                },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x11, 0x01, 0x01, 0x01, "Off"                    },
-	{0x11, 0x01, 0x01, 0x00, "On"                     },
+	{0x01, 0x01, 0x01, 0x01, "Off"                    },
+	{0x01, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             }, // This is conditional on difficulty
-	{0x11, 0x01, 0x06, 0x02, "15000"                  },
-	{0x11, 0x01, 0x06, 0x04, "30000"                  },
-	{0x11, 0x01, 0x06, 0x06, "40000"                  },
-	{0x11, 0x01, 0x06, 0x00, "None"                   },
+	{0x01, 0x01, 0x06, 0x02, "15000"                  },
+	{0x01, 0x01, 0x06, 0x04, "30000"                  },
+	{0x01, 0x01, 0x06, 0x06, "40000"                  },
+	{0x01, 0x01, 0x06, 0x00, "None"                   },
 	
 	{0   , 0xfe, 0   , 8   , "Difficulty"             },
-	{0x11, 0x01, 0x38, 0x10, "1 Car,  Medium"         },
-	{0x11, 0x01, 0x38, 0x28, "1 Car,  Hard"           },
-	{0x11, 0x01, 0x38, 0x00, "2 Cars, Easy"           },
-	{0x11, 0x01, 0x38, 0x18, "2 Cars, Medium"         },
-	{0x11, 0x01, 0x38, 0x30, "2 Cars, Hard"           },
-	{0x11, 0x01, 0x38, 0x08, "3 Cars, Easy"           },
-	{0x11, 0x01, 0x38, 0x20, "3 Cars, Medium"         },
-	{0x11, 0x01, 0x38, 0x38, "3 Cars, Hard"           },
+	{0x01, 0x01, 0x38, 0x10, "1 Car,  Medium"         },
+	{0x01, 0x01, 0x38, 0x28, "1 Car,  Hard"           },
+	{0x01, 0x01, 0x38, 0x00, "2 Cars, Easy"           },
+	{0x01, 0x01, 0x38, 0x18, "2 Cars, Medium"         },
+	{0x01, 0x01, 0x38, 0x30, "2 Cars, Hard"           },
+	{0x01, 0x01, 0x38, 0x08, "3 Cars, Easy"           },
+	{0x01, 0x01, 0x38, 0x20, "3 Cars, Medium"         },
+	{0x01, 0x01, 0x38, 0x38, "3 Cars, Hard"           },
 	
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
-	{0x11, 0x01, 0xc0, 0x40, "2 Coins 1 Play"         },
-	{0x11, 0x01, 0xc0, 0xc0, "1 Coin  1 Play"         },
-	{0x11, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        },
-	{0x11, 0x01, 0xc0, 0x00, "Freeplay"               },
+	{0x01, 0x01, 0xc0, 0x40, "2 Coins 1 Play"         },
+	{0x01, 0x01, 0xc0, 0xc0, "1 Coin  1 Play"         },
+	{0x01, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        },
+	{0x01, 0x01, 0xc0, 0x00, "Freeplay"               },
 };
 
 STDDIPINFO(Drv)
 
 static struct BurnDIPInfo DngrtrckDIPList[]=
 {
+	DIP_OFFSET(0x10)
 	// Default Values
-	{0x10, 0xff, 0xff, 0x01, NULL                     },
-	{0x11, 0xff, 0xff, 0xcb, NULL                     },
+	{0x00, 0xff, 0xff, 0x01, NULL                     },
+	{0x01, 0xff, 0xff, 0xcb, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x01, 0x00, "Cocktail"               },
-	{0x10, 0x01, 0x01, 0x01, "Upright"                },
+	{0x00, 0x01, 0x01, 0x00, "Cocktail"               },
+	{0x00, 0x01, 0x01, 0x01, "Upright"                },
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x11, 0x01, 0x01, 0x01, "Off"                    },
-	{0x11, 0x01, 0x01, 0x00, "On"                     },
+	{0x01, 0x01, 0x01, 0x01, "Off"                    },
+	{0x01, 0x01, 0x01, 0x00, "On"                     },
 	
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             }, // This is conditional on difficulty
-	{0x11, 0x01, 0x06, 0x02, "15000"                  },
-	{0x11, 0x01, 0x06, 0x04, "30000"                  },
-	{0x11, 0x01, 0x06, 0x06, "40000"                  },
-	{0x11, 0x01, 0x06, 0x00, "None"                   },
+	{0x01, 0x01, 0x06, 0x02, "15000"                  },
+	{0x01, 0x01, 0x06, 0x04, "30000"                  },
+	{0x01, 0x01, 0x06, 0x06, "40000"                  },
+	{0x01, 0x01, 0x06, 0x00, "None"                   },
 	
 	{0   , 0xfe, 0   , 8   , "Difficulty"             },
-	{0x11, 0x01, 0x38, 0x10, "1 Car,  Medium"         },
-	{0x11, 0x01, 0x38, 0x28, "1 Car,  Hard"           },
-	{0x11, 0x01, 0x38, 0x00, "2 Cars, Easy"           },
-	{0x11, 0x01, 0x38, 0x18, "2 Cars, Medium"         },
-	{0x11, 0x01, 0x38, 0x30, "2 Cars, Hard"           },
-	{0x11, 0x01, 0x38, 0x08, "3 Cars, Easy"           },
-	{0x11, 0x01, 0x38, 0x20, "3 Cars, Medium"         },
-	{0x11, 0x01, 0x38, 0x38, "3 Cars, Hard"           },
+	{0x01, 0x01, 0x38, 0x10, "1 Car,  Medium"         },
+	{0x01, 0x01, 0x38, 0x28, "1 Car,  Hard"           },
+	{0x01, 0x01, 0x38, 0x00, "2 Cars, Easy"           },
+	{0x01, 0x01, 0x38, 0x18, "2 Cars, Medium"         },
+	{0x01, 0x01, 0x38, 0x30, "2 Cars, Hard"           },
+	{0x01, 0x01, 0x38, 0x08, "3 Cars, Easy"           },
+	{0x01, 0x01, 0x38, 0x20, "3 Cars, Medium"         },
+	{0x01, 0x01, 0x38, 0x38, "3 Cars, Hard"           },
 	
 	{0   , 0xfe, 0   , 4   , "Coinage"                				},
-	{0x11, 0x01, 0xc0, 0x00, "1 Coin  1 Play"        				},
-	{0x11, 0x01, 0xc0, 0x40, "1st Coin/1 Coin  2nd Coin/2 Plays"	},
-	{0x11, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        				},
-	{0x11, 0x01, 0xc0, 0xc0, "1st Coin/2 Coins  2nd Coin/3 plays"	},
+	{0x01, 0x01, 0xc0, 0x00, "1 Coin  1 Play"        				},
+	{0x01, 0x01, 0xc0, 0x40, "1st Coin/1 Coin  2nd Coin/2 Plays"	},
+	{0x01, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        				},
+	{0x01, 0x01, 0xc0, 0xc0, "1st Coin/2 Coins  2nd Coin/3 plays"	},
 };
 
 STDDIPINFO(Dngrtrck)
 
 static struct BurnDIPInfo JunglerDIPList[]=
 {
+	DIP_OFFSET(0x10)
 	// Default Values
-	{0x10, 0xff, 0xff, 0xbf, NULL                     },
+	{0x00, 0xff, 0xff, 0xbf, NULL                     },
 	
 	// Dip 1
 	{0   , 0xfe, 0   , 8   , "Coin A"                 },
-	{0x10, 0x01, 0x07, 0x01, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0x07, 0x02, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0x07, 0x03, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0x07, 0x00, "4 Coins 3 Plays"        },
-	{0x10, 0x01, 0x07, 0x07, "1 Coin  1 Play"         },
-	{0x10, 0x01, 0x07, 0x06, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0x07, 0x05, "1 Coin  3 Plays"        },
-	{0x10, 0x01, 0x07, 0x04, "1 Coin  4 Plays"        },
+	{0x00, 0x01, 0x07, 0x01, "4 Coins 1 Play"         },
+	{0x00, 0x01, 0x07, 0x02, "3 Coins 1 Play"         },
+	{0x00, 0x01, 0x07, 0x03, "2 Coins 1 Play"         },
+	{0x00, 0x01, 0x07, 0x00, "4 Coins 3 Plays"        },
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Play"         },
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  2 Plays"        },
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  3 Plays"        },
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Plays"        },
 	
 	{0   , 0xfe, 0   , 8   , "Coin B"                 },
-	{0x10, 0x01, 0x38, 0x08, "4 Coins 1 Play"         },
-	{0x10, 0x01, 0x38, 0x10, "3 Coins 1 Play"         },
-	{0x10, 0x01, 0x38, 0x18, "2 Coins 1 Play"         },
-	{0x10, 0x01, 0x38, 0x00, "4 Coins 3 Plays"        },
-	{0x10, 0x01, 0x38, 0x38, "1 Coin  1 Play"         },
-	{0x10, 0x01, 0x38, 0x30, "1 Coin  2 Plays"        },
-	{0x10, 0x01, 0x38, 0x28, "1 Coin  3 Plays"        },
-	{0x10, 0x01, 0x38, 0x20, "1 Coin  4 Plays"        },
+	{0x00, 0x01, 0x38, 0x08, "4 Coins 1 Play"         },
+	{0x00, 0x01, 0x38, 0x10, "3 Coins 1 Play"         },
+	{0x00, 0x01, 0x38, 0x18, "2 Coins 1 Play"         },
+	{0x00, 0x01, 0x38, 0x00, "4 Coins 3 Plays"        },
+	{0x00, 0x01, 0x38, 0x38, "1 Coin  1 Play"         },
+	{0x00, 0x01, 0x38, 0x30, "1 Coin  2 Plays"        },
+	{0x00, 0x01, 0x38, 0x28, "1 Coin  3 Plays"        },
+	{0x00, 0x01, 0x38, 0x20, "1 Coin  4 Plays"        },
 		
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x10, 0x01, 0x40, 0x40, "Cocktail"               },
-	{0x10, 0x01, 0x40, 0x00, "Upright"                },
+	{0x00, 0x01, 0x40, 0x40, "Cocktail"               },
+	{0x00, 0x01, 0x40, 0x00, "Upright"                },
 	
 	{0   , 0xfe, 0   , 2   , "Test Mode (255 lives)"  },
-	{0x10, 0x01, 0x80, 0x80, "Off"                    },
-	{0x10, 0x01, 0x80, 0x00, "On"                     },	
+	{0x00, 0x01, 0x80, 0x80, "Off"                    },
+	{0x00, 0x01, 0x80, 0x00, "On"                     },	
 };
 
 STDDIPINFO(Jungler)
@@ -763,6 +769,28 @@ static struct BurnRomInfo NrallyxRomDesc[] = {
 STD_ROM_PICK(Nrallyx)
 STD_ROM_FN(Nrallyx)
 
+static struct BurnRomInfo NrallyxbRomDesc[] = {
+	{ "nrallyx.1b",    0x01000, 0x9404c8d6, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "nrallyx.1e",    0x01000, 0xac01bf3f, BRF_ESS | BRF_PRG }, //  1
+	{ "nrallyx.1h",    0x01000, 0xaeba29b5, BRF_ESS | BRF_PRG }, //  2
+	{ "nrallyx.1k",    0x01000, 0x78f17da7, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "nrallyx.8e",    0x01000, 0xca7a174a, BRF_GRA },	     //  4	Characters & Sprites
+	
+	{ "rx1-6.8m",      0x00100, 0x3c16f62c, BRF_GRA },	     //  5	Dots
+	
+	{ "nrx1-1.11n",    0x00020, 0xa0a49017, BRF_GRA },	     //  6	Palette PROM
+	{ "nrx1-7.8p",     0x00100, 0x4e46f485, BRF_GRA },	     //  7	Lookup PROM
+	{ "rx1-2.4n",      0x00020, 0x8f574815, BRF_GRA },	     //  8	Video Layout PROM
+	{ "rx1-3.7k",      0x00020, 0xb8861096, BRF_GRA },	     //  9	Video Timing PROM
+	
+	{ "rx1-5.3p",      0x00100, 0x4bad7017, BRF_SND },	     //  10	Sound PROMs
+	{ "rx1-4.2m",      0x00100, 0x77245b66, BRF_SND },	     //  11
+};
+
+STD_ROM_PICK(Nrallyxb)
+STD_ROM_FN(Nrallyxb)
+
 static struct BurnRomInfo JunglerRomDesc[] = {
 	{ "jungr1",        0x01000, 0x5bd6ad15, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code #1
 	{ "jungr2",        0x01000, 0xdc99f1e3, BRF_ESS | BRF_PRG }, //  1
@@ -784,6 +812,94 @@ static struct BurnRomInfo JunglerRomDesc[] = {
 
 STD_ROM_PICK(Jungler)
 STD_ROM_FN(Jungler)
+
+static struct BurnRomInfo JunglersRomDesc[] = {
+	{ "5c",            0x01000, 0xedd71b28, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code #1
+	{ "5a",            0x01000, 0x61ea4d46, BRF_ESS | BRF_PRG }, //  1
+	{ "4d",            0x01000, 0x557c7925, BRF_ESS | BRF_PRG }, //  2
+	{ "4c",            0x01000, 0x51aac9a5, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "1b",            0x01000, 0xf86999c3, BRF_ESS | BRF_PRG }, //  4	Z80 Program Code #2
+	
+	{ "5k",            0x00800, 0x924262bf, BRF_GRA },	     //  5	Characters & Sprites
+	{ "5m",            0x00800, 0x131a08ac, BRF_GRA },	     //  6
+	
+	{ "82s129.10g",    0x00100, 0xc59c51b7, BRF_GRA },	     //  7	Dots
+	
+	{ "18s030.8b",     0x00020, 0x55a7e6d1, BRF_GRA },	     //  8	Palette PROM
+	{ "tbp24s10.9d",   0x00100, 0xd223f7b8, BRF_GRA },	     //  9	Lookup PROM
+	{ "18s030.7a",     0x00020, 0x8f574815, BRF_GRA },	     //  10	Video Layout PROM
+	{ "6331-1.10a",    0x00020, 0xb8861096, BRF_GRA },	     //  11	Video Timing PROM
+};
+
+STD_ROM_PICK(Junglers)
+STD_ROM_FN(Junglers)
+
+static struct BurnRomInfo JungleroRomDesc[] = {
+	{ "j1.bin",        0x01000, 0x5bd6ad15, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code #1
+	{ "j2.bin",        0x01000, 0xdc99f1e3, BRF_ESS | BRF_PRG }, //  1
+	{ "j3.bin",        0x01000, 0x3dcc03da, BRF_ESS | BRF_PRG }, //  2
+	{ "j4.bin",        0x01000, 0xf92e9940, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "js1.bin",       0x01000, 0xf86999c3, BRF_ESS | BRF_PRG }, //  4	Z80 Program Code #2
+	
+	{ "j5.bin",        0x01000, 0x4190c6c0, BRF_GRA },	     //  5	Characters & Sprites
+	{ "j6.bin",        0x01000, 0x5c001c66, BRF_GRA },	     //  6
+	
+	{ "am27s21dc.jn4", 0x00100, 0xc59c51b7, BRF_GRA },	     //  7	Dots
+	
+	{ "dm74s288n.jn2", 0x00020, 0x55a7e6d1, BRF_GRA },	     //  8	Palette PROM
+	{ "tbp24s10.jn5",  0x00100, 0xd223f7b8, BRF_GRA },	     //  9	Lookup PROM
+	{ "dm74s288n.jn1", 0x00020, 0x8f574815, BRF_GRA },	     //  10	Video Layout PROM
+	{ "mb7051.jn3",    0x00020, 0xb8861096, BRF_GRA },	     //  11	Video Timing PROM
+};
+
+STD_ROM_PICK(Junglero)
+STD_ROM_FN(Junglero)
+
+static struct BurnRomInfo JacklerRomDesc[] = {
+	{ "jackler_j1.r1", 0x01000, 0x3fc0d149, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code #1
+	{ "jackler_j2.r2", 0x01000, 0x5f482c7d, BRF_ESS | BRF_PRG }, //  1
+	{ "jungr3",        0x01000, 0x3dcc03da, BRF_ESS | BRF_PRG }, //  2
+	{ "jungr4",        0x01000, 0xf92e9940, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "1b",            0x01000, 0xf86999c3, BRF_ESS | BRF_PRG }, //  4	Z80 Program Code #2
+	
+	{ "jackler_j5.r9", 0x01000, 0x4190c6c0, BRF_GRA },	     //  5	Characters & Sprites
+	{ "jackler_j6.r10", 0x01000, 0x5c001c66, BRF_GRA },	     //  6
+	
+	{ "82s129.10g",    0x00100, 0xc59c51b7, BRF_GRA },	     //  7	Dots
+	
+	{ "18s030.8b",     0x00020, 0x55a7e6d1, BRF_GRA },	     //  8	Palette PROM
+	{ "tbp24s10.9d",   0x00100, 0xd223f7b8, BRF_GRA },	     //  9	Lookup PROM
+	{ "18s030.7a",     0x00020, 0x8f574815, BRF_GRA },	     //  10	Video Layout PROM
+	{ "6331-1.10a",    0x00020, 0xb8861096, BRF_GRA },	     //  11	Video Timing PROM
+};
+
+STD_ROM_PICK(Jackler)
+STD_ROM_FN(Jackler)
+
+static struct BurnRomInfo SavannaRomDesc[] = {
+	{ "sav1.bin",      0x01000, 0x958c57eb, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code #1
+	{ "sav2.bin",      0x01000, 0x61ea4d46, BRF_ESS | BRF_PRG }, //  1
+	{ "sav3.bin",      0x01000, 0x557c7925, BRF_ESS | BRF_PRG }, //  2
+	{ "sav4.bin",      0x01000, 0xb38b6cbd, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "1b",            0x01000, 0xf86999c3, BRF_ESS | BRF_PRG }, //  4	Z80 Program Code #2
+	
+	{ "5k",            0x00800, 0x924262bf, BRF_GRA },	     //  5	Characters & Sprites
+	{ "5m",            0x00800, 0x131a08ac, BRF_GRA },	     //  6
+	
+	{ "82s129.10g",    0x00100, 0xc59c51b7, BRF_GRA },	     //  7	Dots
+	
+	{ "18s030.8b",     0x00020, 0x55a7e6d1, BRF_GRA },	     //  8	Palette PROM
+	{ "tbp24s10.9d",   0x00100, 0xd223f7b8, BRF_GRA },	     //  9	Lookup PROM
+	{ "18s030.7a",     0x00020, 0x8f574815, BRF_GRA },	     //  10	Video Layout PROM
+	{ "6331-1.10a",    0x00020, 0xb8861096, BRF_GRA },	     //  11	Video Timing PROM
+};
+
+STD_ROM_PICK(Savanna)
+STD_ROM_FN(Savanna)
 
 static struct BurnSampleInfo RallyxSampleDesc[] = {
 	{ "bang", SAMPLE_NOLOOP },
@@ -1414,7 +1530,7 @@ static INT32 JunglerInit()
 	memset(AllMem, 0, nLen);
 	JunglerMemIndex();
 
-	DrvTempRom = (UINT8 *)BurnMalloc(0x01000);
+	DrvTempRom = (UINT8 *)BurnMalloc(0x01800); // jackler/junglero gfx roms are 2x size, loaded overlapped
 
 	// Load Z80 Program Roms
 	nRet = BurnLoadRom(DrvZ80Rom1 + 0x00000,  0, 1); if (nRet != 0) return 1;
@@ -2090,7 +2206,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvRallyx = {
 	"rallyx", NULL, NULL, "rallyx", "1980",
-	"Rally X (32k Ver.?)\0", NULL, "Namco", "Miscellaneous",
+	"Rally-X (32k Ver.?)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxRomInfo, RallyxRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
@@ -2100,7 +2216,7 @@ struct BurnDriver BurnDrvRallyx = {
 
 struct BurnDriver BurnDrvRallyxa = {
 	"rallyxa", "rallyx", NULL, "rallyx", "1980",
-	"Rally X\0", NULL, "Namco", "Miscellaneous",
+	"Rally-X\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxaRomInfo, RallyxaRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
@@ -2110,7 +2226,7 @@ struct BurnDriver BurnDrvRallyxa = {
 
 struct BurnDriver BurnDrvRallyxm = {
 	"rallyxm", "rallyx", NULL, "rallyx", "1980",
-	"Rally X (Midway)\0", NULL, "Namco (Midway license)", "Miscellaneous",
+	"Rally-X (Midway)\0", NULL, "Namco (Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmRomInfo, RallyxmRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
@@ -2120,7 +2236,7 @@ struct BurnDriver BurnDrvRallyxm = {
 
 struct BurnDriver BurnDrvRallyxmr = {
 	"rallyxmr", "rallyx", NULL, "rallyx", "1980",
-	"Rally X (Model Racing bootleg)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
+	"Rally-X (Model Racing bootleg)\0", NULL, "bootleg (Model Racing)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmrRomInfo, RallyxmrRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
@@ -2130,7 +2246,7 @@ struct BurnDriver BurnDrvRallyxmr = {
 
 struct BurnDriver BurnDrvRallyxeg = {
 	"rallyxeg", "rallyx", NULL, "rallyx", "1981",
-	"Rally X (Video Game bootleg)\0", NULL, "bootleg (Video Game / Electrogame)", "Miscellaneous",
+	"Rally-X (Video Game bootleg)\0", NULL, "bootleg (Video Game / Electrogame)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxegRomInfo, RallyxegRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, RallyxegInputInfo, DrvDIPInfo,
@@ -2140,7 +2256,7 @@ struct BurnDriver BurnDrvRallyxeg = {
 
 struct BurnDriver BurnDrvRallyxtd = {
 	"rallyxtd", "rallyx", NULL, "rallyx", "1981",
-	"Rally X (Tecnidiver bootleg)\0", NULL, "bootleg (Tecnidiver)", "Miscellaneous",
+	"Rally-X (Tecnidiver bootleg)\0", NULL, "bootleg (Tecnidiver)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxtdRomInfo, RallyxtdRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, RallyxegInputInfo, DrvDIPInfo,
@@ -2150,7 +2266,7 @@ struct BurnDriver BurnDrvRallyxtd = {
 
 struct BurnDriver BurnDrvDngrtrck = {
 	"dngrtrck", "rallyx", NULL, "rallyx", "1980",
-	"Danger Track (bootleg of Rally X)\0", NULL, "bootleg (Petaco)", "Miscellaneous",
+	"Danger Track (bootleg of Rally-X)\0", NULL, "bootleg (Petaco)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, DngrtrckRomInfo, DngrtrckRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DngrtrckDIPInfo,
@@ -2160,11 +2276,21 @@ struct BurnDriver BurnDrvDngrtrck = {
 
 struct BurnDriver BurnDrvNrallyx = {
 	"nrallyx", NULL, NULL, "rallyx", "1981",
-	"New Rally X\0", NULL, "Namco", "Miscellaneous",
+	"New Rally-X\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, NrallyxRomInfo, NrallyxRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
 	NrallyxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	NULL, 260, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvNrallyxb = {
+	"nrallyxb", "nrallyx", NULL, "rallyx", "1981",
+	"New Rally-X (bootleg?)\0", NULL, "Namco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, NrallyxbRomInfo, NrallyxbRomName, NULL, NULL, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2174,6 +2300,46 @@ struct BurnDriver BurnDrvJungler = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, JunglerRomInfo, JunglerRomName, NULL, NULL, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
+	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrvJunglers = {
+	"junglers", "jungler", NULL, NULL, "1981",
+	"Jungler (Stern Electronics)\0", NULL, "Konami (Stern Electronics license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, JunglersRomInfo, JunglersRomName, NULL, NULL, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
+	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrvJunglero = {
+	"junglero", "jungler", NULL, NULL, "1981",
+	"Jungler (Olympia)\0", NULL, "Konami (Olympia license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, JungleroRomInfo, JungleroRomName, NULL, NULL, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
+	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrvJackler = {
+	"jackler", "jungler", NULL, NULL, "1982",
+	"Jackler (bootleg of Jungler)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, JacklerRomInfo, JacklerRomName, NULL, NULL, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
+	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrvSavanna = {
+	"savanna", "jungler", NULL, NULL, "1982",
+	"Savanna (bootleg of Jungler)\0", NULL, "bootleg (Olympia)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, SavannaRomInfo, SavannaRomName, NULL, NULL, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
 	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };

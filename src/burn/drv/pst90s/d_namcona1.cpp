@@ -1886,7 +1886,7 @@ static struct BurnRomInfo emeraldajdRomDesc[] = {
 	{ "em1-ep0ld.6c",			0x080000, 0x988eb1cb, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "em1-ep0ud.6f",			0x080000, 0x6a169b8c, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "em1-ep1l.7c",			0x080000, 0x373c1c59, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "em1-ep1u.7c",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "em1-ep1u.7f",			0x080000, 0x4e969152, 1 | BRF_PRG | BRF_ESS }, //  3
 };
 
 STDROMPICKEXT(emeraldajd, emeraldajd, namcoc69)

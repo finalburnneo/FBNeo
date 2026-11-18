@@ -4459,6 +4459,57 @@ struct BurnDriver BurnDrvCosmogng = {
 };
 
 
+static struct BurnRomInfo cosmogngjRomDesc[] = {
+	{ "co1mpr0.bin",	0x20000, 0xd1b4c8db, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "co1mpr1.bin",	0x20000, 0x2f391906, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "co1spr0.bin",	0x20000, 0xbba2c28f, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "co1spr1.bin",	0x20000, 0xc029b459, 0x02 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "co1snd0.bin",	0x20000, 0x6bfa619f, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+#if !defined ROM_VERIFY
+	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+#endif
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "co1obj0.bin",	0x80000, 0x5df8ce0c, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "co1obj1.bin",	0x80000, 0x3d152497, 0x05 | BRF_GRA },           //  8
+	{ "co1obj2.bin",	0x80000, 0x4e50b6ee, 0x05 | BRF_GRA },           //  9
+	{ "co1obj3.bin",	0x80000, 0x7beed669, 0x05 | BRF_GRA },           // 10
+
+	{ "co1chr0.bin",	0x80000, 0xee375b3e, 0x06 | BRF_GRA },           // 11 Layer Tiles
+	{ "co1chr1.bin",	0x80000, 0x0149de65, 0x06 | BRF_GRA },           // 12
+	{ "co1chr2.bin",	0x80000, 0x93d565a0, 0x06 | BRF_GRA },           // 13
+	{ "co1chr3.bin",	0x80000, 0x4d971364, 0x06 | BRF_GRA },           // 14
+
+	{ "co1roz0.bin",	0x80000, 0x2bea6951, 0x07 | BRF_GRA },           // 15 Roz Layer Tiles
+
+	{ "co1sha0.bin",	0x80000, 0x063a70cc, 0x08 | BRF_GRA },           // 16 Layer Tiles Mask Data
+
+	{ "co1dat0.13s",	0x20000, 0xb53da2ae, 0x09 | BRF_PRG | BRF_ESS }, // 17 Shared 68K Data
+	{ "co1dat1.13p",	0x20000, 0xd21ad10b, 0x09 | BRF_PRG | BRF_ESS }, // 18
+
+	{ "co1voi1.bin",	0x80000, 0xb5ba8f15, 0x0a | BRF_SND },           // 19 C140 Samples
+	{ "co1voi2.bin",	0x80000, 0xb566b105, 0x0a | BRF_SND },           // 20
+
+	{ "04544191.6n",	0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // 21 Zoom table
+};
+
+STD_ROM_PICK(cosmogngj)
+STD_ROM_FN(cosmogngj)
+
+struct BurnDriver BurnDrvCosmogngj = {
+	"cosmogngj", "cosmogng", NULL, NULL, "1991",
+	"Cosmo Gang the Video (Japan)\0", NULL, "Namco", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, cosmogngjRomInfo, cosmogngjRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
+	CosmogngInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	224, 288, 3, 4
+};
+
+
 // Mirai Ninja (Japan, set 1)
 
 static struct BurnRomInfo mirninjaRomDesc[] = {
@@ -7229,46 +7280,46 @@ struct BurnDriver BurnDrvFinallapjb = {
 // Final Lap 2
 
 static struct BurnRomInfo finalap2RomDesc[] = {
-	{ "fls2mp0b",		0x20000, 0x97b48aae, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "fls2mp1b",		0x20000, 0xc9f3e0e7, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "fls2_mp0b.11d",	0x20000, 0x97b48aae, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "fls2_mp1b.13d",	0x20000, 0xc9f3e0e7, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "fls1sp0b",		0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "fls1sp1b",		0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "fls1_sp0b.11k",	0x20000, 0x8bf15d9c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "fls1_sp1b.13k",	0x20000, 0xc1a31086, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "flss0",		0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "fls1_s0.7j",	0x20000, 0xc07cc10a, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 #if !defined ROM_VERIFY
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 #endif
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "fl2obj0",		0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
-	{ "fl2obj2",		0x80000, 0x8ac933fd, 0x05 | BRF_GRA },           //  8
-	{ "fl2obj4",		0x80000, 0xe7b989e6, 0x05 | BRF_GRA },           //  9
-	{ "fl2obj6",		0x80000, 0x4936583d, 0x05 | BRF_GRA },           // 10
-	{ "fl2obj1",		0x80000, 0x3cebf419, 0x05 | BRF_GRA },           // 11
-	{ "fl2obj3",		0x80000, 0x0959ed55, 0x05 | BRF_GRA },           // 12
-	{ "fl2obj5",		0x80000, 0xd74ae0d3, 0x05 | BRF_GRA },           // 13
-	{ "fl2obj7",		0x80000, 0x5ca68c93, 0x05 | BRF_GRA },           // 14
+	{ "fls_obj-0.4c",	0x80000, 0x3657dd7a, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "fls_obj-2.4a",	0x80000, 0x8ac933fd, 0x05 | BRF_GRA },           //  8
+	{ "fls_obj-4.8c",	0x80000, 0xe7b989e6, 0x05 | BRF_GRA },           //  9
+	{ "fls_obj-6.8a",	0x80000, 0x4936583d, 0x05 | BRF_GRA },           // 10
+	{ "fls_obj-1.2c",	0x80000, 0x3cebf419, 0x05 | BRF_GRA },           // 11
+	{ "fls_obj-3.2a",	0x80000, 0x0959ed55, 0x05 | BRF_GRA },           // 12
+	{ "fls_obj-5.5c",	0x80000, 0xd74ae0d3, 0x05 | BRF_GRA },           // 13
+	{ "fls_obj-7.6a",	0x80000, 0x5ca68c93, 0x05 | BRF_GRA },           // 14
 
-	{ "fls2chr0",		0x40000, 0x7bbda499, 0x16 | BRF_GRA },           // 15 Layer Tiles
-	{ "fls2chr1",		0x40000, 0xac8940e5, 0x16 | BRF_GRA },           // 16
-	{ "fls2chr2",		0x40000, 0x1756173d, 0x16 | BRF_GRA },           // 17
-	{ "fls2chr3",		0x40000, 0x69032785, 0x16 | BRF_GRA },           // 18
-	{ "fls2chr4",		0x40000, 0x8216cf42, 0x16 | BRF_GRA },           // 19
-	{ "fls2chr5",		0x40000, 0xdc3e8e1c, 0x16 | BRF_GRA },           // 20
-	{ "fls2chr6",		0x40000, 0x1ef4bdde, 0x16 | BRF_GRA },           // 21
-	{ "fls2chr7",		0x40000, 0x53dafcde, 0x16 | BRF_GRA },           // 22
+	{ "fls2_chr-0.11n",	0x40000, 0x7bbda499, 0x16 | BRF_GRA },           // 15 Layer Tiles
+	{ "fls2_chr-1.11p",	0x40000, 0xac8940e5, 0x16 | BRF_GRA },           // 16
+	{ "fls_chr-2.11r",	0x40000, 0x1756173d, 0x16 | BRF_GRA },           // 17
+	{ "fls_chr-3.11s",	0x40000, 0x69032785, 0x16 | BRF_GRA },           // 18
+	{ "fls_chr-4.9n",	0x40000, 0x8216cf42, 0x16 | BRF_GRA },           // 19
+	{ "fls2_chr-5.9p",	0x40000, 0xdc3e8e1c, 0x16 | BRF_GRA },           // 20
+	{ "fls2_chr-6.9r",	0x40000, 0x1ef4bdde, 0x16 | BRF_GRA },           // 21
+	{ "fls2_chr-7.9s",	0x40000, 0x53dafcde, 0x16 | BRF_GRA },           // 22
 
-	{ "fls2sha",		0x40000, 0xf7b40a85, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
+	{ "fls2_sha.7n",	0x40000, 0xf7b40a85, 0x08 | BRF_GRA },           // 23 Layer Tiles Mask Data
 
 	{ "fls2dat0.13s",	0x40000, 0xf1af432c, 0x09 | BRF_PRG | BRF_ESS }, // 24 Shared 68K Data
 	{ "fls2dat1.13p",	0x40000, 0x8719533e, 0x09 | BRF_PRG | BRF_ESS }, // 25
 
 	{ "fl1-3.5b",		0x00100, 0xd179d99a, 0x0c | BRF_GRA },           // 26 C45 Color Look-up
 
-	{ "flsvoi1",		0x80000, 0x590be52f, 0x0a | BRF_SND },           // 27 C140 Samples
-	{ "flsvoi2",		0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
+	{ "fls_voi-1.3m",	0x80000, 0x590be52f, 0x0a | BRF_SND },           // 27 C140 Samples
+	{ "fls_voi-2.3l",	0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
 
 	{ "finalap2.nv",	0x02000, 0xc7ae5d0a, 0x0b | BRF_PRG | BRF_ESS},  // 29 nvram
 };
@@ -7278,7 +7329,7 @@ STD_ROM_FN(finalap2)
 
 struct BurnDriver BurnDrvFinalap2 = {
 	"finalap2", NULL, NULL, NULL, "1990",
-	"Final Lap 2\0", "Imperfect graphics", "Namco", "System 2",
+	"Final Lap 2 (World, Rev B)\0", "Imperfect graphics", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap2RomInfo, finalap2RomName, NULL, NULL, NULL, NULL, FinallapInputInfo, FinallapDIPInfo,
@@ -7528,7 +7579,7 @@ STD_ROM_FN(finalap3a)
 
 struct BurnDriver BurnDrvFinalap3a = {
 	"finalap3a", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (World, set 2)\0", "Imperfect graphics", "Namco", "System 2",
+	"Final Lap 3 (World)\0", "Imperfect graphics", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3aRomInfo, finalap3aRomName, NULL, NULL, NULL, NULL, FinallapInputInfo, FinallapDIPInfo,
@@ -7717,7 +7768,7 @@ STD_ROM_FN(finalap3bl)
 
 struct BurnDriver BurnDrvFinalap3bl = {
 	"finalap3bl", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (bootleg)\0", "Imperfect graphics", "Namco", "System 2",
+	"Final Lap 3 (bootleg)\0", "Imperfect graphics", "bootleg", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3blRomInfo, finalap3blRomName, NULL, NULL, NULL, NULL, FinallapInputInfo, FinallapDIPInfo,

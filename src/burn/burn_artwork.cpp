@@ -26,6 +26,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <utility>
+#include <algorithm>
 #include <math.h>
 
 #ifndef __LIBRETRO__

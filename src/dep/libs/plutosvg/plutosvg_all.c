@@ -3,7 +3,7 @@
 //   plutovg:  https://github.com/sammycage/plutovg (bbd91f0)
 // both MIT licensed, see LICENSE-plutosvg / LICENSE-plutovg (FTL.TXT for the FreeType-derived rasterizer)
 
-#if defined(__GNUC__)
+#if defined(__GNUC__) && !defined(__clang__)
 #pragma GCC diagnostic ignored "-Wmaybe-uninitialized"	// false positives from inlining
 #endif
 

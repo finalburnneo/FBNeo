@@ -1469,6 +1469,7 @@ static void CreateSupportFolders()
 		{_T("support/lua/")},
 		{_T("support/shaders/")},
 		{_T("support/bezel/")},
+		{_T("support/artwork/")},
 		{_T("cdiso/")},
 		// rom directories
 		{_T("roms/arcade/")},

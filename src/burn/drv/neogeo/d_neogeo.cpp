@@ -17345,12 +17345,12 @@ struct BurnDriver BurnDrvKarnovre = {
 };
 
 
-// Last Hope - Pink Bullets (bootleg AES to MVS conversion, no coin support) (Hack)
+// Last Hope - Pink Bullets v1.30 (bootleg AES to MVS conversion, no coin support) (Hack)
 
 static struct BurnRomInfo lasthopepbRomDesc[] = {
-	{ "ngdt-300-p1pb.bin", 0x100000, 0xb81dd2e0, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
+	{ "ngdt-300-p1pb.bin", 0x100000, 0x25c1867d, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
 
-	{ "ngdt-300-s1pb.bin", 0x020000, 0xf0719dbb, 2 | BRF_GRA },		 	//  1 Text data
+	{ "ngdt-300-s1pb.bin", 0x020000, 0x36c54e06, 2 | BRF_GRA },		 	//  1 Text data
 
 	{ "ngdt-300-c1pb.bin", 0x400000, 0xbc2d2a8b, 3 | BRF_GRA },		 	//  2 Sprite data
 	{ "ngdt-300-c2pb.bin", 0x400000, 0x1673318d, 3 | BRF_GRA },		 	//  3
@@ -17369,7 +17369,7 @@ STD_ROM_FN(lasthopepb)
 
 struct BurnDriver BurnDrvLasthopepb = {
 	"lasthopepb", "lasthope", "neogeo", NULL, "2026",
-	"Last Hope - Pink Bullets (bootleg AES to MVS conversion, no coin support) (Hack)\0", NULL, "LoW", "Neo Geo MVS",
+	"Last Hope - Pink Bullets v1.30 (bootleg AES to MVS conversion, no coin support) (Hack)\0", NULL, "LoW", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HACK | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
 	NULL, lasthopepbRomInfo, lasthopepbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

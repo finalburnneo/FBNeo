@@ -4024,6 +4024,8 @@ static struct BurnRomInfo assaultRomDesc[] = {
 	{ "at1dat1.13p",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "atvoi1.bin",		0x80000, 0xd36a649e, 0x0a | BRF_SND },           // 28 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(assault)
@@ -4088,6 +4090,8 @@ static struct BurnRomInfo assaultjRomDesc[] = {
 	{ "at1dat1.13p",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "atvoi1.bin",		0x80000, 0xd36a649e, 0x0a | BRF_SND },           // 28 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(assaultj)
@@ -4147,6 +4151,8 @@ static struct BurnRomInfo assaultpRomDesc[] = {
 	{ "at1dat1.13p",	0x20000, 0x21715313, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "atvoi1.bin",		0x80000, 0xd36a649e, 0x0a | BRF_SND },           // 28 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(assaultp)
@@ -4554,6 +4560,8 @@ static struct BurnRomInfo mirninjaRomDesc[] = {
 
 	{ "mn_voi1.bin",	0x80000, 0x2ca3573c, 0x0a | BRF_SND },           // 28 C140 Samples
 	{ "mn_voi2.bin",	0x80000, 0x466c3b47, 0x0a | BRF_SND },           // 29
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(mirninja)
@@ -4626,6 +4634,8 @@ static struct BurnRomInfo mirninjaaRomDesc[] = {
 
 	{ "mn_voi1.bin",	0x80000, 0x2ca3573c, 0x0a | BRF_SND },           // 28 C140 Samples
 	{ "mn_voi2.bin",	0x80000, 0x466c3b47, 0x0a | BRF_SND },           // 29
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(mirninjaa)
@@ -4689,6 +4699,8 @@ static struct BurnRomInfo pheliosRomDesc[] = {
 	{ "ps2_dat1.13p",	0x20000, 0x5b22d714, 0x09 | BRF_PRG | BRF_ESS }, // 31
 
 	{ "ps_voi-1.voice1",	0x80000, 0xf67376ed, 0x0a | BRF_SND },           // 32 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(phelios)
@@ -4775,6 +4787,8 @@ static struct BurnRomInfo pheliosjRomDesc[] = {
 	{ "ps1_dat1.13p",	0x20000, 0x5b22d714, 0x09 | BRF_PRG | BRF_ESS }, // 31
 
 	{ "ps_voi-1.voice1",	0x80000, 0xf67376ed, 0x0a | BRF_SND },           // 32 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(pheliosj)
@@ -4831,7 +4845,9 @@ static struct BurnRomInfo marvlandupRomDesc[] = {
 	{ "mv2_dat2.13r",	0x20000, 0xf5c6408c, 0x09 | BRF_PRG | BRF_ESS }, // 23
 	{ "mv2_dat3.13n",	0x20000, 0x6df76955, 0x09 | BRF_PRG | BRF_ESS }, // 24
 
-	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 25 C140 Samples Samples
+	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 25 C140 Samples (bad dump: either undumped, or JP samples rom on this PCB)
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(marvlandup)
@@ -4912,6 +4928,8 @@ static struct BurnRomInfo marvlandRomDesc[] = {
 	{ "mv1-dat1.13p",	0x20000, 0x73e1545a, 0x09 | BRF_PRG | BRF_ESS }, // 22
 
 	{ "mv1-voi1.bin",	0x80000, 0xde5cac09, 0x0a | BRF_SND },           // 23 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(marvland)
@@ -4974,6 +4992,8 @@ static struct BurnRomInfo valkyrieRomDesc[] = {
 	{ "wd1voi2.bin",	0x20000, 0xe95c5cf3, 0x0a | BRF_SND },           // 29
 
 	{ "valkyrie.nv",	0x02000, 0xd5ce4069, 0x0b | BRF_PRG | BRF_ESS},  // 30 nvram
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(valkyrie)
@@ -5104,6 +5124,8 @@ static struct BurnRomInfo rthun2RomDesc[] = {
 
 	{ "rts_voi1.3m",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "rts_voi2.3l",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 STD_ROM_PICK(rthun2)
 STD_ROM_FN(rthun2)
@@ -5190,6 +5212,8 @@ static struct BurnRomInfo rthun2jRomDesc[] = {
 	{ "plhs18p8a.4g",		0x00149, 0x1932dd5e, 0x00 | BRF_OPT },
 	{ "plhs18p8a.5f",		0x00149, 0xab2fd9c2, 0x00 | BRF_OPT },
 	{ "pal16l8.9d",			0x00104, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP},
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(rthun2j)
@@ -5244,6 +5268,8 @@ static struct BurnRomInfo dsaberRomDesc[] = {
 	{ "pal16l8a.4g",	0x00104, 0x660e1655, 0x00 | BRF_OPT },           // 20 plds
 	{ "pal16l8a.5f",	0x00104, 0x18f43c22, 0x00 | BRF_OPT },           // 21
 	{ "pal12l10.8d",	0x00040, 0xe2379249, 0x00 | BRF_OPT },           // 22
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(dsaber)
@@ -5317,6 +5343,8 @@ static struct BurnRomInfo dsaberaRomDesc[] = {
 	{ "pal16l8a.4g",	0x00104, 0x660e1655, 0x00 | BRF_OPT },              // 20 plds
 	{ "pal16l8a.5f",	0x00104, 0x18f43c22, 0x00 | BRF_OPT },           // 21
 	{ "pal12l10.8d",	0x00040, 0xe2379249, 0x00 | BRF_OPT },           // 22
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(dsabera)
@@ -5371,6 +5399,8 @@ static struct BurnRomInfo dsaberjRomDesc[] = {
 	{ "pal16l8a.4g",	0x00104, 0x660e1655, 0x00 | BRF_OPT },           // 20 plds
 	{ "pal16l8a.5f",	0x00104, 0x18f43c22, 0x00 | BRF_OPT },           // 21
 	{ "pal12l10.8d",	0x00040, 0xe2379249, 0x00 | BRF_OPT },           // 22
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(dsaberj)
@@ -5429,6 +5459,8 @@ static struct BurnRomInfo burnforcRomDesc[] = {
 	{ "bu1_dat1.13p",	0x20000, 0x5fe54b73, 0x09 | BRF_PRG | BRF_ESS }, // 26
 
 	{ "bu_voi-1.bin",	0x80000, 0x99d8a239, 0x0a | BRF_SND },           // 27 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(burnforc)
@@ -5505,6 +5537,8 @@ static struct BurnRomInfo burnforcoRomDesc[] = {
 	{ "bu1_dat1.13p",	0x20000, 0x5fe54b73, 0x09 | BRF_PRG | BRF_ESS }, // 26
 
 	{ "bu_voi-1.bin",	0x80000, 0x99d8a239, 0x0a | BRF_SND },           // 27 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(burnforco)
@@ -5565,6 +5599,8 @@ static struct BurnRomInfo finehourRomDesc[] = {
 	{ "fh1_dt3.13n",	0x20000, 0x50bab9da, 0x09 | BRF_PRG | BRF_ESS }, // 27
 
 	{ "fh1_vo1.bin",	0x80000, 0x07560fc7, 0x0a | BRF_SND },           // 28 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finehour)
@@ -5635,6 +5671,8 @@ static struct BurnRomInfo swsRomDesc[] = {
 	{ "ss1_dat1.13p",	0x40000, 0xab1e487d, 0x09 | BRF_PRG | BRF_ESS }, // 17
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 18 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(sws)
@@ -5698,6 +5736,8 @@ static struct BurnRomInfo sws92RomDesc[] = {
 	{ "sss1dat1.13p",	0x40000, 0x463b5ba8, 0x09 | BRF_PRG | BRF_ESS }, // 19
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 20 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(sws92)
@@ -5763,6 +5803,8 @@ static struct BurnRomInfo sws92gRomDesc[] = {
 	{ "ssg1dat3.13n",	0x40000, 0xcb3fed01, 0x09 | BRF_PRG | BRF_ESS }, // 21
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 22 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(sws92g)
@@ -5826,6 +5868,8 @@ static struct BurnRomInfo sws93RomDesc[] = {
 	{ "sst1dat1.13p",	0x80000, 0x60cf6281, 0x09 | BRF_PRG | BRF_ESS }, // 19
 
 	{ "ss_voi1.bin",	0x80000, 0x503e51b7, 0x0a | BRF_SND },           // 20 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(sws93)
@@ -5893,6 +5937,8 @@ static struct BurnRomInfo kyukaidkRomDesc[] = {
 	{ "ky1_d3.13n",		0x20000, 0x95674701, 0x09 | BRF_PRG | BRF_ESS }, // 23
 
 	{ "ky1_v1.bin",		0x80000, 0x5ff81aec, 0x0a | BRF_SND },           // 24 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(kyukaidk)
@@ -5953,6 +5999,8 @@ static struct BurnRomInfo kyukaidkoRomDesc[] = {
 	{ "ky1_d3.13n",		0x20000, 0x95674701, 0x09 | BRF_PRG | BRF_ESS }, // 23
 
 	{ "ky1_v1.bin",		0x80000, 0x5ff81aec, 0x0a | BRF_SND },           // 24 C140 Samples Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(kyukaidko)
@@ -6253,6 +6301,8 @@ static struct BurnRomInfo dirtfoxjRomDesc[] = {
 	{ "df1_voi1.bin",	0x80000, 0x15053904, 0x0a | BRF_SND },           // 26 C140 Samples Samples
 	
 	{ "nvram",			0x02000, 0x4b9f7b06, 0x00 | BRF_OPT },
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(dirtfoxj)
@@ -7057,6 +7107,8 @@ static struct BurnRomInfo finallapRomDesc[] = {
 
 	{ "fl1-v1",		0x20000, 0x86b21996, 0x0a | BRF_SND },           // 20 C140 Samples
 	{ "fl1-v2",		0x20000, 0x6a164647, 0x0a | BRF_SND },           // 21
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finallap)
@@ -7108,6 +7160,8 @@ static struct BurnRomInfo finallapdRomDesc[] = {
 
 	{ "fl1-v1",		0x20000, 0x86b21996, 0x0a | BRF_SND },           // 20 C140 Samples
 	{ "fl1-v2",		0x20000, 0x6a164647, 0x0a | BRF_SND },           // 21
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finallapd)
@@ -7159,6 +7213,8 @@ static struct BurnRomInfo finallapcRomDesc[] = {
 
 	{ "fl1-v1",		0x20000, 0x86b21996, 0x0a | BRF_SND },           // 20 C140 Samples
 	{ "fl1-v2",		0x20000, 0x6a164647, 0x0a | BRF_SND },           // 21
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finallapc)
@@ -7210,6 +7266,8 @@ static struct BurnRomInfo finallapjcRomDesc[] = {
 
 	{ "fl1-v1",		0x20000, 0x86b21996, 0x0a | BRF_SND },           // 20 C140 Samples
 	{ "fl1-v2",		0x20000, 0x6a164647, 0x0a | BRF_SND },           // 21
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finallapjc)
@@ -7261,6 +7319,8 @@ static struct BurnRomInfo finallapjbRomDesc[] = {
 
 	{ "fl1-v1",		0x20000, 0x86b21996, 0x0a | BRF_SND },           // 20 C140 Samples
 	{ "fl1-v2",		0x20000, 0x6a164647, 0x0a | BRF_SND },           // 21
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finallapjb)
@@ -7322,6 +7382,8 @@ static struct BurnRomInfo finalap2RomDesc[] = {
 	{ "fls_voi-2.3l",	0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
 
 	{ "finalap2.nv",	0x02000, 0xc7ae5d0a, 0x0b | BRF_PRG | BRF_ESS},  // 29 nvram
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finalap2)
@@ -7383,6 +7445,8 @@ static struct BurnRomInfo finalap2jRomDesc[] = {
 	{ "fls_voi-2.3l",	0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
 
 	{ "finalap2.nv",	0x02000, 0xc7ae5d0a, 0x0b | BRF_PRG | BRF_ESS},  // 29 nvram
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finalap2j)
@@ -7444,6 +7508,8 @@ static struct BurnRomInfo finalap2jbRomDesc[] = {
 	{ "fls_voi-2.3l",	0x80000, 0x204b3c27, 0x0a | BRF_SND },           // 28
 
 	{ "finalap2.nv",	0x02000, 0xc7ae5d0a, 0x0b | BRF_PRG | BRF_ESS},  // 29 nvram
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(finalap2jb)
@@ -7829,6 +7895,8 @@ static struct BurnRomInfo fourtraxRomDesc[] = {
 	{ "fx1_1.5b",		0x00100, 0x85ffd753, 0x0c | BRF_GRA },           // 36 C45 Color Look-up
 
 	{ "fx_voi-1.3m",	0x80000, 0x6173364f, 0x0a | BRF_SND },           // 37 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(fourtrax)
@@ -7897,6 +7965,8 @@ static struct BurnRomInfo fourtraxjRomDesc[] = {
 	{ "fx1_1.5b",		0x00100, 0x85ffd753, 0x0c | BRF_GRA },           // 36 C45 Color Look-up
 
 	{ "fx_voi-1.3m",	0x80000, 0x6173364f, 0x0a | BRF_SND },           // 37 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(fourtraxj)
@@ -7965,6 +8035,8 @@ static struct BurnRomInfo fourtraxaRomDesc[] = {
 	{ "fx1_1.5b",		0x00100, 0x85ffd753, 0x0c | BRF_GRA },           // 36 C45 Color Look-up
 
 	{ "fx_voi-1.3m",	0x80000, 0x6173364f, 0x0a | BRF_SND },           // 37 C140 Samples
+
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // Sprite zoom table (bad dump, not used)
 };
 
 STD_ROM_PICK(fourtraxa)

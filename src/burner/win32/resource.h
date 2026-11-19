@@ -1160,6 +1160,11 @@
 #define MENU_ARTWORK_RESET					12101
 #define MENU_ARTWORK_VIEW					12110	// 12110 - 12141: views
 #define MENU_ARTWORK_TOGGLE					12150	// 12150 - 12181: collections (overlay, bezel, ...)
+#define MENU_ARTWORK_ENABLE					12102
+#define MENU_ARTWORK_DEF					12190	// 12190 - 12194: default parts (marquee, overlay, backdrop, bezel, control panel)
+#define MENU_ARTWORK_DEFVIEW				12200	// 12200 - 12207: default view
+#define MENU_ARTWORK_SCALE					12210	// 12210 - 12215: size mode (auto, 1x - 4x, fit max. height)
+#define MENU_ARTWORK_MAXH					12220	// 12220 - 12224: max. height
 
 // Next default values for new objects
 //

@@ -46,7 +46,7 @@ INT32 bBurnArtworkEnable = 1;
 INT32 nBurnArtworkView = 0;
 INT32 nBurnArtworkMaxHeight = 2160;
 INT32 nBurnArtworkScale = -1;
-TCHAR szBurnArtworkToggles[1024] = _T("");	// global defaults for collections, see apply_patterns()
+INT32 nBurnArtworkDefaults = ARTWORK_DEFAULT_ALL;	// parts shown in games without their own settings
 
 extern "C" INT32 BurnDrvGetNativeSize(INT32 *pnWidth, INT32 *pnHeight);
 
@@ -1921,7 +1921,8 @@ static void view_apply(lview *v)
 	}
 }
 
-// case-insensitive wildcard match (* and ?), '_' and ' ' are the same
+// name compare for the default parts: not case sensitive, '_' and ' ' are the
+// same (* and ? wildcards work too)
 static INT32 tog_char(INT32 c)
 {
 	if (c == '_') c = ' ';
@@ -1947,39 +1948,6 @@ static INT32 wild_match(const char *p, const char *t)
 	}
 }
 
-// szBurnArtworkToggles, e.g. "-Marquee*, -Control*" or "-*, Bezel*, Overlay*":
-// comma separated, applied in order, '-' (or '!') switches off, otherwise on
-static void apply_patterns(lview *v)
-{
-	char buf[1024];
-	if (TCHARToANSI(szBurnArtworkToggles, buf, sizeof(buf)) == NULL) return;
-	buf[sizeof(buf) - 1] = 0;
-
-	char *tok = buf;
-	while (tok && *tok) {
-		char *next = strpbrk(tok, ",;");
-		if (next) *next++ = 0;
-
-		while (*tok == ' ' || *tok == '\t') tok++;
-		char *e = tok + strlen(tok);
-		while (e > tok && (e[-1] == ' ' || e[-1] == '\t')) *--e = 0;
-
-		INT32 on = 1;
-		if (*tok == '-' || *tok == '!') { on = 0; tok++; }
-		else if (*tok == '+') tok++;
-		while (*tok == ' ') tok++;
-
-		if (*tok) {
-			for (UINT32 i = 0; i < v->tog_name.size(); i++) {
-				if (wild_match(tok, v->tog_name[i].c_str())) {
-					if (on) v->tog_on |= (1u << i); else v->tog_on &= ~(1u << i);
-				}
-			}
-		}
-		tok = next;
-	}
-}
-
 static void settings_path(TCHAR *path)
 {
 	_stprintf(path, _T("%s%s_art.ini"), szAppEEPROMPath, BurnDrvGetText(DRV_NAME));
@@ -1994,13 +1962,37 @@ static void str_trim(char *t)
 	while (e > t && (e[-1] == ' ' || e[-1] == '\t' || e[-1] == '\r' || e[-1] == '\n')) *--e = 0;
 }
 
-// layout defaults -> global patterns -> config/games/<game>_art.ini
+// the common parts, for nBurnArtworkDefaults: a collection is one of these if
+// its name is one of the names (not case sensitive, '_' = ' '), so alternatives
+// like "Bezel_Alt" or "Marquee_Lit" keep the layout's own default
+static const char *def_part_names[5][4] = {
+	{ "Marquee",		"Marquees",			NULL,			NULL },	// ARTWORK_DEFAULT_MARQUEE
+	{ "Overlay",		"Overlays",			NULL,			NULL },	// ARTWORK_DEFAULT_OVERLAY
+	{ "Backdrop",		"Backdrops",		NULL,			NULL },	// ARTWORK_DEFAULT_BACKDROP
+	{ "Bezel",			"Bezels",			NULL,			NULL },	// ARTWORK_DEFAULT_BEZEL
+	{ "Control Panel",	"Control Panels",	"CPO",			NULL },	// ARTWORK_DEFAULT_CPANEL
+};
+
+static void apply_default_parts(lview *v)
+{
+	for (UINT32 i = 0; i < v->tog_name.size(); i++) {
+		for (INT32 c = 0; c < 5; c++) {
+			for (INT32 k = 0; k < 4 && def_part_names[c][k]; k++) {
+				if (wild_match(def_part_names[c][k], v->tog_name[i].c_str())) {
+					if (nBurnArtworkDefaults & (1 << c)) v->tog_on |= (1u << i); else v->tog_on &= ~(1u << i);
+				}
+			}
+		}
+	}
+}
+
+// layout defaults -> default parts (nBurnArtworkDefaults) -> config/games/<game>_art.ini
 static void settings_load()
 {
 	for (UINT32 k = 0; k < view_list.size(); k++) {
 		lview *v = views[view_list[k]];
 		v->tog_on = v->tog_def;
-		apply_patterns(v);
+		apply_default_parts(v);
 	}
 	cur_view = (nBurnArtworkView >= 0 && nBurnArtworkView < (INT32)view_list.size()) ? nBurnArtworkView : 0;
 
@@ -2296,6 +2288,35 @@ INT32 BurnArtworkSetToggle(INT32 n, INT32 nOn)
 	art_layout();
 	settings_save();
 	return 1;
+}
+
+// a global setting changed (nBurnArtworkScale, nBurnArtworkMaxHeight, the
+// defaults): redo the running game's artwork. returns 1 if active: re-init video
+INT32 BurnArtworkRefresh()
+{
+	if (!art_active) return 0;
+	settings_load();		// a game with its own _art.ini keeps those settings
+	view = views[view_list[cur_view]];
+	view_apply(view);
+	art_layout();
+	return 1;
+}
+
+// switch artwork on / off for the running game (and the next ones).
+// returns 1 if that changed anything: re-init video
+INT32 BurnArtworkSetEnable(INT32 bEnable)
+{
+	bBurnArtworkEnable = bEnable ? 1 : 0;
+
+	if (bBurnArtworkEnable && !art_active) {
+		BurnArtworkInit();
+		return art_active;
+	}
+	if (!bBurnArtworkEnable && art_active) {
+		art_free();
+		return 1;
+	}
+	return 0;
 }
 
 // forget the game's saved settings: back to the layout + global defaults

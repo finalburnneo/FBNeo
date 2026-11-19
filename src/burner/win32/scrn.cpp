@@ -2453,6 +2453,16 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			}
 			break;
 
+		case MENU_ARTWORK_ENABLE:
+			if (bDrvOkay) {
+				if (BurnArtworkSetEnable(!bBurnArtworkEnable)) {
+					POST_INITIALISE_MESSAGE;
+				}
+			} else {
+				bBurnArtworkEnable = !bBurnArtworkEnable;
+			}
+			break;
+
 		// PGM2 per-slot card operations (IDs 10040..10055)
 		default:
 			// Artwork views / parts (the artwork's size can change: re-initialise like a window size change)
@@ -2465,6 +2475,25 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			if (id >= MENU_ARTWORK_TOGGLE && id < MENU_ARTWORK_TOGGLE + 32) {
 				int n = id - MENU_ARTWORK_TOGGLE;
 				if (bDrvOkay && BurnArtworkSetToggle(n, !BurnArtworkGetToggle(n))) {
+					POST_INITIALISE_MESSAGE;
+				}
+				break;
+			}
+			// Artwork defaults / size: global settings, redo the running game's artwork with them
+			if ((id >= MENU_ARTWORK_DEF && id < MENU_ARTWORK_DEF + 5) || (id >= MENU_ARTWORK_DEFVIEW && id < MENU_ARTWORK_DEFVIEW + 8) ||
+				(id >= MENU_ARTWORK_SCALE && id < MENU_ARTWORK_SCALE + 6) || (id >= MENU_ARTWORK_MAXH && id < MENU_ARTWORK_MAXH + 5)) {
+				if (id >= MENU_ARTWORK_DEF && id < MENU_ARTWORK_DEF + 5) {
+					nBurnArtworkDefaults ^= 1 << (id - MENU_ARTWORK_DEF);
+				} else if (id >= MENU_ARTWORK_DEFVIEW && id < MENU_ARTWORK_DEFVIEW + 8) {
+					nBurnArtworkView = id - MENU_ARTWORK_DEFVIEW;
+				} else if (id >= MENU_ARTWORK_SCALE && id < MENU_ARTWORK_SCALE + 6) {
+					int n = id - MENU_ARTWORK_SCALE;
+					nBurnArtworkScale = (n == 0) ? -1 : ((n == 5) ? 0 : n);
+				} else {
+					const int nHeights[5] = { 720, 1080, 1440, 2160, 4320 };
+					nBurnArtworkMaxHeight = nHeights[id - MENU_ARTWORK_MAXH];
+				}
+				if (bDrvOkay && BurnArtworkRefresh()) {
 					POST_INITIALISE_MESSAGE;
 				}
 				break;

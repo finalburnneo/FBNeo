@@ -357,7 +357,6 @@ extern INT32 nBurnArtworkScale;			// game screen size: -1 = fit the frontend's w
 INT32 BurnArtworkActive();
 INT32 BurnArtworkGetBaseSize(INT32 *pnWidth, INT32 *pnHeight);	// size to base the window size on (1 if active)
 INT32 BurnArtworkSetTargetSize(INT32 nWidth, INT32 nHeight);		// output area, display orientation (1 if size changed)
-extern TCHAR szBurnArtworkToggles[1024];	// global defaults for the layouts' collections, e.g. "-Marquee*, -Control*"
 INT32 BurnArtworkGetViewCount();
 const char *BurnArtworkGetViewName(INT32 n);
 INT32 BurnArtworkGetView();
@@ -367,6 +366,15 @@ const char *BurnArtworkGetToggleName(INT32 n);
 INT32 BurnArtworkGetToggle(INT32 n);
 INT32 BurnArtworkSetToggle(INT32 n, INT32 nOn);		// returns 1 if changed: re-init video
 INT32 BurnArtworkResetSettings();					// delete config/games/<game>_art.ini, back to defaults
+INT32 BurnArtworkRefresh();							// after changing a global setting: returns 1 if active (re-init video)
+INT32 BurnArtworkSetEnable(INT32 bEnable);			// on/off for the running game too: returns 1 if changed (re-init video)
+extern INT32 nBurnArtworkDefaults;					// parts shown in games without their own _art.ini:
+#define ARTWORK_DEFAULT_MARQUEE		(1 << 0)
+#define ARTWORK_DEFAULT_OVERLAY		(1 << 1)
+#define ARTWORK_DEFAULT_BACKDROP	(1 << 2)
+#define ARTWORK_DEFAULT_BEZEL		(1 << 3)
+#define ARTWORK_DEFAULT_CPANEL		(1 << 4)
+#define ARTWORK_DEFAULT_ALL			0x1f
 
 extern INT32 nBurnFPS;
 extern INT32 nBurnCPUSpeedAdjust;

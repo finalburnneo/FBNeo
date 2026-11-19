@@ -38,8 +38,19 @@ static HMENU MenuFindItemParent(HMENU hParent, UINT nID)
 	return NULL;
 }
 
-// Rebuild the "Artwork" sub-menu: the artwork's views and its on/off parts
-// (MAME layout collections: overlay, backdrop, bezel, marquee, control panel...)
+// "Artwork" sub-menu item text from a layout name ('_' shown as ' ')
+static void MenuArtworkName(TCHAR* szItem, const char* szName)
+{
+	_sntprintf(szItem, 127, _T("%s"), ANSIToTCHAR(szName, NULL, 0));
+	szItem[127] = 0;
+	for (TCHAR* p = szItem; *p; p++) if (*p == _T('_')) *p = _T(' ');
+}
+
+static const int nArtworkMaxHeights[5] = { 720, 1080, 1440, 2160, 4320 };
+
+// Rebuild the "Artwork" sub-menu: on/off, the running game's views and parts
+// (MAME layout collections: overlay, backdrop, bezel, marquee, control panel...),
+// the defaults for games that haven't been set up yet, and the size options
 static void MenuUpdateArtwork()
 {
 	if (hArtworkMenu == NULL) {
@@ -47,40 +58,91 @@ static void MenuUpdateArtwork()
 	}
 
 	while (GetMenuItemCount(hArtworkMenu) > 0) {
-		DeleteMenu(hArtworkMenu, 0, MF_BYPOSITION);
-	}
-
-	if (!bDrvOkay || !BurnArtworkActive()) {
-		AppendMenu(hArtworkMenu, MF_STRING | MF_GRAYED, MENU_ARTWORK_NONE, _T("(no artwork loaded)"));
-		return;
+		DeleteMenu(hArtworkMenu, 0, MF_BYPOSITION);		// also destroys the sub-menus
 	}
 
 	TCHAR szItem[128];
-	int nViews = BurnArtworkGetViewCount();
-	if (nViews > 1) {
-		for (int i = 0; i < nViews && i < 32; i++) {
-			_sntprintf(szItem, 127, _T("%s"), ANSIToTCHAR(BurnArtworkGetViewName(i), NULL, 0));
-			szItem[127] = 0;
-			for (TCHAR* p = szItem; *p; p++) if (*p == _T('_')) *p = _T(' ');
-			AppendMenu(hArtworkMenu, MF_STRING, MENU_ARTWORK_VIEW + i, szItem);
-		}
-		CheckMenuRadioItem(hArtworkMenu, MENU_ARTWORK_VIEW, MENU_ARTWORK_VIEW + nViews - 1, MENU_ARTWORK_VIEW + BurnArtworkGetView(), MF_BYCOMMAND);
-		AppendMenu(hArtworkMenu, MF_SEPARATOR, 0, NULL);
-	}
 
-	int nToggles = BurnArtworkGetToggleCount();
-	for (int i = 0; i < nToggles && i < 32; i++) {
-		_sntprintf(szItem, 127, _T("%s"), ANSIToTCHAR(BurnArtworkGetToggleName(i), NULL, 0));
-		szItem[127] = 0;
-		for (TCHAR* p = szItem; *p; p++) if (*p == _T('_')) *p = _T(' ');
-		AppendMenu(hArtworkMenu, MF_STRING | (BurnArtworkGetToggle(i) ? MF_CHECKED : MF_UNCHECKED), MENU_ARTWORK_TOGGLE + i, szItem);
-	}
-	if (nToggles == 0) {
-		AppendMenu(hArtworkMenu, MF_STRING | MF_GRAYED, MENU_ARTWORK_NONE, _T("(nothing to switch in this view)"));
-	}
-
+	AppendMenu(hArtworkMenu, MF_STRING | (bBurnArtworkEnable ? MF_CHECKED : MF_UNCHECKED), MENU_ARTWORK_ENABLE, _T("&Use artwork"));
 	AppendMenu(hArtworkMenu, MF_SEPARATOR, 0, NULL);
-	AppendMenu(hArtworkMenu, MF_STRING, MENU_ARTWORK_RESET, _T("Reset to defaults"));
+
+	// the running game
+	if (!bDrvOkay || !BurnArtworkActive()) {
+		AppendMenu(hArtworkMenu, MF_STRING | MF_GRAYED, MENU_ARTWORK_NONE, (bDrvOkay && bBurnArtworkEnable) ? _T("(no artwork for this game)") : _T("(no artwork loaded)"));
+	} else {
+		int nViews = BurnArtworkGetViewCount();
+		if (nViews > 1) {
+			for (int i = 0; i < nViews && i < 32; i++) {
+				MenuArtworkName(szItem, BurnArtworkGetViewName(i));
+				AppendMenu(hArtworkMenu, MF_STRING, MENU_ARTWORK_VIEW + i, szItem);
+			}
+			CheckMenuRadioItem(hArtworkMenu, MENU_ARTWORK_VIEW, MENU_ARTWORK_VIEW + ((nViews < 32) ? nViews : 32) - 1, MENU_ARTWORK_VIEW + BurnArtworkGetView(), MF_BYCOMMAND);
+			AppendMenu(hArtworkMenu, MF_SEPARATOR, 0, NULL);
+		}
+
+		int nToggles = BurnArtworkGetToggleCount();
+		for (int i = 0; i < nToggles && i < 32; i++) {
+			MenuArtworkName(szItem, BurnArtworkGetToggleName(i));
+			AppendMenu(hArtworkMenu, MF_STRING | (BurnArtworkGetToggle(i) ? MF_CHECKED : MF_UNCHECKED), MENU_ARTWORK_TOGGLE + i, szItem);
+		}
+		if (nToggles == 0) {
+			AppendMenu(hArtworkMenu, MF_STRING | MF_GRAYED, MENU_ARTWORK_NONE, _T("(nothing to switch in this view)"));
+		}
+
+		AppendMenu(hArtworkMenu, MF_STRING, MENU_ARTWORK_RESET, _T("&Reset this game to the defaults"));
+	}
+	AppendMenu(hArtworkMenu, MF_SEPARATOR, 0, NULL);
+
+	// defaults, for games without their own config/games/<game>_art.ini
+	HMENU hDefaults = CreatePopupMenu();
+	const TCHAR* szParts[5] = { _T("&Marquee"), _T("&Overlay"), _T("&Backdrop"), _T("B&ezel"), _T("&Control panel") };
+	for (int i = 0; i < 5; i++) {
+		AppendMenu(hDefaults, MF_STRING | ((nBurnArtworkDefaults & (1 << i)) ? MF_CHECKED : MF_UNCHECKED), MENU_ARTWORK_DEF + i, szParts[i]);
+	}
+	AppendMenu(hDefaults, MF_SEPARATOR, 0, NULL);
+
+	HMENU hDefView = CreatePopupMenu();
+	for (int i = 0; i < 8; i++) {
+		_sntprintf(szItem, 127, (i == 0) ? _T("View &%d (the layout's first)") : _T("View &%d"), i + 1);
+		szItem[127] = 0;
+		AppendMenu(hDefView, MF_STRING, MENU_ARTWORK_DEFVIEW + i, szItem);
+	}
+	CheckMenuRadioItem(hDefView, MENU_ARTWORK_DEFVIEW, MENU_ARTWORK_DEFVIEW + 7, MENU_ARTWORK_DEFVIEW + ((nBurnArtworkView >= 0 && nBurnArtworkView < 8) ? nBurnArtworkView : 0), MF_BYCOMMAND);
+	AppendMenu(hDefaults, MF_POPUP, (UINT_PTR)hDefView, _T("Default &view"));
+
+	AppendMenu(hArtworkMenu, MF_POPUP, (UINT_PTR)hDefaults, _T("&Defaults (games not set up yet)"));
+
+	// size
+	HMENU hSize = CreatePopupMenu();
+	AppendMenu(hSize, MF_STRING, MENU_ARTWORK_SCALE + 0, _T("&Match the window / fullscreen (sharpest)"));
+	for (int i = 1; i <= 4; i++) {
+		_sntprintf(szItem, 127, _T("Game screen at &%dx"), i);
+		szItem[127] = 0;
+		AppendMenu(hSize, MF_STRING, MENU_ARTWORK_SCALE + i, szItem);
+	}
+	AppendMenu(hSize, MF_STRING, MENU_ARTWORK_SCALE + 5, _T("&Largest whole size that fits the max. height"));
+	int nScaleItem = (nBurnArtworkScale < 0) ? 0 : ((nBurnArtworkScale == 0) ? 5 : ((nBurnArtworkScale > 4) ? 4 : nBurnArtworkScale));
+	CheckMenuRadioItem(hSize, MENU_ARTWORK_SCALE, MENU_ARTWORK_SCALE + 5, MENU_ARTWORK_SCALE + nScaleItem, MF_BYCOMMAND);
+	AppendMenu(hSize, MF_SEPARATOR, 0, NULL);
+
+	HMENU hMaxHeight = CreatePopupMenu();
+	int nMaxItem = -1;
+	for (int i = 0; i < 5; i++) {
+		_sntprintf(szItem, 127, _T("%d"), nArtworkMaxHeights[i]);
+		szItem[127] = 0;
+		AppendMenu(hMaxHeight, MF_STRING, MENU_ARTWORK_MAXH + i, szItem);
+		if (nBurnArtworkMaxHeight == nArtworkMaxHeights[i]) nMaxItem = i;
+	}
+	if (nMaxItem >= 0) {
+		CheckMenuRadioItem(hMaxHeight, MENU_ARTWORK_MAXH, MENU_ARTWORK_MAXH + 4, MENU_ARTWORK_MAXH + nMaxItem, MF_BYCOMMAND);
+	} else {
+		_sntprintf(szItem, 127, _T("Other (%d, set in the .ini)"), nBurnArtworkMaxHeight);
+		szItem[127] = 0;
+		AppendMenu(hMaxHeight, MF_STRING | MF_GRAYED | MF_CHECKED, MENU_ARTWORK_NONE, szItem);
+	}
+	AppendMenu(hSize, MF_POPUP, (UINT_PTR)hMaxHeight, _T("Maximum &height (lower = faster)"));
+
+	AppendMenu(hArtworkMenu, MF_POPUP, (UINT_PTR)hSize, _T("&Size"));
 }
 
 // Rebuild the list of recently used Direct3D 11 shaders

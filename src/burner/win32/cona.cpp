@@ -506,7 +506,7 @@ int ConfigAppLoad()
 		VAR(nBurnArtworkView);
 		VAR(nBurnArtworkMaxHeight);
 		VAR(nBurnArtworkScale);
-		STR(szBurnArtworkToggles);
+		VAR(nBurnArtworkDefaults);
 		VAR(BurnShiftEnabled);
 		VAR(bBurnGunDrawReticles);
 		VAR(bBurnGunPositionalMode);
@@ -1038,15 +1038,15 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// If non-zero, enable alpha blending support.\n"));
 	VAR(bBurnUseBlend);
 
-	_ftprintf(h, _T("\n// If non-zero, load MAME artwork packs (default.lay) from szAppArtworkPath.\n"));
+	_ftprintf(h, _T("\n// If non-zero, load MAME-style artwork packs (drvname.zip w/default.lay) from szAppArtworkPath.\n"));
 	VAR(bBurnArtworkEnable);
-	_ftprintf(h, _T("// Artwork view to use (0 = first view with a screen), and max. height of the composited image (lower it if slow).\n"));
+	_ftprintf(h, _T("// Artwork view to use (0 = first view with a screen), and max. height of the composited image (if slow: lower value).\n"));
 	VAR(nBurnArtworkView);
 	VAR(nBurnArtworkMaxHeight);
 	_ftprintf(h, _T("// Artwork render size: -1 = match the window / fullscreen size (sharpest), 1 = game screen at the game's own\n// resolution, 2-4 = game screen at 2x-4x, 0 = largest integer size that fits nBurnArtworkMaxHeight.\n"));
 	VAR(nBurnArtworkScale);
-	_ftprintf(h, _T("// Default on/off for the artwork's parts (MAME layout collections), for games without their own\n// config/games/<game>_art.ini (Video > Artwork writes that). Comma separated, applied in order, '-' = off,\n// * and ? wildcards, not case sensitive, '_' = ' '. Empty = as the layout says. Examples:\n//   -Marquee*, -Control*     (no marquees or control panels)\n//   -*, Bezel*, Overlay*     (only bezels and overlays)\n"));
-	STR(szBurnArtworkToggles);
+	_ftprintf(h, _T("// Artwork defaults menu bitmask (1 = marquee, 2 = overlay, 4 = backdrop, 8 = bezel, 16 = control panel [31 = all])\n"));
+	VAR(nBurnArtworkDefaults);
 
 	_ftprintf(h, _T("\n// If non-zero, enable gear shifter display support.\n"));
 	VAR(BurnShiftEnabled);

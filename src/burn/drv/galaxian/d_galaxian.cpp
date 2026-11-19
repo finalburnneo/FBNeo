@@ -258,11 +258,11 @@ static struct BurnInputInfo BagmanmcInputList[] =
 	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 4, "p1 right"  },
 	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 7, "p1 fire 1" },
 	
-	{"Up (Cocktail)"     , BIT_DIGITAL   , GalInputPort1 + 4, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 5, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 2, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL   , GalInputPort1 + 3, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 6, "p2 fire 1" },
+	{"Up (Cocktail)"     , BIT_DIGITAL   , GalInputPort1 + 3, "p2 up"     },
+	{"Down (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 4, "p2 down"   },
+	{"Left (Cocktail)"   , BIT_DIGITAL   , GalInputPort1 + 1, "p2 left"   },
+	{"Right (Cocktail)"  , BIT_DIGITAL   , GalInputPort1 + 2, "p2 right"  },
+	{"Fire 1 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 5, "p2 fire 1" },
 
 	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
 	{"Dip 1"             , BIT_DIPSWITCH , GalDip + 0       , "dip"       },
@@ -2804,14 +2804,14 @@ static struct BurnDIPInfo BagmanmcDIPList[]=
 	// Default Values
 	{0x00, 0xff, 0xff, 0x00, NULL                     },
 	{0x01, 0xff, 0xff, 0x80, NULL                     },
-	{0x02, 0xff, 0xff, 0x7e, NULL                     },
+	{0x02, 0xff, 0xff, 0xfe, NULL                     },
 	
 	// Dip 1
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
 	{0x01, 0x01, 0x80, 0x80, "Upright"                },
-	{0x01, 0x01, 0x80, 0x00, "Cocktail"               },	
+	{0x01, 0x01, 0x80, 0x00, "Cocktail"               },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
@@ -2833,10 +2833,10 @@ static struct BurnDIPInfo BagmanmcDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Language"               },
 	{0x02, 0x01, 0x20, 0x20, "English"                },
 	{0x02, 0x01, 0x20, 0x00, "French"                 },
-	
-	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
-	{0x02, 0x01, 0x40, 0x40, "30000"                  },
-	{0x02, 0x01, 0x40, 0x00, "40000"                  },
+
+	{0   , 0xfe, 0   , 2   , "Unknown"                },
+	{0x02, 0x01, 0x80, 0x80, "Off"                    },
+	{0x02, 0x01, 0x80, 0x00, "On"                     },
 };
 
 STDDIPINFO(Bagmanmc)
@@ -11180,6 +11180,16 @@ static struct BurnRomInfo Ozon1RomDesc[] = {
 STD_ROM_PICK(Ozon1)
 STD_ROM_FN(Ozon1)
 
+static UINT8 ZigzagBank;
+
+static void ZigzagMapBank()
+{
+	ZetMapArea(0x2000, 0x2fff, 0, GalZ80Rom1 + 0x2000 + (0x1000 * (ZigzagBank & 1)));
+	ZetMapArea(0x2000, 0x2fff, 2, GalZ80Rom1 + 0x2000 + (0x1000 * (ZigzagBank & 1)));
+	ZetMapArea(0x3000, 0x3fff, 0, GalZ80Rom1 + 0x2000 + (0x1000 * (~ZigzagBank & 1)));
+	ZetMapArea(0x3000, 0x3fff, 2, GalZ80Rom1 + 0x2000 + (0x1000 * (~ZigzagBank & 1)));
+}
+
 void __fastcall ZigzagZ80Write(UINT16 a, UINT8 d)
 {
 	if (a >= 0x4800 && a <= 0x4fff) {
@@ -11242,10 +11252,8 @@ void __fastcall ZigzagZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0x7002: {
-			ZetMapArea(0x2000, 0x2fff, 0, GalZ80Rom1 + 0x2000 + (0x1000 * (d & 1)));
-			ZetMapArea(0x2000, 0x2fff, 2, GalZ80Rom1 + 0x2000 + (0x1000 * (d & 1)));
-			ZetMapArea(0x3000, 0x3fff, 0, GalZ80Rom1 + 0x2000 + (0x1000 * (~d & 1)));
-			ZetMapArea(0x3000, 0x3fff, 2, GalZ80Rom1 + 0x2000 + (0x1000 * (~d & 1)));
+			ZigzagBank = d & 1;
+			ZigzagMapBank();
 			return;
 		}
 		
@@ -11363,12 +11371,27 @@ static void ZigzagInstallHandler()
 	ZetClose();
 }
 
+static void ZigzagScan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(ZigzagBank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		ZigzagMapBank();
+		ZetClose();
+	}
+}
+
 static INT32 ZigzagInit()
 {
 	INT32 nRet;
 	
+	ZigzagBank = 0;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910;
 	GalPostLoadCallbackFunction = ZigzagInstallHandler;
+	GalDriverScanFunction = ZigzagScan;
 	
 	nRet = GalInit();
 	
@@ -11525,6 +11548,38 @@ static void GmgalaxPostLoad()
 	ZetClose();
 }
 
+static void GmgalaxSelectGame()
+{
+	INT32 nAddress = (GmgalaxSelectedGame == 1) ? 0x4000 : 0x0000;
+
+	ZetOpen(0);
+	ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1 + nAddress);
+	ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1 + nAddress);
+	ZetClose();
+
+	GalGfxBank[0] = (GmgalaxSelectedGame == 1) ? 1 : 0;
+	GalPaletteBank = (GmgalaxSelectedGame == 1) ? 1 : 0;
+}
+
+static void GmgalaxReset()
+{
+	GmgalaxSelectGame();
+}
+
+static void GmgalaxScan(INT32 nAction)
+{
+	if (nAction & ACB_WRITE) GmgalaxSelectGame();
+}
+
+static void GmgalaxFrameStart()
+{
+	// the game select switch resets the machine
+	if (GmgalaxSelectedGame != GalFakeDip) {
+		GmgalaxSelectedGame = GalFakeDip;
+		GalDoReset();
+	}
+}
+
 static INT32 GmgalaxInit()
 {
 	INT32 nRet;
@@ -11559,7 +11614,9 @@ static INT32 GmgalaxInit()
 	GalSpriteClipStart = 7;
 	GalSpriteClipEnd = 246;
 	
-	GameIsGmgalax = 1;
+	GalDriverResetFunction = GmgalaxReset;
+	GalDriverFrameStartFunction = GmgalaxFrameStart;
+	GalDriverScanFunction = GmgalaxScan;
 	
 	return nRet;
 }
@@ -11634,6 +11691,16 @@ UINT8 __fastcall Fourin1Z80Read(UINT16 a)
 	}
 
 	return 0xff;
+}
+
+static UINT8 Fourin1BankMapped; // 0 until the menu selects a game
+
+static void Fourin1MapBank()
+{
+	UINT8 *Rom = Fourin1BankMapped ? (GalZ80Rom1 + 0x2000 + (Fourin1Bank * 0x4000)) : GalZ80Rom1;
+
+	ZetMapArea(0x0000, 0x3fff, 0, Rom);
+	ZetMapArea(0x0000, 0x3fff, 2, Rom);
 }
 
 void __fastcall Fourin1Z80Write(UINT16 a, UINT8 d)
@@ -11719,8 +11786,8 @@ void __fastcall Fourin1Z80Write(UINT16 a, UINT8 d)
 		
 		case 0x8000: {
 			Fourin1Bank = d & 0x03;
-			ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1 + 0x2000 + (Fourin1Bank * 0x4000));
-			ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1 + 0x2000 + (Fourin1Bank * 0x4000));
+			Fourin1BankMapped = 1;
+			Fourin1MapBank();
 			return;
 		}
 		
@@ -11764,12 +11831,36 @@ static void Fourin1PostLoad()
 	ZetClose();
 }
 
+static void Fourin1Reset()
+{
+	Fourin1BankMapped = 0;
+
+	ZetOpen(0);
+	Fourin1MapBank();
+	ZetClose();
+}
+
+static void Fourin1Scan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(Fourin1BankMapped);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		Fourin1MapBank();
+		ZetClose();
+	}
+}
+
 static INT32 Fourin1Init()
 {
 	INT32 nRet;
 	
 	Fourin1Bank = 0;
 	GalPostLoadCallbackFunction = Fourin1PostLoad;
+	GalDriverResetFunction = Fourin1Reset;
+	GalDriverScanFunction = Fourin1Scan;
 	GalZ80Rom1Size = 0x2000;
 	GalTilesSharedRomSize = 0x1000;
 	
@@ -13663,6 +13754,26 @@ static struct BurnRomInfo Bagmanm2RomDesc[] = {
 STD_ROM_PICK(Bagmanm2)
 STD_ROM_FN(Bagmanm2)
 
+static struct BurnRomInfo Bagmanm3RomDesc[] = {
+	{ "1-2-tms2564.bin",       0x02000, 0x90e5ae76, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3-4-tms2564.bin",       0x02000, 0xf68fc60d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5a.bin",                0x00800, 0x99992ffb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5b.bin",                0x00800, 0x838c1462, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5c.bin",                0x00800, 0xdf4139fe, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5d.bin",                0x00800, 0xd07a1fcb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "bottom-tms2532.bin",    0x01000, 0xc26409b5, BRF_GRA | GAL_ROM_TILES_SHARED }, // second half unused
+	{ "top-tms2532.bin",       0x01000, 0xa2790089, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "c3-bottom-tms2532.bin", 0x01000, 0x4fdd460f, BRF_GRA | GAL_ROM_TILES_SHARED }, // second half unused
+	{ "c3-top-tms2532.bin",    0x01000, 0xb63cfae4, BRF_GRA | GAL_ROM_TILES_SHARED },
+
+	{ "82s123.bin",            0x00020, 0x9fe412ff, BRF_GRA | GAL_ROM_PROM },
+	{ "82s123-74157.bin",      0x00020, 0x66bb08a3, BRF_OPT }, // attached to a 74157
+};
+
+STD_ROM_PICK(Bagmanm3)
+STD_ROM_FN(Bagmanm3)
+
 static struct BurnRomInfo DkongjrmRomDesc[] = {
 	{ "a1",            0x01000, 0x299486e9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "a2",            0x01000, 0xa74a193b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -14366,7 +14477,7 @@ static INT32 BagmanmcInit()
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = BagmanmcPostLoad;
-	GameIsBagmanmc = 1;
+	GalIrqFireSlice = 0;
 	
 	nRet = GalInit();
 	
@@ -14375,6 +14486,31 @@ static INT32 BagmanmcInit()
 	GalExtendSpriteInfoFunction = BagmanmcExtendSpriteInfo;
 	
 	return nRet;
+}
+
+// gfx split over 4 roms, the lower 0x800 of each plane is mirrored from the upper half
+static INT32 BagmanmcSplitGfxInit()
+{
+	// GalInit adds the rom sizes to this, so the tile buffers end up 0x4000 big
+	struct BurnRomInfo ri;
+	GalTilesSharedRomSize = 0x4000;
+	for (INT32 i = 0; BurnDrvGetRomInfo(&ri, i) == 0 && ri.nLen; i++) {
+		if ((ri.nType & 0xff) == GAL_ROM_TILES_SHARED) GalTilesSharedRomSize -= ri.nLen;
+	}
+
+	INT32 nRet = BagmanmcInit(); if (nRet) return nRet;
+
+	GalTempRom = (UINT8*)BurnMalloc(0x4000);
+	for (INT32 i = 0; i < 4; i++) {
+		if (BurnLoadRom(GalTempRom + i * 0x1000, GAL_ROM_OFFSET_TILES_SHARED + i, 1)) return 1;
+	}
+	memcpy(GalTempRom + 0x0800, GalTempRom + 0x1800, 0x0800);
+	memcpy(GalTempRom + 0x2800, GalTempRom + 0x3800, 0x0800);
+	GfxDecode(GalNumChars, 2, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, GalTempRom, GalChars);
+	GfxDecode(GalNumSprites, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x100, GalTempRom, GalSprites);
+	BurnFree(GalTempRom);
+
+	return 0;
 }
 
 static void DkongjrmPostLoad()
@@ -14733,13 +14869,13 @@ struct BurnDriver BurnDrvSkybase = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvBagmanmc = {
+struct BurnDriver BurnDrvBagmanmc = {
 	"bagmanmc", "bagman", NULL, NULL, "1982",
 	"Bagman (bootleg on Moon Cresta hardware, set 1)\0", "Bad Colours", "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, BagmanmcRomInfo, BagmanmcRomName, NULL, NULL, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
-	BagmanmcInit, GalExit, GalFrame, GalDraw, GalScan,
+	BagmanmcSplitGfxInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -14747,9 +14883,19 @@ struct BurnDriver BurnDrvBagmanm2 = {
 	"bagmanm2", "bagman", NULL, NULL, "1984",
 	"Bagman (bootleg on Moon Cresta hardware, set 2)\0", "Bad Colours", "bootleg (GIB)", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Bagmanm2RomInfo, Bagmanm2RomName, NULL, NULL, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
 	BagmanmcInit, GalExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvBagmanm3 = {
+	"bagmanm3", "bagman", NULL, NULL, "1982",
+	"Bagman (bootleg on Moon Cresta hardware, set 3)\0", "Bad Colours", "bootleg", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
+	NULL, Bagmanm3RomInfo, Bagmanm3RomName, NULL, NULL, NULL, NULL, BagmanmcInputInfo, BagmanmcDIPInfo,
+	BagmanmcSplitGfxInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -15893,8 +16039,8 @@ static INT32 DingoInit()
 	
 	GalPostLoadCallbackFunction = DingoPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910;
-	Dingo = 1;
 	nRet = GalInit();
+	GalSoundIrqDivider = 2; // MAME runs it like checkmanj, the music sounds too fast there
 	GalScreenUnflipper = 1; // unflip coctail!
 	
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -19287,11 +19433,25 @@ void __fastcall HotshockSoundZ80PortWrite(UINT16 a, UINT8 d)
 	bprintf(PRINT_NORMAL, _T("Sound Port Write %x, %x\n"), a, d);
 }
 
+static void CavelonMapBank()
+{
+	ZetMapArea(0x0000, 0x1fff, 0, GalZ80Rom1 + ((CavelonBankSwitch) ? 0x4000 : 0x0000));
+	ZetMapArea(0x0000, 0x1fff, 2, GalZ80Rom1 + ((CavelonBankSwitch) ? 0x4000 : 0x0000));
+}
+
 static void CavelonDoBankSwitch()
 {
 	CavelonBankSwitch = !CavelonBankSwitch;
-	ZetMapArea(0x0000, 0x1fff, 0, GalZ80Rom1 + ((CavelonBankSwitch) ? 0x4000 : 0x0000));
-	ZetMapArea(0x0000, 0x1fff, 2, GalZ80Rom1 + ((CavelonBankSwitch) ? 0x4000 : 0x0000));
+	CavelonMapBank();
+}
+
+static void CavelonScan(INT32 nAction)
+{
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		CavelonMapBank();
+		ZetClose();
+	}
 }
 
 UINT8 __fastcall CavelonZ80Read(UINT16 a)
@@ -20109,6 +20269,7 @@ static INT32 CavelonInit()
 	INT32 nRet;
 	
 	GalPostLoadCallbackFunction = CavelonPostLoad;
+	GalDriverScanFunction = CavelonScan;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
 	nRet = GalInit(); if (nRet) return 1;
@@ -21320,6 +21481,351 @@ static INT32 ScorpionmcInit()
 	return nRet;
 }
 
+// Harem protection: an opcode/data rom bankswitch selected by a 4-bit shift register clocked through 0x5801-0x5803
+static INT32 harem_decrypt_mode = 0;
+static INT32 harem_decrypt_count = 0;
+static INT32 harem_decrypt_clk = 0;
+static INT32 harem_decrypt_bit = 0;
+static INT32 harem_bank = 0;
+
+static void harem_bankswitch(INT32 bank)
+{
+	UINT8 *data = GalZ80Rom1Op + 0x0000 + (0x2000 * bank);
+	UINT8 *opcodes = GalZ80Rom1Op + 0x6000 + (0x2000 * bank);
+
+	harem_bank = bank;
+
+	ZetMapMemory(data	, 0x8000, 0x9fff, MAP_READ | MAP_FETCHARG);
+	ZetMapMemory(opcodes, 0x8000, 0x9fff, MAP_FETCHOP);
+}
+
+static void harem_decrypt_bit_write(UINT8 data)
+{
+	harem_decrypt_bit = data;
+}
+
+static void harem_decrypt_rst_write(UINT8 data)
+{
+	harem_decrypt_mode = 0;
+	harem_decrypt_count = 0;
+}
+
+static void harem_decrypt_clk_write(UINT8 data)
+{
+	if (data & 1 && ~harem_decrypt_clk & 1) {
+		harem_decrypt_mode = ((harem_decrypt_mode >> 1) | ((harem_decrypt_bit & 1) << 3)) & 0x0f;
+		harem_decrypt_count++;
+	}
+
+	harem_decrypt_clk = data;
+
+	if (harem_decrypt_count == 4) {
+		INT32 bank = 0;
+		switch (harem_decrypt_mode) {
+			case 0x03: bank = 0; break;
+			case 0x09: bank = 1; break;
+			case 0x0a: bank = 2; break;
+		}
+
+		harem_bankswitch(bank);
+
+		harem_decrypt_rst_write(0);
+	}
+}
+
+static void harem_decrypt_scan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(harem_decrypt_mode);
+		SCAN_VAR(harem_decrypt_count);
+		SCAN_VAR(harem_decrypt_clk);
+		SCAN_VAR(harem_decrypt_bit);
+		SCAN_VAR(harem_bank);
+	}
+
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		harem_bankswitch(harem_bank);
+		ZetClose();
+	}
+}
+
+// Harem Memory Map
+static UINT8 __fastcall HaremZ80Read(UINT16 a)
+{
+	if ((a & 0xfc0c) == 0x6000) {
+		switch (a & 0x300) {
+			case 0x100: return ppi8255_r(0, a & 3);
+			case 0x200: return ppi8255_r(1, a & 3);
+		}
+	}
+
+	switch (a) {
+		case 0x5000: {
+			return GalGfxBank[0];
+		}
+
+		case 0x5800: {
+			// watchdog read
+			return 0xff;
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("harem Z80 #1 Read => %04X\n"), a);
+		}
+	}
+
+	return 0xff;
+}
+
+static void __fastcall HaremZ80Write(UINT16 a, UINT8 d)
+{
+	if (a >= 0x4000 && a <= 0x40ff) {
+		INT32 Offset = a & 0xff;
+
+		GalSpriteRam[Offset] = d;
+
+		if (Offset < 0x40) {
+			if ((Offset & 0x01) == 0) {
+				GalScrollVals[Offset >> 1] = d;
+			}
+		}
+
+		return;
+	}
+
+	if ((a & 0xfc0c) == 0x6000) {
+		switch (a & 0x300) {
+			case 0x100: ppi8255_w(0, a & 3, d); return;
+			case 0x200: ppi8255_w(1, a & 3, d); return;
+		}
+		return;
+	}
+
+	switch (a) {
+		case 0x5000: {
+			GalGfxBank[1] = d; // tiles
+			return;
+		}
+		case 0x5805: {
+			GalGfxBank[0] = d; // sprites
+			return;
+		}
+
+		case 0x5801: {
+			harem_decrypt_clk_write(d);
+			return;
+		}
+		case 0x5802: {
+			harem_decrypt_bit_write(d);
+			return;
+		}
+		case 0x5803: {
+			harem_decrypt_rst_write(d);
+			return;
+		}
+
+		case 0x5800: {
+			GalIrqFire = d & 1;
+			return;
+		}
+
+		case 0x5804: {
+			return; // coin counter
+		}
+
+		case 0x5806: {
+			GalFlipScreenX = d & 1;
+			return;
+		}
+
+		case 0x5807: {
+			GalFlipScreenY = d & 1;
+			return;
+		}
+
+		case 0x7005: {
+			return; // NOP
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("harem Z80 #1 Write => %04X, %02X\n"), a, d);
+		}
+	}
+}
+
+// Namenayo Memory Map
+static UINT8 __fastcall NamenayoZ80Read(UINT16 a)
+{
+	if ((a & 0xf4fc) == 0xf000) {
+		switch (a & 0x300) {
+			case 0x100: return ppi8255_r(0, a & 3);
+			case 0x200: return ppi8255_r(1, a & 3);
+		}
+		return 0xff; // watchdog @ 0xf000
+	}
+
+	if ((a & 0xffe0) == 0xe000) {
+		return GalExtraRam[a & 0x1f];
+	}
+
+	switch (a) {
+		case 0xf000: {
+			// watchdog read
+			return 0xff;
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("namenayo Z80 #1 Read => %04X\n"), a);
+		}
+	}
+
+	return 0xff;
+}
+
+static void __fastcall NamenayoZ80Write(UINT16 a, UINT8 d)
+{
+	if (a >= 0xc800 && a <= 0xc8ff) {
+		INT32 Offset = a & 0xff;
+
+		GalSpriteRam[Offset] = d;
+
+		if (Offset < 0x40 && ~Offset & 1) {
+			GalScrollVals[Offset >> 1] = d;
+		}
+
+		return;
+	}
+
+	if ((a & 0xf4fc) == 0xf000) {
+		switch (a & 0x300) {
+			case 0x100: ppi8255_w(0, a & 3, d); return;
+			case 0x200: ppi8255_w(1, a & 3, d); return;
+		}
+		return;
+	}
+
+	if ((a & 0xffe0) == 0xe000) {
+		GalExtraRam[a & 0x1f] = d;
+		return;
+	}
+
+	switch (a) {
+		case 0xd800: {
+			return; // unk?
+		}
+
+		case 0xe801: {
+			GalIrqFire = d & 1;
+			return;
+		}
+
+		case 0xe802: {
+			return; // coin counter
+		}
+
+		case 0xe804: {
+			GalStarsEnable = d & 0x01;
+			if (!GalStarsEnable) GalStarsScrollPos = -1;
+			return;
+		}
+
+		case 0xe806: {
+			GalFlipScreenX = d & 1;
+			return;
+		}
+
+		case 0xe807: {
+			GalFlipScreenY = d & 1;
+			return;
+		}
+
+		case 0x7005: {
+			return; // NOP
+		}
+
+		default: {
+			bprintf(PRINT_NORMAL, _T("namenayo Z80 #1 Write => %04X, %02X\n"), a, d);
+		}
+	}
+}
+
+static void MapHarem()
+{
+	ZetOpen(0);
+	ZetMemCallback(0x0000, 0xffff, 0);
+	ZetMemCallback(0x0000, 0xffff, 1);
+	ZetMemCallback(0x0000, 0xffff, 2);
+	ZetSetReadHandler(HaremZ80Read);
+	ZetSetWriteHandler(HaremZ80Write);
+	ZetSetInHandler(TheendZ80PortRead);
+	ZetSetOutHandler(TheendZ80PortWrite);
+	ZetMapArea(0x0000, 0x1fff, 0, GalZ80Rom1);
+	ZetMapArea(0x0000, 0x1fff, 2, GalZ80Rom1);
+
+	ZetMapArea(0x4000, 0x40ff, 0, GalSpriteRam);
+	ZetMapArea(0x4000, 0x40ff, 2, GalSpriteRam);
+
+	ZetMapMemory(GalExtraRam, 0x2000, 0x27ff, MAP_RAM);
+
+	ZetMapArea(0x4100, 0x47ff, 0, GalZ80Ram1);
+	ZetMapArea(0x4100, 0x47ff, 1, GalZ80Ram1);
+	ZetMapArea(0x4100, 0x47ff, 2, GalZ80Ram1);
+	ZetMapArea(0x4800, 0x4bff, 0, GalVideoRam);
+	ZetMapArea(0x4800, 0x4bff, 1, GalVideoRam);
+	ZetMapArea(0x4800, 0x4bff, 2, GalVideoRam);
+	ZetMapArea(0x4c00, 0x4fff, 0, GalVideoRam);
+	ZetMapArea(0x4c00, 0x4fff, 1, GalVideoRam);
+	ZetMapArea(0x4c00, 0x4fff, 2, GalVideoRam);
+	ZetClose();
+}
+
+static void MapNamenayo()
+{
+	ZetOpen(0);
+	ZetMemCallback(0x0000, 0xffff, 0);
+	ZetMemCallback(0x0000, 0xffff, 1);
+	ZetMemCallback(0x0000, 0xffff, 2);
+	ZetSetReadHandler(NamenayoZ80Read);
+	ZetSetWriteHandler(NamenayoZ80Write);
+	ZetSetInHandler(TheendZ80PortRead);
+	ZetSetOutHandler(TheendZ80PortWrite);
+	ZetMapMemory(GalZ80Rom1 + 0x0000,	0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(GalZ80Rom1 + 0x5000,	0x5000, 0x5fff, MAP_ROM);
+	ZetMapMemory(GalZ80Rom1 + 0x4000,	0x6000, 0x6fff, MAP_ROM);
+
+	ZetMapMemory(GalZ80Ram1,	0x4000, 0x4fff, MAP_RAM);
+	ZetMapMemory(GalVideoRam,	0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(GalSpriteRam,	0xc800, 0xc8ff, MAP_ROM);
+	ZetClose();
+}
+
+static void HaremExtendTileInfo(UINT16 *Code, INT32 *color, INT32, INT32 x, INT32)
+{
+	UINT8 Bank = (GalGfxBank[1] >> (x / 4)) & 1;
+	*Code |= Bank * 0x200;
+	*color |= GAL_TMAP_OPAQUE; // all Opaque
+}
+
+static void NamenayoExtendTileInfo(UINT16 *code, INT32 *color, INT32 attr, INT32 x, INT32 y)
+{
+	if (~attr & 1) { // pf/hud
+		INT32 e_at = GalExtraRam[y & 0x1f];
+		*code += (e_at & 0x38) << 5;
+		*color = (e_at & 0x07);
+		if (x < (0x1f - 8)) *color |= GAL_TMAP_OPAQUE; // pf: opaque, hud: transparent
+	} else {
+		// map
+		*code += ((attr & 0xfe) == 0x20) ? 0x400 : 0;
+	}
+}
+
+static void NamenayoExtendSpriteInfo(const UINT8 *base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *code, UINT8 *color)
+{
+	*code += (base[2] & 0x08) << 3;
+	*color += 0x08;
+}
+
 static void HaremPostLoad()
 {
 	GalZ80Rom1Op = (UINT8*)BurnMalloc(0x2000 * 3 * 2);
@@ -21344,13 +21850,6 @@ static void HaremPostLoad()
 	MapHarem();
 }
 
-static INT32 HaremScan(INT32 nAction, INT32 *pnMin)
-{
-	harem_decrypt_scan(nAction);
-
-	return GalScan(nAction, pnMin);
-}
-
 static INT32 HaremInit()
 {
 	INT32 nRet;
@@ -21358,7 +21857,8 @@ static INT32 HaremInit()
 	GalPostLoadCallbackFunction = HaremPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910;
 
-	Harem = 1;
+	GalExtraRamSize = 0x800;
+	GalDriverScanFunction = harem_decrypt_scan;
 
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
@@ -21385,7 +21885,7 @@ struct BurnDriver BurnDrvHarem = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_RUNGUN, 0,
 	NULL, haremRomInfo, haremRomName, NULL, NULL, NULL, NULL, HaremInputInfo, HaremDIPInfo,
-	HaremInit, KonamiExit, GalFrame, GalDraw, HaremScan,
+	HaremInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -21401,7 +21901,7 @@ static INT32 NamenayoInit()
 	GalPostLoadCallbackFunction = NamenayoPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 
-	Namenayo = 1;
+	GalExtraRamSize = 0x20; // extended tile attributes
 
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
@@ -23969,6 +24469,12 @@ static void MoonwarPortSelectWrite(UINT8 d)
 	MoonwarPortSelect = ((d & 0x10) >> 4) ^ 1;
 }
 
+static void MoonwarSoundRender(INT16 *, INT32)
+{
+	// Moonwar[a] has a horrible DC offset
+	BurnSoundDCFilter();
+}
+
 static INT32 MoonwarInit()
 {
 	INT32 nRet;
@@ -23993,7 +24499,7 @@ static INT32 MoonwarInit()
 	filter_rc_set_src_gain(4, 0.20);
 	filter_rc_set_src_gain(5, 0.20);
 
-	GameIsMoonwar = 1;
+	GalSoundBoardRenderFunction = MoonwarSoundRender;
 
 	return nRet;
 }

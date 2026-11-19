@@ -83,9 +83,6 @@ extern UINT8 GalPaletteBank;
 extern UINT8 GalSpriteClipStart;
 extern UINT8 GalSpriteClipEnd;
 extern UINT8 FroggerAdjust;
-extern UINT8 Dingo;
-extern UINT8 Harem;
-extern UINT8 Namenayo;
 extern UINT8 GalBackgroundRed;
 extern UINT8 GalBackgroundGreen;
 extern UINT8 GalBackgroundBlue;
@@ -153,9 +150,6 @@ void DambustrExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
 void Ad2083ExtendTileInfo(UINT16 *Code, INT32 *Colour, INT32 Attr, INT32, INT32);
 void Ad2083ExtendSpriteInfo(const UINT8 *Base, INT32*, INT32*, UINT8 *xFlip, UINT8*, UINT16 *Code, UINT8*);
 void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
-void HaremExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32);
-void NamenayoExtendTileInfo(UINT16 *code, INT32 *color, INT32 attr, INT32 x, INT32 y);
-void NamenayoExtendSpriteInfo(const UINT8 *base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *code, UINT8 *color);
 void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32);
 void BagmanmcExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*);
 void HardCodeGalaxianPROM();
@@ -237,7 +231,8 @@ extern UINT8 *GalChars;
 extern UINT8 *GalSprites;
 extern UINT8 *GalTempRom;
 extern UINT8 *digitalk_rom;
-extern UINT8 *namenayo_extattr;
+extern UINT8 *GalExtraRam;
+extern UINT32 GalExtraRamSize;			// set before GalInit: driver ram, zeroed and saved with the rest
 extern INT32 GalSndROMSize;
 extern UINT32 *GalPalette;
 extern UINT32 GalZ80Rom1Size;
@@ -264,7 +259,18 @@ extern UINT32 GalPromRomNum;
 typedef void (*GalPostLoadCallback)();
 extern GalPostLoadCallback GalPostLoadCallbackFunction;
 
-// optional extra sound board, driven from GalFrame
+// per-driver hooks, so the framework needs no game-specific code
+typedef void (*GalDriverReset)();
+extern GalDriverReset GalDriverResetFunction;			// end of GalDoReset
+typedef void (*GalDriverFrameStart)();
+extern GalDriverFrameStart GalDriverFrameStartFunction;	// start of GalFrame, after the reset check
+typedef void (*GalDriverScan)(INT32 nAction);
+extern GalDriverScan GalDriverScanFunction;			// end of GalScan, restores driver banking on ACB_WRITE
+extern INT32 GalIrqFireSlice;						// main cpu irq slice, -1 = framework default
+extern INT32 GalSoundIrqDivider;					// checkmaj sound cpu: one irq every n slices
+INT32 GalDoReset();
+
+// optional extra sound board, driven from GalFrame (render is called after all other sound)
 typedef void (*GalSoundBoardReset)();
 extern GalSoundBoardReset GalSoundBoardResetFunction;
 typedef void (*GalSoundBoardRun)(INT32 nSlice, INT32 nInterleave);
@@ -294,9 +300,6 @@ extern UINT8 MoonwarDialX[2];
 extern UINT8 MshuttleAY8910CS;
 extern UINT8 GmgalaxSelectedGame;
 extern UINT8 Fourin1Bank;
-extern UINT8 GameIsGmgalax;
-extern UINT8 GameIsBagmanmc;
-extern UINT8 GameIsMoonwar;
 extern UINT8 CavelonBankSwitch;
 extern UINT8 GalVBlank;
 
@@ -310,15 +313,10 @@ void MapJumpbug();
 void MapFrogger();
 void KonamiPPIInit();
 void MapTheend();
-void MapHarem();
-void MapNamenayo();
+UINT8 __fastcall TheendZ80PortRead(UINT16 a);
+void __fastcall TheendZ80PortWrite(UINT16 a, UINT8 d);
 void MapTurtles();
 void MapScobra();
-void harem_bankswitch(INT32 bank);
-void harem_decrypt_scan(INT32 nAction);
-void harem_decrypt_bit_write(UINT8 data);
-void harem_decrypt_clk_write(UINT8 data);
-void harem_decrypt_rst_write(UINT8 data);
 UINT8 harem_digitalker_intr_read(); // sound
 INT32 GalExit();
 INT32 KonamiExit();

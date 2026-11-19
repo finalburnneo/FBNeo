@@ -135,38 +135,12 @@ void RacknrolExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32)
 	*Code |= Bank << 8;
 }
 
-void HaremExtendTileInfo(UINT16 *Code, INT32 *color, INT32, INT32 x, INT32)
-{
-	UINT8 Bank = (GalGfxBank[1] >> (x / 4)) & 1;
-	*Code |= Bank * 0x200;
-	*color |= GAL_TMAP_OPAQUE; // all Opaque
-}
-
-void NamenayoExtendTileInfo(UINT16 *code, INT32 *color, INT32 attr, INT32 x, INT32 y)
-{
-	if (~attr & 1) { // pf/hud
-		INT32 e_at = namenayo_extattr[y & 0x1f];
-		*code += (e_at & 0x38) << 5;
-		*color = (e_at & 0x07);
-		if (x < (0x1f - 8)) *color |= GAL_TMAP_OPAQUE; // pf: opaque, hud: transparent
-	} else {
-		// map
-		*code += ((attr & 0xfe) == 0x20) ? 0x400 : 0;
-	}
-}
-
 void BagmanmcExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32, INT32)
 {
 	*Code |= GalGfxBank[0] << 9;
 }
 
 // Sprite extend helpers
-void NamenayoExtendSpriteInfo(const UINT8 *base, INT32*, INT32*, UINT8*, UINT8*, UINT16 *code, UINT8 *color)
-{
-	*code += (base[2] & 0x08) << 3;
-	*color += 0x08;
-}
-
 void PacmanblExtendSpriteInfo(const UINT8*, INT32 *sx, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)
 {
 	// Sprites on the topmost row of the maze are ok, everywhere else need

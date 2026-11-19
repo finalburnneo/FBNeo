@@ -208,7 +208,7 @@ static struct BurnInputInfo Colony7InputList[] = {
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 5,	"tilt"		},
-	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // b
+	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",					BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",					BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
@@ -229,7 +229,7 @@ static struct BurnInputInfo JinInputList[] = {
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		}, // 9
+	{"Dip A",					BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",					BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",					BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
@@ -652,48 +652,50 @@ STDINPUTINFO(Lottofun)
 
 static struct BurnDIPInfo Colony7DIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0x00, NULL					},
-	{0x0c, 0xff, 0xff, 0x00, NULL					},
-	{0x0d, 0xff, 0xff, 0x01, NULL					},
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+	{0x01, 0xff, 0xff, 0x00, NULL					},
+	{0x02, 0xff, 0xff, 0x01, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Lives"				},
-	{0x0d, 0x01, 0x01, 0x00, "2"					},
-	{0x0d, 0x01, 0x01, 0x01, "3"					},
+	{0x02, 0x01, 0x01, 0x00, "2"					},
+	{0x02, 0x01, 0x01, 0x01, "3"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus At"				},
-	{0x0d, 0x01, 0x02, 0x00, "20k/40k"				},
-	{0x0d, 0x01, 0x02, 0x02, "30k/50k"				},
-	{0x0d, 0x01, 0x02, 0x00, "30k/50k"				},
-	{0x0d, 0x01, 0x02, 0x02, "40k/70k"				},
+	{0x02, 0x01, 0x02, 0x00, "20k/40k"				},
+	{0x02, 0x01, 0x02, 0x02, "30k/50k"				},
+	{0x02, 0x01, 0x02, 0x00, "30k/50k"				},
+	{0x02, 0x01, 0x02, 0x02, "40k/70k"				},
 };
 
 STDDIPINFO(Colony7)
 
 static struct BurnDIPInfo JinDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x00, NULL					},
-	{0x0a, 0xff, 0xff, 0x60, NULL					},
-	{0x0b, 0xff, 0xff, 0x00, NULL					},
+	DIP_OFFSET(0x0b)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+	{0x01, 0xff, 0xff, 0x60, NULL					},
+	{0x02, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"				},
-	{0x0a, 0x01, 0x07, 0x07, "A 2C/1C B 1C/3C"		},
-	{0x0a, 0x01, 0x07, 0x06, "A 2C/1C B 1C/1C"		},
-	{0x0a, 0x01, 0x07, 0x05, "A 1C/3C B 1C/3C"		},
-	{0x0a, 0x01, 0x07, 0x04, "A 1C/3C B 1C/1C"		},
-	{0x0a, 0x01, 0x07, 0x03, "A 1C/2C B 1C/3C"		},
-	{0x0a, 0x01, 0x07, 0x02, "A 1C/2C B 1C/1C"		},
-	{0x0a, 0x01, 0x07, 0x01, "A 1C/1C B 1C/3C"		},
-	{0x0a, 0x01, 0x07, 0x00, "A 1C/1C B 1C/1C"		},
+	{0x01, 0x01, 0x07, 0x07, "A 2C/1C B 1C/3C"		},
+	{0x01, 0x01, 0x07, 0x06, "A 2C/1C B 1C/1C"		},
+	{0x01, 0x01, 0x07, 0x05, "A 1C/3C B 1C/3C"		},
+	{0x01, 0x01, 0x07, 0x04, "A 1C/3C B 1C/1C"		},
+	{0x01, 0x01, 0x07, 0x03, "A 1C/2C B 1C/3C"		},
+	{0x01, 0x01, 0x07, 0x02, "A 1C/2C B 1C/1C"		},
+	{0x01, 0x01, 0x07, 0x01, "A 1C/1C B 1C/3C"		},
+	{0x01, 0x01, 0x07, 0x00, "A 1C/1C B 1C/1C"		},
 
 	{0   , 0xfe, 0   ,    2, "Lives"				},
-	{0x0a, 0x01, 0x08, 0x08, "4"					},
-	{0x0a, 0x01, 0x08, 0x00, "3"					},
+	{0x01, 0x01, 0x08, 0x08, "4"					},
+	{0x01, 0x01, 0x08, 0x00, "3"					},
 
 	{0   , 0xfe, 0   ,    4, "Level completed"		},
-	{0x0a, 0x01, 0x60, 0x60, "85%"					},
-	{0x0a, 0x01, 0x60, 0x40, "75%"					},
-	{0x0a, 0x01, 0x60, 0x20, "65%"					},
-	{0x0a, 0x01, 0x60, 0x00, "55%"					},
+	{0x01, 0x01, 0x60, 0x60, "85%"					},
+	{0x01, 0x01, 0x60, 0x40, "75%"					},
+	{0x01, 0x01, 0x60, 0x20, "65%"					},
+	{0x01, 0x01, 0x60, 0x00, "55%"					},
 };
 
 STDDIPINFO(Jin)
@@ -3028,7 +3030,7 @@ static struct BurnRomInfo defndjeuRomDesc[] = {
 	{ "16",					0x1000, 0x03201532, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "17",					0x1000, 0x25287eca, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "21",					0x1000, 0xbddb71a3, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "20",					0x1000, 0x12fa0788, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "20",					0x1000, 0x12fa0788, 1 | BRF_PRG | BRF_ESS }, //  4 bad dump
 	{ "19",					0x1000, 0x769f5984, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "18",					0x1000, 0xe99d5679, 1 | BRF_PRG | BRF_ESS }, //  6
 
@@ -3080,9 +3082,9 @@ struct BurnDriver BurnDrvTornado1 = {
 // Tornado (set 2, Defender bootleg)
 
 static struct BurnRomInfo tornado2RomDesc[] = {
-	{ "tto15.bin",			0x1000, 0x910ac603, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "to16.bin",			0x1000, 0x46ccd582, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tto17.bin",			0x1000, 0xfaa3613c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tto15.bin",			0x1000, 0x910ac603, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (bad dump)
+	{ "to16.bin",			0x1000, 0x46ccd582, 1 | BRF_PRG | BRF_ESS }, //  1 bad dump
+	{ "tto17.bin",			0x1000, 0xfaa3613c, 1 | BRF_PRG | BRF_ESS }, //  2 bad dump
 	{ "to21.bin",			0x1000, 0xe30f4c00, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "to20.bin",			0x1000, 0xe90bdcb2, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "to19.bin",			0x1000, 0x42885b4f, 1 | BRF_PRG | BRF_ESS }, //  5
@@ -3170,8 +3172,8 @@ static struct BurnRomInfo defenderomRomDesc[] = {
 	{ "rom10.bin",		0x0800, 0x12e2bd1c, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "rom7.bin",		0x0800, 0x19e1ac79, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "rom9.bin",		0x0800, 0xb8ac5966, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "rom6.bin",		0x0800, 0x9deaf6d9, 1 | BRF_PRG | BRF_ESS }, //  6 BAD_DUMP, borrowed from defenseb
-	{ "rom8.bin",		0x0800, 0x339e092e, 1 | BRF_PRG | BRF_ESS }, //  7 BAD_DUMP, borrowed from defenseb
+	{ "rom6.bin",		0x0800, 0x9deaf6d9, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rom8.bin",		0x0800, 0x4af2142f, 1 | BRF_PRG | BRF_ESS }, //  7
 	{ "rom5.bin",		0x0800, 0x871f75a0, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "rom4.bin",		0x0800, 0x65f4efd1, 1 | BRF_PRG | BRF_ESS }, //  9
 
@@ -3356,9 +3358,9 @@ struct BurnDriver BurnDrvDefence = {
 // Attack (bootleg of Defender)
 
 static struct BurnRomInfo attackfRomDesc[] = {
-	{ "002-1.ic1",		0x1000, 0x0ee1019d, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "002-2.ic2",		0x1000, 0xd184ab6b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "002-3.ic3",		0x1000, 0xa732d649, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "002-1.ic1",		0x1000, 0x0ee1019d, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code (bad dump)
+	{ "002-2.ic2",		0x1000, 0xd184ab6b, 1 | BRF_PRG | BRF_ESS }, //  1 bad dump
+	{ "002-3.ic3",		0x1000, 0xa732d649, 1 | BRF_PRG | BRF_ESS }, //  2 bad dump
 	{ "002-9.ic12",		0x0800, 0xf57caa62, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "002-12.ic9",		0x0800, 0xeb73d8a1, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "002-8.ic11",		0x0800, 0x17f7abde, 1 | BRF_PRG | BRF_ESS }, //  5
@@ -3369,7 +3371,7 @@ static struct BurnRomInfo attackfRomDesc[] = {
 
 	{ "003-13.ic12",	0x0800, 0xfefd5b48, 2 | BRF_PRG | BRF_ESS }, // 10 M6808 Code
 
-	{ "001-14.g1",		0x0200, 0x8dd98da5, 0 | BRF_OPT },           // 11 Address Decoder
+	{ "001-14.g1",		0x0200, 0x8dd98da5, 0 | BRF_OPT },           // 11 Address Decoder (bad dump)
 };
 
 STD_ROM_PICK(attackf)
@@ -3710,14 +3712,14 @@ static INT32 ConquestInit()
 {
 	conquest = 1;
 
-	return DrvInit(1, 6, 6, -1, 0);
+	return DrvInit(1, 6, 6, 1, 0xc000);
 }
 
-struct BurnDriverD BurnDrvConquest = {
+struct BurnDriver BurnDrvConquest = {
 	"conquest", NULL, NULL, NULL, "1982",
-	"Conquest (prototype)\0", NULL, "Williams / Vid Kidz", "6809 System",
+	"Conquest (prototype)\0", "Incomplete game", "Williams / Vid Kidz", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, conquestRomInfo, conquestRomName, NULL, NULL, NULL, NULL, ConquestInputInfo, NULL,
 	ConquestInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 292, 3, 4
@@ -3889,9 +3891,9 @@ static INT32 TshootInit()
 
 struct BurnDriver BurnDrvTshoot = {
 	"tshoot", NULL, NULL, NULL, "1984",
-	"Turkey Shoot\0", NULL, "Williams", "6809 System",
+	"Turkey Shoot (prototype)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, tshootRomInfo, tshootRomName, NULL, NULL, NULL, NULL, TshootInputInfo, NULL,
 	TshootInit, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
 	276, 240, 4, 3
@@ -3988,7 +3990,7 @@ struct BurnDriver BurnDrvMysticmp = {
 	"mysticmp", "mysticm", NULL, NULL, "1983",
 	"Mystic Marathon (prototype)\0", "Bad Colors", "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, mysticmpRomInfo, mysticmpRomName, NULL, NULL, NULL, NULL, MysticmInputInfo, NULL,
 	MysticmInit, DrvExit, DrvFrame, Williams2Draw, DrvScan, &DrvRecalc, 0x410,
 	276, 240, 4, 3

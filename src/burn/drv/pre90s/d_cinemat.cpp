@@ -476,19 +476,22 @@ static struct BurnDIPInfo CinematCfgDIPList[]=
 {
 	{0x02, 0xff, 0xff, 0x00, NULL				},
 
+#ifndef __LIBRETRO__
 	{0   , 0xfe, 0   ,    2, "Hires Mode"		},
 	{0x02, 0x01, 0x01, 0x00, "No"				},
 	{0x02, 0x01, 0x01, 0x01, "Yes"				},
+#endif
 };
 
 static struct BurnDIPInfo CinematOvlDIPList[]=
 {
 	{0x02, 0xff, 0xff, 0x02, NULL				},
 
-
+#ifndef __LIBRETRO__
 	{0   , 0xfe, 0   ,    2, "Hires Mode"		},
 	{0x02, 0x01, 0x01, 0x00, "No"				},
 	{0x02, 0x01, 0x01, 0x01, "Yes"				},
+#endif
 
 	{0   , 0xfe, 0   ,    2, "Color Overlay"	},
 	{0x02, 0x01, 0x02, 0x00, "Off"				},
@@ -1813,6 +1816,9 @@ static void DrvPaletteInit()
 
 static INT32 res_check()
 {
+#ifdef __LIBRETRO__
+	return 0;
+#endif
 	INT32 Width, Height;
 	BurnDrvGetFullSize(&Width, &Height); // native (unrotated) size
 

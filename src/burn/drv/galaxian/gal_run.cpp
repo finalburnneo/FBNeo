@@ -95,6 +95,7 @@ UINT8 *GalZ80Rom1Op          = NULL;
 UINT8 *GalZ80Rom2            = NULL;
 UINT8 *GalZ80Rom3            = NULL;
 UINT8 *GalS2650Rom1          = NULL;
+UINT8 *GalM6502Rom1          = NULL;
 UINT8 *GalZ80Ram1            = NULL;
 UINT8 *GalZ80Ram2            = NULL;
 UINT8 *GalZ80Ram3            = NULL;
@@ -119,6 +120,8 @@ UINT32   GalZ80Rom3Size        = 0;
 UINT32   GalZ80Rom3Num         = 0;
 UINT32   GalS2650Rom1Size      = 0;
 UINT32   GalS2650Rom1Num       = 0;
+UINT32   GalM6502Rom1Size      = 0;
+UINT32   GalM6502Rom1Num       = 0;
 UINT32   GalTilesSharedRomSize = 0;
 UINT32   GalTilesSharedRomNum  = 0;
 UINT32   GalTilesCharRomSize   = 0;
@@ -134,6 +137,11 @@ INT32 GalSndROMOffset 		   = -1;
 INT32 GalSndROMNum			   = 0;
 
 GalPostLoadCallback GalPostLoadCallbackFunction;
+GalSoundBoardReset GalSoundBoardResetFunction = NULL;
+GalSoundBoardRun GalSoundBoardRunFunction = NULL;
+GalSoundBoardRender GalSoundBoardRenderFunction = NULL;
+GalSoundBoardScan GalSoundBoardScanFunction = NULL;
+GalSoundBoardExit GalSoundBoardExitFunction = NULL;
 
 // CPU Control
 UINT8 GalIrqType;
@@ -229,6 +237,7 @@ static INT32 GalMemIndex()
 	GalZ80Rom2             = Next; Next += GalZ80Rom2Size;
 	GalZ80Rom3             = Next; Next += GalZ80Rom3Size;
 	GalS2650Rom1           = Next; Next += GalS2650Rom1Size;
+	GalM6502Rom1           = Next; Next += GalM6502Rom1Size;
 	GalProm                = Next; Next += GalPromRomSize;
 
 	GalRamStart            = Next;
@@ -277,10 +286,16 @@ static INT32 GalDoReset()
 		s2650Reset();
 		s2650Close();
 	}
+
+	if (GalM6502Rom1Size) {
+		M6502Open(0);
+		M6502Reset();
+		M6502Close();
+	}
 	
 	if (GalZ80Rom1Size) {
 		ZetOpen(0);
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "4in1")) {
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "4funin1")) {
 			ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1);
 			ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1);
 		}
@@ -300,7 +315,11 @@ static INT32 GalDoReset()
 		ZetClose();
 	}
 	
+	memset(GalGfxBank, 0, 0x20);
+	if (GameIsGmgalax) GalGfxBank[0] = (GmgalaxSelectedGame == 1) ? 1 : 0;
+
 	GalSoundReset();
+	if (GalSoundBoardResetFunction) GalSoundBoardResetFunction();
 	HiscoreReset();
 	
 	GalIrqFire = 0;
@@ -387,6 +406,10 @@ static INT32 GalLoadRoms(bool bLoad)
 			if ((ri.nType & 0xff) == GAL_ROM_S2650_PROG1) {
 				GalS2650Rom1Size += ri.nLen;
 				GalS2650Rom1Num++;
+			}
+			if ((ri.nType & 0xff) == GAL_ROM_M6502_PROG1) {
+				GalM6502Rom1Size += ri.nLen;
+				GalM6502Rom1Num++;
 			}
 		} while (ri.nLen);
 		
@@ -514,6 +537,17 @@ static INT32 GalLoadRoms(bool bLoad)
 			for (i = GAL_ROM_OFFSET_S2650_PROG1; i < GAL_ROM_OFFSET_S2650_PROG1 + GalS2650Rom1Num; i++) {
 				nRet = BurnLoadRom(GalS2650Rom1 + Offset, i, 1); if (nRet) return 1;
 			
+				BurnDrvGetRomInfo(&ri, i + 0);
+				Offset += ri.nLen;
+			}
+		}
+
+		// M6502 #1 Program Roms
+		if (GalM6502Rom1Size) {
+			Offset = 0;
+			for (i = GAL_ROM_OFFSET_M6502_PROG1; i < GAL_ROM_OFFSET_M6502_PROG1 + GalM6502Rom1Num; i++) {
+				nRet = BurnLoadRom(GalM6502Rom1 + Offset, i, 1); if (nRet) return 1;
+
 				BurnDrvGetRomInfo(&ri, i + 0);
 				Offset += ri.nLen;
 			}
@@ -1952,6 +1986,7 @@ INT32 GalExit()
 {
 	if (GalZ80Rom1Size) ZetExit();
 	if (GalS2650Rom1Size) s2650Exit();
+	if (GalM6502Rom1Size) M6502Exit();
 	
 	GenericTilesExit();
 	
@@ -1961,6 +1996,7 @@ INT32 GalExit()
 	BurnFree(RockclimTiles);
 	
 	GalSoundExit();
+	if (GalSoundBoardExitFunction) GalSoundBoardExitFunction();
 	
 	GalIrqFire = 0;
 	GalIrqType = 0;
@@ -2000,6 +2036,8 @@ INT32 GalExit()
 	GalZ80Rom3Num = 0;
 	GalS2650Rom1Size = 0;
 	GalS2650Rom1Num = 0;
+	GalM6502Rom1Size = 0;
+	GalM6502Rom1Num = 0;
 	GalTilesSharedRomSize = 0;
 	GalTilesSharedRomNum = 0;
 	GalTilesCharRomSize = 0;
@@ -2015,6 +2053,11 @@ INT32 GalExit()
 	GalSndROMNum = 0;
 	
 	GalPostLoadCallbackFunction = NULL;
+	GalSoundBoardResetFunction = NULL;
+	GalSoundBoardRunFunction = NULL;
+	GalSoundBoardRenderFunction = NULL;
+	GalSoundBoardScanFunction = NULL;
+	GalSoundBoardExitFunction = NULL;
 	GalRenderBackgroundFunction = NULL;
 	GalCalcPaletteFunction = NULL;
 	GalDrawBulletsFunction = NULL;
@@ -2072,6 +2115,7 @@ INT32 GalFrame()
 	INT32 nIrqInterleaveFire = nInterleave / 4;
 
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) { nInterleave = 8; nIrqInterleaveFire = nInterleave - 1; }
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_BMXSTUNTSSN76489A) { nInterleave = 32; nIrqInterleaveFire = nInterleave - 1; }
 
 	if (GameIsBagmanmc) nIrqInterleaveFire = 0;
 
@@ -2098,6 +2142,7 @@ INT32 GalFrame()
 	GalVBlank = 0;
 	
 	if (GalZ80Rom1Size) ZetNewFrame();
+	if (GalM6502Rom1Size) M6502NewFrame();
 
 	nGalCyclesDone[0] = nGalCyclesDone[1] = nGalCyclesDone[2] = 0;
 	
@@ -2118,6 +2163,8 @@ INT32 GalFrame()
 			}
 			ZetClose();
 		}
+
+		if (GalSoundBoardRunFunction) GalSoundBoardRunFunction(i, nInterleave);
 			
 		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910) {
 			// Run Z80 #2
@@ -2162,14 +2209,30 @@ INT32 GalFrame()
 			nGalCyclesDone[nCurrentCPU] += s2650Run(nGalCyclesSegment);
 			if (i == nIrqInterleaveFire) {
 				GalVBlank = 1;
-				s2650SetIRQLine(0, CPU_IRQSTATUS_ACK);
-				s2650Run(0);
-				s2650SetIRQLine(0, CPU_IRQSTATUS_NONE);
-				s2650Run(0);
+				if (GalIrqType != GAL_IRQ_TYPE_NONE && (GalIrqType != GAL_IRQ_TYPE_S2650_GATED || GalIrqFire)) {
+					s2650SetIRQLine(0, CPU_IRQSTATUS_ACK);
+					s2650Run(0);
+					s2650SetIRQLine(0, CPU_IRQSTATUS_NONE);
+					s2650Run(0);
+				}
 			}
 			s2650Close();
 		}
 			
+		// Run M6502 #1
+		if (GalM6502Rom1Size) {
+			nCurrentCPU = 0;
+			M6502Open(nCurrentCPU);
+			nNext = (i + 1) * nGalCyclesTotal[nCurrentCPU] / nInterleave;
+			nGalCyclesSegment = nNext - nGalCyclesDone[nCurrentCPU];
+			nGalCyclesDone[nCurrentCPU] += M6502Run(nGalCyclesSegment);
+			if (i == nIrqInterleaveFire && GalIrqFire) {
+				// held until the irq enable latch is cleared, like the z80 boards
+				M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			}
+			M6502Close();
+		}
+
 		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) {
 			// Run Z80 #1
 			nCurrentCPU = 1;
@@ -2232,7 +2295,7 @@ INT32 GalFrame()
 			}
 		}
 		
-		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {
+		if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BMXSTUNTSSN76489A) {
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -2257,6 +2320,8 @@ INT32 GalFrame()
 			}
 		}
 	}
+
+	if (GalSoundBoardRenderFunction && pBurnSoundOut) GalSoundBoardRenderFunction(pBurnSoundOut, nBurnSoundLen);
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC || GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
 		if (pBurnSoundOut) {
@@ -2326,7 +2391,7 @@ INT32 GalFrame()
 		if (pBurnSoundOut) DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_BMXSTUNTSSN76489A) {
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -2366,8 +2431,10 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin)
 		if (GalZ80Rom1Size) ZetScan(nAction);
 
 		if (GalS2650Rom1Size) s2650Scan(nAction);
+		if (GalM6502Rom1Size) M6502Scan(nAction);
 		
 		GalSoundScan(nAction, pnMin);
+		if (GalSoundBoardScanFunction) GalSoundBoardScanFunction(nAction, pnMin);
 		
 		// Scan critical driver variables
 		SCAN_VAR(GalInput);

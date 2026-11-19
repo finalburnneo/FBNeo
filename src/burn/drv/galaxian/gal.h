@@ -8,6 +8,7 @@
 #include "8255ppi.h"
 #include "bitswap.h"
 #include "s2650_intf.h"
+#include "m6502_intf.h"
 #include "sn76496.h"
 #include "flt_rc.h"
 #include "ay8910.h"
@@ -22,6 +23,7 @@
 #define GAL_ROM_TILES_SPRITES				6
 #define GAL_ROM_PROM					7
 #define GAL_ROM_S2650_PROG1				8
+#define GAL_ROM_M6502_PROG1				9
 
 #define GAL_ROM_OFFSET_Z80_PROG2			GalZ80Rom1Num
 #define GAL_ROM_OFFSET_Z80_PROG3			GalZ80Rom1Num + GalZ80Rom2Num
@@ -30,10 +32,13 @@
 #define GAL_ROM_OFFSET_TILES_SPRITES			GalZ80Rom1Num + GalZ80Rom2Num + GalZ80Rom3Num + GalTilesSharedRomNum + GalTilesCharRomNum
 #define GAL_ROM_OFFSET_PROM				GalZ80Rom1Num + GalZ80Rom2Num + GalZ80Rom3Num + GalTilesSharedRomNum + GalTilesCharRomNum + GalTilesSpriteRomNum
 #define GAL_ROM_OFFSET_S2650_PROG1			GalZ80Rom1Num + GalZ80Rom2Num + GalZ80Rom3Num + GalTilesSharedRomNum + GalTilesCharRomNum + GalTilesSpriteRomNum + GalPromRomNum
+#define GAL_ROM_OFFSET_M6502_PROG1			GalZ80Rom1Num + GalZ80Rom2Num + GalZ80Rom3Num + GalTilesSharedRomNum + GalTilesCharRomNum + GalTilesSpriteRomNum + GalPromRomNum + GalS2650Rom1Num
 
 // IRQ types
 #define GAL_IRQ_TYPE_NMI				1
 #define GAL_IRQ_TYPE_IRQ0				2
+#define GAL_IRQ_TYPE_S2650_GATED			3	// s2650: only while the irq enable latch (GalIrqFire) is set
+#define GAL_IRQ_TYPE_NONE				4
 
 // Sound hardware types
 #define GAL_SOUND_HARDWARE_TYPE_GALAXIAN		1
@@ -54,6 +59,7 @@
 #define GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496		16
 #define GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910		17
 #define GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910		18
+#define GAL_SOUND_HARDWARE_TYPE_BMXSTUNTSSN76489A	19
 
 // Palette Numbers
 #define GAL_PALETTE_NUM_COLOURS_PROM			64
@@ -155,6 +161,7 @@ void BagmanmcExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT
 void HardCodeGalaxianPROM();
 void HardCodeMooncrstPROM();
 void GalaxianCalcPalette();
+void SbhoeiCalcPalette();
 void RockclimCalcPalette();
 void MarinerCalcPalette();
 void StratgyxCalcPalette();
@@ -217,6 +224,7 @@ extern UINT8 *GalZ80Rom1Op;
 extern UINT8 *GalZ80Rom2;
 extern UINT8 *GalZ80Rom3;
 extern UINT8 *GalS2650Rom1;
+extern UINT8 *GalM6502Rom1;
 extern UINT8 *GalZ80Ram1;
 extern UINT8 *GalZ80Ram2;
 extern UINT8 *GalZ80Ram3;
@@ -240,6 +248,8 @@ extern UINT32 GalZ80Rom3Size;
 extern UINT32 GalZ80Rom3Num;
 extern UINT32 GalS2650Rom1Size;
 extern UINT32 GalS2650Rom1Num;
+extern UINT32 GalM6502Rom1Size;
+extern UINT32 GalM6502Rom1Num;
 extern UINT32 GalTilesSharedRomSize;
 extern UINT32 GalTilesSharedRomNum;
 extern UINT32 GalTilesCharRomSize;
@@ -253,6 +263,18 @@ extern UINT32 GalPromRomNum;
 
 typedef void (*GalPostLoadCallback)();
 extern GalPostLoadCallback GalPostLoadCallbackFunction;
+
+// optional extra sound board, driven from GalFrame
+typedef void (*GalSoundBoardReset)();
+extern GalSoundBoardReset GalSoundBoardResetFunction;
+typedef void (*GalSoundBoardRun)(INT32 nSlice, INT32 nInterleave);
+extern GalSoundBoardRun GalSoundBoardRunFunction;
+typedef void (*GalSoundBoardRender)(INT16 *pSoundBuf, INT32 nLength);
+extern GalSoundBoardRender GalSoundBoardRenderFunction;
+typedef void (*GalSoundBoardScan)(INT32 nAction, INT32 *pnMin);
+extern GalSoundBoardScan GalSoundBoardScanFunction;
+typedef void (*GalSoundBoardExit)();
+extern GalSoundBoardExit GalSoundBoardExitFunction;
 
 extern UINT8 GalIrqType;
 extern UINT8 GalIrqFire;

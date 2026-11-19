@@ -347,7 +347,7 @@ void HardCodeMooncrstPROM()
 // Palette generation
 #define RGB_MAXIMUM			224
 
-void GalaxianCalcPalette()
+static void GalaxianCalcPaletteInternal(bool bSwapGB)
 {
 	static const INT32 RGBResistances[3] = {1000, 470, 220};
 	double rWeights[3], gWeights[3], bWeights[2];
@@ -372,7 +372,7 @@ void GalaxianCalcPalette()
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],7);
 		b = combine_2_weights(bWeights, Bit0, Bit1);
 
-		GalPalette[i] = BurnHighCol(r, g, b, 0);
+		GalPalette[i] = bSwapGB ? BurnHighCol(r, b, g, 0) : BurnHighCol(r, g, b, 0);
 	}
 	
 	// Stars
@@ -387,14 +387,25 @@ void GalaxianCalcPalette()
 		Bits = (i >> 4) & 0x03;
 		b = Map[Bits];
 
-		GalPalette[i + GAL_PALETTE_STARS_OFFSET] = BurnHighCol(r, g, b, 0);
+		GalPalette[i + GAL_PALETTE_STARS_OFFSET] = bSwapGB ? BurnHighCol(r, b, g, 0) : BurnHighCol(r, g, b, 0);
 	}
 
 	// Bullets
 	for (INT32 i = 0; i < GAL_PALETTE_NUM_COLOURS_BULLETS - 1; i++) {
 		GalPalette[i + GAL_PALETTE_BULLETS_OFFSET] = BurnHighCol(0xff, 0xff, 0xff, 0);
 	}
-	GalPalette[GAL_PALETTE_NUM_COLOURS_BULLETS - 1 + GAL_PALETTE_BULLETS_OFFSET] = BurnHighCol(0xff, 0xff, 0x00, 0);
+	GalPalette[GAL_PALETTE_NUM_COLOURS_BULLETS - 1 + GAL_PALETTE_BULLETS_OFFSET] = bSwapGB ? BurnHighCol(0xff, 0x00, 0xff, 0) : BurnHighCol(0xff, 0xff, 0x00, 0);
+}
+
+void GalaxianCalcPalette()
+{
+	GalaxianCalcPaletteInternal(false);
+}
+
+// Hoei Space Battle: the wiring harness swaps RGB -> RBG
+void SbhoeiCalcPalette()
+{
+	GalaxianCalcPaletteInternal(true);
 }
 
 void RockclimCalcPalette()

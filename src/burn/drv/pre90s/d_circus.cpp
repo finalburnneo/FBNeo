@@ -895,7 +895,7 @@ static struct BurnRomInfo circusRomDesc[] = {
 
 	{ "9012.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
 
-	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 Line drawing proms (bad dump, not used)
 	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
 };
 
@@ -947,7 +947,7 @@ static struct BurnRomInfo circusoRomDesc[] = {
 
 	{ "9012.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
 
-	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 Line drawing proms (bad dump, not used)
 	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
 };
 
@@ -984,7 +984,7 @@ static struct BurnRomInfo springbdRomDesc[] = {
 
 	{ "93448.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
 
-	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
+	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 Line drawing proms (bad dump, not used)
 	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
 };
 
@@ -1020,6 +1020,9 @@ static struct BurnRomInfo robotbwlRomDesc[] = {
 	{ "4013.1c",		0x0200, 0xb2991e7e, 2 | BRF_GRA },           // 11
 
 	{ "6000.14d",		0x0020, 0xa402ac06, 3 | BRF_GRA },           // 12 Sprites
+
+	{ "5000.4d",		0x0200, 0xe69d8fc6, 0 | BRF_OPT },           // 13 Line drawing proms (not used)
+	{ "5001.5d",		0x0200, 0x5022c4ea, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(robotbwl)
@@ -1072,9 +1075,6 @@ static struct BurnRomInfo trapezeRomDesc[] = {
 	{ "9000.1c",			0x0200, 0x0ddc4b45, 2 | BRF_GRA },           // 11
 
 	{ "9012.14d",			0x0200, 0x2fde3930, 3 | BRF_GRA },           // 12 Sprites
-
-	{ "dm74s570-d4.4d",		0x0200, 0xaad8da33, 0 | BRF_OPT },           // 13 proms
-	{ "dm74s570-d5.5d",		0x0200, 0xed2493fa, 0 | BRF_OPT },           // 14
 };
 
 STD_ROM_PICK(trapeze)
@@ -1223,6 +1223,9 @@ static struct BurnRomInfo ripcordRomDesc[] = {
 	{ "9023.1c",			0x0200, 0x9f86ed5b, 2 | BRF_GRA },           // 11
 	
 	{ "9035.14d",			0x0200, 0xc9979802, 3 | BRF_GRA },           // 12 Sprites
+
+	{ "82s131.4d",			0x0200, 0x00000000, 0 | BRF_NODUMP },        // 13 Line drawing proms (not used)
+	{ "82s131.5d",			0x0200, 0x00000000, 0 | BRF_NODUMP },        // 14
 };
 
 STD_ROM_PICK(ripcord)

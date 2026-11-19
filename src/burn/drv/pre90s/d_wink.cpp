@@ -38,11 +38,15 @@ static struct BurnInputInfo WinkInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
 
 	A("P1 Dial", 		BIT_ANALOG_REL, &Analog[0],		"p1 x-axis"),
 
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p3 coin"	},
+
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 7,	"tilt"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
@@ -53,7 +57,7 @@ STDINPUTINFO(Wink)
 
 static struct BurnDIPInfo WinkDIPList[]=
 {
-	DIP_OFFSET(0x07)
+	DIP_OFFSET(0x0a)
 	{0x00, 0xff, 0xff, 0xfe, NULL						},
 	{0x01, 0xff, 0xff, 0xd7, NULL						},
 	{0x02, 0xff, 0xff, 0xff, NULL						},
@@ -86,12 +90,12 @@ static struct BurnDIPInfo WinkDIPList[]=
 	{0x00, 0x01, 0xc8, 0x00, "2 Coins 5 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Ball Save Barrier"		},
-	{0x01, 0x01, 0x11, 0x00, "Off"						},
-	{0x01, 0x01, 0x11, 0x11, "On"						},
+	{0x01, 0x01, 0x11, 0x00, "Yes"						},
+	{0x01, 0x01, 0x11, 0x11, "No"						},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"					},
-	{0x01, 0x01, 0x02, 0x02, "Off"						},
-	{0x01, 0x01, 0x02, 0x00, "On"						},
+	{0   , 0xfe, 0   ,    2, "Green Balls Bonus"		},
+	{0x01, 0x01, 0x02, 0x02, "3"						},
+	{0x01, 0x01, 0x02, 0x00, "4"						},
 
 	{0   , 0xfe, 0   ,    2, "1 Credit Award"			},
 	{0x01, 0x01, 0x04, 0x04, "Yes"						},
@@ -113,9 +117,11 @@ static struct BurnDIPInfo WinkDIPList[]=
 	{0x03, 0x01, 0x01, 0x01, "Off"						},
 	{0x03, 0x01, 0x01, 0x00, "On"						},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"					},
-	{0x03, 0x01, 0x02, 0x02, "Off"						},
-	{0x03, 0x01, 0x02, 0x00, "On"						},
+	{0   , 0xfe, 0   ,    4, "Number of lip hits at 3rd spin"	},
+	{0x03, 0x01, 0x22, 0x22, "73"						},
+	{0x03, 0x01, 0x22, 0x20, "46"						},
+	{0x03, 0x01, 0x22, 0x02, "37"						},
+	{0x03, 0x01, 0x22, 0x00, "28"						},
 
 	{0   , 0xfe, 0   ,    4, "Credit Payout"			},
 	{0x03, 0x01, 0x44, 0x44, "2.5%"						},
@@ -126,10 +132,6 @@ static struct BurnDIPInfo WinkDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
 	{0x03, 0x01, 0x08, 0x08, "Off"						},
 	{0x03, 0x01, 0x08, 0x00, "On"						},
-
-	{0   , 0xfe, 0   ,    2, "Unknown"					},
-	{0x03, 0x01, 0x20, 0x20, "Off"						},
-	{0x03, 0x01, 0x20, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Reset Summary Stats"		},
 	{0x03, 0x01, 0x80, 0x80, "Off"						},
@@ -520,36 +522,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Wink (set 1)
+// Wink (newer)
 
 static struct BurnRomInfo winkRomDesc[] = {
-	{ "midcoin-wink00.rom",		0x4000, 0x044f82d6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "midcoin-wink01.rom",		0x4000, 0xacb0a392, 1 | BRF_PRG | BRF_ESS }, //  1
-
-	{ "midcoin-wink05.rom",		0x2000, 0xc6c9d9cf, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
-
-	{ "midcoin-wink02.rom",		0x2000, 0xd1cd9d06, 3 | BRF_GRA },           //  3 Graphics
-	{ "midcoin-wink03.rom",		0x2000, 0x2346f50c, 3 | BRF_GRA },           //  4
-	{ "midcoin-wink04.rom",		0x2000, 0x06dd229b, 3 | BRF_GRA },           //  5
-};
-
-STD_ROM_PICK(wink)
-STD_ROM_FN(wink)
-
-struct BurnDriver BurnDrvWink = {
-	"wink", NULL, NULL, NULL, "1985",
-	"Wink (set 1)\0", NULL, "Midcoin", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
-	NULL, winkRomInfo, winkRomName, NULL, NULL, NULL, NULL, WinkInputInfo, WinkDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
-	256, 256, 4, 3
-};
-
-
-// Wink (set 2)
-
-static struct BurnRomInfo winkaRomDesc[] = {
 	{ "wink0.bin",				0x4000, 0x554d86e5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "wink1.bin",				0x4000, 0x9d8ad539, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -560,15 +535,69 @@ static struct BurnRomInfo winkaRomDesc[] = {
 	{ "wink4.bin",				0x2000, 0x06dd229b, 3 | BRF_GRA },           //  5
 };
 
-STD_ROM_PICK(winka)
-STD_ROM_FN(winka)
+STD_ROM_PICK(wink)
+STD_ROM_FN(wink)
 
-struct BurnDriver BurnDrvWinka = {
-	"winka", "wink", NULL, NULL, "1985",
-	"Wink (set 2)\0", NULL, "Midcoin", "Miscellaneous",
+struct BurnDriver BurnDrvWink = {
+	"wink", NULL, NULL, NULL, "1985",
+	"Wink (newer)\0", NULL, "Midcoin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
+	NULL, winkRomInfo, winkRomName, NULL, NULL, NULL, NULL, WinkInputInfo, WinkDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	256, 256, 4, 3
+};
+
+// Wink (older, bugfixed)
+
+static struct BurnRomInfo winkobRomDesc[] = {
+	{ "midcoin-wink00.rom",		0x4000, 0x044f82d6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "midcoin-wink01.rom",		0x4000, 0xacb0a392, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "midcoin-wink05.rom",		0x2000, 0xc6c9d9cf, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "midcoin-wink02.rom",		0x2000, 0xd1cd9d06, 3 | BRF_GRA },           //  3 Graphics
+	{ "midcoin-wink03.rom",		0x2000, 0x2346f50c, 3 | BRF_GRA },           //  4
+	{ "midcoin-wink04.rom",		0x2000, 0x06dd229b, 3 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(winkob)
+STD_ROM_FN(winkob)
+
+struct BurnDriver BurnDrvWinkob = {
+	"winkob", "wink", NULL, NULL, "1985",
+	"Wink (older, bugfixed)\0", NULL, "Midcoin", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
-	NULL, winkaRomInfo, winkaRomName, NULL, NULL, NULL, NULL, WinkInputInfo, WinkDIPInfo,
+	NULL, winkobRomInfo, winkobRomName, NULL, NULL, NULL, NULL, WinkInputInfo, WinkDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
+	256, 256, 4, 3
+};
+
+
+
+// Wink (older)
+
+static struct BurnRomInfo winkoRomDesc[] = {
+	{ "midcoin_0.j12.2h",		0x4000, 0x044f82d6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "midcoin_1.j15.2g",		0x4000, 0x93fd9bd7, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "midcoin_5.j46.11h",		0x2000, 0xc6c9d9cf, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "midcoin_2.j28.7e",		0x2000, 0xd1cd9d06, 3 | BRF_GRA },           //  3 Graphics
+	{ "midcoin_3.j30.9e",		0x2000, 0x2346f50c, 3 | BRF_GRA },           //  4
+	{ "midcoin_4.j32.10e",		0x2000, 0x06dd229b, 3 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(winko)
+STD_ROM_FN(winko)
+
+struct BurnDriver BurnDrvWinko = {
+	"winko", "wink", NULL, NULL, "1985",
+	"Wink (older)\0", NULL, "Midcoin", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_BALLPADDLE, 0,
+	NULL, winkoRomInfo, winkoRomName, NULL, NULL, NULL, NULL, WinkInputInfo, WinkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	256, 256, 4, 3
 };

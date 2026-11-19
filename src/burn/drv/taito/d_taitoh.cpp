@@ -146,97 +146,99 @@ STDINPUTINFO(Dleague)
 
 static struct BurnDIPInfo SyvalionDIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xfe, NULL					},
-	{0x16, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x11)
+	{0x04, 0xff, 0xff, 0xfe, NULL					},
+	{0x05, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    1, "Cabinet"				},
-	{0x15, 0x01, 0x01, 0x00, "Upright"				},
+	{0x04, 0x01, 0x01, 0x00, "Upright"				},
 	//{0x15, 0x01, 0x01, 0x01, "Cocktail"		}, //needs screen flipping for this to work
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x15, 0x01, 0x02, 0x02, "Off"					},
-	{0x15, 0x01, 0x02, 0x00, "On"					},
+	{0x04, 0x01, 0x02, 0x02, "Off"					},
+	{0x04, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x15, 0x01, 0x04, 0x04, "Off"					},
-	{0x15, 0x01, 0x04, 0x00, "On"					},
+	{0x04, 0x01, 0x04, 0x04, "Off"					},
+	{0x04, 0x01, 0x04, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x15, 0x01, 0x08, 0x00, "Off"					},
-	{0x15, 0x01, 0x08, 0x08, "On"					},
+	{0x04, 0x01, 0x08, 0x00, "Off"					},
+	{0x04, 0x01, 0x08, 0x08, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x04, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x04, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x04, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x04, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x15, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x15, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x04, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x04, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x04, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x04, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x16, 0x01, 0x03, 0x02, "Easy"					},
-	{0x16, 0x01, 0x03, 0x03, "Medium"				},
-	{0x16, 0x01, 0x03, 0x01, "Hard"					},
-	{0x16, 0x01, 0x03, 0x00, "Hardest"				},
+	{0x05, 0x01, 0x03, 0x02, "Easy"					},
+	{0x05, 0x01, 0x03, 0x03, "Medium"				},
+	{0x05, 0x01, 0x03, 0x01, "Hard"					},
+	{0x05, 0x01, 0x03, 0x00, "Hardest"				},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
-	{0x16, 0x01, 0x0c, 0x08, "1000k"				},
-	{0x16, 0x01, 0x0c, 0x0c, "1500k"				},
-	{0x16, 0x01, 0x0c, 0x04, "2000k"				},
-	{0x16, 0x01, 0x0c, 0x00, "None"					},
+	{0x05, 0x01, 0x0c, 0x08, "1000k"				},
+	{0x05, 0x01, 0x0c, 0x0c, "1500k"				},
+	{0x05, 0x01, 0x0c, 0x04, "2000k"				},
+	{0x05, 0x01, 0x0c, 0x00, "None"					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x16, 0x01, 0x30, 0x00, "2"					},
-	{0x16, 0x01, 0x30, 0x30, "3"					},
-	{0x16, 0x01, 0x30, 0x20, "4"					},
-	{0x16, 0x01, 0x30, 0x10, "5"					},
+	{0x05, 0x01, 0x30, 0x00, "2"					},
+	{0x05, 0x01, 0x30, 0x30, "3"					},
+	{0x05, 0x01, 0x30, 0x20, "4"					},
+	{0x05, 0x01, 0x30, 0x10, "5"					},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"				},
-	{0x16, 0x01, 0x40, 0x40, "Off"					},
-	{0x16, 0x01, 0x40, 0x00, "On"					},
+	{0x05, 0x01, 0x40, 0x40, "Off"					},
+	{0x05, 0x01, 0x40, 0x00, "On"					},
 };
 
 STDDIPINFO(Syvalion)
 
 static struct BurnDIPInfo TetristhDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xff, NULL					},
-	{0x12, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x11)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x11, 0x01, 0x02, 0x02, "Off"					},
-	{0x11, 0x01, 0x02, 0x00, "On"					},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x04, 0x04, "Off"					},
-	{0x11, 0x01, 0x04, 0x00, "On"					},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x11, 0x01, 0x08, 0x00, "Off"					},
-	{0x11, 0x01, 0x08, 0x08, "On"					},
+	{0x00, 0x01, 0x08, 0x00, "Off"					},
+	{0x00, 0x01, 0x08, 0x08, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x11, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x11, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x11, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x11, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x11, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x11, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 };
 
 STDDIPINFO(Tetristh)
 
 static struct BurnDIPInfo RecordbrDIPList[]=
 {
-	{0x0f, 0xf0, 0xff, 0xff, NULL /*dip offset*/	},
+	DIP_OFFSET(0x0f)
 
 	{0x00, 0xff, 0xff, 0xff, NULL					},
 	{0x01, 0xff, 0xff, 0xff, NULL					},
@@ -315,84 +317,86 @@ STDDIPINFO(Gogold)
 
 static struct BurnDIPInfo DleagueDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL					},
-	{0x14, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x13, 0x01, 0x01, 0x01, "Constant"				},
-	{0x13, 0x01, 0x01, 0x00, "Based on Inning"		},
+	{0x00, 0x01, 0x01, 0x01, "Constant"				},
+	{0x00, 0x01, 0x01, 0x00, "Based on Inning"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x13, 0x01, 0x02, 0x02, "Off"					},
-	{0x13, 0x01, 0x02, 0x00, "On"					},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x13, 0x01, 0x04, 0x04, "Off"					},
-	{0x13, 0x01, 0x04, 0x00, "On"					},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x13, 0x01, 0x08, 0x00, "Off"					},
-	{0x13, 0x01, 0x08, 0x08, "On"					},
+	{0x00, 0x01, 0x08, 0x00, "Off"					},
+	{0x00, 0x01, 0x08, 0x08, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"				},
-	{0x13, 0x01, 0x30, 0x00, "4 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x10, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x30, 0x00, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x10, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Price to Continue"	},
-	{0x13, 0x01, 0xc0, 0x00, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0xc0, 0x80, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0xc0, 0xc0, "Same as Start"		},
+	{0x00, 0x01, 0xc0, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xc0, 0xc0, "Same as Start"		},
 
 	{0   , 0xfe, 0   ,    4, "Extra Credit Needed"		},
-	{0x14, 0x01, 0x0c, 0x08, "After Inning 6"			},
-	{0x14, 0x01, 0x0c, 0x00, "After Innings 5 and 7"	},
-	{0x14, 0x01, 0x0c, 0x0c, "After Innings 3 and 6"	},
-	{0x14, 0x01, 0x0c, 0x04, "After Innings 3, 5 and 7"	},
+	{0x01, 0x01, 0x0c, 0x08, "After Inning 6"			},
+	{0x01, 0x01, 0x0c, 0x00, "After Innings 5 and 7"	},
+	{0x01, 0x01, 0x0c, 0x0c, "After Innings 3 and 6"	},
+	{0x01, 0x01, 0x0c, 0x04, "After Innings 3, 5 and 7"	},
 };
 
 STDDIPINFO(Dleague)
 
 static struct BurnDIPInfo DleaguejDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xff, NULL					},
-	{0x14, 0xff, 0xff, 0xff, NULL					},
+	DIP_OFFSET(0x13)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x13, 0x01, 0x01, 0x01, "Constant"				},
-	{0x13, 0x01, 0x01, 0x00, "Based on Inning"		},
+	{0x00, 0x01, 0x01, 0x01, "Constant"				},
+	{0x00, 0x01, 0x01, 0x00, "Based on Inning"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x13, 0x01, 0x02, 0x02, "Off"					},
-	{0x13, 0x01, 0x02, 0x00, "On"					},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x13, 0x01, 0x04, 0x04, "Off"					},
-	{0x13, 0x01, 0x04, 0x00, "On"					},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x13, 0x01, 0x08, 0x00, "Off"					},
-	{0x13, 0x01, 0x08, 0x08, "On"					},
+	{0x00, 0x01, 0x08, 0x00, "Off"					},
+	{0x00, 0x01, 0x08, 0x08, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x13, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x13, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x13, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x13, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Extra Credit Needed"		},
-	{0x14, 0x01, 0x0c, 0x08, "After Inning 6"			},
-	{0x14, 0x01, 0x0c, 0x00, "After Innings 5 and 7"	},
-	{0x14, 0x01, 0x0c, 0x0c, "After Innings 3 and 6"	},
-	{0x14, 0x01, 0x0c, 0x04, "After Innings 3, 5 and 7"	},
+	{0x01, 0x01, 0x0c, 0x08, "After Inning 6"			},
+	{0x01, 0x01, 0x0c, 0x00, "After Innings 5 and 7"	},
+	{0x01, 0x01, 0x0c, 0x0c, "After Innings 3 and 6"	},
+	{0x01, 0x01, 0x0c, 0x04, "After Innings 3, 5 and 7"	},
 };
 
 STDDIPINFO(Dleaguej)
@@ -1886,7 +1890,7 @@ STD_ROM_FN(syvalion)
 
 struct BurnDriver BurnDrvSyvalion = {
 	"syvalion", NULL, NULL, NULL, "1988",
-	"Syvalion (Japan)\0", NULL, "Taito Corporation", "Taito H System",
+	"Syvalion (Japan)\0", NULL, "Taito", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionRomInfo, syvalionRomName, NULL, NULL, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -1948,7 +1952,7 @@ static INT32 SyvalionpInit()
 
 struct BurnDriver BurnDrvSyvalionp = {
 	"syvalionp", "syvalion", NULL, NULL, "1988",
-	"Syvalion (World, prototype)\0", NULL, "Taito Corporation", "Taito H System",
+	"Syvalion (World, prototype)\0", NULL, "Taito", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionpRomInfo, syvalionpRomName, NULL, NULL, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -1995,7 +1999,7 @@ STD_ROM_FN(syvalionu)
 
 struct BurnDriver BurnDrvSyvalionu = {
 	"syvalionu", "syvalion", NULL, NULL, "1988",
-	"Syvalion (US, PS2 Taito Legends 2)\0", NULL, "Taito America Corporation", "Taito H System",
+	"Syvalion (US, PS2 Taito Legends 2)\0", NULL, "Taito America", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionuRomInfo, syvalionuRomName, NULL, NULL, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -2042,7 +2046,7 @@ STD_ROM_FN(syvalionw)
 
 struct BurnDriver BurnDrvSyvalionw = {
 	"syvalionw", "syvalion", NULL, NULL, "1988",
-	"Syvalion (World, PS2 Taito Legends 2)\0", NULL, "Taito Corporation Japan", "Taito H System",
+	"Syvalion (World, PS2 Taito Legends 2)\0", NULL, "Taito", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionwRomInfo, syvalionwRomName, NULL, NULL, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -2054,27 +2058,27 @@ struct BurnDriver BurnDrvSyvalionw = {
 // Recordbreaker (World)
 
 static struct BurnRomInfo recordbrRomDesc[] = {
-	{ "b56-17.bin",		0x20000, 0x3e0a9c35, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "b56-16.bin",		0x20000, 0xb447f12c, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "b56-15.bin",		0x20000, 0xb346e282, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "b56-21.bin",		0x20000, 0xe5f63790, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "b56-17.ic36",	0x20000, 0x3e0a9c35, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "b56-16.ic18",	0x20000, 0xb447f12c, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "b56-15.ic35",	0x20000, 0xb346e282, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "b56-21.ic17",	0x20000, 0xe5f63790, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b56-19.bin",		0x10000, 0xc68085ee, TAITO_Z80ROM1 },          //  4 Z80 Code
+	{ "b56-19.ic56",	0x10000, 0xc68085ee, TAITO_Z80ROM1 },          //  4 Z80 Code
 
-	{ "b56-04.bin",		0x20000, 0xf7afdff0, TAITO_CHARS_BYTESWAP },   //  5 Background Tiles & Sprites
-	{ "b56-08.bin",		0x20000, 0xc9f0d38a, TAITO_CHARS_BYTESWAP },   //  6
-	{ "b56-03.bin",		0x20000, 0x4045fd44, TAITO_CHARS_BYTESWAP },   //  7
-	{ "b56-07.bin",		0x20000, 0x0c76e4c8, TAITO_CHARS_BYTESWAP },   //  8
-	{ "b56-02.bin",		0x20000, 0x68c604ec, TAITO_CHARS_BYTESWAP },   //  9
-	{ "b56-06.bin",		0x20000, 0x5fbcd302, TAITO_CHARS_BYTESWAP },   // 10
-	{ "b56-01.bin",		0x20000, 0x766b7260, TAITO_CHARS_BYTESWAP },   // 11
-	{ "b56-05.bin",		0x20000, 0xed390378, TAITO_CHARS_BYTESWAP },   // 12
+	{ "b56-04.ic51",	0x20000, 0xf7afdff0, TAITO_CHARS_BYTESWAP },   //  5 Background Tiles & Sprites
+	{ "b56-08.ic65",	0x20000, 0xc9f0d38a, TAITO_CHARS_BYTESWAP },   //  6
+	{ "b56-03.ic50",	0x20000, 0x4045fd44, TAITO_CHARS_BYTESWAP },   //  7
+	{ "b56-07.ic64",	0x20000, 0x0c76e4c8, TAITO_CHARS_BYTESWAP },   //  8
+	{ "b56-02.ic49",	0x20000, 0x68c604ec, TAITO_CHARS_BYTESWAP },   //  9
+	{ "b56-06.ic63",	0x20000, 0x5fbcd302, TAITO_CHARS_BYTESWAP },   // 10
+	{ "b56-01.ic48",	0x20000, 0x766b7260, TAITO_CHARS_BYTESWAP },   // 11
+	{ "b56-05.ic62",	0x20000, 0xed390378, TAITO_CHARS_BYTESWAP },   // 12
 
-	{ "b56-10.bin",		0x80000, 0xde1bce59, TAITO_YM2610A },          // 14 YM2610 Samples
+	{ "b56-10.ic41",	0x80000, 0xde1bce59, TAITO_YM2610A },          // 14 YM2610 Samples
 
-	{ "b56-09.bin",		0x80000, 0x7fd9ee68, TAITO_YM2610B },          // 13 YM2610 DeltaT Region
+	{ "b56-09.ic42",	0x80000, 0x7fd9ee68, TAITO_YM2610B },          // 13 YM2610 DeltaT Region
 
-	{ "b56-18.bin",		0x02000, 0xc88f0bbe, 0 },                      // 15 ?
+	{ "b56-18.ic39",	0x02000, 0xc88f0bbe, 0 },                      // 15 ?
 };
 
 STD_ROM_PICK(recordbr)
@@ -2082,7 +2086,7 @@ STD_ROM_FN(recordbr)
 
 struct BurnDriver BurnDrvRecordbr = {
 	"recordbr", NULL, NULL, NULL, "1988",
-	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "Taito H System",
+	"Recordbreaker (World)\0", NULL, "Taito", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, recordbrRomInfo, recordbrRomName, NULL, NULL, NULL, NULL, RecordbrInputInfo, RecordbrDIPInfo,
@@ -2094,27 +2098,27 @@ struct BurnDriver BurnDrvRecordbr = {
 // Go For The Gold (Japan)
 
 static struct BurnRomInfo gogoldRomDesc[] = {
-	{ "b56-17.bin",		0x20000, 0x3e0a9c35, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "b56-16.bin",		0x20000, 0xb447f12c, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "b56-15.bin",		0x20000, 0xb346e282, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "b56-14.bin",		0x20000, 0xb6c195b9, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "b56-17.ic36",	0x20000, 0x3e0a9c35, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "b56-16.ic18",	0x20000, 0xb447f12c, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "b56-15.ic35",	0x20000, 0xb346e282, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "b56-14.ic17",	0x20000, 0xb6c195b9, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "b56-19.bin",		0x10000, 0xc68085ee, TAITO_Z80ROM1 },          //  4 Z80 Code
+	{ "b56-19.ic56",	0x10000, 0xc68085ee, TAITO_Z80ROM1 },          //  4 Z80 Code
 
-	{ "b56-04.bin",		0x20000, 0xf7afdff0, TAITO_CHARS_BYTESWAP },   //  5 Background Tiles & Sprites
-	{ "b56-08.bin",		0x20000, 0xc9f0d38a, TAITO_CHARS_BYTESWAP },   //  6
-	{ "b56-03.bin",		0x20000, 0x4045fd44, TAITO_CHARS_BYTESWAP },   //  7
-	{ "b56-07.bin",		0x20000, 0x0c76e4c8, TAITO_CHARS_BYTESWAP },   //  8
-	{ "b56-02.bin",		0x20000, 0x68c604ec, TAITO_CHARS_BYTESWAP },   //  9
-	{ "b56-06.bin",		0x20000, 0x5fbcd302, TAITO_CHARS_BYTESWAP },   // 10
-	{ "b56-01.bin",		0x20000, 0x766b7260, TAITO_CHARS_BYTESWAP },   // 11
-	{ "b56-05.bin",		0x20000, 0xed390378, TAITO_CHARS_BYTESWAP },   // 12
+	{ "b56-04.ic51",	0x20000, 0xf7afdff0, TAITO_CHARS_BYTESWAP },   //  5 Background Tiles & Sprites
+	{ "b56-08.ic65",	0x20000, 0xc9f0d38a, TAITO_CHARS_BYTESWAP },   //  6
+	{ "b56-03.ic50",	0x20000, 0x4045fd44, TAITO_CHARS_BYTESWAP },   //  7
+	{ "b56-07.ic64",	0x20000, 0x0c76e4c8, TAITO_CHARS_BYTESWAP },   //  8
+	{ "b56-02.ic49",	0x20000, 0x68c604ec, TAITO_CHARS_BYTESWAP },   //  9
+	{ "b56-06.ic63",	0x20000, 0x5fbcd302, TAITO_CHARS_BYTESWAP },   // 10
+	{ "b56-01.ic48",	0x20000, 0x766b7260, TAITO_CHARS_BYTESWAP },   // 11
+	{ "b56-05.ic62",	0x20000, 0xed390378, TAITO_CHARS_BYTESWAP },   // 12
 
-	{ "b56-10.bin",		0x80000, 0xde1bce59, TAITO_YM2610A },          // 13 YM2610 Samples
+	{ "b56-10.ic41",	0x80000, 0xde1bce59, TAITO_YM2610A },          // 13 YM2610 Samples
 
-	{ "b56-09.bin",		0x80000, 0x7fd9ee68, TAITO_YM2610B },          // 14 YM2610 DeltaT Region
+	{ "b56-09.ic42",	0x80000, 0x7fd9ee68, TAITO_YM2610B },          // 14 YM2610 DeltaT Region
 
-	{ "b56-18.bin",		0x02000, 0xc88f0bbe, 0 },                      // 15 ?
+	{ "b56-18.ic39",	0x02000, 0xc88f0bbe, 0 },                      // 15 ?
 };
 
 STD_ROM_PICK(gogold)
@@ -2122,7 +2126,7 @@ STD_ROM_FN(gogold)
 
 struct BurnDriver BurnDrvGogold = {
 	"gogold", "recordbr", NULL, NULL, "1988",
-	"Go For The Gold (Japan)\0", NULL, "Taito Corporation", "Taito H System",
+	"Go For The Gold (Japan)\0", NULL, "Taito", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, gogoldRomInfo, gogoldRomName, NULL, NULL, NULL, NULL, RecordbrInputInfo, GogoldDIPInfo,
@@ -2148,11 +2152,11 @@ static struct BurnRomInfo tetristhRomDesc[] = {
 	{ "c26-01.ic48",	0x20000, 0x7efc7311, TAITO_CHARS_BYTESWAP },   //  9
 	{ "c26-05.ic62",	0x20000, 0x12718d97, TAITO_CHARS_BYTESWAP },   // 10
 
-	{ "b56-10.bin",		0x80000, 0xde1bce59, TAITO_YM2610A },          // 11 YM2610 Samples
+	{ "b56-10.ic41",	0x80000, 0xde1bce59, TAITO_YM2610A },          // 11 YM2610 Samples
 
-	{ "b56-09.bin",		0x80000, 0x7fd9ee68, TAITO_YM2610B },          // 12 YM2610 DeltaT Region
+	{ "b56-09.ic42",	0x80000, 0x7fd9ee68, TAITO_YM2610B },          // 12 YM2610 DeltaT Region
 
-	{ "b56-18.bin",		0x02000, 0xc88f0bbe, 0 },         	       // 13 ?
+	{ "b56-18.ic39",	0x02000, 0xc88f0bbe, 0 },         	       // 13 ?
 };
 
 STD_ROM_PICK(tetristh)
@@ -2203,7 +2207,7 @@ STD_ROM_FN(dleague)
 
 struct BurnDriver BurnDrvDleague = {
 	"dleague", NULL, NULL, NULL, "1990",
-	"Dynamite League (US)\0", NULL, "Taito America Corporation", "Taito H System",
+	"Dynamite League (US)\0", NULL, "Taito America", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleagueRomInfo, dleagueRomName, NULL, NULL, NULL, NULL, DleagueInputInfo, DleagueDIPInfo,
@@ -2215,8 +2219,8 @@ struct BurnDriver BurnDrvDleague = {
 // Dynamite League (Japan)
 
 static struct BurnRomInfo dleaguejRomDesc[] = {
-	{ "c02-19a.33",		0x20000, 0x7e904e45, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c02-21a.36",		0x20000, 0x18c8a32b, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c02-19+.33",		0x20000, 0x7e904e45, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c02-21+.36",		0x20000, 0x18c8a32b, TAITO_68KROM1_BYTESWAP }, //  1
 	{ "c02-20.34",		0x10000, 0xcdf593f3, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "c02-22.37",		0x10000, 0xf50db2d7, TAITO_68KROM1_BYTESWAP }, //  3
 
@@ -2245,7 +2249,7 @@ STD_ROM_FN(dleaguej)
 
 struct BurnDriver BurnDrvDleaguej = {
 	"dleaguej", "dleague", NULL, NULL, "1990",
-	"Dynamite League (Japan)\0", NULL, "Taito Corporation", "Taito H System",
+	"Dynamite League (Japan)\0", NULL, "Taito", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleaguejRomInfo, dleaguejRomName, NULL, NULL, NULL, NULL, DleagueInputInfo, DleaguejDIPInfo,

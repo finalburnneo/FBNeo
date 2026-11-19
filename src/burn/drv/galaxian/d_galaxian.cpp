@@ -27044,10 +27044,10 @@ static INT32 SuperbikgInit()
 }
 
 struct BurnDriver BurnDrvSuperbikg = {
-	"superbikg", NULL, NULL, NULL, "1983",
+	"superbikg", "superbik", NULL, NULL, "1983",
 	"Superbike (Galaxian hardware)\0", NULL, "Century Electronics", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_RACING, 0,
 	NULL, SuperbikgRomInfo, SuperbikgRomName, NULL, NULL, NULL, NULL, SuperbikgInputInfo, SuperbikgDIPInfo,
 	SuperbikgInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
@@ -27175,10 +27175,10 @@ static struct BurnDIPInfo BullsdrtgDIPList[]=
 STDDIPINFO(Bullsdrtg)
 
 struct BurnDriver BurnDrvBullsdrtg = {
-	"bullsdrtg", NULL, NULL, NULL, "1985",
+	"bullsdrtg", "bullsdrt", NULL, NULL, "1985",
 	"Bulls Eye Darts (Galaxian conversion)\0", "Bad Colours", "Senko Industries", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_SPORTSMISC, 0,
 	NULL, BullsdrtgRomInfo, BullsdrtgRomName, NULL, NULL, NULL, NULL, BullsdrtgInputInfo, BullsdrtgDIPInfo,
 	BullsdrtgInit, GalExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4

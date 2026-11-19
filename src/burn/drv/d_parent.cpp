@@ -58,6 +58,30 @@ struct BurnDriver BurnDrvEightballact = {
 	NULL, 0, 256, 224, 4, 3
 };
 
+static struct BurnRomInfo BullsdrtRomDesc[] = {
+	{ "27128.bin",          0x04000, 0x2729f585, BRF_ESS | BRF_PRG },
+
+	{ "2764_b.bin",         0x02000, 0x49a19aba, BRF_GRA },
+	{ "2764_a.bin",         0x02000, 0x361ff09d, BRF_GRA },
+
+	{ "82s147.bin",         0x00200, 0xd841b7e0, BRF_GRA },
+
+	{ "82s153.bin",         0x000eb, 0xff7e0ced, BRF_OPT },
+};
+
+STD_ROM_PICK(Bullsdrt)
+STD_ROM_FN(Bullsdrt)
+
+struct BurnDriver BurnDrvBullsdrt = {
+	"bullsdrt", NULL, NULL, NULL, "1985",
+	"Bulls Eye Darts\0", "Parent set for working drivers", "Shinkai Inc. (Magic Electronics Inc. license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, BullsdrtRomInfo, BullsdrtRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
+	ParentInit, ParentExit, NULL, NULL, NULL,
+	NULL, 0, 240, 256, 3, 4
+};
+
 static struct BurnRomInfo HeroRomDesc[] = {
 	{ "hr-gp1.bin",         0x01000, 0x82f39788, BRF_ESS | BRF_PRG },
 	{ "hr-gp2.bin",         0x01000, 0x79607812, BRF_ESS | BRF_PRG },
@@ -156,6 +180,40 @@ struct BurnDriver BurnDrvHuncholy = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, HuncholyRomInfo, HuncholyRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
+	ParentInit, ParentExit, NULL, NULL, NULL,
+	NULL, 0, 224, 256, 3, 4
+};
+
+static struct BurnRomInfo SuperbikRomDesc[] = {
+	{ "sb-gp1.bin",         0x01000, 0xf0209700, BRF_ESS | BRF_PRG },
+	{ "sb-gp2.bin",         0x01000, 0x1956d687, BRF_ESS | BRF_PRG },
+	{ "sb-gp3.bin",         0x01000, 0xceb27b75, BRF_ESS | BRF_PRG },
+	{ "sb-gp4.bin",         0x01000, 0x430b70b3, BRF_ESS | BRF_PRG },
+	{ "sb-gp5.bin",         0x01000, 0x013615a3, BRF_ESS | BRF_PRG },
+
+	{ "sb-sdp1.bin",        0x00800, 0xe977c090, BRF_ESS | BRF_PRG },
+
+	{ "sb-sp1.bin",         0x00800, 0x0aeb9ccd, BRF_SND },
+
+	{ "sb-cp1.bin",         0x00800, 0x03ba7760, BRF_GRA },
+	{ "sb-cp2.bin",         0x00800, 0x04de69f2, BRF_GRA },
+	{ "sb-cp3.bin",         0x00800, 0xbb7d0b9a, BRF_GRA },
+
+	{ "5b.bin",             0x00800, 0xf055a624, BRF_SND },
+
+	{ "82s185.10h",         0x00800, 0xc205bca6, BRF_GRA },
+	{ "82s123.10k",         0x00020, 0xb5221cec, BRF_GRA },
+};
+
+STD_ROM_PICK(Superbik)
+STD_ROM_FN(Superbik)
+
+struct BurnDriver BurnDrvSuperbik = {
+	"superbik", NULL, NULL, NULL, "1983",
+	"Superbike\0", "Parent set for working drivers", "Century Electronics", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	0, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, SuperbikRomInfo, SuperbikRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 224, 256, 3, 4
 };

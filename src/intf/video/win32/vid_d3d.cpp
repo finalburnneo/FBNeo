@@ -194,6 +194,13 @@ static D3DVIEWPORT7 Viewport = {0, 0, 0, 0, 0.0f, 10.0f};
 static RECT Dest = { 0, 0, 0, 0 };
 static RECT Render;
 
+// Artwork, composited here so the effects only touch the game image (see
+// BurnArtworkGetLayers): ArtRender is the whole artwork, Render the game's part of it
+static bool bArtLayered = false;
+static RECT ArtRender = { 0, 0, 0, 0 };
+static IDirectDrawSurface7* pArtTexture[3] = { NULL, NULL, NULL };	// under, multiply, add
+static int nArtWidth = 0, nArtHeight = 0, nArtTexWidth = 0, nArtTexHeight = 0, nArtSerial = -1;
+
 static int nZoomFactor;
 
 static int nGameWidth = 0, nGameHeight = 0;						// Game screen size
@@ -505,9 +512,205 @@ static int ReleaseSurfaces()
 	return 0;
 }
 
+// ----------------------------------------------------------------------------
+// Artwork layers: out = Add + Mul * (Under + game)
+
+static void vidArtRelease()
+{
+	for (int i = 0; i < 3; i++) {
+		RELEASE(pArtTexture[i]);
+	}
+	nArtWidth = nArtHeight = 0;
+	nArtSerial = -1;
+}
+
+// the artwork's size on screen (in the game's orientation there), false if not layered
+static bool vidArtSize(int* pnWidth, int* pnHeight)
+{
+	BurnArtworkLayers L;
+	if (!bArtLayered || !BurnArtworkGetLayers(&L)) {
+		return false;
+	}
+	*pnWidth = (nRotateGame & 1) ? L.nHeight : L.nWidth;
+	*pnHeight = (nRotateGame & 1) ? L.nWidth : L.nHeight;
+	return true;
+}
+
+// where the game goes inside the artwork at pArt
+static void vidArtScreenRect(const RECT* pArt, RECT* pScreen)
+{
+	*pScreen = *pArt;
+
+	BurnArtworkLayers L;
+	if (!bArtLayered || !BurnArtworkGetLayers(&L)) {
+		return;
+	}
+
+	float fW = (float)(pArt->right - pArt->left), fH = (float)(pArt->bottom - pArt->top);
+	float u0 = (float)L.nScreenX / L.nWidth, u1 = (float)(L.nScreenX + L.nScreenW) / L.nWidth;
+	float v0 = (float)L.nScreenY / L.nHeight, v1 = (float)(L.nScreenY + L.nScreenH) / L.nHeight;
+	float x0, x1, y0, y1;
+	switch (nRotateGame & 3) {
+		case 0:  x0 = u0 * fW;        x1 = u1 * fW;        y0 = v0 * fH;        y1 = v1 * fH;        break;
+		case 1:  x0 = v0 * fW;        x1 = v1 * fW;        y0 = fH - u1 * fH;   y1 = fH - u0 * fH;   break;
+		case 2:  x0 = fW - u1 * fW;   x1 = fW - u0 * fW;   y0 = fH - v1 * fH;   y1 = fH - v0 * fH;   break;
+		default: x0 = fW - v1 * fW;   x1 = fW - v0 * fW;   y0 = u0 * fH;        y1 = u1 * fH;        break;
+	}
+	pScreen->left = pArt->left + (int)(x0 + 0.5f);
+	pScreen->right = pArt->left + (int)(x1 + 0.5f);
+	pScreen->top = pArt->top + (int)(y0 + 0.5f);
+	pScreen->bottom = pArt->top + (int)(y1 + 0.5f);
+}
+
+// pack 0xRRGGBB into a DirectDraw pixel format
+static unsigned int vidArtPackShift(unsigned int nMask, int* pnBits)
+{
+	unsigned int nShift = 0;
+	*pnBits = 0;
+	if (nMask == 0) {
+		return 0;
+	}
+	while (!(nMask & 1)) { nMask >>= 1; nShift++; }
+	while (nMask & 1) { nMask >>= 1; (*pnBits)++; }
+	return nShift;
+}
+
+static int vidArtUpload(BurnArtworkLayers* pL)
+{
+	if (pL->nWidth != nArtWidth || pL->nHeight != nArtHeight || pArtTexture[0] == NULL) {
+		vidArtRelease();
+
+		nArtTexWidth = GetTextureSize(pL->nWidth);
+		nArtTexHeight = GetTextureSize(pL->nHeight);
+
+		for (int i = 0; i < 3; i++) {
+			DDSURFACEDESC2 ddsd;
+			memset(&ddsd, 0, sizeof(ddsd));
+			ddsd.dwSize = sizeof(ddsd);
+			ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT;
+			ddsd.ddsCaps.dwCaps = DDSCAPS_TEXTURE;
+			ddsd.dwWidth = nArtTexWidth;
+			ddsd.dwHeight = nArtTexHeight;
+			if (FAILED(pDD->CreateSurface(&ddsd, &pArtTexture[i], NULL))) {
+				vidArtRelease();
+				return 1;
+			}
+		}
+		nArtWidth = pL->nWidth;
+		nArtHeight = pL->nHeight;
+	}
+
+	for (int i = 0; i < 3; i++) {
+		if (FAILED(pArtTexture[i]->IsLost())) {
+			if (FAILED(pArtTexture[i]->Restore())) {
+				return 1;
+			}
+			nArtSerial = -1;
+		}
+	}
+
+	if (pL->nSerial != nArtSerial) {
+		UINT32* pLayer[3] = { pL->pUnder, pL->pMul, pL->pAdd };
+		for (int i = 0; i < 3; i++) {
+			DDSURFACEDESC2 ddsd;
+			memset(&ddsd, 0, sizeof(ddsd));
+			ddsd.dwSize = sizeof(ddsd);
+			if (FAILED(pArtTexture[i]->Lock(NULL, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT | DDLOCK_WRITEONLY, NULL))) {
+				return 1;
+			}
+
+			int nRBits, nGBits, nBBits;
+			unsigned int nRShift = vidArtPackShift(ddsd.ddpfPixelFormat.dwRBitMask, &nRBits);
+			unsigned int nGShift = vidArtPackShift(ddsd.ddpfPixelFormat.dwGBitMask, &nGBits);
+			unsigned int nBShift = vidArtPackShift(ddsd.ddpfPixelFormat.dwBBitMask, &nBBits);
+			int nBytes = ddsd.ddpfPixelFormat.dwRGBBitCount >> 3;
+
+			for (int y = 0; y < pL->nHeight; y++) {
+				unsigned char* pd = (unsigned char*)ddsd.lpSurface + y * ddsd.lPitch;
+				UINT32* ps = pLayer[i] + y * pL->nPitch;
+				for (int x = 0; x < pL->nWidth; x++) {
+					UINT32 c = ps[x];
+					unsigned int p = ((((c >> 16) & 0xff) >> (8 - nRBits)) << nRShift) | ((((c >> 8) & 0xff) >> (8 - nGBits)) << nGShift) | (((c & 0xff) >> (8 - nBBits)) << nBShift);
+					if (nBytes == 4) {
+						((unsigned int*)pd)[x] = p;
+					} else if (nBytes == 2) {
+						((unsigned short*)pd)[x] = (unsigned short)p;
+					}
+				}
+			}
+			pArtTexture[i]->Unlock(NULL);
+		}
+		nArtSerial = pL->nSerial;
+	}
+
+	return 0;
+}
+
+// Draw the layers over the whole artwork (inside BeginScene / EndScene, after the game)
+static void vidArtDraw()
+{
+	BurnArtworkLayers L;
+	if (!bArtLayered || !BurnArtworkGetLayers(&L) || vidArtUpload(&L)) {
+		return;
+	}
+
+	// texture corners TL, TR, BL, BR -> screen corners, rotated like the game
+	float x0 = (float)ArtRender.left - 0.5f, x1 = (float)ArtRender.right - 0.5f;
+	float y0 = (float)ArtRender.top - 0.5f, y1 = (float)ArtRender.bottom - 0.5f;
+	float px[4], py[4];
+	switch (nRotateGame & 3) {
+		case 0:  px[0] = x0; py[0] = y0;  px[1] = x1; py[1] = y0;  px[2] = x0; py[2] = y1;  px[3] = x1; py[3] = y1;  break;
+		case 1:  px[0] = x0; py[0] = y1;  px[1] = x0; py[1] = y0;  px[2] = x1; py[2] = y1;  px[3] = x1; py[3] = y0;  break;
+		case 2:  px[0] = x1; py[0] = y1;  px[1] = x0; py[1] = y1;  px[2] = x1; py[2] = y0;  px[3] = x0; py[3] = y0;  break;
+		default: px[0] = x1; py[0] = y0;  px[1] = x1; py[1] = y1;  px[2] = x0; py[2] = y0;  px[3] = x0; py[3] = y1;  break;
+	}
+	float u1 = (float)nArtWidth / nArtTexWidth, v1 = (float)nArtHeight / nArtTexHeight;
+	float pu[4] = { 0.0f, u1, 0.0f, u1 }, pv[4] = { 0.0f, 0.0f, v1, v1 };
+	D3DTLVERTEX v[4];
+	for (int i = 0; i < 4; i++) {
+		v[i].sx = px[i]; v[i].sy = py[i]; v[i].sz = 0.0f; v[i].rhw = 1.0f;
+		v[i].color = 0xFFFFFFFF; v[i].specular = 0;
+		v[i].tu = pu[i]; v[i].tv = pv[i];
+	}
+
+	// the 3D screen leaves the viewport on the game, the layers cover the whole artwork
+	D3DVIEWPORT7 vp = { (DWORD)ArtRender.left, (DWORD)ArtRender.top, (DWORD)(ArtRender.right - ArtRender.left), (DWORD)(ArtRender.bottom - ArtRender.top), 0.0f, 1.0f };
+	pD3DDevice->SetViewport(&vp);
+
+	pD3DDevice->SetRenderState(D3DRENDERSTATE_ALPHABLENDENABLE, TRUE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_MAGFILTER, D3DTFG_LINEAR);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_MINFILTER, D3DTFN_LINEAR);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+	pD3DDevice->SetTextureStageState(0, D3DTSS_TEXCOORDINDEX, 0);
+	pD3DDevice->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+	pD3DDevice->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+
+	static const DWORD nSrcBlend[3] = { D3DBLEND_ONE, D3DBLEND_ZERO, D3DBLEND_ONE };		// under: +, multiply: *, add: +
+	static const DWORD nDstBlend[3] = { D3DBLEND_ONE, D3DBLEND_SRCCOLOR, D3DBLEND_ONE };
+	for (int i = 0; i < 3; i++) {
+		pD3DDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, nSrcBlend[i]);
+		pD3DDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, nDstBlend[i]);
+		pD3DDevice->SetTexture(0, pArtTexture[i]);
+		pD3DDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, D3DFVF_TLVERTEX, (void*)v, 4, 0);
+	}
+
+	pD3DDevice->SetTexture(0, NULL);
+	// the game's own render state is set up again every frame
+	pD3DDevice->SetRenderState(D3DRENDERSTATE_SRCBLEND, D3DBLEND_ONE);
+	pD3DDevice->SetRenderState(D3DRENDERSTATE_DESTBLEND, D3DBLEND_ZERO);
+}
+
 static int vidExit()
 {
 	VidSExitOSD();
+
+	vidArtRelease();
+	if (bArtLayered) {
+		BurnArtworkSetLayered(0);
+		bArtLayered = false;
+	}
 
 	if (v3DScreen) {
 		free(v3DScreen);
@@ -1267,6 +1470,9 @@ static int vidInit()
 
 	nGameWidth = nVidImageWidth; nGameHeight = nVidImageHeight;
 
+	// Artwork: composite it here, the game image (and the effects) stay at the game's size
+	bArtLayered = bDrvOkay && BurnArtworkSetLayered(1);
+
 	nRotateGame = 0;
 	if (bDrvOkay) {
 		// Get the game screen size
@@ -1747,7 +1953,12 @@ static int vidRenderImageA()
 		Dest.top += nMenuHeight;
 	}
 
-	if (bVidArcaderes && nVidFullscreen) {
+	int nArtW, nArtH;
+	bool bArt = vidArtSize(&nArtW, &nArtH);
+
+	if (bArt) {
+		vidScale(&Dest, nArtW, nArtH);
+	} else if (bVidArcaderes && nVidFullscreen) {
 		Dest.left = (Dest.right + Dest.left) / 2;
 		Dest.left -= nGameWidth / 2;
 		Dest.right = Dest.left + nGameWidth;
@@ -1769,6 +1980,13 @@ static int vidRenderImageA()
 		Render.right = Dest.right - Dest.left;
 		Render.top = 0;
 		Render.bottom = Dest.bottom - Dest.top;
+	}
+
+	// artwork: Render becomes the game's part of it (the effects / scanlines follow it)
+	ArtRender = Render;
+	if (bArt) {
+		vidArtScreenRect(&ArtRender, &Render);
+		VidSClearSurface(pBackbuffer, 0, &ArtRender);
 	}
 
 	if (((nRotateGame & 1) && !bRotateEffects) || (!(nRotateGame & 1) && bRotateEffects)) {
@@ -2111,6 +2329,10 @@ static int vidRenderImageB()
 		}
 	}
 
+	if (bArtLayered) {
+		vidArtDraw();
+	}
+
 	if (FAILED(pD3DDevice->EndScene())) {
 		return 1;
 	}
@@ -2318,7 +2540,12 @@ int vidPaint(int bValidate)
 		GetClientScreenRect(hVidWnd, &rect);
 		rect.top += nMenuHeight;
 
-		vidScale(&rect, nGameWidth, nGameHeight);
+		int nArtW, nArtH;
+		if (vidArtSize(&nArtW, &nArtH)) {
+			vidScale(&rect, nArtW, nArtH);
+		} else {
+			vidScale(&rect, nGameWidth, nGameHeight);
+		}
 
 		if ((rect.right - rect.left) != (Dest.right - Dest.left) || (rect.bottom - rect.top ) != (Dest.bottom - Dest.top)) {
 			bValidate |= 2;
@@ -2331,7 +2558,7 @@ int vidPaint(int bValidate)
 	}
 
 	// Display OSD text message
-	VidSDisplayOSD(pBackbuffer, &Render, 0);
+	VidSDisplayOSD(pBackbuffer, bArtLayered ? &ArtRender : &Render, 0);
 
 //	if(bVidVSync && !nVidFullscreen) { pDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
 

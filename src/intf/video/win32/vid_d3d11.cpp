@@ -220,6 +220,17 @@ static int nConvPitch = 0;
 static RECT Dest = { 0, 0, 0, 0 };					// game image, client coordinates of hVidWnd
 static RECT Render = { 0, 0, 0, 0 };				// game image, render target coordinates
 
+// Artwork, composited here so the effects / shaders only touch the game image (see
+// BurnArtworkGetLayers): Dest / Render are the whole artwork, the game goes in ArtScreen
+static bool bArtLayered = false;
+static ID3D11Texture2D* pArtTexture[3] = { NULL, };		// under, multiply, add
+static ID3D11ShaderResourceView* pArtSRV[3] = { NULL, };
+static int nArtWidth = 0, nArtHeight = 0, nArtSerial = -1;
+static ID3D11Buffer* pArtVB = NULL;
+static ID3D11BlendState* pBlendAdd = NULL;
+static ID3D11BlendState* pBlendMul = NULL;
+static RECT ArtScreen = { 0, 0, 0, 0 };				// game image inside the artwork, render target coordinates
+
 // ----------------------------------------------------------------------------
 // Built-in shaders
 
@@ -2810,6 +2821,71 @@ static int d3d11CreateResources()
 		return 1;
 	}
 
+	// artwork layers: dst + src, dst * src
+	bd.RenderTarget[0].SrcBlend = D3D11_BLEND_ONE;
+	bd.RenderTarget[0].DestBlend = D3D11_BLEND_ONE;
+	if (FAILED(pDevice->CreateBlendState(&bd, &pBlendAdd))) {
+		return 1;
+	}
+	bd.RenderTarget[0].SrcBlend = D3D11_BLEND_ZERO;
+	bd.RenderTarget[0].DestBlend = D3D11_BLEND_SRC_COLOR;
+	if (FAILED(pDevice->CreateBlendState(&bd, &pBlendMul))) {
+		return 1;
+	}
+
+	pArtVB = d3d11CreateDynamicBuffer(sizeof(d3d11Vertex) * 4, D3D11_BIND_VERTEX_BUFFER);
+	if (pArtVB == NULL) {
+		return 1;
+	}
+
+	return 0;
+}
+
+static void d3d11ReleaseArtwork()
+{
+	for (int i = 0; i < 3; i++) {
+		D3D11_RELEASE(pArtSRV[i]);
+		D3D11_RELEASE(pArtTexture[i]);
+	}
+	nArtWidth = nArtHeight = 0;
+	nArtSerial = -1;
+}
+
+// (Re)upload the artwork layers when they've changed
+static int d3d11UploadArtwork(BurnArtworkLayers* pL)
+{
+	if (pL->nWidth != nArtWidth || pL->nHeight != nArtHeight || pArtTexture[0] == NULL) {
+		d3d11ReleaseArtwork();
+
+		D3D11_TEXTURE2D_DESC td;
+		memset(&td, 0, sizeof(td));
+		td.Width = pL->nWidth;
+		td.Height = pL->nHeight;
+		td.MipLevels = 1;
+		td.ArraySize = 1;
+		td.Format = DXGI_FORMAT_B8G8R8A8_UNORM;			// = 0xAARRGGBB in memory
+		td.SampleDesc.Count = 1;
+		td.Usage = D3D11_USAGE_DEFAULT;
+		td.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+
+		for (int i = 0; i < 3; i++) {
+			if (FAILED(pDevice->CreateTexture2D(&td, NULL, &pArtTexture[i])) || FAILED(pDevice->CreateShaderResourceView(pArtTexture[i], NULL, &pArtSRV[i]))) {
+				d3d11ReleaseArtwork();
+				return 1;
+			}
+		}
+		nArtWidth = pL->nWidth;
+		nArtHeight = pL->nHeight;
+	}
+
+	if (pL->nSerial != nArtSerial) {
+		UINT32* pLayer[3] = { pL->pUnder, pL->pMul, pL->pAdd };
+		for (int i = 0; i < 3; i++) {
+			pContext->UpdateSubresource(pArtTexture[i], 0, NULL, pLayer[i], pL->nPitch * 4, 0);
+		}
+		nArtSerial = pL->nSerial;
+	}
+
 	return 0;
 }
 
@@ -2873,6 +2949,10 @@ static void d3d11ReleaseDevice()
 
 	d3d11ReleaseShader();
 	d3d11ReleaseTextures();
+	d3d11ReleaseArtwork();
+	D3D11_RELEASE(pArtVB);
+	D3D11_RELEASE(pBlendMul);
+	D3D11_RELEASE(pBlendAdd);
 
 	for (int f = 0; f < 2; f++) {
 		for (int w = 0; w < 4; w++) {
@@ -2906,6 +2986,11 @@ static void d3d11ReleaseDevice()
 static int d3d11Exit()
 {
 	bD3D11Ready = false;
+
+	if (bArtLayered) {
+		BurnArtworkSetLayered(0);
+		bArtLayered = false;
+	}
 
 	VidSExitOSD();
 	VidSSetOSDBackend(NULL);
@@ -3029,6 +3114,9 @@ static int d3d11Init()
 	nGameWidth = nVidImageWidth;
 	nGameHeight = nVidImageHeight;
 	nRotateGame = 0;
+
+	// Artwork: composite it here, the game image (and the effects) stay at the game's size
+	bArtLayered = bDrvOkay && BurnArtworkSetLayered(1);
 
 	if (bDrvOkay) {
 		BurnDrvGetVisibleSize(&nGameWidth, &nGameHeight);
@@ -3261,7 +3349,18 @@ static int d3d11UpdateGeometry()
 
 	RECT View = rect;								// the area the view window covers
 
-	if (bVidArcaderes && nVidFullscreen && !bChangedDisplayMode && bVidDX9WinFullscreen) {
+	BurnArtworkLayers ArtLayers;
+	bool bArt = bArtLayered && BurnArtworkGetLayers(&ArtLayers);
+
+	if (bArt) {
+		// the whole artwork, in the game's orientation on screen
+		Dest = rect;
+		if (nRotateGame & 1) {
+			d3d11Scale(&Dest, ArtLayers.nHeight, ArtLayers.nWidth);
+		} else {
+			d3d11Scale(&Dest, ArtLayers.nWidth, ArtLayers.nHeight);
+		}
+	} else if (bVidArcaderes && nVidFullscreen && !bChangedDisplayMode && bVidDX9WinFullscreen) {
 		// arcade resolution in borderless mode: centre the image at 1:1
 		Dest.left = (rect.right + rect.left) / 2 - nGameWidth / 2;
 		Dest.right = Dest.left + nGameWidth;
@@ -3302,9 +3401,31 @@ static int d3d11UpdateGeometry()
 		return 1;
 	}
 
+	// Artwork: where the game goes (the layers are in the driver's orientation, like the game image)
+	if (bArt) {
+		float fW = (float)(Render.right - Render.left), fH = (float)(Render.bottom - Render.top);
+		float u0 = (float)ArtLayers.nScreenX / ArtLayers.nWidth, u1 = (float)(ArtLayers.nScreenX + ArtLayers.nScreenW) / ArtLayers.nWidth;
+		float v0 = (float)ArtLayers.nScreenY / ArtLayers.nHeight, v1 = (float)(ArtLayers.nScreenY + ArtLayers.nScreenH) / ArtLayers.nHeight;
+		float x0, x1, y0, y1;
+		switch (nRotateGame & 3) {
+			case 0:  x0 = u0 * fW;        x1 = u1 * fW;        y0 = v0 * fH;        y1 = v1 * fH;        break;
+			case 1:  x0 = v0 * fW;        x1 = v1 * fW;        y0 = fH - u1 * fH;   y1 = fH - u0 * fH;   break;
+			case 2:  x0 = fW - u1 * fW;   x1 = fW - u0 * fW;   y0 = fH - v1 * fH;   y1 = fH - v0 * fH;   break;
+			default: x0 = fW - v1 * fW;   x1 = fW - v0 * fW;   y0 = u0 * fH;        y1 = u1 * fH;        break;
+		}
+		ArtScreen.left = Render.left + (int)(x0 + 0.5f);
+		ArtScreen.right = Render.left + (int)(x1 + 0.5f);
+		ArtScreen.top = Render.top + (int)(y0 + 0.5f);
+		ArtScreen.bottom = Render.top + (int)(y1 + 0.5f);
+	}
+
 	// The quad for the game image (vertex order: 0 = TL, 1 = TR, 2 = BL, 3 = BR of the game image)
 	int nNewImageWidth = (nRotateGame & 1) ? (Dest.bottom - Dest.top) : (Dest.right - Dest.left);
 	int nNewImageHeight = (nRotateGame & 1) ? (Dest.right - Dest.left) : (Dest.bottom - Dest.top);
+	if (bArt) {
+		nNewImageWidth = (nRotateGame & 1) ? (ArtScreen.bottom - ArtScreen.top) : (ArtScreen.right - ArtScreen.left);
+		nNewImageHeight = (nRotateGame & 1) ? (ArtScreen.right - ArtScreen.left) : (ArtScreen.bottom - ArtScreen.top);
+	}
 
 	nImageWidth = nNewImageWidth;
 	nImageHeight = nNewImageHeight;
@@ -3346,9 +3467,55 @@ static int d3d11UpdateGeometry()
 			memcpy(GameQuad, Quad, sizeof(Quad));
 			d3d11UpdateBuffer(pGameVB, GameQuad, sizeof(GameQuad));
 		}
+
+		// the artwork layers: the same quad over the whole artwork, whole textures
+		if (bArt) {
+			d3d11SetVertex(&Quad[0], x[0], y[0], 0.0f, 0.0f, 1.0f);
+			d3d11SetVertex(&Quad[1], x[1], y[1], 1.0f, 0.0f, 1.0f);
+			d3d11SetVertex(&Quad[2], x[2], y[2], 0.0f, 1.0f, 1.0f);
+			d3d11SetVertex(&Quad[3], x[3], y[3], 1.0f, 1.0f, 1.0f);
+			d3d11UpdateBuffer(pArtVB, Quad, sizeof(Quad));
+		}
 	}
 
 	return 0;
+}
+
+// The artwork around / over the game: out = Add + Mul * (Under + game)
+static void d3d11DrawArtwork()
+{
+	BurnArtworkLayers L;
+	if (!bArtLayered || !BurnArtworkGetLayers(&L) || d3d11UploadArtwork(&L)) {
+		return;
+	}
+
+	D3D11_VIEWPORT vp;
+	vp.TopLeftX = (float)Render.left;
+	vp.TopLeftY = (float)Render.top;
+	vp.Width = (float)(Render.right - Render.left);
+	vp.Height = (float)(Render.bottom - Render.top);
+	vp.MinDepth = 0.0f;
+	vp.MaxDepth = 1.0f;
+	pContext->RSSetViewports(1, &vp);
+
+	UINT nStride = sizeof(d3d11Vertex), nOffset = 0;
+	pContext->IASetVertexBuffers(0, 1, &pArtVB, &nStride, &nOffset);
+	pContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);
+	pContext->IASetInputLayout(pBasicLayout);
+	pContext->VSSetShader(pBasicVS, NULL, 0);
+	pContext->PSSetShader(pBasicPS, NULL, 0);
+	pContext->PSSetSamplers(0, 1, &pSamplerLinear);
+
+	ID3D11BlendState* pBlend[3] = { pBlendAdd, pBlendMul, pBlendAdd };	// under, multiply, add
+	for (int i = 0; i < 3; i++) {
+		pContext->OMSetBlendState(pBlend[i], NULL, 0xFFFFFFFF);
+		pContext->PSSetShaderResources(0, 1, &pArtSRV[i]);
+		pContext->Draw(4, 0);
+	}
+
+	ID3D11ShaderResourceView* NullSRV = NULL;
+	pContext->PSSetShaderResources(0, 1, &NullSRV);
+	pContext->OMSetBlendState(NULL, NULL, 0xFFFFFFFF);
 }
 
 static void d3d11DrawGame(ID3D11ShaderResourceView* pSRV, float fAlpha)
@@ -3394,6 +3561,12 @@ static int d3d11Render()
 	pContext->RSSetState(pRasterState);
 
 	if (bTextureValid) {
+		// with artwork, the game (and the shader chain, which draws into Render) goes in its part of it
+		RECT ArtRender = Render;
+		if (bArtLayered) {
+			Render = ArtScreen;
+		}
+
 		D3D11_VIEWPORT vp;
 		vp.TopLeftX = (float)Render.left;
 		vp.TopLeftY = (float)Render.top;
@@ -3416,7 +3589,11 @@ static int d3d11Render()
 		ID3D11ShaderResourceView* NullSRV[16] = { NULL, };
 		pContext->PSSetShaderResources(0, 16, NullSRV);
 		pContext->VSSetShaderResources(0, 16, NullSRV);
+
+		Render = ArtRender;
 	}
+
+	d3d11DrawArtwork();
 
 	// OSD (status, messages, chat, netplay edit box)
 	VidSDisplayOSD(NULL, &Render, 0);

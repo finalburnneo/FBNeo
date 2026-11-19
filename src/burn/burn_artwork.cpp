@@ -46,7 +46,7 @@ INT32 bBurnArtworkEnable = 1;
 INT32 nBurnArtworkView = 0;
 INT32 nBurnArtworkMaxHeight = 2160;
 INT32 nBurnArtworkScale = -1;
-INT32 nBurnArtworkDefaults = ARTWORK_DEFAULT_ALL;	// parts shown in games without their own settings
+INT32 nBurnArtworkDefaults = ARTWORK_DEFAULT_OVERLAY | ARTWORK_DEFAULT_BACKDROP | ARTWORK_DEFAULT_BEZEL; //ARTWORK_DEFAULT_ALL;	// parts shown in games without their own settings
 
 extern "C" INT32 BurnDrvGetNativeSize(INT32 *pnWidth, INT32 *pnHeight);
 

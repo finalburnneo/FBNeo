@@ -1531,32 +1531,32 @@ BEGIN
 #endif
 	END
         MENUITEM SEPARATOR
-        POPUP    "Generate dat file"
+		POPUP    "Generate dat file"
         BEGIN
-	        MENUITEM "Generate dat (Arcade only)...",			MENU_CLRMAME_PRO_XML
-	        MENUITEM "Generate dat (Neo Geo only)...",			MENU_CLRMAME_PRO_XML_NEOGEO_ONLY
-	        MENUITEM "Generate dat (Megadrive only)...",		MENU_CLRMAME_PRO_XML_MD_ONLY
-			MENUITEM "Generate dat (PC-Engine only)...",		MENU_CLRMAME_PRO_XML_PCE_ONLY
-			MENUITEM "Generate dat (TurboGrafx16 only)...",		MENU_CLRMAME_PRO_XML_TG16_ONLY
-			MENUITEM "Generate dat (SuprGrafx only)...",		MENU_CLRMAME_PRO_XML_SGX_ONLY
-			MENUITEM "Generate dat (Sega SG-1000 only)...",		MENU_CLRMAME_PRO_XML_SG1000_ONLY
-			MENUITEM "Generate dat (ColecoVision only)...",		MENU_CLRMAME_PRO_XML_COLECO_ONLY
-			MENUITEM "Generate dat (Master System only)...",	MENU_CLRMAME_PRO_XML_SMS_ONLY
-			MENUITEM "Generate dat (Game Gear only)...",		MENU_CLRMAME_PRO_XML_GG_ONLY
-			MENUITEM "Generate dat (MSX 1 Games only)...",		MENU_CLRMAME_PRO_XML_MSX_ONLY
-			MENUITEM "Generate dat (ZX Spectrum Games only)...",MENU_CLRMAME_PRO_XML_SPECTRUM_ONLY
-			MENUITEM "Generate dat (NES Games only)...",		MENU_CLRMAME_PRO_XML_NES_ONLY
-			MENUITEM "Generate dat (FDS Games only)...",		MENU_CLRMAME_PRO_XML_FDS_ONLY
-			MENUITEM "Generate dat (SNES Games only)...",		MENU_CLRMAME_PRO_XML_SNES_ONLY
-			MENUITEM "Generate dat (GBA Games Only)...",		MENU_CLRMAME_PRO_XML_GBA_ONLY
-			MENUITEM "Generate dat (Neo Geo Pocket Games only)...",	MENU_CLRMAME_PRO_XML_NGP_ONLY
-			MENUITEM "Generate dat (Fairchild Channel F Games only)...",	MENU_CLRMAME_PRO_XML_CHANNELF_ONLY
-			MENUITEM "Generate dat (Bally Astrocade Games Only)...",	MENU_CLRMAME_PRO_XML_ASTROHOME_ONLY
-			MENUITEM "Generate dat (Atari 2600 Games Only)...",	MENU_CLRMAME_PRO_XML_ATARI2600_ONLY
-			MENUITEM "Generate dat (Sega 32X Games Only)...",	MENU_CLRMAME_PRO_XML_32X_ONLY
-			MENUITEM SEPARATOR
-			MENUITEM "Generate all dats...",					MENU_CLRMAME_PRO_ALL_DATS
-	END
+            MENUITEM "Generate dat (Arcade Only)...",                     MENU_CLRMAME_PRO_XML
+            MENUITEM "Generate dat (Atari 2600 Games Only)...",           MENU_CLRMAME_PRO_XML_ATARI2600_ONLY
+            MENUITEM "Generate dat (Bally Astrocade Games Only)...",      MENU_CLRMAME_PRO_XML_ASTROHOME_ONLY
+            MENUITEM "Generate dat (Coleco ColecoVision Only)...",        MENU_CLRMAME_PRO_XML_COLECO_ONLY
+            MENUITEM "Generate dat (Fairchild Channel F Games Only)...",  MENU_CLRMAME_PRO_XML_CHANNELF_ONLY
+            MENUITEM "Generate dat (MSX 1 Games Only)...",                MENU_CLRMAME_PRO_XML_MSX_ONLY
+            MENUITEM "Generate dat (NEC PC-Engine Only)...",              MENU_CLRMAME_PRO_XML_PCE_ONLY
+            MENUITEM "Generate dat (NEC SuprGrafx Only)...",              MENU_CLRMAME_PRO_XML_SGX_ONLY
+            MENUITEM "Generate dat (NEC TurboGrafx16 Only)...",           MENU_CLRMAME_PRO_XML_TG16_ONLY
+            MENUITEM "Generate dat (Nintendo FDS Games Only)...",         MENU_CLRMAME_PRO_XML_FDS_ONLY
+            MENUITEM "Generate dat (Nintendo GBA Games Only)...",         MENU_CLRMAME_PRO_XML_GBA_ONLY
+            MENUITEM "Generate dat (Nintendo NES Games Only)...",         MENU_CLRMAME_PRO_XML_NES_ONLY
+            MENUITEM "Generate dat (Nintendo SNES Games Only)...",        MENU_CLRMAME_PRO_XML_SNES_ONLY
+            MENUITEM "Generate dat (Sega 32X Games Only)...",             MENU_CLRMAME_PRO_XML_32X_ONLY
+            MENUITEM "Generate dat (Sega Game Gear Only)...",             MENU_CLRMAME_PRO_XML_GG_ONLY
+            MENUITEM "Generate dat (Sega Master System Only)...",         MENU_CLRMAME_PRO_XML_SMS_ONLY
+            MENUITEM "Generate dat (Sega Megadrive Only)...",             MENU_CLRMAME_PRO_XML_MD_ONLY
+            MENUITEM "Generate dat (Sega SG-1000 Only)...",               MENU_CLRMAME_PRO_XML_SG1000_ONLY
+            MENUITEM "Generate dat (Sinclair ZX Spectrum Games Only)...", MENU_CLRMAME_PRO_XML_SPECTRUM_ONLY
+            MENUITEM "Generate dat (SNK Neo Geo Only)...",                MENU_CLRMAME_PRO_XML_NEOGEO_ONLY
+            MENUITEM "Generate dat (SNK Neo Geo Pocket Games Only)...",   MENU_CLRMAME_PRO_XML_NGP_ONLY
+            MENUITEM SEPARATOR
+            MENUITEM "Generate all dats...",                              MENU_CLRMAME_PRO_ALL_DATS
+        END
         MENUITEM SEPARATOR
         MENUITEM "Configure ROM paths...",						MENU_ROMDIRS
         MENUITEM "Configure support file paths...",				MENU_SUPPORTDIRS

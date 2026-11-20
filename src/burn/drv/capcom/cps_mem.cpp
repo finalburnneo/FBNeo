@@ -250,6 +250,19 @@ void __fastcall CpsWriteSpriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 // ----------------------------------------------------------------------------
 
+// CPS2 0x700000-0x701fff: write-only window to the displayed object bank
+// (the bank the CPU does not see at 0x708000), as MAME's cps2_objram_w<0>
+static void __fastcall CpsObjWindowWriteByte(UINT32 sekAddress, UINT8 byteValue)
+{
+	CpsRam708[(((nCpsObjectBank ^ 1) << 15) + (sekAddress & 0x1FFF)) ^ 1] = byteValue;
+}
+
+static void __fastcall CpsObjWindowWriteWord(UINT32 sekAddress, UINT16 wordValue)
+{
+	UINT16 *Ram = (UINT16*)(CpsRam708 + ((nCpsObjectBank ^ 1) << 15));
+	Ram[(sekAddress & 0x1FFE) >> 1] = BURN_ENDIAN_SWAP_INT16(wordValue);
+}
+
 UINT8 __fastcall haxx0rReadByte(UINT32 sekAddress)
 {
 	sekAddress &= 0xFFFF;
@@ -293,6 +306,13 @@ INT32 CpsMemInit()
 #else
 		SekMapMemory(CpsRam660, 0x660000, 0x663FFF, MAP_RAM);
 #endif
+
+		if (!bCpsObjectBankHandlers) {
+			// drivers with their own 0x700000 handlers replace handler 4 after this
+			SekMapHandler(4, 0x700000, 0x701FFF, MAP_WRITE);
+			SekSetWriteByteHandler(4, CpsObjWindowWriteByte);
+			SekSetWriteWordHandler(4, CpsObjWindowWriteWord);
+		}
 
 //		SekMapHandler(4, 0x708000, 0x709FFF, MAP_WRITE);
 //		SekMapHandler(4, 0x70A000, 0x70BFFF, MAP_WRITE);

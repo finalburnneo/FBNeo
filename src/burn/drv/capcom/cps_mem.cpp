@@ -251,7 +251,7 @@ void __fastcall CpsWriteSpriteWord(UINT32 sekAddress, UINT16 wordValue)
 // ----------------------------------------------------------------------------
 
 // CPS2 0x700000-0x701fff: write-only window to the displayed object bank
-// (the bank the CPU does not see at 0x708000), as MAME's cps2_objram_w<0>
+// (the bank the CPU does not see at 0x708000)
 static void __fastcall CpsObjWindowWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	CpsRam708[(((nCpsObjectBank ^ 1) << 15) + (sekAddress & 0x1FFF)) ^ 1] = byteValue;

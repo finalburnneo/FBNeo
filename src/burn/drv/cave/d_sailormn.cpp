@@ -13,6 +13,7 @@ static UINT8 DrvJoy2[10] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static UINT16 DrvInput[2] = {0x0000, 0x0000};
 
 static UINT8 RegionSw = 0; // Fake Dip
+static INT32 bRegionSwitch = 0;
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -91,7 +92,7 @@ static struct BurnDIPInfo slmregswDIPList[] = {
 	// Defaults
 	{0x00,	0xff, 0xff,	0x00, NULL},
 
-	{0,		0xFE, 0,	6,	  "Region (Must reload)"},
+	{0,		0xFD, 0,	6,	  "Region (Must reload)"},
 	{0x00,	0x01, 0x1f,	0x00, "Europe"				},
 	{0x00,	0x01, 0x1f,	0x01, "USA"					},
 	{0x00,	0x01, 0x1f,	0x02, "Japan"				},
@@ -183,8 +184,10 @@ static void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
 				SoundLatchReplyMax = -1;
 				SoundLatchReplyIndex = 0;
 			}
-			SoundLatchReplyMax++;
-			SoundLatchReply[SoundLatchReplyMax] = nValue;
+			if (SoundLatchReplyMax < (INT32)(sizeof(SoundLatchReply) / sizeof(SoundLatchReply[0])) - 1) {
+				SoundLatchReplyMax++;
+				SoundLatchReply[SoundLatchReplyMax] = nValue;
+			}
 			break;
 
 		case 0x50:
@@ -483,6 +486,7 @@ static INT32 DrvExit()
 
 	BurnFreeMemIndex();
 	agalletamode = 0;
+	bRegionSwitch = 0;
 
 	nRom01Len = 0;
 
@@ -791,13 +795,17 @@ static INT32 sailormnLoadRoms()
 	BurnLoadRom(MSM6295ROM + 0x0380000, 16, 1);
 
 	INT32 nIndex = 17; // Region
-	nBurnDrvSubActive = RegionSw & 0x1f;
 
-	if (nBurnDrvSubActive) {
-		for (INT32 i = 0x01; i <= 0x10; i <<= 1) {
-			nIndex++;
+	// Only the hacks with the region fake dip are sub-drivers, the other sets must keep nBurnDrvSubActive at -1
+	if (bRegionSwitch) {
+		nBurnDrvSubActive = RegionSw & 0x1f;
 
-			if (nBurnDrvSubActive == i) break;
+		if (nBurnDrvSubActive) {
+			for (INT32 i = 0x01; i <= 0x10; i <<= 1) {
+				nIndex++;
+
+				if (nBurnDrvSubActive == i) break;
+			}
 		}
 	}
 
@@ -989,7 +997,7 @@ static INT32 gameInit()
 	MSM6295SetRoute(1, 0.65, BURN_SND_ROUTE_BOTH);
 	
 	EEPROMInit(&eeprom_interface_93C46);
-	if (!EEPROMAvailable() || nBurnDrvSubActive) EEPROMFill(DefEEPROM, 0, 0x80);
+	if (!EEPROMAvailable() || (nBurnDrvSubActive > 0)) EEPROMFill(DefEEPROM, 0, 0x80);
 
 	bDrawScreen = true;
 
@@ -1028,6 +1036,13 @@ static INT32 Name##Oc##value##Init()	\
 }
 
 OC_INIT(sailormn, 384)
+
+static INT32 slmregswInit()
+{
+	bRegionSwitch = 1;
+
+	return sailormnOc384Init();
+}
 
 // Rom information
 
@@ -2289,7 +2304,7 @@ struct BurnDriver BurnDrvSailorMoonffj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailormnffjRomInfo, sailormnffjRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2299,7 +2314,7 @@ struct BurnDriver BurnDrvSailorMoonrot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailormnrotRomInfo, sailormnrotRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2309,7 +2324,7 @@ struct BurnDriver BurnDrvSailorMoonhy = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Black Moon, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnhyRomInfo, sailmnhyRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2319,7 +2334,7 @@ struct BurnDriver BurnDrvSailorMoonxy = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (New Moon, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnxyRomInfo, sailmnxyRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2329,7 +2344,7 @@ struct BurnDriver BurnDrvSailorMoonxys = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (New Moon Super, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnxysRomInfo, sailmnxysRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2339,7 +2354,7 @@ struct BurnDriver BurnDrvSailorMoonhx = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Crescent Fantasy, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnhxRomInfo, sailmnhxRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2349,7 +2364,7 @@ struct BurnDriver BurnDrvSailorMoonyh = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Eternal Poem, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnyhRomInfo, sailmnyhRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2359,7 +2374,7 @@ struct BurnDriver BurnDrvSailorMoonzy = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Eternal End, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnzyRomInfo, sailmnzyRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2369,7 +2384,7 @@ struct BurnDriver BurnDrvSailorMoonee = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Enhanced Edition v5 Final, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmneeRomInfo, sailmneeRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2379,7 +2394,7 @@ struct BurnDriver BurnDrvSailorMoonopt = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Optimised, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnoptRomInfo, sailmnoptRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2389,7 +2404,7 @@ struct BurnDriver BurnDrvSailorMoonyy = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Serena Tsukino, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnyyRomInfo, sailmnyyRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2399,7 +2414,7 @@ struct BurnDriver BurnDrvSailorMoonyg = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Moonlight, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnygRomInfo, sailmnygRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2409,7 +2424,7 @@ struct BurnDriver BurnDrvSailorMoonwx = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Infinite, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmnwxRomInfo, sailmnwxRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 
@@ -2419,7 +2434,7 @@ struct BurnDriver BurnDrvSailorMoondf = {
 	L"Bishoujo Senshi Sailor Moon\0\u7f8e\u5c11\u5973\u6226\u58eb \u30bb\u30fc\u30e9\u30fc\u30e0\u30fc\u30f3 (Apex Infinity, Hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, sailmndfRomInfo, sailmndfRomName, NULL, NULL, NULL, NULL, slmregswInputInfo, slmregswDIPInfo,
-	sailormnOc384Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	slmregswInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 320, 240, 4, 3
 };
 

@@ -383,8 +383,8 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 		ba.szName	= "Serial Buffer";
 		BurnAcb(&ba);
 
-		if (nAction & ACB_RUNAHEAD) {
-			// we _must_ scan eeprom data when in RunAhead mode or corruption is a possibility
+		if (nAction & (ACB_RUNAHEAD | ACB_2RUNAHEAD | ACB_NET_OPT)) {
+			// we _must_ scan eeprom data when in RunAhead or rollback netplay mode or corruption is a possibility
 			ScanVar(eeprom_data, MEMORY_SIZE, "eeprom_data");
 		}
 

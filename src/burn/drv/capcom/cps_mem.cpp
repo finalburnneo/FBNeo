@@ -440,6 +440,13 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nCpsObjectBank);
 		CpsRasterScan();
 
+		// latches drawn after the vblank (sprite list, palette DMA, registers): without them the first frame drawn
+		// after a state load, or a redraw, uses the latches of whatever frame ran before the load
+		ScanVar(CpsSavePal, 0x2000, "CpsSavePal");
+		ScanVar(CpsSaveReg[0], 0x100, "CpsSaveReg");
+		if (Cps == 2) ScanVar(CpsSaveFrg[0], 0x20, "CpsSaveFrg");
+		if (CpsObjScan(nAction, "CpsObj")) return 1;
+
 		if (Cps1OverrideLayers) {
 			SCAN_VAR(nCps1Layers);
 			SCAN_VAR(nCps1LayerOffs);

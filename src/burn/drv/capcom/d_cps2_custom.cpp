@@ -4,10 +4,7 @@
 // CPS2 hardware extensions used by custom games.
 
 struct CpsDisplayState {
-	char* szPalette;
 	char* szRegisters;
-	char* szFrg;
-	char* szObjects;
 	char* szEffectivePalette;
 	bool bRawPalette;
 };
@@ -45,20 +42,15 @@ static INT32 CpsPalVisualScan(INT32 nAction)
 }
 
 // Preserve latched display state so a paused redraw does not read the next frame's RAM.
+// CpsAreaScan saves the palette, frg, sprite and first register latches; the raster register slices are saved here.
 static INT32 CpsVisualScan(INT32 nAction)
 {
 	if (!pCpsDisplayState || !(nAction & ACB_DRIVER_DATA)) return 0;
 
 	struct BurnArea ba;
 	memset(&ba, 0, sizeof(ba));
-	ba.Data = CpsSavePal;		ba.nLen = 0x2000;								ba.szName = pCpsDisplayState->szPalette;
+	ba.Data = CpsSaveReg[1];	ba.nLen = 0x100 * MAX_RASTER;					ba.szName = pCpsDisplayState->szRegisters;
 	BurnAcb(&ba);
-	ba.Data = CpsSaveReg[0];	ba.nLen = 0x100 * (MAX_RASTER + 1);				ba.szName = pCpsDisplayState->szRegisters;
-	BurnAcb(&ba);
-	ba.Data = CpsSaveFrg[0];	ba.nLen = 0x20;									ba.szName = pCpsDisplayState->szFrg;
-	BurnAcb(&ba);
-
-	if (CpsObjScan(nAction, pCpsDisplayState->szObjects)) return 1;
 
 	return CpsPalVisualScan(nAction);
 }
@@ -95,8 +87,7 @@ static INT32 DrvExit()
 }
 
 static const CpsDisplayState Cps2PlusDisplayState = {
-	"Latched palette", "Latched registers", "Latched frg",
-	"Sprite lag buffers", "Effective palette", true
+	"Latched registers", "Effective palette", true
 };
 
 static UINT8* Cps2PlusObjectBanks = NULL;
@@ -583,8 +574,7 @@ static INT32 Cps2MixInit()
 
 // XMvsSF 3v3: an input device, extra work RAM and optional wide-screen graphics.
 static const CpsDisplayState CpsXmvDisplayState = {
-	"XMvsSF 3v3 latched palette", "XMvsSF 3v3 latched registers", "XMvsSF 3v3 latched frg",
-	"XMvsSF 3v3 sprite lag buffers", "XMvsSF 3v3 effective palette", false
+	"XMvsSF 3v3 latched registers", "XMvsSF 3v3 effective palette", false
 };
 
 static UINT8 CpsXmvSixButtons[XMV6_PLAYERS][13];

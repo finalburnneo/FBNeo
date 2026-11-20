@@ -3918,12 +3918,13 @@ static void YM2610_postload(void)
 	for(num=0;num<YM2610NumChips;num++)
 	{
 		YM2610 *F2610 = &(FM2610[num]);
-		/* the register writes below recompute fields that are already in the state (operator tl / vol_out,
-		 * ADPCM-A start / end), and can get them different from the values saved: put the saved ones back after */
+		/* the register writes below recompute these, the saved values are restored after */
 		UINT32 keep_tl[6][4], keep_vol_out[6][4], keep_start[6], keep_end[6];
+		INT32 keep_IL[6], keep_vol_mul[6], keep_vol_shift[6], keep_adpcm_out[6];
 		for (r = 0; r < 6; r++) {
 			int k; for (k = 0; k < 4; k++) { keep_tl[r][k] = F2610->CH[r].SLOT[k].tl; keep_vol_out[r][k] = F2610->CH[r].SLOT[k].vol_out; }
 			keep_start[r] = F2610->adpcm[r].start; keep_end[r] = F2610->adpcm[r].end;
+			keep_IL[r] = F2610->adpcm[r].IL; keep_vol_mul[r] = F2610->adpcm[r].vol_mul; keep_vol_shift[r] = F2610->adpcm[r].vol_shift; keep_adpcm_out[r] = F2610->adpcm[r].adpcm_out;
 		}
 		/* SSG registers */
 		for(r=0;r<16;r++)
@@ -3965,6 +3966,7 @@ static void YM2610_postload(void)
 		for (r = 0; r < 6; r++) {
 			int k; for (k = 0; k < 4; k++) { F2610->CH[r].SLOT[k].tl = keep_tl[r][k]; F2610->CH[r].SLOT[k].vol_out = keep_vol_out[r][k]; }
 			F2610->adpcm[r].start = keep_start[r]; F2610->adpcm[r].end = keep_end[r];
+			F2610->adpcm[r].IL = keep_IL[r]; F2610->adpcm[r].vol_mul = keep_vol_mul[r]; F2610->adpcm[r].vol_shift = keep_vol_shift[r]; F2610->adpcm[r].adpcm_out = keep_adpcm_out[r];
 		}
 	}
 
@@ -3993,7 +3995,6 @@ static void YM2610_save_state(void)
 		state_save_register_UINT8 (statename, num, "addr_A1" , &F2610->addr_A1, 1);
 
 		state_save_register_UINT8 (statename, num, "arrivedFlag", &F2610->adpcm_arrivedEndAddress , 1);
-		/* envelope generator and LFO counters: without them the envelopes step on different samples after a load */
 		state_save_register_UINT32(statename, num, "eg_cnt"   , &F2610->OPN.eg_cnt   , 1);
 		state_save_register_UINT32(statename, num, "eg_timer" , &F2610->OPN.eg_timer , 1);
 		state_save_register_UINT32(statename, num, "lfo_cnt"  , &F2610->OPN.lfo_cnt  , 1);

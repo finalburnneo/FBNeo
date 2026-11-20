@@ -505,14 +505,12 @@ void BurnYM2610Scan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nYM2610Position);
 		SCAN_VAR(nAY8910Position);
 
-		// resampler fraction and the samples carried into the next frame: without them a frame run again after a
-		// state load renders a different number of chip samples (FM envelopes, ADPCM positions) than the same frame
-		// run once
+		// needed for deterministic state loads (rollback, runahead)
 		SCAN_VAR(nFractionalPosition);
 		if (pBuffer) {
 			char szCarry[] = "YM2610 carry";
 			for (INT32 c = 0; c < 5; c++) {
-				// samples past the carried ones are rendered again next frame: clear them so they don't reach the state
+				// past the carried samples: rendered again next frame
 				INT32 used = 4 + (c < 2 ? nYM2610Position : nAY8910Position);
 				if (used < 64) memset(pBuffer + c * 4096 + (used < 0 ? 0 : used), 0, (64 - (used < 0 ? 0 : used)) * sizeof(INT16));
 				ScanVar(pBuffer + c * 4096, 64 * sizeof(INT16), szCarry);

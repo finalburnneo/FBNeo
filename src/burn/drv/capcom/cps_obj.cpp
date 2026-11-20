@@ -40,6 +40,13 @@ struct ObjFrame {
 static INT32 nFrameCount = 0;
 static struct ObjFrame of[3];
 
+// clear the unused entries, so the buffers saved in states only depend on the active sprites
+static void ObjClearUnused(struct ObjFrame* pof, UINT8* po)
+{
+	memset(po, 0, (nMax - pof->nCount) << 3);
+	if (pof->Extra) memset(pof->Extra + pof->nCount, 0, nCpsObjExtraLen - pof->nCount);
+}
+
 static UINT8 *blendtable;
 static UINT32 nBlendCount;
 
@@ -271,6 +278,8 @@ INT32 CpsObjGet()
 		pof->nCount++;
 		po += 8;
 	}
+
+	ObjClearUnused(pof, po);
 
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {
@@ -588,6 +597,8 @@ INT32 FcrashObjGet()
 		po += 8;
 	}
 
+	ObjClearUnused(pof, po);
+
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {
 		nGetNext = 0;
@@ -643,6 +654,8 @@ INT32 KodbObjGet()
 		po += 8;
 	}
 
+	ObjClearUnused(pof, po);
+
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {
 		nGetNext = 0;
@@ -697,6 +710,8 @@ INT32 DinopicObjGet()
 		pof->nCount++;
 		po += 8;
 	}
+
+	ObjClearUnused(pof, po);
 
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {
@@ -759,6 +774,8 @@ INT32 DaimakaibObjGet()
 		po += 8;
 	}
 
+	ObjClearUnused(pof, po);
+
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {
 		nGetNext = 0;
@@ -814,6 +831,8 @@ INT32 WofhObjGet()
 		po += 8;
 	}
 
+	ObjClearUnused(pof, po);
+
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {
 		nGetNext = 0;
@@ -868,6 +887,8 @@ INT32 Sf2mdtObjGet()
 		pof->nCount++;
 		po += 8;
 	}
+
+	ObjClearUnused(pof, po);
 
 	nGetNext++;
 	if (nGetNext >= nFrameCount) {

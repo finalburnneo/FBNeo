@@ -453,7 +453,7 @@ void YM_DELTAT_postload(YM_DELTAT *DELTAT,UINT8 *regszz)
 		YM_DELTAT_ADPCM_Write(DELTAT,r,DELTAT->reg[r]);
 	DELTAT->reg[0] = regs[0];
 #endif
-	/* now_data is saved with the state; reloading it from sample memory here could give a different value */
+	/* now_data is saved with the state, don't reload it from sample memory */
 }
 
 void YM_DELTAT_savestate(const char *statename,int num,YM_DELTAT *DELTAT)

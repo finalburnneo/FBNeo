@@ -502,7 +502,7 @@ static void DoDraw(INT32 Recalc)
 	CtvReady();								// Point to correct tile drawing functions
 
 	if (!CpsDrawPaletteCallbackFunction || !CpsDrawPaletteCallbackFunction()) {
-		if (CpsRecalcPal || bCpsUpdatePalEveryFrame) GetPalette(0, 6);
+		if (bCpsUpdatePalEveryFrame) GetPalette(0, 6);			// otherwise CpsSavePal is the latch of the last palette DMA
 		if (Recalc || bCpsUpdatePalEveryFrame) CpsPalUpdate(CpsSavePal);		// recalc whole palette if needed
 	}
 

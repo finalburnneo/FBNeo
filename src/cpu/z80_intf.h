@@ -46,6 +46,7 @@ void ZetReset(INT32 nCPU);
 UINT32 ZetGetPC(INT32 n);
 INT32 ZetGetPrevPC(INT32 n);
 INT32 ZetIsHalted(INT32 nCPU); // this is the actual HALT status of the z80
+INT32 ZetIFF1();
 INT32 ZetBc(INT32 n);
 INT32 ZetDe(INT32 n);
 INT32 ZetHL(INT32 n);

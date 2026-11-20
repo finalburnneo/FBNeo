@@ -675,6 +675,11 @@ INT32 ZetIsHalted(INT32 nCPU)
 	}
 }
 
+INT32 ZetIFF1()
+{
+	return ActiveZ80GetIFF1();
+}
+
 INT32 ZetBc(INT32 n)
 {
 #if defined FBNEO_DEBUG

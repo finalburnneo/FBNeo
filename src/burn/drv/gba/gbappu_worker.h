@@ -110,15 +110,14 @@ typedef struct ppu_worker_render_ctx_t {
 	UINT8  tile_fetch_bytes[4][8];
 	bool   tile_fetch_valid[4];
 
-	// Per-frame OBJ Y-buckets: up to 64 sprites per scanline.
+	// Per-scanline OBJ Y-buckets: up to 64 sprites per scanline.
 	const INT32 (*obj_bucket)[64];
 	const INT32*  obj_bucket_n;
-	// Scanline flags set at render_scanline entry.
+	// Scanline flags set by the OBJ pass before render_scanline runs.
 	bool  no_windows;         // windows have no per-pixel effect this line
 	bool  frame_needs_second_buf; // frame-level: 1 if any scanline needs second buffer (set by render_objs)
 	bool  need_second_this_line;  // per-line flag: true while this scanline actually uses st_buf
 	INT32 eff_blend_mode;       // BLDCNT effect mode actually in force (0 when inert)
-	bool  has_any_obj_this_line; // render_objs saw a visible OBJ; fast-pixel skips backdrop fill when set
 	// Pre-expanded palette table (512 x XRGB8888 UINT32), rebuilt per
 	// scanline only when the palette changed (dirty-checked).
 	UINT32 pal_xrgb[512];
@@ -375,7 +374,7 @@ typedef struct ppu_worker_obj_geom_t {
 } ppu_worker_obj_geom_t;
 
 // Decode one OAM slot into geom (includes attr0/1/2 attribute bits for Pass 2).
-// Returns false when the slot is disabled (double-size bit set without rot/scale).
+// Returns false when the slot is disabled (attr0 bit9 set without rot/scale).
 static inline bool ppu_worker_obj_decode(ppu_worker_obj_geom_t* geom, const UINT8* oam, INT32 obj_idx)
 {
 	const UINT8* entry = oam + obj_idx * 8;
@@ -422,10 +421,12 @@ SB_ALWAYS_INLINE bool ppu_worker_obj_covers_row(const ppu_worker_obj_geom_t* geo
 	return sy >= 0 && sy < geom->y_size_eff;
 }
 
-// True when the OBJ lies fully outside the 240-pixel row.
+// True when the OBJ lies fully outside the 240-pixel row (left or right).
+// x_draw_w already accounts for rot/scale double-size.
 SB_ALWAYS_INLINE bool ppu_worker_obj_off_row(const ppu_worker_obj_geom_t* geom)
 {
-	return geom->x_raw >= 240 && geom->x_raw + geom->x_draw_w < 512;
+	INT32 x_end = geom->x_coord + geom->x_draw_w;
+	return x_end <= 0 || geom->x_coord >= GBA_LCD_W;
 }
 
 // Horizontal clip range on the row; an empty range has no visible pixel.
@@ -436,18 +437,19 @@ SB_ALWAYS_INLINE void ppu_worker_obj_x_clip(const ppu_worker_obj_geom_t* geom, I
 	*x_hi = x_end > GBA_LCD_W ? GBA_LCD_W : (x_end < 0 ? 0 : x_end);
 }
 
-// OBJ draw-cycle cost. Returns false when a normal OBJ is fully left-offscreen
-// and charges zero cycles.
+// OBJ draw-cycle cost. Returns false when the OBJ is fully left- or
+// right-offscreen and charges zero cycles.
 static inline bool ppu_worker_obj_draw_cycles(const ppu_worker_obj_geom_t* geom, INT32* cycles)
 {
+	INT32 x_end = geom->x_coord + geom->x_draw_w;
+	if (x_end <= 0 || geom->x_coord >= GBA_LCD_W)
+		return false;
 	if (geom->rot_scale) {
 		INT32 cost = 8 + geom->x_draw_w * 2;
 		if (geom->x_coord < 0) cost += geom->x_coord;
 		*cycles = cost;
 		return true;
 	}
-	if (geom->x_coord < 0 && geom->x_coord + geom->x_size < 0)
-		return false;
 	INT32 cost = geom->x_size - 2;
 	if (geom->x_coord < 0) cost += geom->x_coord >> 1;
 	*cycles = cost;
@@ -468,13 +470,10 @@ typedef struct ppu_worker_hit_t {
 
 // Populate one hit entry from a pre-decoded geom (no further OAM reads).
 static void ppu_worker_fill_hit(ppu_worker_hit_t* hit, const ppu_worker_obj_geom_t* geom,
-                                       INT32 x_clip_lo, INT32 x_clip_hi,
-                                       INT32* n_semitrans_objs) {
+                                       INT32 x_clip_lo, INT32 x_clip_hi) {
 	hit->rot_scale          = (UINT8)geom->rot_scale;
 	hit->double_size        = (UINT8)geom->double_size;
-	INT32 obj_mode_val      = geom->obj_mode;
-	hit->obj_mode           = (UINT8)obj_mode_val;
-	if (obj_mode_val == 1) ++(*n_semitrans_objs);
+	hit->obj_mode           = (UINT8)geom->obj_mode;
 	hit->mosaic             = geom->mosaic;
 	hit->colors_or_palettes = geom->colors_or_palettes;
 	hit->h_flip             = geom->h_flip;
@@ -492,7 +491,7 @@ static void ppu_worker_fill_hit(ppu_worker_hit_t* hit, const ppu_worker_obj_geom
 }
 
 // window_permissive(): true when this scanline's WIN0/WIN1 rects reduce to a
-// single mask equal to the no-window default, so the window passes can be skipped.
+// single mask equivalent to the no-window default, so the window passes can be skipped.
 static bool ppu_worker_window_permissive(ppu_worker_render_ctx_t* ctx,
                                                 UINT16 dispcnt, INT32 lcd_y)
 {
@@ -571,7 +570,7 @@ static bool ppu_worker_window_permissive(ppu_worker_render_ctx_t* ctx,
 	return false;
 }
 
-static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lcd_y)
+static void ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lcd_y)
 {
 	UINT16 dispcnt         = ppu_worker_io_read16(ctx, GBA_DISPCNT);
 	INT32  bg_mode         = SB_BFE(dispcnt, 0, 3);
@@ -596,11 +595,10 @@ static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lc
 			obj_window_control   = SB_BFE(WINOUT, 8, 6);
 	}
 
-	// Count semi-transparent OBJs and pixels actually written, for need_second_buf.
-	INT32 n_semitrans_objs = 0;
+	// Set once a semi-transparent OBJ pixel is drawn on this line.
 	bool  saw_semitrans_pixel = false;
 
-	// Read BLDCNT early so the early-return can set need_second_buf correctly.
+	// Read BLDCNT early so the early return still sets need_second_this_line.
 	UINT16 bldcnt = ppu_worker_io_read16(ctx, GBA_BLDCNT);
 	INT32  bld_mode   = SB_BFE(bldcnt, 6, 2);
 	// Mode is inert with an empty first-target mask or alpha with no second target;
@@ -669,7 +667,7 @@ static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lc
 				bool line_needs = (ctx->eff_blend_mode == 1);
 				ctx->need_second_this_line = line_needs;
 				if (line_needs) ctx->frame_needs_second_buf = true;
-				return false;
+				return;
 			}
 		}
 		// Pass 1: scan this line's Y-bucket only; X-clip drops off-screen hits.
@@ -682,7 +680,7 @@ static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lc
 			ppu_worker_obj_x_clip(geom, &x_clip_lo, &x_clip_hi);
 			if (x_clip_hi <= x_clip_lo) continue;
 			if (n_hits >= 128) break;
-			ppu_worker_fill_hit(&hits[n_hits++], geom, x_clip_lo, x_clip_hi, &n_semitrans_objs);
+			ppu_worker_fill_hit(&hits[n_hits++], geom, x_clip_lo, x_clip_hi);
 			obj_hit_mask[obj_idx] = true;
 		}
 
@@ -699,7 +697,7 @@ static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lc
 				ppu_worker_obj_x_clip(geom, &x_clip_lo, &x_clip_hi);
 				if (x_clip_hi <= x_clip_lo) continue;
 				if (n_hits >= 128) break;
-				ppu_worker_fill_hit(&hits[n_hits++], geom, x_clip_lo, x_clip_hi, &n_semitrans_objs);
+				ppu_worker_fill_hit(&hits[n_hits++], geom, x_clip_lo, x_clip_hi);
 				obj_hit_mask[obj_idx] = true;
 			}
 		}
@@ -874,7 +872,7 @@ static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lc
 								*ft_ptr = ((*ft_ptr) & 0x03FFFFFFu) | (col & 0xFC000000u);
 						} else {
 							*ft_ptr = col;
-							// Record a drawn semi-transparent OBJ pixel for need_second_buf.
+							// Record a drawn semi-transparent OBJ pixel.
 							if (obj_mode == 1) saw_semitrans_pixel = true;
 						}
 					}
@@ -938,21 +936,19 @@ static bool ppu_worker_render_objs(ppu_worker_render_ctx_t* ctx, INT32 sprite_lc
 		line_needs_second = (ctx->eff_blend_mode == 1) || saw_semitrans_pixel || obj_window_enable;
 	ctx->need_second_this_line = line_needs_second;
 	if (line_needs_second) ctx->frame_needs_second_buf = true;
-	return n_hits > 0;
 }
 
-// Max cycles to skip from current beam position (worker-side copy).
+// Max cycles to skip from current beam position; non-per-pixel (worker) specialization:
+// whole scanline is rendered at cycle 1006, so no per-pixel stepping needed.
 static INT32 ppu_worker_compute_max_fast_forward(ppu_worker_render_ctx_t* ctx)
 {
-	INT32 scanline_clock = (ctx->ppu->scan_clock) % 1232;
-	if (scanline_clock >= GBA_LCD_HBLANK_START * 4 && scanline_clock <= GBA_LCD_HBLANK_END * 4)
-		return GBA_LCD_HBLANK_END   * 4 - scanline_clock - 1;
-	if (scanline_clock >= 1 && scanline_clock <= GBA_LCD_HBLANK_START * 4)
-		return GBA_LCD_HBLANK_START * 4 - scanline_clock - 1;
-	// Past HBLANK_END nothing is drawn: jump straight to the next line.
-	if (scanline_clock > GBA_LCD_HBLANK_END * 4)
-		return 1232 - scanline_clock - 1;
-	return 3 - ((ctx->ppu->scan_clock) % 4);
+	INT32 line_clock = ctx->ppu->scan_clock % GBA_LCD_LINE_CYCLES;
+	// inside HBlank (1006..1231): fast-forward to its end
+	if (line_clock >= GBA_LCD_HBLANK_START_CYCLE && line_clock < GBA_LCD_HBLANK_END_CYCLE)
+		return GBA_LCD_HBLANK_END_CYCLE - line_clock - 1;
+	// active/tail (0..1005): worker renders at HBlank start, no per-pixel work here,
+	// so fast-forward straight to HBlank entry even inside visible lines.
+	return GBA_LCD_HBLANK_START_CYCLE - line_clock - 1;
 }
 
 // Convert one XRGB8888 row to out_bpp (BGR24/RGB565) into dst.
@@ -1045,8 +1041,6 @@ static void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT32 lcd_y
 	const bool frame_second = ctx->frame_needs_second_buf;
 	const bool line_second  = ctx->need_second_this_line;
 	const bool no_win       = ctx->no_windows;
-	// Backdrop initial fill: pri=0 (lowest), tie=0.
-	UINT32 backdrop_col = (ctx->pal_xrgb[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
 
 	// Blend tables, rebuilt per scanline so HBlank BLDALPHA/BLDY updates apply.
 	// Brighten/darken are pre-baked to 8-bit; alpha uses raw 0-16 EVA/EVB with
@@ -1192,15 +1186,6 @@ static void ppu_worker_render_scanline(ppu_worker_render_ctx_t* ctx, INT32 lcd_y
 	if (fast_pixel_row || fast_pixel_alpha_row) {
 		INT32 x;
 		UINT32* SB_RESTRICT st_ptr = fast_pixel_alpha_row ? st_buf : 0;
-		// ft_buf: backdrop when no OBJs; render_objs already seeded ft when any_obj.
-		// st_buf: always seeded with backdrop (OBJ never writes st); BG loop pushes
-		// displaced ft pixels into st as it layers up, matching generic path.
-		if (!ctx->has_any_obj_this_line) {
-			ppu_worker_fill_row(ft_buf, backdrop_col);
-		}
-		if (fast_pixel_alpha_row) {
-			ppu_worker_fill_row(st_buf, backdrop_col);
-		}
 
 		// Render each active BG; the per-pixel (tie,pri) compare picks the winner.
 		for (INT32 bg_i = n_active_bg - 1; bg_i >= 0; --bg_i) {
@@ -1879,7 +1864,7 @@ static bool ppu_worker_render_frame_into(ppu_worker_snapshot_t* snap, UINT32* ou
 	ctx.one_minus_ghost_q8 = 256 - frame_ghost_q8;
 	ctx.ghost_fast         = (frame_ghost_q8 == 0);
 
-	// Per-frame OBJ Y buckets: 64 sprites/line cap, rebuilt per scanline from
+	// Per-scanline OBJ Y buckets: 64 sprites/line cap, rebuilt from
 	// that line's OAM snapshot so HBlank DMA moves/creates sprites are seen.
 	INT32 obj_bucket[GBA_LCD_H][64];
 	INT32 obj_bucket_n[GBA_LCD_H];
@@ -1976,14 +1961,23 @@ static bool ppu_worker_render_frame_into(ppu_worker_snapshot_t* snap, UINT32* ou
 				INT32 y_start_r = ppu_worker_obj_y_wrap(y_coord_r, y_size_r);
 				INT32 y_end_r = y_start_r + y_size_r;
 				if (y >= y_start_r && y < y_end_r && obj_bucket_n[y] < 64) {
-					obj_bucket[y][obj_bucket_n[y]++] = obj_idx;
+					// Horizontal cull: fully off-screen sprites never enter
+					// the bucket, saving decode + hit-record + pixel loop.
+					INT32 x_raw_r  = SB_BFE(attr1, 0, 9);
+					INT32 xs_r     = gba_obj_xsize[obj_size_r * 4 + obj_shape_r] * (double_size_r ? 2 : 1);
+					bool right_off = x_raw_r >= GBA_LCD_W && (x_raw_r + xs_r) < 512;
+					INT16 xc_r     = (INT16)x_raw_r;
+					if (SB_BFE(x_raw_r, 8, 1)) xc_r |= (INT16)0xfe00;
+					bool left_off  = (xc_r + xs_r) <= 0;
+					if (!right_off && !left_off) {
+						obj_bucket[y][obj_bucket_n[y]++] = obj_idx;
+					}
 				}
 			}
 		}
 		UINT32 backdrop = (ctx.pal_xrgb[0] & 0x00FFFFFFu) | ((UINT32)0 << 26) | (1u << 24);
 		ppu_worker_fill_row(first_buf, backdrop);
-		bool any_obj = ppu_worker_render_objs(&ctx, y);
-		ctx.has_any_obj_this_line = any_obj;
+		ppu_worker_render_objs(&ctx, y);
 		if (ctx.need_second_this_line) ppu_worker_fill_row(second_buf, backdrop);
 		ppu_worker_render_scanline(&ctx, y);
 	}
@@ -2324,6 +2318,11 @@ static void ppu_worker_reset(ppu_worker_t* worker)
 // --- PPU state machine (main thread) --------------------------------------
 // Parallel twin of the single-threaded handler; captures worker snapshots at
 // line boundaries and fast-forwards idle cycles.
+//
+// Three event boundaries per line (cycle-exact):
+//   0    : line start  - DISPCNT pipeline advance, affine reload, line-start snapshot
+//   1006 : HBlank start- HBlank flag set, IRQ fires, DMA wakes, HBlank snapshot+render
+// HBlank end (1232) coincides with line 0 of the next row and is handled there.
 
 static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 cycles_late)
 {
@@ -2332,8 +2331,8 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 	if (gba->ppu.scan_clock >= 280896)
 		gba->ppu.scan_clock -= 280896;
 
-	INT32 lcd_y = (INT32)(gba->ppu.scan_clock / 1232);
-	INT32 lcd_x = (INT32)((gba->ppu.scan_clock % 1232) / 4);
+	INT32 lcd_y      = (INT32)(gba->ppu.scan_clock / GBA_LCD_LINE_CYCLES);
+	INT32 line_clock = (INT32)(gba->ppu.scan_clock % GBA_LCD_LINE_CYCLES);
 	gba->ppu.scan_clock++;
 
 	ppu_worker_render_ctx_t fwd_ctx = {0};
@@ -2341,12 +2340,16 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 	INT32 fast_forward_ticks = ppu_worker_compute_max_fast_forward(&fwd_ctx) + 1;
 	gba->ppu.scan_clock += fast_forward_ticks;
 
-	bool hblank = (lcd_x >= GBA_LCD_HBLANK_START) && (lcd_x < GBA_LCD_HBLANK_END);
-	bool vblank = (lcd_y >= GBA_LCD_H) && (lcd_y < 228);
-	INT32 vcount = (lcd_y + (lcd_x >= GBA_LCD_HBLANK_END)) % 228;
+	bool at_line_start   = (line_clock == 0);
+	bool at_hblank_start = (line_clock == GBA_LCD_HBLANK_START_CYCLE);
 
-	// DISPSTAT / VCount update at x=0, hblank start, hblank end.
-	if ((lcd_x == 0) || (lcd_x == GBA_LCD_HBLANK_START) || (lcd_x == GBA_LCD_HBLANK_END)) {
+	bool vblank = (lcd_y >= GBA_LCD_H) && (lcd_y < 228);
+	bool hblank = (line_clock >= GBA_LCD_HBLANK_START_CYCLE) && (line_clock < GBA_LCD_HBLANK_END_CYCLE);
+	// VCount advances at HBlank exit (cycle 1232); events only fire at 0/1006, so VCount == lcd_y.
+	INT32 vcount = lcd_y % 228;
+
+	// DISPSTAT / VCount update at the two handled boundaries.
+	if (at_line_start || at_hblank_start) {
 		UINT16 disp_stat_raw = (UINT16)gba_io_read16(gba, GBA_DISPSTAT);
 		UINT32 vcount_cmp  = disp_stat_raw >> 8;
 		UINT16 disp_stat   = (UINT16)(disp_stat_raw & ~0x7);
@@ -2366,6 +2369,7 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 				if (hblank_irq_en)
 					gba_send_interrupt(gba, 3, 1 << GBA_INT_LCD_HBLANK);
 				++gba->ppu.hblank_seq;
+				// HBlank snapshot and line render fire at cycle 1006 (HBlank entry)
 				if (gba->ppu_worker_ptr && gba->ppu_worker_ptr->enabled && lcd_y < GBA_LCD_H)
 					ppu_worker_hblank_snapshot(gba->ppu_worker_ptr, gba, lcd_y);
 				gba_timing_schedule(gba, &gba->dma_event, 2);
@@ -2398,8 +2402,8 @@ static inline void gba_ppu_event_worker(gba_t* gba, sb_emu_state_t* emu, UINT32 
 		gba->ppu.last_vcount_match = vcount_match_cur;
 	}
 
-	// Affine PB/PD advance + BG2X/Y reload at lcd_x == 0.
-	if (lcd_x == 0 && lcd_y < GBA_LCD_H) {
+	// Affine PB/PD advance + BG2X/Y reload at line start (cycle 0).
+	if (at_line_start && lcd_y < GBA_LCD_H) {
 		UINT16 dispcnt = gba->ppu.dispcnt_pipeline[0];
 		INT32  bg_mode = SB_BFE(dispcnt, 0, 3);
 

@@ -388,12 +388,18 @@ typedef struct {
 	UINT8 rumble;
 } gba_gpio_t;
 
+#define GBA_VFAME_NONE      0
+#define GBA_VFAME_STANDARD  1
+#define GBA_VFAME_GEORGE    2
+#define GBA_VFAME_ALTERNATE 3
+
 typedef struct {
-	INT32  type;		// 0: none, 1: standard, 2: george, 3: alternate
+	INT32  type;       // GBA_VFAME_* value
 	INT32  sram_mode;
+	INT32  rom_mode;   // Reserved (written on register-select commands; no reads yet)
 	UINT8  write_sequence[5];
-	bool   accepting_mode_change;
-} gba_fcmini_t;
+	INT32  accepting_mode_change;
+} gba_vfame_t;
 
 typedef struct {
 	UINT32 rom_size;
@@ -412,7 +418,7 @@ typedef struct {
 	} matrix;
 	INT32  eeprom_read_bits_remaining;
 	gba_gpio_t   gpio;
-	gba_fcmini_t fcmini;
+	gba_vfame_t  vfame;
 } gba_cartridge_t;
 
 typedef struct {
@@ -464,11 +470,11 @@ typedef struct {
 	INT32  length[4];
 	UINT32 volume[4];
 	UINT32 frequency[4];
-	INT32  env_direction[4];	//1: increase 0: nochange -1: decrease
+	INT32  env_direction[4];	// 1: increase 0: nochange -1: decrease
 	UINT32 env_period[4];
 	UINT32 env_period_timer[4];
 	bool   env_overflow[4];
-	//Only channel 1
+	// Only channel 1
 	UINT32 sweep_period;
 	UINT32 sweep_timer;
 	INT32  sweep_direction;
@@ -500,14 +506,14 @@ typedef struct {
 	float  capacitor_r;
 	gba_frame_sequencer_t sequencer;
 	UINT32 audio_clock;
-	//Wave RAM is banked: mem.io[0x90..0x9f] exposes the bank that is NOT
-	//playing, while this holds the bank selected by SOUND3CNT_L bit6.
+	// Wave RAM is banked: mem.io[0x90..0x9f] exposes the bank that is NOT
+	// playing, while this holds the bank selected by SOUND3CNT_L bit6.
 	UINT8  wave_play[16];
 	UINT8  wave_play_bank;
-	//BLEP residual buffers for square channels 0/1; blep_idx is the ring head.
+	// BLEP residual buffers for square channels 0/1; blep_idx is the ring head.
 	float  blep_buf[2][64];
 	UINT8  blep_idx[2];
-	//One-pole LPF state per channel.
+	// One-pole LPF state per channel.
 	float  lpf_l, lpf_r;
 } gba_audio_t;
 
@@ -552,7 +558,8 @@ typedef struct gba_t {
 	bool last_transaction_dma;
 	bool activate_dmas;
 	bool dma_wait_ppu;
-	bool   interrupt_pending;	// cached (IE & IF) with IME enabled
+	bool   interrupt_pending;	// cached (IE & IF & IME), true means IRQ vector should be taken
+	bool   interrupt_flagged;	// cached (IE & IF), true means Halt/Stop should wake up (IME don't care)
 	bool   prev_key_interrupt;
 	// IF propagates with up to 4-cycle delay; this FIFO tracks it
 	UINT16 pipelined_if[5];

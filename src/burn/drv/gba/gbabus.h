@@ -169,7 +169,7 @@ static inline UINT8 gba_read8(gba_t* gba, UINT32 baddr)
 static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 {
 	if (baddr >= 0x08000000) {
-		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
+		// Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
 		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, (data >> GUEST_BYTE_SHIFT(baddr & 3)) & 0xFF);
 			return;
@@ -192,7 +192,7 @@ static inline void gba_store32(gba_t* gba, UINT32 baddr, UINT32 data)
 static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 {
 	if (baddr >= 0x08000000) {
-		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
+		// Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
 		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data >> ((baddr & 1) * 8));
 			return;
@@ -201,7 +201,7 @@ static inline void gba_store16(gba_t* gba, UINT32 baddr, UINT32 data)
 			gba_gpio_write16(gba, baddr & ~1, data);
 			return;
 		}
-		//Detected EEPROM savegame
+		// Detected EEPROM savegame
 		if (gba->cart.backup_type == GBA_BACKUP_NONE && (baddr & 0xff000000) == 0x0d000000)
 			gba->cart.backup_type = GBA_BACKUP_EEPROM;
 		if (gba->cart.matrix.active && (baddr & 0x01ffff00) == 0x00800100) {
@@ -236,7 +236,7 @@ static inline void gba_store8(gba_t* gba, UINT32 baddr, UINT32 data)
 			}
 			return;
 		}
-		//Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
+		// Mask is 0xfe to catch the sram mirror at 0x0f and 0x0e
 		if ((baddr & 0xfe000000) == 0xe000000) {
 			gba_process_backup_write(gba, baddr, data);
 			return;
@@ -289,30 +289,30 @@ static inline UINT32 gba_io_read32(gba_t* gba, UINT32 baddr)
 // refreshes the cached interrupt poll flag used once per instruction
 static inline void gba_update_interrupt_pending(gba_t* gba)
 {
-	gba->interrupt_pending = (gba_io_read16(gba, GBA_IE) & gba_io_read16(gba, GBA_IF)) != 0
-		&& (gba_io_read32(gba, GBA_IME) & 1);
+	UINT16 ie_if = gba_io_read16(gba, GBA_IE) & gba_io_read16(gba, GBA_IF);
+	gba->interrupt_flagged = ie_if != 0;
+	gba->interrupt_pending = (ie_if != 0) && (gba_io_read32(gba, GBA_IME) & 1);
 }
 
 static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 {
-	// TODO: Make the ROM waitstate configurable
 	const INT32 wait_state_table[16 * 4] = {
-		1, 1, 1, 1,		//0x00 (bios)
-		1, 1, 1, 1,		//0x01 (bios)
-		3, 3, 6, 6,		//0x02 (256k WRAM)
-		1, 1, 1, 1,		//0x03 (32k WRAM)
-		1, 1, 1, 1,		//0x04 (IO)
-		1, 1, 2, 2,		//0x05 (BG/OBJ Palette)
-		1, 1, 2, 2,		//0x06 (VRAM)
-		1, 1, 1, 1,		//0x07 (OAM)
-		4, 4, 8, 8,		//0x08 (GAMEPAK ROM 0)
-		4, 4, 8, 8,		//0x09 (GAMEPAK ROM 0)
-		4, 4, 8, 8,		//0x0A (GAMEPAK ROM 1)
-		4, 4, 8, 8,		//0x0B (GAMEPAK ROM 1)
-		4, 4, 8, 8,		//0x0C (GAMEPAK ROM 2)
-		4, 4, 8, 8,		//0x0D (GAMEPAK ROM 2)
-		4, 4, 4, 4,		//0x0E (GAMEPAK SRAM)
-		1, 1, 1, 1,		//0x0F (unused)
+		1, 1, 1, 1,		// 0x00 (bios)
+		1, 1, 1, 1,		// 0x01 (bios)
+		3, 3, 6, 6,		// 0x02 (256k WRAM)
+		1, 1, 1, 1,		// 0x03 (32k WRAM)
+		1, 1, 1, 1,		// 0x04 (IO)
+		1, 1, 2, 2,		// 0x05 (BG/OBJ Palette)
+		1, 1, 2, 2,		// 0x06 (VRAM)
+		1, 1, 1, 1,		// 0x07 (OAM)
+		4, 4, 8, 8,		// 0x08 (GAMEPAK ROM 0)
+		4, 4, 8, 8,		// 0x09 (GAMEPAK ROM 0)
+		4, 4, 8, 8,		// 0x0A (GAMEPAK ROM 1)
+		4, 4, 8, 8,		// 0x0B (GAMEPAK ROM 1)
+		4, 4, 8, 8,		// 0x0C (GAMEPAK ROM 2)
+		4, 4, 8, 8,		// 0x0D (GAMEPAK ROM 2)
+		4, 4, 4, 4,		// 0x0E (GAMEPAK SRAM)
+		1, 1, 1, 1,		// 0x0F (unused)
 	};
 	for (INT32 i = 0;i < 16 * 4;++i) {
 		gba->mem.wait_state_table[i] = wait_state_table[i];
@@ -342,7 +342,7 @@ static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 			if (ws == 2)
 				w_second = wait_second[ws] ? 1 : 8;
 			w_first += 1;w_second += 1;
-			//Wait 0
+			// Fill wait tables for this ws (sequential/non-sequential, 16-bit/32-bit)
 			INT32 wait16b = w_second;
 			INT32 wait32b = w_second * 2;
 
@@ -358,12 +358,12 @@ static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
 	gba->mem.prefetch_en   = prefetch_en;
 	gba->mem.prefetch_size = 0;
 
-	//SRAM
+	// SRAM
 	gba->mem.wait_state_table[(0x0e * 4) + 0] = 1 + primary_table[sram_wait];
 	gba->mem.wait_state_table[(0x0e * 4) + 1] = 1 + primary_table[sram_wait];
 	gba->mem.wait_state_table[(0x0e * 4) + 2] = 1 + primary_table[sram_wait];
 	gba->mem.wait_state_table[(0x0e * 4) + 3] = 1 + primary_table[sram_wait];
-	waitcnt &= (1 << 15);	// Force cartridge to report as GBA cart
+	waitcnt &= 0x5FFF;	// Force cartridge to report as GBA cart
 	gba_io_store16(gba, GBA_WAITCNT, waitcnt);
 }
 
@@ -391,11 +391,11 @@ SB_ALWAYS_INLINE void gba_compute_access_cycles(gba_t* gba, UINT32 address, INT3
 					if (gba->mem.prefetch_size >
 						gba->cpu.i_cycles && prefetch_phase == prefetch_cycles - 1)wait += 1;
 				}
-				//Non-sequential access resets the prefetch buffer
+				// Non-sequential access resets the prefetch buffer
 				gba->mem.prefetch_size         = 0;
 				gba->cpu.next_fetch_sequential = false;
 			} else {
-				//Sequential fetch from prefetch buffer based on available wait states
+				// Sequential fetch from prefetch buffer based on available wait states
 				if (gba->mem.prefetch_size >= wait) {
 					gba->mem.prefetch_size -= wait - 1;
 					wait = 1;
@@ -631,8 +631,20 @@ SB_ALWAYS_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_typ
 			}
 			INT32 maddr = addr & 0x1fffffc;
 			if (SB_UNLIKELY(maddr >= gba->cart.rom_size)) {
-				if (gba->cart.fcmini.type) {
-					gba->mem.openbus_word = gba_fcmini_get_pattern(addr) | (gba_fcmini_get_pattern(addr + 2) << 16);
+				if (gba->cart.vfame.type) {
+					UINT32 aligned_addr = addr & ~2;
+					UINT32 p0 = gba_vfame_get_pattern(aligned_addr);
+					UINT32 p2 = gba_vfame_get_pattern(aligned_addr + 2);
+					if (req_type & GBA_REQ_1B) { // 8-bit read
+						UINT16 half = (addr & 2) ? p2 : p0;
+						UINT8 byte = (addr & 1) ? (half & 0xff) : ((half >> 8) & 0xff);
+						gba->mem.openbus_word = byte * 0x01010101u;
+					} else if (req_type & GBA_REQ_2B) { // 16-bit read
+						UINT16 half = (addr & 2) ? p2 : p0;
+						gba->mem.openbus_word = half * 0x00010001u;
+					} else { // 32-bit read
+						gba->mem.openbus_word = (p0 << 2) + p2;
+					}
 					break;
 				}
 				if (gba_rom_mirrors_1m(gba, maddr)) {
@@ -676,7 +688,7 @@ SB_ALWAYS_INLINE UINT32* gba_dword_lookup(gba_t* gba, UINT32 addr, INT32 req_typ
 				gba->mem.sram_word = 0xffffffff;
 				ret = &gba->mem.sram_word;
 			} else {
-				//Flash
+				// Flash
 				if (gba->cart.in_chip_id_mode && addr <= 0xe000001) {
 					gba->mem.openbus_word = BURN_ENDIAN_SWAP_INT32(*(UINT32*)gba->mem.flash_chip_id);
 					ret = &gba->mem.openbus_word;
@@ -779,7 +791,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 
 		return true;
 	} else if (address_u32 == GBA_IF) {
-		//Writing 1 to an IF bit acknowledges (clears) the interrupt
+		// Writing 1 to an IF bit acknowledges (clears) the interrupt
 		UINT16 IF = gba_io_read16(gba, GBA_IF);
 		IF &= ~(word_data & word_mask);
 		gba_io_store16(gba, GBA_IF, IF);
@@ -791,8 +803,8 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba_update_interrupt_pending(gba);
 		return true;
 	} else if (address_u32 == GBA_SOUNDCNT_L) {
-		//FIFO reset bits are W1C: bit11 for FIFO A (low word of SOUNDCNT_H),
-		//bit15 for FIFO B (high byte of SOUNDCNT_H).
+		// FIFO reset bits are W1C: bit11 for FIFO A (low word of SOUNDCNT_H),
+		// bit15 for FIFO B (high byte of SOUNDCNT_H).
 		for (INT32 i = 0; i < 2; ++i) {
 			UINT32 reset_bit = 1u << (11 + i * 4);
 			if ((word_mask >> 16) & reset_bit & (word_data >> 16)) {
@@ -802,7 +814,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 				word_data &= ~(reset_bit << 16);
 			}
 		}
-		//Merge and store both halves; FIFO reset bits are cleared above.
+		// Merge and store both halves; FIFO reset bits are cleared above.
 		UINT32 old = gba_io_read32(gba, GBA_SOUNDCNT_L);
 		gba_io_store32(gba, GBA_SOUNDCNT_L, (old & ~word_mask) | (word_data & word_mask));
 		return true;
@@ -835,9 +847,9 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		}
 		return true;
 	} else if (address_u32 == GBA_POSTFLG) {
-		//Only BIOS can update Post Flag and haltcnt
+		// Only BIOS can update Post Flag and haltcnt
 		if (gba->cpu.registers[15] < 0x4000) {
-			//Writes to haltcnt halt the CPU
+			// Writes to haltcnt halt the CPU
 			if (word_mask & 0xff00) {
 				if (word_data & 0x8000) {
 					gba->stop_mode         = true;
@@ -846,7 +858,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 				gba->cpu.wait_for_interrupt = true;
 			}
 			UINT32 post = gba_io_read32(gba, address_u32);
-			//POST can only be initialized once, then other writes are dropped.
+			// POST can only be initialized once, then other writes are dropped.
 			if ((word_mask & 0xff) && (post & 0xff))
 				word_mask &= ~0xff;
 			post &= ~word_mask;
@@ -875,6 +887,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		UINT16 waitcnt = gba_io_read16(gba, GBA_WAITCNT);
 		waitcnt = ((waitcnt & ~word_mask) | (word_data & word_mask));
 		gba_recompute_waitstate_table(gba, waitcnt);
+		return true;
 	} else if (address_u32 == GBA_KEYINPUT) {
 		// KEYCNT (high word) writes must not clobber read-only KEYINPUT (low word)
 		if (word_mask & 0xffff0000) {
@@ -892,7 +905,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 		gba_audio_apply_writes(gba);
 		return true;
 	} else if (address_u32 >= GBA_WAVE_RAM && address_u32 < GBA_WAVE_RAM + 16) {
-		//Wave RAM: the byte write already relocates samples, no extra store needed.
+		// Wave RAM: the byte write already relocates samples, no extra store needed.
 		for (INT32 i = 0;i < 4;++i) {
 			if (word_mask & (0xffu << (i * 8))) {
 				(void)gba_audio_process_reg_write(gba, address_u32 + i, SB_BFE(word_data, (i * 8), 8));
@@ -906,7 +919,7 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 static inline void gba_tick_keypad(sb_joy_t* joy, gba_t* gba)
 {
 	UINT16 reg_value = 0;
-	//Null joy updates are used to tick the joypad when mmios are set
+	// Null joy updates are used to tick the joypad when mmios are set
 	if (joy) {
 		reg_value |= !(joy->inputs[SE_KEY_A     ] > 0.3) << 0;
 		reg_value |= !(joy->inputs[SE_KEY_B     ] > 0.3) << 1;

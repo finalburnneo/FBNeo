@@ -76,7 +76,7 @@ static TCHAR* getFilenameFromPath(TCHAR* path) {
             filename = p + 1;
         }
     }
-    return filename;
+    return strdup(filename);
 }
 
 static void CheatLinkNewNode(TCHAR *szDerp)

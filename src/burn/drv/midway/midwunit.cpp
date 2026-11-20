@@ -402,59 +402,46 @@ static INT32 LoadGfxBanks()
     return 0;
 }
 
-static void WolfUnitBootRomPatch(UINT32 address, const UINT16 *data, INT32 len)
+static UINT32 WolfUnitBootRomRead32(UINT32 address)
 {
-	for (INT32 i = 0; i < len; i++) {
-		UINT32 offs = ((address - 0xff800000) >> 3) + i * 2;
-		DrvBootROM[offs + 0] = data[i] & 0xff;
-		DrvBootROM[offs + 1] = data[i] >> 8;
-	}
+	UINT32 offs = (address - 0xff800000) >> 3;
+	return DrvBootROM[offs + 0] | (DrvBootROM[offs + 1] << 8) | (DrvBootROM[offs + 2] << 16) | ((UINT32)DrvBootROM[offs + 3] << 24);
 }
 
-static INT32 WolfUnitBootRomCheck(UINT32 address, const UINT16 *data, INT32 len)
+static void WolfUnitBootRomWrite32(UINT32 address, UINT32 data)
 {
-	for (INT32 i = 0; i < len; i++) {
-		UINT32 offs = ((address - 0xff800000) >> 3) + i * 2;
-		if ((DrvBootROM[offs + 0] | (DrvBootROM[offs + 1] << 8)) != data[i]) return 0;
-	}
-	return 1;
+	UINT32 offs = (address - 0xff800000) >> 3;
+	DrvBootROM[offs + 0] = data >> 0;
+	DrvBootROM[offs + 1] = data >> 8;
+	DrvBootROM[offs + 2] = data >> 16;
+	DrvBootROM[offs + 3] = data >> 24;
 }
 
-// umk3wp: Noob Saibot's teleport slam crashes the game against Motaro / Shao Kahn
-// (no "being slammed" animation), make it miss when the opponent is a boss
-static void UMK3WPNoobSlamPatch()
+// umk3wp: Noob Saibot's teleport slam uses the "thrown by" animations (0x26-0x3f) of the victim,
+// Motaro / Shao Kahn tables stop at 0x25 and the slam crashes the game. Relocate both tables
+// to unused rom space and fill the missing entries with the stance animation (entry 0).
+static void UMK3WPBossAnimTablesPatch()
 {
-	static const UINT16 call_orig[4] = { 0x4c52, 0xcb00, 0xf810, 0xc00b };
-	static const UINT16 call_new[3]  = { 0x0d5f, 0xf000, 0xfff7 };
-	static const UINT16 cave[31] = {
-		0x4c52,                 // move b2,b2
-		0xca04,                 // jreq L1
-		0x100f,                 // addk 32,sp
-		0xc080, 0x49d0, 0xffa9, // ja ffa949d0
-		0xa22f,                 // L1: move a1,-*sp,1
-		0x07a1, 0x09d0, 0x0106, // move @010609d0h,a1,1
-		0x4828,                 // cmp a1,a8
-		0xca04,                 // jreq L2
-		0x09e1, 0x0a30, 0x0106, // movi 01060a30h,a1
-		0xc003,                 // jr L3
-		0x09e1, 0x15e0, 0x0106, // L2: movi 010615e0h,a1
-		0x8421,                 // L3: move *a1,a1,0
-		0x0b41, 0xffe7,         // cmpi 18h,a1
-		0xc805,                 // jrlo L4
-		0x97e1,                 // move *sp+,a1,1
-		0x100f,                 // addk 32,sp
-		0xc080, 0xc8e0, 0xffa9, // ja ffa9c8e0
-		0x97e1,                 // L4: move *sp+,a1,1
-		0x0960                  // rets
-	};
-	UINT16 cave_free[31];
-	for (INT32 i = 0; i < 31; i++) cave_free[i] = 0xffff;
+	static const UINT32 old_tables[2] = { 0xff9376a0, 0xff93fab0 }; // Motaro (0x18), Shao Kahn (0x19)
+	const UINT32 master = 0xffb46a70;
+	const UINT32 cave = 0xfff80000;
 
-	if (WolfUnitBootRomCheck(0xffa9c8a0, call_orig, 4) && WolfUnitBootRomCheck(0xfff7f000, cave_free, 31)) {
-		WolfUnitBootRomPatch(0xfff7f000, cave, 31);
-		WolfUnitBootRomPatch(0xffa9c8a0, call_new, 3);
-		bprintf(0, _T("**  Hot-Patched UMK3WP w/Noob Saibot teleport slam vs. bosses Bugfix!\n"));
+	for (UINT32 a = cave; a < cave + 2 * 0x40 * 32; a += 32) {
+		if (WolfUnitBootRomRead32(a) != 0xffffffff) return;
 	}
+	for (INT32 i = 0; i < 2; i++) {
+		if (WolfUnitBootRomRead32(master + (0x18 + i) * 32) != old_tables[i]) return;
+	}
+
+	for (INT32 i = 0; i < 2; i++) {
+		UINT32 table = cave + i * 0x40 * 32;
+		for (INT32 j = 0; j < 0x40; j++) {
+			WolfUnitBootRomWrite32(table + j * 32, WolfUnitBootRomRead32(old_tables[i] + ((j < 0x26) ? j : 0) * 32));
+		}
+		WolfUnitBootRomWrite32(master + (0x18 + i) * 32, table);
+	}
+
+	bprintf(0, _T("**  Hot-Patched UMK3WP w/Motaro / Shao Kahn animation tables Bugfix!\n"));
 }
 
 static void WolfDoReset()
@@ -516,7 +503,7 @@ INT32 WolfUnitInit()
         return 1;
 
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "umk3wp") == 0) {
-		UMK3WPNoobSlamPatch();
+		UMK3WPBossAnimTablesPatch();
 	}
 
     nRet = LoadSoundBanks();

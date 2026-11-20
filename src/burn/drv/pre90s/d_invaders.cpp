@@ -4502,6 +4502,8 @@ static INT32 MemIndex()
 #define R_SOUND			2
 #define R_PROM			3
 #define R_USER			4
+#define R_NIBHI			5	// 4-bit proms: main cpu high nibble
+#define R_NIBLO			6	// 4-bit proms: main cpu low nibble
 
 static INT32 DrvLoadRoms()
 {
@@ -4536,6 +4538,20 @@ static INT32 DrvLoadRoms()
 
 			case R_USER:
 				if (BurnLoadRom(DrvUser1 + offs, i, 1)) return 1;
+			break;
+
+			case R_NIBHI:
+			case R_NIBLO: {
+				UINT8 *tmp = (UINT8*)BurnMalloc(ri.nLen);
+				if (BurnLoadRom(tmp, i, 1)) { BurnFree(tmp); return 1; }
+				for (UINT32 j = 0; j < ri.nLen; j++) {
+					if ((ri.nType & 0x0f) == R_NIBHI)
+						DrvI8080ROM[offs + j] = (DrvI8080ROM[offs + j] & 0x0f) | (tmp[j] << 4);
+					else
+						DrvI8080ROM[offs + j] = (DrvI8080ROM[offs + j] & 0xf0) | (tmp[j] & 0x0f);
+				}
+				BurnFree(tmp);
+			}
 			break;
 		}
 	}
@@ -9024,7 +9040,18 @@ struct BurnDriver BurnDrvSpaceatt = {
 // Space Attack (bootleg of Space Invaders, bproms)
 
 static struct BurnRomInfo spaceattbpRomDesc[] = {
-
+	{ "06e.bin",             0x0400, 0x68301d05, MW_ROM(R_NIBHI, 0x0000) | BRF_PRG | BRF_ESS }, //  0 i8080 code (high nibble)
+	{ "12l.bin",             0x0400, 0xc5a5228f, MW_ROM(R_NIBLO, 0x0000) | BRF_PRG | BRF_ESS }, //  1 i8080 code (low nibble)
+	{ "05de.bin",            0x0400, 0x42032c14, MW_ROM(R_NIBHI, 0x0400) | BRF_PRG | BRF_ESS }, //  2 i8080 code (high nibble)
+	{ "11hl.bin",            0x0400, 0xd5d3811a, MW_ROM(R_NIBLO, 0x0400) | BRF_PRG | BRF_ESS }, //  3 i8080 code (low nibble)
+	{ "04d.bin",             0x0400, 0x5f5e540c, MW_ROM(R_NIBHI, 0x0800) | BRF_PRG | BRF_ESS }, //  4 i8080 code (high nibble)
+	{ "10h.bin",             0x0400, 0x9d5ef6f1, MW_ROM(R_NIBLO, 0x0800) | BRF_PRG | BRF_ESS }, //  5 i8080 code (low nibble)
+	{ "03b.bin",             0x0400, 0x89e13008, MW_ROM(R_NIBHI, 0x1400) | BRF_PRG | BRF_ESS }, //  6 i8080 code (high nibble)
+	{ "09g.bin",             0x0400, 0xc16f5503, MW_ROM(R_NIBLO, 0x1400) | BRF_PRG | BRF_ESS }, //  7 i8080 code (low nibble)
+	{ "02ab.bin",            0x0400, 0xffa166c2, MW_ROM(R_NIBHI, 0x1800) | BRF_PRG | BRF_ESS }, //  8 i8080 code (high nibble)
+	{ "08f.bin",             0x0400, 0xb5fa1a2b, MW_ROM(R_NIBLO, 0x1800) | BRF_PRG | BRF_ESS }, //  9 i8080 code (low nibble)
+	{ "01a.bin",             0x0400, 0x44f8e99c, MW_ROM(R_NIBHI, 0x1c00) | BRF_PRG | BRF_ESS }, // 10 i8080 code (high nibble)
+	{ "07ef.bin",            0x0400, 0x9560880d, MW_ROM(R_NIBLO, 0x1c00) | BRF_PRG | BRF_ESS }, // 11 i8080 code (low nibble)
 };
 
 STD_ROM_PICK(spaceattbp)

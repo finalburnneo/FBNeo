@@ -107,6 +107,23 @@ struct BurnNameCopy {
 };
 static BurnNameCopy* pBurnNameCopies = NULL;
 
+// Full names may hold several titles ("A\0B\0"), copy them all and keep the double null
+static void BurnNameCopyMultiA(char* pDst, const char* pSrc, INT32 nSize)
+{
+	INT32 n = 0;
+	while (n < nSize - 2 && (pSrc[n] || pSrc[n + 1])) n++;
+	memcpy(pDst, pSrc, n + 1);
+}
+
+#if defined (_UNICODE)
+static void BurnNameCopyMultiW(wchar_t* pDst, const wchar_t* pSrc, INT32 nSize)
+{
+	INT32 n = 0;
+	while (n < nSize - 2 && (pSrc[n] || pSrc[n + 1])) n++;
+	memcpy(pDst, pSrc, (n + 1) * sizeof(wchar_t));
+}
+#endif
+
 static BurnNameCopy* BurnNameCopyGet(UINT32 i)
 {
 	if (i >= nBurnDrvCount) return NULL;
@@ -123,11 +140,11 @@ static BurnNameCopy* BurnNameCopyGet(UINT32 i)
 	p->szOrigFullNameA = pDriver[i]->szFullNameA;
 	p->szOrigFullNameW = pDriver[i]->szFullNameW;
 	if (pDriver[i]->szShortName) strncpy(p->szShortName, pDriver[i]->szShortName, sizeof(p->szShortName) - 1);
-	if (pDriver[i]->szFullNameA) strncpy(p->szFullNameA, pDriver[i]->szFullNameA, MAX_PATH - 1);
+	if (pDriver[i]->szFullNameA) BurnNameCopyMultiA(p->szFullNameA, pDriver[i]->szFullNameA, MAX_PATH);
 	pDriver[i]->szShortName = p->szShortName;
 	pDriver[i]->szFullNameA = p->szFullNameA;
 #if defined (_UNICODE)
-	if (pDriver[i]->szFullNameW) wcsncpy(p->szFullNameW, pDriver[i]->szFullNameW, MAX_PATH - 1);
+	if (pDriver[i]->szFullNameW) BurnNameCopyMultiW(p->szFullNameW, pDriver[i]->szFullNameW, MAX_PATH);
 	pDriver[i]->szFullNameW = p->szFullNameW;
 #endif
 	p->pNext = pBurnNameCopies;
@@ -294,7 +311,12 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
 
 				if (i & DRV_NEXTNAME) {
+					pszStringW = NULL;
 					if (pszCurrentNameW && pDriver[nBurnDrvActive]->szFullNameW) {
+						// Never step past the terminating null, extra calls must keep returning NULL
+						if (!pszCurrentNameW[0]) {
+							return NULL;
+						}
 						pszCurrentNameW += wcslen(pszCurrentNameW) + 1;
 						if (!pszCurrentNameW[0]) {
 							return NULL;
@@ -318,6 +340,8 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 						// If all titles can be printed, we can use the Unicode versions
 						if (nRet >= 0) {
 							pszStringW = pszCurrentNameW = pDriver[nBurnDrvActive]->szFullNameW;
+						} else {
+							pszStringW = pszCurrentNameW = NULL;
 						}
 					}
 
@@ -407,6 +431,9 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 			if (i & DRV_NEXTNAME) {
 				if (!pszCurrentNameW && pDriver[nBurnDrvActive]->szFullNameA) {
+					if (!pszCurrentNameA || !pszCurrentNameA[0]) {
+						return NULL;
+					}
 					pszCurrentNameA += strlen(pszCurrentNameA) + 1;
 					if (!pszCurrentNameA[0]) {
 						return NULL;
@@ -616,7 +643,10 @@ extern "C" INT32 BurnDrvGetIndex(char* szName)
 
 extern "C" wchar_t* BurnDrvGetFullNameW(UINT32 i)
 {
-	return pDriver[i]->szFullNameW;
+	// Callers compare/copy the result, never return NULL for drivers without a Unicode title
+	static wchar_t szEmpty[1] = { L'\0' };
+
+	return (NULL != pDriver[i]->szFullNameW) ? pDriver[i]->szFullNameW : szEmpty;
 }
 
 // Get the zip names for the driver

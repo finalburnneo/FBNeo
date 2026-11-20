@@ -54,7 +54,7 @@ jobs:
         shell: bash {0}
     steps:
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -77,14 +77,14 @@ jobs:
           echo archive_path= '${{ steps.create_release_body_archive.outputs.archive_file }}' > $RELEASE_BODY_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.RELEASE_BODY_ARTIFACT }}
           path: ${{ env.RELEASE_BODY_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.RELEASE_BODY_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_release_body_archive.outputs.archive_file }}
@@ -92,25 +92,26 @@ jobs:
 
   build_windows_x86_64:
     name: Build (Windows x86_64)
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # mingw-w64 >= 12 is required: older libwinpthread imports GetTickCount64 (Vista+), breaking Windows XP
+    container: ubuntu:26.04
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash {0}
     steps:
       - name: Install dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget perl
-          msystem: MINGW64
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends make gcc g++ perl nasm zip g++-mingw-w64-x86-64-posix
 
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build
         id: create_windows_x86_64_archive
         run: |
-          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1 RELEASEBUILD=1
+          set -e
+          make -j$(nproc) mingwcc64 SKIPDEPEND=1 RELEASEBUILD=1
           archive_file="${{ env.WINDOWS_X86_64_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneo64.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
@@ -120,14 +121,14 @@ jobs:
           echo archive_path= '${{ steps.create_windows_x86_64_archive.outputs.archive_file }}' > $WINDOWS_X86_64_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_64_ARTIFACT }}
           path: ${{ env.WINDOWS_X86_64_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_64_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_windows_x86_64_archive.outputs.archive_file }}
@@ -135,25 +136,26 @@ jobs:
 
   build_windows_x86_64_debug:
     name: Build (Windows x86_64 Debug)
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # mingw-w64 >= 12 is required: older libwinpthread imports GetTickCount64 (Vista+), breaking Windows XP
+    container: ubuntu:26.04
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash {0}
     steps:
       - name: Install dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel binutils mingw-w64-x86_64-toolchain mingw-w64-x86_64-nasm zip wget perl
-          msystem: MINGW64
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends make gcc g++ perl nasm zip g++-mingw-w64-x86-64-posix
 
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build
         id: create_windows_x86_64_debug_archive
         run: |
-          make -j$(nproc) mingw BUILD_X64_EXE=1 SKIPDEPEND=1
+          set -e
+          make -j$(nproc) mingwcc64 SKIPDEPEND=1
           archive_file="${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneo64d.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
@@ -163,14 +165,14 @@ jobs:
           echo archive_path= '${{ steps.create_windows_x86_64_debug_archive.outputs.archive_file }}' > $WINDOWS_X86_64_DEBUG_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT }}
           path: ${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_64_DEBUG_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_windows_x86_64_debug_archive.outputs.archive_file }}
@@ -178,26 +180,27 @@ jobs:
 
   build_windows_x86_32:
     name: Build (Windows x86_32)
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # mingw-w64 >= 12 is required: older libwinpthread imports GetTickCount64 (Vista+), breaking Windows XP
+    container: ubuntu:26.04
     continue-on-error: true
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash {0}
     steps:
       - name: Install dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain nasm zip wget perl
-          msystem: MINGW32
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends make gcc g++ perl nasm zip g++-mingw-w64-i686-posix
 
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build
         id: create_windows_x86_32_archive
         run: |
-          make -j$(nproc) mingw SKIPDEPEND=1 RELEASEBUILD=1
+          set -e
+          make -j$(nproc) mingwcc SKIPDEPEND=1 RELEASEBUILD=1
           archive_file="${{ env.WINDOWS_X86_32_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneo.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
@@ -207,14 +210,14 @@ jobs:
           echo archive_path= '${{ steps.create_windows_x86_32_archive.outputs.archive_file }}' > $WINDOWS_X86_32_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_32_ARTIFACT }}
           path: ${{ env.WINDOWS_X86_32_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_32_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_windows_x86_32_archive.outputs.archive_file }}
@@ -222,26 +225,27 @@ jobs:
 
   build_windows_x86_32_debug:
     name: Build (Windows x86_32 Debug)
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
+    # mingw-w64 >= 12 is required: older libwinpthread imports GetTickCount64 (Vista+), breaking Windows XP
+    container: ubuntu:26.04
     continue-on-error: true
     defaults:
       run:
-        shell: msys2 {0}
+        shell: bash {0}
     steps:
       - name: Install dependencies
-        uses: msys2/setup-msys2@v2
-        with:
-          update: true
-          install: msys2-devel base-devel binutils mingw-w64-i686-toolchain nasm zip wget perl
-          msystem: MINGW32
+        run: |
+          apt-get update
+          DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends make gcc g++ perl nasm zip g++-mingw-w64-i686-posix
 
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build
         id: create_windows_x86_32_debug_archive
         run: |
-          make -j$(nproc) mingw SKIPDEPEND=1
+          set -e
+          make -j$(nproc) mingwcc SKIPDEPEND=1
           archive_file="${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}.zip"
           echo "archive_file=${archive_file}" >> $GITHUB_OUTPUT
           zip --junk-paths "${archive_file}" fbneod.exe src/license.txt fbahelpfilesrc/fbneo.chm whatsnew.html
@@ -251,14 +255,14 @@ jobs:
           echo archive_path= '${{ steps.create_windows_x86_32_debug_archive.outputs.archive_file }}' > $WINDOWS_X86_32_DEBUG_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}
           path: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_windows_x86_32_debug_archive.outputs.archive_file }}
@@ -278,7 +282,7 @@ jobs:
           curl -fsSL https://github.com/mstorsjo/llvm-mingw/releases/download/${LLVM_MINGW_VERSION}/${name}.tar.xz | tar -xJ -C $HOME
           echo "$HOME/${name}/bin" >> $GITHUB_PATH
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Build
         id: create_windows_arm64_archive
         run: |
@@ -291,13 +295,13 @@ jobs:
         run: |
           echo archive_path= '${{ steps.create_windows_arm64_archive.outputs.archive_file }}' > $WINDOWS_ARM64_ARTIFACT_PATH
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_ARM64_ARTIFACT }}
           path: ${{ env.WINDOWS_ARM64_ARTIFACT_PATH }}
           retention-days: 1
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_ARM64_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_windows_arm64_archive.outputs.archive_file }}
@@ -317,7 +321,7 @@ jobs:
           curl -fsSL https://github.com/mstorsjo/llvm-mingw/releases/download/${LLVM_MINGW_VERSION}/${name}.tar.xz | tar -xJ -C $HOME
           echo "$HOME/${name}/bin" >> $GITHUB_PATH
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Build
         id: create_windows_arm64_debug_archive
         run: |
@@ -330,13 +334,13 @@ jobs:
         run: |
           echo archive_path= '${{ steps.create_windows_arm64_debug_archive.outputs.archive_file }}' > $WINDOWS_ARM64_DEBUG_ARTIFACT_PATH
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT }}
           path: ${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT_PATH }}
           retention-days: 1
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.WINDOWS_ARM64_DEBUG_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_windows_arm64_debug_archive.outputs.archive_file }}
@@ -356,7 +360,7 @@ jobs:
           sudo apt-get -y install libsdl2-dev libsdl2-image-dev
 
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build
         id: create_linux_sdl2_x86_64_archive
@@ -371,14 +375,14 @@ jobs:
           echo archive_path= '${{ steps.create_linux_sdl2_x86_64_archive.outputs.archive_file }}' > $LINUX_SDL2_X86_64_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.LINUX_SDL2_X86_64_ARTIFACT }}
           path: ${{ env.LINUX_SDL2_X86_64_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.LINUX_SDL2_X86_64_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_linux_sdl2_x86_64_archive.outputs.archive_file }}
@@ -398,7 +402,7 @@ jobs:
           sudo apt-get -y install libsdl1.2-dev
 
       - name: Clone
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Build
         id: create_linux_sdl1_x86_64_archive
@@ -413,14 +417,14 @@ jobs:
           echo archive_path= '${{ steps.create_linux_sdl1_x86_64_archive.outputs.archive_file }}' > $LINUX_SDL1_X86_64_ARTIFACT_PATH
 
       - name: Upload Archive Path
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.LINUX_SDL1_X86_64_ARTIFACT }}
           path: ${{ env.LINUX_SDL1_X86_64_ARTIFACT_PATH }}
           retention-days: 1
 
       - name: Upload Archive as Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ env.LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT }}
           path: ${{ steps.create_linux_sdl1_x86_64_archive.outputs.archive_file }}
@@ -432,7 +436,7 @@ jobs:
 #    continue-on-error: true
 #    steps:
 #      - name: Clone
-#        uses: actions/checkout@v4
+#        uses: actions/checkout@v7
 
 #      - name: Build
 #        id: create_macos_x86_64_archive
@@ -452,14 +456,14 @@ jobs:
 #          echo archive_path= '${{ steps.create_macos_x86_64_archive.outputs.archive_file }}' > $MACOS_X86_64_ARTIFACT_PATH
 
 #      - name: Upload Archive Path
-#        uses: actions/upload-artifact@v4
+#        uses: actions/upload-artifact@v7
 #        with:
 #          name: ${{ env.MACOS_X86_64_ARTIFACT }}
 #          path: ${{ env.MACOS_X86_64_ARTIFACT_PATH }}
 #          retention-days: 1
 
 #      - name: Upload Archive as Artifact
-#        uses: actions/upload-artifact@v4
+#        uses: actions/upload-artifact@v7
 #        with:
 #          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
 #          path: ${{ steps.create_macos_x86_64_archive.outputs.archive_file }}
@@ -471,7 +475,7 @@ jobs:
 #    continue-on-error: true
 #    steps:
 #      - name: Clone
-#        uses: actions/checkout@v4
+#        uses: actions/checkout@v7
 
 #      - name: Build
 #        id: create_macos_arm64_archive
@@ -491,14 +495,14 @@ jobs:
 #          echo archive_path= '${{ steps.create_macos_arm64_archive.outputs.archive_file }}' > $MACOS_ARM64_ARTIFACT_PATH
 
 #      - name: Upload Archive Path
-#        uses: actions/upload-artifact@v4
+#        uses: actions/upload-artifact@v7
 #        with:
 #          name: ${{ env.MACOS_ARM64_ARTIFACT }}
 #          path: ${{ env.MACOS_ARM64_ARTIFACT_PATH }}
 #          retention-days: 1
 
 #      - name: Upload Archive as Artifact
-#        uses: actions/upload-artifact@v4
+#        uses: actions/upload-artifact@v7
 #        with:
 #          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
 #          path: ${{ steps.create_macos_arm64_archive.outputs.archive_file }}
@@ -510,13 +514,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       # We'll need the repo if we want to use gh command line later
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
       # Release body
       - name: Download Artifact (Release body)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.RELEASE_BODY_ARTIFACT }}
 
@@ -527,13 +531,13 @@ jobs:
           echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
       - name: Download Artifact with Archive (Release body)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.RELEASE_BODY_ARCHIVE_ARTIFACT }}
 
       # Windows x86_64
       - name: Download Artifact (Windows x86_64)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_64_ARTIFACT }}
 
@@ -544,13 +548,13 @@ jobs:
           echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
       - name: Download Artifact with Archive (Windows x86_64)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_64_ARCHIVE_ARTIFACT }}
 
       # Windows x86_64 Debug
       - name: Download Artifact (Windows x86_64 Debug)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_64_DEBUG_ARTIFACT }}
 
@@ -561,14 +565,14 @@ jobs:
           echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
       - name: Download Artifact with Archive (Windows x86_64 Debug)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_64_DEBUG_ARCHIVE_ARTIFACT }}
 
       # Windows x86_32
       - name: Download Artifact (Windows x86_32)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_32_ARTIFACT }}
 
@@ -579,14 +583,14 @@ jobs:
           echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
       - name: Download Artifact with Archive (Windows x86_32)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_32_ARCHIVE_ARTIFACT }}
 
       # Windows x86_32 Debug
       - name: Download Artifact (Windows x86_32 Debug)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARTIFACT }}
 
@@ -597,14 +601,14 @@ jobs:
           echo "archive_path=$archive_path" >> $GITHUB_OUTPUT
 
       - name: Download Artifact with Archive (Windows x86_32 Debug)
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_X86_32_DEBUG_ARCHIVE_ARTIFACT }}
 
       # Windows ARM64
       - name: Download Artifact (Windows ARM64)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_ARM64_ARTIFACT }}
 
@@ -617,14 +621,14 @@ jobs:
 
       - name: Download Artifact with Archive (Windows ARM64)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_ARM64_ARCHIVE_ARTIFACT }}
 
       # Windows ARM64 Debug
       - name: Download Artifact (Windows ARM64 Debug)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_ARM64_DEBUG_ARTIFACT }}
 
@@ -637,14 +641,14 @@ jobs:
 
       - name: Download Artifact with Archive (Windows ARM64 Debug)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.WINDOWS_ARM64_DEBUG_ARCHIVE_ARTIFACT }}
 
       # Linux SDL2 x86_64
       - name: Download Artifact (Linux SDL2 x86_64)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.LINUX_SDL2_X86_64_ARTIFACT }}
 
@@ -657,14 +661,14 @@ jobs:
 
       - name: Download Artifact with Archive (Linux SDL2 x86_64)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.LINUX_SDL2_X86_64_ARCHIVE_ARTIFACT }}
 
       # Linux SDL1 x86_64
       - name: Download Artifact (Linux SDL1 x86_64)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.LINUX_SDL1_X86_64_ARTIFACT }}
 
@@ -677,14 +681,14 @@ jobs:
 
       - name: Download Artifact with Archive (Linux SDL1 x86_64)
         continue-on-error: true
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: ${{ env.LINUX_SDL1_X86_64_ARCHIVE_ARTIFACT }}
 
       # MacOS x86_64
 #      - name: Download Artifact (MacOS x86_64)
 #        continue-on-error: true
-#        uses: actions/download-artifact@v4
+#        uses: actions/download-artifact@v8
 #        with:
 #          name: ${{ env.MACOS_X86_64_ARTIFACT }}
 
@@ -697,14 +701,14 @@ jobs:
 
 #      - name: Download Artifact with Archive (MacOS x86_64)
 #        continue-on-error: true
-#        uses: actions/download-artifact@v4
+#        uses: actions/download-artifact@v8
 #        with:
 #          name: ${{ env.MACOS_X86_64_ARCHIVE_ARTIFACT }}
 
       # MacOS arm64
 #      - name: Download Artifact (MacOS arm64)
 #        continue-on-error: true
-#        uses: actions/download-artifact@v4
+#        uses: actions/download-artifact@v8
 #        with:
 #          name: ${{ env.MACOS_ARM64_ARTIFACT }}
 
@@ -717,7 +721,7 @@ jobs:
 
 #      - name: Download Artifact with Archive (MacOS arm64)
 #        continue-on-error: true
-#        uses: actions/download-artifact@v4
+#        uses: actions/download-artifact@v8
 #        with:
 #          name: ${{ env.MACOS_ARM64_ARCHIVE_ARTIFACT }}
 

@@ -376,6 +376,20 @@ void BurnYM2151Scan(INT32 nAction, INT32 *pnMin)
 
 	BurnYM2151Scan_int(nAction); // Scan the YM2151's internal registers
 
+	// render position, resampler fraction and the samples carried into the next frame: without them a frame
+	// run again after a state load renders a different number of chip samples than the same frame run once
+	SCAN_VAR(nYM2151Position);
+	SCAN_VAR(nFractionalPosition);
+	if (pBuffer) {
+		char szCarry[] = "YM2151 carry";
+		for (INT32 c = 0; c < 4; c++) {
+			// samples past the carried ones are rendered again next frame: clear them so they don't reach the state
+			INT32 used = 4 + nYM2151Position;
+			if (used < 64) memset(pBuffer + c * 4096 + (used < 0 ? 0 : used), 0, (64 - (used < 0 ? 0 : used)) * sizeof(INT16));
+			ScanVar(pBuffer + c * 4096, 64 * sizeof(INT16), szCarry);
+		}
+	}
+
 	if (YM2151BurnTimer)
 		BurnTimerScan(nAction, pnMin);
 }

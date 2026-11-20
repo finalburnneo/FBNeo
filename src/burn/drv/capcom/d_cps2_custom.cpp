@@ -546,7 +546,7 @@ static INT32 Cps2MixFrame()
 static void Cps2MixSoundScan(INT32 nAction, INT32* pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) BurnSampleScan(nAction, pnMin);
-	QsndScan(nAction);
+	QsndScan(nAction, 1);
 }
 
 static INT32 Cps2MixLoadTiles()

@@ -462,7 +462,7 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 
 	if (((Cps == 2) && !Cps2DisableQSnd) || Cps1Qs == 1) {						// Scan QSound chips
 		if (CpsSoundScanCallbackFunction) CpsSoundScanCallbackFunction(nAction, pnMin);
-		else QsndScan(nAction);
+		else QsndScan(nAction, 1);
 	} else {											// Scan PSound chips
 		if ((Cps & 1) && !Cps1DisablePSnd) PsndScan(nAction, pnMin);
 	}

@@ -3860,6 +3860,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "Shared (DP) RAM";
 		BurnAcb(&ba);
 
+		if ((nAction & ACB_WRITE) && is_gollygho) {
+			// artwork outputs aren't in savestates, rebuild them from the dpram
+			gollygho_outputs(0xc0/2, DrvDPRAM[0xc0/2]);
+			for (INT32 i = 0xc4/2; i <= 0xca/2; i++) gollygho_outputs(i, DrvDPRAM[i]);
+		}
+
 		ba.Data		= DrvC139RAM;
 		ba.nLen		= 0x0004000;
 		ba.nAddress	= 0x480000;

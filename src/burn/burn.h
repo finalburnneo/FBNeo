@@ -368,6 +368,14 @@ INT32 BurnArtworkSetToggle(INT32 n, INT32 nOn);		// returns 1 if changed: re-ini
 INT32 BurnArtworkResetSettings();					// delete config/games/<game>_art.ini, back to defaults
 INT32 BurnArtworkRefresh();							// after changing a global setting: returns 1 if active (re-init video)
 INT32 BurnArtworkSetEnable(INT32 bEnable);			// on/off for the running game too: returns 1 if changed (re-init video)
+// frontends that keep the per-game settings themselves (libretro core options): BurnArtworkProbe()
+// parses the selected game's artwork before BurnDrvInit() (returns 1 if found), so its views and
+// toggles can be listed and set; the choices are kept when BurnDrvInit() loads the artwork
+INT32 BurnArtworkProbe();
+INT32 BurnArtworkGetViewToggleCount(INT32 nView);
+const char *BurnArtworkGetViewToggleName(INT32 nView, INT32 n);
+INT32 BurnArtworkGetViewToggle(INT32 nView, INT32 n);
+INT32 BurnArtworkSetViewToggles(INT32 nView, UINT32 nToggles);	// returns 1 if changed: re-init video
 extern INT32 nBurnArtworkDefaults;					// parts shown in games without their own _art.ini:
 #define ARTWORK_DEFAULT_MARQUEE		(1 << 0)
 #define ARTWORK_DEFAULT_OVERLAY		(1 << 1)

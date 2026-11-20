@@ -31,9 +31,7 @@
 #include <algorithm>
 #include <math.h>
 
-#ifndef __LIBRETRO__
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
-#endif
 
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
@@ -401,7 +399,6 @@ static UINT8 *art_load_file(const char *name, INT32 *len)
 {
 	*len = 0;
 
-#ifndef __LIBRETRO__
 	if (art_archive[0]) {
 		void *dest = NULL;
 		INT32 l = 0;
@@ -411,7 +408,6 @@ static UINT8 *art_load_file(const char *name, INT32 *len)
 		}
 		if (dest) free(dest);
 	}
-#endif
 
 	if (art_folder[0]) {
 		char path[MAX_PATH * 3];
@@ -1368,6 +1364,7 @@ static void element_render(lelement *e, INT32 state, INT32 w, INT32 h, abitmap &
 // Compositor
 
 static INT32 art_active = 0;
+static INT32 art_probed = 0;			// layout parsed by BurnArtworkProbe(), not running
 static lview *view = NULL;
 static INT32 first_screen = -1;		// index of the first screen item in view->items
 static INT32 is_vector = 0;
@@ -1899,6 +1896,7 @@ static void art_free()
 	native_buf_size = 0;
 
 	art_active = 0;
+	art_probed = 0;
 	told_w = told_h = 0;
 	lay_under.clear(); lay_add.clear(); lay_mul.clear();
 	lay_w = lay_h = 0;
@@ -2009,6 +2007,10 @@ static void settings_load()
 	}
 	cur_view = (nBurnArtworkView >= 0 && nBurnArtworkView < (INT32)view_list.size()) ? nBurnArtworkView : 0;
 
+#ifdef __LIBRETRO__
+	return;		// per-game settings are core options (BurnArtworkSetViewToggles())
+#endif
+
 	TCHAR path[MAX_PATH];
 	settings_path(path);
 	FILE *f = _tfopen(path, _T("rt"));
@@ -2058,6 +2060,10 @@ static void settings_load()
 // written when something is changed from the frontend
 static void settings_save()
 {
+#ifdef __LIBRETRO__
+	return;
+#endif
+
 	TCHAR path[MAX_PATH];
 	settings_path(path);
 	FILE *f = _tfopen(path, _T("wt"));
@@ -2134,22 +2140,43 @@ INT32 BurnArtworkActive()
 	return art_active;
 }
 
-void BurnArtworkInit()
+static INT32 art_load_game()
 {
-	art_free();
-
-#ifdef __LIBRETRO__
-	return;
-#endif
-
-	if (!bBurnArtworkEnable) return;
-
 	if (art_try_load(BurnDrvGetTextA(DRV_NAME))) {
 		art_free();
 		if (art_try_load(BurnDrvGetTextA(DRV_PARENT))) {
 			art_free();
-			return;
+			return 1;
 		}
+	}
+	return 0;
+}
+
+void BurnArtworkInit()
+{
+	// keep what the frontend chose after BurnArtworkProbe()
+	std::vector<std::pair<std::string, UINT32> > probed;
+	std::string probed_view;
+	if (art_probed) {
+		for (UINT32 k = 0; k < view_list.size(); k++) probed.push_back(std::make_pair(views[view_list[k]]->name, views[view_list[k]]->tog_on));
+		probed_view = views[view_list[cur_view]]->name;
+	}
+
+	art_free();
+
+	if (!bBurnArtworkEnable) return;
+
+	if (art_load_game()) return;
+
+	if (probed.size()) {
+		for (UINT32 k = 0; k < view_list.size(); k++) {
+			lview *v = views[view_list[k]];
+			for (UINT32 i = 0; i < probed.size(); i++)
+				if (probed[i].first == v->name) v->tog_on = probed[i].second;
+			if (v->name == probed_view) cur_view = k;
+		}
+		view = views[view_list[cur_view]];
+		view_apply(view);
 	}
 
 	INT32 flags = BurnDrvGetFlags();
@@ -2285,18 +2312,67 @@ INT32 BurnArtworkGetLayers(BurnArtworkLayers *pLayers)
 
 INT32 BurnArtworkGetViewCount()
 {
-	return art_active ? (INT32)view_list.size() : 0;
+	return (art_active || art_probed) ? (INT32)view_list.size() : 0;
 }
 
 const char *BurnArtworkGetViewName(INT32 n)
 {
-	if (!art_active || n < 0 || n >= (INT32)view_list.size()) return NULL;
+	if (!(art_active || art_probed) || n < 0 || n >= (INT32)view_list.size()) return NULL;
 	return views[view_list[n]]->name.c_str();
 }
 
 INT32 BurnArtworkGetView()
 {
-	return art_active ? cur_view : -1;
+	return (art_active || art_probed) ? cur_view : -1;
+}
+
+// toggles of any view (not just the current one)
+static lview *view_at(INT32 nView)
+{
+	if (!(art_active || art_probed) || nView < 0 || nView >= (INT32)view_list.size()) return NULL;
+	return views[view_list[nView]];
+}
+
+INT32 BurnArtworkGetViewToggleCount(INT32 nView)
+{
+	lview *v = view_at(nView);
+	return v ? (INT32)v->tog_name.size() : 0;
+}
+
+const char *BurnArtworkGetViewToggleName(INT32 nView, INT32 n)
+{
+	lview *v = view_at(nView);
+	if (v == NULL || n < 0 || n >= (INT32)v->tog_name.size()) return NULL;
+	return v->tog_name[n].c_str();
+}
+
+INT32 BurnArtworkGetViewToggle(INT32 nView, INT32 n)
+{
+	lview *v = view_at(nView);
+	if (v == NULL || n < 0 || n >= (INT32)v->tog_name.size()) return 0;
+	return (v->tog_on >> n) & 1;
+}
+
+// for frontends that keep the per-game settings themselves (libretro core options):
+// view and all its toggles at once, so the artwork is only laid out once.
+// returns 1 if changed: re-init video
+INT32 BurnArtworkSetViewToggles(INT32 nView, UINT32 nToggles)
+{
+	lview *v = view_at(nView);
+	if (v == NULL) return 0;
+
+	if (v->tog_name.size() < 32) nToggles &= (1u << v->tog_name.size()) - 1;
+	if (nView == cur_view && nToggles == v->tog_on) return 0;
+
+	cur_view = nView;
+	v->tog_on = nToggles;
+	view = v;
+	view_apply(v);
+	if (!art_active) return 0;
+
+	art_layout();
+	settings_save();
+	return 1;
 }
 
 INT32 BurnArtworkSetView(INT32 n)
@@ -2351,6 +2427,19 @@ INT32 BurnArtworkRefresh()
 	return 1;
 }
 
+// parse the selected game's artwork before BurnDrvInit(), so a frontend can
+// list its views and toggles and set them (BurnArtworkSetViewToggles()) before
+// the game starts. the artwork itself is (re)loaded by BurnDrvInit().
+// returns 1 if the game has artwork, whether artwork is enabled or not
+INT32 BurnArtworkProbe()
+{
+	art_free();
+	if (art_load_game()) return 0;
+
+	art_probed = 1;
+	return 1;
+}
+
 // switch artwork on / off for the running game (and the next ones).
 // returns 1 if that changed anything: re-init video
 INT32 BurnArtworkSetEnable(INT32 bEnable)
@@ -2372,9 +2461,11 @@ INT32 BurnArtworkSetEnable(INT32 bEnable)
 INT32 BurnArtworkResetSettings()
 {
 	if (!art_active) return 0;
+#ifndef __LIBRETRO__
 	TCHAR path[MAX_PATH];
 	settings_path(path);
 	_tremove(path);
+#endif
 	settings_load();
 	view = views[view_list[cur_view]];
 	view_apply(view);
@@ -2809,10 +2900,7 @@ void BurnArtworkFrameEnd()
 
 void BurnArtworkScan(INT32 nAction)
 {
-	if (nAction & ACB_DRIVER_DATA) {
-		for (UINT32 i = 0; i < outputs.size(); i++) {
-			ScanVar(&outputs[i].value, sizeof(INT32) * 2, outputs[i].name);	// value + set
-		}
-		if (nAction & ACB_WRITE) { bg_dirty = 1; full_dirty = 1; }
-	}
+	// outputs aren't saved: they only mirror driver state, so drivers with outputs
+	// rebuild them from their own state when loading (savestate size stays constant)
+	if (nAction & ACB_WRITE) { bg_dirty = 1; full_dirty = 1; }
 }

@@ -41,6 +41,7 @@ static INT32 nIOShuffle[16];
 static INT32 wwfmania = 0;
 static INT32 is_umk3 = 0;
 static INT32 is_umk3_patchable = 0;
+static UINT32 nUMK3PalHackStart = 0;
 
 static INT32 nExtraCycles = 0;
 
@@ -227,11 +228,10 @@ void WolfUnitCMOSWriteEnable(UINT32 address, UINT16 value)
 
 void WolfUnitUMK3PaletteHack(UINT32 address, UINT16 value)
 {
-	if (address >= 0x0106a060 && address <= 0x0106a09f) {
+	if (address >= nUMK3PalHackStart && address <= nUMK3PalHackStart + 0x3f) {
 		tms34010_modify_timeslice(-100);
 	}
-	address &= 0xFFF;
-	*(UINT16*)(&DrvRAM[TOBYTE(0x6a000 + address)]) = BURN_ENDIAN_SWAP_INT16(value);
+	*(UINT16*)(&DrvRAM[TOBYTE(address & 0x3fffff)]) = BURN_ENDIAN_SWAP_INT16(value);
 }
 
 UINT16 WolfUnitPalRead(UINT32 address)
@@ -402,6 +402,61 @@ static INT32 LoadGfxBanks()
     return 0;
 }
 
+static void WolfUnitBootRomPatch(UINT32 address, const UINT16 *data, INT32 len)
+{
+	for (INT32 i = 0; i < len; i++) {
+		UINT32 offs = ((address - 0xff800000) >> 3) + i * 2;
+		DrvBootROM[offs + 0] = data[i] & 0xff;
+		DrvBootROM[offs + 1] = data[i] >> 8;
+	}
+}
+
+static INT32 WolfUnitBootRomCheck(UINT32 address, const UINT16 *data, INT32 len)
+{
+	for (INT32 i = 0; i < len; i++) {
+		UINT32 offs = ((address - 0xff800000) >> 3) + i * 2;
+		if ((DrvBootROM[offs + 0] | (DrvBootROM[offs + 1] << 8)) != data[i]) return 0;
+	}
+	return 1;
+}
+
+// umk3wp: Noob Saibot's teleport slam crashes the game against Motaro / Shao Kahn
+// (no "being slammed" animation), make it miss when the opponent is a boss
+static void UMK3WPNoobSlamPatch()
+{
+	static const UINT16 call_orig[4] = { 0x4c52, 0xcb00, 0xf810, 0xc00b };
+	static const UINT16 call_new[3]  = { 0x0d5f, 0xf000, 0xfff7 };
+	static const UINT16 cave[31] = {
+		0x4c52,                 // move b2,b2
+		0xca04,                 // jreq L1
+		0x100f,                 // addk 32,sp
+		0xc080, 0x49d0, 0xffa9, // ja ffa949d0
+		0xa22f,                 // L1: move a1,-*sp,1
+		0x07a1, 0x09d0, 0x0106, // move @010609d0h,a1,1
+		0x4828,                 // cmp a1,a8
+		0xca04,                 // jreq L2
+		0x09e1, 0x0a30, 0x0106, // movi 01060a30h,a1
+		0xc003,                 // jr L3
+		0x09e1, 0x15e0, 0x0106, // L2: movi 010615e0h,a1
+		0x8421,                 // L3: move *a1,a1,0
+		0x0b41, 0xffe7,         // cmpi 18h,a1
+		0xc805,                 // jrlo L4
+		0x97e1,                 // move *sp+,a1,1
+		0x100f,                 // addk 32,sp
+		0xc080, 0xc8e0, 0xffa9, // ja ffa9c8e0
+		0x97e1,                 // L4: move *sp+,a1,1
+		0x0960                  // rets
+	};
+	UINT16 cave_free[31];
+	for (INT32 i = 0; i < 31; i++) cave_free[i] = 0xffff;
+
+	if (WolfUnitBootRomCheck(0xffa9c8a0, call_orig, 4) && WolfUnitBootRomCheck(0xfff7f000, cave_free, 31)) {
+		WolfUnitBootRomPatch(0xfff7f000, cave, 31);
+		WolfUnitBootRomPatch(0xffa9c8a0, call_new, 3);
+		bprintf(0, _T("**  Hot-Patched UMK3WP w/Noob Saibot teleport slam vs. bosses Bugfix!\n"));
+	}
+}
+
 static void WolfDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -459,6 +514,10 @@ INT32 WolfUnitInit()
     nRet = BurnLoadRom(DrvBootROM + 1, 1, 2);
     if (nRet != 0)
         return 1;
+
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "umk3wp") == 0) {
+		UMK3WPNoobSlamPatch();
+	}
 
     nRet = LoadSoundBanks();
     if (nRet != 0)
@@ -527,9 +586,11 @@ INT32 WolfUnitInit()
     TMS34010MapHandler(11, 0x00000000, 0x003fffff, MAP_READ | MAP_WRITE);
 
 	if (is_umk3) {
+		// palette queue pointers moved in the WaveNet builds
+		nUMK3PalHackStart = (strstr(BurnDrvGetTextA(DRV_NAME), "umk3w") ? 0x010869a0 : 0x0106a060);
 		bprintf(0, _T("*** UMK3 Palette Fix active.\n"));
 		TMS34010SetWriteHandler(12, WolfUnitUMK3PaletteHack);
-		TMS34010MapHandler(12, 0x0106a000, 0x0106afff, MAP_WRITE);
+		TMS34010MapHandler(12, nUMK3PalHackStart & ~0xfff, nUMK3PalHackStart | 0xfff, MAP_WRITE);
 	}
 
 	TMS34010Close();

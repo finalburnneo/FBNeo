@@ -16,6 +16,7 @@
 #include "math.h"
 #include "burn_pal.h"
 #include "burn_gun.h" // trackball (ebases, demndrgn)
+#include "burn_artwork.h" // lamp / led outputs
 #include "astrocde_snd.h"
 #include "votrax.h"
 
@@ -101,6 +102,12 @@ static UINT16 profpac_color_mapping[4];
 static UINT8 sound_p0_last;
 static UINT8 sound_p1_last;
 static UINT8 lamps[2];
+
+// artwork outputs
+#define MAX_OUT_LAMPS	16
+static UINT8 out_lamp[MAX_OUT_LAMPS];
+static UINT8 out_led[2];
+static INT32 has_outputs = 0;
 
 // configuration stuff
 static void (*update_line_cb)(int);
@@ -1226,6 +1233,40 @@ static UINT8 __fastcall common_port_read(UINT16 port)
 	return 0;
 }
 
+// artwork lamps / leds
+static void set_lamp(INT32 num, INT32 state)
+{
+	out_lamp[num] = state ? 1 : 0;
+	BurnOutputSetIndexed("lamp", num, out_lamp[num]);
+}
+
+static void set_led(INT32 num, INT32 state)
+{
+	out_led[num] = state ? 1 : 0;
+	BurnOutputSetIndexed("led", num, out_led[num]);
+}
+
+static void outputs_refresh() // after reset / state load
+{
+	if (!has_outputs) return;
+
+	for (INT32 i = 0; i < MAX_OUT_LAMPS; i++) BurnOutputSetIndexed("lamp", i, out_lamp[i]);
+	for (INT32 i = 0; i < 2; i++) BurnOutputSetIndexed("led", i, out_led[i]);
+}
+
+static void seawolf2_lamp_outputs(INT32 player_left, UINT8 data)
+{
+	const INT32 base = player_left ? 7 : 0;
+
+	set_lamp(base + 6, data & 0x01);	// torpedo 4 available
+	set_lamp(base + 5, data & 0x02);	// torpedo 3 available
+	set_lamp(base + 4, data & 0x04);	// torpedo 2 available
+	set_lamp(base + 3, data & 0x08);	// torpedo 1 available
+	set_lamp(base + 2, data & 0x10);	// ready
+	set_lamp(base + 1, ~data & 0x10);	// reload (active low)
+	set_lamp(base + 0, data & 0x20);	// explosion (hit)
+}
+
 static void seawolf2_samples_all_vol(float vol)
 {
 	for (int i = 0; i <= 9; i++) {
@@ -1270,8 +1311,8 @@ static void __fastcall seawolf2_write_port(UINT16 port, UINT8 data)
 
 		case 0x42:
 		case 0x43:
-			lamps[port & 1] = data;
-			// lamps
+			lamps[port & 1] = data; // used for the on-screen torpedo icons
+			seawolf2_lamp_outputs(~port & 1, data); // artwork lamps
 		return;
 	}
 
@@ -1354,14 +1395,20 @@ static UINT8 __fastcall gorf_read_port(UINT16 port)
 				case 3:
 				case 4:
 				case 5: sparkle[offset - 2] = data; break;
-				case 7: break; // wow - coin counter 3
+				case 6: break; // sound switch
+				case 7: set_lamp(6, data); break; // lamp6
 			}
 
 			return 0;
 		}
 
-		case 0x16:
-			return 0; // lamps - don't  bother
+		case 0x16: // MC14099B lamp latch
+		{
+			UINT8 data = (port >> 8) & 1;
+			int offset = (port >> 9) & 7;
+			if (offset != 6) set_lamp(offset, data); // lamp0..5, lamp7 (6 = n/c)
+			return 0;
+		}
 		case 0x17:
 			speech_write(port >> 8);
 			return port >> 8;
@@ -1421,9 +1468,9 @@ static UINT8 __fastcall robby_read_port(UINT16 port)
 				case 1: break; // coin counter 2
 				case 2: break; // coin counter 3
 				case 3:
-				case 4:
-				case 6: break; // set led status - 0
-				case 7: break; // set led status - 1
+				case 4: break;
+				case 6: set_led(0, (port >> 8) & 1); break;
+				case 7: set_led(1, (port >> 8) & 1); break;
 			}
 			return 0;
 		}
@@ -1626,13 +1673,25 @@ static UINT8 __fastcall profpac_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
-		case 0x14:
-		//	coin counters & leds
+		case 0x14: // 74LS174 outlatch: coin counters & leds
+		{
+			UINT8 data = port >> 8;
+			set_led(0, data & 0x04);
+			set_led(1, data & 0x08);
 			return 0;
+		}
 
-		case 0x15:
-		// leds
+		case 0x15: // 74LS174 lamp latch
+		{
+			UINT8 data = port >> 8;
+			set_lamp(0, data & 0x01); // left lamp A
+			set_lamp(1, data & 0x02); // left lamp B
+			set_lamp(2, data & 0x04); // left lamp C
+			set_lamp(3, data & 0x10); // right lamp A
+			set_lamp(4, data & 0x20); // right lamp B
+			set_lamp(5, data & 0x40); // right lamp C
 			return 0;
+		}
 
 		case 0xc3:
 			return profpac_intercept;
@@ -1681,6 +1740,8 @@ static UINT8 __fastcall demndrgn_read_port(UINT16 port)
 
 		case 0x14:
 			// coin counter & leds as well
+			set_led(0, (port >> 8) & 0x04);
+			set_led(1, (port >> 8) & 0x08);
 			trackball_select = (port >> 12) & 1;
 			BurnTrackballReadReset();
 			return 0;
@@ -1739,6 +1800,14 @@ static INT32 DrvDoReset()
 	sound_p0_last = 0;
 	sound_p1_last = 0;
 	lamps[0] = lamps[1] = 0;
+
+	memset(out_lamp, 0, sizeof(out_lamp));
+	memset(out_led, 0, sizeof(out_led));
+	if (is_seawolf2) {
+		seawolf2_lamp_outputs(1, 0);
+		seawolf2_lamp_outputs(0, 0);
+	}
+	outputs_refresh();
 
 	nExtraCycles = 0;
 
@@ -1869,6 +1938,7 @@ static INT32 Seawolf2Init()
 
 	has_sam = 1;
 	is_seawolf2 = 1;
+	has_outputs = 1;
 
 	y_offset = 24;
 
@@ -1980,6 +2050,7 @@ static INT32 GorfInit()
 	has_sc01 = 1;
 	has_snd = 2;
 	has_stars = 1;
+	has_outputs = 1;
 
 	GenericTilesInit();
 
@@ -2052,6 +2123,7 @@ static INT32 RobbyInit()
 	astrocde_snd_init(1, BURN_SND_ROUTE_PANRIGHT);
 	astrocde_snd_set_buffered(ZetTotalCycles, 1789772);
 	has_snd = 2;
+	has_outputs = 1;
 
 	GenericTilesInit();
 
@@ -2107,6 +2179,7 @@ static INT32 ProfpacInit()
 	ZetClose();
 
 	update_line_cb = profpac_update_line;
+	has_outputs = 1;
 
 	astrocde_snd_init(0, BURN_SND_ROUTE_PANLEFT);
 	astrocde_snd_init(1, BURN_SND_ROUTE_PANRIGHT);
@@ -2157,6 +2230,7 @@ static INT32 DemndrgnInit()
 
 	has_tball = 1;
 	BurnTrackballInit(2);
+	has_outputs = 1;
 
 	GenericTilesInit();
 
@@ -2184,6 +2258,7 @@ static INT32 DrvExit()
 	is_home = 0;
 	has_stars = 0;
 	has_tball = 0;
+	has_outputs = 0;
 
 	y_offset = 0;
 
@@ -2417,19 +2492,12 @@ static INT32 DrvFrame()
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
-	struct BurnArea ba;
-
 	if (pnMin) {
 		*pnMin = 0x029702;
 	}
 
 	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
-
-		ba.Data	  = AllRam;
-		ba.nLen	  = RamEnd - AllRam;
-		ba.szName = "All Ram";
-		BurnAcb(&ba);
+		ScanVar(AllRam, RamEnd - AllRam, "All Ram");
 
 		ZetScan(nAction);
 
@@ -2485,8 +2553,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_p0_last);
 		SCAN_VAR(sound_p1_last);
 		SCAN_VAR(lamps);
+		SCAN_VAR(out_lamp);
+		SCAN_VAR(out_led);
 
 		SCAN_VAR(nExtraCycles);
+
+		if (nAction & ACB_WRITE) {
+			outputs_refresh(); // restore the artwork lamps / leds
+		}
 	}
 
 	if (nAction & ACB_NVRAM) {

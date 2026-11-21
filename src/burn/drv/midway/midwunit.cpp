@@ -41,6 +41,7 @@ static INT32 nIOShuffle[16];
 static INT32 wwfmania = 0;
 static INT32 is_umk3 = 0;
 static INT32 is_umk3_patchable = 0;
+static INT32 is_umk3w_boss_patchable = 0;
 static UINT32 nUMK3PalHackStart = 0;
 
 static INT32 nExtraCycles = 0;
@@ -417,31 +418,44 @@ static void WolfUnitBootRomWrite32(UINT32 address, UINT32 data)
 	DrvBootROM[offs + 3] = data >> 24;
 }
 
-// umk3wp: Noob Saibot's teleport slam uses the "thrown by" animations (0x26-0x3f) of the victim,
-// Motaro / Shao Kahn tables stop at 0x25 and the slam crashes the game. Relocate both tables
-// to unused rom space and fill the missing entries with the stance animation (entry 0).
-static void UMK3WPBossAnimTablesPatch()
-{
-	static const UINT32 old_tables[2] = { 0xff9376a0, 0xff93fab0 }; // Motaro (0x18), Shao Kahn (0x19)
-	const UINT32 master = 0xffb46a70;
-	const UINT32 cave = 0xfff80000;
+// umk3w / umk3wp: Noob Saibot's teleport slam uses the "thrown by" animations (0x26-0x3f) of the victim,
+// Motaro / Shao Kahn tables stop at 0x25 and the slam crashes the game. Build extended copies of both
+// tables in unused rom space, missing entries use the stance animation (entry 0).
+// The master table is pointed to them on reset, depending on the dipswitch.
+static const UINT32 umk3w_boss_tables[2] = { 0xff9376a0, 0xff93fab0 }; // Motaro (0x18), Shao Kahn (0x19)
+static const UINT32 umk3w_anim_master = 0xffb46a70;
+static const UINT32 umk3w_boss_cave = 0xfff80000;
 
-	for (UINT32 a = cave; a < cave + 2 * 0x40 * 32; a += 32) {
+static void UMK3WBossAnimTablesInit()
+{
+	for (UINT32 a = umk3w_boss_cave; a < umk3w_boss_cave + 2 * 0x40 * 32; a += 32) {
 		if (WolfUnitBootRomRead32(a) != 0xffffffff) return;
 	}
 	for (INT32 i = 0; i < 2; i++) {
-		if (WolfUnitBootRomRead32(master + (0x18 + i) * 32) != old_tables[i]) return;
+		if (WolfUnitBootRomRead32(umk3w_anim_master + (0x18 + i) * 32) != umk3w_boss_tables[i]) return;
 	}
 
 	for (INT32 i = 0; i < 2; i++) {
-		UINT32 table = cave + i * 0x40 * 32;
+		UINT32 table = umk3w_boss_cave + i * 0x40 * 32;
 		for (INT32 j = 0; j < 0x40; j++) {
-			WolfUnitBootRomWrite32(table + j * 32, WolfUnitBootRomRead32(old_tables[i] + ((j < 0x26) ? j : 0) * 32));
+			WolfUnitBootRomWrite32(table + j * 32, WolfUnitBootRomRead32(umk3w_boss_tables[i] + ((j < 0x26) ? j : 0) * 32));
 		}
-		WolfUnitBootRomWrite32(master + (0x18 + i) * 32, table);
 	}
 
-	bprintf(0, _T("**  Hot-Patched UMK3WP w/Motaro / Shao Kahn animation tables Bugfix!\n"));
+	is_umk3w_boss_patchable = 1;
+}
+
+static void UMK3WBossAnimTablesPatch()
+{
+	INT32 enable = (~nWolfUnitDSW[2] & 1);
+
+	for (INT32 i = 0; i < 2; i++) {
+		WolfUnitBootRomWrite32(umk3w_anim_master + (0x18 + i) * 32, enable ? (umk3w_boss_cave + i * 0x40 * 32) : umk3w_boss_tables[i]);
+	}
+
+	if (enable) {
+		bprintf(0, _T("**  Hot-Patched UMK3W w/Motaro / Shao Kahn animation tables Bugfix!\n"));
+	}
 }
 
 static void WolfDoReset()
@@ -463,6 +477,10 @@ static void WolfDoReset()
 		if (~nWolfUnitDSW[2] & 1) {
 			bprintf(0, _T("**  Hot-Patched UMK3 w/Scorpion voice Bugfix!\n"));
 		}
+	}
+
+	if (is_umk3w_boss_patchable) {
+		UMK3WBossAnimTablesPatch();
 	}
 
 	bCMOSWriteEnable = false;
@@ -502,9 +520,9 @@ INT32 WolfUnitInit()
     if (nRet != 0)
         return 1;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "umk3wp") == 0) {
-		UMK3WPBossAnimTablesPatch();
-	}
+    if (strcmp(BurnDrvGetTextA(DRV_NAME), "umk3w") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "umk3wp") == 0) {
+        UMK3WBossAnimTablesInit();
+    }
 
     nRet = LoadSoundBanks();
     if (nRet != 0)
@@ -665,6 +683,7 @@ INT32 WolfUnitExit()
 	wwfmania = 0;
 	is_umk3 = 0;
 	is_umk3_patchable = 0;
+	is_umk3w_boss_patchable = 0;
 
     return 0;
 }

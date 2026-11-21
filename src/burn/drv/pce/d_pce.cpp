@@ -322,7 +322,7 @@ struct BurnDriver BurnDrvpce_scdsys = {
 	"pce_scdsys", NULL, NULL, NULL, "1991",
 	"CD System Card\0", "System - media selected seperately", "NEC - Hudson Soft", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_PCENGINE_PCE_CD, GBF_BIOS, 0,
+	BDF_GAME_WORKING | BDF_BOARDROM, 1, HARDWARE_PCENGINE_PCE_CD, GBF_BIOS, 0,
 	PceGetZipName, pce_scdsysRomInfo, pce_scdsysRomName, NULL, NULL, NULL, NULL, pceInputInfo, pcecdDIPInfo,
 	PCECDInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 1024, 240, 4, 3

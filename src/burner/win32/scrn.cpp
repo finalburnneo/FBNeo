@@ -1642,6 +1642,27 @@ static void QuitGame()
 	}
 }
 
+// cd systems are flagged as boardROM (bios), they are still launched (with a disc)
+bool BurnerDrvIsCDSystem()
+{
+	const UINT32 nHardware = BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK;
+	return (nHardware == HARDWARE_SNK_NEOCD || nHardware == HARDWARE_PCENGINE_PCE_CD || nHardware == HARDWARE_SEGA_MEGACD);
+}
+
+static INT32 CDSystemGetDrvIndex(const TCHAR* pszDrvName)
+{
+	const UINT32 nOldDrvActive = nBurnDrvActive;
+	INT32 nDrvIdx = BurnDrvGetIndex(_TtoA(pszDrvName));
+
+	if (nDrvIdx >= 0) {
+		nBurnDrvActive = nDrvIdx;
+		if (!BurnerDrvIsCDSystem()) nDrvIdx = -1;
+	}
+
+	nBurnDrvActive = nOldDrvActive;
+	return nDrvIdx;
+}
+
 // Compact driver loading module
 int BurnerLoadDriver(TCHAR *pszDriverName)
 {
@@ -1661,6 +1682,8 @@ int BurnerLoadDriver(TCHAR *pszDriverName)
 	if (!bFinder || !bRDMode) {
 		nDrvIdx = RomdataGetDrvIndex(pszDriverName);
 	}
+	if (nDrvIdx < 0)
+		nDrvIdx = CDSystemGetDrvIndex(pszDriverName);
 	if (nDrvIdx < 0)
 		return -1;
 
@@ -1901,7 +1924,7 @@ INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect)
 					return -1;
 			}
 
-			nDrvIdx = RomdataGetDrvIndex(pszDrvName);
+			nDrvIdx = CDSystemGetDrvIndex(pszDrvName);
 			break;
 		}
 

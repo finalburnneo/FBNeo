@@ -295,6 +295,7 @@ void SetPauseMode(bool bPause);
 int ActivateChat();
 void DeActivateChat();
 int BurnerLoadDriver(TCHAR *pszDriverName);
+bool BurnerDrvIsCDSystem();
 int StartFromReset(TCHAR *szDriverName, bool bLoadSram);
 void PausedRedraw(void);
 INT32 is_netgame_or_recording();

@@ -2031,7 +2031,7 @@ struct BurnDriver BurnDrvNeocdz = {
 	"neocdz", NULL, "neogeo", NULL, "1996",
 	"Neo Geo CDZ system\0", "System - media selected seperately", "SNK", "Neo Geo CDZ",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING /*| BDF_SYSTEM_ONLY*/, 2, HARDWARE_SNK_NEOCD, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_BOARDROM, 2, HARDWARE_SNK_NEOCD, GBF_MISC, 0,
 	NULL, neocdzRomInfo, neocdzRomName, NULL, NULL, NULL, NULL, neoCDInputInfo, neoCDDIPInfo,
 	NeoCDInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3

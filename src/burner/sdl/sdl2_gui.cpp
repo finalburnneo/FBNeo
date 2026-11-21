@@ -5,8 +5,6 @@
 
 extern char videofiltering[3];
 
-// reduce the total number of sets by the number of romsets flagged with BDF_BOARDROM
-#define REDUCE_TOTAL_SETS_BIOS		31
 #define MAX_STRING_SIZE 300
 // Limit CPU usage
 #define maxfps 20
@@ -41,6 +39,7 @@ static SDL_Rect dest_title_texture_rect;
 static char* gameAv = NULL;
 static unsigned int *filterGames = NULL;
 static int filterGamesCount = 0;
+static int nBiosCount = 0;							// bios sets aren't listed (nor counted)
 static int nSystemToCheckMask = HARDWARE_PUBLIC_MASK;
 static char systemName[MAX_STRING_SIZE] = { 0 };
 static char genre[MAX_STRING_SIZE] = { 0 };
@@ -295,7 +294,6 @@ static bool CheckIfSystem(INT32 gameTocheck)
 
 static void DoFilterGames()
 {
-	int count = 0;
 	int currentSelected = nBurnDrvActive;
 	if (filterGames!=NULL)
 	{
@@ -305,73 +303,22 @@ static void DoFilterGames()
 
 	filterGames = (unsigned int*)malloc(nBurnDrvCount * sizeof(unsigned int));
 	filterGamesCount = 0;
+	nBiosCount = 0;
 
-	if (bShowAvailableOnly)
+	for(UINT32 i = 0; i < nBurnDrvCount; i++)
 	{
-		for(UINT32 i = 0; i < nBurnDrvCount; i++)
+		nBurnDrvActive = i;
+		if (BurnDrvGetGenreFlags() & GBF_BIOS)
 		{
-			nBurnDrvActive = i;
-			if (gameAv[i] && CheckIfSystem(i) && !(BurnDrvGetGenreFlags() & GBF_BIOS)	)
-			{
-				if(bShowClones)
-				{
-					count++;
-				}
-				else
-				{
-					if (BurnDrvGetTextA(DRV_PARENT) == NULL)
-					{
-						count++;
-					}
-				}
-
-			}
+			nBiosCount++;
+			continue;
 		}
+		if (bShowAvailableOnly && !gameAv[i]) continue;
+		if (!CheckIfSystem(i)) continue;
+		if (!bShowClones && BurnDrvGetTextA(DRV_PARENT) != NULL) continue;
 
-		for(UINT32 i = 0; i < nBurnDrvCount; i++)
-		{
-			nBurnDrvActive = i;
-			if (gameAv[i] && CheckIfSystem(i) && !(BurnDrvGetGenreFlags() & GBF_BIOS)	)
-			{
-				if(bShowClones)
-				{
-					filterGames[filterGamesCount] = i;
-					filterGamesCount++;
-				}
-				else
-				{
-					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
-					{
-						filterGames[filterGamesCount] = i;
-						filterGamesCount++;
-					}
-				}
-
-			}
-		}
-	}
-	else
-	{
-		for(UINT32 i = 0; i < nBurnDrvCount; i++)
-		{
-			nBurnDrvActive = i;
-			if (CheckIfSystem(i) && !(BurnDrvGetGenreFlags() & GBF_BIOS)	)
-			{
-				if(bShowClones)
-				{
-					filterGames[filterGamesCount] = i;
-					filterGamesCount++;
-				}
-				else
-				{
-					if(BurnDrvGetTextA(DRV_PARENT) == NULL)
-					{
-						filterGames[filterGamesCount] = i;
-						filterGamesCount++;
-					}
-				}
-			}
-		}
+		filterGames[filterGamesCount] = i;
+		filterGamesCount++;
 	}
 	nBurnDrvActive = currentSelected;
 
@@ -1038,7 +985,7 @@ void gui_render()
 	incolor(fbn_color, /* unused */ 0);
 	inprint(sdlRenderer, "FB Neo *** A/ENTER: Start game  B/F5: Reset Filters  X/F4: Filter Clones  Y/F2: Filter Missing  COIN/F3: System Filter  START/F1: Rescan ROMs  F12: Quit ***", 10, 5);
 	if (strlen(systemName) != 0) {
-		snprintf(newLine, MAX_STRING_SIZE, "Filter System: %s / Missing: %s / Clones: %s / Showing : %d of %d", systemName, (bShowAvailableOnly?"No":"Yes"), (bShowClones?"Yes":"No"), filterGamesCount, (nBurnDrvCount + 1 - REDUCE_TOTAL_SETS_BIOS));
+		snprintf(newLine, MAX_STRING_SIZE, "Filter System: %s / Missing: %s / Clones: %s / Showing : %d of %d", systemName, (bShowAvailableOnly?"No":"Yes"), (bShowClones?"Yes":"No"), filterGamesCount, (nBurnDrvCount - nBiosCount));
 		inprint(sdlRenderer, newLine, 10, 15);
 	}
 	incolor(normal_color, /* unused */ 0);

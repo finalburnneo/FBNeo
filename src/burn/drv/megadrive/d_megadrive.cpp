@@ -521,7 +521,7 @@ struct BurnDriver BurnDrvmd_segacd = {
 	"md_segacd", NULL, NULL, NULL, "1992",
 	"Sega CD / Mega-CD System\0", "System - media selected separately", "Sega", "Sega CD / Mega-CD",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MEGACD, GBF_BIOS, 0,
+	BDF_GAME_WORKING | BDF_BOARDROM, 2, HARDWARE_SEGA_MEGACD, GBF_BIOS, 0,
 	MegadriveGetZipName, md_segacdRomInfo, md_segacdRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, SegaCDDIPInfo,
 	MegadriveInitSegaCD, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

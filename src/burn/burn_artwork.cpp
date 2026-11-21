@@ -2214,6 +2214,10 @@ void BurnArtworkNativeSizeChanged()
 {
 	if (!art_active) return;
 
+	INT32 nw = 0, nh = 0;
+	BurnDrvGetNativeSize(&nw, &nh);
+	if (nw == native_w && nh == native_h) return;	// same size again (e.g. set from a driver's scan)
+
 	resized_in_frame = 1;
 	art_layout();
 
@@ -2909,5 +2913,4 @@ void BurnArtworkScan(INT32 nAction)
 {
 	// outputs aren't saved: they only mirror driver state, so drivers with outputs
 	// rebuild them from their own state when loading (savestate size stays constant)
-	if (nAction & ACB_WRITE) { bg_dirty = 1; full_dirty = 1; }
 }

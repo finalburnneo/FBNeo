@@ -485,24 +485,24 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Capcom Baseball (Japan)
 
 static struct BurnRomInfo cbasebalRomDesc[] = {
-	{ "cbj10.11j",		0x008000, 0xbbff0acc,  1 | BRF_PRG | BRF_ESS },	//  0 Z80 Code (Encrypted)
-	{ "cbj07.16f",		0x020000, 0x8111d13f,  1 | BRF_PRG | BRF_ESS },	//  1 
-	{ "cbj06.14f",		0x020000, 0x9aaa0e37,  1 | BRF_PRG | BRF_ESS },	//  2 
-	{ "cbj05.13f",		0x020000, 0xd0089f37,  1 | BRF_PRG | BRF_ESS },	//  3 
+	{ "cbj_10.11j",		0x008000, 0xbbff0acc,  1 | BRF_PRG | BRF_ESS },	//  0 Z80 Code (Encrypted)
+	{ "cbj_07.16f",		0x020000, 0x8111d13f,  1 | BRF_PRG | BRF_ESS },	//  1 
+	{ "cbj_06.14f",		0x020000, 0x9aaa0e37,  1 | BRF_PRG | BRF_ESS },	//  2 
+	{ "cbj_05.13f",		0x020000, 0xd0089f37,  1 | BRF_PRG | BRF_ESS },	//  3 
 
-	{ "cbj13.16m",		0x010000, 0x2359fa0a,  2 | BRF_GRA },			//  4 Characters
+	{ "cbj_13.16m",		0x010000, 0x2359fa0a,  2 | BRF_GRA },			//  4 Characters
 
-	{ "cbj02.1f",		0x020000, 0xd6740535,  3 | BRF_GRA },			//  5 Background Tiles
-	{ "cbj03.2f",		0x020000, 0x88098dcd,  3 | BRF_GRA },			//  6 
-	{ "cbj08.1j",		0x020000, 0x5f3344bf,  3 | BRF_GRA },			//  7 
-	{ "cbj09.2j",		0x020000, 0xaafffdae,  3 | BRF_GRA },			//  8 
+	{ "cbj_02.1f",		0x020000, 0xd6740535,  3 | BRF_GRA },			//  5 Background Tiles
+	{ "cbj_03.2f",		0x020000, 0x88098dcd,  3 | BRF_GRA },			//  6 
+	{ "cbj_08.1j",		0x020000, 0x5f3344bf,  3 | BRF_GRA },			//  7 
+	{ "cbj_09.2j",		0x020000, 0xaafffdae,  3 | BRF_GRA },			//  8 
 
-	{ "cbj11.1m",		0x020000, 0xbdc1507d,  4 | BRF_GRA },			//  9 Sprites
-	{ "cbj12.2m",		0x020000, 0x973f3efe,  4 | BRF_GRA },			// 10 
-	{ "cbj14.1n",		0x020000, 0x765dabaa,  4 | BRF_GRA },			// 11 
-	{ "cbj15.2n",		0x020000, 0x74756de5,  4 | BRF_GRA },			// 12 
+	{ "cbj_11.1m",		0x020000, 0xbdc1507d,  4 | BRF_GRA },			//  9 Sprites
+	{ "cbj_12.2m",		0x020000, 0x973f3efe,  4 | BRF_GRA },			// 10 
+	{ "cbj_14.1n",		0x020000, 0x765dabaa,  4 | BRF_GRA },			// 11 
+	{ "cbj_15.2n",		0x020000, 0x74756de5,  4 | BRF_GRA },			// 12 
 
-	{ "cbj01.1e",		0x020000, 0x1d8968bd,  5 | BRF_SND },			// 13 Samples
+	{ "cbj_01.1e",		0x020000, 0x1d8968bd,  5 | BRF_SND },			// 13 Samples
 };
 
 STD_ROM_PICK(cbasebal)

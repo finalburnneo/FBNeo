@@ -10508,6 +10508,31 @@ struct BurnDriver BurnDrvLupin3a = {
 	224, 260, 3, 4
 };
 
+// Yosaku HB remake
+
+static struct BurnRomInfo yosakuRomDesc[] = {
+	{ "ylp12.bin",            0x0800, 0x37fecee4, MW_ROM(R_MAIN, 0x0000) | BRF_PRG | BRF_ESS }, //  0 i8080 code
+	{ "ylp13.bin",            0x0800, 0xceb6c3b4, MW_ROM(R_MAIN, 0x0800) | BRF_PRG | BRF_ESS }, //  1 i8080 code
+	{ "ylp14.bin",            0x0800, 0xc433a113, MW_ROM(R_MAIN, 0x1000) | BRF_PRG | BRF_ESS }, //  2 i8080 code
+	{ "ylp15.bin",            0x0800, 0x6cac14c1, MW_ROM(R_MAIN, 0x1800) | BRF_PRG | BRF_ESS }, //  3 i8080 code
+	{ "ylp16.bin",            0x0800, 0x3f55d17f, MW_ROM(R_MAIN, 0x4000) | BRF_PRG | BRF_ESS }, //  4 i8080 code
+	{ "ylp17.bin",            0x0800, 0x3f55d17f, MW_ROM(R_MAIN, 0x4800) | BRF_PRG | BRF_ESS }, //  5 i8080 code
+	{ "ylp18.bin",            0x0800, 0x3f55d17f, MW_ROM(R_MAIN, 0x5000) | BRF_PRG | BRF_ESS }, //  6 i8080 code
+};
+
+STD_ROM_PICK(yosaku)
+STD_ROM_FN(yosaku)
+
+struct BurnDriver BurnDrvYosaku = {
+	"yosaku", NULL, NULL, "yosaku", "1980",
+	"Yosaku (HB)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED | BDF_HOMEBREW, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
+	NULL, yosakuRomInfo, yosakuRomName, NULL, NULL, Lupin3SampleInfo, Lupin3SampleName, Lupin3InputInfo, Lupin3aDIPInfo,
+	Init40, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 260, 3, 4
+};
+
 // Polaris (latest version)
 
 static struct BurnRomInfo polarisRomDesc[] = {

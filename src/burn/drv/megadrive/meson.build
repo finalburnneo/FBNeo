@@ -8,6 +8,7 @@ group_desc = 'Sega Mega Drive drivers'
 group_srcs = [
     'megadrive.cpp',
     's32x.cpp',
+    'svp.cpp',
     'segacd.cpp',
     'stm95.cpp',
 ]

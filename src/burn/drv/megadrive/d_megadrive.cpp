@@ -37791,11 +37791,11 @@ static struct BurnRomInfo md_vrRomDesc[] = {
 STD_ROM_PICK(md_vr)
 STD_ROM_FN(md_vr)
 
-struct BurnDriverD BurnDrvmd_vr = {
+struct BurnDriver BurnDrvmd_vr = {
 	"md_vr", NULL, NULL, NULL, "1994",
 	"Virtua Racing (Euro)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SVP, GBF_RACING, 0,
 	MegadriveGetZipName, md_vrRomInfo, md_vrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -37809,11 +37809,11 @@ static struct BurnRomInfo md_vrjRomDesc[] = {
 STD_ROM_PICK(md_vrj)
 STD_ROM_FN(md_vrj)
 
-struct BurnDriverD BurnDrvmd_vrj = {
+struct BurnDriver BurnDrvmd_vrj = {
 	"md_vrj", "md_vr", NULL, NULL, "1994",
 	"Virtua Racing (Japan)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SVP, GBF_RACING, 0,
 	MegadriveGetZipName, md_vrjRomInfo, md_vrjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -37827,11 +37827,11 @@ static struct BurnRomInfo md_vruRomDesc[] = {
 STD_ROM_PICK(md_vru)
 STD_ROM_FN(md_vru)
 
-struct BurnDriverD BurnDrvmd_vru = {
+struct BurnDriver BurnDrvmd_vru = {
 	"md_vru", "md_vr", NULL, NULL, "1994",
 	"Virtua Racing (USA)\0", NULL, "Sega", "Genesis / Mega Drive",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SVP, GBF_RACING, 0,
 	MegadriveGetZipName, md_vruRomInfo, md_vruRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

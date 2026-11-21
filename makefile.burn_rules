@@ -160,7 +160,7 @@ depobj	= 	burn.o burn_artwork.o plutosvg_all.o burn_bitmap.o burn_gun.o burn_led
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \
 			\
-			megadrive.o s32x.o segacd.o stm95.o \
+			megadrive.o s32x.o segacd.o stm95.o svp.o \
 			\
 			pce.o pce_cd.o \
 			\

@@ -35,6 +35,7 @@
 #include "burn_gun.h" // menacer, justifier
 #include "segacd.h"
 #include "s32x.h"
+#include "svp.h"
 #include "samples.h" // md+ (megasd.h)
 
 UINT8 MegadriveUnmappedRom = 0xff;
@@ -829,6 +830,9 @@ static void DmaSlow(INT32 len)
 		source &= ~1;
 		// dma from word ram responds with a one-access delay
 		if ((source & 0x3c0000) == 0x200000) source -= 2;
+	} else if (SVPMode && (source & 0xf00000) == 0x300000) { // SVP dram
+		fromrom = 1;
+		source = SVPDmaSource(source & ~1);
 	} else if( source < RomSize) {	// ROM
 		if (papriummode || psolarmode) fromrom = 1;
 		fromrom = 1;
@@ -1728,6 +1732,10 @@ static INT32 MegadriveResetDo()
 		SegaCDReset();
 	}
 
+	if (SVPMode) {
+		SVPReset();
+	}
+
 	if (megasdmode) {
 		megasd_reset();
 	}
@@ -1757,6 +1765,10 @@ static INT32 MegadriveResetDo()
 
 	if (S32XMode) {
 		S32XSetPAL(Hardware & 0x40);
+	}
+
+	if (SVPMode) {
+		SVPSetPAL(Hardware & 0x40);
 	}
 
 	if (last_hardware != Hardware) {
@@ -4155,6 +4167,14 @@ INT32 MegadriveInit()
 		MegadriveSetupSRAM();
 		SetupCustomCartridgeMappers();
 		if (megasd_init()) return 1;
+
+		if ((BurnDrvGetHardwareCode() & 0x3f) == HARDWARE_SEGA_MEGADRIVE_PCB_SVP) {
+			SVPMainCycles = SekCyclesDoneFrameF;
+			SekOpen(0);
+			INT32 nRet = SVPInit(RomMain, RomSize);
+			SekClose();
+			if (nRet) return 1;
+		}
 	}
 
 	if (MegadriveCallback) MegadriveCallback();
@@ -4212,6 +4232,10 @@ INT32 MegadriveExit()
 
 	if (SegaCDMode) {
 		SegaCDExit();
+	}
+
+	if (SVPMode) {
+		SVPExit();
 	}
 
 	if (S32XMode) {
@@ -5829,6 +5853,10 @@ INT32 MegadriveFrame()
 			S32XLineStart(y, lines_vis, SekCyclesDoneFrame());
 		}
 
+		if (SVPMode) {
+			SVPRun(SekCyclesDoneFrame());
+		}
+
 		if (y == 0) SekRunM68k(CYCLES_M68K_ASD);
 
 		if (y > lines_vis && nBurnCPUSpeedAdjust > 0x100)
@@ -5990,6 +6018,10 @@ INT32 MegadriveFrame()
 		S32XEndFrame(SekCyclesDoneFrame());
 	}
 
+	if (SVPMode) {
+		SVPEndFrame(SekCyclesDoneFrame());
+	}
+
 	if (papriummode) lm_sync();
 
 	if (pBurnDraw) MegadriveDraw();
@@ -6109,6 +6141,10 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 
 	if (S32XMode) {
 		S32XScan(nAction, pnMin);
+	}
+
+	if (SVPMode) {
+		SVPScan(nAction, pnMin);
 	}
 
 	if (megasdmode) {

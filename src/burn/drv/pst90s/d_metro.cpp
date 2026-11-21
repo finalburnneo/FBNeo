@@ -4515,10 +4515,6 @@ static INT32 NoZ80Frame()
 			CPU_RUN(1, upd7810);
 		}
 
-		if (sound_system == 6) {
-			es8712Sync(0);
-		}
-
 		if (i == 37 && requested_int[5] == 1) {
 			requested_int[5] = 0;
 		}

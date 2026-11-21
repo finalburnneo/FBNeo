@@ -326,6 +326,8 @@ void es8712Reset(INT32 device)
 
 	chip = &chips[device];
 
+	stream.update();
+
 	reset_handler(0);
 
 	if (chip->playing)
@@ -374,6 +376,8 @@ void es8712Play(INT32 device)
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];
+
+	stream.update();
 
 	if (chip->start < chip->end)
 	{

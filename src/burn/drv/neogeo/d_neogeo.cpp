@@ -17512,12 +17512,46 @@ STD_ROM_FN(turfmastsc)
 
 struct BurnDriver BurnDrvTurfmastsc = {
 	"turfmastsc", "turfmast", "neogeo", NULL, "2026",
-	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.10)\0", NULL, "dericmiller", "Neo Geo MVS",
+	"Neo Turf Masters / Big Tournament Golf: Scotland Course (Hack, v1.10)\0", NULL, "hack (dericmiller)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastscRomInfo, turfmastscRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
+};
+
+
+// Neo Turf Masters / Big Tournament Golf (Hack, Plus v1.0)
+
+static struct BurnRomInfo turfmastplusRomDesc[] = {
+	{ "200-p1p.p1",   0x200000, 0x9f9f50a5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code         / mask rom TC5316200
+
+	{ "200-s1p.s1",   0x020000, 0xedd8a8e6, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+
+	{ "200-c1p.c1",   0x400000, 0xfd0220e1, 3 | BRF_GRA },           //  2 Sprite data      / mask rom TC5332205
+	{ "200-c2p.c2",   0x400000, 0xfee05bf6, 3 | BRF_GRA },           //  3                  / mask rom TC5332205
+	{ "200-c3p.c3",   0x400000, 0x10fc8214, 3 | BRF_GRA },           //  4                  / mask rom TC5332205
+	{ "200-c4p.c4",   0x400000, 0x0f83f209, 3 | BRF_GRA },           //  5                  / mask rom TC5332205
+
+	{ "200-m1p.m1",   0x020000, 0x7d4d4616, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code         / mask rom TC531001
+
+	{ "200-v1.v1",    0x200000, 0x00fd48d2, 5 | BRF_SND },           //  7 Sound data       / mask rom TC5316200
+	{ "200-v2.v2",    0x200000, 0x082acb31, 5 | BRF_SND },           //  8                  / mask rom TC5316200
+	{ "200-v3.v3",    0x200000, 0x7abca053, 5 | BRF_SND },           //  9                  / mask rom TC5316200
+	{ "200-v4p.v4",   0x200000, 0xdba55b91, 5 | BRF_SND },           // 10                  / mask rom TC5316200
+};
+
+STDROMPICKEXT(turfmastplus, turfmastplus, neogeo)
+STD_ROM_FN(turfmastplus)
+
+struct BurnDriver BurnDrvTurfmastplus = {
+	"turfmastplus", "turfmast", "neogeo", NULL, "2026",
+	"Neo Turf Masters / Big Tournament Golf (Hack, Plus v1.0)\0", NULL, "hack (Nazca)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
+	NULL, turfmastplusRomInfo, turfmastplusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
 };
 
 

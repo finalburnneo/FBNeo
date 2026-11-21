@@ -1790,8 +1790,15 @@ static abitmap *item_bitmap(litem &it, INT32 state);
 // change mid-game only blends bitmaps that are already there:
 //  - every image component is rasterized at the size it's drawn at
 //  - every item's states (its components' state values + defstate) are rendered
+// art_layout() only marks the item cache stale; it's drawn once, by the first frame
+// that needs it (the frontend sets its target size after BurnArtworkInit(), so
+// drawing at every layout would draw everything twice at game start)
+static INT32 predraw_pending = 0;
+
 static void art_predraw()
 {
+	predraw_pending = 0;
+
 	// sizes from a previous layout aren't needed any more
 	for (std::map<std::string, lelement*>::iterator e = elements.begin(); e != elements.end(); ++e)
 		for (UINT32 i = 0; i < e->second->comps.size(); i++) e->second->comps[i].raster.clear();
@@ -1819,7 +1826,8 @@ static void art_predraw()
 		for (UINT32 k = 0; k < states.size(); k++) item_bitmap(it, states[k]);
 		nstates += states.size();
 	}
-	bprintf(PRINT_NORMAL, _T("Artwork: %d item states drawn\n"), nstates);
+	bprintf(PRINT_NORMAL, _T("Artwork: view \"%S\", %dx%d (game screen %dx%d px), %d item states drawn\n"), view->name.c_str(), disp_w, disp_h,
+		view->items[first_screen].px1 - view->items[first_screen].px0, view->items[first_screen].py1 - view->items[first_screen].py0, nstates);
 }
 
 // work out output size and item pixel rectangles
@@ -1866,10 +1874,7 @@ static void art_layout()
 	full_dirty = 1;
 	lay_full = 1;
 
-	art_predraw();
-
-	bprintf(PRINT_NORMAL, _T("Artwork: view \"%S\", %dx%d (game screen %dx%d px)\n"), view->name.c_str(), disp_w, disp_h,
-		view->items[first_screen].px1 - view->items[first_screen].px0, view->items[first_screen].py1 - view->items[first_screen].py0);
+	predraw_pending = 1;
 }
 
 static void art_free()
@@ -2260,6 +2265,7 @@ INT32 BurnArtworkGetBaseSize(INT32 *pnWidth, INT32 *pnHeight)
 INT32 BurnArtworkSetTargetSize(INT32 nWidth, INT32 nHeight)
 {
 	if (nWidth < 16 || nHeight < 16) nWidth = nHeight = 0;
+	if (nWidth == target_w && nHeight == target_h) return 0;	// the current layout already uses it
 	target_w = nWidth;
 	target_h = nHeight;
 
@@ -2485,6 +2491,7 @@ void BurnArtworkFrameBegin()
 	INT32 nw = 0, nh = 0;
 	BurnDrvGetNativeSize(&nw, &nh);
 	if (nw != native_w || nh != native_h) art_layout();
+	if (predraw_pending) art_predraw();
 
 	if (layered) return;	// the driver draws straight into the frontend's (game sized) buffer
 

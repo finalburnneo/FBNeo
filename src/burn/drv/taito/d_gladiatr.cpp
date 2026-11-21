@@ -1186,11 +1186,11 @@ static struct BurnRomInfo gladiatrRomDesc[] = {
 	{ "q3.2b",			0x0020, 0x6a7c3c60, 7 | BRF_GRA },           // 18 Unused PROMS
 	{ "q4.5s",			0x0020, 0xe325808e, 7 | BRF_GRA },           // 19
 
-	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },           // 20 CCTL MCU Code
+	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },           // 20 CCTL MCU Code (bad dump)
 
-	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS }, // 21 CCPU MCU Code
+	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS }, // 21 CCPU MCU Code (bad dump)
 
-	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS },// 22 UCPU MCU Code
+	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS },// 22 UCPU MCU Code (bad dump)
 
 	{ "aq_007.6c",		0x0800, 0xf19af04d, 11 | BRF_PRG | BRF_ESS },// 23 CSND MCU Code
 };
@@ -1200,7 +1200,7 @@ STD_ROM_FN(gladiatr)
 
 struct BurnDriver BurnDrvGladiatr = {
 	"gladiatr", NULL, NULL, NULL, "1986",
-	"Gladiator (US)\0", NULL, "Allumer / Taito America Corporation", "Miscellaneous",
+	"Gladiator (US)\0", NULL, "Allumer / Taito America", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, gladiatrRomInfo, gladiatrRomName, NULL, NULL, NULL, NULL, GladiatrInputInfo, GladiatrDIPInfo,
@@ -1239,11 +1239,11 @@ static struct BurnRomInfo ogonsiroRomDesc[] = {
 	{ "q3.2b",			0x0020, 0x6a7c3c60, 7 | BRF_GRA },            // 18 Unused PROMS
 	{ "q4.5s",			0x0020, 0xe325808e, 7 | BRF_GRA },            // 19
 
-	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },            // 20 CCTL MCU Code
+	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },            // 20 CCTL MCU Code (bad dump)
 
-	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS },  // 21 CCPU MCU Code
+	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS },  // 21 CCPU MCU Code (bad dump)
 
-	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS }, // 22 UCPU MCU Code
+	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS }, // 22 UCPU MCU Code (bad dump)
 
 	{ "aq_007.6c",		0x0800, 0xf19af04d, 11 | BRF_PRG | BRF_ESS }, // 23 CSND MCU Code
 };
@@ -1253,7 +1253,7 @@ STD_ROM_FN(ogonsiro)
 
 struct BurnDriver BurnDrvOgonsiro = {
 	"ogonsiro", "gladiatr", NULL, NULL, "1986",
-	"Ougon no Shiro (Japan)\0", NULL, "Allumer / Taito Corporation", "Miscellaneous",
+	"Ougon no Shiro (Japan)\0", NULL, "Allumer / Taito", "Miscellaneous",
 	L"Ougon no Shiro (Japan)\0\u9ec4\u91d1\u306e\u57ce\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, ogonsiroRomInfo, ogonsiroRomName, NULL, NULL, NULL, NULL, GladiatrInputInfo, GladiatrDIPInfo,
@@ -1292,11 +1292,11 @@ static struct BurnRomInfo greatgurRomDesc[] = {
 	{ "q3.2b",			0x0020, 0x6a7c3c60, 7 | BRF_GRA },           // 18 Unused PROMS
 	{ "q4.5s",			0x0020, 0xe325808e, 7 | BRF_GRA },           // 19
 
-	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },           // 20 CCTL MCU Code
+	{ "gladcctl.1",		0x0400, 0xb30d225f, 8 | BRF_GRA },           // 20 CCTL MCU Code (bad dump)
 
-	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS }, // 21 CCPU MCU Code
+	{ "gladccpu.2",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS }, // 21 CCPU MCU Code (bad dump)
 
-	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS },// 22 UCPU MCU Code
+	{ "gladucpu.17",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS },// 22 UCPU MCU Code
 
 	{ "aq_007.6c",		0x0800, 0xf19af04d, 11 | BRF_PRG | BRF_ESS },// 23 CSND MCU Code
 };
@@ -1306,9 +1306,9 @@ STD_ROM_FN(greatgur)
 
 struct BurnDriver BurnDrvGreatgur = {
 	"greatgur", "gladiatr", NULL, NULL, "1986",
-	"Great Gurianos (bootleg?)\0", NULL, "Allumer / Taito Corporation", "Miscellaneous",
+	"Great Gurianos (bootleg?)\0", NULL, "Allumer / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, greatgurRomInfo, greatgurRomName, NULL, NULL, NULL, NULL, GladiatrInputInfo, GladiatrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x401,
 	256, 224, 4, 3
@@ -1318,10 +1318,10 @@ struct BurnDriver BurnDrvGreatgur = {
 // Golden Castle (prototype?)
 
 static struct BurnRomInfo gcastleRomDesc[] = {
-	{ "gc0_5",			0x4000, 0x25b19efb, 1 | BRF_PRG | BRF_ESS },  //  0 Z80 #0 Code
-	{ "gc0_4",			0x2000, 0x347ec794, 1 | BRF_PRG | BRF_ESS },  //  1
-	{ "gc0_1",			0x4000, 0x040c9839, 1 | BRF_PRG | BRF_ESS },  //  2
-	{ "gc0_3",			0x8000, 0xd6a342e7, 1 | BRF_PRG | BRF_ESS },  //  3
+	{ "gc0_5",			0x4000, 0x25b19efb, 1 | BRF_PRG | BRF_ESS },  //  0 Z80 #0 Code (bad dump, not dumped, placeholders taken from ogonsiro)
+	{ "gc0_4",			0x2000, 0x347ec794, 1 | BRF_PRG | BRF_ESS },  //  1 (bad dump)
+	{ "gc0_1",			0x4000, 0x040c9839, 1 | BRF_PRG | BRF_ESS },  //  2 (bad dump)
+	{ "gc0_3",			0x8000, 0xd6a342e7, 1 | BRF_PRG | BRF_ESS },  //  3 (bad dump)
 
 	{ "qb0_17",			0x4000, 0xe78be010, 2 | BRF_PRG | BRF_ESS },  //  4 Z80 #1 Code
 
@@ -1345,11 +1345,11 @@ static struct BurnRomInfo gcastleRomDesc[] = {
 	{ "q3.2b",			0x0020, 0x6a7c3c60, 7 | BRF_GRA },            // 18 Unused PROMS
 	{ "q4.5s",			0x0020, 0xe325808e, 7 | BRF_GRA },            // 19
 
-	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },            // 20 CCTL MCU Code
+	{ "aq_002.9b",		0x0400, 0xb30d225f, 8 | BRF_GRA },            // 20 CCTL MCU Code (bad dump)
 
-	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS },  // 21 CCPU MCU Code
+	{ "aq_003.xx",		0x0400, 0x1d02cd5f, 9 | BRF_PRG | BRF_ESS },  // 21 CCPU MCU Code (bad dump)
 
-	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS }, // 22 UCPU MCU Code
+	{ "aq_006.3a",		0x0400, 0x3c5ca4c6, 10 | BRF_PRG | BRF_ESS }, // 22 UCPU MCU Code (bad dump)
 
 	{ "aq_007.6c",		0x0800, 0xf19af04d, 11 | BRF_PRG | BRF_ESS }, // 23 CSND MCU Code
 };
@@ -1359,7 +1359,7 @@ STD_ROM_FN(gcastle)
 
 struct BurnDriver BurnDrvGcastle = {
 	"gcastle", "gladiatr", NULL, NULL, "1986",
-	"Golden Castle (prototype?)\0", NULL, "Allumer / Taito Corporation", "Miscellaneous",
+	"Golden Castle (prototype?)\0", NULL, "Allumer / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, gcastleRomInfo, gcastleRomName, NULL, NULL, NULL, NULL, GladiatrInputInfo, GladiatrDIPInfo,

@@ -20394,6 +20394,82 @@ struct BurnDriver BurnDrvHovvbovv = {
 	NULL, 392, 224, 256, 3, 4
 };
 
+// Star Attack
+
+static struct BurnRomInfo StaratkRomDesc[] = {
+	{ "sa1.2c",        0x01000, 0x14c44344, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sa2.2e",        0x01000, 0x4ce8f186, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sa3.2f",        0x01000, 0xbd956295, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "sa4.2h",        0x01000, 0xd8f11ac1, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+
+	{ "sa_s1.5c",      0x00800, 0xbe037cf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "sa_s2.5d",      0x00800, 0x40b994dd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "sa_s3.5e",      0x00800, 0x0a5e2327, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "sa5.5f",        0x01000, 0xb690153b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sa8.6f",        0x01000, 0x563825bd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sa7.6d",        0x01000, 0x3fb29add, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sa6.5g",        0x01000, 0x4ea68501, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sa9.6g",        0x01000, 0xfdef1479, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "sa10.6j",       0x01000, 0xefcc97d4, BRF_GRA | GAL_ROM_TILES_SHARED }, // bad dump, hand-fixed
+
+	{ "prom",          0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },         // bad dump, not dumped from this set
+};
+
+STD_ROM_PICK(Staratk)
+STD_ROM_FN(Staratk)
+
+void __fastcall TheendZ80Write(UINT16 a, UINT8 d);
+
+static void __fastcall StaratkZ80Write(UINT16 a, UINT8 d)
+{
+	if (a == 0x6000) {
+		GalGfxBank[0] = d;
+		return;
+	}
+
+	TheendZ80Write(a, d);
+}
+
+static void StaratkExtendTileInfo(UINT16 *Code, INT32*, INT32, INT32 x, INT32 y)
+{
+	// 3rd scene: hardcoded extended tiles outside of the lives / score columns
+	if (x >= 2 && x <= 30 && (GalGfxBank[0] & 0x04)) {
+		*Code = (x | (y << 5)) + 0x200;
+	} else if (GalGfxBank[0] & 0x08) {
+		*Code += 0x100;
+	}
+}
+
+static void StaratkExtendSpriteInfo(const UINT8*, INT32*, INT32*, UINT8*, UINT8*, UINT16 *Code, UINT8*)
+{
+	if (GalGfxBank[0] & 0x08) *Code += 0x40;
+}
+
+static INT32 StaratkInit()
+{
+	INT32 nRet = ScrambleInit(); if (nRet) return 1;
+
+	ZetOpen(0);
+	ZetSetWriteHandler(StaratkZ80Write);
+	ZetClose();
+
+	GalExtendTileInfoFunction = StaratkExtendTileInfo;
+	GalExtendSpriteInfoFunction = StaratkExtendSpriteInfo;
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvStaratk = {
+	"staratk", NULL, NULL, NULL, "1981",
+	"Star Attack\0", "Imperfect graphics and sound", "Hiraoka New York", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, StaratkRomInfo, StaratkRomName, NULL, NULL, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	StaratkInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvScrambles = {
 	"scrambles", "scramble", NULL, NULL, "1981",
 	"Scramble (Stern Electronics, set 1)\0", NULL, "Konami (Stern Electronics license)", "Galaxian",

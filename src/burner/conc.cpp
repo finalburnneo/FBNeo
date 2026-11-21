@@ -392,9 +392,9 @@ static INT32 ConfigParseNebulaFile(TCHAR* pszFilename)
 
 	FILE *fp = _tfopen(pszFilename, pszReadMode);
 	TCHAR* pszFileHeading = getFilenameFromPath(pszFilename);
+	TCHAR szAlternative[MAX_PATH] = { 0 };
 	if (fp == NULL) {
 		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
-			TCHAR szAlternative[MAX_PATH] = { 0 };
 			_stprintf(szAlternative, _T("%s%s.dat"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
 
 			pszReadMode = AdaptiveEncodingReads(szAlternative);
@@ -944,9 +944,9 @@ static INT32 ConfigParseVCT(TCHAR* pszFilename)
 
 	FILE* h = _tfopen(pszFilename, pszReadMode);
 	TCHAR* pszFileHeading = getFilenameFromPath(pszFilename);
+	TCHAR szAlternative[MAX_PATH] = { 0 };
 	if (h == NULL) {
 		if ((BurnDrvGetFlags() & BDF_CLONE) && BurnDrvGetText(DRV_PARENT)) {
-			TCHAR szAlternative[MAX_PATH] = { 0 };
 			_stprintf(szAlternative, _T("%s%s.vct"), szAppCheatsPath, BurnDrvGetText(DRV_PARENT));
 
 			pszReadMode = AdaptiveEncodingReads(szAlternative);

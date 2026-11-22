@@ -9,6 +9,9 @@
 
 #define PLUTOVG_BUILD_STATIC
 #define PLUTOSVG_BUILD_STATIC
+// disable 2 unused features that are causing portability issues 
+#define PLUTOVG_DISABLE_FONT_FACE_CACHE_LOAD
+#define STBI_NO_THREAD_LOCALS
 
 #include "plutovg-blend.c"
 #include "plutovg-canvas.c"

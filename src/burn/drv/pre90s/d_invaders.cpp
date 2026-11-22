@@ -2071,156 +2071,296 @@ static double mwmusic_sound_step()
 }
 
 // Gun Fight
+#define GF_VT		0.025864	// thermal voltage at 27C (netlist default)
+#define GF_IS		1.95e-14	// BC548C
+#define GF_BF		466.0
+#define GF_BR		2.42
+#define GF_NF		0.993
+#define GF_NR		1.2
+
+struct gf_bjt {	// Ebers-Moll, as netlist QBJT_EB
+	double vbe, vbc;	// last junction voltages (for limiting)
+};
+
+static inline double gf_pnjlim(double vnew, double vold, double nvt)
+{
+	double vcrit = nvt * log(nvt / (M_SQRT2 * GF_IS));
+	if (vnew > vcrit && fabs(vnew - vold) > 2 * nvt) {
+		if (vold > 0) {
+			double arg = 1 + (vnew - vold) / nvt;
+			vnew = (arg > 0) ? vold + nvt * log(arg) : vcrit;
+		} else {
+			vnew = nvt * log(vnew / nvt);
+		}
+	}
+	return vnew;
+}
+
+template <int N>
+struct gf_mna {
+	double A[N][N], b[N];
+
+	void clear() { memset(A, 0, sizeof(A)); memset(b, 0, sizeof(b)); }
+	void g(INT32 i, INT32 j, double G) {		// conductance between nodes (-1 = ground)
+		if (i >= 0) A[i][i] += G;
+		if (j >= 0) A[j][j] += G;
+		if (i >= 0 && j >= 0) { A[i][j] -= G; A[j][i] -= G; }
+	}
+	void gv(INT32 i, double G, double V) {	// conductance from node i to a fixed voltage
+		A[i][i] += G; b[i] += G * V;
+	}
+	void cap(INT32 i, INT32 j, double C, double vprev) {	// backward euler companion model
+		double G = C / disc_dt;
+		g(i, j, G);
+		if (i >= 0) b[i] += G * vprev;
+		if (j >= 0) b[j] -= G * vprev;
+	}
+	void cap_v(INT32 i, double C, double vprev, double vother) {	// cap to a known voltage
+		double G = C / disc_dt;
+		A[i][i] += G; b[i] += G * (vprev + vother);
+	}
+	void bjt(INT32 nb, INT32 nc, INT32 ne, const double *v, gf_bjt *q) {
+		const double af = GF_BF / (1 + GF_BF), ar = GF_BR / (1 + GF_BR);
+		const double nvf = GF_NF * GF_VT, nvr = GF_NR * GF_VT;
+		double vb = (nb >= 0) ? v[nb] : 0, vc = (nc >= 0) ? v[nc] : 0, ve = (ne >= 0) ? v[ne] : 0;
+		double vbe = gf_pnjlim(vb - ve, q->vbe, nvf);
+		double vbc = gf_pnjlim(vb - vc, q->vbc, nvr);
+		q->vbe = vbe; q->vbc = vbc;
+		double ebe = exp(vbe / nvf), ebc = exp(vbc / nvr);
+		double ibe = (GF_IS / af) * (ebe - 1), gbe = (GF_IS / af) * ebe / nvf + 1e-12;
+		double ibc = (GF_IS / ar) * (ebc - 1), gbc = (GF_IS / ar) * ebc / nvr + 1e-12;
+		// terminal currents flowing into the device
+		double ie = -(ibe - ar * ibc);			// into emitter (negative for npn forward)
+		double ic = af * ibe - ibc;				// into collector
+		double ib = -(ic + ie);
+		// partial derivatives wrt vbe / vbc
+		double dic_be = af * gbe, dic_bc = -gbc;
+		double die_be = -gbe, die_bc = ar * gbc;
+		double dib_be = -(dic_be + die_be), dib_bc = -(dic_bc + die_bc);
+		INT32 n[3] = { nb, nc, ne };
+		double I[3] = { ib, ic, ie };
+		double dbe[3] = { dib_be, dic_be, die_be };
+		double dbc[3] = { dib_bc, dic_bc, die_bc };
+		for (INT32 t = 0; t < 3; t++) {
+			if (n[t] < 0) continue;
+			// dI/dvb = dbe + dbc, dI/dvc = -dbc, dI/dve = -dbe
+			double d[3] = { dbe[t] + dbc[t], -dbc[t], -dbe[t] };
+			double lin = I[t] - dbe[t] * vbe - dbc[t] * vbc;
+			for (INT32 k = 0; k < 3; k++) if (n[k] >= 0) A[n[t]][n[k]] += d[k];
+			b[n[t]] -= lin;
+		}
+	}
+	void solve(double *x) {	// gaussian elimination, partial pivoting
+		for (INT32 c = 0; c < N; c++) {
+			INT32 p = c;
+			for (INT32 r = c + 1; r < N; r++) if (fabs(A[r][c]) > fabs(A[p][c])) p = r;
+			if (p != c) {
+				for (INT32 k = 0; k < N; k++) { double t = A[c][k]; A[c][k] = A[p][k]; A[p][k] = t; }
+				double t = b[c]; b[c] = b[p]; b[p] = t;
+			}
+			double d = A[c][c];
+			if (d == 0) d = 1e-30;
+			for (INT32 r = c + 1; r < N; r++) {
+				double f = A[r][c] / d;
+				if (f == 0) continue;
+				for (INT32 k = c; k < N; k++) A[r][k] -= f * A[c][k];
+				b[r] -= f * b[c];
+			}
+		}
+		for (INT32 r = N - 1; r >= 0; r--) {
+			double s = b[r];
+			for (INT32 k = r + 1; k < N; k++) s -= A[r][k] * x[k];
+			x[r] = s / ((A[r][r] != 0) ? A[r][r] : 1e-30);
+		}
+	}
+};
+
+// sound effect generator
+enum { GV_S = 0, GV_X, GV_F, GV_B, GV_EM, GV_C, GV_E, GV_O, GV_W, GV_Y, GV_N };
+
 struct gf_voice_info {
-	double c_env;		// C122/C116
-	double r_lp1, c_lp1;	// R129 C121 / R116 C115
-	double c_lp2;		// C120 / C114 (with R128 || bias network)
-	double re;			// emitter resistor (100 shot, 1k hit)
-	double c_e;			// emitter bypass (0 for shot)
-	double c_out, c_out_gnd;	// C119 / C118
+	double c_in;		// C303/C306/C304/C305 noise coupling
+	double r_f1, c_f1;	// first low pass (R129/C121)
+	double r_f2, c_f2;	// second low pass (R128/C120)
+	double c_env;		// supply cap (C122/C116)
+	double r_e, c_e;	// emitter resistor and bypass cap (0 = none)
+	double c_out, c_out_g;	// output coupling C119 and filter C118
+	double c_mix;		// C117 / C110
 };
 
 static const gf_voice_info gf_voice_infos[4] = {
-	{ CAP_U(10), RES_K(20), CAP_U(0.015), CAP_U(0.01),  100,  0,          CAP_U(0.047), CAP_U(0.022) },	// left shot
-	{ CAP_U(10), RES_K(20), CAP_U(0.015), CAP_U(0.015), 100,  0,          CAP_U(0.047), CAP_U(0.022) },	// right shot
-	{ CAP_U(20), RES_K(20), CAP_U(0.033), CAP_U(0.1),   1000, CAP_U(50),  CAP_U(0.1),   CAP_U(0.033) },	// left hit
-	{ CAP_U(20), RES_K(20), CAP_U(0.033), CAP_U(0.047), 1000, CAP_U(50),  CAP_U(0.1),   CAP_U(0.033) },	// right hit
+	{ CAP_U(0.1), RES_K(20), CAP_U(0.015), RES_K(30), CAP_U(0.01),  CAP_U(10), 100,        0,         CAP_U(0.047), CAP_U(0.022), CAP_U(0.047) },	// left shot
+	{ CAP_U(0.1), RES_K(20), CAP_U(0.015), RES_K(30), CAP_U(0.015), CAP_U(10), 100,        0,         CAP_U(0.047), CAP_U(0.022), CAP_U(0.047) },	// right shot
+	{ CAP_U(0.1), RES_K(20), CAP_U(0.033), RES_K(30), CAP_U(0.1),   CAP_U(20), RES_K(1),   CAP_U(50), CAP_U(0.1),   CAP_U(0.033), CAP_U(0.1)   },	// left hit
+	{ CAP_U(0.1), RES_K(20), CAP_U(0.033), RES_K(30), CAP_U(0.047), CAP_U(20), RES_K(1),   CAP_U(50), CAP_U(0.1),   CAP_U(0.033), CAP_U(0.1)   },	// right hit
 };
+
+#define GF_NOISE_RS		(3400.0 * 4)	// Q302 collector impedance, shared by 4 inputs
+#define GF_POT_HALF		0.5
 
 struct gf_voice {
-	double env, lp1, lp2, ve, hp_cap, lp_out;
-	double k_lp1, k_lp2, k_ve, k_hp, k_lpo;
+	double v[GV_N];
+	gf_bjt q;
+	INT32 idle;
 
-	void reset(const gf_voice_info *i) {
-		env = lp1 = lp2 = ve = hp_cap = lp_out = 0;
-		k_lp1 = rc_exp(i->r_lp1 * i->c_lp1);
-		k_lp2 = rc_exp(((RES_K(30) * 27500.0) / (RES_K(30) + 27500.0)) * i->c_lp2);
-		k_ve  = (i->c_e != 0) ? rc_exp(i->re * i->c_e) : 0;
-		k_hp  = rc_exp(RES_K(50) * i->c_out);
-		k_lpo = rc_exp(RES_K(5.1) * i->c_out_gnd);
-	}
+	void reset() { memset(v, 0, sizeof(v)); q.vbe = q.vbc = 0; idle = 0; }
 
-	double step(const gf_voice_info *i, INT32 sw, double noise) {
-		// envelope cap: switch (15 ohm) charges to 16V
-		if (sw) env += (16.0 - env) * (1.0 - exp(-disc_dt / (15.0 * i->c_env)));
+	void step(const gf_voice_info *i, INT32 sw, double vn, double vz) {
+		if (!sw && idle) return;	// nothing audible left, the circuit is frozen
 
-		// base: bias divider R126 330k / R127 30k from the envelope + filtered noise
-		lp1 += (noise - lp1) * k_lp1;
-		lp2 += (lp1 - lp2) * k_lp2;
-		double vb = env * (30.0 / 360.0) + lp2 * (27.5 / 57.5);
+		double old[GV_N];
+		memcpy(old, v, sizeof(old));
 
-		double ic;
-		if (i->c_e != 0) {
-			// bypassed emitter: dc set by emitter cap, ac gain set by re
-			double vbe = vb - 0.65;
-			double target = (vbe > 0) ? vbe : 0;
-			ve += (target - ve) * k_ve;
-			ic = ve / i->re + (vbe - ve) / 25.0;
-		} else {
-			ic = (vb - 0.65) / i->re;
+		const double pot1 = RES_K(50) * (1.0 - GF_POT_HALF), pot2 = RES_K(50) * GF_POT_HALF;
+
+		for (INT32 it = 0; it < 8; it++) {
+			gf_mna<GV_N> m;
+			m.clear();
+
+			m.gv(GV_S, 1.0 / GF_NOISE_RS, vn);						// noise source
+			m.cap(GV_S, GV_X, i->c_in, old[GV_S] - old[GV_X]);		// C303
+			m.g(GV_X, GV_F, 1.0 / i->r_f1);							// R129
+			m.cap(GV_F, -1, i->c_f1, old[GV_F]);					// C121
+			m.g(GV_F, GV_B, 1.0 / i->r_f2);							// R128
+			m.cap(GV_B, -1, i->c_f2, old[GV_B]);					// C120
+			m.g(GV_E, GV_B, 1.0 / RES_K(330));						// R126
+			m.g(GV_B, -1, 1.0 / RES_K(30));							// R127
+			m.g(GV_EM, -1, 1.0 / i->r_e);							// R125 / R112
+			if (i->c_e != 0) m.cap(GV_EM, -1, i->c_e, old[GV_EM]);	// C113
+			m.g(GV_E, GV_C, 1.0 / RES_K(5.1));						// R124
+			m.cap(GV_E, -1, i->c_env, old[GV_E]);					// C122
+			if (sw) m.gv(GV_E, 1.0 / (15.0 + 0.1), 16.0);			// switch (RON 0.1) + R130
+			m.cap(GV_C, GV_O, i->c_out, old[GV_C] - old[GV_O]);		// C119
+			m.cap(GV_O, -1, i->c_out_g, old[GV_O]);					// C118
+			m.g(GV_O, GV_W, 1.0 / pot1);							// R123 (pot)
+			m.g(GV_W, -1, 1.0 / pot2);
+			m.g(GV_W, GV_Y, 1.0 / RES_K(30));						// R122
+			m.cap_v(GV_Y, i->c_mix, old[GV_Y] - vz, vz);			// C117 to the mixing amp base
+			m.bjt(GV_B, GV_C, GV_EM, v, &q);						// Q106
+
+			double x[GV_N];
+			m.solve(x);
+
+			double dmax = 0;
+			for (INT32 k = 0; k < GV_N; k++) { double d = fabs(x[k] - v[k]); if (d > dmax) dmax = d; v[k] = x[k]; }
+			if (dmax < 1e-7) break;
 		}
-		if (ic < 0) ic = 0;
 
-		double vc = env - ic * RES_K(5.1);
-		if (vc < 0.1) { vc = (env > 0.1) ? 0.1 : env; ic = (env - vc) / RES_K(5.1); }
-
-		// discharge of the envelope cap: transistor + R126/R127
-		if (!sw) {
-			env -= (ic + env / RES_K(360)) * disc_dt / i->c_env;
-			if (env < 0) env = 0;
-		}
-
-		// output coupling: C119 into the volume pot, C118 to ground
-		double hp = vc - hp_cap;
-		hp_cap += hp * k_hp;
-		lp_out += (hp - lp_out) * k_lpo;
-
-		return lp_out * 0.5;	// pot at midpoint
+		// transistor cut off and the output settled -> freeze until the next trigger
+		idle = (!sw && (v[GV_B] - v[GV_EM]) < 0.3 && fabs(v[GV_O]) < 1e-5 && fabs(v[GV_W]) < 1e-5 && fabs(v[GV_C] - v[GV_E]) < 1e-3);
 	}
 };
 
-struct gf_side {
-	double cin_s, cin_h, ve, out_cap, out_lp;
-	double k_in_s, k_in_h, k_out, k_lp;
+// mixing amp + output
+enum { GM_Z = 0, GM_EM, GM_C, GM_Q, GM_P, GM_OUT, GM_N };
 
-	void reset(double c_shot, double c_hit) {
-		cin_s = cin_h = ve = out_cap = out_lp = 0;
-		k_in_s = rc_exp(RES_K(30) * c_shot);
-		k_in_h = rc_exp(RES_K(30) * c_hit);
-		k_out  = rc_exp((RES_K(30) + RES_K(47)) * CAP_U(0.047));
-		k_lp   = rc_exp(RES_K(30) * CAP_U(0.001));
-	}
+struct gf_mixer {
+	double v[GM_N];
+	gf_bjt q;
 
-	double step(double shot, double hit) {
-		// input coupling caps (R122/C117, R109/C110)
-		double s = shot - cin_s; cin_s += s * k_in_s;
-		double h = hit - cin_h;  cin_h += h * k_in_h;
+	void reset() { memset(v, 0, sizeof(v)); q.vbe = q.vbc = 0; }
 
-		// common emitter amp Q102: ~2.36k input impedance, gain ~ -392 (5.1k / 13 ohm)
-		double vin = (s + h) * 0.5 * (2360.0 / (RES_K(30) + 2360.0));
-		double vc = 5.8 - vin * 392.0;
-		if (vc > 16.0) vc = 16.0;
-		if (vc < 2.1) vc = 2.1;
+	double step(double ys, double ys_old, double yh, double yh_old, double c_s, double c_h) {
+		double old[GM_N];
+		memcpy(old, v, sizeof(old));
 
-		// C108 coupling, R104/C107 low pass, master volume pot midpoint
-		double o = vc - out_cap; out_cap += o * k_out;
-		out_lp += (o - out_lp) * k_lp;
-		return out_lp * 0.5;
+		const double pot1 = RES_K(47) * (1.0 - GF_POT_HALF), pot2 = RES_K(47) * GF_POT_HALF;
+
+		for (INT32 it = 0; it < 8; it++) {
+			gf_mna<GM_N> m;
+			m.clear();
+
+			m.cap_v(GM_Z, c_s, old[GM_Z] - ys_old, ys);		// C117 (shot)
+			m.cap_v(GM_Z, c_h, old[GM_Z] - yh_old, yh);		// C110 (hit)
+			m.gv(GM_Z, 1.0 / RES_K(150), 16.0);				// R107
+			m.g(GM_Z, -1, 1.0 / RES_K(30));					// R105
+			m.g(GM_EM, -1, 1.0 / RES_K(1));					// R106
+			m.cap(GM_EM, -1, CAP_U(50), old[GM_EM]);		// C109
+			m.gv(GM_C, 1.0 / RES_K(5.1), 16.0);				// R108
+			m.cap(GM_C, GM_Q, CAP_U(0.047), old[GM_C] - old[GM_Q]);	// C108
+			m.g(GM_Q, GM_P, 1.0 / RES_K(30));				// R104
+			m.cap(GM_P, -1, CAP_U(0.001), old[GM_P]);		// C107
+			m.g(GM_P, GM_OUT, 1.0 / pot1);					// R103 (master volume)
+			m.g(GM_OUT, -1, 1.0 / pot2);
+			m.bjt(GM_Z, GM_C, GM_EM, v, &q);				// Q102
+
+			double x[GM_N];
+			m.solve(x);
+
+			double dmax = 0;
+			for (INT32 k = 0; k < GM_N; k++) { double d = fabs(x[k] - v[k]); if (d > dmax) dmax = d; v[k] = x[k]; }
+			if (dmax < 1e-7) break;
+		}
+
+		return v[GM_OUT];
 	}
 };
 
 static struct {
 	INT32 sw[4];		// left shot, right shot, left hit, right hit
 	gf_voice v[4];
-	gf_side side[2];
-	double noise_t, noise_val, noise_lp;
+	gf_mixer mix[2];
+	double y_old[4];
+	double noise_t, noise_val;
 	UINT32 rng;
+	INT32 have_gauss;
+	double gauss2;
 } gf;
 
 static void gunfight_sound_reset()
 {
-	for (INT32 i = 0; i < 4; i++) { gf.sw[i] = 0; gf.v[i].reset(&gf_voice_infos[i]); }
-	gf.side[0].reset(CAP_U(0.047), CAP_U(0.1));
-	gf.side[1].reset(CAP_U(0.047), CAP_U(0.1));
-	gf.noise_t = gf.noise_val = gf.noise_lp = 0;
+	memset(&gf, 0, sizeof(gf));
+	for (INT32 i = 0; i < 4; i++) gf.v[i].reset();
+	gf.mix[0].reset();
+	gf.mix[1].reset();
 	gf.rng = 0x12345678;
 }
 
-static double gf_gauss()
+static double gf_gauss()	// box-muller, sigma 1
 {
-	// sum of 4 uniforms, roughly gaussian, sigma ~1
-	double s = 0;
-	for (INT32 i = 0; i < 4; i++) {
+	if (gf.have_gauss) { gf.have_gauss = 0; return gf.gauss2; }
+	double u1, u2;
+	do {
 		gf.rng = gf.rng * 1664525 + 1013904223;
-		s += (double)(gf.rng >> 8) / 16777216.0;
-	}
-	return (s - 2.0) * 1.73;
+		u1 = (double)((gf.rng >> 8) + 1) / 16777217.0;
+		gf.rng = gf.rng * 1664525 + 1013904223;
+		u2 = (double)(gf.rng >> 8) / 16777216.0;
+	} while (u1 <= 0);
+	double r = sqrt(-2.0 * log(u1));
+	gf.gauss2 = r * sin(2 * M_PI * u2);
+	gf.have_gauss = 1;
+	return r * cos(2 * M_PI * u2);
 }
 
 static void gunfight_sound_step(double *l, double *r)
 {
-	// zener noise amplified by Q302, sampled at 24kHz
+	// zener noise (2mV RMS, 24kHz clock) amplified by Q302: ic = vn * beta / (r_pi + r_z) ~ vn / 54.6,
+	// into ~3.4k -> about 62x open circuit
 	gf.noise_t += disc_dt;
 	while (gf.noise_t >= 1.0 / 24000) {
 		gf.noise_t -= 1.0 / 24000;
-		gf.noise_val = gf_gauss() * 0.5;
+		gf.noise_val = gf_gauss() * 0.002 * 62.4;
 	}
 
-	double ls = gf.v[0].step(&gf_voice_infos[0], gf.sw[0], gf.noise_val);
-	double rs = gf.v[1].step(&gf_voice_infos[1], gf.sw[1], gf.noise_val);
-	double lh = gf.v[2].step(&gf_voice_infos[2], gf.sw[2], gf.noise_val);
-	double rh = gf.v[3].step(&gf_voice_infos[3], gf.sw[3], gf.noise_val);
+	for (INT32 i = 0; i < 4; i++) {
+		gf.y_old[i] = gf.v[i].v[GV_Y];
+		gf.v[i].step(&gf_voice_infos[i], gf.sw[i], gf.noise_val, gf.mix[i & 1].v[GM_Z]);
+	}
 
-	*l = gf.side[0].step(ls, lh);
-	*r = gf.side[1].step(rs, rh);
+	*l = gf.mix[0].step(gf.v[0].v[GV_Y], gf.y_old[0], gf.v[2].v[GV_Y], gf.y_old[2], gf_voice_infos[0].c_mix, gf_voice_infos[2].c_mix);
+	*r = gf.mix[1].step(gf.v[1].v[GV_Y], gf.y_old[1], gf.v[3].v[GV_Y], gf.y_old[3], gf_voice_infos[1].c_mix, gf_voice_infos[3].c_mix);
 }
 
 static void gunfight_sound_w(UINT8 data)
 {
-	// the 74175 latches and inverts the top 4 bits
+	// the 74175 latches and inverts the top 4 bits; the 74156 decoder turns on one switch
+	// a selected switch is only turned on, any other value turns all of them off
 	INT32 sel = (~data >> 4) & 0x0f;
-	for (INT32 i = 0; i < 4; i++) gf.sw[i] = 0;
-	if (sel >= 1 && sel <= 4) gf.sw[sel - 1] = 1;
+	if (sel >= 1 && sel <= 4) {
+		gf.sw[sel - 1] = 1;
+	} else {
+		for (INT32 i = 0; i < 4; i++) gf.sw[i] = 0;
+	}
 }
 
 // 280-ZZZAP / Laguna Racer sound board

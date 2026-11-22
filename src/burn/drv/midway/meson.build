@@ -13,7 +13,6 @@ group_srcs = [
     'midwunit.cpp',
     'narc_sound.cpp',
     'williams_adpcm.cpp',
-    'williams_cvsd.cpp',
     'yawdim_sound.cpp',
 ]
 drivers = {

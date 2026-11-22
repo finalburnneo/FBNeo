@@ -217,7 +217,6 @@
     <ClCompile Include="..\..\src\burn\drv\midway\d_yunit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\narc_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\williams_adpcm.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\midway\williams_cvsd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\yawdim_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\nes\d_nes.cpp" />
     <ClCompile Include="..\..\src\burn\drv\nes\nes.cpp" />

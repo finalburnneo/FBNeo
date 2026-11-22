@@ -8,6 +8,8 @@ void cvsd_cb1_write(INT32 state);
 void cvsd_set_cb2_callback(void (*cb)(INT32 state));
 void cvsd_set_s11_bg_mode(INT32 enable);
 void cvsd_set_dac_signed(INT32 enable);
+void cvsd_set_protection(INT32 start, INT32 end, INT32 rom_patch);
+void cvsd_set_reset_line_resets_sound(INT32 enable);
 UINT8 cvsd_talkback_read();
 void cvsd_reset();
 void cvsd_init(INT32 m6809num, INT32 dacnum, INT32 pianum, UINT8 *rom /*0x80000 size!*/, UINT8 *ram/*0x800 size!*/); // cpu is 2000000 hz

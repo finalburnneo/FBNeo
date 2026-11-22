@@ -7,7 +7,10 @@
 #include "z80_intf.h"
 #include "narc_sound.h"
 #include "williams_adpcm.h"
-#include "williams_cvsd.h"
+#include "midcvsd.h"
+#include "burn_ym2151.h"
+#include "dac.h"
+#include "hc55516.h"
 #include "yawdim_sound.h"
 #include "burn_ym2151.h"
 #include "burn_pal.h"
@@ -26,6 +29,7 @@ static UINT8 *MemEnd;
 static UINT8 *DrvMainROM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvSndROM[2];
+static UINT8 *DrvSndRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvCMOSRAM;
 static UINT8 *DrvMainRAM;
@@ -1346,7 +1350,19 @@ static UINT16 midyunit_main_read(UINT32 address)
 
 static void midyunit_cvsd_write(UINT16 data)
 {
-	williams_cvsd_write((data & 0xff) | ((data & 0x200) >> 1));
+	cvsd_data_write((data & 0xff) | ((data & 0x200) >> 1));
+}
+
+static void midyunit_cvsd_reset_write(UINT16 state)
+{
+	cvsd_reset_write(state);
+}
+
+static INT32 midyunit_cvsd_scan(INT32 nAction, INT32 *pnMin)
+{
+	cvsd_scan(nAction, pnMin);
+
+	return 0;
 }
 
 static void to_shiftreg(UINT32 address, UINT16 *shiftreg)
@@ -1483,6 +1499,7 @@ static INT32 MemIndex()
 	DrvVidRAM			= Next; Next += 0x080000;
 	BurnPalRAM			= Next; Next += 0x004000;
 	DrvMainRAM			= Next; Next += 0x020000;
+	DrvSndRAM			= Next; Next += 0x000800;
 	DrvPalMAP           = (UINT16*)Next; Next += 0x002000 * sizeof(UINT16); // in ram section!
 
 	RamEnd				= Next;
@@ -1759,16 +1776,24 @@ static INT32 CommonInit(void (*load_callback)(), INT32 sound_system, UINT32 cloc
 
 		case 1: // CVSD
 		{
-			williams_cvsd_init(DrvSndROM[0], sndprot_start, sndprot_end, sound_system & 0x80 /* small/large mode */);
+			cvsd_init(0, 0, 0, DrvSndROM[0] + 0x10000, DrvSndRAM);
+			cvsd_set_protection(sndprot_start, sndprot_end, (sound_system & 0x80) ? 1 : 0); // 0x80: small board, protection patches rom bank 0
+			cvsd_set_dac_signed(1);
+			cvsd_set_reset_line_resets_sound(0);
+			BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.10, BURN_SND_ROUTE_LEFT);
+			BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.10, BURN_SND_ROUTE_RIGHT);
+			DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
+			DACDCBlock(1);
+			hc55516_volume(0.35);
 			sound_write = midyunit_cvsd_write;
-			sound_reset_write = williams_cvsd_reset_write;
+			sound_reset_write = midyunit_cvsd_reset_write;
 			sound_response_read = NULL;
 			sound_irq_state_read = NULL;
-			sound_reset = williams_cvsd_reset;
-			sound_scan = williams_cvsd_scan;
-			sound_exit = williams_cvsd_exit;
-			sound_update = williams_cvsd_update;
-			sound_in_reset = williams_cvsd_in_reset;
+			sound_reset = cvsd_reset;
+			sound_scan = midyunit_cvsd_scan;
+			sound_exit = cvsd_exit;
+			sound_update = cvsd_update;
+			sound_in_reset = cvsd_reset_status;
 			has_ym2151 = 1;
 		}
 		break;

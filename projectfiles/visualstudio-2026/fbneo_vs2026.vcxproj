@@ -362,7 +362,6 @@
     <ClCompile Include="..\..\src\burn\drv\midway\midwunit.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\narc_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\williams_adpcm.cpp" />
-    <ClCompile Include="..\..\src\burn\drv\midway\williams_cvsd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\midway\yawdim_sound.cpp" />
     <ClCompile Include="..\..\src\burn\drv\msx\d_msx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\neogeo\d_neogeo.cpp" />

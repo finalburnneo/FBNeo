@@ -19,18 +19,45 @@ static INT32 ym_reset_state;
 static void (*cb2_callback)(INT32 state) = NULL;
 static INT32 s11_bg_map = 0; // williams system 11 bg boards: cvsd clock set / digit write are swapped
 static INT32 dac_signed = 0;
+static INT32 reset_line_resets_sound = 1; // williams_cvsd (y-unit) only resets the cpu
+
+// sound cpu protection (midway y-unit), see cvsd_set_protection()
+#define PROT_MAX	0x100
+static INT32 prot_start = -1;
+static INT32 prot_end = -1;
+static INT32 prot_rom_patch = 0;
+static UINT8 protram[PROT_MAX];
+
+static INT32 bank_offset()
+{
+	return 0x8000 * ((cpu_bank >> 2) & 3) + 0x20000 * (cpu_bank & 3);
+}
 
 static void bankswitch(INT32 data)
 {
-	INT32 bank = (0x8000 * ((data >> 2) & 3) + 0x20000 * (data & 3));
+	cpu_bank = data & 0x0f;
 
-	cpu_bank = data;
+	M6809MapMemory(mainrom + bank_offset(),	0x8000, 0xffff, MAP_ROM);
 
-	M6809MapMemory(mainrom + bank,		0x8000, 0xffff, MAP_ROM);
+	if (prot_start >= 0) {
+		// the protection window goes through the handlers
+		M6809UnmapMemory(prot_start & ~0xff, prot_end | 0xff, MAP_ROM);
+	}
+}
+
+static INT32 prot_visible()
+{
+	// rom patch mode: the patched bytes only exist in bank 0
+	return (prot_rom_patch == 0 || bank_offset() == 0);
 }
 
 static void cvsd_write(UINT16 address, UINT8 data)
 {
+	if (address >= prot_start && address <= prot_end) {
+		protram[address - prot_start] = data;
+		return;
+	}
+
 	if ((address & 0xe000) == 0x2000) {
 		BurnYM2151Write(address & 1, data);
 		return;
@@ -45,8 +72,8 @@ static void cvsd_write(UINT16 address, UINT8 data)
 		if (s11_bg_map) {
 			hc55516_clock_w(1);
 		} else {
-			hc55516_digit_w(data);
 			hc55516_clock_w(0);
+			hc55516_digit_w(data & 1);
 		}
 		return;
 	}
@@ -69,6 +96,13 @@ static void cvsd_write(UINT16 address, UINT8 data)
 
 static UINT8 cvsd_read(UINT16 address)
 {
+	if (address >= 0x8000) {
+		if (address >= prot_start && address <= prot_end && prot_visible()) {
+			return protram[address - prot_start];
+		}
+		return mainrom[bank_offset() + (address & 0x7fff)];
+	}
+
 	if ((address & 0xe001) == 0x2001) {
 		return BurnYM2151Read();
 	}
@@ -144,8 +178,10 @@ void cvsd_reset_write(INT32 state)
 		M6809SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		M6809SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		bankswitch(0);
-		if (dac_select == 0) DACReset();
-		BurnYM2151Reset();
+		if (reset_line_resets_sound) {
+			if (dac_select == 0) DACReset();
+			BurnYM2151Reset();
+		}
 		M6809CPUPop();
 	}
 }
@@ -205,6 +241,44 @@ void cvsd_set_dac_signed(INT32 enable)
 	dac_signed = enable;
 }
 
+void cvsd_set_reset_line_resets_sound(INT32 enable)
+{
+	reset_line_resets_sound = enable;
+}
+
+static void prot_reset()
+{
+	if (prot_start < 0) return;
+
+	if (prot_rom_patch) {
+		memcpy(protram, mainrom + (prot_start - 0x8000), prot_end - prot_start + 1);
+	} else {
+		memset(protram, 0, sizeof(protram));
+	}
+}
+
+void cvsd_set_protection(INT32 start, INT32 end, INT32 rom_patch)
+{
+	// rom_patch = 0: extra ram visible in every bank (CVSD boards with the hidden ram)
+	// rom_patch = 1: writes patch the bank 0 rom copy (CVSD "small" boards)
+	if (cvsd_is_initialized == 0) return;
+
+	if (start < 0x8000 || end < start || (end - start + 1) > PROT_MAX) {
+		prot_start = prot_end = -1;
+		return;
+	}
+
+	prot_start = start;
+	prot_end = end;
+	prot_rom_patch = rom_patch;
+
+	prot_reset();
+
+	M6809CPUPush(cpu_select);
+	bankswitch(cpu_bank);
+	M6809CPUPop();
+}
+
 UINT8 cvsd_talkback_read()
 {
 	return audio_talkback;
@@ -230,6 +304,8 @@ void cvsd_reset()
 	pia_set_input_ca1(pia_select,1); // ??
 	M6809Close();
 
+	prot_reset();
+
 	audio_talkback = 0;
 	cvsd_in_reset = 0;
 	ym_reset_state = 0;
@@ -245,6 +321,9 @@ void cvsd_init(INT32 m6809num, INT32 dacnum, INT32 pianum, UINT8 *rom, UINT8 *ra
 	cb2_callback = NULL;
 	s11_bg_map = 0;
 	dac_signed = 0;
+	reset_line_resets_sound = 1;
+	prot_start = prot_end = -1;
+	cpu_bank = 0;
 
 	M6809Init(cpu_select);
 	M6809Open(cpu_select);
@@ -285,6 +364,8 @@ void cvsd_exit()
 	cb2_callback = NULL;
 	s11_bg_map = 0;
 	dac_signed = 0;
+	reset_line_resets_sound = 1;
+	prot_start = prot_end = -1;
 	cvsd_is_initialized = 0;
 }
 
@@ -328,6 +409,15 @@ void cvsd_scan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cpu_bank);
 		SCAN_VAR(cvsd_in_reset);
 		SCAN_VAR(ym_reset_state);
+	}
+
+	if ((nAction & ACB_MEMORY_RAM) && prot_start >= 0) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = protram;
+		ba.nLen	  = prot_end - prot_start + 1;
+		ba.szName = "CVSD protection ram";
+		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_WRITE) {

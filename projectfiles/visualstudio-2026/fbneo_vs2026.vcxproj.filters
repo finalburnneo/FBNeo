@@ -994,9 +994,6 @@
     <ClCompile Include="..\..\src\burn\drv\midway\williams_adpcm.cpp">
       <Filter>burn\drv\midway</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\burn\drv\midway\williams_cvsd.cpp">
-      <Filter>burn\drv\midway</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\midway\yawdim_sound.cpp">
       <Filter>burn\drv\midway</Filter>
     </ClCompile>

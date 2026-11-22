@@ -4876,10 +4876,14 @@ int ScrnSize()
 	} else {
 		if (nWindowSize) {
 			nMaxSize = nWindowSize;
-			if (bDrvOkay && nWindowSize > 1 && nBmapWidth >= 400 && nBmapHeight >= 400) {
-				// For Popeye, Hole Land and Syvalion, MCR..etc. when running Windowed: Double Size
-				bprintf(PRINT_NORMAL, _T("  * Game is double-sized to begin with.\n"));
-				nMaxSize--;
+			if (BurnArtworkActive() == false) {
+				// AKA the hires-hack - keeps hires games relatively the same
+				// size as average games (256x224, .. etc)
+				if (bDrvOkay && nWindowSize > 1 && nBmapWidth >= 400 && nBmapHeight >= 400) {
+					// For Popeye, Hole Land and Syvalion, MCR..etc. when running Windowed: Double Size
+					bprintf(PRINT_NORMAL, _T("  * Game is double-sized to begin with.\n"));
+					nMaxSize--;
+				}
 			}
 		} else {
 			if (nBmapWidth < nBmapHeight) {

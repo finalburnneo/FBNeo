@@ -320,6 +320,7 @@ int DrvInitCallback()
 int DrvExit()
 {
 	if (bDrvOkay) {
+		ScrnExitLua();					// Stop Lua script & close console
 		NeoCDZRateChangeback();
 		StopReplay();
 		VidExit();

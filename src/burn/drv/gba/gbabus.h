@@ -289,9 +289,11 @@ static inline UINT32 gba_io_read32(gba_t* gba, UINT32 baddr)
 // refreshes the cached interrupt poll flag used once per instruction
 static inline void gba_update_interrupt_pending(gba_t* gba)
 {
-	UINT16 ie_if = gba_io_read16(gba, GBA_IE) & gba_io_read16(gba, GBA_IF);
-	gba->interrupt_flagged = ie_if != 0;
-	gba->interrupt_pending = (ie_if != 0) && (gba_io_read32(gba, GBA_IME) & 1);
+	UINT16 ie = gba_io_read16(gba, GBA_IE);
+	UINT16 if_value = gba_io_read16(gba, GBA_IF);
+	bool flagged = (ie & if_value) != 0;
+	gba->interrupt_flagged = flagged;
+	gba->interrupt_pending = flagged && (gba_io_read32(gba, GBA_IME) & 1);
 }
 
 static inline void gba_recompute_waitstate_table(gba_t* gba, UINT16 waitcnt)
@@ -780,21 +782,12 @@ static inline bool gba_process_mmio_write(gba_t* gba, UINT32 address, UINT32 dat
 	word_data &= word_mask;
 
 	if (address_u32 == GBA_IE) {
-		UINT16 IE = gba_io_read16(gba, GBA_IE);
-		UINT16 IF = gba_io_read16(gba, GBA_IF);
-
-		IE = ((IE & ~word_mask) | (word_data & word_mask)) >> 0;
-		IF &= ~((word_data) >> 16);
-		gba_io_store16(gba, GBA_IE, IE);
-		gba_io_store16(gba, GBA_IF, IF);
-		gba_update_interrupt_pending(gba);
-
-		return true;
-	} else if (address_u32 == GBA_IF) {
-		// Writing 1 to an IF bit acknowledges (clears) the interrupt
-		UINT16 IF = gba_io_read16(gba, GBA_IF);
-		IF &= ~(word_data & word_mask);
-		gba_io_store16(gba, GBA_IF, IF);
+		// IE is low half-word (R/W). IF is high half-word; write 1 to acknowledge (W1C).
+		// 8/16-bit writes to IF (0x4000202/03) also land here since address & ~3 = 0x4000200.
+		UINT32 word = gba_io_read32(gba, GBA_IE);
+		UINT16 IE = (UINT16)((word & ~word_mask) | (word_data & word_mask));
+		UINT16 IF = (UINT16)((word >> 16) & ~(word_data >> 16));
+		gba_io_store32(gba, GBA_IE, ((UINT32)IF << 16) | IE);
 		gba_update_interrupt_pending(gba);
 		return true;
 	} else if (address_u32 == GBA_IME) {

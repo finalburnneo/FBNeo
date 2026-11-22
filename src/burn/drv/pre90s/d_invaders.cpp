@@ -10651,10 +10651,10 @@ struct BurnDriver BurnDrvLupin3a = {
 // Yosaku HB remake
 
 static struct BurnRomInfo yosakuRomDesc[] = {
-	{ "ylp12.bin",            0x0800, 0x37fecee4, MW_ROM(R_MAIN, 0x0000) | BRF_PRG | BRF_ESS }, //  0 i8080 code
-	{ "ylp13.bin",            0x0800, 0xceb6c3b4, MW_ROM(R_MAIN, 0x0800) | BRF_PRG | BRF_ESS }, //  1 i8080 code
-	{ "ylp14.bin",            0x0800, 0xc433a113, MW_ROM(R_MAIN, 0x1000) | BRF_PRG | BRF_ESS }, //  2 i8080 code
-	{ "ylp15.bin",            0x0800, 0x6cac14c1, MW_ROM(R_MAIN, 0x1800) | BRF_PRG | BRF_ESS }, //  3 i8080 code
+	{ "ylp12.bin",            0x0800, 0x19bc1db4, MW_ROM(R_MAIN, 0x0000) | BRF_PRG | BRF_ESS }, //  0 i8080 code
+	{ "ylp13.bin",            0x0800, 0x1fb43a59, MW_ROM(R_MAIN, 0x0800) | BRF_PRG | BRF_ESS }, //  1 i8080 code
+	{ "ylp14.bin",            0x0800, 0xc418d5a3, MW_ROM(R_MAIN, 0x1000) | BRF_PRG | BRF_ESS }, //  2 i8080 code
+	{ "ylp15.bin",            0x0800, 0xb76d9e6f, MW_ROM(R_MAIN, 0x1800) | BRF_PRG | BRF_ESS }, //  3 i8080 code
 	{ "ylp16.bin",            0x0800, 0x3f55d17f, MW_ROM(R_MAIN, 0x4000) | BRF_PRG | BRF_ESS }, //  4 i8080 code
 	{ "ylp17.bin",            0x0800, 0x3f55d17f, MW_ROM(R_MAIN, 0x4800) | BRF_PRG | BRF_ESS }, //  5 i8080 code
 	{ "ylp18.bin",            0x0800, 0x3f55d17f, MW_ROM(R_MAIN, 0x5000) | BRF_PRG | BRF_ESS }, //  6 i8080 code

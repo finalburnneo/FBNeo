@@ -398,7 +398,7 @@ typedef struct {
 	INT32  sram_mode;
 	INT32  rom_mode;   // Reserved (written on register-select commands; no reads yet)
 	UINT8  write_sequence[5];
-	INT32  accepting_mode_change;
+	bool   accepting_mode_change;
 } gba_vfame_t;
 
 typedef struct {

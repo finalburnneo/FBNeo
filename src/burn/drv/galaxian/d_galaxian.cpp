@@ -7933,7 +7933,7 @@ struct BurnDriverD BurnDrvSupergx = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvTstgalx = {
+struct BurnDriverD BurnDrvTstgalx = {
 	"tst_galx", "galaxian", NULL, NULL, "19??",
 	"Galaxian Test ROM\0", NULL, "<unknown>", "Galaxian",
 	NULL, NULL, NULL, NULL,

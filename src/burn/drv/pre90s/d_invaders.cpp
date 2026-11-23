@@ -10121,7 +10121,7 @@ static struct BurnRomInfo tst_invdRomDesc[] = {
 STD_ROM_PICK(tst_invd)
 STD_ROM_FN(tst_invd)
 
-struct BurnDriver BurnDrvTst_invd = {
+struct BurnDriverD BurnDrvTst_invd = {
 	"tst_invd", "invaders", NULL, NULL, "19??",
 	"Space Invaders Test ROM\0", NULL, "<unknown>", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

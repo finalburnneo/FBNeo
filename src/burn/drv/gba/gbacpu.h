@@ -482,7 +482,6 @@ static inline void arm7_process_interrupts(arm7_t* cpu)
 		cpu->registers[CPSR]     = (cpsr & 0xffffffe0) | 0x12;
 		//Disable interrupts(set I bit)
 		cpu->registers[CPSR]    |= 1 << 7;
-		cpu->i_cycles += 1;
 		arm7_set_thumb_bit(cpu, false);
 		cpu->phased_op_id = ARM_PHASED_FILL_PIPE;
 		cpu->phase = 0;
@@ -513,14 +512,13 @@ static inline void arm7_fill_pipeline(arm7_t* cpu)
 	bool thumb = arm7_get_thumb_bit(cpu);
 	if (thumb) {
 		cpu->registers[PC] &= ~1;
-		cpu->prefetch_opcode[cpu->phase] = cpu->read16_seq(cpu->user_data, cpu->registers[PC] + 2 * cpu->phase, cpu->phase != 0);
+		cpu->prefetch_opcode[0] = cpu->read16_seq(cpu->user_data, cpu->registers[PC] + 0, false);
+		cpu->prefetch_opcode[1] = cpu->read16_seq(cpu->user_data, cpu->registers[PC] + 2, true);
 	} else {
 		cpu->registers[PC] &= ~3;
-		cpu->prefetch_opcode[cpu->phase] = cpu->read32_seq(cpu->user_data, cpu->registers[PC] + 4 * cpu->phase, cpu->phase != 0);
+		cpu->prefetch_opcode[0] = cpu->read32_seq(cpu->user_data, cpu->registers[PC] + 0, false);
+		cpu->prefetch_opcode[1] = cpu->read32_seq(cpu->user_data, cpu->registers[PC] + 4, true);
 	}
-	++cpu->phase;
-	if (cpu->phase != 2)
-		return;
 	cpu->phase        = 0;
 	cpu->phased_op_id = 0;
 	cpu->prefetch_pc  = cpu->registers[PC];
@@ -1043,15 +1041,17 @@ static inline void arm7_single_word_transfer(arm7_t* cpu, UINT32 opcode)
 static inline void arm7_undefined(arm7_t* cpu, UINT32 opcode)
 {
 	bool thumb = arm7_get_thumb_bit(cpu);
-	cpu->registers[R14_und]  = cpu->registers[PC] - (thumb ? 0 : 4);
+	// R14_und = next instruction
+	cpu->registers[R14_und]  = cpu->registers[PC];
 	cpu->registers[PC]       = 0 + 0x4;
 	UINT32 cpsr = cpu->registers[CPSR];
 	cpu->registers[SPSR_und] = cpsr;
-	//Update mode to supervisor and block irqs
-	cpu->registers[CPSR]     = (cpsr & 0xffffffE0) | 0x1b | 0x80;
+	//Update mode to Undefined and block irqs
+	cpu->registers[CPSR]     = (cpsr & 0xffffffe0) | 0x1b | 0x80;
 	arm7_set_thumb_bit(cpu, false);
-	printf("Unhandled Instruction Class (arm7_undefined) Opcode: %x PC:%08x\n", opcode, cpu->registers[R14_und]);
-	cpu->i_cycles += 1;
+	// faulting instruction address for debug print
+	UINT32 fault_pc = cpu->registers[R14_und] - (thumb ? 2 : 4);
+	printf("Unhandled Instruction Class (arm7_undefined) Opcode: %x PC:%08x\n", opcode, fault_pc);
 }
 
 
@@ -1921,15 +1921,17 @@ static inline void arm7t_long_branch_link(arm7_t* cpu, UINT32 opcode)
 static inline void arm7t_unknown(arm7_t* cpu, UINT32 opcode)
 {
 	bool thumb = arm7_get_thumb_bit(cpu);
-	cpu->registers[R14_und]  = cpu->registers[PC] - (thumb ? 0 : 4);
+	// R14_und = next instruction
+	cpu->registers[R14_und]  = cpu->registers[PC];
 	cpu->registers[PC]       = 0 + 0x4;
 	UINT32 cpsr = cpu->registers[CPSR];
 	cpu->registers[SPSR_und] = cpsr;
-	//Update mode to supervisor and block irqs
+	//Update mode to Undefined and block irqs
 	cpu->registers[CPSR]     = (cpsr & 0xffffffe0) | 0x1b | 0x80;
 	arm7_set_thumb_bit(cpu, false);
+	UINT32 fault_pc = cpu->registers[R14_und] - (thumb ? 2 : 4);
 	printf("Unhandled Thumb Instruction Class: (arm7t_unknown) Opcode %x\n", opcode);
-	printf("PC: %08x\n", cpu->registers[PC]);
+	printf("PC: %08x\n", fault_pc);
 	if (cpu->trigger_breakpoint)cpu->trigger_breakpoint(cpu->user_data);
 }
 

@@ -7,6 +7,72 @@
 #include "gbabios.h"
 #include <ctype.h>
 
+// CRC-32 (reflected polynomial 0xEDB88320), table T0 is the standard 8-bit
+// table; T1..T7 are pre-generated at startup for slice-by-8 processing.
+static UINT32 CRC32_TABLE0[256];
+static UINT32 CRC32_TABLE1[256];
+static UINT32 CRC32_TABLE2[256];
+static UINT32 CRC32_TABLE3[256];
+static UINT32 CRC32_TABLE4[256];
+static UINT32 CRC32_TABLE5[256];
+static UINT32 CRC32_TABLE6[256];
+static UINT32 CRC32_TABLE7[256];
+static bool   gba_crc32_tables_ready = false;
+
+static void gba_crc32_init_tables(void)
+{
+	static const UINT32 poly = 0xEDB88320u;
+	for (UINT32 i = 0; i < 256; ++i) {
+		UINT32 c = i;
+		for (UINT32 j = 0; j < 8; ++j)
+			c = (c >> 1) ^ ((c & 1) ? poly : 0);
+		CRC32_TABLE0[i] = c;
+	}
+	for (UINT32 i = 0; i < 256; ++i) {
+		CRC32_TABLE1[i] = (CRC32_TABLE0[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE0[i] & 0xFF];
+		CRC32_TABLE2[i] = (CRC32_TABLE1[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE1[i] & 0xFF];
+		CRC32_TABLE3[i] = (CRC32_TABLE2[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE2[i] & 0xFF];
+		CRC32_TABLE4[i] = (CRC32_TABLE3[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE3[i] & 0xFF];
+		CRC32_TABLE5[i] = (CRC32_TABLE4[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE4[i] & 0xFF];
+		CRC32_TABLE6[i] = (CRC32_TABLE5[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE5[i] & 0xFF];
+		CRC32_TABLE7[i] = (CRC32_TABLE6[i] >> 8) ^ CRC32_TABLE0[CRC32_TABLE6[i] & 0xFF];
+	}
+	gba_crc32_tables_ready = true;
+}
+
+static UINT32 gba_crc32(const UINT8* data, UINT32 length)
+{
+	if (!gba_crc32_tables_ready)
+		gba_crc32_init_tables();
+	UINT32 crc = 0xFFFFFFFFu;
+	const UINT8* p = data;
+	// Process 8 bytes at a time via slice-by-8. The word is normalized to
+	// little-endian order so the byte lanes match the host on either endianness.
+	while (length >= 8) {
+		UINT64 w;
+		memcpy(&w, p, 8);
+		w = BURN_ENDIAN_SWAP_INT64(w);
+		UINT32 one   = (UINT32)(w & 0xFFFFFFFFu) ^ crc;
+		UINT32 two   = (UINT32)(w >> 32);
+		crc = CRC32_TABLE7[ one        & 0xFF] ^
+		      CRC32_TABLE6[(one >> 8)  & 0xFF] ^
+		      CRC32_TABLE5[(one >> 16) & 0xFF] ^
+		      CRC32_TABLE4[(one >> 24) & 0xFF] ^
+		      CRC32_TABLE3[ two        & 0xFF] ^
+		      CRC32_TABLE2[(two >> 8)  & 0xFF] ^
+		      CRC32_TABLE1[(two >> 16) & 0xFF] ^
+		      CRC32_TABLE0[(two >> 24) & 0xFF];
+		p      += 8;
+		length -= 8;
+	}
+	// Tail: single-byte fallback (no branch misprediction on short inputs).
+	while (length) {
+		crc = CRC32_TABLE0[(crc ^ *p) & 0xFF] ^ (crc >> 8);
+		++p;
+		--length;
+	}
+	return ~crc;
+}
 
 static inline UINT8* sb_load_file_data(const char*, size_t* fileSize)
 {
@@ -30,8 +96,8 @@ static inline bool gba_load_bios_file(const char*, const char*, const char*, UIN
 	return true;
 }
 
-// FC Mini (FC Mini) cartridge pattern value for out-of-bounds ROM reads
-static inline UINT32 gba_fcmini_pattern_right_shift2(UINT32 addr)
+// VFame unlicensed cartridge out-of-bounds ROM read pattern
+static inline UINT32 gba_vfame_pattern_right_shift2(UINT32 addr)
 {
 	UINT32 value = addr & 0xffff;
 	value >>= 2;
@@ -40,13 +106,13 @@ static inline UINT32 gba_fcmini_pattern_right_shift2(UINT32 addr)
 	return value;
 }
 
-static inline UINT16 gba_fcmini_get_pattern(UINT32 addr)
+static inline UINT16 gba_vfame_get_pattern(UINT32 addr)
 {
 	addr &= 0x1fffff;
 	UINT32 value = 0;
 	switch (addr & 0x1f0000) {
 		case 0x000000:
-		case 0x010000: value = (addr >> 1) & 0xffff;							break;
+		case 0x010000: value = (addr >> 1) & 0xffff;								break;
 		case 0x020000: value = addr & 0xffff;									break;
 		case 0x030000: value = (addr & 0xffff) + 1;								break;
 		case 0x040000: value = 0xffff - (addr & 0xffff);						break;
@@ -56,13 +122,13 @@ static inline UINT16 gba_fcmini_get_pattern(UINT32 addr)
 		case 0x080000: value = (addr & 0xffff) ^ 0x5555;						break;
 		case 0x090000: value = ((addr & 0xffff) ^ 0x5555) - 1;					break;
 		case 0x0a0000:
-		case 0x0b0000: value = gba_fcmini_pattern_right_shift2(addr);			break;
+		case 0x0b0000: value = gba_vfame_pattern_right_shift2(addr);			break;
 		case 0x0c0000:
-		case 0x0d0000: value = 0xffff - gba_fcmini_pattern_right_shift2(addr);	break;
+		case 0x0d0000: value = 0xffff - gba_vfame_pattern_right_shift2(addr);	break;
 		case 0x0e0000:
-		case 0x0f0000: value = gba_fcmini_pattern_right_shift2(addr) ^ 0xaaaa;	break;
+		case 0x0f0000: value = gba_vfame_pattern_right_shift2(addr) ^ 0xaaaa;	break;
 		case 0x100000:
-		case 0x110000: value = gba_fcmini_pattern_right_shift2(addr) ^ 0x5555;	break;
+		case 0x110000: value = gba_vfame_pattern_right_shift2(addr) ^ 0x5555;	break;
 		case 0x120000: value = 0xffff - ((addr & 0xffff) >> 1);					break;
 		case 0x130000: value = 0xffff - ((addr & 0xffff) >> 1) - 0x8000;		break;
 		case 0x140000:
@@ -90,8 +156,8 @@ static inline UINT16 gba_rom_read16(const gba_t* gba, UINT32 address)
 {
 	UINT32 offset = address & 0x1fffffe;
 	if (offset >= gba->cart.rom_size) {
-		if (gba->cart.fcmini.type)
-			return gba_fcmini_get_pattern(address);
+		if (gba->cart.vfame.type)
+			return gba_vfame_get_pattern(address);
 		if (gba_rom_mirrors_1m(gba, offset))
 			offset &= 0x0ffffe;
 		else
@@ -131,12 +197,12 @@ static inline void gba_process_flash_state_machine(gba_t* gba, UINT32 baddr, UIN
 		case FLASH_RECV_55:
 			if (baddr == 0x5555) {
 				switch (data) {
-					case FLASH_ENTER_CHIP_ID:gba->cart.in_chip_id_mode = true;             break;
-					case FLASH_EXIT_CHIP_ID: gba->cart.in_chip_id_mode = false;            break;
-					case FLASH_PREP_ERASE:   gba->cart.flash_state     = FLASH_PREP_ERASE; break;
-					case FLASH_WRITE_BYTE:   gba->cart.flash_state     = FLASH_WRITE_BYTE; break;
-					case FLASH_SET_BANK:     gba->cart.flash_state     = FLASH_SET_BANK;   break;
-					default: printf("Unknown flash command: %02x\n", data);                break;
+					case FLASH_ENTER_CHIP_ID: gba->cart.in_chip_id_mode = true;             break;
+					case FLASH_EXIT_CHIP_ID:  gba->cart.in_chip_id_mode = false;            break;
+					case FLASH_PREP_ERASE:    gba->cart.flash_state     = FLASH_PREP_ERASE; break;
+					case FLASH_WRITE_BYTE:    gba->cart.flash_state     = FLASH_WRITE_BYTE; break;
+					case FLASH_SET_BANK:      gba->cart.flash_state     = FLASH_SET_BANK;   break;
+					default: printf("Unknown flash command: %02x\n", data);                 break;
 				}
 			}
 			break;
@@ -176,55 +242,54 @@ static inline void gba_process_flash_state_machine(gba_t* gba, UINT32 baddr, UIN
 	}
 }
 
-// FC Mini SRAM write - address/value scrambling for FC Mini carts
-static inline UINT32 gba_fcmini_reorder_bits(UINT32 value, const UINT8* reordering, INT32 len)
+// VFame SRAM write address/value bit-scrambling
+static inline UINT32 gba_vfame_reorder_bits(UINT32 value, const UINT8* reordering, INT32 len)
 {
 	UINT32 result = 0;
 	for (INT32 i = 0; i < len; i++)
-		if (SB_BFE(value, i, 1))
-			result |= 1 << reordering[i];
+		if (SB_BFE(value, reordering[i], 1))
+			result |= 1 << ((len == 16) ? (15 - i) : (7 - i));
 	return result;
 }
 
-static inline void gba_fcmini_sram_write(gba_t* gba, UINT32 address, UINT8 value)
+static inline void gba_vfame_sram_write(gba_t* gba, UINT32 address, UINT8 value)
 {
-	gba_fcmini_t* fcmini = &gba->cart.fcmini;
+	gba_vfame_t* vfame = &gba->cart.vfame;
 	// Mode change sequence detection
 	if (address >= 0xfff8 && address <= 0xfffc) {
-		fcmini->write_sequence[address - 0xfff8] = value;
+		vfame->write_sequence[address - 0xfff8] = value;
 		if (address == 0xfffc) {
 			static const UINT8 start_seq[5] = { 0x99, 0x02, 0x05, 0x02, 0x03 };
 			static const UINT8 end_seq[5]   = { 0x99, 0x03, 0x62, 0x02, 0x56 };
-			if (memcmp(start_seq, fcmini->write_sequence, 5) == 0)
-				fcmini->accepting_mode_change = true;
-			if (memcmp(end_seq,   fcmini->write_sequence, 5) == 0)
-				fcmini->accepting_mode_change = false;
+			if (memcmp(start_seq, vfame->write_sequence, 5) == 0)
+				vfame->accepting_mode_change = true;
+			if (memcmp(end_seq,   vfame->write_sequence, 5) == 0)
+				vfame->accepting_mode_change = false;
 		}
 	}
-	if (fcmini->accepting_mode_change) {
+	if (vfame->accepting_mode_change) {
 		if (address == 0xfffe) {
-			fcmini->sram_mode = value;
-			return;
+			vfame->sram_mode = value;
 		} else if (address == 0xfffd) {
-			return;
+			vfame->rom_mode = value;
 		}
 	}
-	if (fcmini->sram_mode == -1)
+	if (vfame->sram_mode == -1)
 		return;
 
 	// addr_reorder[type][mode-1][16]
 	static const UINT8 addr_reorder[3][3][16] = {
-		{	// FCMINI_STANDARD [0]
+		{	// VFAME_STANDARD [0]
 			{ 15, 14,  9,  1,  8, 10,  7,  3,  5, 11,  4,  0, 13, 12,  2,  6 },
 			{ 15,  7, 13,  5, 11,  6,  0,  9, 12,  2, 10, 14,  3,  1,  8,  4 },
 			{ 15,  0,  3, 12,  2,  4, 14, 13,  1, 8,   6,  7,  9,  5, 11, 10 }
 		},
-		{	// FCMINI_GEORGE [1]
+		{	// VFAME_GEORGE [1]
 			{ 15,  7, 13,  1, 11, 10, 14,  9, 12,  2,  4,  0,  3,  5,  8,  6 },
 			{ 15, 14,  3, 12,  8,  4,  0, 13,  5, 11,  6,  7,  9,  1,  2, 10 },
 			{ 15,  0,  9,  5,  2,  6,  7,  3,  1,  8, 10, 14, 13, 12, 11,  4 }
 		},
-		{	// FCMINI_ALTERNATE [2]
+		{	// VFAME_ALTERNATE [2]
 			{ 15,  0, 13,  5,  8,  4,  7,  3,  1,  2, 10, 14,  9, 12, 11,  6 },
 			{ 15,  7,  9,  1,  2,  6, 14, 13, 12, 11,  4,  0,  3,  5,  8, 10 },
 			{ 15, 14,  3, 12, 11, 10,  0,  9,  5,  8,  6,  7, 13,  1,  2,  4 }
@@ -237,15 +302,16 @@ static inline void gba_fcmini_sram_write(gba_t* gba, UINT32 address, UINT8 value
 		{ { 5, 4, 7, 2, 1, 0, 3, 6 }, { 1, 2, 3, 0, 5, 6, 7, 4 }, { 3, 0, 1, 6, 7, 4, 5, 2 } },
 	};
 
-	INT32 mode = fcmini->sram_mode & 0x3;
-	INT32 type = fcmini->type - 1;	// 0: standard, 1: george, 2: alternate
-	if (mode != 0) {
-		address = gba_fcmini_reorder_bits(address, addr_reorder[type][mode - 1], 16);
-		INT32 reorder_val = (fcmini->sram_mode & 0xf) >> 2;
-		if (reorder_val != 0)
-			value = gba_fcmini_reorder_bits(value, val_reorder[type][reorder_val - 1], 8);
+	INT32 addr_mode = vfame->sram_mode & 0x3;
+	INT32 type = vfame->type - 1;	// 0: standard, 1: george, 2: alternate
+	if (addr_mode != 0) {
+		address = gba_vfame_reorder_bits(address, addr_reorder[type][addr_mode - 1], 16);
 	}
-	if (fcmini->sram_mode & 0x80)
+	INT32 val_mode = (vfame->sram_mode >> 2) & 0x3;
+	if (val_mode != 0) {
+		value = gba_vfame_reorder_bits(value, val_reorder[type][val_mode - 1], 8);
+	}
+	if (vfame->sram_mode & 0x80)
 		value ^= 0xaa;
 	address &= 0x7fff;
 	if (gba->mem.cart_backup[address] != value) {
@@ -269,8 +335,8 @@ static inline void gba_process_backup_write(gba_t* gba, UINT32 baddr, UINT32 dat
 	if (gba->cart.backup_type == GBA_BACKUP_FLASH_64K || gba->cart.backup_type == GBA_BACKUP_FLASH_128K) {
 		gba_process_flash_state_machine(gba, baddr, data);
 	} else if (gba->cart.backup_type == GBA_BACKUP_SRAM) {
-		if (gba->cart.fcmini.type) {
-			gba_fcmini_sram_write(gba, baddr, data & 0xff);
+		if (gba->cart.vfame.type) {
+			gba_vfame_sram_write(gba, baddr, data & 0xff);
 		} else if (gba->mem.cart_backup[baddr & 0x7fff] != (data & 0xff)) {
 			gba->mem.cart_backup[baddr & 0x7fff] = data & 0xff;
 			gba->cart.backup_is_dirty = true;
@@ -280,31 +346,103 @@ static inline void gba_process_backup_write(gba_t* gba, UINT32 baddr, UINT32 dat
 	}
 }
 
+// SWAR helper: returns a 64-bit mask where each byte position is 0x80 if that
+// byte of w equals ch, otherwise 0x00.
+static inline UINT64 gba_swar_byte_eq(UINT64 w, UINT8 ch)
+{
+	UINT64 m = 0x0101010101010101ULL * ch;
+	UINT64 x = w ^ m;
+	return (x - 0x0101010101010101ULL) & ~x & 0x8080808080808080ULL;
+}
+
+// The cartridge declares its backup type through a signature string placed in the ROM image.
+// Signature prefixes are dispatched by lead byte: 'E' -> EEPROM_, 'S' -> SRAM_, 'F' -> FLASH*_.
+// Bulk 8-byte SWAR scanning skips most bytes without branching; only candidate bytes run memcmp.
 INT32 gba_search_rom_for_backup_string(gba_t* gba)
 {
-	INT32 btype = GBA_BACKUP_NONE;
-	for (INT32 b = 0; b < gba->cart.rom_size;++b) {
-		const char* strings[] = { "EEPROM_", "SRAM_", "FLASH_", "FLASH512_", "FLASH1M_" };
-		INT32 backup_type[] = { GBA_BACKUP_EEPROM, GBA_BACKUP_SRAM, GBA_BACKUP_FLASH_64K, GBA_BACKUP_FLASH_64K, GBA_BACKUP_FLASH_128K };
-		for (INT32 type = 0; type < ARRAY_SIZE(strings);++type) {
-			INT32 str_off   = 0;
-			bool  matches   = true;
-			const char* str = strings[type];
-			while (str[str_off] && matches) {
-				if (b + str_off  >= gba->cart.rom_size)
-					matches = false;
-				else if (str[str_off] != gba->mem.cart_rom[b + str_off])
-					matches = false;
-				++str_off;
+	// Per-lead signatures: only E/S/F lead bytes occur in our list.
+	typedef struct { const char* text; UINT32 len; INT32 btype; } sig_entry;
+	static const sig_entry sig_e[] = { { "EEPROM_",  sizeof("EEPROM_")  - 1, GBA_BACKUP_EEPROM      } };
+	static const sig_entry sig_s[] = { { "SRAM_",    sizeof("SRAM_")    - 1, GBA_BACKUP_SRAM        } };
+	static const sig_entry sig_f[] = {
+		{ "FLASH_",     sizeof("FLASH_")     - 1, GBA_BACKUP_FLASH_64K },
+		{ "FLASH512_",  sizeof("FLASH512_")  - 1, GBA_BACKUP_FLASH_64K },
+		{ "FLASH1M_",   sizeof("FLASH1M_")   - 1, GBA_BACKUP_FLASH_128K },
+	};
+
+	UINT32       rom_size = gba->cart.rom_size;
+	const UINT8* rom      = gba->mem.cart_rom;
+	INT32        btype    = GBA_BACKUP_NONE;
+	UINT32       offset   = 0;
+
+	// 64-bit bulk SWAR filter: entire 8-byte blocks with no E/S/F at any
+	// position are skipped in one branch.
+	while (offset + 8 <= rom_size) {
+		UINT64 w;
+		memcpy(&w, rom + offset, 8);
+		w = BURN_ENDIAN_SWAP_INT64(w);
+		UINT64 mE = gba_swar_byte_eq(w, 'E');
+		UINT64 mS = gba_swar_byte_eq(w, 'S');
+		UINT64 mF = gba_swar_byte_eq(w, 'F');
+		UINT64 m  = mE | mS | mF;
+		if (!m) {
+			offset += 8;
+			continue;
+		}
+		// At least one lead byte hit; check each hit byte by dispatch.
+		while (m) {
+			UINT32 bit  = (UINT32)__builtin_ctzll(m);
+			UINT32 byte = bit >> 3;
+			UINT32 pos  = offset + byte;
+			UINT8  c    = (UINT8)(w >> (byte * 8));
+			const sig_entry* sigs;
+			UINT32 n_sigs;
+			switch (c) {
+				case 'E': sigs = sig_e; n_sigs = ARRAY_SIZE(sig_e); break;
+				case 'S': sigs = sig_s; n_sigs = ARRAY_SIZE(sig_s); break;
+				case 'F': sigs = sig_f; n_sigs = ARRAY_SIZE(sig_f); break;
+				default:  m &= m - 1; continue;
 			}
-			if (matches) {
-				if (btype != backup_type[type] && btype != GBA_BACKUP_NONE) {
+			for (UINT32 k = 0; k < n_sigs; ++k) {
+				UINT32 len = sigs[k].len;
+				if (pos + len > rom_size)
+					continue;
+				if (memcmp(sigs[k].text, rom + pos, len) != 0)
+					continue;
+				if (btype != sigs[k].btype && btype != GBA_BACKUP_NONE) {
 					printf("Found multiple backup types, defaulting to none\n");
 					return GBA_BACKUP_NONE;
 				}
-				btype = backup_type[type];
+				btype = sigs[k].btype;
 			}
+			m &= m - 1;
 		}
+		offset += 8;
+	}
+	// Tail (< 8 bytes): per-byte check with same lead dispatch.
+	while (offset < rom_size) {
+		UINT8 c = rom[offset];
+		const sig_entry* sigs;
+		UINT32 n_sigs;
+		switch (c) {
+			case 'E': sigs = sig_e; n_sigs = ARRAY_SIZE(sig_e); break;
+			case 'S': sigs = sig_s; n_sigs = ARRAY_SIZE(sig_s); break;
+			case 'F': sigs = sig_f; n_sigs = ARRAY_SIZE(sig_f); break;
+			default:  ++offset; continue;
+		}
+		for (UINT32 k = 0; k < n_sigs; ++k) {
+			UINT32 len = sigs[k].len;
+			if (offset + len > rom_size)
+				continue;
+			if (memcmp(sigs[k].text, rom + offset, len) != 0)
+				continue;
+			if (btype != sigs[k].btype && btype != GBA_BACKUP_NONE) {
+				printf("Found multiple backup types, defaulting to none\n");
+				return GBA_BACKUP_NONE;
+			}
+			btype = sigs[k].btype;
+		}
+		++offset;
 	}
 	return btype;
 }
@@ -417,22 +555,61 @@ bool gba_load_rom(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch)
 		gba_matrix_reset(gba);
 	}
 
-	// FC Mini cartridge detection
-	{
-		static const UINT8 fcmini_init_seq[16] = {
+	// VFame unlicensed cartridge detection by init signature at ROM+0x15C,
+	// title string, or CRC32. 32MB dumps are de-protected.
+	if (emu->rom_size < 0x2000000) {
+		static const UINT8 vfame_init_seq[16] = {
 			0xb4, 0x00, 0x9f, 0xe5, 0x99, 0x10, 0xa0, 0xe3,
 			0x00, 0x10, 0xc0, 0xe5, 0xac, 0x00, 0x9f, 0xe5
 		};
-		if (emu->rom_size >= 0x16C && memcmp(fcmini_init_seq, emu->rom_data + 0x15c, 16) == 0) {
-			gba->cart.fcmini.type      =  1;	// FCMINI_STANDARD
-			gba->cart.fcmini.sram_mode = -1;
-			gba->cart.backup_type      = GBA_BACKUP_SRAM;
+		static const UINT8 vfame_lotr_title[16] = {
+			0x00, 0x4c, 0x4f, 0x52, 0x44, 0x00, 0x57, 0x4f,
+			0x52, 0x44, 0x00, 0x00, 0x41, 0x4b, 0x49, 0x4a
+		};
+		bool is_vfame = false;
+		if (emu->rom_size >= 0x16C && memcmp(vfame_init_seq, emu->rom_data + 0x15c, 16) == 0) {
+			gba->cart.vfame.type      = GBA_VFAME_STANDARD;
+			is_vfame                  = true;
+		}
+		if (emu->rom_size >= 0xB0) {
+			const char* title = (const char*)emu->rom_data + 0xA0;
+			if (memcmp(title, vfame_lotr_title, 16) == 0) {
+				gba->cart.vfame.type  = GBA_VFAME_STANDARD;
+				is_vfame              = true;
+			}
+			if (memcmp(title, "George Sango", 12) == 0) {
+				gba->cart.vfame.type  = GBA_VFAME_GEORGE;
+				is_vfame              = true;
+			}
+		}
+		// CRC32 match for Digimon Sapphire (Chinese), can override STANDARD
+		{
+			UINT32 rom_crc = gba_crc32(emu->rom_data, emu->rom_size);
+			if (rom_crc == 0x793A328F) {
+				gba->cart.vfame.type  = GBA_VFAME_ALTERNATE;
+				is_vfame              = true;
+			}
+		}
+		if (is_vfame) {
+			gba->cart.vfame.sram_mode = -1;
+			gba->cart.backup_type     = GBA_BACKUP_SRAM;
 		}
 	}
 
-	// Scan for backup strings; 32MB carts are data-dense, so skip them (false positives)
-	if (!gba->cart.fcmini.type && gba->cart.rom_size < 0x2000000)
+	// Scan ROM for a backup signature string; skip 32MB and larger de-protected dumps to avoid false matches
+	if (!gba->cart.vfame.type && gba->cart.rom_size < 0x2000000)
 		gba->cart.backup_type = gba_search_rom_for_backup_string(gba);
+
+	// Famicom Mini (Classic NES Series) fallback by game-code prefix: 'F' with
+	// EEPROM backup, some carrying no signature string. Applied only when the
+	// scan above found none.
+	if (!gba->cart.vfame.type &&
+	    gba->cart.backup_type == GBA_BACKUP_NONE &&
+	    emu->rom_size >= 0xB2 &&
+	    emu->rom_data[0xAC] == 'F' &&
+	    emu->rom_data[0xB0] == '0' && emu->rom_data[0xB1] == '1') {
+		gba->cart.backup_type = GBA_BACKUP_EEPROM;
+	}
 
 	size_t bytes = 0;
 	UINT8* data  = sb_load_file_data(emu->save_file_path, &bytes);

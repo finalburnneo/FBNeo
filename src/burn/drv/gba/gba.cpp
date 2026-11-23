@@ -66,14 +66,13 @@ static inline void arm7_fill_pipeline_fast(arm7_t* cpu, gba_t* gba)
 {
 	if (arm7_get_thumb_bit(cpu)) {
 		cpu->registers[PC] &= ~1;
-		cpu->prefetch_opcode[cpu->phase] = arm7_read16_seq(gba, cpu->registers[PC] + 2 * cpu->phase, cpu->phase != 0);
+		cpu->prefetch_opcode[0] = arm7_read16_seq(gba, cpu->registers[PC] + 0, false);
+		cpu->prefetch_opcode[1] = arm7_read16_seq(gba, cpu->registers[PC] + 2, true);
 	} else {
 		cpu->registers[PC] &= ~3;
-		cpu->prefetch_opcode[cpu->phase] = arm7_read32_seq(gba, cpu->registers[PC] + 4 * cpu->phase, cpu->phase != 0);
+		cpu->prefetch_opcode[0] = arm7_read32_seq(gba, cpu->registers[PC] + 0, false);
+		cpu->prefetch_opcode[1] = arm7_read32_seq(gba, cpu->registers[PC] + 4, true);
 	}
-	++cpu->phase;
-	if (cpu->phase != 2)
-		return;
 	cpu->phase        = 0;
 	cpu->phased_op_id = 0;
 	cpu->prefetch_pc  = cpu->registers[PC];
@@ -645,8 +644,8 @@ static void GbaCoreClearPresentation(GbaCore *core)
 
 static void GbaCoreApplyCartridgeFeatures(GbaCore *core)
 {
-	if (core->state.cart.fcmini.type)
-		return;		// FC Mini carts own their SRAM mapper
+	if (core->state.cart.vfame.type)
+		return;		// VFame carts own their SRAM mapper
 	core->state.cart.features = core->cartridgeFeatures;
 	if (core->cartridgeBackupType != GBA_BACKUP_NONE) {
 		core->state.cart.backup_type = core->cartridgeBackupType;
@@ -1288,18 +1287,22 @@ void gba_tick(sb_emu_state_t* emu, gba_t* gba, gba_scratch_t* scratch, ppu_worke
 			gba->cpu.i_cycles = 0;
 			gba->mem.requests = 0;
 			if (!gba->cpu.phased_op_id) {
+				// Wake halt on (IE&IF) != 0 regardless of IME; only dispatch the
+				// IRQ vector when IME is enabled (IE&IF&IME != 0).
+				if (SB_UNLIKELY(gba->interrupt_flagged))
+					gba->cpu.wait_for_interrupt = false;
 				if (SB_UNLIKELY(gba->interrupt_pending))
 					arm7_process_interrupts(&gba->cpu);
 			}
 			if (gba->cpu.wait_for_interrupt && !gba->cpu.phased_op_id) {
-				// halted: idle instruction, then run to the next event horizon
+				// fast-forward to the next event horizon
 				gba->last_cpu_tick = 1;
 				ticks              = gba_timing_next(gba);
 				if (ticks < 1)
 					ticks = 1;
 				gba_advance(gba, emu, ticks);
-				// settle the IF pipeline within the interrupt latency, not the next horizon
-				while (gba->active_if_pipe_stages && !gba->interrupt_pending)
+				// settle the IF pipeline within interrupt latency until an interrupt is flagged
+				while (gba->active_if_pipe_stages && !gba->interrupt_flagged)
 					gba_advance(gba, emu, 1);
 				continue;
 			} else {

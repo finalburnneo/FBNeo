@@ -33,6 +33,11 @@
 
 INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, INT32* pnWrote);
 
+#if defined(BUILD_WIN32)
+#include "zip.h"		// src/dep/libs/zip: reads the zips inside artwork.zip from memory
+#define ART_NESTED_ZIP
+#endif
+
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 
@@ -387,6 +392,25 @@ static void resample(const abitmap &src, INT32 dw, INT32 dh, abitmap &dst)
 static char art_archive[MAX_PATH * 2];	// zip path without extension ("" if none)
 static char art_folder[MAX_PATH * 2];	// folder with trailing slash ("" if none)
 
+// artwork.zip, holding every game's artwork: <game>.zip inside it, or a <game>/ folder
+static char art_pack[MAX_PATH * 2];		// artwork.zip path without extension, when <game>/ is a folder in it
+static char art_pack_dir[MAX_PATH];		// "<game>/"
+#ifdef ART_NESTED_ZIP
+static struct zip_t *art_inner = NULL;	// <game>.zip from artwork.zip, read from memory
+static void *art_inner_buf = NULL;
+#endif
+
+static void art_close_archives()
+{
+#ifdef ART_NESTED_ZIP
+	if (art_inner) zip_stream_close(art_inner);
+	art_inner = NULL;
+	if (art_inner_buf) free(art_inner_buf);
+	art_inner_buf = NULL;
+#endif
+	art_archive[0] = art_folder[0] = art_pack[0] = art_pack_dir[0] = 0;
+}
+
 static INT32 file_exists(const char *path)
 {
 	FILE *f = fopen(path, "rb");
@@ -403,6 +427,36 @@ static UINT8 *art_load_file(const char *name, INT32 *len)
 		void *dest = NULL;
 		INT32 l = 0;
 		if (ZipLoadOneFile(art_archive, name, &dest, &l) == 0 && dest && l > 0) {
+			*len = l;
+			return (UINT8*)dest;
+		}
+		if (dest) free(dest);
+	}
+#ifdef ART_NESTED_ZIP
+	if (art_inner && zip_entry_open(art_inner, name) == 0) {
+		void *buf = NULL;
+		size_t l = 0;
+		ssize_t r = zip_entry_read(art_inner, &buf, &l);
+		zip_entry_close(art_inner);
+		if (r > 0 && buf) {
+			// callers want a 0 after the data (text files)
+			UINT8 *out = (UINT8*)realloc(buf, l + 1);
+			if (out) {
+				out[l] = 0;
+				*len = (INT32)l;
+				return out;
+			}
+		}
+		if (buf) free(buf);
+	}
+#endif
+
+	if (art_pack[0]) {
+		char path[MAX_PATH * 2];
+		snprintf(path, sizeof(path), "%s%s", art_pack_dir, name);
+		void *dest = NULL;
+		INT32 l = 0;
+		if (ZipLoadOneFile(art_pack, path, &dest, &l) == 0 && dest && l > 0) {
 			*len = l;
 			return (UINT8*)dest;
 		}
@@ -437,7 +491,7 @@ static INT32 art_locate(const char *game)
 	const char *base = _TtoA(szAppArtworkPath);
 	char path[MAX_PATH * 3];
 
-	art_archive[0] = art_folder[0] = 0;
+	art_close_archives();
 
 	static const char *ext[] = { ".zip", ".7z" };
 	for (INT32 e = 0; e < 2; e++) {
@@ -453,7 +507,46 @@ static INT32 art_locate(const char *game)
 		snprintf(art_folder, sizeof(art_folder), "%s%s/", base, game);
 	}
 
-	return (art_archive[0] || art_folder[0]);
+	if (art_archive[0] || art_folder[0]) return 1;
+
+	// artwork.zip (or .7z) with every game in it
+	for (INT32 e = 0; e < 2; e++) {
+		snprintf(path, sizeof(path), "%sartwork%s", base, ext[e]);
+		if (!file_exists(path)) continue;
+
+		char pack[MAX_PATH * 2], name[MAX_PATH];
+		snprintf(pack, sizeof(pack), "%sartwork", base);
+		void *dest = NULL;
+		INT32 l = 0;
+
+#ifdef ART_NESTED_ZIP
+		// <game>.zip inside it
+		snprintf(name, sizeof(name), "%s.zip", game);
+		if (ZipLoadOneFile(pack, name, &dest, &l) == 0 && dest && l > 0) {
+			art_inner = zip_stream_open((const char*)dest, l, 0, 'r');
+			if (art_inner) {
+				art_inner_buf = dest;		// the zip reads from it, keep it until art_close_archives()
+				bprintf(PRINT_NORMAL, _T("Artwork: using %S from artwork%S\n"), name, ext[e]);
+				return 1;
+			}
+		}
+		if (dest) free(dest);
+		dest = NULL;
+#endif
+
+		// or a <game>/ folder inside it
+		snprintf(name, sizeof(name), "%s/default.lay", game);
+		if (ZipLoadOneFile(pack, name, &dest, &l) == 0 && dest && l > 0) {
+			free(dest);
+			snprintf(art_pack, sizeof(art_pack), "%s", pack);
+			snprintf(art_pack_dir, sizeof(art_pack_dir), "%s/", game);
+			bprintf(PRINT_NORMAL, _T("Artwork: using %S/ from artwork%S\n"), game, ext[e]);
+			return 1;
+		}
+		if (dest) free(dest);
+	}
+
+	return 0;
 }
 
 static INT32 png_decode(const UINT8 *data, INT32 len, abitmap &bm)
@@ -1393,6 +1486,32 @@ static INT32 lay_w = 0, lay_h = 0;
 static INT32 lay_full = 1;				// everything needs (re)building
 static INT32 lay_serial = 1;			// bumped when the layers change
 static INT32 lay_sx0, lay_sy0, lay_sx1, lay_sy1;	// screen rectangle (driver orientation)
+static std::vector<INT32> lay_dirty;	// display rectangles (x0, y0, x1, y1) the last layers_update() changed
+// the over-screen items under the first one bound to an output never change: their
+// A / B are kept here (display orientation), so a lamp only redoes the items from it up
+static std::vector<UINT32> pre_add, pre_mul;
+static UINT32 pre_first = 0;			// first item not in pre_add / pre_mul
+static INT32 pre_valid = 0;
+// over-screen items that changed in the last layers_update() (item, its old state)
+static std::vector<std::pair<INT32, INT32> > lay_chg;
+// per screen row: runs where A / B aren't "nothing" (compose_area() skips the rest)
+static std::vector<INT32> fold_runs, fold_row;
+static INT32 fold_serial = 0;
+static INT32 lay_ab_serial = 1;			// bumped when A / B change (not for background-only changes)
+// A / B for each combination of the output-driven items' states seen (blinking lamps
+// go back and forth between a few): switching back is a copy instead of a rebuild
+struct lay_memo {
+	std::vector<INT32> key;
+	std::vector<UINT32> add, mul;
+	UINT32 used;
+};
+static std::vector<lay_memo*> lay_memos;
+static UINT32 lay_memo_clock = 0;
+static void lay_memo_clear()
+{
+	for (UINT32 i = 0; i < lay_memos.size(); i++) delete lay_memos[i];
+	lay_memos.clear();
+}
 static void layers_update();
 static INT32 told_w = 0, told_h = 0;		// size the frontend last asked for (= its buffer)
 static INT32 target_w = 0, target_h = 0;	// frontend output area (auto scale mode)
@@ -1879,6 +1998,8 @@ static void art_layout()
 
 static void art_free()
 {
+	art_close_archives();
+
 	for (std::map<std::string, lelement*>::iterator it = elements.begin(); it != elements.end(); ++it) delete it->second;
 	elements.clear();
 	groups.clear();
@@ -1904,6 +2025,10 @@ static void art_free()
 	art_probed = 0;
 	told_w = told_h = 0;
 	lay_under.clear(); lay_add.clear(); lay_mul.clear();
+	std::vector<UINT32>().swap(pre_add);
+	std::vector<UINT32>().swap(pre_mul);
+	pre_valid = 0;
+	lay_memo_clear();
 	lay_w = lay_h = 0;
 	lay_full = 1;
 	frame_depth = 0;
@@ -2508,36 +2633,6 @@ void BurnArtworkFrameBegin()
 	nBurnPitch = native_w * nBurnBpp;
 }
 
-static void compose_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
-{
-	if (x0 < 0) x0 = 0;
-	if (y0 < 0) y0 = 0;
-	if (x1 > disp_w) x1 = disp_w;
-	if (y1 > disp_h) y1 = disp_h;
-	if (x1 <= x0 || y1 <= y0) return;
-
-	clip_x0 = x0; clip_y0 = y0; clip_x1 = x1; clip_y1 = y1;
-
-	// the game screen is the first thing drawn: if it covers the whole area it
-	// can read the background directly instead of it being copied in first
-	const litem &fs = view->items[first_screen];
-	INT32 fused = (fs.is_screen && fs.screen_index == 0 && fs.px0 <= x0 && fs.py0 <= y0 && fs.px1 >= x1 && fs.py1 >= y1);
-
-	if (!fused) {
-		for (INT32 y = y0; y < y1; y++)
-			memcpy(&disp[y * disp_w + x0], &bg[y * disp_w + x0], (x1 - x0) * sizeof(UINT32));
-	}
-
-	for (UINT32 i = first_screen; i < view->items.size(); i++) {
-		litem &it = view->items[i];
-		if (it.is_screen) {
-			if (it.screen_index == 0) apply_screen(disp, it, (fused && i == (UINT32)first_screen) ? &bg[0] : NULL);
-		} else {
-			apply_bitmap(disp, it, item_bitmap(it, item_state(it)));
-		}
-	}
-}
-
 // redraw the static background in one rectangle
 static void bg_rebuild_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
 {
@@ -2579,6 +2674,8 @@ static INT32 screen_blend(const litem &it)
 // display (layout) pixel -> index into the driver-oriented layers
 static inline INT32 lay_index(INT32 dx, INT32 dy)
 {
+	if (!layered) return dy * disp_w + dx;	// art_compose() keeps them in display orientation
+
 	INT32 x, y;
 	if (!orient_v) {
 		if (!orient_f) { x = dx; y = dy; }
@@ -2590,8 +2687,189 @@ static inline INT32 lay_index(INT32 dx, INT32 dy)
 	return y * lay_w + x;
 }
 
-// rebuild U, A and B in a display rectangle
-static void layers_build_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
+// one over-screen item into a row of A (8.8 fixed) / B (0 - 65536 = 0.0 - 1.0)
+static void layers_apply_item(litem &it, INT32 y, INT32 x0, INT32 x1, UINT32 *a, UINT32 *b)
+{
+	if (it.is_screen || it.elem == NULL || y < it.py0 || y >= it.py1) return;
+	INT32 ix0 = it.px0 > x0 ? it.px0 : x0;
+	INT32 ix1 = it.px1 < x1 ? it.px1 : x1;
+	if (ix1 <= ix0) return;
+
+	abitmap *bm = item_bitmap(it, item_state(it));
+	if (bm == NULL || bm->p.empty()) return;
+	INT32 ry = y - it.py0;
+	const UINT32 *srow = &bm->p[(size_t)ry * bm->w];
+
+	// alpha / add: only the non-transparent runs of the row (a lamp is mostly empty)
+	INT32 runs = 1;
+	const INT32 *sp = NULL;
+	if ((it.blend == BLEND_ALPHA || it.blend == BLEND_ADD) && !bm->span_row.empty()) {
+		sp = &bm->spans[bm->span_row[ry]];
+		runs = sp[0];
+	}
+
+	for (INT32 k = 0; k < runs; k++) {
+		INT32 rx0 = ix0, rx1 = ix1;
+		if (sp) {
+			if (it.px0 + sp[1 + k * 2] > rx0) rx0 = it.px0 + sp[1 + k * 2];
+			if (it.px0 + sp[2 + k * 2] < rx1) rx1 = it.px0 + sp[2 + k * 2];
+		}
+
+		for (INT32 x = rx0; x < rx1; x++) {
+			UINT32 spx = srow[x - it.px0];
+			UINT32 *pa = &a[(x - x0) * 3], *pb = &b[(x - x0) * 3];
+			UINT32 sc[3] = { (spx >> 16) & 0xff, (spx >> 8) & 0xff, spx & 0xff };
+			switch (it.blend) {
+				case BLEND_NONE:
+					for (INT32 c = 0; c < 3; c++) { pa[c] = sc[c] << 8; pb[c] = 0; }
+					break;
+				case BLEND_MULTIPLY:
+					if ((spx & 0xffffff) == 0xffffff) break;
+					for (INT32 c = 0; c < 3; c++) { pa[c] = pa[c] * sc[c] / 255; pb[c] = pb[c] * sc[c] / 255; }
+					break;
+				case BLEND_ADD:
+					for (INT32 c = 0; c < 3; c++) { pa[c] += sc[c] << 8; if (pa[c] > 0xffff) pa[c] = 0xffff; }
+					break;
+				default: {	// alpha, premultiplied
+					UINT32 sa = spx >> 24;
+					if (sa == 0) break;
+					if (sa == 0xff) {
+						for (INT32 c = 0; c < 3; c++) { pa[c] = sc[c] << 8; pb[c] = 0; }
+						break;
+					}
+					UINT32 inv = 255 - sa;
+					for (INT32 c = 0; c < 3; c++) { pa[c] = (sc[c] << 8) + pa[c] * inv / 255; pb[c] = pb[c] * inv / 255; if (pa[c] > 0xffff) pa[c] = 0xffff; }
+				}
+				break;
+			}
+		}
+	}
+}
+
+// 8 bit B (as stored) -> 0 - 65536
+static UINT32 mul_from8_lut[256];
+static INT32 mul_from8_init = 0;
+
+struct lay_ctx {
+	INT32 sblend, tint;
+	UINT32 tr, tg, tb;
+	UINT32 nitems, dyn;
+	INT32 use_pre, build_pre;
+	std::vector<UINT32> a, b;
+};
+
+// U, A and B for display pixels x0 - x1 of row y
+static void layers_build_run(lay_ctx &k, INT32 y, INT32 x0, INT32 x1)
+{
+	INT32 n = x1 - x0;
+	if (n <= 0) return;
+	if ((INT32)k.a.size() < n * 3) { k.a.resize(n * 3); k.b.resize(n * 3); }
+	UINT32 *a = &k.a[0], *b = &k.b[0];		// A: 8.8 fixed, B: 0 - 65536 = 0.0 - 1.0
+	const litem &scr = view->items[first_screen];
+
+	UINT32 first = first_screen + 1;
+	if (k.use_pre && !k.build_pre) {
+		const UINT32 *qa = &pre_add[(size_t)y * disp_w + x0], *qb = &pre_mul[(size_t)y * disp_w + x0];
+		for (INT32 x = 0; x < n; x++) {
+			UINT32 va = qa[x], vb = qb[x];
+			a[x * 3 + 0] = (va >> 8) & 0xff00; a[x * 3 + 1] = va & 0xff00; a[x * 3 + 2] = (va & 0xff) << 8;
+			b[x * 3 + 0] = mul_from8_lut[(vb >> 16) & 0xff]; b[x * 3 + 1] = mul_from8_lut[(vb >> 8) & 0xff]; b[x * 3 + 2] = mul_from8_lut[vb & 0xff];
+		}
+		first = k.dyn;
+	} else {
+		for (INT32 x = 0; x < n * 3; x++) { a[x] = 0; b[x] = 65536; }
+	}
+
+	for (UINT32 i = first; i < k.nitems; i++) {
+		if (k.build_pre && i == k.dyn) {
+			// store the static part (8 bits, like the layers), and go on from what was stored
+			UINT32 *qa = &pre_add[(size_t)y * disp_w + x0], *qb = &pre_mul[(size_t)y * disp_w + x0];
+			for (INT32 x = 0; x < n; x++) {
+				UINT32 av[3], bv[3];
+				for (INT32 c = 0; c < 3; c++) {
+					av[c] = (a[x * 3 + c] + 128) >> 8; if (av[c] > 255) av[c] = 255;
+					bv[c] = (b[x * 3 + c] * 255 + 32768) >> 16; if (bv[c] > 255) bv[c] = 255;
+					a[x * 3 + c] = av[c] << 8;
+					b[x * 3 + c] = mul_from8_lut[bv[c]];
+				}
+				qa[x] = (av[0] << 16) | (av[1] << 8) | av[2];
+				qb[x] = (bv[0] << 16) | (bv[1] << 8) | bv[2];
+			}
+		}
+		layers_apply_item(view->items[i], y, x0, x1, a, b);
+	}
+
+	// where pixel x lands in the layers: li0 + (x - x0) * lstep
+	INT32 li0 = lay_index(x0, y);
+	INT32 lstep = (n > 1) ? lay_index(x0 + 1, y) - li0 : 1;
+
+	INT32 in_scr_y = (y >= scr.py0 && y < scr.py1);
+	const UINT32 *bgrow = &bg[(size_t)y * disp_w];
+	for (INT32 x = x0; x < x1; x++) {
+		UINT32 *pa = &a[(x - x0) * 3], *pb = &b[(x - x0) * 3];
+		INT32 in_scr = in_scr_y && x >= scr.px0 && x < scr.px1;
+		if (in_scr && k.tint) {
+			pb[0] = (UINT32)(((UINT64)pb[0] * k.tr) >> 16);
+			pb[1] = (UINT32)(((UINT64)pb[1] * k.tg) >> 16);
+			pb[2] = (UINT32)(((UINT64)pb[2] * k.tb) >> 16);
+		}
+		UINT32 av[3], bv[3];
+		for (INT32 c = 0; c < 3; c++) {
+			av[c] = (pa[c] + 128) >> 8; if (av[c] > 255) av[c] = 255;
+			bv[c] = (pb[c] * 255 + 32768) >> 16; if (bv[c] > 255) bv[c] = 255;
+		}
+		INT32 li = li0 + (x - x0) * lstep;
+		lay_add[li] = 0xff000000 | (av[0] << 16) | (av[1] << 8) | av[2];
+		lay_mul[li] = 0xff000000 | (bv[0] << 16) | (bv[1] << 8) | bv[2];
+		if (layered) lay_under[li] = (in_scr && k.sblend == BLEND_NONE) ? 0xff000000 : (0xff000000 | bgrow[x]);
+	}
+}
+
+// the display x ranges of row y that a bitmap of item it touches (non-transparent runs),
+// appended to out as [start, end) pairs; returns 0 if it can't tell (then: the whole row)
+static INT32 item_row_runs(const litem &it, const abitmap *bm, INT32 y, std::vector<INT32> &out)
+{
+	if (bm == NULL || bm->p.empty() || y < it.py0 || y >= it.py1) return 1;		// nothing there
+	if (!(it.blend == BLEND_ALPHA || it.blend == BLEND_ADD) || bm->span_row.empty()) return 0;
+	const INT32 *sp = &bm->spans[bm->span_row[y - it.py0]];
+	for (INT32 k = 0; k < sp[0]; k++) {
+		out.push_back(it.px0 + sp[1 + k * 2]);
+		out.push_back(it.px0 + sp[2 + k * 2]);
+	}
+	return 1;
+}
+
+// first over-screen item bound to an output (everything under it, down to the screen, is static)
+static UINT32 layers_dyn_first()
+{
+	UINT32 n = view->items.size(), d = first_screen + 1;
+	while (d < n && !(view->items[d].elem && view->items[d].output >= 0)) d++;
+	return d;
+}
+
+// the display x ranges of row y where an item changed from image bm_old to bm_new
+// (sorted, merged [start, end) pairs); returns 0 if it can't tell (then: its whole row)
+static INT32 changed_row_runs(const litem &it, const abitmap *bm_old, const abitmap *bm_new, INT32 y, std::vector<INT32> &merged)
+{
+	static std::vector<INT32> runs;
+	runs.clear();
+	merged.clear();
+	if (!item_row_runs(it, bm_old, y, runs) || !item_row_runs(it, bm_new, y, runs)) return 0;
+	if (runs.empty()) return 1;
+
+	std::vector<std::pair<INT32, INT32> > r;
+	for (UINT32 q = 0; q + 1 < runs.size(); q += 2) r.push_back(std::make_pair(runs[q], runs[q + 1]));
+	std::sort(r.begin(), r.end());
+	for (UINT32 q = 0; q < r.size(); q++) {
+		if (!merged.empty() && r[q].first <= merged.back()) { if (r[q].second > merged.back()) merged.back() = r[q].second; }
+		else { merged.push_back(r[q].first); merged.push_back(r[q].second); }
+	}
+	return 1;
+}
+
+// rebuild U, A and B in a display rectangle. chg (optional): the item whose state
+// changed from old_state, only the pixels its old or new image covers are redone
+static void layers_build_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1, litem *chg = NULL, INT32 old_state = 0)
 {
 	if (x0 < 0) x0 = 0;
 	if (y0 < 0) y0 = 0;
@@ -2599,99 +2877,83 @@ static void layers_build_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
 	if (y1 > disp_h) y1 = disp_h;
 	if (x1 <= x0 || y1 <= y0) return;
 
-	const litem &scr = view->items[first_screen];
-	INT32 sblend = screen_blend(scr);
-	INT32 tint = !is_white(scr.color) && sblend == BLEND_NONE;	// folded into B (with "add" it can't be, ignored)
-	UINT32 tr = (UINT32)(scr.color.r * scr.color.a * 65536), tg = (UINT32)(scr.color.g * scr.color.a * 65536), tb = (UINT32)(scr.color.b * scr.color.a * 65536);
+	if (!mul_from8_init) {
+		for (UINT32 v = 0; v < 256; v++) mul_from8_lut[v] = (v * 65536 + 127) / 255;
+		mul_from8_init = 1;
+	}
 
-	INT32 n = x1 - x0;
-	std::vector<UINT32> a(n * 3), b(n * 3);		// A: 8.8 fixed, B: 0 - 65536 = 0.0 - 1.0
+	const litem &scr = view->items[first_screen];
+	lay_ctx k;
+	k.sblend = screen_blend(scr);
+	// the screen's tint is folded into B for the frontend; art_compose()'s apply_screen() does it itself
+	k.tint = layered && !is_white(scr.color) && k.sblend == BLEND_NONE;
+	k.tr = (UINT32)(scr.color.r * scr.color.a * 65536); k.tg = (UINT32)(scr.color.g * scr.color.a * 65536); k.tb = (UINT32)(scr.color.b * scr.color.a * 65536);
+
+	// the static items under the first output-driven one: fold them once (whole display), then reuse
+	k.nitems = view->items.size();
+	k.dyn = layers_dyn_first();
+	k.use_pre = (k.dyn > (UINT32)first_screen + 1);
+	if (!k.use_pre) {
+		pre_valid = 0;
+		std::vector<UINT32>().swap(pre_add);
+		std::vector<UINT32>().swap(pre_mul);
+	} else if (!pre_valid || pre_first != k.dyn || pre_add.size() != (size_t)disp_w * disp_h) {
+		pre_add.assign((size_t)disp_w * disp_h, 0);
+		pre_mul.assign((size_t)disp_w * disp_h, 0);
+		pre_first = k.dyn;
+		pre_valid = 0;
+		x0 = 0; y0 = 0; x1 = disp_w; y1 = disp_h;	// build it all now
+		chg = NULL;
+	}
+	k.build_pre = k.use_pre && !pre_valid;
+
+	abitmap *bm_old = chg ? item_bitmap(*chg, old_state) : NULL;
+	abitmap *bm_new = chg ? item_bitmap(*chg, item_state(*chg)) : NULL;
+	std::vector<INT32> merged;
 
 	for (INT32 y = y0; y < y1; y++) {
-		std::fill(a.begin(), a.end(), 0);
-		std::fill(b.begin(), b.end(), 65536);
-
-		INT32 in_scr_y = (y >= scr.py0 && y < scr.py1);
-
-		for (UINT32 i = first_screen + 1; i < view->items.size(); i++) {
-			litem &it = view->items[i];
-			if (it.is_screen || it.elem == NULL || y < it.py0 || y >= it.py1) continue;
-			INT32 ix0 = it.px0 > x0 ? it.px0 : x0;
-			INT32 ix1 = it.px1 < x1 ? it.px1 : x1;
-			if (ix1 <= ix0) continue;
-
-			abitmap *bm = item_bitmap(it, item_state(it));
-			if (bm == NULL || bm->p.empty()) continue;
-			const UINT32 *srow = &bm->p[(y - it.py0) * bm->w];
-
-			for (INT32 x = ix0; x < ix1; x++) {
-				UINT32 sp = srow[x - it.px0];
-				UINT32 *pa = &a[(x - x0) * 3], *pb = &b[(x - x0) * 3];
-				UINT32 sc[3] = { (sp >> 16) & 0xff, (sp >> 8) & 0xff, sp & 0xff };
-				switch (it.blend) {
-					case BLEND_NONE:
-						for (INT32 c = 0; c < 3; c++) { pa[c] = sc[c] << 8; pb[c] = 0; }
-						break;
-					case BLEND_MULTIPLY:
-						if ((sp & 0xffffff) == 0xffffff) break;
-						for (INT32 c = 0; c < 3; c++) { pa[c] = pa[c] * sc[c] / 255; pb[c] = pb[c] * sc[c] / 255; }
-						break;
-					case BLEND_ADD:
-						for (INT32 c = 0; c < 3; c++) { pa[c] += sc[c] << 8; if (pa[c] > 0xffff) pa[c] = 0xffff; }
-						break;
-					default: {	// alpha, premultiplied
-						UINT32 sa = sp >> 24;
-						if (sa == 0) break;
-						UINT32 inv = 255 - sa;
-						for (INT32 c = 0; c < 3; c++) { pa[c] = (sc[c] << 8) + pa[c] * inv / 255; pb[c] = pb[c] * inv / 255; if (pa[c] > 0xffff) pa[c] = 0xffff; }
-					}
-					break;
-				}
+		if (chg && changed_row_runs(*chg, bm_old, bm_new, y, merged)) {
+			for (UINT32 q = 0; q + 1 < merged.size(); q += 2) {
+				INT32 a0 = merged[q] > x0 ? merged[q] : x0, a1 = merged[q + 1] < x1 ? merged[q + 1] : x1;
+				layers_build_run(k, y, a0, a1);
 			}
+			continue;
 		}
-
-		for (INT32 x = x0; x < x1; x++) {
-			UINT32 *pa = &a[(x - x0) * 3], *pb = &b[(x - x0) * 3];
-			INT32 in_scr = in_scr_y && x >= scr.px0 && x < scr.px1;
-			if (in_scr && tint) {
-				pb[0] = (UINT32)(((UINT64)pb[0] * tr) >> 16);
-				pb[1] = (UINT32)(((UINT64)pb[1] * tg) >> 16);
-				pb[2] = (UINT32)(((UINT64)pb[2] * tb) >> 16);
-			}
-			UINT32 av[3], bv[3];
-			for (INT32 c = 0; c < 3; c++) {
-				av[c] = (pa[c] + 128) >> 8; if (av[c] > 255) av[c] = 255;
-				bv[c] = (pb[c] * 255 + 32768) >> 16; if (bv[c] > 255) bv[c] = 255;
-			}
-			INT32 li = lay_index(x, y);
-			lay_add[li] = 0xff000000 | (av[0] << 16) | (av[1] << 8) | av[2];
-			lay_mul[li] = 0xff000000 | (bv[0] << 16) | (bv[1] << 8) | bv[2];
-			lay_under[li] = (in_scr && sblend == BLEND_NONE) ? 0xff000000 : (0xff000000 | bg[y * disp_w + x]);
-		}
+		layers_build_run(k, y, x0, x1);
 	}
+
+	if (k.build_pre) pre_valid = 1;
 }
 
 // bring the layers up to date (called at the end of each frame, and when asked for)
 static void layers_update()
 {
-	INT32 ow = orient_v ? disp_h : disp_w;
-	INT32 oh = orient_v ? disp_w : disp_h;
-	if (ow != lay_w || oh != lay_h || lay_under.size() != (size_t)ow * oh) {
+	// the frontend gets them in the driver's orientation, art_compose() uses them as displayed
+	INT32 ow = (layered && orient_v) ? disp_h : disp_w;
+	INT32 oh = (layered && orient_v) ? disp_w : disp_h;
+	if (ow != lay_w || oh != lay_h || lay_add.size() != (size_t)ow * oh || (layered && lay_under.size() != (size_t)ow * oh)) {
 		lay_w = ow;
 		lay_h = oh;
-		lay_under.assign((size_t)ow * oh, 0xff000000);
+		if (layered) lay_under.assign((size_t)ow * oh, 0xff000000); else std::vector<UINT32>().swap(lay_under);
 		lay_add.assign((size_t)ow * oh, 0xff000000);
 		lay_mul.assign((size_t)ow * oh, 0xffffffff);
 		lay_full = 1;
 	}
+	if (full_dirty) lay_full = 1;
+	lay_dirty.clear();
+	lay_chg.clear();
 
-	// background: same rules as the normal path
+	// background: redo just the areas of items that changed state, or everything if a lot changed at once
 	std::vector<INT32> bg_changed;
+	INT64 bg_area = 0;
 	for (INT32 i = 0; i < first_screen; i++) {
 		litem &it = view->items[i];
-		if (it.elem && item_state(it) != it.last_state) bg_changed.push_back(i);
+		if (it.elem && item_state(it) != it.last_state) {
+			bg_changed.push_back(i);
+			bg_area += (INT64)(it.px1 - it.px0) * (it.py1 - it.py0);
+		}
 	}
-	if (bg_changed.size() > 8) bg_dirty = 1;
+	if (bg_changed.size() > 8 || bg_area * 3 > (INT64)disp_w * disp_h) bg_dirty = 1;
 
 	if (bg_dirty || lay_full) {
 		clip_x0 = 0; clip_y0 = 0; clip_x1 = disp_w; clip_y1 = disp_h;
@@ -2714,23 +2976,81 @@ static void layers_update()
 	}
 
 	if (lay_full) {
+		pre_valid = 0;		// a new layout (or the parts changed): fold the static items again
+		lay_memo_clear();
 		layers_build_area(0, 0, disp_w, disp_h);
 		for (UINT32 i = first_screen + 1; i < view->items.size(); i++)
 			if (view->items[i].elem) view->items[i].last_state = item_state(view->items[i]);
 		lay_full = 0;
 		full_dirty = 0;
 		lay_serial++;
+		lay_ab_serial++;
+		lay_dirty.push_back(0); lay_dirty.push_back(0); lay_dirty.push_back(disp_w); lay_dirty.push_back(disp_h);
 	} else if (bg_changed.size() || changed.size()) {
 		for (UINT32 k = 0; k < bg_changed.size(); k++) {
 			litem &c = view->items[bg_changed[k]];
 			bg_rebuild_area(c.px0, c.py0, c.px1, c.py1);
 			c.last_state = item_state(c);
-			layers_build_area(c.px0, c.py0, c.px1, c.py1);
+			if (layered) layers_build_area(c.px0, c.py0, c.px1, c.py1);	// U only (A / B don't change)
+			lay_dirty.push_back(c.px0); lay_dirty.push_back(c.py0); lay_dirty.push_back(c.px1); lay_dirty.push_back(c.py1);
 		}
-		for (UINT32 k = 0; k < changed.size(); k++) {
-			litem &it = view->items[changed[k]];
-			it.last_state = item_state(it);
-			layers_build_area(it.px0, it.py0, it.px1, it.py1);
+		if (changed.size()) {
+			// the output-driven items' states before and now
+			UINT32 dyn = layers_dyn_first();
+			std::vector<INT32> key_old, key_new;
+			for (UINT32 i = dyn; i < view->items.size(); i++) {
+				litem &it = view->items[i];
+				if (!it.elem || it.output < 0) continue;
+				key_old.push_back(it.last_state);
+				key_new.push_back(item_state(it));
+			}
+
+			// a few of them (lamps): keep A / B for each combination
+			INT32 use_memo = key_new.size() <= 4;
+			size_t bytes = lay_add.size() * sizeof(UINT32) * 2;
+			lay_memo *hit = NULL;
+			if (use_memo) {
+				lay_memo *have_old = NULL;
+				for (UINT32 m = 0; m < lay_memos.size(); m++) {
+					if (lay_memos[m]->key == key_old) have_old = lay_memos[m];
+					if (lay_memos[m]->key == key_new) hit = lay_memos[m];
+				}
+				if (have_old == NULL) {
+					// remember what's there now (up to 128 MB, the least recently used goes)
+					while (lay_memos.size() && (lay_memos.size() + 1) * bytes > 128 * 1024 * 1024) {
+						UINT32 lru = 0;
+						for (UINT32 m = 1; m < lay_memos.size(); m++) if (lay_memos[m]->used < lay_memos[lru]->used) lru = m;
+						if (lay_memos[lru] == hit) hit = NULL;
+						delete lay_memos[lru];
+						lay_memos.erase(lay_memos.begin() + lru);
+					}
+					if (bytes <= 128 * 1024 * 1024) {
+						lay_memo *m = new lay_memo;
+						m->key = key_old;
+						m->add = lay_add;
+						m->mul = lay_mul;
+						m->used = ++lay_memo_clock;
+						lay_memos.push_back(m);
+					}
+				} else {
+					have_old->used = ++lay_memo_clock;
+				}
+			}
+
+			if (hit) {
+				memcpy(&lay_add[0], &hit->add[0], lay_add.size() * sizeof(UINT32));
+				memcpy(&lay_mul[0], &hit->mul[0], lay_mul.size() * sizeof(UINT32));
+				hit->used = ++lay_memo_clock;
+			}
+
+			for (UINT32 k = 0; k < changed.size(); k++) {
+				litem &it = view->items[changed[k]];
+				INT32 old_state = it.last_state;
+				it.last_state = item_state(it);
+				if (!hit) layers_build_area(it.px0, it.py0, it.px1, it.py1, &it, old_state);
+				lay_chg.push_back(std::make_pair((INT32)changed[k], old_state));
+			}
+			lay_ab_serial++;
 		}
 		lay_serial++;
 	}
@@ -2747,80 +3067,162 @@ static void layers_update()
 	}
 }
 
+// redo one display rectangle: background, game, then everything on top of it as
+// out = A + B * (background + game), A / B from layers_build_area()
+static void compose_area(INT32 x0, INT32 y0, INT32 x1, INT32 y1)
+{
+	if (x0 < 0) x0 = 0;
+	if (y0 < 0) y0 = 0;
+	if (x1 > disp_w) x1 = disp_w;
+	if (y1 > disp_h) y1 = disp_h;
+	if (x1 <= x0 || y1 <= y0) return;
+
+	clip_x0 = x0; clip_y0 = y0; clip_x1 = x1; clip_y1 = y1;
+
+	// if the game screen covers the whole area it can read the background
+	// directly instead of it being copied in first
+	const litem &fs = view->items[first_screen];
+	INT32 fused = (fs.is_screen && fs.screen_index == 0 && fs.px0 <= x0 && fs.py0 <= y0 && fs.px1 >= x1 && fs.py1 >= y1);
+
+	if (!fused) {
+		for (INT32 y = y0; y < y1; y++)
+			memcpy(&disp[y * disp_w + x0], &bg[y * disp_w + x0], (x1 - x0) * sizeof(UINT32));
+	}
+	if (fs.is_screen && fs.screen_index == 0) apply_screen(disp, fs, fused ? &bg[0] : NULL);
+
+	// on the screen, only where something is on top of it (often nothing, or a small part)
+	if (fold_serial != lay_ab_serial) {
+		fold_serial = lay_ab_serial;
+		fold_runs.clear();
+		fold_row.assign(fs.py1 > fs.py0 ? fs.py1 - fs.py0 : 0, 0);
+		for (INT32 y = fs.py0; y < fs.py1; y++) {
+			fold_row[y - fs.py0] = fold_runs.size();
+			fold_runs.push_back(0);
+			if (y < 0 || y >= disp_h) continue;
+			const UINT32 *la = &lay_add[y * disp_w], *lm = &lay_mul[y * disp_w];
+			INT32 x = fs.px0 > 0 ? fs.px0 : 0, xe = fs.px1 < disp_w ? fs.px1 : disp_w, n = 0;
+			while (x < xe) {
+				while (x < xe && (lm[x] & 0xffffff) == 0xffffff && (la[x] & 0xffffff) == 0) x++;
+				if (x >= xe) break;
+				INT32 st = x;
+				while (x < xe && !((lm[x] & 0xffffff) == 0xffffff && (la[x] & 0xffffff) == 0)) x++;
+				fold_runs.push_back(st);
+				fold_runs.push_back(x);
+				n++;
+			}
+			fold_runs[fold_row[y - fs.py0]] = n;
+		}
+	}
+
+	for (INT32 y = y0; y < y1; y++) {
+		UINT32 *d = &disp[y * disp_w];
+		const UINT32 *la = &lay_add[y * disp_w], *lm = &lay_mul[y * disp_w];
+
+		if (y >= fs.py0 && y < fs.py1 && x0 >= fs.px0 && x1 <= fs.px1) {
+			const INT32 *r = &fold_runs[fold_row[y - fs.py0]];
+			for (INT32 q = 0; q < r[0]; q++) {
+				INT32 a0 = r[1 + q * 2] > x0 ? r[1 + q * 2] : x0, a1 = r[2 + q * 2] < x1 ? r[2 + q * 2] : x1;
+				for (INT32 x = a0; x < a1; x++) {
+					UINT32 m = lm[x] & 0xffffff, ad = la[x] & 0xffffff;
+					if (m == 0) { d[x] = ad; continue; }
+					UINT32 p = d[x];
+					UINT32 rr = (((p >> 16) & 0xff) * ((m >> 16) & 0xff) + 127) / 255 + ((ad >> 16) & 0xff);
+					UINT32 g = (((p >>  8) & 0xff) * ((m >>  8) & 0xff) + 127) / 255 + ((ad >>  8) & 0xff);
+					UINT32 b = (((p >>  0) & 0xff) * ((m >>  0) & 0xff) + 127) / 255 + ((ad >>  0) & 0xff);
+					if (rr > 255) rr = 255;
+					if (g > 255) g = 255;
+					if (b > 255) b = 255;
+					d[x] = (rr << 16) | (g << 8) | b;
+				}
+			}
+			continue;
+		}
+
+		for (INT32 x = x0; x < x1; x++) {
+			UINT32 m = lm[x] & 0xffffff, ad = la[x] & 0xffffff;
+			if (m == 0xffffff) { if (ad) d[x] = sat_add24(d[x], ad); continue; }	// nothing on top here, or only added light
+			if (m == 0) { d[x] = ad; continue; }									// opaque artwork
+			UINT32 p = d[x];
+			UINT32 r = (((p >> 16) & 0xff) * ((m >> 16) & 0xff) + 127) / 255 + ((ad >> 16) & 0xff);
+			UINT32 g = (((p >>  8) & 0xff) * ((m >>  8) & 0xff) + 127) / 255 + ((ad >>  8) & 0xff);
+			UINT32 b = (((p >>  0) & 0xff) * ((m >>  0) & 0xff) + 127) / 255 + ((ad >>  0) & 0xff);
+			if (r > 255) r = 255;
+			if (g > 255) g = 255;
+			if (b > 255) b = 255;
+			d[x] = (r << 16) | (g << 8) | b;
+		}
+	}
+}
+
+// out = A + B * background, for display pixels x0 - x1 of row y that aren't on the
+// game screen (art_compose() redoes the screen every frame)
+static void compose_outside(INT32 y, INT32 x0, INT32 x1)
+{
+	if (x0 < 0) x0 = 0;
+	if (x1 > disp_w) x1 = disp_w;
+	if (y < 0 || y >= disp_h || x1 <= x0) return;
+
+	const litem &fs = view->items[first_screen];
+	if (y >= fs.py0 && y < fs.py1 && x0 < fs.px1 && x1 > fs.px0) {
+		// split around the screen
+		if (x0 < fs.px0) compose_outside(y, x0, fs.px0);
+		if (x1 > fs.px1) compose_outside(y, fs.px1, x1);
+		return;
+	}
+
+	UINT32 *d = &disp[y * disp_w];
+	const UINT32 *bgrow = &bg[y * disp_w], *la = &lay_add[y * disp_w], *lm = &lay_mul[y * disp_w];
+	for (INT32 x = x0; x < x1; x++) {
+		UINT32 m = lm[x] & 0xffffff, ad = la[x] & 0xffffff, p = bgrow[x];
+		if (m == 0xffffff) { d[x] = ad ? sat_add24(p, ad) : p; continue; }
+		if (m == 0) { d[x] = ad; continue; }
+		UINT32 r = (((p >> 16) & 0xff) * ((m >> 16) & 0xff) + 127) / 255 + ((ad >> 16) & 0xff);
+		UINT32 g = (((p >>  8) & 0xff) * ((m >>  8) & 0xff) + 127) / 255 + ((ad >>  8) & 0xff);
+		UINT32 b = (((p >>  0) & 0xff) * ((m >>  0) & 0xff) + 127) / 255 + ((ad >>  0) & 0xff);
+		if (r > 255) r = 255;
+		if (g > 255) g = 255;
+		if (b > 255) b = 255;
+		d[x] = (r << 16) | (g << 8) | b;
+	}
+}
+
 static void art_compose()
 {
 	fmt_update();
 
-	// static part (below the screen): redo just the areas of items that changed
-	// state, or everything if a lot changed at once
-	std::vector<INT32> bg_changed;
-	INT64 bg_area = 0;
-	for (INT32 i = 0; i < first_screen; i++) {
-		litem &it = view->items[i];
-		if (it.elem && item_state(it) != it.last_state) {
-			bg_changed.push_back(i);
-			bg_area += (INT64)(it.px1 - it.px0) * (it.py1 - it.py0);
-		}
-	}
-	if (bg_changed.size() > 8 || bg_area * 3 > (INT64)disp_w * disp_h) bg_dirty = 1;
+	// what changed (background items, or the ones over the screen) since last frame
+	layers_update();
 
-	if (!bg_dirty) {
-		for (UINT32 k = 0; k < bg_changed.size(); k++) {
-			litem &c = view->items[bg_changed[k]];
-			bg_rebuild_area(c.px0, c.py0, c.px1, c.py1);
-		}
-		for (UINT32 k = 0; k < bg_changed.size(); k++) {
-			litem &c = view->items[bg_changed[k]];
-			c.last_state = item_state(c);
-		}
+	INT32 full = 0;
+	for (UINT32 k = 0; k + 3 < lay_dirty.size(); k += 4) {
+		if (lay_dirty[k] <= 0 && lay_dirty[k + 1] <= 0 && lay_dirty[k + 2] >= disp_w && lay_dirty[k + 3] >= disp_h) full = 1;
 	}
 
-	if (bg_dirty) {
-		clip_x0 = 0; clip_y0 = 0; clip_x1 = disp_w; clip_y1 = disp_h;
-		std::fill(bg.begin(), bg.end(), 0);
-		for (INT32 i = 0; i < first_screen; i++) {
-			litem &it = view->items[i];
-			if (it.is_screen) continue;
-			it.last_state = item_state(it);
-			apply_bitmap(bg, it, item_bitmap(it, it.last_state));
-		}
-		bg_dirty = 0;
-		full_dirty = 1;
-	}
-
-	// items on top of the screen: only recompose where their state changed
-	std::vector<INT32> changed;
-	for (UINT32 i = first_screen; i < view->items.size(); i++) {
-		litem &it = view->items[i];
-		if (it.elem && item_state(it) != it.last_state) changed.push_back(i);
-	}
-
-	if (full_dirty) {
+	if (full) {
 		compose_area(0, 0, disp_w, disp_h);
-		for (UINT32 i = first_screen; i < view->items.size(); i++)
-			if (view->items[i].elem) view->items[i].last_state = item_state(view->items[i]);
-		full_dirty = 0;
 	} else {
-		for (UINT32 k = 0; k < changed.size(); k++) {
-			litem &it = view->items[changed[k]];
-			compose_area(it.px0, it.py0, it.px1, it.py1);
-		}
-		for (UINT32 k = 0; k < changed.size(); k++) {
-			litem &it = view->items[changed[k]];
-			it.last_state = item_state(it);
+		// background items that changed
+		for (UINT32 k = 0; k + 3 < lay_dirty.size(); k += 4)
+			for (INT32 y = lay_dirty[k + 1]; y < lay_dirty[k + 3]; y++) compose_outside(y, lay_dirty[k], lay_dirty[k + 2]);
+
+		// items over the screen that changed: just the pixels their old or new image covers
+		std::vector<INT32> merged;
+		for (UINT32 k = 0; k < lay_chg.size(); k++) {
+			litem &it = view->items[lay_chg[k].first];
+			abitmap *bm_old = item_bitmap(it, lay_chg[k].second);
+			abitmap *bm_new = item_bitmap(it, it.last_state);
+			for (INT32 y = it.py0 > 0 ? it.py0 : 0; y < it.py1 && y < disp_h; y++) {
+				if (changed_row_runs(it, bm_old, bm_new, y, merged)) {
+					for (UINT32 q = 0; q + 1 < merged.size(); q += 2) compose_outside(y, merged[q], merged[q + 1]);
+				} else {
+					compose_outside(y, it.px0, it.px1);
+				}
+			}
 		}
 
-		// background areas that changed
-		for (UINT32 k = 0; k < bg_changed.size(); k++) {
-			litem &c = view->items[bg_changed[k]];
-			compose_area(c.px0, c.py0, c.px1, c.py1);
-		}
-
-		// everything else is static, redo the game screen area(s) only
-		for (UINT32 i = first_screen; i < view->items.size(); i++) {
-			litem &it = view->items[i];
-			if (it.is_screen && it.screen_index == 0) compose_area(it.px0, it.py0, it.px1, it.py1);
-		}
+		// everything else is static, redo the game screen area only
+		const litem &fs = view->items[first_screen];
+		compose_area(fs.px0, fs.py0, fs.px1, fs.py1);
 	}
 
 	// the size changed (view / part switched on or off) and the frontend hasn't

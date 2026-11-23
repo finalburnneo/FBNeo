@@ -57,6 +57,8 @@ static UINT8 port_3_last;
 static UINT8 soundlatch;
 static UINT8 sound_mute;
 static double sound_mute_vol;	// soft mute
+static INT32 draw_xoffs;	// columns cropped from the left of the 260 pixel line (spcenctr)
+static INT32 light_add_r, light_add_g, light_add_b;	// lamp / strobe reflection on the screen (spcenctr)
 static INT32 vblank;
 static INT32 lupin3_step;
 static INT32 darthvdr_fleet_step;
@@ -138,6 +140,7 @@ enum {
 	SND_LAGUNAR,	// C version of the netlist
 	SND_BOOTHILL,	// discrete (stereo)
 	SND_MWMUSIC,	// midway tone generator only (+ samples)
+	SND_SPCENCTR,	// discrete + SN76477
 };
 
 struct mw_config {
@@ -1115,6 +1118,12 @@ static void palette_update()
 				b = b * ((m >>  0) & 0xff) / 255;
 			}
 
+			if (light_add_r | light_add_g | light_add_b) {	// additive light
+				r += light_add_r; if (r > 255) r = 255;
+				g += light_add_g; if (g > 255) g = 255;
+				b += light_add_b; if (b > 255) b = 255;
+			}
+
 			DrvPalette[(c << 4) | o] = BurnHighCol(r, g, b, 0);
 		}
 	}
@@ -1123,6 +1132,8 @@ static void palette_update()
 // Video
 static inline void set_pixel(INT32 x, INT32 y, INT32 color)
 {
+	x -= draw_xoffs;
+	if ((UINT32)x >= (UINT32)nScreenWidth) return;
 	if (flipscreen) { x = nScreenWidth - 1 - x; y = nScreenHeight - 1 - y; }
 	INT32 offs = y * nScreenWidth + x;
 	pTransDraw[offs] = (color << 4) | ovl_map[offs];
@@ -1410,11 +1421,7 @@ static void draw_spcenctr()
 
 		if (x == 0)
 		{
-			for (INT32 i = 0; i < 4; i++) {
-				pen = (video_data & 1) ? 0xff : brightness;
-				set_pixel(256 + i, y - 0x20, pen);
-				video_data >>= 1;
-			}
+			video_data = 0;
 
 			UINT8 trench_control = DrvMainRAM[((y << 5) | 0x1f) & 0x1fff];
 			if (trench_control & 0x40) draw_trench = 1;
@@ -2495,6 +2502,179 @@ static double zzzap_sound_step()
 	return o / 1.25;
 }
 
+// Space Encounters
+struct d_filter2 {
+	double a1, a2, b0, b1, b2, x1, x2, y1, y2;
+	void reset_bp(double fc, double d) {
+		double sr = disc_rate;
+		double two_over_T = 2 * sr, tt2 = two_over_T * two_over_T;
+		double wc = sr * 2.0 * tan(M_PI * fc / sr), wc2 = wc * wc;
+		double den = tt2 + d * wc * two_over_T + wc2;
+		a1 = 2.0 * (-tt2 + wc2) / den;
+		a2 = (tt2 - d * wc * two_over_T + wc2) / den;
+		b0 = d * wc * two_over_T / den; b1 = 0; b2 = -b0;
+		x1 = x2 = y1 = y2 = 0;
+	}
+	double step(double in) {
+		double v = -a1 * y1 - a2 * y2 + b0 * in + b1 * x1 + b2 * x2;
+		x2 = x1; x1 = in; y2 = y1; y1 = v;
+		return v;
+	}
+};
+
+struct d_opfilt_bp1m_norton {	// DST_OP_AMP_FILT, BAND_PASS_1M | NORTON
+	d_filter2 f;
+	double vRef, vP, vN;
+	void reset(const opfilt_info *i) {
+		double rTotal = (i->r2 == 0) ? i->r1 : RES_2_PARALLEL(i->r1, i->r2);
+		double fc = 1.0 / (2 * M_PI * sqrt(rTotal * i->rF * i->c1 * i->c2));
+		double d  = (i->c1 + i->c2) / sqrt(i->rF / rTotal * i->c1 * i->c2);
+		double gain = -i->rF / rTotal * i->c2 / (i->c1 + i->c2);
+		f.reset_bp(fc, d);
+		f.b0 *= gain; f.b1 *= gain; f.b2 *= gain;
+		vRef = (i->vP - OP_AMP_NORTON_VBE) / i->r3 * i->rF;
+		vP = i->vP - OP_AMP_NORTON_VBE;
+		vN = i->vN;
+	}
+	double step(double in) {
+		double v = in - OP_AMP_NORTON_VBE;
+		if (v < 0) v = 0;
+		double v_out = -f.a1 * f.y1 - f.a2 * f.y2 + f.b0 * v + f.b1 * f.x1 + f.b2 * f.x2 + vRef;
+		f.x2 = f.x1; f.x1 = v; f.y2 = f.y1;
+		if (v_out > vP) v_out = vP;
+		if (v_out < vN) v_out = vN;
+		f.y1 = v_out - vRef;
+		return v_out;
+	}
+};
+
+static const opamp_info spcenctr_enemy_shot_E1 = { 0, RES_K(510), RES_M(2.2), RES_M(2.2), CAP_U(0.1), 0, 12 };
+static const osc_info spcenctr_enemy_shot_osc = { OSC_VCO_3 | OSC_NORTON | OSC_OUT_SQW, RES_K(560), RES_K(7.5), RES_K(22), RES_K(47), RES_K(100), 0, 0, 0, CAP_U(0.0022), 12 };
+static const opamp_info spcenctr_enemy_shot_D1 = { RES_K(100), RES_K(100), RES_M(2.7), RES_K(100), 0, 0, 12 };
+static const opfilt_info spcenctr_enemy_shot_filt = { RES_K(100), RES_K(10), RES_M(4.3), 0, RES_M(2.2), CAP_U(0.001), CAP_U(0.001), 0, 0, 12, 0 };
+static const opamp_1sht_info spcenctr_player_shot_1sht = { RES_M(4.7), RES_K(100), RES_M(1), RES_M(1), RES_M(2.2), CAP_U(1), CAP_P(470), 0, 12 };
+static const opamp_info spcenctr_player_shot_E1 = { 0, RES_K(10), RES_M(1.5), 0, CAP_U(0.22), 0, 12 };
+static const osc_info spcenctr_player_shot_osc = { OSC_VCO_3 | OSC_NORTON | OSC_OUT_SQW, 1.0 / (1.0 / RES_M(1) + 1.0 / RES_K(330)) + RES_M(1.5),
+	RES_M(1), RES_K(560), RES_M(2.7), RES_M(1), RES_M(4.7), RES_M(3.3), 0, CAP_P(330), 12 };
+static const opamp_info spcenctr_player_shot_C1 = { RES_K(560), RES_K(470), RES_M(2.7), RES_K(560), 0, 0, 12 };
+static const tvca_info spcenctr_player_shot_tvca = { RES_M(2.7), RES_K(560), 0, RES_K(560), RES_K(1), 0, RES_K(560), 0, 0, 0, 0, CAP_U(1), 0, 0, 0, 12, 0, 0, 12, TRG_NONE, TRG_NONE, TRG0, TRG_NONE, TRG_NONE, TRG_NONE };
+static const tvca_info spcenctr_crash_tvca = { RES_M(2.7), RES_K(470), 0, RES_K(470), RES_K(1), 0, RES_K(470), 0, 0, 0, 0, CAP_U(2.2), 0, 0, 0, 5, 0, 0, 12, TRG_NONE, TRG_NONE, TRG0, TRG_NONE, TRG_NONE, TRG_NONE };
+static const tvca_info spcenctr_explosion_tvca = { RES_M(2.7), RES_K(680), 0, RES_K(680), RES_K(1), 0, RES_K(680), 0, 0, 0, 0, CAP_U(2.2), 0, 0, 0, 12, 0, 0, 12, TRG_NONE, TRG_NONE, TRG0, TRG_NONE, TRG_NONE, TRG_NONE };
+static const mixer_info spcenctr_mixer = { MIXER_IS_RESISTOR,
+	{ RES_K(15), RES_K(15), RES_K(22), RES_K(3.6), RES_K(1.8) + RES_K(3.6) + RES_K(4.7), RES_K(27), RES_K(27) },
+	{ 0, CAP_U(0.001), CAP_U(0.1), CAP_U(1), 0, 0, CAP_U(10) }, 0, 0, 0, CAP_U(1), 0, 1 };
+
+static struct {
+	INT32 enemy_shot, player_shot, crash, explosion, bonus;
+	INT32 strobe_enable, lamp;
+	d_lfsr noise;
+	d_opamp es_e1, es_d1;
+	d_opamp_osc es_osc;
+	d_opfilt_bp1m_norton es_filt;
+	d_cr es_cr;
+	d_opamp_1sht ps_1sht;
+	d_opamp ps_e1, ps_c1;
+	d_cr ps_cr;
+	d_opamp_osc ps_osc;
+	d_tvca ps_tvca, crash_tvca, exp_tvca;
+	d_filter2 crash_filt;
+	d_rc exp_rc1, exp_rc2;
+	d_555_astable bonus1, bonus2;
+	d_mixer mix;
+} sec;
+
+static void spcenctr_sound_relink()
+{
+	sec.es_e1.info = &spcenctr_enemy_shot_E1;
+	sec.es_osc.info = &spcenctr_enemy_shot_osc;
+	sec.es_d1.info = &spcenctr_enemy_shot_D1;
+	sec.ps_1sht.info = &spcenctr_player_shot_1sht;
+	sec.ps_e1.info = &spcenctr_player_shot_E1;
+	sec.ps_osc.info = &spcenctr_player_shot_osc;
+	sec.ps_c1.info = &spcenctr_player_shot_C1;
+	sec.ps_tvca.info = &spcenctr_player_shot_tvca;
+	sec.crash_tvca.info = &spcenctr_crash_tvca;
+	sec.exp_tvca.info = &spcenctr_explosion_tvca;
+	sec.mix.info = &spcenctr_mixer;
+}
+
+static void spcenctr_sound_reset()
+{
+	sec.enemy_shot = sec.player_shot = sec.crash = sec.explosion = sec.bonus = 0;
+	sec.strobe_enable = sec.lamp = 0;
+	sec.noise.reset(7515, 12, 12.0 / 2, 0x1ffff, 4, 16, 12);	// midway_lfsr
+	sec.es_e1.reset(&spcenctr_enemy_shot_E1);
+	sec.es_osc.reset(&spcenctr_enemy_shot_osc);
+	sec.es_d1.reset(&spcenctr_enemy_shot_D1);
+	sec.es_filt.reset(&spcenctr_enemy_shot_filt);
+	sec.es_cr.reset(RES_K(1.8), CAP_U(0.1));
+	sec.ps_1sht.reset(&spcenctr_player_shot_1sht);
+	sec.ps_e1.reset(&spcenctr_player_shot_E1);
+	sec.ps_cr.reset(RES_M(1) + RES_K(330), CAP_U(0.1));
+	sec.ps_osc.reset(&spcenctr_player_shot_osc);
+	sec.ps_c1.reset(&spcenctr_player_shot_C1);
+	sec.ps_tvca.reset(&spcenctr_player_shot_tvca);
+	sec.crash_tvca.reset(&spcenctr_crash_tvca);
+	sec.crash_filt.reset_bp(130, 1.0 / 8);
+	sec.exp_tvca.reset(&spcenctr_explosion_tvca);
+	sec.exp_rc1.reset(RES_K(1.8), CAP_U(0.22));
+	sec.exp_rc2.reset(RES_K(1.8) + RES_K(3.6), CAP_U(0.22));
+	sec.bonus1.reset(D555_OUT_SQW, 5, -1, -1);
+	sec.bonus2.reset(D555_OUT_SQW, 5, -1, -1);
+	sec.mix.reset(&spcenctr_mixer, 7);
+}
+
+static double spcenctr_sound_step()
+{
+	double noise = sec.noise.step(1, 0);
+
+	// enemy ship shot
+	double n20 = sec.es_e1.step(0, sec.enemy_shot ? 12 : 0);
+	double n21 = sec.es_osc.step(1, n20, 0);
+	double n22 = sec.es_d1.step(n21, n20);
+	double enemy = sec.es_cr.step(sec.es_filt.step(n22));
+
+	// player shot
+	double n30 = sec.ps_1sht.step(sec.player_shot ? 12 : 0);
+	double n31 = sec.ps_e1.step(0, n30);
+	double n33 = n31 - 0.5;	// D502
+	if (n33 < 0) n33 = 0;
+	if (n33 > 12) n33 = 12;
+	double n35 = sec.ps_cr.step(noise) * (RES_K(330) / (RES_M(1) + RES_K(330)));
+	double n36 = sec.ps_osc.step(1, n35, n33);
+	double n37 = sec.ps_c1.step(n36, n33);
+	double player = sec.ps_tvca.step(sec.player_shot, 0, 0, n37, 0);
+
+	// crash
+	double n60 = sec.crash_tvca.step(sec.crash, 0, 0, noise, 0);
+	double crash = sec.crash_filt.step(n60 - 6.8) * 6 + 6.8;
+	if (crash < 0) crash = 0;
+	if (crash > 12.0 - OP_AMP_NORTON_VBE) crash = 12.0 - OP_AMP_NORTON_VBE;
+
+	// explosion
+	double expl = sec.exp_rc2.step(sec.exp_rc1.step(sec.exp_tvca.step(sec.explosion, 0, 0, noise, 0)));
+
+	// bonus
+	double b1 = sec.bonus1.step(sec.bonus, RES_K(1), RES_K(27), CAP_U(0.047));
+	double b2 = sec.bonus2.step(sec.bonus, RES_K(100), RES_K(47), CAP_U(1));
+	double bonus = (b1 != 0 && b2 != 0 && sec.bonus) ? TTL_V_LOGIC_1 : 0;
+
+	double in[7] = { enemy, player, 0, crash, expl, bonus, 0 };
+	return sec.mix.step(1, in);
+}
+
+static void spcenctr_sound_p1_w(UINT8 data)
+{
+	sound_mute = (~data) & 1;
+	sec.crash = (data >> 2) & 1;
+}
+
+static void spcenctr_sound_p2_w(UINT8 data)
+{
+	sec.explosion = (data >> 4) & 1;
+	sec.player_shot = (data >> 5) & 1;
+}
+
 static Stream snd_stream;
 static d_bitdac bitdac;
 static INT16 *sn_buf[2];
@@ -2596,6 +2776,10 @@ static void snd_stream_update(INT16 **streams, INT32 samples)
 				l = r = mwmusic_sound_step() * disc_gain;
 			break;
 
+			case SND_SPCENCTR:
+				l = r = spcenctr_sound_step() * disc_gain + sn0 * sn_gain;
+			break;
+
 			default:
 				l = r = sn0 * sn_gain;
 			break;
@@ -2658,6 +2842,14 @@ static void sound_init()
 			sn_chips = 2;
 		break;
 
+		case SND_SPCENCTR:
+			SN76477_init(0);
+			SN76477_set_mastervol(0, 4.5);
+			sn76477_invaders_saucer(0, CAP_U(0.047), RES_K(56));
+			SN76477_set_slf_params(0, CAP_U(1.0), RES_K(150));
+			sn_chips = 1;
+		break;
+
 		case SND_SCHASER:
 			SN76477_init(0);
 			SN76477_set_mastervol(0, 10.0);
@@ -2687,6 +2879,7 @@ static void sound_init()
 		case SND_INVAD2CT:	disc_gain = 2500 * 0.5; sn_gain = 0.3; break;
 		case SND_POLARIS:	disc_gain = 1.0 * 0.50; break;
 		case SND_SCHASER:	disc_gain = 33080 * 0.65; break;
+		case SND_SPCENCTR:	disc_gain = 20000 * 0.45; sn_gain = 0.2; break;
 		case SND_LUPIN3:	disc_gain = 21000 * 1.0; sn_gain = 0.5; break;
 		case SND_BALLBOMB:	disc_gain = 21000 * 1.0; sn_gain = 0.5; break;
 		case SND_INDIANBT:	disc_gain = 21000 * 0.25; sn_gain = 0.5; break;
@@ -2723,6 +2916,7 @@ static void sound_reset()
 		case SND_LAGUNAR:	zzzap_sound_reset(1); break;
 		case SND_BOOTHILL:	boothill_sound_reset(); break;
 		case SND_MWMUSIC:	mwmusic_sound_reset(); break;
+		case SND_SPCENCTR:	spcenctr_sound_reset(); break;
 	}
 
 	if (inv_extra) invaders_sound_reset(1);
@@ -2756,6 +2950,7 @@ static void sound_reset()
 				case SND_ZZZAP: case SND_LAGUNAR: zzzap_sound_step(); break;
 				case SND_BOOTHILL: { double l, r; boothill_sound_step(&l, &r); } break;
 				case SND_MWMUSIC: mwmusic_sound_step(); break;
+				case SND_SPCENCTR: spcenctr_sound_step(); break;
 			}
 		}
 	}
@@ -2772,6 +2967,7 @@ static void sound_relink()
 		case SND_POLARIS:	polaris_relink(); break;
 		case SND_BOOTHILL:	boothill_sound_relink(); break;
 		case SND_MWMUSIC:	mwmusic_sound_relink(); break;
+		case SND_SPCENCTR:	spcenctr_sound_relink(); break;
 	}
 }
 
@@ -4023,7 +4219,7 @@ static const UINT8 seawolf_controller_table[30] = {
 
 // periscope: BurnGun, only the horizontal position is used.  The reticle is
 // kept on a fixed line, the periscope only turns left / right.
-#define SEAWOLF_RETICLE_Y	72
+#define SEAWOLF_RETICLE_Y	32
 
 static void seawolf_frame()
 {
@@ -4038,7 +4234,7 @@ static void seawolf_frame()
 	BurnGunX[0] = x << 8;
 	BurnGunY[0] = (SEAWOLF_RETICLE_Y - 8) << 8;
 
-	INT32 pos = ((x + 8) * 30) / nScreenWidth;	// 30 positions across the screen
+	INT32 pos = ((x + 8 - 16) * 30) / (nScreenWidth - 28);	// 30 positions
 	if (pos < 0) pos = 0;
 	if (pos > 29) pos = 29;
 
@@ -4404,7 +4600,7 @@ static void __fastcall shuffle_out(UINT16 port, UINT8 data)
 
 static UINT8 __fastcall bowler_in(UINT16 port)
 {
-	if ((port & 0x0f) == 1) return ~shift_result_r();	// inverted, see MAME
+	if ((port & 0x0f) == 1) return ~shift_result_r();
 	return shuffle_in(port);
 }
 
@@ -4456,8 +4652,42 @@ static const UINT8 spcenctr_controller_table[64] = {
 	0x17, 0x16, 0x14, 0x15, 0x11, 0x10, 0x12, 0x13, 0x1b, 0x1a, 0x18, 0x19, 0x1d, 0x1c, 0x1e, 0x1f
 };
 
+// "LAMP" (damage, orange-red) and "STROBE" (white flash, 555 at 9Hz with a 5% on time)
+// light up the screen through the bezel
+static double spcenctr_strobe_phase;
+
+static void spcenctr_lights_frame()
+{
+	const double period = 1.0 / 9.0, on_from = period * 0.95;
+	const double frame_time = 1.0 / (19968000.0 / 4 / 320 / 262);
+	double on = 0;
+
+	// how much of this frame the strobe was on (the 5.5ms flash is shorter than a frame)
+	for (INT32 i = 0; i < 16; i++) {
+		double t = fmod(spcenctr_strobe_phase + frame_time * (i + 0.5) / 16, period);
+		if (t >= on_from) on += 1.0 / 16;
+	}
+	spcenctr_strobe_phase = fmod(spcenctr_strobe_phase + frame_time, period);
+	if (!sec.strobe_enable) on = 0;
+
+	INT32 strobe = (on > 0) ? 1 : 0;
+	BurnOutputSet("LAMP", sec.lamp);
+	BurnOutputSet("STROBE", strobe);
+
+	light_add_r = light_add_g = light_add_b = 0;
+	if (!BurnArtworkActive()) {
+		// a 5.5ms flash on a CRT shows as a full white frame, scale it up a bit
+		double s = on * 3.0; if (s > 1.0) s = 1.0;
+		light_add_r = (INT32)(255 * (0.5   * sec.lamp + 0.7 * s));
+		light_add_g = (INT32)(255 * (0.125 * sec.lamp + 0.7 * s));
+		light_add_b = (INT32)(255 * (0.05  * sec.lamp + 0.7 * s));
+	}
+}
+
 static void spcenctr_frame()
 {
+	spcenctr_lights_frame();
+
 	INT32 x = mw_positional(0, DrvJoyX[0], DrvJoyX[1], DrvAnalog[0], 35, 17, 1);
 	INT32 y = mw_positional(1, DrvJoyX[2], DrvJoyX[3], DrvAnalog[1], 20, 9, 2);
 	mw_analog[0] = spcenctr_controller_table[12 + (34 - x)];
@@ -4479,7 +4709,17 @@ static void __fastcall spcenctr_out(UINT16 port, UINT8 data)
 	port &= 0xff;
 
 	if ((port & 0x07) == 0x00) bright_control = (~data >> 3) & 1;
-	else if ((port & 0x5f) == 0x01 || (port & 0x5f) == 0x09 || (port & 0x5f) == 0x11) { /* sound (not emulated) */ }
+	else if ((port & 0x5f) == 0x01) { snd_sync(); spcenctr_sound_p1_w(data); }
+	else if ((port & 0x5f) == 0x09) { snd_sync(); spcenctr_sound_p2_w(data); }
+	else if ((port & 0x5f) == 0x11) {
+		snd_sync();
+		// bit 0: screech (not emulated yet)
+		sec.enemy_shot = (data >> 1) & 1;
+		sec.strobe_enable = (data >> 2) & 1;
+		sec.lamp = (data >> 3) & 1;
+		sec.bonus = (data >> 4) & 1;
+		SN76477_enable_w(0, (data >> 5) & 1);
+	}
 	else if ((port & 0x07) == 0x02) BurnWatchdogWrite();
 	else if ((port & 0x07) == 0x03) trench_slope[BITSWAP08(port, 0, 0, 0, 0, 7, 6, 4, 3) & 0x0f] = data;
 	else if ((port & 0x07) == 0x04) trench_center = data;
@@ -4577,6 +4817,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	trench_width = trench_center = bright_control = brightness = 0;
 	memset(trench_slope, 0, sizeof(trench_slope));
 	phantom2_cloud_counter = PHANTOM2_CLOUD_COUNTER_START;
+	light_add_r = light_add_g = light_add_b = 0;
+	spcenctr_strobe_phase = 0;
 	if (cfg->out == seawolf_out) {
 		seawolf_explosion_lamp_w(0);
 		seawolf_periscope_lamp_w(0);
@@ -4800,6 +5042,8 @@ static INT32 DrvInit(const mw_config *config, const ovl_layout *ovl, void (*decr
 	sound_init();
 
 	if (cfg->video == VID_COSMO) cosmo_stars_init();
+
+	draw_xoffs = (cfg->video == VID_SPCENCTR) ? 4 : 0;
 
 	GenericTilesInit();
 	overlay_build();
@@ -5078,6 +5322,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			case SND_LAGUNAR:	SCAN_VAR(zz); break;
 			case SND_BOOTHILL:	SCAN_VAR(bh); break;
 			case SND_MWMUSIC:	SCAN_VAR(mwmus); break;
+			case SND_SPCENCTR:	SCAN_VAR(sec); SCAN_VAR(spcenctr_strobe_phase); break;
 		}
 
 		if (nAction & ACB_WRITE) {
@@ -7774,7 +8019,7 @@ static const mw_config cfg_spacwalk   = { VID_MW,       SND_MWMUSIC,     2, clow
 static const mw_config cfg_shuffle    = { VID_MW,       SND_NONE,        2, shuffle_out,     shuffle_in,      0, MW_CLOCK,  0, 255, trackball_frame };
 static const mw_config cfg_bowler     = { VID_MW,       SND_NONE,        2, bowler_out,      bowler_in,       0, MW_CLOCK,  0, 255, trackball_frame };
 static const mw_config cfg_dogpatch   = { VID_MW,       SND_MWMUSIC,     2, dogpatch_out,    dogpatch_in,     0, MW_CLOCK,  0, 255, dogpatch_frame };
-static const mw_config cfg_spcenctr   = { VID_SPCENCTR, SND_NONE,        6, spcenctr_out,    spcenctr_in,     0, MW_CLOCK,  0, 255, spcenctr_frame };
+static const mw_config cfg_spcenctr   = { VID_SPCENCTR, SND_SPCENCTR,    6, spcenctr_out,    spcenctr_in,     0, MW_CLOCK,  0, 255, spcenctr_frame };
 static const mw_config cfg_phantom2   = { VID_PHANTOM2, SND_SAMPLESONLY, 6, phantom2_out,    phantom2_in,     0, MW_CLOCK,  0, 255, NULL           };
 static const mw_config cfg_blueshrk   = { VID_MW,       SND_NONE,        2, blueshrk_out,    blueshrk_in,     0, MW_CLOCK,  0, 255, blueshrk_frame };
 
@@ -8460,7 +8705,7 @@ struct BurnDriver BurnDrvSpcenctr = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, spcenctrRomInfo, spcenctrRomName, NULL, NULL, NULL, NULL, SpcenctrInputInfo, SpcenctrDIPInfo,
 	Init16, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	260, 224, 4, 3
+	252, 224, 4, 3
 };
 
 // Phantom II

@@ -610,12 +610,24 @@ static int vidArtUpload(BurnArtworkLayers* pL)
 	}
 
 	if (pL->nSerial != nArtSerial) {
+	// what to send: only the layers that changed, and if we have the previous version,
+	// only the part that changed (a lamp blinking doesn't resend everything)
+	bool bPart = (nArtSerial == pL->nSerial - 1) && pL->nDirtyW > 0 && pL->nDirtyH > 0;
+	int nX = bPart ? pL->nDirtyX : 0, nY = bPart ? pL->nDirtyY : 0;
+	int nW = bPart ? pL->nDirtyW : pL->nWidth, nH = bPart ? pL->nDirtyH : pL->nHeight;
 		UINT32* pLayer[3] = { pL->pUnder, pL->pMul, pL->pAdd };
+		int nLayerSerial[3] = { pL->nSerialUnder, pL->nSerialOver, pL->nSerialOver };
 		for (int i = 0; i < 3; i++) {
+			if (nArtSerial >= 0 && nLayerSerial[i] <= nArtSerial) {
+				continue;					// this one hasn't changed
+			}
+			bool bAll = (nArtSerial < 0) || !bPart;
+			RECT r = { bAll ? 0 : nX, bAll ? 0 : nY, bAll ? pL->nWidth : nX + nW, bAll ? pL->nHeight : nY + nH };
+
 			DDSURFACEDESC2 ddsd;
 			memset(&ddsd, 0, sizeof(ddsd));
 			ddsd.dwSize = sizeof(ddsd);
-			if (FAILED(pArtTexture[i]->Lock(NULL, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT | DDLOCK_WRITEONLY, NULL))) {
+			if (FAILED(pArtTexture[i]->Lock(&r, &ddsd, DDLOCK_SURFACEMEMORYPTR | DDLOCK_WAIT | DDLOCK_WRITEONLY, NULL))) {
 				return 1;
 			}
 
@@ -625,10 +637,10 @@ static int vidArtUpload(BurnArtworkLayers* pL)
 			unsigned int nBShift = vidArtPackShift(ddsd.ddpfPixelFormat.dwBBitMask, &nBBits);
 			int nBytes = ddsd.ddpfPixelFormat.dwRGBBitCount >> 3;
 
-			for (int y = 0; y < pL->nHeight; y++) {
-				unsigned char* pd = (unsigned char*)ddsd.lpSurface + y * ddsd.lPitch;
-				UINT32* ps = pLayer[i] + y * pL->nPitch;
-				for (int x = 0; x < pL->nWidth; x++) {
+			for (int y = r.top; y < r.bottom; y++) {
+				unsigned char* pd = (unsigned char*)ddsd.lpSurface + (y - r.top) * ddsd.lPitch;	// the lock starts at r
+				UINT32* ps = pLayer[i] + y * pL->nPitch + r.left;
+				for (int x = 0; x < r.right - r.left; x++) {
 					UINT32 c = ps[x];
 					unsigned int p = ((((c >> 16) & 0xff) >> (8 - nRBits)) << nRShift) | ((((c >> 8) & 0xff) >> (8 - nGBits)) << nGShift) | (((c & 0xff) >> (8 - nBBits)) << nBShift);
 					if (nBytes == 4) {

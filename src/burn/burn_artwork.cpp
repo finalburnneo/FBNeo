@@ -1498,6 +1498,9 @@ static std::vector<std::pair<INT32, INT32> > lay_chg;
 static std::vector<INT32> fold_runs, fold_row;
 static INT32 fold_serial = 0;
 static INT32 lay_ab_serial = 1;			// bumped when A / B change (not for background-only changes)
+// for the frontend: lay_serial at which U / A + B last changed, and what changed at lay_serial (layer coordinates)
+static INT32 lay_under_serial = 1, lay_over_serial = 1;
+static INT32 lay_dx0 = 0, lay_dy0 = 0, lay_dx1 = 0, lay_dy1 = 0;
 // A / B for each combination of the output-driven items' states seen (blinking lamps
 // go back and forth between a few): switching back is a copy instead of a rebuild
 struct lay_memo {
@@ -2438,6 +2441,12 @@ INT32 BurnArtworkGetLayers(BurnArtworkLayers *pLayers)
 	pLayers->nScreenW = lay_sx1 - lay_sx0;
 	pLayers->nScreenH = lay_sy1 - lay_sy0;
 	pLayers->nSerial = lay_serial;
+	pLayers->nSerialUnder = lay_under_serial;
+	pLayers->nSerialOver = lay_over_serial;
+	pLayers->nDirtyX = lay_dx0;
+	pLayers->nDirtyY = lay_dy0;
+	pLayers->nDirtyW = lay_dx1 - lay_dx0;
+	pLayers->nDirtyH = lay_dy1 - lay_dy0;
 	return 1;
 }
 
@@ -2985,6 +2994,7 @@ static void layers_update()
 		full_dirty = 0;
 		lay_serial++;
 		lay_ab_serial++;
+		lay_under_serial = lay_over_serial = lay_serial;
 		lay_dirty.push_back(0); lay_dirty.push_back(0); lay_dirty.push_back(disp_w); lay_dirty.push_back(disp_h);
 	} else if (bg_changed.size() || changed.size()) {
 		for (UINT32 k = 0; k < bg_changed.size(); k++) {
@@ -3053,6 +3063,47 @@ static void layers_update()
 			lay_ab_serial++;
 		}
 		lay_serial++;
+		if (bg_changed.size()) lay_under_serial = lay_serial;
+		if (changed.size()) lay_over_serial = lay_serial;
+	}
+
+	// what this update changed, as one rectangle in the layers' coordinates
+	if (lay_dirty.size() || lay_chg.size()) {
+		INT32 x0 = disp_w, y0 = disp_h, x1 = 0, y1 = 0;
+		for (UINT32 k = 0; k + 3 < lay_dirty.size(); k += 4) {
+			if (lay_dirty[k] < x0) x0 = lay_dirty[k];
+			if (lay_dirty[k + 1] < y0) y0 = lay_dirty[k + 1];
+			if (lay_dirty[k + 2] > x1) x1 = lay_dirty[k + 2];
+			if (lay_dirty[k + 3] > y1) y1 = lay_dirty[k + 3];
+		}
+		for (UINT32 k = 0; k < lay_chg.size(); k++) {
+			const litem &it = view->items[lay_chg[k].first];
+			if (it.px0 < x0) x0 = it.px0;
+			if (it.py0 < y0) y0 = it.py0;
+			if (it.px1 > x1) x1 = it.px1;
+			if (it.py1 > y1) y1 = it.py1;
+		}
+		if (x0 < 0) x0 = 0;
+		if (y0 < 0) y0 = 0;
+		if (x1 > disp_w) x1 = disp_w;
+		if (y1 > disp_h) y1 = disp_h;
+		if (x1 > x0 && y1 > y0) {
+			// the corners, through the same mapping as the pixels
+			INT32 cx[2] = { x0, x1 - 1 }, cy[2] = { y0, y1 - 1 };
+			lay_dx0 = lay_w; lay_dy0 = lay_h; lay_dx1 = 0; lay_dy1 = 0;
+			for (INT32 a = 0; a < 2; a++) {
+				for (INT32 b = 0; b < 2; b++) {
+					INT32 li = lay_index(cx[a], cy[b]);
+					INT32 lx = li % lay_w, ly = li / lay_w;
+					if (lx < lay_dx0) lay_dx0 = lx;
+					if (ly < lay_dy0) lay_dy0 = ly;
+					if (lx + 1 > lay_dx1) lay_dx1 = lx + 1;
+					if (ly + 1 > lay_dy1) lay_dy1 = ly + 1;
+				}
+			}
+		} else {
+			lay_dx0 = lay_dy0 = lay_dx1 = lay_dy1 = 0;
+		}
 	}
 
 	// the screen rectangle, in driver orientation

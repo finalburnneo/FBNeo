@@ -63,6 +63,8 @@ static UINT8 *slapstic_source;
 static INT32 current_bank;
 
 static INT32 is_esb = 0;
+static INT32 is_tomcat = 0;
+static UINT8 TomcatStick[2];
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -450,7 +452,7 @@ static void starwars_main_write(UINT16 address, UINT8 data)
 
 	if (address == 0x4400) {
 		sync_soundcpu();
-		if (port_A & 0x80) bprintf(0, _T("soundlatch overrun!\n"));
+		if ((port_A & 0x80) && !is_tomcat) bprintf(0, _T("soundlatch overrun!\n"));
 		port_A |= 0x80;
 		sound_data = data;
 
@@ -552,9 +554,12 @@ static UINT8 starwars_main_read(UINT16 address)
 	}
 
 	if ((address & 0xffe0) == 0x4380) {
+		UINT8 y = is_tomcat ? TomcatStick[1] : BurnGunReturnY(0);
+		UINT8 x = is_tomcat ? TomcatStick[0] : BurnGunReturnX(0);
+
 		switch (control_num) {
-			case 0: return (DrvDips[2] & 1) ? 0xff - BurnGunReturnY(0) : BurnGunReturnY(0);
-			case 1: return BurnGunReturnX(0);
+			case 0: return (DrvDips[2] & 1) ? 0xff - y : y;
+			case 1: return x;
 			default: return 0;
 		}
 		return 0;
@@ -852,6 +857,8 @@ static INT32 DrvInit(INT32 game_select)
 	}
 	else if (game_select == 1) // tomcat
 	{
+		is_tomcat = 1;
+
 		if (BurnLoadRom(DrvVectorROM + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x06000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
@@ -947,7 +954,7 @@ static INT32 DrvInit(INT32 game_select)
 
 	swmathbox_init();
 
-	BurnGunInit(2, FALSE);
+	BurnGunInit(1, FALSE);
 
 	DrvDoReset(1);
 
@@ -968,6 +975,7 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	is_esb = 0;
+	is_tomcat = 0;
 
 	return 0;
 }
@@ -1022,7 +1030,13 @@ static INT32 DrvFrame()
 
 		DrvInputs[0] = (DrvInputs[0] & ~0x10) | (DrvDips[2] & 0x10);
 
-		BurnGunMakeInputs(0, DrvAnalogPort0, DrvAnalogPort1);
+		if (is_tomcat) {
+			// self-centering flight stick, like MAME's AD_STICK
+			TomcatStick[0] = ProcessAnalog(DrvAnalogPort0, 0, INPUT_DEADZONE, 0x40, 0xc0);
+			TomcatStick[1] = ProcessAnalog(DrvAnalogPort1, 0, INPUT_DEADZONE, 0x40, 0xc0);
+		} else {
+			BurnGunMakeInputs(0, DrvAnalogPort0, DrvAnalogPort1);
+		}
 	}
 
 	INT32 nInterleave = 256;
@@ -1286,7 +1300,7 @@ static INT32 TomcatInit()
 
 struct BurnDriver BurnDrvTomcatsw = {
 	"tomcatsw", "tomcat", NULL, NULL, "1983",
-	"TomCat (Star Wars hardware, prototype)\0", "No sound!", "Atari", "Miscellaneous",
+	"TomCat (Star Wars hardware, prototype)\0", "No sound! Select Copter, Jet doesn't respond to the controls", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, tomcatswRomInfo, tomcatswRomName, NULL, NULL, NULL, NULL, StarwarsInputInfo, StarwarsDIPInfo,

@@ -11337,7 +11337,7 @@ struct BurnDriver BurnDrvsnes_Dquest6te = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - La Legende Saien (Euro, French)
+// Dragon Ball Z: La Legende Saien (Euro, French)
 
 static struct BurnRomInfo snes_Dragballz2efRomDesc[] = {
 	{ "Dragon Ball Z - La Legende Saien (E, France)(1993)(Bandai).sfc", 2097152, 0x8f24f886, BRF_ESS | BRF_PRG },
@@ -11348,7 +11348,7 @@ STD_ROM_FN(snes_Dragballz2ef)
 
 struct BurnDriver BurnDrvsnes_Dragballz2ef = {
 	"snes_dragballz2ef", NULL, NULL, NULL, "1993",
-	"Dragon Ball Z - La Legende Saien (Euro, French)\0", NULL, "Bandai", "SNES / Super Famicom",
+	"Dragon Ball Z: La Legende Saien (Euro, French)\0", NULL, "Bandai", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Dragballz2efRomInfo, snes_Dragballz2efRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11356,7 +11356,7 @@ struct BurnDriver BurnDrvsnes_Dragballz2ef = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Super Butouden 2 (Japan, Rev. 1)
+// Dragon Ball Z: Super Butouden 2 (Japan, Rev. 1)
 
 static struct BurnRomInfo snes_Dragballz2jRomDesc[] = {
 	{ "Dragon Ball Z - Super Butouden 2 (J, Rev 1)(1993)(Bandai).sfc", 2097152, 0x081fde86, BRF_ESS | BRF_PRG },
@@ -11367,15 +11367,15 @@ STD_ROM_FN(snes_Dragballz2j)
 
 struct BurnDriver BurnDrvsnes_Dragballz2j = {
 	"snes_dragballz2j", "snes_dragballz2ef", NULL, NULL, "1993",
-	"Dragon Ball Z - Super Butouden 2 (Japan, Rev. 1)\0", NULL, "Bandai", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	"Dragon Ball Z: Super Butouden 2 (Japan, Rev. 1)\0", NULL, "Bandai", "SNES / Super Famicom",
+	L"Dragon Ball Z: Super Butouden 2 (Japan, Rev. 1)\0Dragon Ball Z \u8d85\u6b66\u95d8\u4f1d 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Dragballz2jRomInfo, snes_Dragballz2jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Ultime Menace (Euro, French)
+// Dragon Ball Z: Ultime Menace (Euro, French)
 
 static struct BurnRomInfo snes_Dragballz3efRomDesc[] = {
 	{ "Dragon Ball Z - Ultime Menace (E, France)(1994)(Bandai).sfc", 2097152, 0x593eefe0, BRF_ESS | BRF_PRG },
@@ -11386,7 +11386,7 @@ STD_ROM_FN(snes_Dragballz3ef)
 
 struct BurnDriver BurnDrvsnes_Dragballz3ef = {
 	"snes_dragballz3ef", NULL, NULL, NULL, "1994",
-	"Dragon Ball Z - Ultime Menace (Euro, French)\0", NULL, "Bandai", "SNES / Super Famicom",
+	"Dragon Ball Z: Ultime Menace (Euro, French)\0", NULL, "Bandai", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Dragballz3efRomInfo, snes_Dragballz3efRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11394,7 +11394,7 @@ struct BurnDriver BurnDrvsnes_Dragballz3ef = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Super Butouden 3 (Japan)
+// Dragon Ball Z: Super Butouden 3 (Japan)
 
 static struct BurnRomInfo snes_Dragballz3jRomDesc[] = {
 	{ "Dragon Ball Z - Super Butouden 3 (J)(1994)(Bandai).sfc", 2097152, 0xcbfde2d0, BRF_ESS | BRF_PRG },
@@ -11405,15 +11405,15 @@ STD_ROM_FN(snes_Dragballz3j)
 
 struct BurnDriver BurnDrvsnes_Dragballz3j = {
 	"snes_dragballz3j", "snes_dragballz3ef", NULL, NULL, "1994",
-	"Dragon Ball Z - Super Butouden 3 (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	"Dragon Ball Z: Super Butouden 3 (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
+	L"Dragon Ball Z: Super Butouden 3 (Japan)\0Dragon Ball Z \u8d85\u6b66\u95d8\u4f1d 3\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Dragballz3jRomInfo, snes_Dragballz3jRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Super Butouden (Euro, French)
+// Dragon Ball Z: Super Butouden (Euro, French)
 
 static struct BurnRomInfo snes_DragballzefRomDesc[] = {
 	{ "Dragon Ball Z - Super Butouden (E, France)(1993)(Bandai).sfc", 2097152, 0xea7abad1, BRF_ESS | BRF_PRG },
@@ -11424,7 +11424,7 @@ STD_ROM_FN(snes_Dragballzef)
 
 struct BurnDriver BurnDrvsnes_Dragballzef = {
 	"snes_dragballzef", NULL, NULL, NULL, "1993",
-	"Dragon Ball Z - Super Butouden (Euro, French)\0", NULL, "Bandai", "SNES / Super Famicom",
+	"Dragon Ball Z: Super Butouden (Euro, French)\0", NULL, "Bandai", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragballzefRomInfo, snes_DragballzefRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11432,7 +11432,7 @@ struct BurnDriver BurnDrvsnes_Dragballzef = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Super Butouden (Japan)
+// Dragon Ball Z: Super Butouden (Japan)
 
 static struct BurnRomInfo snes_DragballzjRomDesc[] = {
 	{ "Dragon Ball Z - Super Butouden (J)(1993)(Bandai).sfc", 2097152, 0x8c7780bd, BRF_ESS | BRF_PRG },
@@ -11443,15 +11443,15 @@ STD_ROM_FN(snes_Dragballzj)
 
 struct BurnDriver BurnDrvsnes_Dragballzj = {
 	"snes_dragballzj", "snes_dragballzef", NULL, NULL, "1993",
-	"Dragon Ball Z - Super Butouden (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	"Dragon Ball Z: Super Butouden (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
+	L"Dragon Ball Z: Super Butouden (Japan)\0Dragon Ball Z \u8d85\u6b66\u95d8\u4f1d\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragballzjRomInfo, snes_DragballzjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Hyper Dimension (Euro, French)
+// Dragon Ball Z: Hyper Dimension (Euro, French)
 
 static struct BurnRomInfo snes_DragballzhdefRomDesc[] = {
 	{ "Dragon Ball Z - Hyper Dimension (E, France)(1996)(Bandai).sfc", 3145728, 0xa6dc166b, BRF_ESS | BRF_PRG },
@@ -11462,7 +11462,7 @@ STD_ROM_FN(snes_Dragballzhdef)
 
 struct BurnDriver BurnDrvsnes_Dragballzhdef = {
 	"snes_dragballzhdef", "snes_dragballzhdte", NULL, NULL, "1996",
-	"Dragon Ball Z - Hyper Dimension (Euro, French)\0", "SA-1 enhancement CPU", "Bandai", "SNES / Super Famicom",
+	"Dragon Ball Z: Hyper Dimension (Euro, French)\0", "SA-1 enhancement CPU", "Bandai", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragballzhdefRomInfo, snes_DragballzhdefRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11470,7 +11470,7 @@ struct BurnDriver BurnDrvsnes_Dragballzhdef = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Hyper Dimension (Japan)
+// Dragon Ball Z: Hyper Dimension (Japan)
 
 static struct BurnRomInfo snes_DragballzhdjRomDesc[] = {
 	{ "Dragon Ball Z - Hyper Dimension (J)(1996)(Bandai).sfc", 3145728, 0xf4ab1557, BRF_ESS | BRF_PRG },
@@ -11481,15 +11481,15 @@ STD_ROM_FN(snes_Dragballzhdj)
 
 struct BurnDriver BurnDrvsnes_Dragballzhdj = {
 	"snes_dragballzhdj", "snes_dragballzhdte", NULL, NULL, "1996",
-	"Dragon Ball Z - Hyper Dimension (Japan)\0", "SA-1 enhancement CPU", "Bandai", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	"Dragon Ball Z: Hyper Dimension (Japan)\0", "SA-1 enhancement CPU", "Bandai", "SNES / Super Famicom",
+	L"Dragon Ball Z: Hyper Dimension (Japan)\0Dragon Ball Z \u30cf\u30a4\u30d1\u30fc \u30c7\u30a3\u30e1\u30f3\u30b7\u30e7\u30f3\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragballzhdjRomInfo, snes_DragballzhdjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Hyper Dimension (Hack, English)
+// Dragon Ball Z: Hyper Dimension (Hack, English)
 // https://www.romhacking.net/translations/1537/
 static struct BurnRomInfo snes_DragballzhdteRomDesc[] = {
 	{ "Dragon Ball Z - Hyper Dimension T-Eng (2010)(Twilight Translations).sfc", 3145728, 0x971c9513, BRF_ESS | BRF_PRG },
@@ -11500,7 +11500,7 @@ STD_ROM_FN(snes_Dragballzhdte)
 
 struct BurnDriver BurnDrvsnes_Dragballzhdte = {
 	"snes_dragballzhdte", NULL, NULL, NULL, "2010",
-	"Dragon Ball Z - Hyper Dimension (Hack, English)\0", "SA-1 enhancement CPU", "Twilight Translations", "SNES / Super Famicom",
+	"Dragon Ball Z: Hyper Dimension (Hack, English)\0", "SA-1 enhancement CPU", "Twilight Translations", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragballzhdteRomInfo, snes_DragballzhdteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11527,7 +11527,7 @@ struct BurnDriver BurnDrvsnes_Dragballzhdtp = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Chou Gokuuden - Totsugeki Hen (Japan)
+// Dragon Ball Z: Chou Gokuuden - Totsugeki Hen (Japan)
 
 static struct BurnRomInfo snes_DragballzrpgjRomDesc[] = {
 	{ "Dragon Ball Z - Chou Gokuuden - Totsugeki Hen (J)(1995)(Bandai).sfc", 2097152, 0xd531289b, BRF_ESS | BRF_PRG },
@@ -11538,15 +11538,15 @@ STD_ROM_FN(snes_Dragballzrpgj)
 
 struct BurnDriver BurnDrvsnes_Dragballzrpgj = {
 	"snes_dragballzrpgj", "snes_dragballzrpgte", NULL, NULL, "1995",
-	"Dragon Ball Z - Chou Gokuuden - Totsugeki Hen (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	"Dragon Ball Z: Chou Gokuuden - Totsugeki Hen (Japan)\0", NULL, "Bandai", "SNES / Super Famicom",
+	L"Dragon Ball Z: Chou Gokuuden - Totsugeki Hen (Japan)\0Dragon Ball Z \u8d85\u609f\u7a7a\u4f1d - \u7a81\u6fc0\u7de8\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_DragballzrpgjRomInfo, snes_DragballzrpgjRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - Super Gokuden - Totsugeki Hen (Hack, English v0.98)
+// Dragon Ball Z: Super Gokuden - Totsugeki Hen (Hack, English v0.98)
 // https://www.romhacking.net/translations/315/
 static struct BurnRomInfo snes_DragballzrpgteRomDesc[] = {
 	{ "Dragon Ball Z - Chou Gokuuden - Totsugeki Hen T-Eng v0.98 (2016)(Kakkoii Translations).sfc", 2097152, 0x3561ff9d, BRF_ESS | BRF_PRG },
@@ -11557,7 +11557,7 @@ STD_ROM_FN(snes_Dragballzrpgte)
 
 struct BurnDriver BurnDrvsnes_Dragballzrpgte = {
 	"snes_dragballzrpgte", NULL, NULL, NULL, "2016",
-	"Dragon Ball Z - Super Gokuden - Totsugeki Hen (Hack, English v0.98)\0", NULL, "Kakkoii Translations", "SNES / Super Famicom",
+	"Dragon Ball Z: Super Gokuden - Totsugeki Hen (Hack, English v0.98)\0", NULL, "Kakkoii Translations", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_DragballzrpgteRomInfo, snes_DragballzrpgteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11565,7 +11565,7 @@ struct BurnDriver BurnDrvsnes_Dragballzrpgte = {
 	512, 448, 4, 3
 };
 
-// Dragon Ball Z - A Lenda de Goku - Embate (Hack, Portuguese)
+// Dragon Ball Z: A Lenda de Goku - Embate (Hack, Portuguese)
 // https://www.romhacking.net/translations/7297/
 static struct BurnRomInfo snes_DragballzrpgtpRomDesc[] = {
 	{ "Dragon Ball Z - A Lenda de Goku - Embate PT-BR (2024)(Nathan).sfc", 2097152, 0x6e20d7eb, BRF_ESS | BRF_PRG },
@@ -11576,7 +11576,7 @@ STD_ROM_FN(snes_Dragballzrpgtp)
 
 struct BurnDriver BurnDrvsnes_Dragballzrpgtp = {
 	"snes_dragballzrpgtp", "snes_dragballzrpgte", NULL, NULL, "2024",
-	"Dragon Ball Z - A Lenda de Goku - Embate (Hack, Portuguese)\0", NULL, "Nathan", "SNES / Super Famicom",
+	"Dragon Ball Z: A Lenda de Goku - Embate (Hack, Portuguese)\0", NULL, "Nathan", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RPG, 0,
 	SNESGetZipName, snes_DragballzrpgtpRomInfo, snes_DragballzrpgtpRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11641,7 +11641,7 @@ struct BurnDriver BurnDrvsnes_Dragmagic = {
 	512, 448, 4, 3
 };
 
-// Dragon - The Bruce Lee Story (USA)
+// Dragon: The Bruce Lee Story (USA)
 
 static struct BurnRomInfo snes_DragonblsRomDesc[] = {
 	{ "Dragon - The Bruce Lee Story (U)(1994)(Acclaim Ent. - Virgin).sfc", 2097152, 0x407c5c24, BRF_ESS | BRF_PRG },
@@ -11652,7 +11652,7 @@ STD_ROM_FN(snes_Dragonbls)
 
 struct BurnDriver BurnDrvsnes_Dragonbls = {
 	"snes_dragonbls", NULL, NULL, NULL, "1994",
-	"Dragon - The Bruce Lee Story (USA)\0", NULL, "Acclaim Ent. - Virgin Int.", "SNES / Super Famicom",
+	"Dragon: The Bruce Lee Story (USA)\0", NULL, "Acclaim Ent. - Virgin Int.", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragonblsRomInfo, snes_DragonblsRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11660,7 +11660,7 @@ struct BurnDriver BurnDrvsnes_Dragonbls = {
 	512, 448, 4, 3
 };
 
-// Dragon - The Bruce Lee Story (Euro)
+// Dragon: The Bruce Lee Story (Euro)
 
 static struct BurnRomInfo snes_DragonblseRomDesc[] = {
 	{ "Dragon - The Bruce Lee Story (E)(1994)(Virgin).sfc", 2097152, 0x038212ea, BRF_ESS | BRF_PRG },
@@ -11671,7 +11671,7 @@ STD_ROM_FN(snes_Dragonblse)
 
 struct BurnDriver BurnDrvsnes_Dragonblse = {
 	"snes_dragonblse", "snes_dragonbls", NULL, NULL, "1994",
-	"Dragon - The Bruce Lee Story (Euro)\0", NULL, "Virgin Int.", "SNES / Super Famicom",
+	"Dragon: The Bruce Lee Story (Euro)\0", NULL, "Virgin Interactive", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_DragonblseRomInfo, snes_DragonblseRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -11755,7 +11755,7 @@ struct BurnDriver BurnDrvsnes_Drakkhenj = {
 	512, 448, 4, 3
 };
 
-// Yume Meikyuu - Kigurumi Daibouken (Japan)
+// Yume Meikyuu: Kigurumi Daibouken (Japan)
 
 static struct BurnRomInfo snes_DreamazejRomDesc[] = {
 	{ "Yume Meikyuu - Kigurumi Daibouken (J)(1994)(Hect).sfc", 1048576, 0x4b17a200, BRF_ESS | BRF_PRG },
@@ -11766,15 +11766,15 @@ STD_ROM_FN(snes_Dreamazej)
 
 struct BurnDriver BurnDrvsnes_Dreamazej = {
 	"snes_dreamazej", "snes_dreamazete", NULL, NULL, "1994",
-	"Yume Meikyuu - Kigurumi Daibouken (Japan)\0", NULL, "Hect", "SNES / Super Famicom",
-	NULL, NULL, NULL, NULL,
+	"Yume Meikyuu: Kigurumi Daibouken (Japan)\0", NULL, "Hect", "SNES / Super Famicom",
+	L"Yume Meikyuu: Kigurumi Daibouken (Japan)\0\u3069\u308a\u3044\u3080\u3081\u3044\u305a \u5922\u8ff7\u5bae \u304d\u3050\u308b\u307f\u5927\u5192\u967a\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SNES, GBF_MAZE | GBF_RPG, 0,
 	SNESGetZipName, snes_DreamazejRomInfo, snes_DreamazejRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
 
-// Dream Maze - Kigurumi Daibouken (Hack, English v1.0b)
+// Dream Maze: The Kigurumi Adventure (Hack, English v1.0b)
 // https://www.romhacking.net/translations/860/
 static struct BurnRomInfo snes_DreamazeteRomDesc[] = {
 	{ "Dream Maze - Kigurumi Daibouken T-Eng v1.0b (2004)(KingMike's Translations).sfc", 1048576, 0xc5fcafa0, BRF_ESS | BRF_PRG },
@@ -11785,7 +11785,7 @@ STD_ROM_FN(snes_Dreamazete)
 
 struct BurnDriver BurnDrvsnes_Dreamazete = {
 	"snes_dreamazete", NULL, NULL, NULL, "2004",
-	"Dream Maze - Kigurumi Daibouken (Hack, English v1.0b)\0", NULL, "KingMike's Translations", "SNES / Super Famicom",
+	"Dream Maze: The Kigurumi Adventure (Hack, English v1.0b)\0", NULL, "KingMike's Translations", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 1, HARDWARE_SNES, GBF_MAZE | GBF_RPG, 0,
 	SNESGetZipName, snes_DreamazeteRomInfo, snes_DreamazeteRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
@@ -47792,6 +47792,25 @@ struct BurnDriver BurnDrvsnes_Dottieflowers = {
 	512, 448, 4, 3
 };
 
+// Dragon Ball Z: Super Butouden 3 - Story Mode (Hack, v1.1)
+// https://www.romhacking.net/hacks/10423/
+static struct BurnRomInfo snes_Dragballz3storyRomDesc[] = {
+	{ "Dragon Ball Z - Super Butouden 3 - Story Mode v1.1 (2026)(Midtown Games).sfc", 4194304, 0x9f29d899, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Dragballz3story)
+STD_ROM_FN(snes_Dragballz3story)
+
+struct BurnDriver BurnDrvsnes_Dragballz3story = {
+	"snes_dragballz3story", "snes_dragballz3ef", NULL, NULL, "2026",
+	"Dragon Ball Z: Super Butouden 3 - Story Mode (Hack, v1.1)\0", "Dual Language: English/Japanese", "Midtown Games", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_ADV | GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Dragballz3storyRomInfo, snes_Dragballz3storyRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // EarthBound Beginnings Remake (Hack, v1.2)
 // https://ebbr.neocities.org/
 static struct BurnRomInfo snes_EarthboundbrRomDesc[] = {
@@ -49162,6 +49181,25 @@ struct BurnDriver BurnDrvsnes_Megaman7re = {
 	512, 448, 4, 3
 };
 
+// Mega Man VII: Ultimate Warriors (Hack, v2.4)
+// https://www.romhacking.net/hacks/10282/
+static struct BurnRomInfo snes_Megaman7uwRomDesc[] = {
+	{ "Mega Man VII - Ultimate Warriors v2.4 (2026)(Shadow501).sfc", 4194304, 0x1cf4f48e, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Megaman7uw)
+STD_ROM_FN(snes_Megaman7uw)
+
+struct BurnDriver BurnDrvsnes_Megaman7uw = {
+	"snes_megaman7uw", "snes_megaman7", NULL, NULL, "2026",
+	"Mega Man VII: Ultimate Warriors (Hack, v2.4)\0", NULL, "Shadow501", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_PLATFORM, 0,
+	SNESGetZipName, snes_Megaman7uwRomInfo, snes_Megaman7uwRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mega Man's Soccer Restoration (Hack, v1.1)
 // https://romhackplaza.org/romhacks/mega-man-soccer-restoration-snes/
 static struct BurnRomInfo snes_MegamansocrestRomDesc[] = {
@@ -49371,6 +49409,25 @@ struct BurnDriver BurnDrvsnes_Miniquest = {
 	512, 448, 4, 3
 };
 
+// Mortal Kombat Arcade Edition (Hack, v1.2)
+// https://www.romhacking.net/hacks/10286/
+static struct BurnRomInfo snes_MkaeRomDesc[] = {
+	{ "Mortal Kombat Arcade Edition v1.2 (2026)(lord-amd).sfc", 4194304, 0x8a939c7b, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mkae)
+STD_ROM_FN(snes_Mkae)
+
+struct BurnDriver BurnDrvsnes_Mkae = {
+	"snes_mkae", "snes_mk", NULL, NULL, "2026",
+	"Mortal Kombat Arcade Edition (Hack, v1.2)\0", NULL, "lord-amd", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_MkaeRomInfo, snes_MkaeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Mortal Kombat - Blood Color Fix (Hack)
 // https://www.romhacking.net/hacks/2885/
 static struct BurnRomInfo snes_MkbcfRomDesc[] = {
@@ -49386,6 +49443,25 @@ struct BurnDriver BurnDrvsnes_Mkbcf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_MkbcfRomInfo, snes_MkbcfRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mortal Kombat II - Super Arcade Edition (Hack)
+// https://romhackplaza.org/romhacks/mortal-kombat-2-super-arcade-edition-snes-2
+static struct BurnRomInfo snes_MkiisaeRomDesc[] = {
+	{ "Mortal Kombat II - Super Arcade Edition (2026)(B-Zero TV).sfc", 4194304, 0x2faab208, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mkiisae)
+STD_ROM_FN(snes_Mkiisae)
+
+struct BurnDriver BurnDrvsnes_Mkiisae = {
+	"snes_mkiisae", "snes_mkii", NULL, NULL, "2026",
+	"Mortal Kombat II - Super Arcade Edition (Hack)\0", NULL, "B-Zero TV", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_MkiisaeRomInfo, snes_MkiisaeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -49424,6 +49500,25 @@ struct BurnDriver BurnDrvsnes_Mk3ne = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Mk3neRomInfo, snes_Mk3neRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Mighty Morphin Power Rangers - Green Ranger Edition (Hack, v1.8)
+// https://www.romhacking.net/hacks/10237/
+static struct BurnRomInfo snes_MmprgreRomDesc[] = {
+	{ "Mighty Morphin Power Rangers - Green Ranger Edition v1.8 (2026)(matchaman).sfc", 4194304, 0x6a78f4bc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Mmprgre)
+STD_ROM_FN(snes_Mmprgre)
+
+struct BurnDriver BurnDrvsnes_Mmprgre = {
+	"snes_mmprgre", "snes_mmpr", NULL, NULL, "2026",
+	"Mighty Morphin Power Rangers - Green Ranger Edition (Hack, v1.8)\0", NULL, "matchaman", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_MmprgreRomInfo, snes_MmprgreRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -49708,6 +49803,25 @@ struct BurnDriver BurnDrvsnes_Othercastle2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	SNESGetZipName, snes_Othercastle2RomInfo, snes_Othercastle2RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Outlander - SA-1 improvement (Hack)
+// https://github.com/satelliteoflove/outlander-improvement/releases/tag/v1.0
+static struct BurnRomInfo snes_Outlandersa1RomDesc[] = {
+	{ "Outlander - SA-1 improvement (2026)(Satellite of Love).sfc", 4194304, 0x6f701fee, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Outlandersa1)
+STD_ROM_FN(snes_Outlandersa1)
+
+struct BurnDriver BurnDrvsnes_Outlandersa1 = {
+	"snes_outlandersa1", "snes_outlander", NULL, NULL, "2026",
+	"Outlander - SA-1 improvement (Hack)\0", "SA-1 enhancement CPU", "Satellite of Love", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 1, HARDWARE_SNES, GBF_RACING | GBF_RUNGUN, 0,
+	SNESGetZipName, snes_Outlandersa1RomInfo, snes_Outlandersa1RomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };
@@ -51103,6 +51217,25 @@ struct BurnDriver BurnDrvsnes_Supblocksock = {
 	512, 448, 4, 3
 };
 
+// Super Castlevania IV Co-Op (Hack, v1.01)
+// https://www.romhacking.net/hacks/10249/
+static struct BurnRomInfo snes_Supercastlevania4coRomDesc[] = {
+	{ "Super Castlevania IV Co-Op - SA-1 v1.01 (2026)(MateriaShrine).sfc", 3145728, 0x3ccc0afc, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Supercastlevania4co)
+STD_ROM_FN(snes_Supercastlevania4co)
+
+struct BurnDriver BurnDrvsnes_Supercastlevania4co = {
+	"snes_supercastlevania4co", "snes_supercastlevania4", NULL, NULL, "2026",
+	"Super Castlevania IV Co-Op (Hack, v1.01)\0", "SA-1 enhancement CPU", "MateriaShrine", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	SNESGetZipName, snes_Supercastlevania4coRomInfo, snes_Supercastlevania4coRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Supercooked! (HB, v1.2)
 
 static struct BurnRomInfo snes_SupcookedRomDesc[] = {
@@ -51826,6 +51959,25 @@ struct BurnDriver BurnDrvsnes_Tmntsf2t = {
 	512, 448, 4, 3
 };
 
+// Top Gear - Fullscreen Edition (Hack, v1.2)
+// https://www.romhacking.net/hacks/10367/
+static struct BurnRomInfo snes_TopgearfeRomDesc[] = {
+	{ "Top Gear - Fullscreen Edition - SA-1 v1.2 (2026)(Psicopompo).sfc", 1048576, 0xcdf8fc04, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Topgearfe)
+STD_ROM_FN(snes_Topgearfe)
+
+struct BurnDriver BurnDrvsnes_Topgearfe = {
+	"snes_topgearfe", "snes_topgear", NULL, NULL, "2026",
+	"Top Gear - Fullscreen Edition (Hack, v1.2)\0", "SA-1 enhancement CPU", "Psicopompo", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_RACING, 0,
+	SNESGetZipName, snes_TopgearfeRomInfo, snes_TopgearfeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
 // Turrican 1.5 (HB)
 
 static struct BurnRomInfo snes_Turrican15RomDesc[] = {
@@ -51845,10 +51997,10 @@ struct BurnDriver BurnDrvsnes_Turrican15 = {
 	512, 448, 4, 3
 };
 
-// Ultimate Mortal Kombat 3 BZero Edition (Hack, v1.1)
+// Ultimate Mortal Kombat 3 - BZero Edition (Hack, v1.1)
 // https://www.romhacking.net/hacks/9151/
 static struct BurnRomInfo snes_Umk3bzeroRomDesc[] = {
-	{ "Ultimate Mortal Kombat 3 BZero Edition v1.1 (2025)(B-Zero TV).sfc", 8388608, 0x4ae4d7ad, BRF_ESS | BRF_PRG },
+	{ "Ultimate Mortal Kombat 3 - BZero Edition v1.1 (2025)(B-Zero TV).sfc", 8388608, 0x4ae4d7ad, BRF_ESS | BRF_PRG },
 };
 
 STD_ROM_PICK(snes_Umk3bzero)
@@ -51856,10 +52008,29 @@ STD_ROM_FN(snes_Umk3bzero)
 
 struct BurnDriver BurnDrvsnes_Umk3bzero = {
 	"snes_umk3bzero", "snes_umk3", NULL, NULL, "2025",
-	"Ultimate Mortal Kombat 3 BZero Edition (Hack, v1.1)\0", NULL, "B-Zero TV", "SNES / Super Famicom",
+	"Ultimate Mortal Kombat 3 - BZero Edition (Hack, v1.1)\0", NULL, "B-Zero TV", "SNES / Super Famicom",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
 	SNESGetZipName, snes_Umk3bzeroRomInfo, snes_Umk3bzeroRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	512, 448, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 - Extended Edition (Hack, Beta103)
+// https://www.romhacking.net/hacks/10290/
+static struct BurnRomInfo snes_Umk3eeRomDesc[] = {
+	{ "UMK3 - Extended Edition Beta103 (2026)(VrepliroidV).sfc", 8388608, 0x06dcd1c2, BRF_ESS | BRF_PRG },
+};
+
+STD_ROM_PICK(snes_Umk3ee)
+STD_ROM_FN(snes_Umk3ee)
+
+struct BurnDriver BurnDrvsnes_Umk3ee = {
+	"snes_umk3ee", "snes_umk3", NULL, NULL, "2026",
+	"Ultimate Mortal Kombat 3 - Extended Edition (Hack, Beta103)\0", NULL, "VrepliroidV", "Nintendo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SNES, GBF_VSFIGHT, 0,
+	SNESGetZipName, snes_Umk3eeRomInfo, snes_Umk3eeRomName, NULL, NULL, NULL, NULL, SNESInputInfo, SNESDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	512, 448, 4, 3
 };

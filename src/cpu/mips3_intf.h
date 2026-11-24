@@ -3,8 +3,12 @@
 
 #include <stdint.h>
 
-// MIPS III (R4600) interpreter, little-endian guest.
-// Addresses given to Mips3MapMemory/Mips3MapHandler and passed to handlers are physical.
+// MIPS III (R4600) / MIPS IV (VR5500) interpreter, little-endian guest.
+// Addresses given to Mips3MapMemory/Mips3MapHandler and passed to handlers are physical:
+// 29 bits on the R4600, 32 bits on the VR5500 (only reachable through the TLB above 512MB).
+
+#define MIPS3_TYPE_R4600	0
+#define MIPS3_TYPE_VR5500	1	// MIPS IV, VR5500 MUL/MADD/ROR extensions, 1GB pages
 
 typedef UINT8 (*pMips3ReadByteHandler)(UINT32 a);
 typedef void (*pMips3WriteByteHandler)(UINT32 a, UINT8 d);
@@ -18,7 +22,7 @@ typedef void (*pMips3WriteWordHandler)(UINT32 a, UINT32 d);
 typedef UINT64 (*pMips3ReadDoubleHandler)(UINT32 a);
 typedef void (*pMips3WriteDoubleHandler)(UINT32 a, UINT64 d);
 
-int Mips3Init();
+int Mips3Init(int nType = MIPS3_TYPE_R4600);
 int Mips3UseRecompiler(bool use);   // kept for compatibility, ignored
 int Mips3Exit();
 void Mips3Reset();
@@ -37,6 +41,13 @@ int Mips3MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, 
 
 // Must be called when something other than the CPU (DMA, driver code...) writes code into mapped memory
 void Mips3InvalidateRange(unsigned int nStart, unsigned int nEnd);
+// called before the VR5500 data cache model touches memory directly (drivers that let other threads use RAM)
+void Mips3SetCacheSyncCallback(void (*pCallback)());
+// write tracking of the RAM from physical address 0 (4KB pages, below nBytes): before the cpu first writes
+// page n through a direct map while pMap[n] is 0, pCallback(n) runs (if not NULL) and pMap[n] is set;
+// call again after clearing bytes of pMap, so that pages held in the host write cache are seen again
+// with tracking on, a load with ACB_RUNAHEAD keeps the code cache: the driver must invalidate the RAM it restores
+void Mips3SetWriteTrack(unsigned char *pMap, unsigned int nBytes, void (*pCallback)(unsigned int nPage));
 
 int Mips3SetReadByteHandler(int i, pMips3ReadByteHandler pHandler);
 int Mips3SetWriteByteHandler(int i, pMips3WriteByteHandler pHandler);

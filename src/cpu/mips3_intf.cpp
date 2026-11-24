@@ -1,4 +1,4 @@
-// MIPS III (R4600) interface: memory map, handlers and FBNeo cpu core glue
+// MIPS III (R4600) / MIPS IV (VR5500) interface: memory map, handlers and FBNeo cpu core glue
 // The interpreter itself is in mips3/mips3.cpp
 
 #include "burnint.h"
@@ -7,6 +7,7 @@
 #include <stdlib.h>
 
 Mips3PhysPage *Mips3Phys = NULL;
+UINT32 Mips3PhysMask = 0x1fffffff;
 
 pMips3ReadByteHandler Mips3ReadByteH[MIPS3_MAXHANDLER];
 pMips3WriteByteHandler Mips3WriteByteH[MIPS3_MAXHANDLER];
@@ -42,6 +43,7 @@ int Mips3MapMemory(unsigned char* pMemory, unsigned int nStart, unsigned int nEn
 		if (nType & MAP_FETCH) Mips3Phys[page].fetch = pMemory + 0x1000 * i;
 		mips3_page_mapped(page);
 	}
+	mips3_map_changed();
 	return 0;
 }
 
@@ -56,12 +58,23 @@ int Mips3MapHandler(uintptr_t nHandler, unsigned int nStart, unsigned int nEnd, 
 		if (nType & MAP_FETCH) Mips3Phys[page].fetch = NULL;	// fetch through the read handler
 		mips3_page_mapped(page);
 	}
+	mips3_map_changed();
 	return 0;
 }
 
 void Mips3InvalidateRange(unsigned int nStart, unsigned int nEnd)
 {
 	mips3_invalidate(nStart, nEnd);
+}
+
+void Mips3SetCacheSyncCallback(void (*pCallback)())
+{
+	pMips3CacheSync = pCallback;
+}
+
+void Mips3SetWriteTrack(unsigned char *pMap, unsigned int nBytes, void (*pCallback)(unsigned int nPage))
+{
+	mips3_set_write_track(pMap, nBytes, pCallback);
 }
 
 #define MIPS3_SET_HANDLER(name, type, table) \
@@ -169,15 +182,17 @@ cpu_core_config Mips3Config =
 	Mips3Reset,
 	Mips3Scan,
 	Mips3CoreExit,
-	MIPS3_PHYS_MASK,
+	0x1fffffff,
 	0
 };
 
 // ---------------------------------------------------------------------------
 // init / exit / reset / state
 
-int Mips3Init()
+int Mips3Init(int nType)
 {
+	Mips3PhysMask = (nType == MIPS3_TYPE_VR5500) ? 0xffffffff : 0x1fffffff;
+	Mips3Config.nMemorySize = (UINT64)Mips3PhysMask;
 	Mips3Phys = (Mips3PhysPage*)calloc(MIPS3_PHYS_PAGES, sizeof(Mips3PhysPage));
 
 	for (INT32 i = 0; i < MIPS3_MAXHANDLER; i++) {
@@ -191,7 +206,7 @@ int Mips3Init()
 		Mips3WriteDoubleH[i] = DefWriteDouble;
 	}
 
-	mips3_init();
+	mips3_init(nType);
 
 	CpuCheatRegister(0, &Mips3Config);
 
@@ -204,6 +219,7 @@ int Mips3Exit()
 	if (!bMips3IntfInitted) return 0;
 
 	mips3_exit();
+	pMips3CacheSync = NULL;
 
 	free(Mips3Phys);
 	Mips3Phys = NULL;

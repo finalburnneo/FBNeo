@@ -17521,7 +17521,7 @@ struct BurnDriver BurnDrvTurfmastsc = {
 };
 
 
-// Neo Turf Masters / Big Tournament Golf (Hack, Plus v2.0)
+// Neo Turf Masters Plus / Big Tournament Golf Plus (Hack, v2.0)
 // https://github.com/theenemy-thd/NeoTurfMastersPlus
 static struct BurnRomInfo turfmastplusRomDesc[] = {
 	{ "200-p1pl.p1",	0x200000, 0xb41f72c1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -17546,7 +17546,7 @@ STD_ROM_FN(turfmastplus)
 
 struct BurnDriver BurnDrvTurfmastplus = {
 	"turfmastplus", "turfmast", "neogeo", NULL, "2026",
-	"Neo Turf Masters / Big Tournament Golf (Hack, Plus v2.0)\0", NULL, "hack (TheEnemy)", "Neo Geo MVS",
+	"Neo Turf Masters Plus / Big Tournament Golf Plus (Hack, v2.0)\0", NULL, "hack (TheEnemy)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastplusRomInfo, turfmastplusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

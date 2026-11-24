@@ -60,46 +60,47 @@ STDINPUTINFO(Ddayjlc)
 
 static struct BurnDIPInfo DdayjlcDIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0x00, NULL					},
-	{0x0d, 0xff, 0xff, 0x00, NULL					},
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0x00, NULL					},
+	{0x01, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x0c, 0x01, 0x03, 0x00, "3"					},
-	{0x0c, 0x01, 0x03, 0x01, "4"					},
-	{0x0c, 0x01, 0x03, 0x02, "5"					},
-	{0x0c, 0x01, 0x03, 0x03, "6"					},
+	{0x00, 0x01, 0x03, 0x00, "3"					},
+	{0x00, 0x01, 0x03, 0x01, "4"					},
+	{0x00, 0x01, 0x03, 0x02, "5"					},
+	{0x00, 0x01, 0x03, 0x03, "6"					},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"				},
-	{0x0c, 0x01, 0x1c, 0x0c, "4 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x08, "3 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x04, "2 Coins 1 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x00, "1 Coin  1 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x18, "2 Coins 3 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x10, "1 Coin  2 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
-	{0x0c, 0x01, 0x1c, 0x1c, "Free Play"			},
+	{0x00, 0x01, 0x1c, 0x0c, "4 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x08, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x04, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x00, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x18, "2 Coins 3 Credits"	},
+	{0x00, 0x01, 0x1c, 0x10, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x1c, 0x1c, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    2, "Extend"				},
-	{0x0c, 0x01, 0x20, 0x00, "30K"					},
-	{0x0c, 0x01, 0x20, 0x20, "50K"					},
+	{0x00, 0x01, 0x20, 0x00, "30K"					},
+	{0x00, 0x01, 0x20, 0x20, "50K"					},
 	
 	{0   , 0xfe, 0   ,    2, "Difficulty"			},
-	{0x0c, 0x01, 0x40, 0x00, "Easy"					},
-	{0x0c, 0x01, 0x40, 0x40, "Hard"					},
+	{0x00, 0x01, 0x40, 0x00, "Easy"					},
+	{0x00, 0x01, 0x40, 0x40, "Hard"					},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x0c, 0x01, 0x80, 0x00, "Upright"				},
-	{0x0c, 0x01, 0x80, 0x80, "Cocktail"				},
+	{0x00, 0x01, 0x80, 0x00, "Upright"				},
+	{0x00, 0x01, 0x80, 0x80, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"				},
-	{0x0d, 0x01, 0x07, 0x03, "4 Coins 1 Credits"	},
-	{0x0d, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
-	{0x0d, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
-	{0x0d, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
-	{0x0d, 0x01, 0x07, 0x06, "2 Coins 3 Credits"	},
-	{0x0d, 0x01, 0x07, 0x04, "1 Coin  2 Credits"	},
-	{0x0d, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x0d, 0x01, 0x07, 0x07, "Free Play"			},
+	{0x01, 0x01, 0x07, 0x03, "4 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x02, "3 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x07, 0x06, "2 Coins 3 Credits"	},
+	{0x01, 0x01, 0x07, 0x04, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x07, 0x07, "Free Play"			},
 };
 
 STDDIPINFO(Ddayjlc)
@@ -150,7 +151,7 @@ static void __fastcall ddayjc_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf080:
-			char_bank = data;
+			char_bank = data & 1;
 		return;
 
 		case 0xf081:
@@ -258,7 +259,9 @@ static tilemap_callback( bg )
 	UINT8 attr = DrvBgRAM[offs + 0x400];
 	UINT16 code = DrvBgRAM[offs] + ((attr & 0x08) << 5);
 
-	TILE_SET_INFO(0, code, (attr & 0x07) | ((attr >> 3) & 8), 0);
+	INT32 category = attr >> 7;
+
+	TILE_SET_INFO(0, code, (attr & 0x07) | ((attr >> 3) & 8), TILE_GROUP(category) | (category ? TILE_OPAQUE : 0));
 }
 
 static tilemap_callback( fg )
@@ -269,7 +272,9 @@ static tilemap_callback( fg )
 	INT32 sx = offs & 0x1f;
 	if (sx < 2 || sx >= 30) flags = TILE_OPAQUE;
 
-	TILE_SET_INFO(1, code + (char_bank * 0x100), 2, flags);
+	UINT8 color = DrvColPROM[0x400 | ((offs >> 2) & 0xe0) | (offs & 0x1f)];
+
+	TILE_SET_INFO(1, code + (char_bank * 0x100), color, flags);
 }
 
 static UINT8 AY8910_0_portA(UINT32)
@@ -313,7 +318,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x008000;
 	DrvGfxROM2		= Next; Next += 0x008000;
 
-	DrvColPROM		= Next; Next += 0x000400;
+	DrvColPROM		= Next; Next += 0x000500;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
@@ -396,7 +401,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvColPROM + 0x00100, 20, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00200, 21, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00300, 22, 1)) return 1;
-	//	if (BurnLoadRom(DrvColPROM + 0x00400, 23, 1)) return 1; // not used
+		if (BurnLoadRom(DrvColPROM + 0x00400, 23, 1)) return 1;
 
 		DrvGfxDecode();
 	}
@@ -432,8 +437,9 @@ static INT32 DrvInit()
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM2, 2, 8, 8, 0x8000, 0x100, 0xf);
-	GenericTilemapSetGfx(1, DrvGfxROM1, 2, 8, 8, 0x8000, 0x080, 0xf);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 2, 8, 8, 0x8000, 0x000, 0xf);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapSetTransparent(0, 0);
 	GenericTilemapSetTransparent(1, 0);
 
 	DrvDoReset();
@@ -484,10 +490,10 @@ static void draw_sprites()
 {
 	for (INT32 i = 0; i < 0x400; i += 4)
 	{
-		INT32 sy    = 256 - DrvSprRAM[i + 0] - 24;
+		INT32 sy    = (UINT8)(256 - DrvSprRAM[i + 0] - 8) - 16;
 		INT32 attr  = DrvSprRAM[i + 2];
 		INT32 code  = DrvSprRAM[i + 1];
-		INT32 sx    = DrvSprRAM[i + 3] - 16;
+		INT32 sx    = (UINT8)(DrvSprRAM[i + 3] - 8);
 		INT32 flipx = attr & 0x80;
 		INT32 flipy = code & 0x80;
 		INT32 color = attr & 0xf;
@@ -505,15 +511,17 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	BurnTransferClear();
+	BurnTransferClear(0x100);
 
-	GenericTilemapSetScrollX(0, DrvBgRAM[0] + 8);
+	GenericTilemapSetScrollX(0, DrvBgRAM[0]);
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 
 	if (nSpriteEnable & 1) draw_sprites();
 
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0));
+
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -606,7 +614,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// D-Day (Jaleco set 1)
+// D-Day (Jaleco, set 1)
 
 static struct BurnRomInfo ddayjlcRomDesc[] = {
 	{ "1",		0x2000, 0xdbfb8772, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -638,7 +646,7 @@ static struct BurnRomInfo ddayjlcRomDesc[] = {
 	{ "4m.bin",	0x0100, 0xe0ab9a8f, 6 | BRF_GRA },           // 21
 	{ "5n.bin",	0x0100, 0x61d85970, 6 | BRF_GRA },           // 22
 
-	{ "3l.bin",	0x0100, 0xda6fe846, 0 | BRF_OPT },           // 23 Unused?
+	{ "3l.bin",	0x0100, 0xda6fe846, 6 | BRF_GRA },           // 23
 };
 
 STD_ROM_PICK(ddayjlc)
@@ -646,7 +654,7 @@ STD_ROM_FN(ddayjlc)
 
 struct BurnDriver BurnDrvDdayjlc = {
 	"ddayjlc", NULL, NULL, NULL, "1984",
-	"D-Day (Jaleco set 1)\0", "buggy game due to unemulated protection MCU", "Jaleco", "Miscellaneous",
+	"D-Day (Jaleco, set 1)\0", "Protection device (M54828P) is simulated", "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ddayjlcRomInfo, ddayjlcRomName, NULL, NULL, NULL, NULL, DdayjlcInputInfo, DdayjlcDIPInfo,
@@ -655,7 +663,7 @@ struct BurnDriver BurnDrvDdayjlc = {
 };
 
 
-// D-Day (Jaleco set 2)
+// D-Day (Jaleco, set 2)
 
 static struct BurnRomInfo ddayjlcaRomDesc[] = {
 	{ "1a",		0x2000, 0xd8e4f3d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -687,7 +695,7 @@ static struct BurnRomInfo ddayjlcaRomDesc[] = {
 	{ "4m.bin",	0x0100, 0xe0ab9a8f, 6 | BRF_GRA },           // 21
 	{ "5n.bin",	0x0100, 0x61d85970, 6 | BRF_GRA },           // 22
 
-	{ "3l.bin",	0x0100, 0xda6fe846, 0 | BRF_OPT },           // 23 Unused?
+	{ "3l.bin",	0x0100, 0xda6fe846, 6 | BRF_GRA },           // 23
 };
 
 STD_ROM_PICK(ddayjlca)
@@ -695,7 +703,7 @@ STD_ROM_FN(ddayjlca)
 
 struct BurnDriver BurnDrvDdayjlca = {
 	"ddayjlca", "ddayjlc", NULL, NULL, "1984",
-	"D-Day (Jaleco set 2)\0", "buggy game due to unemulated protection MCU", "Jaleco", "Miscellaneous",
+	"D-Day (Jaleco, set 2)\0", "Protection device (M54828P) is simulated", "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, ddayjlcaRomInfo, ddayjlcaRomName, NULL, NULL, NULL, NULL, DdayjlcInputInfo, DdayjlcDIPInfo,

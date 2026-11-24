@@ -217,3 +217,25 @@ struct BurnDriver BurnDrvSuperbik = {
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 224, 256, 3, 4
 };
+
+// TomCat (prototype)
+
+static struct BurnRomInfo TomcatRomDesc[] = {
+	{ "rom1k.bin",          0x08000, 0x5535a1ff, BRF_ESS | BRF_PRG },
+	{ "rom2k.bin",          0x08000, 0x021a01d2, BRF_ESS | BRF_PRG },
+
+	{ "136021-105.1l",      0x00100, 0x82fc3eb2, BRF_GRA },
+};
+
+STD_ROM_PICK(Tomcat)
+STD_ROM_FN(Tomcat)
+
+struct BurnDriver BurnDrvTomcat = {
+	"tomcat", NULL, NULL, NULL, "1985",
+	"TomCat (prototype)\0", "Parent set for working drivers", "Atari", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
+	NULL, TomcatRomInfo, TomcatRomName, NULL, NULL, NULL, NULL, ParentInputInfo, NULL,
+	ParentInit, ParentExit, NULL, NULL, NULL,
+	NULL, 0, 640, 480, 4, 3
+};

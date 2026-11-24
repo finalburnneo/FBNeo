@@ -10,6 +10,7 @@
 //
 // TODO: JVS I/O (no device answers on the bridge, as in MAME: use the JAMMA setting)
 
+#include <vector>
 #include "tiles_generic.h"
 #include "mips3_intf.h"
 #include "burn_hdd.h"
@@ -17,7 +18,6 @@
 #define THREADY_NO_GLOBAL
 #include "thready.h"
 #include <math.h>
-#include <vector>
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

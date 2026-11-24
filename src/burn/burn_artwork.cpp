@@ -519,31 +519,39 @@ static INT32 art_locate(const char *game)
 		void *dest = NULL;
 		INT32 l = 0;
 
+		// at the top of it first, then in an artwork/ folder in it
+		static const char *dir[] = { "", "artwork/" };
+
 #ifdef ART_NESTED_ZIP
 		// <game>.zip inside it
-		snprintf(name, sizeof(name), "%s.zip", game);
-		if (ZipLoadOneFile(pack, name, &dest, &l) == 0 && dest && l > 0) {
-			art_inner = zip_stream_open((const char*)dest, l, 0, 'r');
-			if (art_inner) {
-				art_inner_buf = dest;		// the zip reads from it, keep it until art_close_archives()
-				bprintf(PRINT_NORMAL, _T("Artwork: using %S from artwork%S\n"), name, ext[e]);
-				return 1;
+		for (INT32 d = 0; d < 2; d++) {
+			snprintf(name, sizeof(name), "%s%s.zip", dir[d], game);
+			if (ZipLoadOneFile(pack, name, &dest, &l) == 0 && dest && l > 0) {
+				art_inner = zip_stream_open((const char*)dest, l, 0, 'r');
+				if (art_inner) {
+					art_inner_buf = dest;		// the zip reads from it, keep it until art_close_archives()
+					bprintf(PRINT_NORMAL, _T("Artwork: using %S from artwork%S\n"), name, ext[e]);
+					return 1;
+				}
 			}
+			if (dest) free(dest);
+			dest = NULL;
 		}
-		if (dest) free(dest);
-		dest = NULL;
 #endif
 
 		// or a <game>/ folder inside it
-		snprintf(name, sizeof(name), "%s/default.lay", game);
-		if (ZipLoadOneFile(pack, name, &dest, &l) == 0 && dest && l > 0) {
-			free(dest);
-			snprintf(art_pack, sizeof(art_pack), "%s", pack);
-			snprintf(art_pack_dir, sizeof(art_pack_dir), "%s/", game);
-			bprintf(PRINT_NORMAL, _T("Artwork: using %S/ from artwork%S\n"), game, ext[e]);
-			return 1;
+		for (INT32 d = 0; d < 2; d++) {
+			snprintf(name, sizeof(name), "%s%s/default.lay", dir[d], game);
+			if (ZipLoadOneFile(pack, name, &dest, &l) == 0 && dest && l > 0) {
+				free(dest);
+				snprintf(art_pack, sizeof(art_pack), "%s", pack);
+				snprintf(art_pack_dir, sizeof(art_pack_dir), "%s%s/", dir[d], game);
+				bprintf(PRINT_NORMAL, _T("Artwork: using %S from artwork%S\n"), art_pack_dir, ext[e]);
+				return 1;
+			}
+			if (dest) free(dest);
+			dest = NULL;
 		}
-		if (dest) free(dest);
 	}
 
 	return 0;

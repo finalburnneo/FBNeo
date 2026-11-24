@@ -175,6 +175,10 @@ BurnHDD* BurnHDDOpen(INT32 nIndex)
 		fp = OpenInDir(BurnDrvGetText(DRV_NAME), szName, szExts[i], szPath);
 		if (fp == NULL) fp = OpenInDir(BurnDrvGetText(DRV_PARENT), szName, szExts[i], szPath);
 	}
+	// a single disk may also be named after the romset (<romset>/<romset>.chd)
+	for (INT32 i = 0; i < 2 && fp == NULL && nIndex == 0 && BurnDrvGetTextA(DRV_NAME); i++) {
+		fp = OpenInDir(BurnDrvGetText(DRV_NAME), BurnDrvGetTextA(DRV_NAME), szExts[i], szPath);
+	}
 	if (fp == NULL) {
 		bprintf(PRINT_ERROR, _T("HDD: ") HDD_NARROW_FMT _T(".chd not found\n"), szName);
 		return NULL;
@@ -406,4 +410,16 @@ void BurnHDDDiscardWrites(BurnHDD* pDisk)
 	pDisk->Diff.clear();
 	pDisk->bDiffDirty = true;	// an empty diff file replaces the old one
 	BurnHDDFlush(pDisk);
+}
+
+INT32 BurnHDDGetMetadata(BurnHDD* pDisk, UINT32 nTag, UINT32 nIndex, void* pDest, UINT32 nLen, UINT32* pnResultLen)
+{
+	if (pnResultLen) *pnResultLen = 0;
+	if (pDisk == NULL || pDisk->pChd == NULL) return 1;
+
+	UINT32 nResultLen = 0;
+	if (chd_get_metadata(pDisk->pChd, nTag, nIndex, pDest, nLen, &nResultLen, NULL, NULL) != CHDERR_NONE) return 1;
+
+	if (pnResultLen) *pnResultLen = nResultLen;
+	return 0;
 }

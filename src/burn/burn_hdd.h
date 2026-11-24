@@ -3,7 +3,7 @@
 // Gives drivers sector access to the hard disks listed by their GetHDDInfo/GetHDDName functions.
 // Images can be MAME CHDs (hard disk type, or raw type made by chdman createraw, whose unit size is
 // then the sector size), compressed or not, or raw dumps (512 byte sectors), found in
-// <szAppHDDPath><romset>/ then <szAppHDDPath><parent>/.
+// <szAppHDDPath><romset>/ then <szAppHDDPath><parent>/ (a lone disk may also be <romset>/<romset>.chd).
 // The image files are never written: sectors written by the game are kept in memory and saved in
 // <szAppEEPROMPath><romset>.diff (<romset>_<n>.diff for disk n > 0), reloaded on the next run.
 
@@ -27,6 +27,11 @@ UINT64 BurnHDDGetSize(BurnHDD* pDisk);	// in bytes
 
 // CHS geometry stored in a CHD (GDDD metadata). Returns 1 when the image has none (raw dumps).
 INT32 BurnHDDGetGeometry(BurnHDD* pDisk, INT32* pnCylinders, INT32* pnHeads, INT32* pnSectors);
+
+// CHD metadata item nIndex with tag nTag (e.g. 'CIS ', 'KEY ', 'IDNT'), up to nLen bytes.
+// Returns 0 on success (*pnResultLen: the item's full length), 1 when missing or for raw dumps.
+#define BURN_HDD_TAG(a, b, c, d)	(((UINT32)(a) << 24) | ((UINT32)(b) << 16) | ((UINT32)(c) << 8) | (UINT32)(d))
+INT32 BurnHDDGetMetadata(BurnHDD* pDisk, UINT32 nTag, UINT32 nIndex, void* pDest, UINT32 nLen, UINT32* pnResultLen);
 
 // Sector access, returns 0 on success. Out of range sectors read as zeroes and fail.
 INT32 BurnHDDRead(BurnHDD* pDisk, UINT32 nLba, UINT32 nCount, void* pDest);

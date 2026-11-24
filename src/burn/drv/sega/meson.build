@@ -37,6 +37,7 @@ drivers = {
     'd_sys24.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
     'd_turbo.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'samples', 'segapcm', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
     'd_xbrd.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
+    'd_y2.cpp': ['mips3', 'rpp324'],
     'd_ybrd.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'segapcm', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
     'd_zaxxon.cpp': ['8255ppi', 'ay8910', 'burn_md2612', 'dac', 'i8039', 'i8051', 'm68000', 'mc8123', 'msm6295', 'resnet', 'rf5c68', 'samples', 'segapcm', 'sn76496', 'sp0250', 'upd7759', 'ym2151', 'ym2203', 'ym2413', 'ym2612', 'z80'],
 }

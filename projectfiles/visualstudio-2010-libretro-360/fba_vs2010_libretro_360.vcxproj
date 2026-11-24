@@ -344,6 +344,7 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys16b.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys18.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_xbrd.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_y2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_ybrd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1089.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094.cpp" />
@@ -510,6 +511,7 @@
       <CompileAs Condition="'$(Configuration)|$(Platform)'=='Release_LTCG|Xbox 360'">CompileAsC</CompileAs>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\ymz280b.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\rpp324.cpp" />
     <ClCompile Include="..\..\src\burn\tiles_generic.cpp" />
     <ClCompile Include="..\..\src\burn\timer.cpp" />
     <ClCompile Include="..\..\src\burn\vector.cpp" />

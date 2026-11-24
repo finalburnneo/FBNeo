@@ -1,7 +1,8 @@
 // Burn - hard disk image module
 //
 // Gives drivers sector access to the hard disks listed by their GetHDDInfo/GetHDDName functions.
-// Images can be MAME CHDs (hard disk type, compressed or not) or raw dumps, found in
+// Images can be MAME CHDs (hard disk type, or raw type made by chdman createraw, whose unit size is
+// then the sector size), compressed or not, or raw dumps (512 byte sectors), found in
 // <szAppHDDPath><romset>/ then <szAppHDDPath><parent>/.
 // The image files are never written: sectors written by the game are kept in memory and saved in
 // <szAppEEPROMPath><romset>.diff (<romset>_<n>.diff for disk n > 0), reloaded on the next run.
@@ -22,6 +23,7 @@ INT32 BurnHDDFlush(BurnHDD* pDisk);
 
 UINT32 BurnHDDGetSectorSize(BurnHDD* pDisk);
 UINT32 BurnHDDGetSectorCount(BurnHDD* pDisk);
+UINT64 BurnHDDGetSize(BurnHDD* pDisk);	// in bytes
 
 // CHS geometry stored in a CHD (GDDD metadata). Returns 1 when the image has none (raw dumps).
 INT32 BurnHDDGetGeometry(BurnHDD* pDisk, INT32* pnCylinders, INT32* pnHeads, INT32* pnSectors);
@@ -29,6 +31,10 @@ INT32 BurnHDDGetGeometry(BurnHDD* pDisk, INT32* pnCylinders, INT32* pnHeads, INT
 // Sector access, returns 0 on success. Out of range sectors read as zeroes and fail.
 INT32 BurnHDDRead(BurnHDD* pDisk, UINT32 nLba, UINT32 nCount, void* pDest);
 INT32 BurnHDDWrite(BurnHDD* pDisk, UINT32 nLba, UINT32 nCount, const void* pSrc);
+
+// Byte access for images that are not made of sectors (NAND dumps...), whatever the sector size.
+// Writes made with BurnHDDWrite are seen. Returns 0 on success, bytes past the end read as zeroes.
+INT32 BurnHDDReadBytes(BurnHDD* pDisk, UINT64 nOffset, UINT32 nSize, void* pDest);
 
 // Forgets every write (back to the pristine image) and deletes the diff file.
 void BurnHDDDiscardWrites(BurnHDD* pDisk);

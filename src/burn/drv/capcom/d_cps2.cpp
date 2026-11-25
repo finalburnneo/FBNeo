@@ -16939,88 +16939,88 @@ struct BurnDriver BurnDrvCpsMshrest = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC7)
-// 2026-11-14
-static struct BurnRomInfo MshvsfexRomDesc[] = {
-	{ "mvsex.03i",		0x080000, 0x631a8b65, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.04i",		0x080000, 0xd04210e8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.05h",		0x080000, 0x85d44f70, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.06a",		0x080000, 0x444fb179, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.07b",		0x080000, 0xb559c147, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.09b",		0x080000, 0x2be6f5e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.10b",		0x080000, 0x1b9b86fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+// Marvel Super Heroes EX (Hack, USA RC1)
+// 2026-11-25
+static struct BurnRomInfo MshexRomDesc[] = {
+	{ "mshex.03g",		0x080000, 0x9a543ebb, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshex.04g",		0x080000, 0xe8daf366, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshex.05a",		0x080000, 0xbf91a894, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshex.06b",		0x080000, 0x97005e2b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.07a",		0x080000, 0xc45f8e27, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshex.08a",		0x080000, 0xb2926dcf, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.09a",		0x080000, 0x82ec27af, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshex.10b",		0x080000, 0xa827956b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "mvsex.13m",		0x400000, 0x9fcf617c, CPS2_GFX | BRF_GRA },
-	{ "mvsex.15m",		0x400000, 0xc055f1b7, CPS2_GFX | BRF_GRA },
-	{ "mvsex.17m",		0x400000, 0x0119e3d8, CPS2_GFX | BRF_GRA },
-	{ "mvsex.19m",		0x400000, 0xbf4bce8f, CPS2_GFX | BRF_GRA },
-	{ "mvs.14m",		0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
-	{ "mvs.16m",		0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
-	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
-	{ "mvs.20m",		0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
+	{ "mshex.13m",		0x400000, 0xb7c12f12, CPS2_GFX | BRF_GRA },
+	{ "mshex.15m",		0x400000, 0x884f6643, CPS2_GFX | BRF_GRA },
+	{ "mshex.17m",		0x400000, 0x581fe6da, CPS2_GFX | BRF_GRA },
+	{ "mshex.19m",		0x400000, 0x28820261, CPS2_GFX | BRF_GRA },
+	{ "msh.14m",		0x400000, 0x4197973e, CPS2_GFX | BRF_GRA },
+	{ "msh.16m",		0x400000, 0x438da4a0, CPS2_GFX | BRF_GRA },
+	{ "msh.18m",		0x400000, 0x4db92d94, CPS2_GFX | BRF_GRA },
+	{ "msh.20m",		0x400000, 0xa2b0c6c0, CPS2_GFX | BRF_GRA },
 
-	{ "mvsex.01",		0x020000, 0x4712c830, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "mvs.02",			0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mshex.01",		0x020000, 0x04f35a43, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "msh.02",			0x020000, 0xce67d0d9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "mvs.11m",		0x400000, 0x86219770, CPS2_QSND | BRF_SND },
-	{ "mvs.12m",		0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	{ "msh.11m",		0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
+	{ "msh.12m",		0x200000, 0xde092570, CPS2_QSND | BRF_SND },
 	
-	{ "mshvsfj.key",	0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
+	{ "mshj.key",		0x000014, 0x888761ac, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Mshvsfex)
-STD_ROM_FN(Mshvsfex)
+STD_ROM_PICK(Mshex)
+STD_ROM_FN(Mshex)
 
-struct BurnDriver BurnDrvCpsMshvsfex = {
-	"mshvsfex", "mshvsf", NULL, NULL, "2026",
-	"Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC7)\0", NULL, "Strygo", "CPS2",
+struct BurnDriver BurnDrvCpsMshex = {
+	"mshex", "msh", NULL, NULL, "2026",
+	"Marvel Super Heroes EX (Hack, USA RC1)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, MshvsfexRomInfo, MshvsfexRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, MshexRomInfo, MshexRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-// Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC7)
-// 2026-11-14
-static struct BurnRomInfo MshvsfexjRomDesc[] = {
-	{ "mvsexj.03i",		0x080000, 0x797b67a0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.04i",		0x080000, 0xd04210e8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsexj.05h",		0x080000, 0x396204a6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.06a",		0x080000, 0x444fb179, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.07b",		0x080000, 0xb559c147, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.09b",		0x080000, 0x2be6f5e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "mvsex.10b",		0x080000, 0x1b9b86fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+// Marvel Super Heroes EX (Hack, Japan RC1)
+// 2026-11-25
+static struct BurnRomInfo MshexjRomDesc[] = {
+	{ "mshexj.03g",		0x080000, 0xf5bd99aa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshexj.04g",		0x080000, 0xb0442438, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshexj.05a",		0x080000, 0x8dbbb6aa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshexj.06b",		0x080000, 0xeb4b1fc7, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.07a",		0x080000, 0xc45f8e27, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshexj.08a",		0x080000, 0x25621e31, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.09a",		0x080000, 0x82ec27af, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshexj.10b",		0x080000, 0x7016bea5, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 
-	{ "mvsexj.13m",		0x400000, 0xe8568cf0, CPS2_GFX | BRF_GRA },
-	{ "mvsexj.15m",		0x400000, 0xdc4d9fba, CPS2_GFX | BRF_GRA },
-	{ "mvsexj.17m",		0x400000, 0x9345ae44, CPS2_GFX | BRF_GRA },
-	{ "mvsexj.19m",		0x400000, 0x72ab2cfc, CPS2_GFX | BRF_GRA },
-	{ "mvs.14m",		0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
-	{ "mvs.16m",		0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
-	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
-	{ "mvs.20m",		0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
+	{ "mshexj.13m",		0x400000, 0x9ff36d73, CPS2_GFX | BRF_GRA },
+	{ "mshexj.15m",		0x400000, 0xef7aef7e, CPS2_GFX | BRF_GRA },
+	{ "mshexj.17m",		0x400000, 0xb48f7b69, CPS2_GFX | BRF_GRA },
+	{ "mshexj.19m",		0x400000, 0x22d65cf2, CPS2_GFX | BRF_GRA },
+	{ "msh.14m",		0x400000, 0x4197973e, CPS2_GFX | BRF_GRA },
+	{ "msh.16m",		0x400000, 0x438da4a0, CPS2_GFX | BRF_GRA },
+	{ "msh.18m",		0x400000, 0x4db92d94, CPS2_GFX | BRF_GRA },
+	{ "msh.20m",		0x400000, 0xa2b0c6c0, CPS2_GFX | BRF_GRA },
 
-	{ "mvsex.01",		0x020000, 0x4712c830, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
-	{ "mvs.02",			0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mshex.01",		0x020000, 0x04f35a43, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "msh.02",			0x020000, 0xce67d0d9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
-	{ "mvs.11m",		0x400000, 0x86219770, CPS2_QSND | BRF_SND },
-	{ "mvs.12m",		0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	{ "msh.11m",		0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
+	{ "msh.12m",		0x200000, 0xde092570, CPS2_QSND | BRF_SND },
 	
-	{ "mshvsfj.key",	0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
+	{ "mshj.key",		0x000014, 0x888761ac, CPS2_ENCRYPTION_KEY },
 };
 
-STD_ROM_PICK(Mshvsfexj)
-STD_ROM_FN(Mshvsfexj)
+STD_ROM_PICK(Mshexj)
+STD_ROM_FN(Mshexj)
 
-struct BurnDriver BurnDrvCpsMshvsfexj = {
-	"mshvsfexj", "mshvsf", NULL, NULL, "2026",
-	"Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC7)\0", NULL, "Strygo", "CPS2",
+struct BurnDriver BurnDrvCpsMshexj = {
+	"mshexj", "msh", NULL, NULL, "2026",
+	"Marvel Super Heroes EX (Hack, Japan RC1)\0", NULL, "Strygo", "CPS2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, MshvsfexjRomInfo, MshvsfexjRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, MshexjRomInfo, MshexjRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -17107,6 +17107,92 @@ struct BurnDriver BurnDrvCpsMshvsfrej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, MshvsfrejRomInfo, MshvsfrejRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC7)
+// 2026-11-14
+static struct BurnRomInfo MshvsfexRomDesc[] = {
+	{ "mvsex.03i",		0x080000, 0x631a8b65, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.04i",		0x080000, 0xd04210e8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.05h",		0x080000, 0x85d44f70, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.06a",		0x080000, 0x444fb179, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.07b",		0x080000, 0xb559c147, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.09b",		0x080000, 0x2be6f5e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.10b",		0x080000, 0x1b9b86fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mvsex.13m",		0x400000, 0x9fcf617c, CPS2_GFX | BRF_GRA },
+	{ "mvsex.15m",		0x400000, 0xc055f1b7, CPS2_GFX | BRF_GRA },
+	{ "mvsex.17m",		0x400000, 0x0119e3d8, CPS2_GFX | BRF_GRA },
+	{ "mvsex.19m",		0x400000, 0xbf4bce8f, CPS2_GFX | BRF_GRA },
+	{ "mvs.14m",		0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
+	{ "mvs.16m",		0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
+	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
+	{ "mvs.20m",		0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
+
+	{ "mvsex.01",		0x020000, 0x4712c830, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvs.02",			0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mvs.11m",		0x400000, 0x86219770, CPS2_QSND | BRF_SND },
+	{ "mvs.12m",		0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfj.key",	0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mshvsfex)
+STD_ROM_FN(Mshvsfex)
+
+struct BurnDriver BurnDrvCpsMshvsfex = {
+	"mshvsfex", "mshvsf", NULL, NULL, "2026",
+	"Marvel Super Heroes Vs. Street Fighter EX (Hack, USA RC7)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MshvsfexRomInfo, MshvsfexRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+// Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC7)
+// 2026-11-14
+static struct BurnRomInfo MshvsfexjRomDesc[] = {
+	{ "mvsexj.03i",		0x080000, 0x797b67a0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.04i",		0x080000, 0xd04210e8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsexj.05h",		0x080000, 0x396204a6, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.06a",		0x080000, 0x444fb179, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.07b",		0x080000, 0xb559c147, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvs.08a",		0x080000, 0xc2813884, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.09b",		0x080000, 0x2be6f5e0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mvsex.10b",		0x080000, 0x1b9b86fe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "mvsexj.13m",		0x400000, 0xe8568cf0, CPS2_GFX | BRF_GRA },
+	{ "mvsexj.15m",		0x400000, 0xdc4d9fba, CPS2_GFX | BRF_GRA },
+	{ "mvsexj.17m",		0x400000, 0x9345ae44, CPS2_GFX | BRF_GRA },
+	{ "mvsexj.19m",		0x400000, 0x72ab2cfc, CPS2_GFX | BRF_GRA },
+	{ "mvs.14m",		0x400000, 0xb3b1972d, CPS2_GFX | BRF_GRA },
+	{ "mvs.16m",		0x400000, 0x08aadb5d, CPS2_GFX | BRF_GRA },
+	{ "mvs.18m",		0x400000, 0xc1228b35, CPS2_GFX | BRF_GRA },
+	{ "mvs.20m",		0x400000, 0x366cc6c2, CPS2_GFX | BRF_GRA },
+
+	{ "mvsex.01",		0x020000, 0x4712c830, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "mvs.02",			0x020000, 0xb34e773d, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "mvs.11m",		0x400000, 0x86219770, CPS2_QSND | BRF_SND },
+	{ "mvs.12m",		0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfj.key",	0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mshvsfexj)
+STD_ROM_FN(Mshvsfexj)
+
+struct BurnDriver BurnDrvCpsMshvsfexj = {
+	"mshvsfexj", "mshvsf", NULL, NULL, "2026",
+	"Marvel Super Heroes Vs. Street Fighter EX (Hack, Japan RC7)\0", NULL, "Strygo", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, MshvsfexjRomInfo, MshvsfexjRomName, NULL, NULL, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

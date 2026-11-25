@@ -10,7 +10,6 @@
 //
 // TODO: JVS I/O (no device answers on the bridge, as in MAME: use the JAMMA setting)
 
-#include <vector>
 #include "tiles_generic.h"
 #include "mips3_intf.h"
 #include "burn_hdd.h"
@@ -125,72 +124,6 @@ static NandCacheLine *NandCache;
 
 static double MvcBasis[8][8];
 
-#if defined (FBNEO_DEBUG)
-// activity per second, to follow the boot while the renderer is missing
-static UINT32 nStatGe, nStatLists, nStatTriangles, nStatClears, nStatDma, nStatMvc, nStatYuv, nStatSnd, nStatFrames, nStatFlips, nStatEvent[2];
-#define Y2_STAT(x)	(x)++
-// every 600 frames, the next 8 are traced: lists, flips, vblank events and what is latched for display
-static UINT32 nTraceFrame;
-#define Y2_TRACING	((nTraceFrame % 600) < 8)
-
-// previous rendered list, to count what changed from one frame to the next
-static UINT32 *TracePrevList = NULL;
-static UINT32 nTracePrevWords = 0;
-
-static void TraceListDiff(const UINT32 *list, UINT32 words)
-{
-	if (TracePrevList == NULL) TracePrevList = (UINT32*)calloc(GFX_LIST_WORDS, sizeof(UINT32));
-	if (TracePrevList == NULL) return;
-
-	UINT32 common = (words < nTracePrevWords) ? words : nTracePrevWords;
-	UINT32 diff = 0, first[6], nfirst = 0;
-	for (UINT32 i = 0; i < common; i++) {
-		if (list[i] != TracePrevList[i]) {
-			if (nfirst < 6) first[nfirst++] = i;
-			diff++;
-		}
-	}
-	bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: list differs from the previous one in %d of %d words (sizes %d/%d), first at"),
-		nTraceFrame, nCurrentLine, diff, common, words, nTracePrevWords);
-	for (UINT32 i = 0; i < nfirst; i++) bprintf(PRINT_NORMAL, _T(" %d:%08x->%08x"), first[i], TracePrevList[first[i]], list[first[i]]);
-	bprintf(PRINT_NORMAL, _T("\n"));
-
-	memcpy(TracePrevList, list, words * sizeof(UINT32));
-	nTracePrevWords = words;
-}
-
-static UINT32 ListHash(const UINT32 *list, UINT32 words)
-{
-	UINT32 hash = 2166136261U;
-	for (UINT32 i = 0; i < words; i++) hash = (hash ^ list[i]) * 16777619U;
-	return hash;
-}
-// wall time spent per second, in microseconds (process cpu time would mix the threads up)
-#if defined (_WIN32)
-static INT64 Y2Now()
-{
-	LARGE_INTEGER count, freq;
-	QueryPerformanceCounter(&count);
-	QueryPerformanceFrequency(&freq);
-	return (INT64)(count.QuadPart * 1000000.0 / freq.QuadPart);
-}
-#else
-#include <sys/time.h>
-static INT64 Y2Now()
-{
-	struct timeval tv;
-	gettimeofday(&tv, NULL);
-	return (INT64)tv.tv_sec * 1000000 + tv.tv_usec;
-}
-#endif
-static INT64 nTimeCpu, nTimeRender, nTimeMvc, nTimeYuv, nTimeFrame, nTimeWait;
-#define Y2_TIME_START()	INT64 y2_time_start = Y2Now()
-#define Y2_TIME_END(x)	(x) += Y2Now() - y2_time_start
-#else
-#define Y2_STAT(x)		do { } while (0)
-#define Y2_TIME_START()	do { } while (0)
-#define Y2_TIME_END(x)	do { } while (0)
-#endif
 
 // ---------------------------------------------------------------------------
 // inputs
@@ -743,10 +676,6 @@ static void vint()
 	vint_line = -1;
 
 	if (voc[0] & 1) {
-		Y2_STAT(nStatEvent[event]);
-#if defined (FBNEO_DEBUG)
-		if (Y2_TRACING) bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: event %d\n"), nTraceFrame, nCurrentLine, event);
-#endif
 		voc[0x10 / 4] |= 1U << event;
 		update_irqs();
 		schedule_vint(event ^ 1);
@@ -902,7 +831,6 @@ static INT32 buffer_clear(UINT32 control, UINT32 depth, UINT32 color)
 	}
 
 	if (control & 0x40000000) {
-		Y2_STAT(nStatClears);
 		UINT32 packed = pack_pixel(color, mode);
 		if (mode != 3) packed |= packed << 16;
 		for (UINT32 i = 0; i < bytes; i += 4) RamW32(base + i, packed);
@@ -952,7 +880,8 @@ struct Y2Snapshot {
 
 #define SNAPSHOT_BYTES	0x1000000
 
-static std::vector<Y2Snapshot> *Snapshots = NULL;
+static Y2Snapshot *Snapshots = NULL;
+static UINT32 nSnapshots = 0, nSnapshotsMax = 0;
 static UINT32 nSnapshotBytes = 0;
 
 static void RenderFlush();
@@ -960,9 +889,8 @@ static void RenderFlush();
 static void SnapshotFlush()
 {
 	RenderFlush();
-	if (Snapshots == NULL) return;
-	for (size_t i = 0; i < Snapshots->size(); i++) free((*Snapshots)[i].pixels);
-	Snapshots->clear();
+	for (UINT32 i = 0; i < nSnapshots; i++) free(Snapshots[i].pixels);
+	nSnapshots = 0;
 	nSnapshotBytes = 0;
 }
 
@@ -1657,9 +1585,9 @@ static INT32 draw_triangle(const UINT32 *attr, Y2Vertex a, Y2Vertex b, Y2Vertex 
 	if (textured && bilinear && !poly.linear_argb && independent) {
 		UINT32 key[7] = { poly.texbase, (texmode < 4) ? poly.palette : 0, poly.tw, poly.th, (UINT32)texmode, (texmode < 4) ? (UINT32)poly.pmode : 0, (UINT32)poly.swizzled };
 
-		for (size_t i = 0; i < Snapshots->size(); i++) {
-			if (!memcmp((*Snapshots)[i].key, key, sizeof(key))) {
-				poly.pixels = (*Snapshots)[i].pixels;
+		for (UINT32 i = 0; i < nSnapshots; i++) {
+			if (!memcmp(Snapshots[i].key, key, sizeof(key))) {
+				poly.pixels = Snapshots[i].pixels;
 				break;
 			}
 		}
@@ -1671,14 +1599,18 @@ static INT32 draw_triangle(const UINT32 *attr, Y2Vertex a, Y2Vertex b, Y2Vertex 
 		if (box < samples) samples = box;
 
 		if (poly.pixels == NULL && texels <= samples * 4 && texels <= (SNAPSHOT_BYTES - nSnapshotBytes) / 4) {
-			Y2Snapshot snap;
+			if (nSnapshots == nSnapshotsMax) {
+				nSnapshotsMax = nSnapshotsMax ? nSnapshotsMax * 2 : 64;
+				Snapshots = (Y2Snapshot*)realloc(Snapshots, nSnapshotsMax * sizeof(Y2Snapshot));
+			}
+			Y2Snapshot &snap = Snapshots[nSnapshots];
 			memcpy(snap.key, key, sizeof(key));
 			snap.pixels = (UINT32*)malloc(texels * sizeof(UINT32));
 			if (snap.pixels) {
 				for (UINT32 ty = 0; ty < poly.th; ty++) {
 					for (UINT32 tx = 0; tx < poly.tw; tx++) snap.pixels[ty * poly.tw + tx] = Fetch(poly, tx, ty);
 				}
-				Snapshots->push_back(snap);
+				nSnapshots++;
 				nSnapshotBytes += texels * 4;
 				poly.pixels = snap.pixels;
 			}
@@ -1713,7 +1645,6 @@ static INT32 draw_triangle(const UINT32 *attr, Y2Vertex a, Y2Vertex b, Y2Vertex 
 	// a triangle that can read its own target is drawn on its own
 	if (!independent) RenderFlush();
 
-	Y2_STAT(nStatTriangles);
 	return 1;
 }
 
@@ -1746,7 +1677,14 @@ struct Y2Job {
 	UINT32 coef[6][32];
 };
 
-static std::vector<Y2Job> *JobsPending = NULL, *JobsRunning = NULL;
+#define JOBS_MAX	1024
+
+struct Y2JobList {
+	Y2Job job[JOBS_MAX];
+	UINT32 n;
+};
+
+static Y2JobList *JobsPending = NULL, *JobsRunning = NULL;
 static INT32 bRenderBusy = 0;			// jobs are queued or running
 static INT32 bBgRunning = 0;			// JobsRunning is on the background thread
 static volatile INT32 bBgDone = 0;		// ... and it has finished them
@@ -1983,24 +1921,18 @@ static void ExecJob(const Y2Job &job)
 {
 	switch (job.type) {
 		case JOB_RENDER: {
-			Y2_TIME_START();
 			RdcR = RenderRdc;
 			execute_list(job.list, job.words, 1);
 			SnapshotFlush();
 			RdcR = rdc;
-			Y2_TIME_END(nTimeRender);
 			break;
 		}
 		case JOB_MVC: {
-			Y2_TIME_START();
 			MvcExec(job);
-			Y2_TIME_END(nTimeMvc);
 			break;
 		}
 		case JOB_YUV: {
-			Y2_TIME_START();
 			YuvExec(job);
-			Y2_TIME_END(nTimeYuv);
 			break;
 		}
 	}
@@ -2008,7 +1940,7 @@ static void ExecJob(const Y2Job &job)
 
 static void RenderThreadProc()
 {
-	for (size_t i = 0; i < JobsRunning->size(); i++) ExecJob((*JobsRunning)[i]);
+	for (UINT32 i = 0; i < JobsRunning->n; i++) ExecJob(JobsRunning->job[i]);
 	bBgDone = 1;
 }
 
@@ -2017,24 +1949,22 @@ static void BgWait()
 {
 	if (!bBgRunning) return;
 
-	Y2_TIME_START();
 	RenderThread.notify_wait();
-	Y2_TIME_END(nTimeWait);
 
 	bBgRunning = 0;
-	JobsRunning->clear();
+	JobsRunning->n = 0;
 	BgListRunning = NULL;
 	ClearMap(RunningMap);
 	ProtectUpdate(1);
-	bRenderBusy = !JobsPending->empty();
+	bRenderBusy = JobsPending->n != 0;
 }
 
 // hands the queued jobs to the background thread, if it is free
 static void BgLaunch()
 {
-	if (bBgRunning || JobsPending->empty()) return;
+	if (bBgRunning || JobsPending->n == 0) return;
 
-	std::vector<Y2Job> *jobs = JobsRunning;
+	Y2JobList *jobs = JobsRunning;
 	JobsRunning = JobsPending;
 	JobsPending = jobs;
 
@@ -2053,12 +1983,12 @@ static void BgLaunch()
 
 static void BgQueue(const Y2Job &job)
 {
-	JobsPending->push_back(job);
+	JobsPending->job[JobsPending->n++] = job;
 	bRenderBusy = 1;
 	ProtectUpdate(0);
 
-	// a long stretch without lists: keep the queue short
-	if (JobsPending->size() >= 1024) {
+	// a long stretch without lists: keep the queue short (launching empties it, the thread is free)
+	if (JobsPending->n == JOBS_MAX) {
 		BgWait();
 		BgLaunch();
 	}
@@ -2071,8 +2001,8 @@ static void RenderSync()
 
 	BgWait();
 
-	for (size_t i = 0; i < JobsPending->size(); i++) ExecJob((*JobsPending)[i]);
-	JobsPending->clear();
+	for (UINT32 i = 0; i < JobsPending->n; i++) ExecJob(JobsPending->job[i]);
+	JobsPending->n = 0;
 	BgListPending = NULL;
 	ClearMap(PendingMap);
 	nPendingGen++;
@@ -2119,8 +2049,8 @@ static void RenderAsyncInit()
 	AppliedMap = (UINT8*)calloc(RAM_SIZE >> 12, 1);
 	nMapMin = ~0U;
 	nMapMax = 0;
-	JobsPending = new std::vector<Y2Job>();
-	JobsRunning = new std::vector<Y2Job>();
+	JobsPending = (Y2JobList*)calloc(1, sizeof(Y2JobList));
+	JobsRunning = (Y2JobList*)calloc(1, sizeof(Y2JobList));
 	bRenderBusy = bBgRunning = 0;
 	BgListPending = BgListRunning = NULL;
 	RdcR = rdc;
@@ -2147,27 +2077,15 @@ static void RenderAsyncExit()
 	free(RunningMap);
 	free(AppliedMap);
 	PendingMap = RunningMap = AppliedMap = NULL;
-	delete JobsPending;
-	delete JobsRunning;
+	free(JobsPending);
+	free(JobsRunning);
 	JobsPending = JobsRunning = NULL;
 }
 
 static void render_start()
 {
-#if defined (FBNEO_DEBUG)
-	if (Y2_TRACING) bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: RC start, wants %08x, slots %08x/%d %08x/%d\n"), nTraceFrame, nCurrentLine, rdc[0x90 / 4], gfx_base[0], gfx_words[0], gfx_base[1], gfx_words[1]);
-#endif
 	for (INT32 slot = 0; slot < 2; slot++) {
 		if (gfx_words[slot] && gfx_base[slot] == rdc[0x90 / 4]) {
-			Y2_STAT(nStatLists);
-#if defined (FBNEO_DEBUG)
-			UINT32 trace_hash = Y2_TRACING ? ListHash(DrvGfxList + slot * GFX_LIST_WORDS, gfx_words[slot]) : 0;
-			UINT32 trace_words = gfx_words[slot];
-			if ((nTraceFrame % 600) < 9) {
-				if ((nTraceFrame % 600) == 0) nTracePrevWords = 0;
-				TraceListDiff(DrvGfxList + slot * GFX_LIST_WORDS, gfx_words[slot]);
-			}
-#endif
 			INT32 done;
 			if (bRenderAsync) {
 				// the running jobs may still use the register copy; the queued ones (movie frames) go with the list
@@ -2180,22 +2098,12 @@ static void render_start()
 				job.list = DrvGfxList + slot * GFX_LIST_WORDS;
 				job.words = gfx_words[slot];
 				BgListPending = job.list;
-				JobsPending->push_back(job);
-				bRenderBusy = 1;
-				ProtectUpdate(0);
+				BgQueue(job);
 				BgLaunch();
 			} else {
-				Y2_TIME_START();
 				done = execute_list(DrvGfxList + slot * GFX_LIST_WORDS, gfx_words[slot], 1);
 				SnapshotFlush();
-				Y2_TIME_END(nTimeRender);
 			}
-#if defined (FBNEO_DEBUG)
-			if (Y2_TRACING) {
-				bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: RC wants %08x, slots %08x/%d %08x/%d, renders slot %d (%d words, hash %08x) into %08x\n"),
-					nTraceFrame, nCurrentLine, rdc[0x90 / 4], gfx_base[0], gfx_words[0], gfx_base[1], gfx_words[1], slot, trace_words, trace_hash, rdc[0x9c / 4]);
-			}
-#endif
 			if (done) {
 				gfx_words[slot] = 0;
 				rdc[0x10 / 4] |= 1;
@@ -2214,7 +2122,6 @@ static void geometry_start()
 	UINT32 words = 0;
 	UINT32 glt = gec[0x34 / 4] & 0x0ffffff8;
 
-	Y2_STAT(nStatGe);
 	if (gec[0x30 / 4] & 0x10) return;	// memory-output mode not decoded
 
 	for (INT32 entry = 0; entry < 4096 && glt < RAM_SIZE - 7; entry++, glt += 8) {
@@ -2232,12 +2139,6 @@ static void geometry_start()
 			gfx_base[slot] = rdc[0x30 / 4];
 			gfx_words[slot] = words;
 			gfx_slot ^= 1;
-#if defined (FBNEO_DEBUG)
-			if (Y2_TRACING) {
-				bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: GE decodes list for %08x into slot %d (%d words, hash %08x), auto render %d\n"),
-					nTraceFrame, nCurrentLine, gfx_base[slot], slot, words, ListHash(list, words), rdc[0x2c / 4] & 1);
-			}
-#endif
 			gec[0x18 / 4] = glt + 8;
 			gec[0x10 / 4] |= 1;		// GE complete
 			rdc[0x10 / 4] |= 0x10;	// SA complete, no overflow
@@ -2442,7 +2343,6 @@ static void mvc_process()
 			}
 		}
 
-		Y2_STAT(nStatMvc);
 		mvc_command_ready[mvc_command_pos] = 0;
 		mvc_command_pos = (mvc_command_pos + 1) % 3;
 
@@ -2595,7 +2495,6 @@ static void yuv_w(INT32 offset, UINT32 data, UINT32 mask)
 				ExecJob(job);
 			}
 
-			Y2_STAT(nStatYuv);
 			yuv[0x10 / 4] = (yuv[0x10 / 4] & ~0x100U) | 1;
 		}
 	}
@@ -2642,7 +2541,6 @@ static void dma_w(INT32 offset, UINT32 data, UINT32 mask)
 					}
 				}
 				if (size) Mips3InvalidateRange(dest, dest + size - 1);
-				Y2_STAT(nStatDma);
 				dma[offset] = 0x80000000;
 			}
 		}
@@ -2659,13 +2557,6 @@ static void voc_w(INT32 offset, UINT32 data, UINT32 mask)
 		voc[offset] &= ~(data & mask);	// YG_BeginFrame/EndFrame acknowledge with ones
 	} else {
 		COMBINE(voc[offset], data, mask);
-	}
-
-	if (offset == 0x70 / 4) {
-		Y2_STAT(nStatFlips);
-#if defined (FBNEO_DEBUG)
-		if (Y2_TRACING) bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: flip to %08x\n"), nTraceFrame, nCurrentLine, voc[0x70 / 4]);
-#endif
 	}
 
 	if (offset == 0 && (voc[0] & 0xffff0000) == 0x59470000) {
@@ -2852,7 +2743,6 @@ static void Y2Write32(UINT32 a, UINT32 data, UINT32 mask)
 	switch (a) {
 		case 0xf0000010:
 			if (mask & 0x000000ff) {
-				Y2_STAT(nStatSnd);
 				RPP324HostWrite(0, data & 0xffff);
 			}
 			if (mask & 0x00ff0000) RPP324HostWrite(1, data >> 16);
@@ -3048,7 +2938,6 @@ static INT32 DrvInit(UINT16 seed, const UINT8 *data_bits, const UINT8 *key_bits,
 
 	BurnSetRefreshRate((double)PIXEL_CLOCK / (H_TOTAL * V_TOTAL));
 
-	Snapshots = new std::vector<Y2Snapshot>();
 	RenderInit();
 	RenderAsyncInit();
 
@@ -3070,8 +2959,9 @@ static INT32 DrvExit()
 	RenderExit();
 	EdgeTileRanksExit();
 	SnapshotFlush();
-	delete Snapshots;
+	free(Snapshots);
 	Snapshots = NULL;
+	nSnapshotsMax = 0;
 
 	for (INT32 i = 0; i < 2; i++) {
 		BurnHDDClose(Nand[i]);
@@ -3220,7 +3110,6 @@ static INT32 DrvFrame()
 	// runahead was turned off: stop copying pages
 	if (nCheckpointId && ++nCheckpointAge > 30) CheckpointDrop();
 
-	Y2_TIME_START();
 
 	MakeInputs();
 
@@ -3238,14 +3127,6 @@ static INT32 DrvFrame()
 			display[DISP_ENABLE] = voc[0x50 / 4];
 			display[DISP_BASE] = voc[0x70 / 4];
 			display[DISP_SIZE] = voc[0x74 / 4];
-#if defined (FBNEO_DEBUG)
-			if (Y2_TRACING) {
-				RenderSync();
-				UINT32 base = display[DISP_BASE] & 0x0ffffff0, hash = 2166136261U;
-				for (UINT32 i = 0; i < 640 * 480 * 2 && base + i < RAM_SIZE; i++) hash = (hash ^ DrvRAM[base + i]) * 16777619U;
-				bprintf(PRINT_NORMAL, _T("Y2T %d line %3d: latched %08x, buffer hash %08x\n"), nTraceFrame, line, display[DISP_BASE], hash);
-			}
-#endif
 		}
 
 		UINT64 nLineEnd = nFrameStart + (UINT64)((line + 1) * CyclesPerLine);
@@ -3260,14 +3141,7 @@ static INT32 DrvFrame()
 			if (jvs_fire[1] < target) target = jvs_fire[1];
 
 			if (target > now) {
-#if defined (FBNEO_DEBUG)
-				// the devices the cpu drives are timed on their own, take them out
-				INT64 before = Y2Now(), devices = bRenderAsync ? nTimeWait : (nTimeRender + nTimeMvc + nTimeYuv);
 				Mips3Run((INT32)(target - now));
-				nTimeCpu += Y2Now() - before - ((bRenderAsync ? nTimeWait : (nTimeRender + nTimeMvc + nTimeYuv)) - devices);
-#else
-				Mips3Run((INT32)(target - now));
-#endif
 			}
 
 			now = CpuCycles();
@@ -3281,37 +3155,6 @@ static INT32 DrvFrame()
 	// (Draw for the displayed buffer, savestates in DrvScan, the cpu and devices through the protection)
 
 	RPP324Update(pBurnSoundOut, nBurnSoundLen);
-
-	Y2_TIME_END(nTimeFrame);
-
-#if defined (FBNEO_DEBUG)
-	nTraceFrame++;
-#endif
-
-#if defined (FBNEO_DEBUG)
-	if (++nStatFrames == 60) {
-		bprintf(PRINT_NORMAL, _T("Y2: GE %d, lists %d, triangles %d, clears %d, DMA %d, MVC %d, YUV %d, sound %d, fb %08x %08x, voc %08x\n"),
-			nStatGe, nStatLists, nStatTriangles, nStatClears, nStatDma, nStatMvc, nStatYuv, nStatSnd, voc[0x70 / 4], voc[0x74 / 4], voc[0]);
-		if (bRenderAsync) {
-			bprintf(PRINT_NORMAL, _T("Y2: ms for 60 frames: total %d = cpu %d + waiting for background work %d + other; background thread busy: render %d, MVC %d, YUV %d\n"),
-				(INT32)(nTimeFrame / 1000), (INT32)(nTimeCpu / 1000), (INT32)(nTimeWait / 1000), (INT32)(nTimeRender / 1000), (INT32)(nTimeMvc / 1000), (INT32)(nTimeYuv / 1000));
-		} else {
-			bprintf(PRINT_NORMAL, _T("Y2: ms for 60 frames: total %d = cpu %d + render %d + MVC %d + YUV %d + other\n"),
-				(INT32)(nTimeFrame / 1000), (INT32)(nTimeCpu / 1000), (INT32)(nTimeRender / 1000), (INT32)(nTimeMvc / 1000), (INT32)(nTimeYuv / 1000));
-		}
-		// kof2002um only: YG_Process frame status (vblank count, flip period, main loop period, last main vblank, queued flips)
-		UINT32 status = RamReadSynced(0x00df816c) & 0x0fffffff;
-		if (status && status < RAM_SIZE - 0x50) {
-			bprintf(PRINT_NORMAL, _T("Y2: flips %d, events %d/%d, frame status: count %d, flip period %d, vcount %d, last %d, queued %d\n"),
-				nStatFlips, nStatEvent[0], nStatEvent[1], RamReadSynced(status), RamReadSynced(status + 8), RamReadSynced(status + 0xc), RamReadSynced(status + 0x24), RamReadSynced(status + 0x34));
-		} else {
-			bprintf(PRINT_NORMAL, _T("Y2: flips %d, events %d/%d\n"), nStatFlips, nStatEvent[0], nStatEvent[1]);
-		}
-		nStatFlips = nStatEvent[0] = nStatEvent[1] = 0;
-		nStatGe = nStatLists = nStatTriangles = nStatClears = nStatDma = nStatMvc = nStatYuv = nStatSnd = nStatFrames = 0;
-		nTimeCpu = nTimeRender = nTimeMvc = nTimeYuv = nTimeFrame = nTimeWait = 0;
-	}
-#endif
 
 	if (pBurnDraw) DrvDraw();
 
@@ -3463,8 +3306,8 @@ STDROMPICKEXT(kof2002umj, kof2002umj, systemy2)
 STD_ROM_FN(kof2002umj)
 
 static struct BurnHDDInfo kof2002umjHDDDesc[] = {
-	{ "nand_u101", "5fd38fe816b22ec0e4459f1fc076c148a3f11652" },
-	{ "nand_u102", "52b6093b658baf1dd81f883a2c52b6aac688f703" },
+	{ "nandj_u101", "5fd38fe816b22ec0e4459f1fc076c148a3f11652" },
+	{ "nandj_u102", "52b6093b658baf1dd81f883a2c52b6aac688f703" },
 };
 
 STD_HDD_PICK(kof2002umj)

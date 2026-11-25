@@ -13,8 +13,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <map>
-#include <vector>
 
 #ifndef MIPS3_CACHED_INTERPRETER
 #define MIPS3_CACHED_INTERPRETER	1
@@ -199,8 +197,12 @@ static UINT32 *Vtlb = NULL;
 static UINT32 TlbMappedVpn[MIPS3_TLB_ENTRIES][2];
 static UINT32 TlbMappedCount[MIPS3_TLB_ENTRIES][2];
 
-static std::map<UINT8*, Mips3BlockPage*> *BlockPageMap = NULL;
-static std::vector<Mips3BlockPage*> *BlockPageList = NULL;
+// block pages by host page pointer: open addressing, at most half full
+static UINT8 **BlockPageKeys = NULL;
+static Mips3BlockPage **BlockPageVals = NULL;
+static UINT32 nBlockPageSlots = 0;
+static Mips3BlockPage **BlockPageList = NULL;
+static UINT32 nBlockPages = 0;
 static UINT8 *Arena = NULL;
 #if MIPS3_CACHED_INTERPRETER
 static Mips3FastEntry FastCache[MIPS3_FAST_ENTRIES];
@@ -1501,7 +1503,9 @@ struct Mips3DLine {
 	UINT8 old[32];
 };
 
-static std::vector<Mips3DLine> *DLines = NULL;
+#define MIPS3_DLINES	(512 * 2)	// two ways per set
+static Mips3DLine DLines[MIPS3_DLINES];
+static UINT32 nDLines = 0;
 
 static UINT8 *DLineHost(UINT32 pa)
 {
@@ -1509,9 +1513,9 @@ static UINT8 *DLineHost(UINT32 pa)
 	return IS_PTR(p->write) ? p->write + (pa & 0xfff) : NULL;
 }
 
-static void DLineDrop(size_t i, INT32 discard)
+static void DLineDrop(UINT32 i, INT32 discard)
 {
-	Mips3DLine &l = (*DLines)[i];
+	Mips3DLine &l = DLines[i];
 	if (discard) {
 		UINT8 *host = DLineHost(l.pa);
 		if (host) {
@@ -1520,8 +1524,7 @@ static void DLineDrop(size_t i, INT32 discard)
 			mips3_invalidate(l.pa, l.pa + 31);
 		}
 	}
-	l = DLines->back();
-	DLines->pop_back();
+	l = DLines[--nDLines];
 }
 
 void (*pMips3CacheSync)() = NULL;
@@ -1535,8 +1538,8 @@ static void DCacheOp(UINT32 op, UINT32 va)
 	if (op == 0x01 || op == 0x09) {
 		// Index_Writeback_Invalidate, Index_Store_Tag (discards when TagLo marks the line invalid)
 		INT32 discard = (op == 0x09) && !(CP0(CP0_TagLo) & 0xc0);
-		for (size_t i = 0; i < DLines->size(); ) {
-			if ((*DLines)[i].set == set) DLineDrop(i, discard);
+		for (UINT32 i = 0; i < nDLines; ) {
+			if (DLines[i].set == set) DLineDrop(i, discard);
 			else i++;
 		}
 		return;
@@ -1548,10 +1551,10 @@ static void DCacheOp(UINT32 op, UINT32 va)
 	UINT32 pa = ((e & ~0xfff) | (va & 0xfff)) & ~31U;
 
 	INT32 hit = -1, inset = 0;
-	size_t oldest = 0;
-	for (size_t i = 0; i < DLines->size(); i++) {
-		if ((*DLines)[i].pa == pa) hit = (INT32)i;
-		if ((*DLines)[i].set == set && inset++ == 0) oldest = i;
+	UINT32 oldest = 0;
+	for (UINT32 i = 0; i < nDLines; i++) {
+		if (DLines[i].pa == pa) hit = (INT32)i;
+		if (DLines[i].set == set && inset++ == 0) oldest = i;
 	}
 
 	switch (op) {
@@ -1559,11 +1562,10 @@ static void DCacheOp(UINT32 op, UINT32 va)
 			UINT8 *host = DLineHost(pa);
 			if (hit >= 0 || host == NULL) break;
 			if (inset >= 2) DLineDrop(oldest, 0);	// replaced line is written back
-			Mips3DLine l;
+			Mips3DLine &l = DLines[nDLines++];
 			l.pa = pa;
 			l.set = set;
 			memcpy(l.old, host, 32);
-			DLines->push_back(l);
 			break;
 		}
 		case 0x11:		// Hit_Invalidate
@@ -1574,7 +1576,7 @@ static void DCacheOp(UINT32 op, UINT32 va)
 			break;
 		case 0x19: {	// Hit_Writeback: the line stays valid, its contents are now in memory
 			UINT8 *host = DLineHost(pa);
-			if (hit >= 0 && host) memcpy((*DLines)[hit].old, host, 32);
+			if (hit >= 0 && host) memcpy(DLines[hit].old, host, 32);
 			break;
 		}
 	}
@@ -2245,23 +2247,53 @@ static Mips3Handler Mips3Decode(UINT32 op, UINT32 *flags)
 // ---------------------------------------------------------------------------
 // block cache
 
+static inline UINT32 BlockPageHash(UINT8 *host)
+{
+	return (UINT32)(((uintptr_t)host >> 12) * 2654435761U);
+}
+
+static void BlockPageInsert(UINT8 *host, Mips3BlockPage *bp)
+{
+	UINT32 i = BlockPageHash(host) & (nBlockPageSlots - 1);
+	while (BlockPageKeys[i]) i = (i + 1) & (nBlockPageSlots - 1);
+	BlockPageKeys[i] = host;
+	BlockPageVals[i] = bp;
+}
+
 static Mips3BlockPage *GetBlockPage(UINT8 *host)
 {
-	std::map<UINT8*, Mips3BlockPage*>::iterator it = BlockPageMap->find(host);
-	if (it != BlockPageMap->end()) return it->second;
+	if (nBlockPageSlots) {
+		for (UINT32 i = BlockPageHash(host) & (nBlockPageSlots - 1); BlockPageKeys[i]; i = (i + 1) & (nBlockPageSlots - 1)) {
+			if (BlockPageKeys[i] == host) return BlockPageVals[i];
+		}
+	}
+
+	if ((nBlockPages + 1) * 2 > nBlockPageSlots) {
+		UINT8 **keys = BlockPageKeys;
+		Mips3BlockPage **vals = BlockPageVals;
+		const UINT32 slots = nBlockPageSlots;
+
+		nBlockPageSlots = slots ? slots * 2 : 1024;
+		BlockPageKeys = (UINT8**)calloc(nBlockPageSlots, sizeof(UINT8*));
+		BlockPageVals = (Mips3BlockPage**)calloc(nBlockPageSlots, sizeof(Mips3BlockPage*));
+		BlockPageList = (Mips3BlockPage**)realloc(BlockPageList, (nBlockPageSlots / 2) * sizeof(Mips3BlockPage*));
+		for (UINT32 i = 0; i < slots; i++) {
+			if (keys[i]) BlockPageInsert(keys[i], vals[i]);
+		}
+		free(keys);
+		free(vals);
+	}
 
 	Mips3BlockPage *bp = (Mips3BlockPage*)calloc(1, sizeof(Mips3BlockPage));
-	(*BlockPageMap)[host] = bp;
-	BlockPageList->push_back(bp);
+	BlockPageInsert(host, bp);
+	BlockPageList[nBlockPages++] = bp;
 	return bp;
 }
 
 static void Mips3FlushCache()
 {
-	if (BlockPageList == NULL) return;
-
-	for (size_t i = 0; i < BlockPageList->size(); i++) {
-		Mips3BlockPage *bp = (*BlockPageList)[i];
+	for (UINT32 i = 0; i < nBlockPages; i++) {
+		Mips3BlockPage *bp = BlockPageList[i];
 		if (bp->blk) memset(bp->blk, 0, 1024 * sizeof(Mips3Block*));
 		bp->codemask = 0;
 	}
@@ -3184,11 +3216,9 @@ INT32 mips3_init(INT32 type)
 {
 	nMips3Type = type;
 	Vtlb = (UINT32*)calloc(VIRT_PAGES, sizeof(UINT32));
-	DLines = new std::vector<Mips3DLine>();
+	nDLines = 0;
 	Arena = (UINT8*)malloc(MIPS3_ARENA_SIZE);
 	ArenaUsed = 0;
-	BlockPageMap = new std::map<UINT8*, Mips3BlockPage*>();
-	BlockPageList = new std::vector<Mips3BlockPage*>();
 
 	memset(&M, 0, sizeof(M));
 	M.compare_fire = ~0ULL;
@@ -3208,21 +3238,20 @@ void mips3_exit()
 	WriteTrackPages = 0;
 	pWriteTrackCb = NULL;
 
-	if (BlockPageList) {
-		for (size_t i = 0; i < BlockPageList->size(); i++) {
-			free((*BlockPageList)[i]->blk);
-			free((*BlockPageList)[i]);
-		}
+	for (UINT32 i = 0; i < nBlockPages; i++) {
+		free(BlockPageList[i]->blk);
+		free(BlockPageList[i]);
 	}
-	delete BlockPageList;
-	delete BlockPageMap;
+	free(BlockPageList);
+	free(BlockPageKeys);
+	free(BlockPageVals);
 	BlockPageList = NULL;
-	BlockPageMap = NULL;
+	BlockPageKeys = NULL;
+	BlockPageVals = NULL;
+	nBlockPages = nBlockPageSlots = 0;
 
 	free(Vtlb);
 	free(Arena);
-	delete DLines;
-	DLines = NULL;
 	Vtlb = NULL;
 	Arena = NULL;
 
@@ -3270,7 +3299,7 @@ void mips3_reset()
 
 	VtlbRebuild();
 	Mips3FlushCache();
-	DLines->clear();
+	nDLines = 0;
 	nMips3ICount = 0;
 	FORCE_EVENT();
 	Mx.dpend = 0;

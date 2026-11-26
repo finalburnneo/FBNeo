@@ -16598,7 +16598,7 @@ static struct BurnRomInfo crswd2rcmRomDesc[] = {
 	{ "054-c1.c1",		0x400000, 0x8221b712, 3 | BRF_GRA },           //  2 Sprite data
 	{ "054-c2.c2",		0x400000, 0xd6c6183d, 3 | BRF_GRA },           //  3
 
-	{ "054-m1rcm.m1",	0x020000, 0x67815eda, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "054-m1rcm.m1",	0x020000, 0x2a491bab, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "054-v1rcm.v1",	0x200000, 0x45d86fa5, 5 | BRF_SND },           //  5 Sound data
 };

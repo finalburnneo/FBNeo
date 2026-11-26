@@ -1055,6 +1055,7 @@ del %(Filename).exe</Command>
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp" />
     <ClCompile Include="..\..\src\burn\devices\mc8123.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5195.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5292.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_run.cpp" />

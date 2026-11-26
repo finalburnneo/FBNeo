@@ -534,8 +534,8 @@ void z80ctc_init(INT32 ctcclock, INT32 z80clock, INT32 notimer, void (*intr)(int
 {
 	ctc = (z80ctc *)BurnMalloc(sizeof(z80ctc));
 	ctc->clock = ctcclock;
-	ctc->period16 = 16 * z80clock / ctcclock;
-	ctc->period256 = 256 * z80clock / ctcclock;;
+	ctc->period16 = (INT32)(((INT64)16 * z80clock) / ctcclock);
+	ctc->period256 = (INT32)(((INT64)256 * z80clock) / ctcclock);
 	bprintf(0, _T("Z80 CTC: %dhz, Z80: %dhz.  16: %d cycles, 256: %d cycles.\n"), ctcclock, z80clock, ctc->period16, ctc->period256);
 	//ctc->period16 = attotime_mul(ATTOTIME_IN_HZ(ctc->clock), 16);
 	//ctc->period256 = attotime_mul(ATTOTIME_IN_HZ(ctc->clock), 256);

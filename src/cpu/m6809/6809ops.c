@@ -309,7 +309,7 @@ M6809_INLINE void exg( void )
 		case  5: PC = t2; CHANGE_PC; break;
 		case  8: A = t2;  break;
 		case  9: B = t2;  break;
-		case 10: CC = t2; break;
+		case 10: CC = t2; { CHECK_IRQ_LINES; } break;
 		case 11: DP = t2; break;
 	}
 	switch(tb&15) {
@@ -321,7 +321,7 @@ M6809_INLINE void exg( void )
 		case  5: PC = t1; CHANGE_PC; break;
 		case  8: A = t1;  break;
 		case  9: B = t1;  break;
-		case 10: CC = t1; break;
+		case 10: CC = t1; { CHECK_IRQ_LINES; } break;
 		case 11: DP = t1; break;
 	}
 }
@@ -363,7 +363,7 @@ M6809_INLINE void tfr( void )
 		case  5: PC = t; CHANGE_PC; break;
 		case  8: A = t;  break;
 		case  9: B = t;  break;
-		case 10: CC = t; break;
+		case 10: CC = t; { CHECK_IRQ_LINES; } break;
 		case 11: DP = t; break;
     }
 }

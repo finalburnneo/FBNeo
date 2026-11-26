@@ -165,7 +165,8 @@ void adsp2115_load_boot_data(UINT8 *srcdata, UINT32 *dstdata);
 #define ADSP2181_TIMER		5		/* internal timer IRQ */
 #define ADSP2181_IRQE		6		/* IRQE */
 #define ADSP2181_IRQL1		7		/* IRQL1 */
-#define ADSP2181_IRQL2		8		/* IRQL2 */
+#define ADSP2181_IRQL2		8		/* IRQL2 (IRQL0 in the data sheet) */
+#define ADSP2181_BDMA		9		/* BDMA complete (Adsp2100SetIRQLine() only) */
 
 //CPU_GET_INFO( adsp2181 );
 //#define CPU_ADSP2181 CPU_GET_INFO_NAME( adsp2181 )

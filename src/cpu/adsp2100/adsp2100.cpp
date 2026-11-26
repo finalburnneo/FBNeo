@@ -293,15 +293,22 @@ INLINE void WWORD_DATA(adsp2100_state *adsp, UINT32 addr, UINT16 data)
     adsp21xx_data_write_word_16le(addr << 1, data);
 }
 
+// ADSP-2181 I/O space: its own handlers when set (otherwise the data space, as before)
+UINT16 (*adsp21xx_io_read)(UINT32 addr) = NULL;
+void (*adsp21xx_io_write)(UINT32 addr, UINT16 data) = NULL;
+void (*adsp21xx_dmovlay_cb)(INT32 data) = NULL;
+
 INLINE UINT16 RWORD_IO(adsp2100_state *adsp, UINT32 addr)
 {
     //return memory_read_word_16le(adsp->io, addr << 1);
+    if (adsp21xx_io_read) return adsp21xx_io_read(addr & 0x7ff);
     return adsp21xx_data_read_word_16le(addr << 1);
 }
 
 INLINE void WWORD_IO(adsp2100_state *adsp, UINT32 addr, UINT16 data)
 {
     //memory_write_word_16le(adsp->io, addr << 1, data);
+    if (adsp21xx_io_write) { adsp21xx_io_write(addr & 0x7ff, data); return; }
     adsp21xx_data_write_word_16le(addr << 1, data);
 }
 
@@ -395,8 +402,9 @@ INLINE int adsp2181_generate_irq(adsp2100_state *adsp, int which, int indx)
 	if (!(adsp->imask & (0x200 >> indx)))
 		return 0;
 
-	/* clear the latch */
-	adsp->irq_latch[which] = 0;
+	/* clear the latch (which < 0: the BDMA interrupt) */
+	if (which < 0) adsp->bdma_latch = 0;
+	else adsp->irq_latch[which] = 0;
 
 	/* push the PC and the status */
 	pc_stack_push(adsp);
@@ -451,6 +459,9 @@ static void check_irqs(adsp2100_state *adsp)
 			return;
 
 		/* check BDMA interrupt */
+		check = adsp->bdma_latch;
+		if (check && adsp2181_generate_irq(adsp, -1, 6))
+			return;
 
 		/* check IRQ1/SPORT1 transmit */
 		check = (adsp->icntl & 2) ? adsp->irq_latch[ADSP2181_IRQ1] : adsp->irq_state[ADSP2181_IRQ1];
@@ -741,6 +752,8 @@ void adsp21xx_reset(adsp2100_state *adsp)
 
 	adsp->ppc = -1;
 	adsp->loop = 0xffff;
+	adsp->pmovlay = adsp->dmovlay = 0;
+	adsp->bdma_latch = 0;
 	adsp->loop_condition = 0;
 
 	/* reset status registers */
@@ -904,6 +917,12 @@ void adsp21xx_scan(adsp2100_state *adsp, INT32 nAction)
 		ba.nLen	  = STRUCT_SIZE_HELPER(adsp2100_state, irq_latch);
 		ba.szName = "Adsp21xx Regs";
 		BurnAcb(&ba);
+
+		if (adsp->chip_type == CHIP_TYPE_ADSP2181) {
+			SCAN_VAR(adsp->pmovlay);
+			SCAN_VAR(adsp->dmovlay);
+			SCAN_VAR(adsp->bdma_latch);
+		}
 	}
 }
 

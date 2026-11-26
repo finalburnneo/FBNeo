@@ -34,6 +34,7 @@ all_cpu = {
     'm68000': {'desc': 'Motorola 68000 (Musashi core)', 'sources': ['m68000_intf.cpp', 'm68k/m68kcpu.c', 'm68k/m68kdasm.c'], 'inc': ['m68k']},
     'm6805': {'desc': 'Motorola 6805', 'sources': ['m6805/m6805.cpp', 'm6805_intf.cpp'], 'inc': ['m6805']},
     'm6809': {'desc': 'Motorola 6809', 'sources': ['m6809/m6809.cpp', 'm6809_intf.cpp'], 'inc': ['m6809']},
+    'mb86233': {'desc': 'Fujitsu MB86233 (TGP)', 'sources': ['mb86233/mb86233.cpp'], 'inc': ['mb86233']},
     'mb88xx': {'desc': 'Fujitsu MB88xx', 'sources': ['mb88xx/mb88xx.cpp'], 'inc': ['mb88xx']},
     'mips3': {'desc': 'MIPS III', 'sources': ['mips3/mips3.cpp', 'mips3_intf.cpp'], 'inc': ['mips3']},
     'nec': {'desc': 'NEC V30 / V33', 'sources': ['nec/nec.cpp', 'nec/v25.cpp', 'nec_intf.cpp'], 'inc': ['nec']},

@@ -93,6 +93,26 @@ void v60SetReadLongHandler(UINT32 (*read)(UINT32))
 	v60_read32 = read;
 }
 
+void v60SetIOWriteByteHandler(void (*write)(UINT32,UINT8))
+{
+	v60_iowrite8 = write;
+}
+
+void v60SetIOWriteWordHandler(void (*write)(UINT32,UINT16))
+{
+	v60_iowrite16 = write;
+}
+
+void v60SetIOReadByteHandler(UINT8 (*read)(UINT32))
+{
+	v60_ioread8 = read;
+}
+
+void v60SetIOReadWordHandler(UINT16 (*read)(UINT32))
+{
+	v60_ioread16 = read;
+}
+
 void v60SetAddressMask(UINT32 mask)
 {
 	address_mask = mask;
@@ -598,13 +618,13 @@ static int v60_ICount;
 #define XORW(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Word(dst); }
 #define XORL(dst,src)		{ (dst) ^= (src); _OV = 0; SetSZPF_Long(dst); }
 
-#define SUBB(dst, src)		{ unsigned res=(dst)-(src); SetCFB(res); SetOFB_Sub(res,src,dst); SetSZPF_Byte(res); dst=(UINT8)res; }
-#define SUBW(dst, src)		{ unsigned res=(dst)-(src); SetCFW(res); SetOFW_Sub(res,src,dst); SetSZPF_Word(res); dst=(UINT16)res; }
-#define SUBL(dst, src)		{ UINT64 res=(UINT64)(dst)-(INT64)(src); SetCFL(res); SetOFL_Sub(res,src,dst); SetSZPF_Long(res); dst=(UINT32)res; }
+#define SUBB(dst, src, c)		{ unsigned res=(dst)-(src)-(c); SetCFB(res); SetOFB_Sub(res,src,dst); SetSZPF_Byte(res); dst=(UINT8)res; }
+#define SUBW(dst, src, c)		{ unsigned res=(dst)-(src)-(c); SetCFW(res); SetOFW_Sub(res,src,dst); SetSZPF_Word(res); dst=(UINT16)res; }
+#define SUBL(dst, src, c)		{ UINT64 res=(UINT64)(dst)-(INT64)(src)-(c); SetCFL(res); SetOFL_Sub(res,src,dst); SetSZPF_Long(res); dst=(UINT32)res; }
 
-#define ADDB(dst, src)		{ unsigned res=(dst)+(src); SetCFB(res); SetOFB_Add(res,src,dst); SetSZPF_Byte(res); dst=(UINT8)res; }
-#define ADDW(dst, src)		{ unsigned res=(dst)+(src); SetCFW(res); SetOFW_Add(res,src,dst); SetSZPF_Word(res); dst=(UINT16)res; }
-#define ADDL(dst, src)		{ UINT64 res=(UINT64)(dst)+(UINT64)(src); SetCFL(res); SetOFL_Add(res,src,dst); SetSZPF_Long(res); dst=(UINT32)res; }
+#define ADDB(dst, src, c)		{ unsigned res=(dst)+(src)+(c); SetCFB(res); SetOFB_Add(res,src,dst); SetSZPF_Byte(res); dst=(UINT8)res; }
+#define ADDW(dst, src, c)		{ unsigned res=(dst)+(src)+(c); SetCFW(res); SetOFW_Add(res,src,dst); SetSZPF_Word(res); dst=(UINT16)res; }
+#define ADDL(dst, src, c)		{ UINT64 res=(UINT64)(dst)+(UINT64)(src)+(c); SetCFL(res); SetOFL_Add(res,src,dst); SetSZPF_Long(res); dst=(UINT32)res; }
 
 #define SETREG8(a, b)  (a) = ((a) & ~0xff) | ((b) & 0xff)
 #define SETREG16(a, b) (a) = ((a) & ~0xffff) | ((b) & 0xffff)
@@ -862,6 +882,13 @@ void v60WriteROM(UINT32 a, UINT8 d)
 static void base_init()
 {
 	memset(&v60, 0x00, sizeof(v60));
+
+	v60_ioread8 = NULL;
+	v60_ioread16 = NULL;
+	v60_ioread32 = NULL;
+	v60_iowrite8 = NULL;
+	v60_iowrite16 = NULL;
+	v60_iowrite32 = NULL;
 	v60.irq_cb = v60_default_irq_cb;
 	v60.irq_line = CLEAR_LINE;
 	v60.nmi_line = CLEAR_LINE;
@@ -1087,6 +1114,11 @@ INT32 v60TotalCycles()
 void v60RunEnd()
 {
 	v60.end_run = 1;
+}
+
+void v60BurnCycles(INT32 cycles)
+{
+	v60_ICount -= cycles;
 }
 
 INT32 v60Idle(INT32 cycles)

@@ -278,7 +278,7 @@ static UINT32 opADDB(void) /* TRUSTED (C too!)*/
 
 	F12LOADOP2BYTE();
 
-	ADDB(appb, (UINT8)f12Op1);
+	ADDB(appb, (UINT8)f12Op1, 0);
 
 	F12STOREOP2BYTE();
 	F12END();
@@ -291,7 +291,7 @@ static UINT32 opADDH(void) /* TRUSTED (C too!)*/
 
 	F12LOADOP2HALF();
 
-	ADDW(apph, (UINT16)f12Op1);
+	ADDW(apph, (UINT16)f12Op1, 0);
 
 	F12STOREOP2HALF();
 	F12END();
@@ -304,7 +304,7 @@ static UINT32 opADDW(void) /* TRUSTED (C too!) */
 
 	F12LOADOP2WORD();
 
-	ADDL(appw, (UINT32)f12Op1);
+	ADDL(appw, (UINT32)f12Op1, 0);
 
 	F12STOREOP2WORD();
 	F12END();
@@ -312,14 +312,13 @@ static UINT32 opADDW(void) /* TRUSTED (C too!) */
 
 static UINT32 opADDCB(void)
 {
-	UINT8 appb, temp;
+	UINT8 appb;
 
 	F12DecodeOperands(ReadAM,0,ReadAMAddress,0);
 
 	F12LOADOP2BYTE();
 
-	temp = ((UINT8)f12Op1 + (_CY?1:0));
-	ADDB(appb, temp);
+	ADDB(appb, (UINT8)f12Op1, _CY?1:0);
 
 	F12STOREOP2BYTE();
 	F12END();
@@ -327,14 +326,13 @@ static UINT32 opADDCB(void)
 
 static UINT32 opADDCH(void)
 {
-	UINT16 apph, temp;
+	UINT16 apph;
 
 	F12DecodeOperands(ReadAM,1,ReadAMAddress,1);
 
 	F12LOADOP2HALF();
 
-	temp = ((UINT16)f12Op1 + (_CY?1:0));
-	ADDW(apph, temp);
+	ADDW(apph, (UINT16)f12Op1, _CY?1:0);
 
 	F12STOREOP2HALF();
 	F12END();
@@ -342,14 +340,13 @@ static UINT32 opADDCH(void)
 
 static UINT32 opADDCW(void)
 {
-	UINT32 appw, temp;
+	UINT32 appw;
 
 	F12DecodeOperands(ReadAM,2,ReadAMAddress,2);
 
 	F12LOADOP2WORD();
 
-	temp = f12Op1 + (_CY?1:0);
-	ADDL(appw, temp);
+	ADDL(appw, (UINT32)f12Op1, _CY?1:0);
 
 	F12STOREOP2WORD();
 	F12END();
@@ -508,7 +505,7 @@ static UINT32 opCMPB(void) /* TRUSTED (C too!) */
 	F12DecodeOperands(ReadAM,0,ReadAM,0);
 
 	appb = (UINT8)f12Op2;
-	SUBB(appb, (UINT8)f12Op1);
+	SUBB(appb, (UINT8)f12Op1, 0);
 
 	F12END();
 }
@@ -519,7 +516,7 @@ static UINT32 opCMPH(void) /* TRUSTED (C too!) */
 	F12DecodeOperands(ReadAM,1,ReadAM,1);
 
 	apph = (UINT16)f12Op2;
-	SUBW(apph, (UINT16)f12Op1);
+	SUBW(apph, (UINT16)f12Op1, 0);
 
 	F12END();
 }
@@ -529,9 +526,30 @@ static UINT32 opCMPW(void) /* TRUSTED (C too!)*/
 {
 	F12DecodeOperands(ReadAM,2,ReadAM,2);
 
-	SUBL(f12Op2, (UINT32)f12Op1);
+	SUBL(f12Op2, (UINT32)f12Op1, 0);
 
 	F12END();
+}
+
+// zero divisor (nec's manual): OV set, destination unchanged, and the integer
+// zero divide exception (#21, code 1500h with the current pc)
+static UINT32 F12ZeroDivide(void)
+{
+	_OV = 1;
+	UINT32 oldPSW = v60_update_psw_for_exception(0, 0);
+
+	SP -= 4;
+	MemWrite32(SP, PC);
+	SP -= 4;
+	MemWrite32(SP, EXCEPTION_CODE_AND_SIZE(0x1500, 8));
+	SP -= 4;
+	MemWrite32(SP, oldPSW);
+	SP -= 4;
+	MemWrite32(SP, PC + amLength1 + amLength2 + 2);
+	PC = GETINTVECT(21);
+	ChangePC(PC);
+
+	return 0;
 }
 
 static UINT32 opDIVB(void) /* TRUSTED */
@@ -541,8 +559,9 @@ static UINT32 opDIVB(void) /* TRUSTED */
 
 	F12LOADOP2BYTE();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = ((appb == 0x80) && (f12Op1==0xFF));
-	if (f12Op1 && !_OV)
+	if (!_OV)
 		appb= (INT8)appb / (INT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
@@ -558,8 +577,9 @@ static UINT32 opDIVH(void) /* TRUSTED */
 
 	F12LOADOP2HALF();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = ((apph == 0x8000) && (f12Op1==0xFFFF));
-	if (f12Op1 && !_OV)
+	if (!_OV)
 		apph = (INT16)apph / (INT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
@@ -575,8 +595,9 @@ static UINT32 opDIVW(void) /* TRUSTED */
 
 	F12LOADOP2WORD();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = ((appw == 0x80000000) && (f12Op1==0xFFFFFFFF));
-	if (f12Op1 && !_OV)
+	if (!_OV)
 		appw = (INT32)appw / (INT32)f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
@@ -604,6 +625,15 @@ static UINT32 opDIVX(void)
 	}
 
 	dv = ((UINT64)b<<32) | ((UINT64)a);
+
+	// a quotient that doesn't fit leaves the destination unchanged (and must not fault on the host)
+	if (f12Op1 == 0) return F12ZeroDivide();
+	if ((INT32)f12Op1 == -1 && dv == (INT64)(((UINT64)1) << 63)) { _OV = 1; F12END(); }
+	{
+		INT64 q = dv / (INT64)((INT32)f12Op1);
+		if (q < -(INT64)0x80000000 || q > (INT64)0x7fffffff) { _OV = 1; F12END(); }
+	}
+	_OV = 0;
 
 	a = dv / (INT64)((INT32)f12Op1);
 	b = dv % (INT64)((INT32)f12Op1);
@@ -644,6 +674,9 @@ static UINT32 opDIVUX(void)
 	}
 
 	dv = (UINT64)(((UINT64)b<<32) | (UINT64)a);
+	if (f12Op1 == 0) return F12ZeroDivide();
+	if (dv / (UINT64)f12Op1 > 0xffffffff) { _OV = 1; F12END(); }
+	_OV = 0;
 	a = (UINT32)(dv / (UINT64)f12Op1);
 	b = (UINT32)(dv % (UINT64)f12Op1);
 
@@ -672,8 +705,9 @@ static UINT32 opDIVUB(void) /* TRUSTED */
 
 	F12LOADOP2BYTE();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)	appb /= (UINT8)f12Op1;
+	appb /= (UINT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
 
@@ -688,8 +722,9 @@ static UINT32 opDIVUH(void) /* TRUSTED */
 
 	F12LOADOP2HALF();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)	apph /= (UINT16)f12Op1;
+	apph /= (UINT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
 
@@ -704,8 +739,9 @@ static UINT32 opDIVUW(void) /* TRUSTED */
 
 	F12LOADOP2WORD();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)	appw /= f12Op1;
+	appw /= f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
 
@@ -763,7 +799,7 @@ static UINT32 opLDPR(void)
 	F12DecodeOperands(ReadAMAddress,2,ReadAM,2);
 	if (f12Op2 <= 28)
 	{
-	  if (f12Flag1 &&(!(OpRead8(PC + 1)&0x80 && OpRead8(PC + 2)==0xf4 ) ))
+		if (f12Flag1)
 			v60.reg[f12Op2 + 36] = v60.reg[f12Op1];
 		else
 			v60.reg[f12Op2 + 36] = f12Op1;
@@ -1008,7 +1044,7 @@ static UINT32 opMULB(void)
 	appb = tmp;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
-	_OV = ((tmp >> 8)!=0);
+	_OV = ((INT32)tmp != (INT8)appb);	// the signed product doesn't fit
 
 	F12STOREOP2BYTE();
 	F12END();
@@ -1026,7 +1062,7 @@ static UINT32 opMULH(void)
 	apph = tmp;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
-	_OV = ((tmp >> 16)!=0);
+	_OV = ((INT32)tmp != (INT16)apph);
 
 	F12STOREOP2HALF();
 	F12END();
@@ -1044,7 +1080,7 @@ static UINT32 opMULW(void)
 	appw = tmp;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
-	_OV = ((tmp >> 32) != 0);
+	_OV = ((INT64)tmp != (INT32)appw);
 
 	F12STOREOP2WORD();
 	F12END();
@@ -1109,7 +1145,7 @@ static UINT32 opNEGB(void) /* TRUSTED  (C too!)*/
 	F12DecodeFirstOperand(ReadAM,0);
 
 	modWriteValB = 0;
-	SUBB(modWriteValB, (INT8)f12Op1);
+	SUBB(modWriteValB, (INT8)f12Op1, 0);
 	_CY = modWriteValB ? 1 : 0;
 
 	F12WriteSecondOperand(0);
@@ -1121,7 +1157,7 @@ static UINT32 opNEGH(void) /* TRUSTED  (C too!)*/
 	F12DecodeFirstOperand(ReadAM,1);
 
 	modWriteValH = 0;
-	SUBW(modWriteValH, (INT16)f12Op1);
+	SUBW(modWriteValH, (INT16)f12Op1, 0);
 	_CY = modWriteValH ? 1 : 0;
 
 	F12WriteSecondOperand(1);
@@ -1133,7 +1169,7 @@ static UINT32 opNEGW(void) /* TRUSTED  (C too!)*/
 	F12DecodeFirstOperand(ReadAM,2);
 
 	modWriteValW = 0;
-	SUBL(modWriteValW, (INT32)f12Op1);
+	SUBL(modWriteValW, (INT32)f12Op1, 0);
 	_CY = modWriteValW ? 1 : 0;
 
 	F12WriteSecondOperand(2);
@@ -1265,9 +1301,9 @@ static UINT32 opREMB(void)
 
 	F12LOADOP2BYTE();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)
-		appb= (INT8)appb % (INT8)f12Op1;
+	appb = (INT8)appb % (INT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
 
@@ -1282,9 +1318,9 @@ static UINT32 opREMH(void)
 
 	F12LOADOP2HALF();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)
-		apph=(INT16)apph % (INT16)f12Op1;
+	apph = (INT16)apph % (INT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
 
@@ -1299,9 +1335,10 @@ static UINT32 opREMW(void)
 
 	F12LOADOP2WORD();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)
-		appw=(INT32)appw % (INT32)f12Op1;
+	if (f12Op1 == 0xFFFFFFFF) appw = 0;	// int_min % -1 faults on the host
+	else appw = (INT32)appw % (INT32)f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
 
@@ -1316,9 +1353,9 @@ static UINT32 opREMUB(void)
 
 	F12LOADOP2BYTE();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)
-		appb %= (UINT8)f12Op1;
+	appb %= (UINT8)f12Op1;
 	_Z = (appb == 0);
 	_S = ((appb & 0x80)!=0);
 
@@ -1333,9 +1370,9 @@ static UINT32 opREMUH(void)
 
 	F12LOADOP2HALF();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)
-		apph %= (UINT16)f12Op1;
+	apph %= (UINT16)f12Op1;
 	_Z = (apph == 0);
 	_S = ((apph & 0x8000)!=0);
 
@@ -1350,9 +1387,9 @@ static UINT32 opREMUW(void)
 
 	F12LOADOP2WORD();
 
+	if (f12Op1 == 0) return F12ZeroDivide();
 	_OV = 0;
-	if (f12Op1)
-		appw %= f12Op1;
+	appw %= f12Op1;
 	_Z = (appw == 0);
 	_S = ((appw & 0x80000000)!=0);
 
@@ -2119,7 +2156,7 @@ static UINT32 opSUBB(void) /* TRUSTED (C too!) */
 
 	F12LOADOP2BYTE();
 
-	SUBB(appb, (UINT8)f12Op1);
+	SUBB(appb, (UINT8)f12Op1, 0);
 
 	F12STOREOP2BYTE();
 	F12END();
@@ -2132,7 +2169,7 @@ static UINT32 opSUBH(void) /* TRUSTED (C too!) */
 
 	F12LOADOP2HALF();
 
-	SUBW(apph, (UINT16)f12Op1);
+	SUBW(apph, (UINT16)f12Op1, 0);
 
 	F12STOREOP2HALF();
 	F12END();
@@ -2145,7 +2182,7 @@ static UINT32 opSUBW(void) /* TRUSTED (C too!) */
 
 	F12LOADOP2WORD();
 
-	SUBL(appw, (UINT32)f12Op1);
+	SUBL(appw, (UINT32)f12Op1, 0);
 
 	F12STOREOP2WORD();
 	F12END();
@@ -2155,13 +2192,11 @@ static UINT32 opSUBW(void) /* TRUSTED (C too!) */
 static UINT32 opSUBCB(void)
 {
 	UINT8 appb;
-	UINT8 src;
 	F12DecodeOperands(ReadAM,0,ReadAMAddress,0);
 
 	F12LOADOP2BYTE();
 
-	src = (UINT8)f12Op1 + (_CY?1:0);
-	SUBB(appb, src);
+	SUBB(appb, (UINT8)f12Op1, _CY?1:0);
 
 	F12STOREOP2BYTE();
 	F12END();
@@ -2170,14 +2205,12 @@ static UINT32 opSUBCB(void)
 static UINT32 opSUBCH(void)
 {
 	UINT16 apph;
-	UINT16 src;
 
 	F12DecodeOperands(ReadAM,1,ReadAMAddress,1);
 
 	F12LOADOP2HALF();
 
-	src = (UINT16)f12Op1 + (_CY?1:0);
-	SUBW(apph, src);
+	SUBW(apph, (UINT16)f12Op1, _CY?1:0);
 
 	F12STOREOP2HALF();
 	F12END();
@@ -2186,14 +2219,12 @@ static UINT32 opSUBCH(void)
 static UINT32 opSUBCW(void)
 {
 	UINT32 appw;
-	UINT32 src;
 
 	F12DecodeOperands(ReadAM,2,ReadAMAddress,2);
 
 	F12LOADOP2WORD();
 
-	src = (UINT32)f12Op1 + (_CY?1:0);
-	SUBL(appw, src);
+	SUBL(appw, (UINT32)f12Op1, _CY?1:0);
 
 	F12STOREOP2WORD();
 	F12END();

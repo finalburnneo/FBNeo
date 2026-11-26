@@ -19,6 +19,10 @@ void v60SetWriteLongHandler(void (*write)(UINT32,UINT32));
 void v60SetReadByteHandler(UINT8  (*read)(UINT32));
 void v60SetReadWordHandler(UINT16 (*read)(UINT32));
 void v60SetReadLongHandler(UINT32 (*read)(UINT32));
+void v60SetIOWriteByteHandler(void (*write)(UINT32,UINT8));
+void v60SetIOWriteWordHandler(void (*write)(UINT32,UINT16));
+void v60SetIOReadByteHandler(UINT8 (*read)(UINT32));
+void v60SetIOReadWordHandler(UINT16 (*read)(UINT32));
 void v60SetAddressMask(UINT32 mask);
 void v60MapMemory(UINT8 *ptr, UINT64 start, UINT64 end, UINT32 flags);
 
@@ -35,6 +39,7 @@ void v60RunEnd();
 void v60NewFrame();
 INT32 v60GetActive();
 INT32 v60Idle(INT32 cycles);
+void v60BurnCycles(INT32 cycles); // from a handler: the access took this many more cycles
 
 INT32 v60Scan(INT32 nAction);
 

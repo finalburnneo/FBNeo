@@ -706,10 +706,10 @@ static UINT32 am3DirectAddressDeferredIndexed(void)
 		MemWrite8(MemRead32(OpRead32(modAdd+2)) + v60.reg[modVal&0x1F], modWriteValB);
 		break;
 	case 1:
-		MemWrite16(MemRead32(OpRead32(modAdd+2)) + v60.reg[modVal&0x1F], modWriteValH);
+		MemWrite16(MemRead32(OpRead32(modAdd+2)) + v60.reg[modVal&0x1F]*2, modWriteValH);	// the index is scaled, as in every indexed mode
 		break;
 	case 2:
-		MemWrite32(MemRead32(OpRead32(modAdd+2)) + v60.reg[modVal&0x1F], modWriteValW);
+		MemWrite32(MemRead32(OpRead32(modAdd+2)) + v60.reg[modVal&0x1F]*4, modWriteValW);
 		break;
 	}
 

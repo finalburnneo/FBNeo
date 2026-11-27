@@ -3043,6 +3043,16 @@ static int d3d11ImageInit()
 	nGameImageWidth = nVidImageWidth;
 	nGameImageHeight = nVidImageHeight;
 
+	// A SoftFX filter on an already large image (high resolution drivers) needs huge textures and
+	// buffers (4xBR on 3840x2160: 16384x16384, 1GB each) and brings nothing: run without it
+	if (nPreScaleEffect && (nGameImageWidth * nPreScaleZoom > 4096 || nGameImageHeight * nPreScaleZoom > 4096)) {
+#ifdef PRINT_DEBUG_INFO
+		dprintf(_T("  * SoftFX disabled: the %i x %i image is too large to prescale.\n"), nGameImageWidth, nGameImageHeight);
+#endif
+		nPreScaleEffect = 0;
+		nPreScaleZoom = 1;
+	}
+
 	// The texture is always 32-bit; SoftFX filters that can't output 32-bit run in 16-bit and get converted
 	nVidImageDepth = 32;
 	if (bDrvOkay && nPreScaleEffect && VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32) {

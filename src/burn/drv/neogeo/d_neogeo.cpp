@@ -16598,7 +16598,7 @@ static struct BurnRomInfo crswd2rcmRomDesc[] = {
 	{ "054-c1.c1",		0x400000, 0x8221b712, 3 | BRF_GRA },           //  2 Sprite data
 	{ "054-c2.c2",		0x400000, 0xd6c6183d, 3 | BRF_GRA },           //  3
 
-	{ "054-m1rcm.m1",	0x020000, 0x67815eda, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+	{ "054-m1rcm.m1",	0x020000, 0x2a491bab, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "054-v1rcm.v1",	0x200000, 0x45d86fa5, 5 | BRF_SND },           //  5 Sound data
 };
@@ -17345,10 +17345,10 @@ struct BurnDriver BurnDrvKarnovre = {
 };
 
 
-// Last Hope - Pink Bullets v1.30 (bootleg AES to MVS conversion, no coin support) (Hack)
+// Last Hope - Pink Bullets v1.40 (bootleg AES to MVS conversion, no coin support) (Hack)
 
 static struct BurnRomInfo lasthopepbRomDesc[] = {
-	{ "ngdt-300-p1pb.bin", 0x100000, 0x25c1867d, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
+	{ "ngdt-300-p1pb.bin", 0x100000, 0x918bb988, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
 
 	{ "ngdt-300-s1pb.bin", 0x020000, 0x36c54e06, 2 | BRF_GRA },		 	//  1 Text data
 
@@ -17369,7 +17369,7 @@ STD_ROM_FN(lasthopepb)
 
 struct BurnDriver BurnDrvLasthopepb = {
 	"lasthopepb", "lasthope", "neogeo", NULL, "2026",
-	"Last Hope - Pink Bullets v1.30 (bootleg AES to MVS conversion, no coin support) (Hack)\0", NULL, "LoW", "Neo Geo MVS",
+	"Last Hope - Pink Bullets v1.40 (bootleg AES to MVS conversion, no coin support) (Hack)\0", NULL, "LoW", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_BOOTLEG | BDF_HACK | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
 	NULL, lasthopepbRomInfo, lasthopepbRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -17521,24 +17521,24 @@ struct BurnDriver BurnDrvTurfmastsc = {
 };
 
 
-// Neo Turf Masters / Big Tournament Golf (Hack, Plus v1.0)
-
+// Neo Turf Masters Plus / Big Tournament Golf Plus (Hack, v2.0)
+// https://github.com/theenemy-thd/NeoTurfMastersPlus
 static struct BurnRomInfo turfmastplusRomDesc[] = {
-	{ "200-p1p.p1",   0x200000, 0x9f9d50a5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code         / mask rom TC5316200
+	{ "200-p1pl.p1",	0x200000, 0xb41f72c1, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "200-s1p.s1",   0x020000, 0xedd8a8e6, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
+	{ "200-s1pl.s1",	0x020000, 0xdf08a9ae, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "200-c1p.c1",   0x400000, 0xfd0220e1, 3 | BRF_GRA },           //  2 Sprite data      / mask rom TC5332205
-	{ "200-c2p.c2",   0x400000, 0xfee05bf6, 3 | BRF_GRA },           //  3                  / mask rom TC5332205
-	{ "200-c3p.c3",   0x400000, 0x10fc8214, 3 | BRF_GRA },           //  4                  / mask rom TC5332205
-	{ "200-c4p.c4",   0x400000, 0x0f83f209, 3 | BRF_GRA },           //  5                  / mask rom TC5332205
+	{ "200-c1pl.c1",	0x400000, 0xbace1b78, 3 | BRF_GRA },           //  2 Sprite data
+	{ "200-c2pl.c2",	0x400000, 0xb007fea9, 3 | BRF_GRA },           //  3
+	{ "200-c3pl.c3",	0x400000, 0x10fc8214, 3 | BRF_GRA },           //  4
+	{ "200-c4pl.c4",	0x400000, 0x0f83f209, 3 | BRF_GRA },           //  5
 
-	{ "200-m1p.m1",   0x020000, 0x7d4d4616, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code         / mask rom TC531001
+	{ "200-m1pl.m1",	0x020000, 0x3547983f, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "200-v1.v1",    0x200000, 0x00fd48d2, 5 | BRF_SND },           //  7 Sound data       / mask rom TC5316200
-	{ "200-v2.v2",    0x200000, 0x082acb31, 5 | BRF_SND },           //  8                  / mask rom TC5316200
-	{ "200-v3.v3",    0x200000, 0x7abca053, 5 | BRF_SND },           //  9                  / mask rom TC5316200
-	{ "200-v4p.v4",   0x200000, 0xdba55b91, 5 | BRF_SND },           // 10                  / mask rom TC5316200
+	{ "200-v1.v1",		0x200000, 0x00fd48d2, 5 | BRF_SND },           //  7 Sound data
+	{ "200-v2.v2",		0x200000, 0x082acb31, 5 | BRF_SND },           //  8
+	{ "200-v3.v3",		0x200000, 0x7abca053, 5 | BRF_SND },           //  9
+	{ "200-v4pl.v4",	0x200000, 0x176d83aa, 5 | BRF_SND },           // 10
 };
 
 STDROMPICKEXT(turfmastplus, turfmastplus, neogeo)
@@ -17546,7 +17546,7 @@ STD_ROM_FN(turfmastplus)
 
 struct BurnDriver BurnDrvTurfmastplus = {
 	"turfmastplus", "turfmast", "neogeo", NULL, "2026",
-	"Neo Turf Masters / Big Tournament Golf (Hack, Plus v1.0)\0", NULL, "hack (TheEnemy)", "Neo Geo MVS",
+	"Neo Turf Masters Plus / Big Tournament Golf Plus (Hack, v2.0)\0", NULL, "hack (TheEnemy)", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
 	NULL, turfmastplusRomInfo, turfmastplusRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

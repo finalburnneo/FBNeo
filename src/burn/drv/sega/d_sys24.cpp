@@ -1,16 +1,13 @@
 // FB Alpha Sega System 24 driver module
 // Based on MAME driver by Olivier Galibert
 
-// Needs inputs hooked up...
-// mahmajn
-// mahmajn2
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "burn_ym2151.h"
 #include "dac.h"
 #include "fd1094_intf.h"
 #include "burn_gun.h"
+#include "sega_315_5292.h"
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -20,7 +17,6 @@ static UINT8 *Drv68KROM;
 static UINT8 *Drv68KKey;
 static UINT8 *DrvUserROM;
 static UINT8 *DrvFloppyData;
-static UINT8 *DrvCharExp;
 static UINT8 *DrvShareRAM2;
 static UINT8 *DrvShareRAM3;
 static UINT8 *DrvTileRAM;
@@ -77,8 +73,6 @@ static INT32 track_size;
 static UINT8 (*system24temp_sys16_io_io_r)(INT32 port);
 static void  (*system24temp_sys16_io_io_w)(INT32 port, UINT8 data);
 
-static INT32 gfx_set;
-
 static const UINT8 *mlatch_table;
 static UINT8  mahmajn_mlt[8] = { 5, 1, 6, 2, 3, 7, 4, 0 };
 static UINT8 mahmajn2_mlt[8] = { 6, 0, 5, 3, 1, 4, 2, 7 };
@@ -92,6 +86,8 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
+static UINT8 DrvJoyMJ[6][8];	// mahmajn: the mahjong panel, one input line each
+static UINT8 DrvInputsMJ[6];
 static UINT8 DrvDips[4];
 static UINT8 DrvInputs[10];
 static UINT8 DrvReset;
@@ -133,6 +129,39 @@ static struct BurnInputInfo DrvInputList[] = {
 };
 
 STDINPUTINFO(Drv)
+
+static struct BurnInputInfo MahmajnInputList[] = {
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,		"p1 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy4 + 1,		"p2 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoyMJ[4] + 0,	"p1 start"	},
+	{"P1 A",			BIT_DIGITAL,	DrvJoyMJ[0] + 0,	"mah a"		},
+	{"P1 B",			BIT_DIGITAL,	DrvJoyMJ[0] + 1,	"mah b"		},
+	{"P1 C",			BIT_DIGITAL,	DrvJoyMJ[0] + 2,	"mah c"		},
+	{"P1 D",			BIT_DIGITAL,	DrvJoyMJ[0] + 3,	"mah d"		},
+	{"P1 E",			BIT_DIGITAL,	DrvJoyMJ[1] + 0,	"mah e"		},
+	{"P1 F",			BIT_DIGITAL,	DrvJoyMJ[1] + 1,	"mah f"		},
+	{"P1 G",			BIT_DIGITAL,	DrvJoyMJ[1] + 2,	"mah g"		},
+	{"P1 H",			BIT_DIGITAL,	DrvJoyMJ[1] + 3,	"mah h"		},
+	{"P1 I",			BIT_DIGITAL,	DrvJoyMJ[2] + 0,	"mah i"		},
+	{"P1 J",			BIT_DIGITAL,	DrvJoyMJ[2] + 1,	"mah j"		},
+	{"P1 K",			BIT_DIGITAL,	DrvJoyMJ[2] + 2,	"mah k"		},
+	{"P1 L",			BIT_DIGITAL,	DrvJoyMJ[2] + 3,	"mah l"		},
+	{"P1 M",			BIT_DIGITAL,	DrvJoyMJ[3] + 0,	"mah m"		},
+	{"P1 N",			BIT_DIGITAL,	DrvJoyMJ[3] + 1,	"mah n"		},
+	{"P1 Chi",			BIT_DIGITAL,	DrvJoyMJ[3] + 2,	"mah chi"	},
+	{"P1 Pon",			BIT_DIGITAL,	DrvJoyMJ[3] + 3,	"mah pon"	},
+	{"P1 Kan",			BIT_DIGITAL,	DrvJoyMJ[5] + 0,	"mah kan"	},
+	{"P1 Reach",		BIT_DIGITAL,	DrvJoyMJ[5] + 1,	"mah reach"	},
+	{"P1 Ron",			BIT_DIGITAL,	DrvJoyMJ[5] + 2,	"mah ron"	},
+
+	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy4 + 2,		"diag"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy4 + 3,		"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,		"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,		"dip"		},
+};
+
+STDINPUTINFO(Mahmajn)
 
 static struct BurnInputInfo GgroundInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -642,6 +671,37 @@ static struct BurnDIPInfo HotrodjDIPList[]=
 };
 
 STDDIPINFO(Hotrodj)
+
+static struct BurnDIPInfo MahmajnDIPList[]=
+{
+	{0x19, 0xf0, 0xff, 0xff, NULL /* dip offset */  },
+
+	DEFAULT_COIN_DIPS(0x00)
+
+	{0x01, 0xff, 0xff, 0xfe, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x01, 0x01, "Off"					},
+	{0x01, 0x01, 0x01, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Start Score"			},
+	{0x01, 0x01, 0x02, 0x00, "2000"					},
+	{0x01, 0x01, 0x02, 0x02, "3000"					},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty (computer)"	},
+	{0x01, 0x01, 0x0c, 0x08, "Easy"					},
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"				},
+	{0x01, 0x01, 0x0c, 0x04, "Hard"					},
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty (player)"	},
+	{0x01, 0x01, 0x30, 0x20, "Easy"					},
+	{0x01, 0x01, 0x30, 0x30, "Normal"				},
+	{0x01, 0x01, 0x30, 0x10, "Hard"					},
+	{0x01, 0x01, 0x30, 0x00, "Hardest"				},
+};
+
+STDDIPINFO(Mahmajn)
 
 static struct BurnDIPInfo QghDIPList[]=
 {
@@ -1347,11 +1407,11 @@ static UINT8 mahmajn_io_read(INT32 port)
 		case 1:
 			return 0xff;
 		case 2:
-			return DrvInputs[cur_input_line];
+			return (cur_input_line < 6) ? DrvInputsMJ[cur_input_line] : 0xff;
 		case 3:
 			return 0xff;
 		case 4:
-			return DrvInputs[8];
+			return DrvInputs[3];
 		case 5: // Dip switches
 			return DrvDips[0];
 		case 6:
@@ -1802,14 +1862,6 @@ static UINT8 __fastcall sys24_read_byte(UINT32 address)
 	return 0;
 }
 
-static inline void character_update(UINT32 i)
-{
-	DrvCharExp[i*2+0] = DrvCharRAM[i+1] >> 4;
-	DrvCharExp[i*2+1] = DrvCharRAM[i+1] & 0xf;
-	DrvCharExp[i*2+2] = DrvCharRAM[i+0] >> 4;
-	DrvCharExp[i*2+3] = DrvCharRAM[i+0] & 0xf;
-}
-
 static void __fastcall character_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x1fffe;
@@ -1817,7 +1869,7 @@ static void __fastcall character_write_word(UINT32 address, UINT16 data)
 
 	if (old != data) {
 		*((UINT16*)(DrvCharRAM + address)) = BURN_ENDIAN_SWAP_INT16(data);
-		character_update(address);
+		sega_315_5292_char_written(address);
 	}
 }
 
@@ -1828,7 +1880,7 @@ static void __fastcall character_write_byte(UINT32 address, UINT8 data)
 
 	if (old != data) {
 		DrvCharRAM[address^1] = data;
-		character_update(address & 0x1fffe);
+		sega_315_5292_char_written(address & 0x1fffe);
 	}
 }
 
@@ -1891,38 +1943,6 @@ static void fd1094_map_memory(UINT8 *mem)
 {
 	SekMapMemory(mem+0x00000,		0x000000, 0x03ffff, MAP_FETCH);
 	SekMapMemory(mem+0x00000,		0x040000, 0x07ffff, MAP_FETCH); // mirror
-}
-
-static tilemap_callback( _0s )
-{
-	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x0000 + offs * 2)));
-	INT32 color = attr >> 7;
-
-	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
-}
-
-static tilemap_callback( _0w )
-{
-	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x2000 + offs * 2)));
-	INT32 color = attr >> 7;
-
-	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
-}
-
-static tilemap_callback( _1s )
-{
-	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x4000 + offs * 2)));
-	INT32 color = attr >> 7;
-
-	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
-}
-
-static tilemap_callback( _1w )
-{
-	UINT16 attr = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvTileRAM + 0x6000 + offs * 2)));
-	INT32 color = attr >> 7;
-
-	TILE_SET_INFO(gfx_set, attr, color, TILE_GROUP(attr >> 15));
 }
 
 static INT32 DrvDoReset()
@@ -1993,7 +2013,6 @@ static INT32 MemIndex()
 
 	DrvUserROM		= Next; Next += 0x040000 * 0x10; // good enough
 
-	DrvCharExp		= Next; Next += 0x040000;
 
 	AllRam			= Next;
 
@@ -2156,21 +2175,7 @@ static INT32 DrvInit()
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, _0s_map_callback, 8, 8, 64, 64);
-	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, _0w_map_callback, 8, 8, 64, 64);
-	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, _1s_map_callback, 8, 8, 64, 64);
-	GenericTilemapInit(3, TILEMAP_SCAN_ROWS, _1w_map_callback, 8, 8, 64, 64);
-	GenericTilemapSetGfx(0, DrvCharExp, 4, 8, 8, 0x40000, 0, 0x0ff);
-	GenericTilemapSetGfx(1, DrvCharExp, 4, 8, 8, 0x40000, 0, 0x1ff);
-	GenericTilemapSetTransparent(0, 0);
-	GenericTilemapSetTransparent(1, 0);
-	GenericTilemapSetTransparent(2, 0);
-	GenericTilemapSetTransparent(3, 0);
-
-	BurnBitmapAllocate(1, 512, 512, true);
-	BurnBitmapAllocate(2, 512, 512, true);
-	BurnBitmapAllocate(3, 512, 512, true);
-	BurnBitmapAllocate(4, 512, 512, true);
+	sega_315_5292_init(DrvTileRAM, DrvCharRAM, 0x20000, 0xfff, nScreenWidth, nScreenHeight);
 
 	if (uses_tball)	BurnTrackballInit(2);
 
@@ -2181,6 +2186,7 @@ static INT32 DrvInit()
 
 static INT32 DrvExit()
 {
+	sega_315_5292_exit();
 	GenericTilesExit();
 	SekExit();
 	BurnYM2151Exit();
@@ -2408,304 +2414,14 @@ static void draw_sprites(const INT32 *spri)
 	}
 }
 
-static void draw_rect(UINT16 *source, const UINT16 *mask, UINT16 tpri, UINT8 lpri, INT32 win, INT32 sx, INT32 sy, INT32 xx1, INT32 yy1, INT32 xx2, INT32 yy2)
+static void draw_common(INT32 layer, INT32 lpri)
 {
-	source += (sy * 512) + sx;
-	UINT8	*prib = pPrioDraw;
-	UINT16	*dest = pTransDraw;
+	INT32 tpri = layer & 1;
 
-	tpri <<= 12;
+	if ((nSpriteEnable & 2) == 0 && tpri == 0) return;
+	if ((nSpriteEnable & 4) == 0 && tpri == 1) return;
 
-	dest += yy1*nScreenWidth + xx1;
-	prib += yy1*nScreenWidth + xx1;
-	mask += yy1*4;
-	yy2 -= yy1;
-
-	while (xx1 >= 128) {
-		xx1 -= 128;
-		xx2 -= 128;
-		mask++;
-	}
-
-	for (INT32 y = 0; y < yy2; y++) {
-		const UINT16 *src   = source;
-		UINT16 *dst         = dest;
-		UINT8 *pr           = prib;
-		const UINT16 *mask1 = mask;
-		INT32 llx = xx2;
-		INT32 cur_x = xx1;
-
-		while (llx > 0) {
-			UINT16 m = BURN_ENDIAN_SWAP_INT16(*mask1++); // window mask lives in tile ram (68k memory)
-
-			if (win)
-				m = ~m;
-
-			if (!cur_x && llx >= 128) {
-				// Fast paths for the 128-pixels without side clipping case
-
-				if (!m) {
-					// 1- 128 pixels from this layer
-					for (INT32 x = 0; x < 128; x++) {
-						if ((*src & 0x1000) == tpri && (*src & 0xf)) {
-							*dst = *src & 0xfff;
-							*pr |= lpri;
-						}
-						src++;
-						dst++;
-						pr++;
-					}
-
-				} else if (m == 0xffff) {
-					// 2- 128 pixels from the other layer
-					src += 128;
-					dst += 128;
-					pr += 128;
-
-				} else {
-					// 3- 128 pixels from both layers
-					for (INT32 x = 0; x < 128; x+=8) {
-						if (!(m & 0x8000)) {
-							for (INT32 xx = 0; xx < 8; xx++)
-								if ((src[xx] & 0x1000) == tpri && (src[xx] & 0xf)) {
-									dst[xx] = src[xx] & 0xfff;
-									pr[xx] |= lpri;
-								}
-						}
-						src += 8;
-						dst += 8;
-						pr += 8;
-						m <<= 1;
-					}
-				}
-			} else {
-				// Clipped path
-				INT32 llx1 = llx >= 128 ? 128 : llx;
-
-				if (!m) {
-					// 1- 128 pixels from this layer
-					for (INT32 x = cur_x; x < llx1; x++) {
-						if ((*src & 0x1000) == tpri && (*src & 0xf)) {
-							*dst = *src & 0xfff;
-							*pr |= lpri;
-						}
-						src++;
-						dst++;
-						pr++;
-					}
-
-				} else if (m == 0xffff) {
-					// 2- 128 pixels from the other layer
-					src += 128 - cur_x;
-					dst += 128 - cur_x;
-					pr += 128 - cur_x;
-
-				} else {
-					// 3- 128 pixels from both layers
-					for (INT32 x = cur_x; x < llx1; x++) {
-						if ((*src & 0x1000) == tpri && (*src & 0xf) && !(m & (0x8000 >> (x >> 3)))) {
-							*dst = *src & 0xfff;
-							*pr |= lpri;
-						}
-						src++;
-						dst++;
-						pr++;
-					}
-				}
-			}
-			llx -= 128;
-			cur_x = 0;
-		}
-		source += 512;
-		dest   += nScreenWidth;
-		prib   += nScreenWidth;
-		mask   += 4;
-	}
-}
-
-static void draw_common(INT32 layer, INT32 lpri, INT32 )
-{
-	UINT16 *tile_ram = (UINT16*)DrvTileRAM;
-	UINT16 hscr = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5000+(layer >> 1)]);
-	UINT16 vscr = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5004+(layer >> 1)]);
-	UINT16 ctrl = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5004+((layer >> 1) & 2)]);
-	UINT16 *mask = tile_ram + (layer & 4 ? 0x6800 : 0x6000);
-	UINT16 tpri = layer & 1;
-
-	if ((nSpriteEnable & 2) == 0) {
-		if (tpri == 0) return;
-	}
-	if ((nSpriteEnable & 4) == 0) {
-		if (tpri == 1) return;
-	}
-
-	lpri = 1 << lpri;
-	layer >>= 1;
-
-	// Layer disable
-	if (vscr & 0x8000) return;
-
-	if (ctrl & 0x6000)	// Special window/scroll modes
-	{
-		if (layer & 1) return;
-
-		gfx_set = 0;
-
-		GenericTilemapSetScrollY(layer^0, vscr & 0x1ff);
-		GenericTilemapSetScrollY(layer^1, vscr & 0x1ff);
-
-		if (hscr & 0x8000)
-		{
-			UINT16 *hscrtb = tile_ram + 0x4000 + 0x200*layer;
-
-			switch ((ctrl & 0x6000) >> 13)
-			{
-				case 1:
-					{
-						UINT16 v = (-vscr) & 0x1ff;
-
-						if (!((-vscr) & 0x200))
-							layer ^= 1;
-
-						for (INT32 y = 0; y < nScreenHeight; y++)
-						{
-							INT32 l1 = layer;
-							if (y >= v) l1 ^= 1;
-
-							GenericTilesSetScanline(y);
-							GenericTilemapSetScrollX(l1, -(BURN_ENDIAN_SWAP_INT16(hscrtb[y]) & 0x1ff));
-							GenericTilemapDraw(l1, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-						}
-						GenericTilesClearClip();
-					}
-					break;
-
-				case 2:
-				case 3:
-					{
-						for (INT32 y = 0; y < nScreenHeight; y++)
-						{
-							INT32 l1 = layer;
-							UINT16 h = BURN_ENDIAN_SWAP_INT16(hscrtb[y]) & 0x1ff;
-
-							GenericTilemapSetScrollX(layer|0, -h);
-							GenericTilemapSetScrollX(layer|1, -h);
-
-							INT32 maxx = nScreenWidth;
-							INT32 minx = 0;
-							if (maxx > h) maxx = h; // c1
-							if (minx < h) minx = h; // c2
-
-							if (!(hscr & 0x200)) l1 ^= 1;
-
-							GenericTilesSetClip(-1, maxx, y, y+1);
-							GenericTilemapDraw(l1|0, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-							GenericTilesClearClip();
-
-							GenericTilesSetClip(minx, -1, y, y+1);
-							GenericTilemapDraw(l1^1, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-							GenericTilesClearClip();
-						}
-						break;
-					}
-			}
-
-		} else {
-			GenericTilemapSetScrollX(layer|0, -(hscr & 0x1ff));
-			GenericTilemapSetScrollX(layer|1, -(hscr & 0x1ff));
-
-			switch ((ctrl & 0x6000) >> 13)
-			{
-				case 1:
-					{
-						UINT16 v = (-vscr) & 0x1ff;
-
-						INT32 miny = 0;
-						INT32 maxy = nScreenHeight;
-						if (maxy > v) maxy = v; // c1
-						if (miny < v) miny = v; // c2
-
-						if (!((-vscr) & 0x200)) layer ^= 1;
-
-						GenericTilesSetClip(-1, -1, -1, maxy);
-						GenericTilemapDraw(layer^0, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-						GenericTilesClearClip();
-
-						GenericTilesSetClip(-1, -1, miny, -1);
-						GenericTilemapDraw(layer^1, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-						GenericTilesClearClip();
-					}
-					break;
-
-				case 2:
-				case 3:
-					{
-						UINT16 h = (+hscr) & 0x1ff;
-
-						INT32 maxx = nScreenWidth;
-						INT32 minx = 0;
-						if (maxx > h) maxx = h; // c1
-						if (minx < h) minx = h; // c2
-
-						if (!((+hscr) & 0x200)) layer ^= 1;
-
-						GenericTilesSetClip(-1, maxx, -1, -1);
-						GenericTilemapDraw(layer^0, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-						GenericTilesClearClip();
-
-						GenericTilesSetClip(minx, -1, -1, -1);
-						GenericTilemapDraw(layer^1, pTransDraw, lpri|TMAP_SET_GROUP(tpri), 0xff);
-						GenericTilesClearClip();
-						break;
-					}
-			}
-		}
-	} else {
-		INT32 win = layer & 1;
-		UINT16 *source = BurnBitmapGetBitmap(1+layer);
-
-		if (hscr & 0x8000)
-		{
-			UINT16 *hscrtb = tile_ram + 0x4000 + 0x200*layer;
-			vscr &= 0x1ff;
-
-			for(INT32 y = 0; y < 384; y++) {
-				hscr = (-BURN_ENDIAN_SWAP_INT16(hscrtb[y])) & 0x1ff;
-				if (hscr + 496 <= 512) {		// Horizontal split unnecessary
-					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        y,      496,      y+1);
-				} else {			// Horizontal split necessary
-					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        y, 512-hscr,      y+1);
-					draw_rect(source, mask, tpri, lpri, win,    0, vscr, 512-hscr,        y,      496,      y+1);
-				}
-				vscr = (vscr + 1) & 0x1ff;
-			}
-		} else {
-			hscr = (-hscr) & 0x1ff;
-			vscr = (+vscr) & 0x1ff;
-
-			if (hscr + 496 <= 512) {	// Horizontal split unnecessary
-				if (vscr + 384 <= 512) {	// Vertical split unnecessary
-					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        0,      496,      384);
-				} else {		// Vertical split necessary
-					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        0,      496, 512-vscr);
-					draw_rect(source, mask, tpri, lpri, win, hscr,    0,        0, 512-vscr,      496,      384);
-
-				}
-			} else {	// Horizontal split necessary
-				if (vscr + 384 <= 512) {
-					// Vertical split unnecessary
-					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        0, 512-hscr,      384);
-					draw_rect(source, mask, tpri, lpri, win,    0, vscr, 512-hscr,        0,      496,      384);
-				} else {
-					// Vertical split necessary
-					draw_rect(source, mask, tpri, lpri, win, hscr, vscr,        0,        0, 512-hscr, 512-vscr);
-					draw_rect(source, mask, tpri, lpri, win,    0, vscr, 512-hscr,        0,      496, 512-vscr);
-					draw_rect(source, mask, tpri, lpri, win, hscr,    0,        0, 512-vscr, 512-hscr,      384);
-					draw_rect(source, mask, tpri, lpri, win,    0,    0, 512-hscr, 512-vscr,      496,      384);
-				}
-			}
-		}
-	}
+	sega_315_5292_draw_layer(layer, 0, pTransDraw, pPrioDraw, 1 << lpri);
 }
 
 static INT32 DrvDraw()
@@ -2735,23 +2451,11 @@ static INT32 DrvDraw()
 
 	BurnTransferClear(0x4000);
 
-	{
-		UINT16 *tile_ram = (UINT16*)DrvTileRAM;
-		for (INT32 i = 0; i < 4; i++)
-		{
-			if ((BURN_ENDIAN_SWAP_INT16(tile_ram[0x5004+(i & 2)]) & 0x6000) == 0)
-			{
-				gfx_set = 1; // set1 allows for passing group in color variable
-				GenericTilemapSetScrollX(i, 0); // no scroll! added below!
-				GenericTilemapSetScrollY(i, 0);
-				GenericTilemapDraw(i, 1 + i, TMAP_FORCEOPAQUE); // no priority, draw opaque!
-			}
-		}
-	}
+	sega_315_5292_update();
 
 	for (INT32 i = 0; i < 12; i++) {
 		if (order[i] < 8) {
-			draw_common(order[i], level, 0);
+			draw_common(order[i], level);
 		} else {
 			spri[order[i]-8] = level;
 			level++;
@@ -2776,11 +2480,14 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0xff, 4);
 
+		memset (DrvInputsMJ, 0xff, 6);
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+			for (INT32 j = 0; j < 6; j++) DrvInputsMJ[j] ^= (DrvJoyMJ[j][i] & 1) << i;
 		}
 
 		if (uses_tball) {
@@ -2861,15 +2568,6 @@ static INT32 DrvFrame()
 	fdc_index_count++;
 
 	return 0;
-}
-
-static void DrvCharExpand()
-{
-	for (INT32 i = 0; i < 0x20000; i++)
-	{
-		DrvCharExp[i*2+0] = DrvCharRAM[i^1] >> 4;
-		DrvCharExp[i*2+1] = DrvCharRAM[i^1] & 0xf;
-	}
 }
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
@@ -3032,7 +2730,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		DrvCharExpand();
+		sega_315_5292_recalc();
 
 		SekOpen(0);
 		bankswitch();
@@ -3604,12 +3302,12 @@ static INT32 MahmajnInit()
 	return DrvInit();
 }
 
-struct BurnDriverD BurnDrvMahmajn = {
+struct BurnDriver BurnDrvMahmajn = {
 	"mahmajn", NULL, NULL, NULL, "1992",
 	"Tokoro San no MahMahjan (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAHJONG, 0,
-	NULL, mahmajnRomInfo, mahmajnRomName, NULL, NULL, NULL, NULL, DrvInputInfo, QghDIPInfo, //MahmajnInputInfo, MahmajnDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SYSTEM24, GBF_MAHJONG, 0,
+	NULL, mahmajnRomInfo, mahmajnRomName, NULL, NULL, NULL, NULL, MahmajnInputInfo, MahmajnDIPInfo,
 	MahmajnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
 };
@@ -3642,12 +3340,12 @@ static INT32 Mahmajn2Init()
 	return DrvInit();
 }
 
-struct BurnDriverD BurnDrvMahmajn2 = {
+struct BurnDriver BurnDrvMahmajn2 = {
 	"mahmajn2", NULL, NULL, NULL, "1994",
 	"Tokoro San no MahMahjan 2 (Japan, ROM Based)\0", NULL, "Sega", "System 24",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_SEGA_SYSTEM24, GBF_MAHJONG, 0,
-	NULL, mahmajn2RomInfo, mahmajn2RomName, NULL, NULL, NULL, NULL, DrvInputInfo, QghDIPInfo, //MahmajnInputInfo, MahmajnDIPInfo,
+	BDF_GAME_WORKING, 1, HARDWARE_SEGA_SYSTEM24, GBF_MAHJONG, 0,
+	NULL, mahmajn2RomInfo, mahmajn2RomName, NULL, NULL, NULL, NULL, MahmajnInputInfo, MahmajnDIPInfo,
 	Mahmajn2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	496, 384, 4, 3
 };

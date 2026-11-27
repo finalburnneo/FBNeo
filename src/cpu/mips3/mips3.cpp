@@ -1,4 +1,4 @@
-// MIPS III (R4600, little-endian) cached interpreter
+// MIPS III (R4600) / MIPS IV (VR5500), little-endian, cached interpreter
 //
 // Decoded instructions are kept in blocks (straight-line code ending on a branch + delay slot,
 // a block-ending instruction or a page boundary). Each decoded instruction holds a pointer to its
@@ -13,8 +13,6 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <map>
-#include <vector>
 
 #ifndef MIPS3_CACHED_INTERPRETER
 #define MIPS3_CACHED_INTERPRETER	1
@@ -34,6 +32,7 @@
 #define VIRT_PAGES			(1 << 20)
 #define MIPS3_TLB_ENTRIES	48
 #define MIPS3_BLOCK_MAX		128
+#define MIPS3_SUPER_MAX		(MIPS3_BLOCK_MAX * 2 + 8)
 #define MIPS3_FAST_ENTRIES	4096
 
 // skip the rest of the timeslice when a loop provably spins without progress (polling RAM/IO)
@@ -50,7 +49,7 @@
 enum {
 	CP0_Index = 0, CP0_Random, CP0_EntryLo0, CP0_EntryLo1, CP0_Context, CP0_PageMask, CP0_Wired, CP0_Reserved7,
 	CP0_BadVAddr, CP0_Count, CP0_EntryHi, CP0_Compare, CP0_Status, CP0_Cause, CP0_EPC, CP0_PRId,
-	CP0_Config, CP0_LLAddr, CP0_WatchLo, CP0_WatchHi, CP0_XContext, CP0_ErrorEPC = 30
+	CP0_Config, CP0_LLAddr, CP0_WatchLo, CP0_WatchHi, CP0_XContext, CP0_TagLo = 28, CP0_ErrorEPC = 30
 };
 
 #define SR_IE		0x00000001
@@ -87,6 +86,7 @@ struct Mips3Insn {
 	UINT16 pc;		// offset in the 4KB page
 	UINT16 flags;
 	UINT8 rs, rt, rd, sa;	// pre-decoded register fields
+	UINT16 cyc;		// instructions run in the block up to this one included (pseudo ops do not count)
 };
 
 static inline void InsnFields(Mips3Insn *I)
@@ -160,7 +160,6 @@ static struct {
 	UINT32 vpage;		// virtual page of the running code
 	UINT32 next_pc;		// where to go after the block / after a taken branch's delay slot
 	UINT32 brk;			// stop the block now and go to next_pc
-	UINT32 blk_start;	// page offset of the first instruction of the running block
 	UINT32 anext;		// branch-in-delay-slot: decision of the first branch
 	UINT32 dpend;		// the block ends with a delay slot still to execute (at next_pc, then dtarget)
 	UINT32 dtarget;
@@ -190,13 +189,20 @@ static INT32 nDbgRingPos = 0, nDbgTraceFwd = 0, nDbgTraceState = 0;
 
 static INT32 nMips3ICount;
 static INT32 bMips3Initted = 0;
+static INT32 nMips3Type = MIPS3_TYPE_R4600;
+
+#define IS_VR5500	(nMips3Type == MIPS3_TYPE_VR5500)
 
 static UINT32 *Vtlb = NULL;
 static UINT32 TlbMappedVpn[MIPS3_TLB_ENTRIES][2];
 static UINT32 TlbMappedCount[MIPS3_TLB_ENTRIES][2];
 
-static std::map<UINT8*, Mips3BlockPage*> *BlockPageMap = NULL;
-static std::vector<Mips3BlockPage*> *BlockPageList = NULL;
+// block pages by host page pointer: open addressing, at most half full
+static UINT8 **BlockPageKeys = NULL;
+static Mips3BlockPage **BlockPageVals = NULL;
+static UINT32 nBlockPageSlots = 0;
+static Mips3BlockPage **BlockPageList = NULL;
+static UINT32 nBlockPages = 0;
 static UINT8 *Arena = NULL;
 #if MIPS3_CACHED_INTERPRETER
 static Mips3FastEntry FastCache[MIPS3_FAST_ENTRIES];
@@ -259,8 +265,8 @@ static void CodeWrite(Mips3BlockPage *bp, UINT32 off)
 	UINT32 c = off >> 8;
 	if (!(bp->codemask & (1 << c))) return;
 
-	// blocks are at most (MIPS3_BLOCK_MAX + 4) entries, so only these can overlap the chunk
-	INT32 first = (INT32)(c << 8) - (MIPS3_BLOCK_MAX + 4) * 4;
+	// blocks are at most MIPS3_SUPER_MAX entries, so only these can overlap the chunk
+	INT32 first = (INT32)(c << 8) - MIPS3_SUPER_MAX * 4;
 	if (first < 0) first = 0;
 	UINT32 last = (c << 8) + 0xff;
 
@@ -337,11 +343,28 @@ static inline UINT64 RdPhys64(UINT32 pa)
 	return Mips3ReadDoubleH[(uintptr_t)p->read](pa);
 }
 
+// one byte per 4KB page of physical memory from 0: before the first write through a direct map
+// to a page whose byte is 0, the callback runs, then the byte is set
+static UINT8 *WriteTrack = NULL;
+static UINT32 WriteTrackPages = 0;
+static void (*pWriteTrackCb)(UINT32 page) = NULL;
+
+static void TrackWriteFirst(UINT32 page)
+{
+	if (pWriteTrackCb) pWriteTrackCb(page);
+	WriteTrack[page] = 1;
+}
+
+static inline void TrackWrite(UINT32 pa)
+{
+	if ((pa >> 12) < WriteTrackPages && !WriteTrack[pa >> 12]) TrackWriteFirst(pa >> 12);
+}
+
 static inline void WrPhys8(UINT32 pa, UINT8 v)
 {
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
 	CheckCodeWrite(p, pa);
-	if (IS_PTR(p->write)) { p->write[pa & 0xfff] = v; return; }
+	if (IS_PTR(p->write)) { TrackWrite(pa); p->write[pa & 0xfff] = v; return; }
 	DBG_UNMAPPED_W(p, "write8", pa, v);
 	Mips3WriteByteH[(uintptr_t)p->write](pa, v);
 }
@@ -350,7 +373,7 @@ static inline void WrPhys16(UINT32 pa, UINT16 v)
 {
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
 	CheckCodeWrite(p, pa);
-	if (IS_PTR(p->write)) { *(UINT16*)(p->write + (pa & 0xfff)) = BURN_ENDIAN_SWAP_INT16(v); return; }
+	if (IS_PTR(p->write)) { TrackWrite(pa); *(UINT16*)(p->write + (pa & 0xfff)) = BURN_ENDIAN_SWAP_INT16(v); return; }
 	DBG_UNMAPPED_W(p, "write16", pa, v);
 	Mips3WriteHalfH[(uintptr_t)p->write](pa, v);
 }
@@ -359,7 +382,7 @@ static inline void WrPhys32(UINT32 pa, UINT32 v)
 {
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
 	CheckCodeWrite(p, pa);
-	if (IS_PTR(p->write)) { *(UINT32*)(p->write + (pa & 0xfff)) = BURN_ENDIAN_SWAP_INT32(v); return; }
+	if (IS_PTR(p->write)) { TrackWrite(pa); *(UINT32*)(p->write + (pa & 0xfff)) = BURN_ENDIAN_SWAP_INT32(v); return; }
 	DBG_UNMAPPED_W(p, "write32", pa, v);
 	Mips3WriteWordH[(uintptr_t)p->write](pa, v);
 }
@@ -369,6 +392,7 @@ static inline void WrPhys64(UINT32 pa, UINT64 v)
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
 	CheckCodeWrite(p, pa);
 	if (IS_PTR(p->write)) {
+		TrackWrite(pa);
 		v = BURN_ENDIAN_SWAP_INT64(v);
 		memcpy(p->write + (pa & 0xfff), &v, 8);
 		return;
@@ -451,7 +475,7 @@ static void TlbFault(const Mips3Insn *I, UINT32 va, INT32 store, UINT32 entry)
 #define MIPS3_HOST_ENTRIES	512
 
 struct Mips3HostEntry {
-	UINT32 vpn;
+	UINT32 tag;		// page address; ~0 (low bits set) never matches
 	UINT8 *host;
 };
 
@@ -464,14 +488,14 @@ static UINT64 LoadTmp;
 static void HostCacheFlush()
 {
 	for (INT32 i = 0; i < MIPS3_HOST_ENTRIES; i++) {
-		HostRead[i].vpn = HostWrite[i].vpn = ~0U;
+		HostRead[i].tag = HostWrite[i].tag = ~0U;
 	}
 }
 
 #if MIPS3_CACHED_INTERPRETER && !MIPS3_DEBUG_TRACE
 static void HostWriteFlush()
 {
-	for (INT32 i = 0; i < MIPS3_HOST_ENTRIES; i++) HostWrite[i].vpn = ~0U;
+	for (INT32 i = 0; i < MIPS3_HOST_ENTRIES; i++) HostWrite[i].tag = ~0U;
 }
 #endif
 
@@ -483,7 +507,7 @@ static inline void HostFillRead(UINT32 va, UINT32 pa)
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
 	if (IS_PTR(p->read)) {
 		Mips3HostEntry *h = HOST_R(va);
-		h->vpn = va >> 12;
+		h->tag = va & ~0xfffU;
 		h->host = p->read;
 	}
 }
@@ -492,8 +516,9 @@ static inline void HostFillWrite(UINT32 va, UINT32 pa)
 {
 	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
 	if (IS_PTR(p->write) && (p->wcode == NULL || p->wcode->codemask == 0)) {
+		TrackWrite(pa);
 		Mips3HostEntry *h = HOST_W(va);
-		h->vpn = va >> 12;
+		h->tag = va & ~0xfffU;
 		h->host = p->write;
 	}
 }
@@ -521,7 +546,7 @@ static MIPS3_NOINLINE INT32 Load8Slow(const Mips3Insn *I, UINT32 va)
 static inline INT32 Load8(const Mips3Insn *I, UINT32 va, UINT32 *v)
 {
 	Mips3HostEntry *h = HOST_R(va);
-	if (h->vpn == (va >> 12)) { *v = h->host[va & 0xfff]; return 1; }
+	if (h->tag == (va & ~0xfffU)) { *v = h->host[va & 0xfff]; return 1; }
 	if (!Load8Slow(I, va)) return 0;
 	*v = (UINT32)LoadTmp;
 	return 1;
@@ -540,7 +565,7 @@ static MIPS3_NOINLINE INT32 Load16Slow(const Mips3Insn *I, UINT32 va)
 static inline INT32 Load16(const Mips3Insn *I, UINT32 va, UINT32 *v)
 {
 	Mips3HostEntry *h = HOST_R(va);
-	if (h->vpn == (va >> 12) && !(va & 1)) { *v = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(h->host + (va & 0xfff))); return 1; }
+	if (h->tag == (va & ~0xffeU)) { *v = BURN_ENDIAN_SWAP_INT16(*(UINT16*)(h->host + (va & 0xfff))); return 1; }
 	if (!Load16Slow(I, va)) return 0;
 	*v = (UINT32)LoadTmp;
 	return 1;
@@ -559,7 +584,7 @@ static MIPS3_NOINLINE INT32 Load32Slow(const Mips3Insn *I, UINT32 va)
 static inline INT32 Load32(const Mips3Insn *I, UINT32 va, UINT32 *v)
 {
 	Mips3HostEntry *h = HOST_R(va);
-	if (h->vpn == (va >> 12) && !(va & 3)) { *v = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(h->host + (va & 0xfff))); return 1; }
+	if (h->tag == (va & ~0xffcU)) { *v = BURN_ENDIAN_SWAP_INT32(*(UINT32*)(h->host + (va & 0xfff))); return 1; }
 	if (!Load32Slow(I, va)) return 0;
 	*v = (UINT32)LoadTmp;
 	return 1;
@@ -578,7 +603,7 @@ static MIPS3_NOINLINE INT32 Load64Slow(const Mips3Insn *I, UINT32 va)
 static inline INT32 Load64(const Mips3Insn *I, UINT32 va, UINT64 *v)
 {
 	Mips3HostEntry *h = HOST_R(va);
-	if (h->vpn == (va >> 12) && !(va & 7)) {
+	if (h->tag == (va & ~0xff8U)) {
 		UINT64 t;
 		memcpy(&t, h->host + (va & 0xfff), 8);
 		*v = BURN_ENDIAN_SWAP_INT64(t);
@@ -601,7 +626,7 @@ static MIPS3_NOINLINE INT32 Store8Slow(const Mips3Insn *I, UINT32 va, UINT8 v)
 static inline INT32 Store8(const Mips3Insn *I, UINT32 va, UINT8 v)
 {
 	Mips3HostEntry *h = HOST_W(va);
-	if (h->vpn == (va >> 12)) { h->host[va & 0xfff] = v; return 1; }
+	if (h->tag == (va & ~0xfffU)) { h->host[va & 0xfff] = v; return 1; }
 	return Store8Slow(I, va, v);
 }
 
@@ -618,7 +643,7 @@ static MIPS3_NOINLINE INT32 Store16Slow(const Mips3Insn *I, UINT32 va, UINT16 v)
 static inline INT32 Store16(const Mips3Insn *I, UINT32 va, UINT16 v)
 {
 	Mips3HostEntry *h = HOST_W(va);
-	if (h->vpn == (va >> 12) && !(va & 1)) { *(UINT16*)(h->host + (va & 0xfff)) = BURN_ENDIAN_SWAP_INT16(v); return 1; }
+	if (h->tag == (va & ~0xffeU)) { *(UINT16*)(h->host + (va & 0xfff)) = BURN_ENDIAN_SWAP_INT16(v); return 1; }
 	return Store16Slow(I, va, v);
 }
 
@@ -635,7 +660,7 @@ static MIPS3_NOINLINE INT32 Store32Slow(const Mips3Insn *I, UINT32 va, UINT32 v)
 static inline INT32 Store32(const Mips3Insn *I, UINT32 va, UINT32 v)
 {
 	Mips3HostEntry *h = HOST_W(va);
-	if (h->vpn == (va >> 12) && !(va & 3)) { *(UINT32*)(h->host + (va & 0xfff)) = BURN_ENDIAN_SWAP_INT32(v); return 1; }
+	if (h->tag == (va & ~0xffcU)) { *(UINT32*)(h->host + (va & 0xfff)) = BURN_ENDIAN_SWAP_INT32(v); return 1; }
 	return Store32Slow(I, va, v);
 }
 
@@ -652,7 +677,7 @@ static MIPS3_NOINLINE INT32 Store64Slow(const Mips3Insn *I, UINT32 va, UINT64 v)
 static inline INT32 Store64(const Mips3Insn *I, UINT32 va, UINT64 v)
 {
 	Mips3HostEntry *h = HOST_W(va);
-	if (h->vpn == (va >> 12) && !(va & 7)) {
+	if (h->tag == (va & ~0xff8U)) {
 		UINT64 t = BURN_ENDIAN_SWAP_INT64(v);
 		memcpy(h->host + (va & 0xfff), &t, 8);
 		return 1;
@@ -708,7 +733,7 @@ static void TlbMap(INT32 i)
 	if (!global && ((UINT32)e->hi & 0xff) != asid) return;
 
 	UINT32 vpn = ((UINT32)(e->hi >> 13) & 0x7ffff) << 1;
-	UINT32 count = ((UINT32)(e->mask >> 13) & 0xfff) + 1;
+	UINT32 count = ((UINT32)(e->mask >> 13) & 0x3ffff) + 1;
 
 	for (INT32 w = 0; w < 2; w++) {
 		UINT32 effvpn = vpn + count * w;
@@ -781,7 +806,7 @@ static void TlbWrite(UINT32 idx)
 
 static inline UINT64 CyclesNow(const Mips3Insn *I)
 {
-	return M.total_cycles + ((UINT32)(I->pc - Mx.blk_start) >> 2);
+	return M.total_cycles + I->cyc - 1;
 }
 
 static void CompareRearm(UINT64 now)
@@ -812,6 +837,10 @@ static void CompareRearm(UINT64 now)
 #define CURPC		(Mx.vpage + I->pc)
 #define EA			((UINT32)RS + (UINT32)(INT32)(INT16)OP)
 #define BRTARGET	(CURPC + 4 + ((INT32)(INT16)OP << 2))
+
+// FPU condition code n: cc0 is FCR31 bit 23, cc1-cc7 (MIPS IV) are bits 25-31
+#define FCC_BIT(n)	((n) ? (0x01000000U << (n)) : 0x00800000U)
+#define FCC(n)		((M.fcr31 & FCC_BIT(n)) != 0)
 
 // unsigned 64x64 -> 128 multiply
 static inline void Mul64(UINT64 a, UINT64 b, UINT64 *hi, UINT64 *lo)
@@ -861,7 +890,17 @@ static void op_DSRA32(const Mips3Insn *I) { RD = (UINT64)((INT64)RT >> (SA + 32)
 
 static void op_MOVZ(const Mips3Insn *I)   { if (RT == 0) RD = RS; }
 static void op_MOVN(const Mips3Insn *I)   { if (RT != 0) RD = RS; }
-static void op_MOVCI(const Mips3Insn *I)  { if (((M.fcr31 >> 23) & 1) == ((OP >> 16) & 1)) RD = RS; }
+static void op_MOVCI(const Mips3Insn *I)  { if ((UINT32)FCC((OP >> 18) & 7) == ((OP >> 16) & 1)) RD = RS; }
+
+// VR5500 rotates, encoded as SRL/DSRL/DSRL32 with rs = 1 and SRLV/DSRLV with sa = 1
+static inline UINT32 Rotr32(UINT32 v, UINT32 s) { s &= 31; return s ? (v >> s) | (v << (32 - s)) : v; }
+static inline UINT64 Rotr64(UINT64 v, UINT32 s) { s &= 63; return s ? (v >> s) | (v << (64 - s)) : v; }
+
+static void op_ROR(const Mips3Insn *I)    { RD = SX32(Rotr32(RT32, SA)); }
+static void op_RORV(const Mips3Insn *I)   { RD = SX32(Rotr32(RT32, (UINT32)RS)); }
+static void op_DROR(const Mips3Insn *I)   { RD = Rotr64(RT, SA); }
+static void op_DROR32(const Mips3Insn *I) { RD = Rotr64(RT, SA + 32); }
+static void op_DRORV(const Mips3Insn *I)  { RD = Rotr64(RT, (UINT32)RS & 31); }
 
 static void op_JR(const Mips3Insn *I)     { Mx.next_pc = RS32; }
 
@@ -895,6 +934,38 @@ static void op_MULTU(const Mips3Insn *I)
 	M.hi = SX32(p >> 32);
 	EAT_CYCLES(3);
 }
+
+// HI:LO low words as one 64-bit accumulator
+static inline void MulAcc(UINT64 p, INT32 sub)
+{
+	UINT64 acc = ((UINT64)(UINT32)M.hi << 32) | (UINT32)M.lo;
+	acc = sub ? acc - p : acc + p;
+	M.lo = SX32(acc);
+	M.hi = SX32(acc >> 32);
+}
+
+static inline UINT64 SMul32(UINT32 a, UINT32 b) { return (UINT64)((INT64)(INT32)a * (INT64)(INT32)b); }
+
+// VR5500 MULT/MULTU with sa != 0: sa bit 1 negates, bit 2 accumulates, bit 3 writes HI rather than LO to rd
+static void op_VR5500_MUL(const Mips3Insn *I)
+{
+	UINT64 p = (OP & 1) ? (UINT64)RS32 * RT32 : SMul32(RS32, RT32);
+	if (SA & 2) p = 0 - p;
+	if (SA & 4) MulAcc(p, 0);
+	else {
+		M.lo = SX32(p);
+		M.hi = SX32(p >> 32);
+	}
+	if (RDn) RD = (SA & 8) ? M.hi : M.lo;
+	EAT_CYCLES(3);
+}
+
+// SPECIAL2 (VR5500, same encodings as MIPS32)
+static void op_MADD(const Mips3Insn *I)  { MulAcc(SMul32(RS32, RT32), 0); EAT_CYCLES(1); }
+static void op_MADDU(const Mips3Insn *I) { MulAcc((UINT64)RS32 * RT32, 0); EAT_CYCLES(1); }
+static void op_MSUB(const Mips3Insn *I)  { MulAcc(SMul32(RS32, RT32), 1); EAT_CYCLES(1); }
+static void op_MSUBU(const Mips3Insn *I) { MulAcc((UINT64)RS32 * RT32, 1); EAT_CYCLES(1); }
+static void op_MUL(const Mips3Insn *I)   { RD = SX32(RS32 * RT32); EAT_CYCLES(1); }
 
 static void op_DIV(const Mips3Insn *I)
 {
@@ -1107,13 +1178,38 @@ static void op_LUI(const Mips3Insn *I)    { RT = SX32(UIMM << 16); }
 // ---------------------------------------------------------------------------
 // loads / stores
 
-static void op_LB(const Mips3Insn *I)  { UINT32 v; if (Load8(I, EA, &v) && RTn) RT = (UINT64)(INT64)(INT8)v; }
-static void op_LBU(const Mips3Insn *I) { UINT32 v; if (Load8(I, EA, &v) && RTn) RT = (UINT8)v; }
-static void op_LH(const Mips3Insn *I)  { UINT32 v; if (Load16(I, EA, &v) && RTn) RT = (UINT64)(INT64)(INT16)v; }
-static void op_LHU(const Mips3Insn *I) { UINT32 v; if (Load16(I, EA, &v) && RTn) RT = (UINT16)v; }
-static void op_LW(const Mips3Insn *I)  { UINT32 v; if (Load32(I, EA, &v) && RTn) RT = SX32(v); }
-static void op_LWU(const Mips3Insn *I) { UINT32 v; if (Load32(I, EA, &v) && RTn) RT = v; }
-static void op_LD(const Mips3Insn *I)  { UINT64 v; if (Load64(I, EA, &v) && RTn) RT = v; }
+// the handler only holds the host hit; misses, faults and loads into r0 go out of line,
+// so the common case needs no stack frame
+#define LOAD_OP(name, size, amask, rd, conv) \
+static MIPS3_NOINLINE void name##Miss(const Mips3Insn *I, UINT32 va) \
+{ \
+	if (Load##size##Slow(I, va) && RTn) RT = conv(LoadTmp); \
+} \
+static void name(const Mips3Insn *I) \
+{ \
+	UINT32 va = EA; \
+	Mips3HostEntry *h = HOST_R(va); \
+	if (h->tag == (va & amask) && RTn) { const UINT8 *p = h->host + (va & 0xfff); RT = conv(rd); return; } \
+	name##Miss(I, va); \
+}
+
+static inline UINT64 Rd64Host(const UINT8 *p) { UINT64 t; memcpy(&t, p, 8); return BURN_ENDIAN_SWAP_INT64(t); }
+
+#define CONV_S8(x)	((UINT64)(INT64)(INT8)(x))
+#define CONV_U8(x)	((UINT64)(UINT8)(x))
+#define CONV_S16(x)	((UINT64)(INT64)(INT16)(x))
+#define CONV_U16(x)	((UINT64)(UINT16)(x))
+#define CONV_S32(x)	SX32(x)
+#define CONV_U32(x)	((UINT64)(UINT32)(x))
+#define CONV_64(x)	((UINT64)(x))
+
+LOAD_OP(op_LB,  8,  ~0xfffU, *p, CONV_S8)
+LOAD_OP(op_LBU, 8,  ~0xfffU, *p, CONV_U8)
+LOAD_OP(op_LH,  16, ~0xffeU, BURN_ENDIAN_SWAP_INT16(*(const UINT16*)p), CONV_S16)
+LOAD_OP(op_LHU, 16, ~0xffeU, BURN_ENDIAN_SWAP_INT16(*(const UINT16*)p), CONV_U16)
+LOAD_OP(op_LW,  32, ~0xffcU, BURN_ENDIAN_SWAP_INT32(*(const UINT32*)p), CONV_S32)
+LOAD_OP(op_LWU, 32, ~0xffcU, BURN_ENDIAN_SWAP_INT32(*(const UINT32*)p), CONV_U32)
+LOAD_OP(op_LD,  64, ~0xff8U, Rd64Host(p), CONV_64)
 
 static void op_LWL(const Mips3Insn *I)
 {
@@ -1274,7 +1370,7 @@ static void Cop0Write(const Mips3Insn *I, INT32 idx, UINT64 v)
 			break;
 
 		case CP0_PageMask:
-			CP0(idx) = v & 0x01ffe000;
+			CP0(idx) = v & (IS_VR5500 ? 0x7fffe000 : 0x01ffe000);
 			break;
 
 		case CP0_Index:
@@ -1296,10 +1392,12 @@ static void Cop0Write(const Mips3Insn *I, INT32 idx, UINT64 v)
 			CP0(idx) = v & ~0xfULL;
 			break;
 
-		case CP0_Config:
-			// only K0 (kseg0 cache algorithm) is writable
-			CP0(idx) = (CP0(idx) & ~7ULL) | (v & 7);
+		case CP0_Config: {
+			// R4600: only K0 (kseg0 cache algorithm) is writable
+			UINT64 wmask = IS_VR5500 ? 0x0fc0003fULL : 7ULL;
+			CP0(idx) = (CP0(idx) & ~wmask) | (v & wmask);
 			break;
+		}
 
 		case CP0_EntryHi: {
 			UINT64 old = CP0(idx);
@@ -1395,10 +1493,100 @@ static void op_ERET(const Mips3Insn *I)
 #endif
 }
 
+// VR5500 data cache: only lines allocated by Create_Dirty_Exclusive are tracked (like MAME), 2 per set.
+// Stores still go to memory, but such a line remembers what memory held when it was allocated, so
+// discarding it (Hit_Invalidate, invalidating Index_Store_Tag) puts memory back: the usual cache init
+// loop (allocate, store, invalidate) leaves RAM untouched, as on hardware.
+struct Mips3DLine {
+	UINT32 pa;
+	UINT32 set;
+	UINT8 old[32];
+};
+
+#define MIPS3_DLINES	(512 * 2)	// two ways per set
+static Mips3DLine DLines[MIPS3_DLINES];
+static UINT32 nDLines = 0;
+
+static UINT8 *DLineHost(UINT32 pa)
+{
+	Mips3PhysPage *p = &Mips3Phys[pa >> 12];
+	return IS_PTR(p->write) ? p->write + (pa & 0xfff) : NULL;
+}
+
+static void DLineDrop(UINT32 i, INT32 discard)
+{
+	Mips3DLine &l = DLines[i];
+	if (discard) {
+		UINT8 *host = DLineHost(l.pa);
+		if (host) {
+			TrackWrite(l.pa);
+			memcpy(host, l.old, 32);
+			mips3_invalidate(l.pa, l.pa + 31);
+		}
+	}
+	l = DLines[--nDLines];
+}
+
+void (*pMips3CacheSync)() = NULL;
+
+static void DCacheOp(UINT32 op, UINT32 va)
+{
+	if (pMips3CacheSync) pMips3CacheSync();	// the cache model reads and writes memory behind the map
+
+	UINT32 set = (va >> 5) & 0x1ff;
+
+	if (op == 0x01 || op == 0x09) {
+		// Index_Writeback_Invalidate, Index_Store_Tag (discards when TagLo marks the line invalid)
+		INT32 discard = (op == 0x09) && !(CP0(CP0_TagLo) & 0xc0);
+		for (UINT32 i = 0; i < nDLines; ) {
+			if (DLines[i].set == set) DLineDrop(i, discard);
+			else i++;
+		}
+		return;
+	}
+
+	if (va >= 0xa0000000 && va < 0xc0000000) return;	// kseg1 is uncached
+	UINT32 e = Vtlb[va >> 12];
+	if (!(e & VT_READ)) return;
+	UINT32 pa = ((e & ~0xfff) | (va & 0xfff)) & ~31U;
+
+	INT32 hit = -1, inset = 0;
+	UINT32 oldest = 0;
+	for (UINT32 i = 0; i < nDLines; i++) {
+		if (DLines[i].pa == pa) hit = (INT32)i;
+		if (DLines[i].set == set && inset++ == 0) oldest = i;
+	}
+
+	switch (op) {
+		case 0x0d: {	// Create_Dirty_Exclusive
+			UINT8 *host = DLineHost(pa);
+			if (hit >= 0 || host == NULL) break;
+			if (inset >= 2) DLineDrop(oldest, 0);	// replaced line is written back
+			Mips3DLine &l = DLines[nDLines++];
+			l.pa = pa;
+			l.set = set;
+			memcpy(l.old, host, 32);
+			break;
+		}
+		case 0x11:		// Hit_Invalidate
+			if (hit >= 0) DLineDrop(hit, 1);
+			break;
+		case 0x15:		// Hit_Writeback_Invalidate
+			if (hit >= 0) DLineDrop(hit, 0);
+			break;
+		case 0x19: {	// Hit_Writeback: the line stays valid, its contents are now in memory
+			UINT8 *host = DLineHost(pa);
+			if (hit >= 0 && host) memcpy(DLines[hit].old, host, 32);
+			break;
+		}
+	}
+}
+
 static void op_CACHE(const Mips3Insn *I)
 {
 	if (!Cop0Usable(I)) return;
 	// stores already invalidate stale code, nothing to do for the instruction cache
+	if (IS_VR5500 && (RTn & 3) == 1) DCacheOp(RTn, EA);
 }
 
 static void op_COP2(const Mips3Insn *I)
@@ -1418,7 +1606,6 @@ static void op_COP3(const Mips3Insn *I)
 #define FT_N	(I->rt)
 #define FD_N	(I->sa)
 
-#define FCR31_C		0x00800000
 
 #define COP1_CHECK	if (!(SR & SR_CU1)) { Mips3Exception(I, EXC_CPU, 0, 1); return; }
 
@@ -1503,10 +1690,12 @@ static void op_CTC1(const Mips3Insn *I)
 	if (FS_N == 31) M.fcr31 = RT32;
 }
 
-static void op_BC1F(const Mips3Insn *I)  { COP1_CHECK; if (!(M.fcr31 & FCR31_C)) Mx.next_pc = BRTARGET; }
-static void op_BC1T(const Mips3Insn *I)  { COP1_CHECK; if (M.fcr31 & FCR31_C) Mx.next_pc = BRTARGET; }
-static void op_BC1FL(const Mips3Insn *I) { COP1_CHECK; if (!(M.fcr31 & FCR31_C)) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
-static void op_BC1TL(const Mips3Insn *I) { COP1_CHECK; if (M.fcr31 & FCR31_C) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+#define BC1_CC	FCC((OP >> 18) & 7)
+
+static void op_BC1F(const Mips3Insn *I)  { COP1_CHECK; if (!BC1_CC) Mx.next_pc = BRTARGET; }
+static void op_BC1T(const Mips3Insn *I)  { COP1_CHECK; if (BC1_CC) Mx.next_pc = BRTARGET; }
+static void op_BC1FL(const Mips3Insn *I) { COP1_CHECK; if (!BC1_CC) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
+static void op_BC1TL(const Mips3Insn *I) { COP1_CHECK; if (BC1_CC) Mx.next_pc = BRTARGET; else { Mx.next_pc = CURPC + 8; BREAK_BLOCK(); } }
 
 static void op_LWC1(const Mips3Insn *I) { COP1_CHECK; UINT32 v; if (Load32(I, EA, &v)) SetFpr32(FT_N, v); }
 static void op_LDC1(const Mips3Insn *I) { COP1_CHECK; UINT64 v; if (Load64(I, EA, &v)) SetFpr64(FT_N, v); }
@@ -1624,7 +1813,7 @@ static void op_CVT_D_W(const Mips3Insn *I) { COP1_CHECK; SetD(FD_N, (double)(INT
 static void op_CVT_S_L(const Mips3Insn *I) { COP1_CHECK; SetS(FD_N, (float)(INT64)Fpr64(FS_N)); }
 static void op_CVT_D_L(const Mips3Insn *I) { COP1_CHECK; SetD(FD_N, (double)(INT64)Fpr64(FS_N)); }
 
-static inline void FpCompare(UINT32 cond, double a, double b)
+static inline void FpCompare(UINT32 cond, double a, double b, UINT32 cc)
 {
 	INT32 r;
 	if (a != a || b != b) {
@@ -1632,11 +1821,58 @@ static inline void FpCompare(UINT32 cond, double a, double b)
 	} else {
 		r = ((cond & 2) && a == b) || ((cond & 4) && a < b);
 	}
-	if (r) M.fcr31 |= FCR31_C; else M.fcr31 &= ~FCR31_C;
+	if (r) M.fcr31 |= FCC_BIT(cc); else M.fcr31 &= ~FCC_BIT(cc);
 }
 
-static void op_C_S(const Mips3Insn *I) { COP1_CHECK; FpCompare(OP & 15, GetS(FS_N), GetS(FT_N)); }
-static void op_C_D(const Mips3Insn *I) { COP1_CHECK; FpCompare(OP & 15, GetD(FS_N), GetD(FT_N)); }
+static void op_C_S(const Mips3Insn *I) { COP1_CHECK; FpCompare(OP & 15, GetS(FS_N), GetS(FT_N), (OP >> 8) & 7); }
+static void op_C_D(const Mips3Insn *I) { COP1_CHECK; FpCompare(OP & 15, GetD(FS_N), GetD(FT_N), (OP >> 8) & 7); }
+
+// ---------------------------------------------------------------------------
+// MIPS IV FPU additions (VR5500)
+
+#define FR_N	(I->rs)		// COP1X: addend register
+
+FP_OP_S(op_RECIP_S, 1.0f / a, 0)
+FP_OP_S(op_RSQRT_S, 1.0f / sqrtf(a), 0)
+FP_OP_D(op_RECIP_D, 1.0 / a, 0)
+FP_OP_D(op_RSQRT_D, 1.0 / sqrt(a), 0)
+
+static void op_MOVCF_S(const Mips3Insn *I) { COP1_CHECK; if ((UINT32)FCC((OP >> 18) & 7) == ((OP >> 16) & 1)) SetFpr32(FD_N, Fpr32(FS_N)); }
+static void op_MOVCF_D(const Mips3Insn *I) { COP1_CHECK; if ((UINT32)FCC((OP >> 18) & 7) == ((OP >> 16) & 1)) SetFpr64(FD_N, Fpr64(FS_N)); }
+static void op_MOVZ_S(const Mips3Insn *I)  { COP1_CHECK; if (RT == 0) SetFpr32(FD_N, Fpr32(FS_N)); }
+static void op_MOVZ_D(const Mips3Insn *I)  { COP1_CHECK; if (RT == 0) SetFpr64(FD_N, Fpr64(FS_N)); }
+static void op_MOVN_S(const Mips3Insn *I)  { COP1_CHECK; if (RT != 0) SetFpr32(FD_N, Fpr32(FS_N)); }
+static void op_MOVN_D(const Mips3Insn *I)  { COP1_CHECK; if (RT != 0) SetFpr64(FD_N, Fpr64(FS_N)); }
+
+// indexed loads/stores: the stored register is fs (bits 15-11), the loaded one fd (bits 10-6)
+static void op_LWXC1(const Mips3Insn *I) { COP1_CHECK; UINT32 v; if (Load32(I, RS32 + RT32, &v)) SetFpr32(FD_N, v); }
+static void op_LDXC1(const Mips3Insn *I) { COP1_CHECK; UINT64 v; if (Load64(I, RS32 + RT32, &v)) SetFpr64(FD_N, v); }
+static void op_SWXC1(const Mips3Insn *I) { COP1_CHECK; Store32(I, RS32 + RT32, Fpr32(FS_N)); }
+static void op_SDXC1(const Mips3Insn *I) { COP1_CHECK; Store64(I, RS32 + RT32, Fpr64(FS_N)); }
+
+// the R5000/VR5500 multiply-add rounds the product before the addition (not fused)
+#define FP_MADD_S(name, expr) static void name(const Mips3Insn *I) { \
+	COP1_CHECK; \
+	volatile float p = GetS(FS_N) * GetS(FT_N); \
+	float c = GetS(FR_N); \
+	float r = (expr); \
+	if (r != r) SetFpr32(FD_N, 0x7fbfffff); else SetS(FD_N, r); }
+
+#define FP_MADD_D(name, expr) static void name(const Mips3Insn *I) { \
+	COP1_CHECK; \
+	volatile double p = GetD(FS_N) * GetD(FT_N); \
+	double c = GetD(FR_N); \
+	double r = (expr); \
+	if (r != r) SetFpr64(FD_N, 0x7ff7ffffffffffffULL); else SetD(FD_N, r); }
+
+FP_MADD_S(op_MADD_S, p + c)
+FP_MADD_S(op_MSUB_S, p - c)
+FP_MADD_S(op_NMADD_S, -(p + c))
+FP_MADD_S(op_NMSUB_S, -(p - c))
+FP_MADD_D(op_MADD_D, p + c)
+FP_MADD_D(op_MSUB_D, p - c)
+FP_MADD_D(op_NMADD_D, -(p + c))
+FP_MADD_D(op_NMSUB_D, -(p - c))
 
 // unimplemented FPU operation: real hardware raises an FPU exception, games are not expected to rely on it
 static void op_COP1_NOP(const Mips3Insn *I) { COP1_CHECK; }
@@ -1648,14 +1884,12 @@ static void op_COP1_NOP(const Mips3Insn *I) { COP1_CHECK; }
 #if MIPS3_CACHED_INTERPRETER && !MIPS3_DEBUG_TRACE
 static void op_DelayBranchPre(const Mips3Insn *)
 {
-	EAT_CYCLES(-1);
 	Mx.anext = Mx.next_pc;
 	Mx.next_pc = 1;
 }
 
 static void op_DelayBranchPost(const Mips3Insn *I)
 {
-	EAT_CYCLES(-1);
 	UINT32 seq = CURPC + 8, a = Mx.anext, bnext = Mx.next_pc;
 
 	if (a & 3) {
@@ -1671,6 +1905,29 @@ static void op_DelayBranchPost(const Mips3Insn *I)
 		Mx.next_pc = a;
 		BREAK_BLOCK();
 	}
+}
+
+// superblocks go on past conditional branches; after the delay slot this leaves when the branch
+// was taken, or when the run loop would have looked at events had the block ended here
+static void op_SbExit(const Mips3Insn *I)
+{
+	if (Mx.next_pc != 1) {
+		BREAK_BLOCK();
+	} else if (M.total_cycles + I->cyc >= nRunLimit) {
+		Mx.next_pc = CURPC;
+		BREAK_BLOCK();
+	}
+}
+
+static inline INT32 IsPseudoOp(Mips3Handler h)
+{
+	return h == op_DelayBranchPre || h == op_DelayBranchPost || h == op_SbExit;
+}
+
+// conditional branches without likely/link side effects a superblock may continue past
+static inline INT32 SbBranch(Mips3Handler h)
+{
+	return h == op_BEQ || h == op_BNE || h == op_BLEZ || h == op_BGTZ || h == op_BLTZ || h == op_BGEZ || h == op_BC1F || h == op_BC1T;
 }
 #endif
 
@@ -1717,6 +1974,11 @@ static Mips3Handler DecodeCop1(UINT32 op, UINT32 *flags)
 				case 0x0d: return op_TRUNC_W_S;
 				case 0x0e: return op_CEIL_W_S;
 				case 0x0f: return op_FLOOR_W_S;
+				case 0x11: if (IS_VR5500) return op_MOVCF_S; break;
+				case 0x12: if (IS_VR5500) return op_MOVZ_S; break;
+				case 0x13: if (IS_VR5500) return op_MOVN_S; break;
+				case 0x15: if (IS_VR5500) return op_RECIP_S; break;
+				case 0x16: if (IS_VR5500) return op_RSQRT_S; break;
 				case 0x21: return op_CVT_D_S;
 				case 0x24: return op_CVT_W_S;
 				case 0x25: return op_CVT_L_S;
@@ -1742,6 +2004,11 @@ static Mips3Handler DecodeCop1(UINT32 op, UINT32 *flags)
 				case 0x0d: return op_TRUNC_W_D;
 				case 0x0e: return op_CEIL_W_D;
 				case 0x0f: return op_FLOOR_W_D;
+				case 0x11: if (IS_VR5500) return op_MOVCF_D; break;
+				case 0x12: if (IS_VR5500) return op_MOVZ_D; break;
+				case 0x13: if (IS_VR5500) return op_MOVN_D; break;
+				case 0x15: if (IS_VR5500) return op_RECIP_D; break;
+				case 0x16: if (IS_VR5500) return op_RSQRT_D; break;
 				case 0x20: return op_CVT_S_D;
 				case 0x24: return op_CVT_W_D;
 				case 0x25: return op_CVT_L_D;
@@ -1760,6 +2027,26 @@ static Mips3Handler DecodeCop1(UINT32 op, UINT32 *flags)
 	}
 
 	return op_COP1_NOP;
+}
+
+static Mips3Handler DecodeCop1x(UINT32 op)
+{
+	switch (op & 0x3f) {
+		case 0x00: return op_LWXC1;
+		case 0x01: return op_LDXC1;
+		case 0x08: return op_SWXC1;
+		case 0x09: return op_SDXC1;
+		case 0x0f: return op_COP1_NOP;	// PREFX
+		case 0x20: return op_MADD_S;
+		case 0x21: return op_MADD_D;
+		case 0x28: return op_MSUB_S;
+		case 0x29: return op_MSUB_D;
+		case 0x30: return op_NMADD_S;
+		case 0x31: return op_NMADD_D;
+		case 0x38: return op_NMSUB_S;
+		case 0x39: return op_NMSUB_D;
+	}
+	return op_RI;
 }
 
 static Mips3Handler DecodeCop0(UINT32 op, UINT32 *flags)
@@ -1799,17 +2086,17 @@ static Mips3Handler Mips3Decode(UINT32 op, UINT32 *flags)
 			switch (op & 0x3f) {
 				case 0x00: h = op_SLL; break;
 				case 0x01: h = op_MOVCI; break;
-				case 0x02: h = op_SRL; break;
+				case 0x02: h = (IS_VR5500 && ((op >> 21) & 31) == 1) ? op_ROR : op_SRL; break;
 				case 0x03: h = op_SRA; break;
 				case 0x04: h = op_SLLV; break;
-				case 0x06: h = op_SRLV; break;
+				case 0x06: h = (IS_VR5500 && ((op >> 6) & 31) == 1) ? op_RORV : op_SRLV; break;
 				case 0x07: h = op_SRAV; break;
 				case 0x0a: h = op_MOVZ; break;
 				case 0x0b: h = op_MOVN; break;
 				case 0x10: h = op_MFHI; break;
 				case 0x12: h = op_MFLO; break;
 				case 0x14: h = op_DSLLV; break;
-				case 0x16: h = op_DSRLV; break;
+				case 0x16: h = (IS_VR5500 && ((op >> 6) & 31) == 1) ? op_DRORV : op_DSRLV; break;
 				case 0x17: h = op_DSRAV; break;
 				case 0x21: h = op_ADDU; break;
 				case 0x23: h = op_SUBU; break;
@@ -1822,10 +2109,10 @@ static Mips3Handler Mips3Decode(UINT32 op, UINT32 *flags)
 				case 0x2d: h = op_DADDU; break;
 				case 0x2f: h = op_DSUBU; break;
 				case 0x38: h = op_DSLL; break;
-				case 0x3a: h = op_DSRL; break;
+				case 0x3a: h = (IS_VR5500 && ((op >> 21) & 31) == 1) ? op_DROR : op_DSRL; break;
 				case 0x3b: h = op_DSRA; break;
 				case 0x3c: h = op_DSLL32; break;
-				case 0x3e: h = op_DSRL32; break;
+				case 0x3e: h = (IS_VR5500 && ((op >> 21) & 31) == 1) ? op_DROR32 : op_DSRL32; break;
 				case 0x3f: h = op_DSRA32; break;
 			}
 			if (h) return rd ? h : op_NOP;
@@ -1838,8 +2125,8 @@ static Mips3Handler Mips3Decode(UINT32 op, UINT32 *flags)
 				case 0x0f: return op_NOP;	// SYNC
 				case 0x11: return op_MTHI;
 				case 0x13: return op_MTLO;
-				case 0x18: return op_MULT;
-				case 0x19: return op_MULTU;
+				case 0x18: return (IS_VR5500 && (op & 0x7c0)) ? op_VR5500_MUL : op_MULT;
+				case 0x19: return (IS_VR5500 && (op & 0x7c0)) ? op_VR5500_MUL : op_MULTU;
 				case 0x1a: return op_DIV;
 				case 0x1b: return op_DIVU;
 				case 0x1c: return op_DMULT;
@@ -1898,7 +2185,18 @@ static Mips3Handler Mips3Decode(UINT32 op, UINT32 *flags)
 		case 0x10: return DecodeCop0(op, flags);
 		case 0x11: return DecodeCop1(op, flags);
 		case 0x12: return op_COP2;
-		case 0x13: return op_COP3;	// COP1X on MIPS IV
+		case 0x13: return IS_VR5500 ? DecodeCop1x(op) : op_COP3;
+
+		case 0x1c:
+			if (!IS_VR5500) return op_RI;
+			switch (op & 0x3f) {
+				case 0x00: return op_MADD;
+				case 0x01: return op_MADDU;
+				case 0x02: return rd ? op_MUL : op_NOP;
+				case 0x04: return op_MSUB;
+				case 0x05: return op_MSUBU;
+			}
+			return op_RI;
 
 		case 0x14: *flags |= F_BRANCH; return op_BEQL;
 		case 0x15: *flags |= F_BRANCH; return op_BNEL;
@@ -1949,23 +2247,53 @@ static Mips3Handler Mips3Decode(UINT32 op, UINT32 *flags)
 // ---------------------------------------------------------------------------
 // block cache
 
+static inline UINT32 BlockPageHash(UINT8 *host)
+{
+	return (UINT32)(((uintptr_t)host >> 12) * 2654435761U);
+}
+
+static void BlockPageInsert(UINT8 *host, Mips3BlockPage *bp)
+{
+	UINT32 i = BlockPageHash(host) & (nBlockPageSlots - 1);
+	while (BlockPageKeys[i]) i = (i + 1) & (nBlockPageSlots - 1);
+	BlockPageKeys[i] = host;
+	BlockPageVals[i] = bp;
+}
+
 static Mips3BlockPage *GetBlockPage(UINT8 *host)
 {
-	std::map<UINT8*, Mips3BlockPage*>::iterator it = BlockPageMap->find(host);
-	if (it != BlockPageMap->end()) return it->second;
+	if (nBlockPageSlots) {
+		for (UINT32 i = BlockPageHash(host) & (nBlockPageSlots - 1); BlockPageKeys[i]; i = (i + 1) & (nBlockPageSlots - 1)) {
+			if (BlockPageKeys[i] == host) return BlockPageVals[i];
+		}
+	}
+
+	if ((nBlockPages + 1) * 2 > nBlockPageSlots) {
+		UINT8 **keys = BlockPageKeys;
+		Mips3BlockPage **vals = BlockPageVals;
+		const UINT32 slots = nBlockPageSlots;
+
+		nBlockPageSlots = slots ? slots * 2 : 1024;
+		BlockPageKeys = (UINT8**)calloc(nBlockPageSlots, sizeof(UINT8*));
+		BlockPageVals = (Mips3BlockPage**)calloc(nBlockPageSlots, sizeof(Mips3BlockPage*));
+		BlockPageList = (Mips3BlockPage**)realloc(BlockPageList, (nBlockPageSlots / 2) * sizeof(Mips3BlockPage*));
+		for (UINT32 i = 0; i < slots; i++) {
+			if (keys[i]) BlockPageInsert(keys[i], vals[i]);
+		}
+		free(keys);
+		free(vals);
+	}
 
 	Mips3BlockPage *bp = (Mips3BlockPage*)calloc(1, sizeof(Mips3BlockPage));
-	(*BlockPageMap)[host] = bp;
-	BlockPageList->push_back(bp);
+	BlockPageInsert(host, bp);
+	BlockPageList[nBlockPages++] = bp;
 	return bp;
 }
 
 static void Mips3FlushCache()
 {
-	if (BlockPageList == NULL) return;
-
-	for (size_t i = 0; i < BlockPageList->size(); i++) {
-		Mips3BlockPage *bp = (*BlockPageList)[i];
+	for (UINT32 i = 0; i < nBlockPages; i++) {
+		Mips3BlockPage *bp = BlockPageList[i];
 		if (bp->blk) memset(bp->blk, 0, 1024 * sizeof(Mips3Block*));
 		bp->codemask = 0;
 	}
@@ -1978,6 +2306,8 @@ static void Mips3FlushCache()
 #define IDLE_STABLE		1	// spins with an unchanged state: skip the rest of the slice
 #define IDLE_TIMED		2	// depends on Count only: binary search the first exiting iteration
 #define IDLE_COUNT		3	// delay loop counting a register down: skip the iterations known to loop
+#define IDLE_FILL		4	// word fill loop: do the stores of the iterations known to loop directly
+#define IDLE_COPY		5	// counted word copy loop: same, with the loads
 
 // "loop: addiu r, r, -d / bne r, zero, loop / nop" and "loop: bne r, zero, loop / addiu r, r, -d"
 // (also bgtz, addi, daddiu): indreg[0] = r, indimm[0] = -d, ind64[0] bit 0 = 64-bit add,
@@ -2003,6 +2333,53 @@ static INT32 CountdownAnalyse(Mips3Block *b, const Mips3Insn *tmp, INT32 n)
 	b->indreg[0] = r;
 	b->indimm[0] = (INT16)add;
 	b->ind64[0] = (aopc == 0x19 ? 1 : 0) | (bopc == 0x07 ? 2 : 0) | (before ? 4 : 0);
+	return 1;
+}
+
+// "loop: addiu a, a, 4 / bne a, b, loop / sw v, off(a)" (memset): indreg[0..2] = a, b, v, indimm[0] = off
+static INT32 FillAnalyse(Mips3Block *b, const Mips3Insn *tmp, INT32 n)
+{
+	if (n != 3 || !(tmp[2].flags & F_DELAY)) return 0;
+
+	UINT32 add = tmp[0].op, br = tmp[1].op, st = tmp[2].op;
+	UINT32 a = (add >> 16) & 31;
+	if ((add >> 26) != 0x09 || ((add >> 21) & 31) != a || a == 0 || (INT16)add != 4) return 0;
+	if ((br >> 26) != 0x05 || ((br >> 21) & 31) != a || ((br >> 16) & 31) == a) return 0;
+	if ((st >> 26) != 0x2b || ((st >> 21) & 31) != a || ((st >> 16) & 31) == a) return 0;
+
+	b->idle = IDLE_FILL;
+	b->indreg[0] = a;
+	b->indreg[1] = (br >> 16) & 31;
+	b->indreg[2] = (st >> 16) & 31;
+	b->indimm[0] = (INT16)st;
+	return 1;
+}
+
+// "loop: lw t, 0(s) / addiu c, c, -1 / addiu s, s, 4 / sw t, 0(d) / bne c, zero, loop / addiu d, d, 4"
+// (memcpy): indreg[0..3] = s, d, c, t
+static INT32 CopyAnalyse(Mips3Block *b, const Mips3Insn *tmp, INT32 n)
+{
+	if (n != 6 || !(tmp[5].flags & F_DELAY)) return 0;
+
+	const UINT32 ld = tmp[0].op, dec = tmp[1].op, inc_s = tmp[2].op, st = tmp[3].op, br = tmp[4].op, inc_d = tmp[5].op;
+	const UINT32 src = (ld >> 21) & 31, t = (ld >> 16) & 31, cnt = (dec >> 16) & 31, dst = (st >> 21) & 31;
+
+	if ((ld >> 26) != 0x23 || (INT16)ld != 0) return 0;
+	if ((dec >> 26) != 0x09 || ((dec >> 21) & 31) != cnt || (INT16)dec != -1) return 0;
+	if ((inc_s >> 26) != 0x09 || ((inc_s >> 21) & 31) != src || ((inc_s >> 16) & 31) != src || (INT16)inc_s != 4) return 0;
+	if ((st >> 26) != 0x2b || ((st >> 16) & 31) != t || (INT16)st != 0) return 0;
+	if ((br >> 26) != 0x05 || ((br >> 21) & 31) != cnt || ((br >> 16) & 31) != 0) return 0;
+	if ((inc_d >> 26) != 0x09 || ((inc_d >> 21) & 31) != dst || ((inc_d >> 16) & 31) != dst || (INT16)inc_d != 4) return 0;
+
+	// four distinct registers, none of them r0
+	const UINT32 regs = (1U << src) | (1U << dst) | (1U << cnt) | (1U << t);
+	if ((regs & 1) || src == dst || src == cnt || src == t || dst == cnt || dst == t || cnt == t) return 0;
+
+	b->idle = IDLE_COPY;
+	b->indreg[0] = src;
+	b->indreg[1] = dst;
+	b->indreg[2] = cnt;
+	b->indreg[3] = t;
 	return 1;
 }
 
@@ -2036,6 +2413,8 @@ static INT32 IdleSafe(UINT32 op, UINT32 *rmask, UINT32 *wmask, INT32 *timed)
 			if (rt >= 0x10 && rt <= 0x13) { *wmask = 1U << 31; return 1; }
 			return 0;
 
+		case 0x02:
+			return 1;
 		case 0x04: case 0x05: case 0x14: case 0x15:
 			*rmask = (1 << rs) | (1 << rt); return 1;
 		case 0x06: case 0x07: case 0x16: case 0x17:
@@ -2111,8 +2490,8 @@ static void IdleAnalyse(Mips3Block *b, const Mips3Insn *tmp, INT32 n)
 
 static Mips3Block *BuildBlock(Mips3BlockPage *bp, UINT8 *host, UINT32 off)
 {
-	Mips3Insn tmp[MIPS3_BLOCK_MAX + 4];
-	INT32 n = 0, split = 0;
+	Mips3Insn tmp[MIPS3_SUPER_MAX];
+	INT32 n = 0, split = 0, seg = 0, exits = 0;
 	UINT32 o = off, fall, fl;
 
 	for (;;) {
@@ -2157,6 +2536,16 @@ static Mips3Block *BuildBlock(Mips3BlockPage *bp, UINT8 *host, UINT32 off)
 				tmp[n].pc = o + 4;
 				tmp[n].flags = F_DELAY;
 				n++;
+
+				// a branch back to the start stays a block end: loops are what the idle skip looks for
+				UINT32 target = o + 4 + ((INT32)(INT16)op << 2);
+				if (SbBranch(tmp[n - 2].fn) && !(fl2 & F_END) && target != off && o + 8 < 0x1000 && n < MIPS3_BLOCK_MAX) {
+					tmp[n].fn = op_SbExit; tmp[n].op = 0; tmp[n].pc = o + 8; tmp[n].flags = 0; n++;
+					exits++;
+					o += 8;
+					seg = n;
+					continue;
+				}
 			}
 			fall = o + 8;
 			break;
@@ -2165,7 +2554,7 @@ static Mips3Block *BuildBlock(Mips3BlockPage *bp, UINT8 *host, UINT32 off)
 		if (fl & F_END) { fall = o + 4; break; }
 
 		o += 4;
-		if (o >= 0x1000 || n >= MIPS3_BLOCK_MAX) { fall = o; break; }
+		if (o >= 0x1000 || n - seg >= MIPS3_BLOCK_MAX) { fall = o; break; }
 	}
 
 	UINT32 size = (sizeof(Mips3Block) - sizeof(Mips3Insn) + n * sizeof(Mips3Insn) + 15) & ~15;
@@ -2189,16 +2578,22 @@ static Mips3Block *BuildBlock(Mips3BlockPage *bp, UINT8 *host, UINT32 off)
 #endif
 
 #if MIPS3_IDLE_SKIP
-	// a block whose closing PC-relative branch jumps back to its own start
-	if (!split && n >= 2 && (tmp[n - 1].flags & F_DELAY)) {
+	// a block whose closing PC-relative branch (or J: the rest of its target is checked when skipping)
+	// jumps back to its own start
+	if (!split && !exits && n >= 2 && (tmp[n - 1].flags & F_DELAY)) {
 		UINT32 bop = tmp[n - 2].op, opc = bop >> 26;
 		INT32 relative = (opc == 0x01 || (opc >= 0x04 && opc <= 0x07) || (opc >= 0x14 && opc <= 0x17));
-		if (relative && (INT32)(tmp[n - 2].pc + 4) + ((INT32)(INT16)bop << 2) == (INT32)off) {
-			if (!CountdownAnalyse(b, tmp, n)) IdleAnalyse(b, tmp, n);
+		if ((relative && (INT32)(tmp[n - 2].pc + 4) + ((INT32)(INT16)bop << 2) == (INT32)off) ||
+			(opc == 0x02 && ((bop << 2) & 0xfff) == off)) {
+			if (!CountdownAnalyse(b, tmp, n) && !FillAnalyse(b, tmp, n) && !CopyAnalyse(b, tmp, n)) IdleAnalyse(b, tmp, n);
 		}
 	}
 #endif
-	for (INT32 i = 0; i < n; i++) InsnFields(&tmp[i]);
+	for (INT32 i = 0, c = 0; i < n; i++) {
+		InsnFields(&tmp[i]);
+		if (!IsPseudoOp(tmp[i].fn)) c++;
+		tmp[i].cyc = c;
+	}
 	memcpy(b->insn, tmp, n * sizeof(Mips3Insn));
 
 	if (bp->blk == NULL) bp->blk = (Mips3Block**)calloc(1024, sizeof(Mips3Block*));
@@ -2273,9 +2668,123 @@ static void ExecCountdown(Mips3Block *b)
 #endif
 }
 
+static void ExecFill(Mips3Block *b)
+{
+	ExecBlockPlain(b);
+	if (Mx.brk || M.pc != Mx.vpage + b->start) return;
+	if (M.compare_fire <= M.total_cycles || M.total_cycles >= nRunTarget) return;
+
+	const UINT32 a = (UINT32)M.r[b->indreg[0]], end = (UINT32)M.r[b->indreg[1]], v = (UINT32)M.r[b->indreg[2]];
+	const UINT32 dist = end - a;
+	if (dist & 3) return;	// would only stop after wrapping around
+
+	// iterations that surely loop again: the last one leaves the loop and is run normally
+	INT64 k = (INT64)(dist / 4) - 1;
+	if (k <= 0) return;
+
+	INT64 len = b->count;
+	INT64 budget = (INT64)(nRunTarget - M.total_cycles);
+	if ((UINT64)budget > M.compare_fire - M.total_cycles) budget = (INT64)(M.compare_fire - M.total_cycles);
+	if (k > budget / len) k = budget / len;
+	if (k <= 0) return;
+
+	// only plain RAM pages without cached code, which the host write cache holds: anything else
+	// (faults, handlers, code) is left to the interpreter
+	UINT32 va = a + 4 + (INT32)b->indimm[0];
+	if (va & 3) return;
+
+	const UINT32 sv = BURN_ENDIAN_SWAP_INT32(v);
+	INT64 done = 0;
+	while (done < k) {
+		Mips3HostEntry *h = HOST_W(va);
+		if (h->tag != (va & ~0xfffU)) {
+			UINT32 e = Vtlb[va >> 12];
+			if (!(e & VT_WRITE)) break;
+			HostFillWrite(va, (e & ~0xfff) | (va & 0xfff));
+			if (h->tag != (va & ~0xfffU)) break;
+		}
+
+		INT64 n = (0x1000 - (va & 0xfff)) / 4;
+		if (n > k - done) n = k - done;
+		UINT32 *p = (UINT32*)(h->host + (va & 0xfff));
+		for (INT64 i = 0; i < n; i++) p[i] = sv;
+
+		va += (UINT32)n * 4;
+		done += n;
+	}
+
+	M.total_cycles += done * len;
+	M.r[b->indreg[0]] = SX32(a + (UINT32)done * 4);
+}
+
+static void ExecCopy(Mips3Block *b)
+{
+	ExecBlockPlain(b);
+	if (Mx.brk || M.pc != Mx.vpage + b->start) return;
+	if (M.compare_fire <= M.total_cycles || M.total_cycles >= nRunTarget) return;
+
+	const UINT32 src = (UINT32)M.r[b->indreg[0]], dst = (UINT32)M.r[b->indreg[1]], count = (UINT32)M.r[b->indreg[2]];
+	if ((src | dst) & 3) return;
+
+	// iterations that surely loop again: the counter stays non-zero after its decrement
+	INT64 k = (INT64)count - 1;
+	if (count == 0 || k <= 0) return;
+
+	INT64 len = b->count;
+	INT64 budget = (INT64)(nRunTarget - M.total_cycles);
+	if ((UINT64)budget > M.compare_fire - M.total_cycles) budget = (INT64)(M.compare_fire - M.total_cycles);
+	if (k > budget / len) k = budget / len;
+	if (k <= 0) return;
+
+	// word by word in the guest's order, so overlapping copies behave the same
+	UINT32 s = src, d = dst, last = 0;
+	INT64 done = 0;
+	while (done < k) {
+		// pages that share a slot of the host caches would keep evicting each other
+		if ((s >> 12) != (d >> 12) && !(((s >> 12) ^ (d >> 12)) & (MIPS3_HOST_ENTRIES - 1))) break;
+
+		Mips3HostEntry *hr = HOST_R(s);
+		if (hr->tag != (s & ~0xfffU)) {
+			UINT32 e = Vtlb[s >> 12];
+			if (!(e & VT_READ)) break;
+			HostFillRead(s, (e & ~0xfff) | (s & 0xfff));
+			if (hr->tag != (s & ~0xfffU)) break;
+		}
+		Mips3HostEntry *hw = HOST_W(d);
+		if (hw->tag != (d & ~0xfffU)) {
+			UINT32 e = Vtlb[d >> 12];
+			if (!(e & VT_WRITE)) break;
+			HostFillWrite(d, (e & ~0xfff) | (d & 0xfff));
+			if (hw->tag != (d & ~0xfffU)) break;
+		}
+
+		INT64 n = (0x1000 - (s & 0xfff)) / 4, nd = (0x1000 - (d & 0xfff)) / 4;
+		if (n > nd) n = nd;
+		if (n > k - done) n = k - done;
+		const UINT32 *ps = (const UINT32*)(hr->host + (s & 0xfff));
+		UINT32 *pd = (UINT32*)(hw->host + (d & 0xfff));
+		for (INT64 i = 0; i < n; i++) pd[i] = ps[i];
+		last = BURN_ENDIAN_SWAP_INT32(pd[n - 1]);
+
+		s += (UINT32)n * 4;
+		d += (UINT32)n * 4;
+		done += n;
+	}
+
+	if (done == 0) return;
+
+	M.total_cycles += done * len;
+	M.r[b->indreg[0]] = SX32(s);
+	M.r[b->indreg[1]] = SX32(d);
+	M.r[b->indreg[2]] = SX32(count - (UINT32)done);
+	M.r[b->indreg[3]] = SX32(last);
+}
+
 static void ExecIdleCandidate(Mips3Block *b)
 {
 	if (b->idle == IDLE_COUNT) { ExecCountdown(b); return; }
+	if (b->idle == IDLE_FILL) { ExecFill(b); return; }
+	if (b->idle == IDLE_COPY) { ExecCopy(b); return; }
 
 	UINT64 saved[32];
 	UINT32 mask = b->wmask;
@@ -2340,8 +2849,7 @@ static MIPS3_INLINE void ExecBlock(Mips3Block *b)
 		b->idlewait--;
 	}
 #endif
-	Mx.blk_start = b->start;
-	Mx.next_pc = Mx.vpage + b->fall;
+	Mx.next_pc = 1;
 	Mx.brk = 0;
 
 	const Mips3Insn *I = b->insn;
@@ -2351,7 +2859,7 @@ static MIPS3_INLINE void ExecBlock(Mips3Block *b)
 		I->fn(I);
 	} while (++I < Mx.lim);
 
-	INT32 n = (INT32)(I - b->insn);
+	INT32 n = I[-1].cyc;
 	M.total_cycles += n;
 #if MIPS3_PROFILE
 	b->vpc = Mx.vpage + b->start;
@@ -2366,13 +2874,16 @@ static MIPS3_INLINE void ExecBlock(Mips3Block *b)
 			M.delay_target = Mx.dtarget;
 			FORCE_EVENT();
 		}
-	} else if (b->split) {
-		M.delay_pending = 1;
-		M.delay_target = Mx.next_pc;
-		M.pc = Mx.vpage + b->fall - 4;
-		FORCE_EVENT();
 	} else {
-		M.pc = Mx.next_pc;
+		UINT32 next = (Mx.next_pc == 1) ? Mx.vpage + b->fall : Mx.next_pc;
+		if (b->split) {
+			M.delay_pending = 1;
+			M.delay_target = next;
+			M.pc = Mx.vpage + b->fall - 4;
+			FORCE_EVENT();
+		} else {
+			M.pc = next;
+		}
 	}
 }
 
@@ -2398,8 +2909,9 @@ static void StepOne()
 	I.op = 0;
 	I.fn = op_NOP;
 
+	I.cyc = 1;
+
 	Mx.vpage = pc & ~0xfff;
-	Mx.blk_start = I.pc;
 	Mx.next_pc = 1;		// never a valid target: tells whether a branch was taken
 	Mx.brk = 0;
 
@@ -2490,6 +3002,7 @@ static inline void CheckInterrupts()
 		Mips3Insn I;
 		I.pc = M.pc & 0xfff;
 		I.flags = 0;
+		I.cyc = 1;
 		Mx.vpage = M.pc & ~0xfff;
 		Mips3Exception(&I, EXC_INT, 0);
 		M.pc = Mx.next_pc;
@@ -2636,14 +3149,20 @@ UINT64 mips3_total_cycles()
 // ---------------------------------------------------------------------------
 // memory map changes / interface
 
+// per page; mips3_map_changed() must follow a batch of these
 void mips3_page_mapped(UINT32 page)
 {
-	FAST_INVALIDATE();
-	HostCacheFlush();
 	Mips3PhysPage *p = &Mips3Phys[page];
 	UINT8 *host = CodeHost(p);
 	p->code = host ? GetBlockPage(host) : NULL;
-	p->wcode = IS_PTR(p->write) ? GetBlockPage(p->write) : p->code;
+	if (!IS_PTR(p->write)) p->wcode = p->code;
+	else p->wcode = (p->write == host) ? p->code : GetBlockPage(p->write);
+}
+
+void mips3_map_changed()
+{
+	FAST_INVALIDATE();
+	HostCacheFlush();
 }
 
 void mips3_invalidate(UINT32 nStart, UINT32 nEnd)
@@ -2672,6 +3191,16 @@ UINT32 mips3_get_pc()
 	return M.pc;
 }
 
+void mips3_set_write_track(UINT8 *map, UINT32 nBytes, void (*callback)(UINT32 page))
+{
+	WriteTrack = map;
+	WriteTrackPages = map ? (nBytes >> 12) : 0;
+	pWriteTrackCb = callback;
+
+	// pages already in the host write cache would be written without being seen
+	for (INT32 i = 0; i < MIPS3_HOST_ENTRIES; i++) HostWrite[i].tag = ~0U;
+}
+
 void mips3_burn_cycles(INT32 cycles)
 {
 	M.total_cycles += cycles;
@@ -2683,13 +3212,13 @@ UINT8 mips3_read_phys8(UINT32 pa)
 	return RdPhys8(pa & PHYS_MASK);
 }
 
-INT32 mips3_init()
+INT32 mips3_init(INT32 type)
 {
+	nMips3Type = type;
 	Vtlb = (UINT32*)calloc(VIRT_PAGES, sizeof(UINT32));
+	nDLines = 0;
 	Arena = (UINT8*)malloc(MIPS3_ARENA_SIZE);
 	ArenaUsed = 0;
-	BlockPageMap = new std::map<UINT8*, Mips3BlockPage*>();
-	BlockPageList = new std::vector<Mips3BlockPage*>();
 
 	memset(&M, 0, sizeof(M));
 	M.compare_fire = ~0ULL;
@@ -2705,16 +3234,21 @@ void mips3_exit()
 {
 	if (!bMips3Initted) return;
 
-	if (BlockPageList) {
-		for (size_t i = 0; i < BlockPageList->size(); i++) {
-			free((*BlockPageList)[i]->blk);
-			free((*BlockPageList)[i]);
-		}
+	WriteTrack = NULL;
+	WriteTrackPages = 0;
+	pWriteTrackCb = NULL;
+
+	for (UINT32 i = 0; i < nBlockPages; i++) {
+		free(BlockPageList[i]->blk);
+		free(BlockPageList[i]);
 	}
-	delete BlockPageList;
-	delete BlockPageMap;
+	free(BlockPageList);
+	free(BlockPageKeys);
+	free(BlockPageVals);
 	BlockPageList = NULL;
-	BlockPageMap = NULL;
+	BlockPageKeys = NULL;
+	BlockPageVals = NULL;
+	nBlockPages = nBlockPageSlots = 0;
 
 	free(Vtlb);
 	free(Arena);
@@ -2741,8 +3275,13 @@ void mips3_reset()
 	CP0(CP0_Wired) = 0;
 	CP0(CP0_Compare) = 0xffffffff;
 	CP0(CP0_Count) = 0;
-	CP0(CP0_PRId) = 0x2020;				// R4600
-	CP0(CP0_Config) = 0x00026030 | (2 << 6) | (2 << 9);	// 16KB I/D caches, 32 byte lines
+	if (IS_VR5500) {
+		CP0(CP0_PRId) = 0x5500;
+		CP0(CP0_Config) = 0x003266f0;
+	} else {
+		CP0(CP0_PRId) = 0x2020;				// R4600
+		CP0(CP0_Config) = 0x00026030 | (2 << 6) | (2 << 9);	// 16KB I/D caches, 32 byte lines
+	}
 	CP0(CP0_LLAddr) = 0;
 	M.fcr31 = 0;
 
@@ -2760,6 +3299,7 @@ void mips3_reset()
 
 	VtlbRebuild();
 	Mips3FlushCache();
+	nDLines = 0;
 	nMips3ICount = 0;
 	FORCE_EVENT();
 	Mx.dpend = 0;
@@ -2776,7 +3316,8 @@ void mips3_scan(INT32 nAction)
 
 	if (nAction & ACB_WRITE) {
 		VtlbRebuild();
-		Mips3FlushCache();
+		// with write tracking, a runahead load restores only what changed and invalidates it itself
+		if (!(nAction & ACB_RUNAHEAD) || WriteTrack == NULL) Mips3FlushCache();
 		FORCE_EVENT();
 	}
 }

@@ -87,6 +87,7 @@ all_burn_sounds = {
     'ymf278b': {'desc': 'Yamaha YMF278B core', 'sources': []},
     'ymz280b': {'desc': 'Yamaha YMZ280B PCM', 'sources': ['ymz280b.cpp']},
     'ymz770': {'desc': 'Yamaha YMZ770 sound', 'sources': []},
+    'rpp324': {'desc': 'Roland RPP-324 phrase player', 'sources': ['rpp324.cpp']},
 }
 
 # Enablement is derived from the parent's flat `enabled_components` set

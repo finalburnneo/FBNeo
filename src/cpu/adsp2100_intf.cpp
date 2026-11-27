@@ -84,14 +84,20 @@ static void TimerCallback(adsp2100_state *adsp, int enable)
 }
 
 
-int Adsp2100Init()
+static int Adsp21xxInit(int is2181)
 {
     pMemMap = new Adsp2100MemoryMap;
     adsp21xx_prg_map = pMemMap->PrgMap;
     adsp21xx_data_map = pMemMap->DataMap;
     ResetMemoryMap();
     pADSP = (adsp2100_state*) BurnMalloc(sizeof(adsp2100_state));
-    adsp2105_init(pADSP, NULL);
+    if (is2181) {
+        adsp2181_init(pADSP, NULL);
+        pADSP->pmovlay = pADSP->dmovlay = 0;
+        pADSP->bdma_latch = 0;
+    } else {
+        adsp2105_init(pADSP, NULL);
+    }
     pADSP->sport_rx_callback = RxCallback;
     pADSP->sport_tx_callback = TxCallback;
     pADSP->timer_fired = TimerCallback;
@@ -106,8 +112,38 @@ int Adsp2100Init()
     return 0;
 }
 
+int Adsp2100Init()
+{
+    return Adsp21xxInit(0);
+}
+
+// the ADSP-2181 (I/O space, overlays and BDMA interrupt as used by the Acclaim RAX board)
+extern UINT16 (*adsp21xx_io_read)(UINT32 addr);
+extern void (*adsp21xx_io_write)(UINT32 addr, UINT16 data);
+extern void (*adsp21xx_dmovlay_cb)(INT32 data);
+
+int Adsp2181Init()
+{
+    return Adsp21xxInit(1);
+}
+
+void Adsp2100SetIOHandlers(UINT16 (*read)(UINT32 addr), void (*write)(UINT32 addr, UINT16 data))
+{
+    adsp21xx_io_read = read;
+    adsp21xx_io_write = write;
+}
+
+void Adsp2100SetDmovlayCallback(void (*cb)(INT32 data))
+{
+    adsp21xx_dmovlay_cb = cb;
+}
+
 int Adsp2100Exit()
 {
+    adsp21xx_io_read = NULL;
+    adsp21xx_io_write = NULL;
+    adsp21xx_dmovlay_cb = NULL;
+
     adsp21xx_exit(pADSP);
     BurnFree(pADSP);
     delete pMemMap;
@@ -180,6 +216,12 @@ void Adsp2100SetIRQCallback(int (*cb)(int))
 
 void Adsp2100SetIRQLine(int line, int state)
 {
+	if (line == ADSP2181_BDMA) {
+		// (an internal pulse: only latched)
+		if (state != CPU_IRQSTATUS_NONE) pADSP->bdma_latch = 1;
+		return;
+	}
+
 	switch (state) {
 		case CPU_IRQSTATUS_AUTO:
 		case CPU_IRQSTATUS_HOLD:

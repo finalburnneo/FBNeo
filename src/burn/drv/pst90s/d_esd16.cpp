@@ -45,6 +45,7 @@ static UINT16 DrvInputs[3];
 static UINT8 flipscreen;
 static UINT8 soundlatch;
 static UINT8 esd16_tilemap0_color;
+static UINT8 esd16_tilemap1_color;
 static UINT16 head_layersize;
 static UINT16 headpanic_platform_x;
 static UINT16 headpanic_platform_y;
@@ -52,6 +53,9 @@ static UINT8 esd16_z80_bank;
 
 static INT32 game_select;
 static INT32 weird_offsets = 0;
+static INT32 old_sprite_offsets = 0;
+static INT32 sound_clock = 4000000;
+static INT32 oki_clock = 1056000;
 
 static struct BurnInputInfo MultchmpInputList[] = {
 	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
@@ -140,56 +144,57 @@ STDINPUTINFO(Swatpolc)
 
 static struct BurnDIPInfo MultchmpDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL		},
-	{0x13, 0xff, 0xff, 0xff, NULL		},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL		},
+	{0x01, 0xff, 0xff, 0xff, NULL		},
 
 	{0x12, 0xfe, 0, 2, "Service Mode"	},
-	{0x12, 0x01, 0x01, 0x01, "Off" 		},
-	{0x12, 0x01, 0x01, 0x00, "On" 		},
+	{0x00, 0x01, 0x01, 0x01, "Off" 		},
+	{0x00, 0x01, 0x01, 0x00, "On" 		},
 
 	{0x12, 0xfe, 0, 2, "Coinage Type"	},
-	{0x12, 0x01, 0x02, 0x02, "1" 		},
-	{0x12, 0x01, 0x02, 0x00, "2" 		},
+	{0x00, 0x01, 0x02, 0x02, "1" 		},
+	{0x00, 0x01, 0x02, 0x00, "2" 		},
 
 	{0x12, 0xfe, 0, 2, "Demo Sounds" 	},
-	{0x12, 0x01, 0x04, 0x04, "Off" 		},
-	{0x12, 0x01, 0x04, 0x00, "On" 		},
+	{0x00, 0x01, 0x04, 0x04, "Off" 		},
+	{0x00, 0x01, 0x04, 0x00, "On" 		},
 
 	{0x12, 0xfe, 0, 2, "Flip Screen" 	},
-	{0x12, 0x01, 0x08, 0x08, "Off"		},
-	{0x12, 0x01, 0x08, 0x00, "On" 		},
+	{0x00, 0x01, 0x08, 0x08, "Off"		},
+	{0x00, 0x01, 0x08, 0x00, "On" 		},
 
 	{0x12, 0xfe, 0, 4, "Coin A" },
-	{0x12, 0x01, 0x30, 0x10, "2C 1C" 	},
-	{0x12, 0x01, 0x30, 0x30, "1C 1C" 	},
-	{0x12, 0x01, 0x30, 0x00, "2C 3C" 	},
-	{0x12, 0x01, 0x30, 0x20, "1C 2C" 	},
+	{0x00, 0x01, 0x30, 0x10, "2C 1C" 	},
+	{0x00, 0x01, 0x30, 0x30, "1C 1C" 	},
+	{0x00, 0x01, 0x30, 0x00, "2C 3C" 	},
+	{0x00, 0x01, 0x30, 0x20, "1C 2C" 	},
 
 	{0x12, 0xfe, 0, 4, "Coin B" },
-	{0x12, 0x01, 0xc0, 0x40, "2C 1C" 	},
-	{0x12, 0x01, 0xc0, 0xc0, "1C 1C" 	},
-	{0x12, 0x01, 0xc0, 0x00, "2C 3C" 	},
-	{0x12, 0x01, 0xc0, 0x80, "1C 2C" 	},
+	{0x00, 0x01, 0xc0, 0x40, "2C 1C" 	},
+	{0x00, 0x01, 0xc0, 0xc0, "1C 1C" 	},
+	{0x00, 0x01, 0xc0, 0x00, "2C 3C" 	},
+	{0x00, 0x01, 0xc0, 0x80, "1C 2C" 	},
 
 	{0x13, 0xfe, 0, 4, "Difficulty" 	},
-	{0x13, 0x01, 0x03, 0x02, "Easy" 	},
-	{0x13, 0x01, 0x03, 0x03, "Normal" 	},
-	{0x13, 0x01, 0x03, 0x01, "Hard" 	},
-	{0x13, 0x01, 0x03, 0x00, "Hardest" 	},
+	{0x01, 0x01, 0x03, 0x02, "Easy" 	},
+	{0x01, 0x01, 0x03, 0x03, "Normal" 	},
+	{0x01, 0x01, 0x03, 0x01, "Hard" 	},
+	{0x01, 0x01, 0x03, 0x00, "Hardest" 	},
 
 	{0x13, 0xfe, 0, 4, "Lives" 		},
-	{0x13, 0x01, 0x0c, 0x00, "2" 		},
-	{0x13, 0x01, 0x0c, 0x0c, "3" 		},
-	{0x13, 0x01, 0x0c, 0x08, "4" 		},
-	{0x13, 0x01, 0x0c, 0x04, "5" 		},
+	{0x01, 0x01, 0x0c, 0x00, "2" 		},
+	{0x01, 0x01, 0x0c, 0x0c, "3" 		},
+	{0x01, 0x01, 0x0c, 0x08, "4" 		},
+	{0x01, 0x01, 0x0c, 0x04, "5" 		},
 
 	{0x13, 0xfe, 0, 2, "Selectable Games" 	},
-	{0x13, 0x01, 0x10, 0x10, "3" 		},
-	{0x13, 0x01, 0x10, 0x00, "4" 		},
+	{0x01, 0x01, 0x10, 0x10, "3" 		},
+	{0x01, 0x01, 0x10, 0x00, "4" 		},
 
 	{0x13, 0xfe, 0, 2, "Free Play" 		},
-	{0x13, 0x01, 0x20, 0x20, "Off" 		},
-	{0x13, 0x01, 0x20, 0x00, "On" 		},
+	{0x01, 0x01, 0x20, 0x20, "Off" 		},
+	{0x01, 0x01, 0x20, 0x00, "On" 		},
 };
 
 STDDIPINFO(Multchmp)
@@ -566,6 +571,91 @@ static UINT16 __fastcall tangtang_read_word(UINT32 address)
 
 //----------------------------------------------------------------------------------------------------------
 
+static void __fastcall jumppop_write_byte(UINT32 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x18000d:
+			esd_sound_command_w(data);
+		return;
+	}
+}
+
+static void __fastcall jumppop_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff000) == 0x140000) {
+		palette_write(address & 0xfff, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x180008:
+			// the game never sets the layer colours, they are fixed (as in MAME)
+			esd16_tilemap0_color = 2;
+			esd16_tilemap1_color = 1;
+			flipscreen = data & 0x80;
+		return;
+
+		case 0x18000c:
+			esd_sound_command_w(data);
+		return;
+
+		case 0x380000:
+		case 0x380002:
+			esd16_scroll_0[(address>>1)&1] = data;
+		return;
+
+		case 0x380004:
+		case 0x380006:
+			esd16_scroll_1[(address>>1)&1] = data;
+		return;
+
+		case 0x380008:
+			headpanic_platform_x = data;
+		return;
+
+		case 0x38000a:
+			headpanic_platform_y = data;
+		return;
+
+		case 0x38000e:
+			head_layersize = data;
+		return;
+	}
+}
+
+static UINT8 __fastcall jumppop_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x180002:
+		case 0x180003:
+		case 0x180004:
+		case 0x180005:
+		case 0x180006:
+		case 0x180007:
+			return DrvInputs[(address - 0x180002) >> 1] >> ((~address & 1) << 3);
+	}
+
+	return 0;
+}
+
+static UINT16 __fastcall jumppop_read_word(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x180002:
+		case 0x180004:
+		case 0x180006:
+			return DrvInputs[(address - 0x180002) >> 1];
+	}
+
+	return 0;
+}
+
+//----------------------------------------------------------------------------------------------------------
+
 static void esd16_sound_rombank_w(INT32 data)
 {
 	esd16_z80_bank = data & 0xf;
@@ -646,6 +736,7 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	flipscreen = 0;
 	esd16_tilemap0_color = 0;
+	esd16_tilemap1_color = 0;
 	esd16_z80_bank = 0;
 	head_layersize = 0;
 	headpanic_platform_x = 0;
@@ -879,11 +970,11 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	ZetSetOutHandler(esd16_sound_out);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttach(&ZetConfig, 4000000);
+	BurnYM3812Init(1, sound_clock, NULL, 0);
+	BurnTimerAttach(&ZetConfig, sound_clock);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
-	MSM6295Init(0, 1056000 / 132, 1);
+	MSM6295Init(0, oki_clock / 132, 1);
 	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	EEPROMInit(&eeprom_interface_93C46); // not used in multchmp
@@ -907,6 +998,9 @@ static INT32 DrvExit()
 	BurnFreeMemIndex();
 
 	weird_offsets = 0;
+	old_sprite_offsets = 0;
+	sound_clock = 4000000;
+	oki_clock = 1056000;
 
 	return 0;
 }
@@ -944,7 +1038,7 @@ static void esd16_draw_sprites(INT32 priority)
 		sx		=	sx & 0x1ff;
 		if (sx >= 0x180)	sx -= 0x200;
 
-		if (game_select) {
+		if (game_select && !old_sprite_offsets) {
 			sx -= 24;
 			sy = 0x1ff - (sy & 0x1ff);
 			starty = sy - dimy;
@@ -1033,7 +1127,7 @@ static void draw_layer_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT32 scr
 
 	if (weird_offsets && fg == 1) scrollx += 4; //hedpanic
 
-	for (INT32 offs = 0; offs < 0x1000 / 2; offs++) {
+	for (INT32 offs = 0; offs < 0x2000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x3fff;
 
 		if (DrvGfx2Trans[code] && transp) continue;
@@ -1110,6 +1204,103 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+// decospr bootleg sprite format, drawn from the end of the list like MAME
+static void jumppop_draw_sprites(INT32 priority)
+{
+	UINT16 *ram = (UINT16*)DrvSprRAM;
+
+	for (INT32 offs = 0x400 - 4; offs >= 0; offs -= 4)
+	{
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(ram[offs + 2]);
+		if ((sx >> 15) != priority) continue;
+
+		INT32 sy     = BURN_ENDIAN_SWAP_INT16(ram[offs + 0]);
+		INT32 sprite = BURN_ENDIAN_SWAP_INT16(ram[offs + 1]);
+
+		if ((sy & 0x1000) && (nCurrentFrame & 1)) continue;
+
+		INT32 wide  = sy & 0x0800;
+		INT32 color = (sx >> 9) & 0x1f;
+		INT32 flipx = (~sy >> 13) & 1; // all sprites are x-flipped on this hardware
+		INT32 flipy = (sy >> 14) & 1;
+		INT32 multi = (1 << (((sy >> 9) & 1) | ((sy >> 9) & 2))) - 1;
+		INT32 inc;
+
+		sx &= 0x1ff;
+		sy &= 0x1ff;
+		if (sx >= 320) sx -= 512;
+		if (sy >= 256) sy -= 512;
+		sy = 240 - sy;
+
+		if (flipy) {
+			inc = -1;
+		} else {
+			sprite += multi;
+			inc = 1;
+		}
+
+		INT32 mult2 = multi + 1;
+
+		while (multi >= 0)
+		{
+			INT32 code = (sprite - multi * inc) & 0x3fff;
+			INT32 ypos = sy - 16 * multi - 8;
+
+			if (!DrvGfx0Trans[code])
+				Draw16x16MaskTile(pTransDraw, code, sx, ypos, flipx, flipy, color, 4, 0, 0, DrvGfxROM0);
+
+			if (wide) {
+				code = (code - mult2) & 0x3fff;
+				if (!DrvGfx0Trans[code])
+					Draw16x16MaskTile(pTransDraw, code, sx - 16, ypos, flipx, flipy, color, 4, 0, 0, DrvGfxROM0);
+			}
+
+			multi--;
+		}
+	}
+}
+
+static INT32 JumppopDraw()
+{
+	if (DrvRecalc) {
+		for (INT32 i = 0; i < 0x800; i++) {
+			INT32 rgb = Palette[i];
+			DrvPalette[i] = BurnHighCol((rgb >> 16) & 0xff, (rgb >> 8) & 0xff, rgb & 0xff, 0);
+		}
+	}
+
+	BurnTransferClear();
+
+	if (head_layersize & 0x0001) {
+		if (nBurnLayer & 1) draw_layer_16x16(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1] + 8, 0);
+	} else {
+		if (nBurnLayer & 1) draw_layer_8x8(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x5e, esd16_scroll_0[1] + 8, 0);
+	}
+
+	if (nSpriteEnable & 1) jumppop_draw_sprites(1);
+
+	if (head_layersize & 0x0002) {
+		if (nBurnLayer & 2) draw_layer_16x16(DrvVidRAM1, esd16_tilemap1_color, 1, esd16_scroll_1[0] + 0x64, esd16_scroll_1[1] + 8, 1);
+	} else {
+		if (nBurnLayer & 2) draw_layer_8x8(DrvVidRAM1, esd16_tilemap1_color, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1] + 8, 1);
+	}
+
+	if (nSpriteEnable & 2) jumppop_draw_sprites(0);
+
+	if (flipscreen) {
+		INT32 screensize = nScreenWidth * nScreenHeight;
+		for (INT32 i = 0; i < screensize>>1; i++) {
+			INT32 t = pTransDraw[i];
+			pTransDraw[i] = pTransDraw[screensize-(i+1)];
+			pTransDraw[screensize-(i+1)] = t;
+		}
+	}
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1119,7 +1310,7 @@ static INT32 DrvFrame()
 	{
 		DrvInputs[0] = DrvInputs[1] = DrvInputs[2] = ~0;
 
-		if (game_select == 0) {
+		if (game_select == 0 || game_select == 6) {
 			DrvInputs[2] = (DrvDips[1] << 8) | DrvDips[0];
 		}
 
@@ -1134,7 +1325,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 64;
-	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] = { 16000000 / 60, sound_clock / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -1159,7 +1350,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -1192,6 +1383,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(esd16_tilemap0_color);
+		SCAN_VAR(esd16_tilemap1_color);
 		SCAN_VAR(head_layersize);
 		SCAN_VAR(headpanic_platform_x);
 		SCAN_VAR(headpanic_platform_y);
@@ -1226,16 +1418,30 @@ static struct BurnRomInfo multchmpRomDesc[] = {
 	{ "esd17.ju06",		0x040000, 0xa69d4399, 3 | BRF_GRA },			//  6
 	{ "esd13.ju07",		0x040000, 0x22071594, 3 | BRF_GRA },			//  7
 
-	{ "esd5.fu27",		0x080000, 0x299f32c2, 4 | BRF_GRA },			//  8 - Tiles
-	{ "esd6.fu32",		0x080000, 0xe2689bb2, 4 | BRF_GRA },			//  9
-	{ "esd11.fu29",		0x080000, 0x9bafd8ee, 4 | BRF_GRA },			// 10
-	{ "esd12.fu33",		0x080000, 0xc6b86001, 4 | BRF_GRA },			// 11
-	{ "esd7.fu26", 		0x080000, 0xa783a003, 4 | BRF_GRA },			// 12
-	{ "esd8.fu30",		0x080000, 0x22861af2, 4 | BRF_GRA },			// 13
-	{ "esd9.fu28",		0x080000, 0x6652c04a, 4 | BRF_GRA },			// 14
-	{ "esd10.fu31",		0x080000, 0xd815974b, 4 | BRF_GRA },			// 15
+	{ "esd5.fu27",		0x080000, 0x299f32c2, 4 | BRF_GRA },			//  8 - Tiles (bad dumps, from the other sets)
+	{ "esd6.fu32",		0x080000, 0xe2689bb2, 4 | BRF_GRA },			//  9 (bad dump)
+	{ "esd11.fu29",		0x080000, 0x9bafd8ee, 4 | BRF_GRA },			// 10 (bad dump)
+	{ "esd12.fu33",		0x080000, 0xc6b86001, 4 | BRF_GRA },			// 11 (bad dump)
+	{ "esd7.fu26", 		0x080000, 0xa783a003, 4 | BRF_GRA },			// 12 (bad dump)
+	{ "esd8.fu30",		0x080000, 0x22861af2, 4 | BRF_GRA },			// 13 (bad dump)
+	{ "esd9.fu28",		0x080000, 0x6652c04a, 4 | BRF_GRA },			// 14 (bad dump)
+	{ "esd10.fu31",		0x080000, 0xd815974b, 4 | BRF_GRA },			// 15 (bad dump)
 
 	{ "esd4.su10",		0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
+
+	{ "mx29f1610ml.fu27_fu32",	0x200000, 0x00000000, 4 | BRF_NODUMP },	// 17 - Soldered, not dumped
+	{ "mx29f1610ml.fu28_fu31",	0x200000, 0x00000000, 4 | BRF_NODUMP },	// 18
+
+	{ "palce22v10h-25pc-4.cu04",	0x0002dd, 0x00000000, 0 | BRF_NODUMP },	// 19 - PLDs
+	{ "palce22v10h-25pc-4.cu05",	0x0002dd, 0x00000000, 0 | BRF_NODUMP },	// 20
+	{ "palce22v10h-25pc-4.du05",	0x0002dd, 0x00000000, 0 | BRF_NODUMP },	// 21
+	{ "palce22v10h-25pc-4.fu01",	0x0002dd, 0x00000000, 0 | BRF_NODUMP },	// 22
+	{ "palce16v8h-25.du03",		0x000117, 0x00000000, 0 | BRF_NODUMP },	// 23
+	{ "palce16v8h-25.ru27",		0x000117, 0x00000000, 0 | BRF_NODUMP },	// 24
+	{ "palce16v8h-25.fu01",		0x000117, 0x00000000, 0 | BRF_NODUMP },	// 25
+	{ "palce16v8h-25.su07",		0x000117, 0x00000000, 0 | BRF_NODUMP },	// 26
+	{ "a40mx04-f-pl84.bu01",	0x000200, 0x00000000, 0 | BRF_NODUMP },	// 27
+	{ "a40mx04-f-pl84.du16",	0x000200, 0x00000000, 0 | BRF_NODUMP },	// 28
 };
 
 STD_ROM_PICK(multchmp)
@@ -1536,6 +1742,48 @@ struct BurnDriver BurnDrvHedpanica = {
 };
 
 
+// Head Panic (ver. 0615, 15/06/1999)
+// ESD 05-28-99 PCB which uses older style sprites
+
+static struct BurnRomInfo hedpanicoRomDesc[] = {
+	{ "esd2.rom",		0x040000, 0x70b08424, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.rom",		0x040000, 0x4e0682c5, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "sm1.ju01",		0x200000, 0x8083813f, 3 | BRF_GRA },			//  3 - Sprites
+	{ "sm2.ju02",		0x200000, 0x7a9610e4, 3 | BRF_GRA },			//  4
+	{ "esd5.rom",		0x080000, 0x82c5727f, 3 | BRF_GRA },			//  5
+
+	{ "sm3.fu35",		0x200000, 0x94dd4cfc, 4 | BRF_GRA },			//  6 - Tiles
+	{ "sm4.fu34",		0x200000, 0x6da0fb9e, 4 | BRF_GRA },			//  7
+
+	{ "esd4.rom",		0x020000, 0xd7ca6806, 5 | BRF_SND },			//  8 - OKI Samples
+
+	{ "hedpanic.nv",	0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
+};
+
+STD_ROM_PICK(hedpanico)
+STD_ROM_FN(hedpanico)
+
+static INT32 HedpanicoInit()
+{
+	old_sprite_offsets = 1;
+
+	return DrvInit(hedpanicCallback);
+}
+
+struct BurnDriver BurnDrvHedpanico = {
+	"hedpanico", "hedpanic", NULL, NULL, "1999",
+	"Head Panic (ver. 0615, 15/06/1999)\0", "Story line & game instructions in English", "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, hedpanicoRomInfo, hedpanicoRomName, NULL, NULL, NULL, NULL, HedpanicInputInfo, NULL,
+	HedpanicoInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
 // Head Panic (ver. 0315, 15/03/2000)
 
 static struct BurnRomInfo hedpanifRomDesc[] = {
@@ -1576,7 +1824,7 @@ static struct BurnRomInfo hedpanic830RomDesc[] = {
 	{ "esd2.cu03",		0x040000, 0x955be87f, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
 	{ "esd1.cu02", 		0x040000, 0xb56a4fe8, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code (bad dump)
 
 	{ "esd7.ju02",		0x200000, 0x5554ba0f, 3 | BRF_GRA },			//  3 - Sprites
 	{ "esd6.ju01",		0x200000, 0xffa6eb26, 3 | BRF_GRA },			//  4
@@ -2091,5 +2339,261 @@ struct BurnDriver BurnDrvSwatpolc = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, swatpolcRomInfo, swatpolcRomName, NULL, NULL, NULL, NULL, SwatpolcInputInfo, NULL,
 	SwatpolcInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+static struct BurnDIPInfo JumppopDIPList[]=
+{
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0xff, NULL					},
+	{0x01, 0xff, 0xff, 0xfe, NULL					},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x00, 0x01, 0x01, 0x01, "Off"					},
+	{0x00, 0x01, 0x01, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x00, 0x01, 0x02, 0x02, "Off"					},
+	{0x00, 0x01, 0x02, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"				},
+	{0x00, 0x01, 0x1c, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x10, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x1c, 0x18, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x1c, 0x08, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
+	{0x00, 0x01, 0xe0, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0xe0, 0x80, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0xe0, 0xc0, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0xe0, 0x40, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x01, 0x01, 0x01, 0x01, "Off"					},
+	{0x01, 0x01, 0x01, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x01, 0x01, 0x02, 0x00, "No"					},
+	{0x01, 0x01, 0x02, 0x02, "Yes"					},
+
+	{0   , 0xfe, 0   ,    2, "Picture Viewer"		},
+	{0x01, 0x01, 0x04, 0x04, "Off"					},
+	{0x01, 0x01, 0x04, 0x00, "On"					},
+
+	{0   , 0xfe, 0   ,    2, "BG Modesty"			},
+	{0x01, 0x01, 0x08, 0x08, "More"					},
+	{0x01, 0x01, 0x08, 0x00, "Less"					},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x01, 0x01, 0x30, 0x20, "Easy"					},
+	{0x01, 0x01, 0x30, 0x30, "Normal"				},
+	{0x01, 0x01, 0x30, 0x10, "Hard"					},
+	{0x01, 0x01, 0x30, 0x00, "Hardest"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x01, 0x01, 0xc0, 0x80, "1"					},
+	{0x01, 0x01, 0xc0, 0x00, "2"					},
+	{0x01, 0x01, 0xc0, 0xc0, "3"					},
+	{0x01, 0x01, 0xc0, 0x40, "4"					},
+};
+
+STDDIPINFO(Jumppop)
+
+static INT32 JumppopGfxDecode(UINT8 *tiles, UINT8 *sprites)
+{
+	static INT32 Planes0[4]  = { 0x800008, 0x800000, 0x000008, 0x000000 };
+	static INT32 XOffs0[16]  = { STEP8(0x100, 1), STEP8(0, 1) };
+	static INT32 YOffs0[16]  = { STEP16(0, 0x10) };
+
+	static INT32 Planes1[8]  = { STEP8(0, 1) };
+	static INT32 XOffs1[16]  = { STEP8(0, 8), STEP8(0x200, 8) };
+	static INT32 YOffs1[16]  = { STEP8(0, 0x40), STEP8(0x400, 0x40) };
+
+	GfxDecode(0x4000, 4, 16, 16, Planes0, XOffs0, YOffs0, 0x200, sprites, DrvGfxROM0);
+	GfxDecode(0x8000, 8,  8,  8, Planes1, XOffs1, YOffs1, 0x200, tiles, DrvGfxROM1);
+	GfxDecode(0x2000, 8, 16, 16, Planes1, XOffs1, YOffs1, 0x800, tiles, DrvGfxROM2);
+
+	// the tile codes wrap around like in MAME
+	memcpy (DrvGfxROM0 + 0x400000, DrvGfxROM0, 0x400000);
+	memcpy (DrvGfxROM1 + 0x200000, DrvGfxROM1, 0x200000);
+	memcpy (DrvGfxROM2 + 0x200000, DrvGfxROM2, 0x200000);
+
+	return 0;
+}
+
+static INT32 jumppopCommonCallback(INT32 alt_roms)
+{
+	game_select = 6;
+	sound_clock = 3500000;
+	oki_clock = 875000;
+
+	UINT8 *tiles = (UINT8*)BurnMalloc(0x200000);
+	UINT8 *sprites = (UINT8*)BurnMalloc(0x200000);
+	if (tiles == NULL || sprites == NULL) return 1;
+
+	memset (tiles, 0, 0x200000);
+	memset (sprites, 0, 0x200000);
+
+	INT32 k = 0;
+
+	if (alt_roms) {
+		if (BurnLoadRom(Drv68KROM + 0x000001, k++, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x000000, k++, 2)) return 1;
+	} else {
+		if (BurnLoadRom(Drv68KROM + 0x000000, k++, 1)) return 1;
+	}
+
+	if (BurnLoadRom(DrvZ80ROM, k++, 1)) return 1;
+
+	if (alt_roms) {
+		if (BurnLoadRom(sprites + 0x000000, k++, 2)) return 1;
+		if (BurnLoadRom(sprites + 0x000001, k++, 2)) return 1;
+		if (BurnLoadRom(sprites + 0x100000, k++, 2)) return 1;
+		if (BurnLoadRom(sprites + 0x100001, k++, 2)) return 1;
+
+		if (BurnLoadRom(tiles + 0x000000, k++, 4)) return 1;
+		if (BurnLoadRom(tiles + 0x000002, k++, 4)) return 1;
+		if (BurnLoadRom(tiles + 0x000001, k++, 4)) return 1;
+		if (BurnLoadRom(tiles + 0x000003, k++, 4)) return 1;
+	} else {
+		if (BurnLoadRom(sprites + 0x000000, k++, 1)) return 1;
+		if (BurnLoadRom(sprites + 0x100000, k++, 1)) return 1;
+
+		// ROM_LOAD32_WORD
+		UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
+		if (tmp == NULL) return 1;
+
+		for (INT32 i = 0; i < 2; i++) {
+			if (BurnLoadRom(tmp, k++, 1)) return 1;
+
+			for (INT32 j = 0; j < 0x100000; j += 2) {
+				tiles[j * 2 + i * 2 + 0] = tmp[j + 0];
+				tiles[j * 2 + i * 2 + 1] = tmp[j + 1];
+			}
+		}
+
+		BurnFree(tmp);
+	}
+
+	if (BurnLoadRom(DrvSndROM, k++, 1)) return 1;
+
+	JumppopGfxDecode(tiles, sprites);
+
+	BurnFree(tiles);
+	BurnFree(sprites);
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,				0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,				0x120000, 0x123fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,				0x140000, 0x140fff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,				0x160000, 0x1607ff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,				0x160800, 0x160fff, MAP_RAM); // mirror
+	SekMapMemory(Drv68KRAM + 0x8000,	0x1a0000, 0x1a7fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM0,			0x300000, 0x303fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM0,			0x304000, 0x307fff, MAP_RAM); // mirror
+	SekMapMemory(DrvVidRAM1,			0x320000, 0x323fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM1,			0x324000, 0x327fff, MAP_RAM); // mirror
+	SekSetWriteByteHandler(0,			jumppop_write_byte);
+	SekSetWriteWordHandler(0,			jumppop_write_word);
+	SekSetReadByteHandler(0,			jumppop_read_byte);
+	SekSetReadWordHandler(0,			jumppop_read_word);
+	SekClose();
+
+	return 0;
+}
+
+
+// Jumping Pop (set 1)
+
+static struct BurnRomInfo jumppopRomDesc[] = {
+	{ "68k_prg.bin",	0x080000, 0x123536b9, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+
+	{ "z80_prg.bin",	0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  1 - Z80 Code
+
+	{ "sp0.bin",		0x100000, 0x7c5d0633, 3 | BRF_GRA },			//  2 - Sprites
+	{ "sp1.bin",		0x100000, 0x7eae782e, 3 | BRF_GRA },			//  3
+
+	{ "bg1.bin",		0x100000, 0x5b37f943, 4 | BRF_GRA },			//  4 - Tiles
+	{ "bg0.bin",		0x100000, 0x35a1363d, 4 | BRF_GRA },			//  5
+
+	{ "samples.bin",	0x040000, 0x066f30a7, 5 | BRF_SND },			//  6 - OKI Samples
+};
+
+STD_ROM_PICK(jumppop)
+STD_ROM_FN(jumppop)
+
+static INT32 jumppopCallback()
+{
+	return jumppopCommonCallback(0);
+}
+
+static INT32 JumppopInit()
+{
+	return DrvInit(jumppopCallback);
+}
+
+struct BurnDriver BurnDrvJumppop = {
+	"jumppop", NULL, NULL, NULL, "2001",
+	"Jumping Pop (set 1)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, jumppopRomInfo, jumppopRomName, NULL, NULL, NULL, NULL, MultchmpInputInfo, JumppopDIPInfo,
+	JumppopInit, DrvExit, DrvFrame, JumppopDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Jumping Pop (set 2)
+// Running on an original ESD 11-09-98 PCB with original ESD labeled ROMs
+
+static struct BurnRomInfo jumppopeRomDesc[] = {
+	{ "esd2.cu02",		0x040000, 0x302dd093, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03",		0x040000, 0x883392ba, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "at27c020.su06",	0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "esd7.ju03",		0x040000, 0x9c2970e0, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd8.ju04",		0x040000, 0x33bf99b0, 3 | BRF_GRA },			//  4
+	{ "esd9.ju05",		0x040000, 0x671d21fd, 3 | BRF_GRA },			//  5
+	{ "esd10.ju06",		0x040000, 0x85a3cc73, 3 | BRF_GRA },			//  6
+
+	{ "esd5.fu28",		0x080000, 0x0d47f821, 4 | BRF_GRA },			//  7 - Tiles
+	{ "esd6.fu29",		0x080000, 0xc01af40d, 4 | BRF_GRA },			//  8
+	{ "esd4.fu26",		0x080000, 0x97b409be, 4 | BRF_GRA },			//  9
+	{ "esd3.fu27",		0x080000, 0x3358a693, 4 | BRF_GRA },			// 10
+
+	{ "at27c020.su10",	0x040000, 0x066f30a7, 5 | BRF_SND },			// 11 - OKI Samples
+};
+
+STD_ROM_PICK(jumppope)
+STD_ROM_FN(jumppope)
+
+static INT32 jumppopeCallback()
+{
+	return jumppopCommonCallback(1);
+}
+
+static INT32 JumppopeInit()
+{
+	return DrvInit(jumppopeCallback);
+}
+
+struct BurnDriver BurnDrvJumppope = {
+	"jumppope", "jumppop", NULL, NULL, "2001",
+	"Jumping Pop (set 2)\0", NULL, "Emag Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, jumppopeRomInfo, jumppopeRomName, NULL, NULL, NULL, NULL, MultchmpInputInfo, JumppopDIPInfo,
+	JumppopeInit, DrvExit, DrvFrame, JumppopDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

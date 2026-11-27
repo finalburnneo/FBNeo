@@ -95,7 +95,7 @@ static struct BurnDIPInfo BackfireDIPList[]=
 	DIP_OFFSET(0x18)
 	{0x00, 0xff, 0xff, 0x00, NULL				},
 
-	{0   , 0xfe, 0   ,    2, "Screen Width"		},
+	{0   , 0xfd, 0   ,    2, "Screen Width"		},
 	{0x00, 0x01, 0x01, 0x00, "Single"			},
 	{0x00, 0x01, 0x01, 0x01, "Double"			},
 };
@@ -737,7 +737,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Backfire! (Japan, set 1)
+// Backfire! (Data East, Japan, set 1)
 
 static struct BurnRomInfo backfireRomDesc[] = {
 	{ "ra00-0.2j",		0x080000, 0x790da069, 1 | BRF_PRG | BRF_ESS }, //  0 Arm code (Encrypted)
@@ -773,7 +773,7 @@ static INT32 backfireInit()
 
 struct BurnDriver BurnDrvBackfire = {
 	"backfire", NULL, NULL, NULL, "1995",
-	"Backfire! (Japan, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
+	"Backfire! (Data East, Japan, set 1)\0", NULL, "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
 	NULL, backfireRomInfo, backfireRomName, NULL, NULL, NULL, NULL, BackfireInputInfo, BackfireDIPInfo,
@@ -782,7 +782,7 @@ struct BurnDriver BurnDrvBackfire = {
 };
 
 
-// Backfire! (Japan, set 2)
+// Backfire! (Data East, Japan, set 2)
 
 static struct BurnRomInfo backfireaRomDesc[] = {
 	{ "rb-00h.h2",		0x080000, 0x60973046, 1 | BRF_PRG | BRF_ESS }, //  0 Arm code (Encrypted)
@@ -814,7 +814,7 @@ static INT32 backfireaInit()
 
 struct BurnDriver BurnDrvBackfirea = {
 	"backfirea", "backfire", NULL, NULL, "1995",
-	"Backfire! (Japan, set 2)\0", "uses analog wheel by default", "Data East Corporation", "DECO IC16",
+	"Backfire! (Data East, Japan, set 2)\0", "uses analog wheel by default", "Data East Corporation", "DECO IC16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_RACING, 0,
 	NULL, backfireaRomInfo, backfireaRomName, NULL, NULL, NULL, NULL, BackfireInputInfo, BackfireDIPInfo,

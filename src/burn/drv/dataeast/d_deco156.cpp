@@ -783,7 +783,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Heavy Smash (Europe version -2)
+// Heavy Smash (Europe version -2, 1993/06/30)
 
 static struct BurnRomInfo hvysmshRomDesc[] = {
 	{ "lt00-2.2j",		0x080000, 0xf6e10fc0, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -804,7 +804,7 @@ STD_ROM_FN(hvysmsh)
 
 struct BurnDriver BurnDrvHvysmsh = {
 	"hvysmsh", NULL, NULL, NULL, "1993",
-	"Heavy Smash (Europe version -2)\0", NULL, "Data East Corporation", "DECO 156",
+	"Heavy Smash (Europe version -2, 1993/06/30)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshRomInfo, hvysmshRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
@@ -813,7 +813,7 @@ struct BurnDriver BurnDrvHvysmsh = {
 };
 
 
-// Heavy Smash (Japan version -2)
+// Heavy Smash (Japan version -2, 1993/06/30)
 
 static struct BurnRomInfo hvysmshjRomDesc[] = {
 	{ "lp00-2.2j",		0x080000, 0x3f8fd724, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -834,7 +834,7 @@ STD_ROM_FN(hvysmshj)
 
 struct BurnDriver BurnDrvHvysmshj = {
 	"hvysmshj", "hvysmsh", NULL, NULL, "1993",
-	"Heavy Smash (Japan version -2)\0", NULL, "Data East Corporation", "DECO 156",
+	"Heavy Smash (Japan version -2, 1993/06/30)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshjRomInfo, hvysmshjRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
@@ -843,7 +843,7 @@ struct BurnDriver BurnDrvHvysmshj = {
 };
 
 
-// Heavy Smash (Asia version -4)
+// Heavy Smash (Asia version -4, 1993/09/06)
 
 static struct BurnRomInfo hvysmshaRomDesc[] = {
 	{ "xx00-4.2j",		0x080000, 0x333a92c1, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -864,7 +864,7 @@ STD_ROM_FN(hvysmsha)
 
 struct BurnDriver BurnDrvHvysmsha = {
 	"hvysmsha", "hvysmsh", NULL, NULL, "1993",
-	"Heavy Smash (Asia version -4)\0", NULL, "Data East Corporation", "DECO 156",
+	"Heavy Smash (Asia version -4, 1993/09/06)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshaRomInfo, hvysmshaRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
@@ -873,7 +873,7 @@ struct BurnDriver BurnDrvHvysmsha = {
 };
 
 
-// World Cup Volley '95 (Asia v1.0)
+// World Cup Volleyball '95 (Asia Ver. 1.0)
 
 static struct BurnRomInfo wcvol95RomDesc[] = {
 	{ "pw00-0.2f",		0x080000, 0x86765209, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -895,7 +895,7 @@ STD_ROM_FN(wcvol95)
 
 struct BurnDriver BurnDrvWcvol95 = {
 	"wcvol95", NULL, NULL, NULL, "1995",
-	"World Cup Volley '95 (Asia v1.0)\0", NULL, "Data East Corporation", "DECO 156",
+	"World Cup Volleyball '95 (Asia Ver. 1.0)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, wcvol95RomInfo, wcvol95RomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
@@ -904,7 +904,7 @@ struct BurnDriver BurnDrvWcvol95 = {
 };
 
 
-// World Cup Volley '95 (Japan v1.0)
+// World Cup Volleyball '95 (Japan Ver. 1.0)
 
 static struct BurnRomInfo wcvol95jRomDesc[] = {
 	{ "pn00-0.2f",		0x080000, 0xc9ed2006, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -926,7 +926,7 @@ STD_ROM_FN(wcvol95j)
 
 struct BurnDriver BurnDrvWcvol95j = {
 	"wcvol95j", "wcvol95", NULL, NULL, "1995",
-	"World Cup Volley '95 (Japan v1.0)\0", NULL, "Data East Corporation", "DECO 156",
+	"World Cup Volleyball '95 (Japan Ver. 1.0)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, wcvol95jRomInfo, wcvol95jRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,
@@ -935,7 +935,7 @@ struct BurnDriver BurnDrvWcvol95j = {
 };
 
 
-// World Cup Volley '95 Extra Version (Asia v2.0B)
+// World Cup Volleyball '95 Extra Version (Asia Ver. 2.0B)
 
 static struct BurnRomInfo wcvol95xRomDesc[] = {
 	{ "2f.bin",		0x080000, 0xac06633d, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -957,7 +957,7 @@ STD_ROM_FN(wcvol95x)
 
 struct BurnDriver BurnDrvWcvol95x = {
 	"wcvol95x", "wcvol95", NULL, NULL, "1995",
-	"World Cup Volley '95 Extra Version (Asia v2.0B)\0", NULL, "Data East Corporation", "DECO 156",
+	"World Cup Volleyball '95 Extra Version (Asia Ver. 2.0B)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, wcvol95xRomInfo, wcvol95xRomName, NULL, NULL, NULL, NULL, HvysmshInputInfo, NULL,

@@ -355,8 +355,14 @@ static int dx9ArtUpload(BurnArtworkLayers* pL)
 	if (pL->nWidth != nArtWidth || pL->nHeight != nArtHeight || pArtTexture[0] == NULL) {
 		dx9ArtRelease();
 
-		nArtTexWidth = GetTextureSize(pL->nWidth);
-		nArtTexHeight = GetTextureSize(pL->nHeight);
+		// the exact size if the card can (clamped, no mipmaps: fine for "conditional" support too)
+		D3DCAPS9 caps;
+		bool bPow2 = true;
+		if (SUCCEEDED(pD3DDevice->GetDeviceCaps(&caps))) {
+			bPow2 = (caps.TextureCaps & D3DPTEXTURECAPS_POW2) && !(caps.TextureCaps & D3DPTEXTURECAPS_NONPOW2CONDITIONAL);
+		}
+		nArtTexWidth = bPow2 ? GetTextureSize(pL->nWidth) : pL->nWidth;
+		nArtTexHeight = bPow2 ? GetTextureSize(pL->nHeight) : pL->nHeight;
 		for (int i = 0; i < 3; i++) {
 			if (FAILED(pD3DDevice->CreateTexture(nArtTexWidth, nArtTexHeight, 1, 0, D3DFMT_X8R8G8B8, D3DPOOL_MANAGED, &pArtTexture[i], NULL))) {
 				dx9ArtRelease();
@@ -368,14 +374,25 @@ static int dx9ArtUpload(BurnArtworkLayers* pL)
 	}
 
 	if (pL->nSerial != nArtSerial) {
+	// what to send: only the layers that changed, and if we have the previous version,
+	// only the part that changed (a lamp blinking doesn't resend everything)
+	bool bPart = (nArtSerial == pL->nSerial - 1) && pL->nDirtyW > 0 && pL->nDirtyH > 0;
+	int nX = bPart ? pL->nDirtyX : 0, nY = bPart ? pL->nDirtyY : 0;
+	int nW = bPart ? pL->nDirtyW : pL->nWidth, nH = bPart ? pL->nDirtyH : pL->nHeight;
 		UINT32* pLayer[3] = { pL->pUnder, pL->pMul, pL->pAdd };
+		int nLayerSerial[3] = { pL->nSerialUnder, pL->nSerialOver, pL->nSerialOver };
 		for (int i = 0; i < 3; i++) {
+			if (nArtSerial >= 0 && nLayerSerial[i] <= nArtSerial) {
+				continue;					// this one hasn't changed
+			}
+			bool bAll = (nArtSerial < 0) || !bPart;
+			RECT r = { bAll ? 0 : nX, bAll ? 0 : nY, bAll ? pL->nWidth : nX + nW, bAll ? pL->nHeight : nY + nH };
 			D3DLOCKED_RECT lr;
-			if (FAILED(pArtTexture[i]->LockRect(0, &lr, NULL, 0))) {
+			if (FAILED(pArtTexture[i]->LockRect(0, &lr, &r, D3DLOCK_NOSYSLOCK))) {	// managed: only r goes to the card
 				return 1;
 			}
-			for (int y = 0; y < pL->nHeight; y++) {
-				memcpy((unsigned char*)lr.pBits + y * lr.Pitch, pLayer[i] + y * pL->nPitch, pL->nWidth * 4);
+			for (int y = r.top; y < r.bottom; y++) {
+				memcpy((unsigned char*)lr.pBits + (y - r.top) * lr.Pitch, pLayer[i] + y * pL->nPitch + r.left, (r.right - r.left) * 4);
 			}
 			pArtTexture[i]->UnlockRect(0);
 		}
@@ -2095,8 +2112,10 @@ hardfx_config HardFXConfigs[] = {
 #undef D3DFVF_LVERTEX2
 #define D3DFVF_LVERTEX2 (D3DFVF_XYZRHW | D3DFVF_TEX1)
 
-IDirect3DTexture9* emuTexture[2];
-static unsigned char mbCurrentTexture = 0;	// current texture for motion blur
+IDirect3DTexture9* emuTexture[2];			// on the card, used in turn (and both for motion blur)
+static IDirect3DTexture9* pAltStage[2] = { NULL, NULL };	// system memory copies of the image, used in turn so
+static int nAltStage = 0;						// locking one never waits for the card to finish with the other
+static unsigned char mbCurrentTexture = 0;	// current texture (motion blur: the previous one is the other)
 static bool mbTextureEmpty = true;
 static d3dvertex vertex[4];
 static transp_vertex transpVertex[4];
@@ -2128,7 +2147,9 @@ static int dx9AltSelectFullscreenMode(VidSDisplayScoreInfo* pScoreInfo)
 
 static void dx9AltReleaseTexture()
 {
-	RELEASE(pTexture)
+	pTexture = NULL;						// one of pAltStage[]
+	RELEASE(pAltStage[0])
+	RELEASE(pAltStage[1])
 	RELEASE(emuTexture[0])
 	RELEASE(emuTexture[1])
 }
@@ -2166,9 +2187,13 @@ static int dx9AltExit()
 
 static int dx9AltResize(int width, int height)
 {
-	if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_SYSTEMMEM, &pTexture, NULL))) {
-		return 1;
+	for (int i = 0; i < 2; i++) {
+		if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_SYSTEMMEM, &pAltStage[i], NULL))) {
+			return 1;
+		}
 	}
+	nAltStage = 0;
+	pTexture = pAltStage[0];
 
 	if (!emuTexture[0]) {
 		if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_DEFAULT, &emuTexture[0], NULL))) {
@@ -2176,7 +2201,7 @@ static int dx9AltResize(int width, int height)
 		}
 	}
 
-	if (!emuTexture[1] && bVidMotionBlur) {
+	if (!emuTexture[1]) {
 		if (FAILED(pD3DDevice->CreateTexture(width, height, 1, 0, textureFormat, D3DPOOL_DEFAULT, &emuTexture[1], NULL))) {
 			return 1;
 		}
@@ -2782,9 +2807,24 @@ static int dx9AltRender()  // MemToSurf
 	pD3DDevice->BeginScene();
 
 	{
-		// Copy the game image onto a texture for rendering
+		// Copy the game image onto a texture for rendering. Only the part the image uses is
+		// locked: that's all UpdateTexture() sends to the card (the texture is a power of 2,
+		// and sized for the prescale zoom)
+		pTexture = pAltStage[nAltStage];
+
+		RECT rUsed = { 0, 0, nGameImageWidth, nGameImageHeight };
+		if (nPreScaleEffect) {
+			if (nPreScale & 1) rUsed.right *= nPreScaleZoom;
+			if (nPreScale & 2) rUsed.bottom *= nPreScaleZoom;
+		}
+		if (rUsed.right > nTextureWidth) rUsed.right = nTextureWidth;
+		if (rUsed.bottom > nTextureHeight) rUsed.bottom = nTextureHeight;
+
 		D3DLOCKED_RECT d3dlr;
-		pTexture->LockRect(0, &d3dlr, 0, 0);
+		d3dlr.pBits = NULL;
+		if (FAILED(pTexture->LockRect(0, &d3dlr, &rUsed, D3DLOCK_NOSYSLOCK))) {
+			d3dlr.pBits = NULL;
+		}
 		if (d3dlr.pBits) {
 			int pitch = d3dlr.Pitch;
 			unsigned char* pd = (unsigned char*)d3dlr.pBits;
@@ -2810,6 +2850,7 @@ static int dx9AltRender()  // MemToSurf
 	}
 
 	pD3DDevice->UpdateTexture(pTexture, emuTexture[mbCurrentTexture]);
+	nAltStage ^= 1;
 
 	if (bVidMotionBlur) {
 		// Motion Blur enabled
@@ -2841,6 +2882,7 @@ static int dx9AltRender()  // MemToSurf
 		} else {
 			pD3DDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, 2, vertex, sizeof(d3dvertex));
 		}
+		mbCurrentTexture ^= 1;	// next frame goes into the other one, not the one the card may still be drawing
 	}
 
 	if (bArt) {

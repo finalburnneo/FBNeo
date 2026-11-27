@@ -224,6 +224,39 @@ static struct _tlcs900_state sCpu;
 static UINT8 (*tlcs900_read_callback)(UINT32 a) = NULL;
 static void (*tlcs900_write_callback)(UINT32 a, UINT8 d) = NULL;
 
+// optional on-chip I/O hooks (tmp95c061)
+static UINT8 (*tlcs900_port_read)(INT32 port) = NULL;
+static void (*tlcs900_port_write)(INT32 port, UINT8 data) = NULL;
+static UINT16 (*tlcs900_an_read)(INT32 ch) = NULL;
+static UINT16 tlcs900_ad_result[4];
+
+static INT32 port_index(UINT32 offset)	// port register -> port number (10 = A, 11 = B), or -1
+{
+	switch (offset) {
+		case 0x01: return 1;
+		case 0x06: return 2;
+		case 0x0d: return 5;
+		case 0x12: return 6;
+		case 0x13: return 7;
+		case 0x18: return 8;
+		case 0x19: return 9;
+		case 0x1e: return 10;
+		case 0x1f: return 11;
+	}
+	return -1;
+}
+
+void tlcs900SetPortHandlers(UINT8 (*read)(INT32), void (*write)(INT32, UINT8))
+{
+	tlcs900_port_read = read;
+	tlcs900_port_write = write;
+}
+
+void tlcs900SetAnalogHandler(UINT16 (*read)(INT32))
+{
+	tlcs900_an_read = read;
+}
+
 #define MEM_SIZE		(1 << 24)
 #define MEM_RANGE		(MEM_SIZE - 1)
 #define MEM_PAGE_SHIFT	8
@@ -529,6 +562,10 @@ void tlcs900Reset()
 
 void tlcs900Exit()
 {
+	tlcs900_port_read = NULL;
+	tlcs900_port_write = NULL;
+	tlcs900_an_read = NULL;
+
 }
 
 
@@ -802,6 +839,19 @@ inline void tlcs900_handle_ad( tlcs900_state *cpustate )
 		if ( cpustate->ad_cycles_left <= 0 )
 		{
 			/* Store A/D converted value */
+			if (tlcs900_an_read) {
+				const UINT8 mode = cpustate->reg[ADMOD];
+				if (!(mode & 0x10)) {	// fixed channel
+					tlcs900_ad_result[mode & 3] = tlcs900_an_read(mode & 3) & 0x3ff;
+				} else {				// sweep AN0 .. ANn
+					for (INT32 ch = 0; ch <= (mode & 3); ch++)
+						tlcs900_ad_result[ch] = tlcs900_an_read(ch) & 0x3ff;
+				}
+				for (INT32 ch = 0; ch < 4; ch++) {
+					cpustate->reg[ADREG0L + ch * 2] = (tlcs900_ad_result[ch] << 6) | 0x3f;
+					cpustate->reg[ADREG0H + ch * 2] = tlcs900_ad_result[ch] >> 2;
+				}
+			} else
 			switch( cpustate->reg[ADMOD] & 0x03 )
 			{
 			case 0x00:	/* AN0 */
@@ -820,6 +870,10 @@ inline void tlcs900_handle_ad( tlcs900_state *cpustate )
 
 			cpustate->reg[INTE0AD] |= 0x80;
 			cpustate->check_irqs = 1;
+
+			/* repeat mode */
+			if (tlcs900_an_read && (cpustate->reg[ADMOD] & 0x20))
+				cpustate->ad_cycles_left = (cpustate->reg[ADMOD] & 0x08) ? 320 : 160;
 		}
 	}
 }
@@ -1201,6 +1255,16 @@ UINT8 tlcs900_internal_r(UINT32 offset)
 {
 	tlcs900_state *cpustate = &sCpu;
 
+	if (tlcs900_port_read) {
+		INT32 port = port_index(offset);
+		if (port >= 0) return tlcs900_port_read(port);
+	}
+
+	if (tlcs900_an_read && offset >= ADREG0L && offset <= ADREG3H) {
+		cpustate->reg[ADMOD] &= ~0x80;						// EOCF cleared by any ADREG read
+		if (!(offset & 1)) cpustate->reg[INTE0AD] &= ~0x80;
+	}
+
 	return cpustate->reg[ offset ];
 }
 
@@ -1330,6 +1394,11 @@ void tlcs900_internal_w(UINT32 offset, UINT8 data)
 	}
 
 	cpustate->check_irqs = 1;
+	if (tlcs900_port_write) {
+		INT32 port = port_index(offset);
+		if (port >= 0 && port != 9) tlcs900_port_write(port, data);
+	}
+
 	cpustate->reg[ offset ] = data;
 }
 
@@ -1350,6 +1419,8 @@ INT32 tlcs900Scan(INT32 nAction)
 		SCAN_OFF(sCpu.p2_reg8,  (UINT8*) &sCpu, nAction);
 		SCAN_OFF(sCpu.p2_reg16, (UINT16*)&sCpu, nAction);
 		SCAN_OFF(sCpu.p2_reg32, (UINT32*)&sCpu, nAction);
+
+		if (tlcs900_an_read) SCAN_VAR(tlcs900_ad_result);
 	}
 
 	return 0;

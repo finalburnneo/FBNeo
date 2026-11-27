@@ -5413,11 +5413,11 @@ static struct BurnRomInfo zeroteamsrRomDesc[] = {
 STD_ROM_PICK(zeroteamsr)
 STD_ROM_FN(zeroteamsr)
 
-struct BurnDriver BurnDrvZeroteamsr = {
+struct BurnDriverD BurnDrvZeroteamsr = {
 	"zeroteamsr", "zeroteam", NULL, NULL, "1993",
 	"Zero Team Suicide Revival Kit\0", "No game code! Black screen normal!", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, zeroteamsrRomInfo, zeroteamsrRomName, NULL, NULL, NULL, NULL, ZeroteamInputInfo, ZeroteamDIPInfo,
 	ZeroteamInit, DrvExit, DrvFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

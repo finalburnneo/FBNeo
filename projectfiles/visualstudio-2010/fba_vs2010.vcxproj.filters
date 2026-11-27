@@ -1149,6 +1149,9 @@
     <ClCompile Include="..\..\src\burn\snd\ymz280b.cpp">
       <Filter>Burn\snd</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\rpp324.cpp">
+      <Filter>Burn\snd</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\devices\8255ppi.cpp">
       <Filter>Burn\devices</Filter>
     </ClCompile>
@@ -2020,6 +2023,9 @@
       <Filter>Burn\drv\sega</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\d_xbrd.cpp">
+      <Filter>Burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_y2.cpp">
       <Filter>Burn\drv\sega</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\d_ybrd.cpp">

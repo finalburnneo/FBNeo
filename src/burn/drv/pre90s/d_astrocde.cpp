@@ -621,7 +621,7 @@ static struct BurnDIPInfo RobbyDIPList[]=
 	{0x00, 0x01, 0x08, 0x08, "Off"									},
 	{0x00, 0x01, 0x08, 0x00, "On"									},
 
-	{0   , 0xfe, 0   ,    0, "Use NVRAM"							},
+	{0   , 0xfe, 0   ,    2, "Use NVRAM"							},
 	{0x01, 0x01, 0x01, 0x00, "No"									},
 	{0x01, 0x01, 0x01, 0x01, "Yes"									},
 
@@ -2935,7 +2935,7 @@ struct BurnDriver BurnDrvProfpac = {
 };
 
 
-// Demons & Dragons (Prototype)
+// Demons & Dragons (prototype)
 
 static struct BurnRomInfo demndrgnRomDesc[] = {
 	{ "dd-x1.bin",			0x2000, 0x9aeaf79e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -2958,7 +2958,7 @@ STD_ROM_FN(demndrgn)
 
 struct BurnDriver BurnDrvDemndrgn = {
 	"demndrgn", NULL, NULL, NULL, "1982",
-	"Demons & Dragons (Prototype)\0", "No Sound", "Dave Nutting Associates / Bally Midway", "Miscellaneous",
+	"Demons & Dragons (prototype)\0", "No Sound", "Dave Nutting Associates / Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, demndrgnRomInfo, demndrgnRomName, NULL, NULL, NULL, NULL, DemndrgnInputInfo, DemndrgnDIPInfo,

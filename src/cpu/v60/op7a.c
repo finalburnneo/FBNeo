@@ -40,11 +40,12 @@ static UINT32 f7bBamOffset1, f7bBamOffset2;
 #define F7CEND()	\
 	return amLength1 + amLength2 + 3;
 
+// a 32-bit field gets a full mask (1 << 32 is undefined)
 #define F7BCREATEBITMASK(x)	\
-	x=((1<<(x))-1)
+	x=(((x) >= 32) ? 0xffffffff : ((1u<<(x))-1))
 
 #define F7CCREATEBITMASK(x)	\
-	x=((1<<(x))-1)
+	x=(((x) >= 32) ? 0xffffffff : ((1u<<(x))-1))
 
 static void F7aDecodeOperands(UINT32 (*DecodeOp1)(void), UINT8 dim1, UINT32 (*DecodeOp2)(void), UINT8 dim2)
 {
@@ -184,19 +185,26 @@ static UINT32 opCMPSTRB(UINT8 bFill, UINT8 bStop)
 
 	F7aDecodeOperands(ReadAMAddress,0,ReadAMAddress,0);
 
-	// Filling
+	// the shorter string is extended with the filler for the comparison only (not written)
 	if (bFill)
 	{
-		if (f7aLenOp1 < f7aLenOp2)
+		dest=(f7aLenOp1 > f7aLenOp2 ? f7aLenOp1 : f7aLenOp2);
+		_Z = 0;
+		_S = 0;
+		for (i=0;i<dest;i++)
 		{
-			for (i=f7aLenOp1;i<f7aLenOp2;i++)
-				MemWrite8(f7aOp1+i,(UINT8)R26);
+			c1 = (i < f7aLenOp1) ? MemRead8(f7aOp1+i) : (UINT8)R26;
+			c2 = (i < f7aLenOp2) ? MemRead8(f7aOp2+i) : (UINT8)R26;
+			if (c1 != c2)
+			{
+				_S = (c1 > c2);
+				break;
+			}
 		}
-		else if (f7aLenOp2 < f7aLenOp1)
-		{
-			for (i=f7aLenOp2;i<f7aLenOp1;i++)
-				MemWrite8(f7aOp2+i,(UINT8)R26);
-		}
+		R28=f7aLenOp1+i;
+		R27=f7aLenOp2+i;
+		if (i == dest) _Z = 1;
+		F7AEND();
 	}
 
 	dest=(f7aLenOp1 < f7aLenOp2 ? f7aLenOp1 : f7aLenOp2);
@@ -250,19 +258,26 @@ static UINT32 opCMPSTRH(UINT8 bFill, UINT8 bStop)
 
 	F7aDecodeOperands(ReadAMAddress,0,ReadAMAddress,0);
 
-	// Filling
+	// the shorter string is extended with the filler for the comparison only (not written)
 	if (bFill)
 	{
-		if (f7aLenOp1 < f7aLenOp2)
+		dest=(f7aLenOp1 > f7aLenOp2 ? f7aLenOp1 : f7aLenOp2);
+		_Z = 0;
+		_S = 0;
+		for (i=0;i<dest;i++)
 		{
-			for (i=f7aLenOp1;i<f7aLenOp2;i++)
-				MemWrite16(f7aOp1+i*2,(UINT16)R26);
+			c1 = (i < f7aLenOp1) ? MemRead16(f7aOp1+i*2) : (UINT16)R26;
+			c2 = (i < f7aLenOp2) ? MemRead16(f7aOp2+i*2) : (UINT16)R26;
+			if (c1 != c2)
+			{
+				_S = (c1 > c2);
+				break;
+			}
 		}
-		else if (f7aLenOp2 < f7aLenOp1)
-		{
-			for (i=f7aLenOp2;i<f7aLenOp1;i++)
-				MemWrite16(f7aOp2+i*2,(UINT16)R26);
-		}
+		R28=f7aLenOp1+i*2;
+		R27=f7aLenOp2+i*2;
+		if (i == dest) _Z = 1;
+		F7AEND();
 	}
 
 	dest=(f7aLenOp1 < f7aLenOp2 ? f7aLenOp1 : f7aLenOp2);
@@ -444,7 +459,7 @@ static UINT32 opMOVSTRDH(UINT8 bFill, UINT8 bStop)
 	if (bFill && f7aLenOp1 < f7aLenOp2)
 	{
 		for (;i<f7aLenOp2;i++)
-			MemWrite16(f7aOp2+(f7aLenOp2-i-1)*2,(UINT16)R26);
+			MemWrite16(f7aOp2+(dest+f7aLenOp2-i-1)*2,(UINT16)R26);
 
 		R27=f7aOp2+(f7aLenOp2-i-1)*2;
 	}

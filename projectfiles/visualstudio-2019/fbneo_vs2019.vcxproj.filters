@@ -1051,6 +1051,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_hangon.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_model1.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\d_outrun.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
@@ -1072,6 +1075,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_xbrd.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\d_y2.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\d_ybrd.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
@@ -1088,6 +1094,12 @@
       <Filter>burn\devices</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\model1_io.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\model1_snd.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp">
@@ -2680,6 +2692,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5195.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5292.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\usb_snd.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
@@ -2837,6 +2852,9 @@
       <Filter>burn\snd</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\snd\ymz770.cpp">
+      <Filter>burn\snd</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\burn\snd\rpp324.cpp">
       <Filter>burn\snd</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\burn\burn_bitmap.cpp">
@@ -3607,6 +3625,9 @@
     <ClCompile Include="..\..\src\burn\drv\pst90s\d_itech8.cpp">
       <Filter>burn\drv\pst90s</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\mb86233\mb86233.cpp">
+      <Filter>cpus\mb86233</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\cpu\mb88xx\mb88xx.cpp">
       <Filter>cpus\mb88xx</Filter>
     </ClCompile>
@@ -4130,6 +4151,9 @@
     </Filter>
     <Filter Include="cpus\i386">
       <UniqueIdentifier>{008dfd61-894d-4efe-b43d-a6d7db1d9bb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cpus\mb86233">
+      <UniqueIdentifier>{6b1f4a2e-93c8-4d57-a0e1-5c2d8f7b3e91}</UniqueIdentifier>
     </Filter>
     <Filter Include="cpus\mb88xx">
       <UniqueIdentifier>{0a56ddcb-1397-4ddb-aa78-0188e61a0da9}</UniqueIdentifier>

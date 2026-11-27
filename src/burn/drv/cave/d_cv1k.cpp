@@ -81,31 +81,31 @@ STDINPUTINFO(Cv1k)
 
 static struct BurnDIPInfo DefaultDIPList[]=
 {
-	{0   , 0xfe, 0   ,    2, "Thread Blitter"	},
+	{0   , 0xfd, 0   ,    2, "Thread Blitter"	},
 	{0x01, 0x01, 0x01, 0x00, "Off"				},
 	{0x01, 0x01, 0x01, 0x01, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Speed Hacks"		},
+	{0   , 0xfd, 0   ,    2, "Speed Hacks"		},
 	{0x01, 0x01, 0x02, 0x00, "Off"				},
 	{0x01, 0x01, 0x02, 0x02, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Thread Sync"		},
+	{0   , 0xfd, 0   ,    2, "Thread Sync"		},
 	{0x01, 0x01, 0x04, 0x00, "Before Exec"		},
 	{0x01, 0x01, 0x04, 0x04, "Before Draw"		},
 
-	{0   , 0xfe, 0   ,    2, "Blitter Timing"	},
+	{0   , 0xfd, 0   ,    2, "Blitter Timing"	},
 	{0x02, 0x01, 0x20, 0x00, "Accurate (Buffis)"},
 	{0x02, 0x01, 0x20, 0x20, "Antiquity"		},
 
-	{0   , 0xfe, 0   ,    2, "Clip Margin (test)"},
+	{0   , 0xfd, 0   ,    2, "Clip Margin (test)"},
 	{0x02, 0x01, 0x40, 0x40, "0  (off)"			},
 	{0x02, 0x01, 0x40, 0x00, "32 (on)"			},
 
-	{0   , 0xfe, 0   ,    2, "Busy Sleep (test)"},
+	{0   , 0xfd, 0   ,    2, "Busy Sleep (test)"},
 	{0x02, 0x01, 0x80, 0x80, "Off"				},
 	{0x02, 0x01, 0x80, 0x00, "On"				},
 
-	{0   , 0xfe, 0   , 0x20, "Blitter Delay"	},
+	{0   , 0xfd, 0   , 0x20, "Blitter Delay"	},
 	{0x02, 0x01, 0x1f, 0x00, "Off"				},
 	{0x02, 0x01, 0x1f, 0x01, "50"				},
 	{0x02, 0x01, 0x1f, 0x02, "51"				},
@@ -139,7 +139,7 @@ static struct BurnDIPInfo DefaultDIPList[]=
 	{0x02, 0x01, 0x1f, 0x1e, "79"				},
 	{0x02, 0x01, 0x1f, 0x1f, "80"				},
 
-	{0   , 0xfe, 0   ,   10, "el_rika's CPU Rate tenth-percent adjust"},
+	{0   , 0xfd, 0   ,   10, "el_rika's CPU Rate tenth-percent adjust"},
 	{0x03, 0x01, 0x0f, 0x00, ".0"				},
 	{0x03, 0x01, 0x0f, 0x01, ".1"				},
 	{0x03, 0x01, 0x0f, 0x02, ".2"				},
@@ -674,7 +674,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-// Mushihime-Sama (2004/10/12.MASTER VER.)
+// Mushihime-Sama (Japan, 2004/10/12.MASTER VER.)
 
 static struct BurnRomInfo mushisamRomDesc[] = {
 	{ "mushisam_u4",	0x0200000, 0x15321b30, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -690,8 +690,8 @@ STD_ROM_FN(mushisam)
 
 struct BurnDriver BurnDrvMushisam = {
 	"mushisam", NULL, NULL, NULL, "2004",
-	"Mushihime-Sama (2004/10/12.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA011",
-	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (2004/10/12.MASTER VER.)\0", NULL, NULL, NULL,
+	"Mushihime-Sama (Japan, 2004/10/12.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA011",
+	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (Japan, 2004/10/12.MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mushisamRomInfo, mushisamRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -699,7 +699,7 @@ struct BurnDriver BurnDrvMushisam = {
 };
 
 
-// Mushihime-Sama (2004/10/12 MASTER VER.)
+// Mushihime-Sama (Japan, 2004/10/12 MASTER VER.)
 
 static struct BurnRomInfo mushisamaRomDesc[] = {
 	{ "mushisama_u4",	0x0200000, 0x0b5b30b2, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -715,8 +715,8 @@ STD_ROM_FN(mushisama)
 
 struct BurnDriver BurnDrvMushisama = {
 	"mushisama", "mushisam", NULL, NULL, "2004",
-	"Mushihime-Sama (2004/10/12 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA011",
-	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (2004/10/12 MASTER VER.)\0", NULL, NULL, NULL,
+	"Mushihime-Sama (Japan, 2004/10/12 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA011",
+	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (Japan, 2004/10/12 MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mushisamaRomInfo, mushisamaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -724,7 +724,7 @@ struct BurnDriver BurnDrvMushisama = {
 };
 
 
-// Mushihime-Sama (2004/10/12 MASTER VER)
+// Mushihime-Sama (Japan, 2004/10/12 MASTER VER)
 
 static struct BurnRomInfo mushisambRomDesc[] = {
 	{ "mushisamb_u4",	0x0200000, 0x9f1c7f51, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -740,8 +740,8 @@ STD_ROM_FN(mushisamb)
 
 struct BurnDriver BurnDrvMushisamb = {
 	"mushisamb", "mushisam", NULL, NULL, "2004",
-	"Mushihime-Sama (2004/10/12 MASTER VER)\0", NULL, "Cave (AMI license)", "CA011",
-	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (2004/10/12 MASTER VER)\0", NULL, NULL, NULL,
+	"Mushihime-Sama (Japan, 2004/10/12 MASTER VER)\0", NULL, "Cave (AMI license)", "CA011",
+	L"Mushihime-Sama\0\u866b\u59eb\u3055\u307e (Japan, 2004/10/12 MASTER VER)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mushisambRomInfo, mushisambRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvMushisamb = {
 };
 
 
-// Espgaluda II (2005/11/14.MASTER VER.)
+// Espgaluda II (Japan, 2005/11/14.MASTER VER.)
 
 static struct BurnRomInfo espgal2RomDesc[] = {
 	{ "espgal2_u4",	0x0200000, 0x2cb37c03, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -765,8 +765,8 @@ STD_ROM_FN(espgal2)
 
 struct BurnDriver BurnDrvEspgal2 = {
 	"espgal2", NULL, NULL, NULL, "2005",
-	"Espgaluda II (2005/11/14.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA013",
-	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14.MASTER VER.)\0", NULL, NULL, NULL,
+	"Espgaluda II (Japan, 2005/11/14.MASTER VER.)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (Japan, 2005/11/14.MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2RomInfo, espgal2RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -774,7 +774,7 @@ struct BurnDriver BurnDrvEspgal2 = {
 };
 
 
-// Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)
+// Espgaluda II (Japan, 2005/11/14 MASTER VER, newer CV1000-B PCB)
 
 static struct BurnRomInfo espgal2aRomDesc[] = {
 	{ "espgal2a_u4",	0x0200000, 0x843608b8, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -790,8 +790,8 @@ STD_ROM_FN(espgal2a)
 
 struct BurnDriver BurnDrvEspgal2a = {
 	"espgal2a", "espgal2", NULL, NULL, "2005",
-	"Espgaluda II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
-	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
+	"Espgaluda II (Japan, 2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (Japan, 2005/11/14 MASTER VER, newer CV1000-B PCB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2aRomInfo, espgal2aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -799,7 +799,7 @@ struct BurnDriver BurnDrvEspgal2a = {
 };
 
 
-// Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)
+// Espgaluda II (Japan, 2005/11/14 MASTER VER, original CV1000-B PCB)
 
 static struct BurnRomInfo espgal2bRomDesc[] = {
 	{ "espgal2b_u4",	0x0200000, 0x09c908bb, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -815,8 +815,8 @@ STD_ROM_FN(espgal2b)
 
 struct BurnDriver BurnDrvEspgal2b = {
 	"espgal2b", "espgal2", NULL, NULL, "2005",
-	"Espgaluda II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
-	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, NULL, NULL,
+	"Espgaluda II (Japan, 2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, "Cave (AMI license)", "CA013",
+	L"Espgaluda II\0\u30a8\u30b9\u30d7\u30ac\u30eb\u30fc\u30c0II (Japan, 2005/11/14 MASTER VER, original CV1000-B PCB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, espgal2bRomInfo, espgal2bRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -824,7 +824,7 @@ struct BurnDriver BurnDrvEspgal2b = {
 };
 
 
-// Puzzle! Mushihime-Tama (2005/09/09.MASTER VER)
+// Puzzle! Mushihime-Tama (Japan, 2005/09/09.MASTER VER)
 
 static struct BurnRomInfo mushitamRomDesc[] = {
 	{ "mushitam_u4",	0x0200000, 0xc49eb6b1, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -840,7 +840,7 @@ STD_ROM_FN(mushitam)
 
 struct BurnDriver BurnDrvMushitam = {
 	"mushitam", NULL, NULL, NULL, "2005",
-	"Puzzle! Mushihime-Tama (2005/09/09.MASTER VER)\0", NULL, "Cave (AMI license)", "CA???",
+	"Puzzle! Mushihime-Tama (Japan, 2005/09/09.MASTER VER)\0", NULL, "Cave (AMI license)", "CA???",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_PUZZLE, 0,
 	NULL, mushitamRomInfo, mushitamRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -849,7 +849,7 @@ struct BurnDriver BurnDrvMushitam = {
 };
 
 
-// Puzzle! Mushihime-Tama (2005/09/09 MASTER VER)
+// Puzzle! Mushihime-Tama (Japan, 2005/09/09 MASTER VER)
 
 static struct BurnRomInfo mushitamaRomDesc[] = {
 	{ "mushitama_u4",	0x0200000, 0x4a23e6c8, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -865,7 +865,7 @@ STD_ROM_FN(mushitama)
 
 struct BurnDriver BurnDrvMushitama = {
 	"mushitama", "mushitam", NULL, NULL, "2005",
-	"Puzzle! Mushihime-Tama (2005/09/09 MASTER VER)\0", NULL, "Cave (AMI license)", "CA???",
+	"Puzzle! Mushihime-Tama (Japan, 2005/09/09 MASTER VER)\0", NULL, "Cave (AMI license)", "CA???",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAVE_CV1000, GBF_PUZZLE, 0,
 	NULL, mushitamaRomInfo, mushitamaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -874,7 +874,7 @@ struct BurnDriver BurnDrvMushitama = {
 };
 
 
-// Mushihime-Sama Futari Ver 1.5 (2006/12/8.MASTER VER. 1.54.)
+// Mushihime-Sama Futari Ver 1.5 (Japan, 2006/12/8.MASTER VER. 1.54.)
 
 static struct BurnRomInfo futari15RomDesc[] = {
 	{ "futari15_u4",	0x0200000, 0xe8c5f128, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -890,8 +890,8 @@ STD_ROM_FN(futari15)
 
 struct BurnDriver BurnDrvFutari15 = {
 	"futari15", NULL, NULL, NULL, "2006",
-	"Mushihime-Sama Futari Ver 1.5 (2006/12/8.MASTER VER. 1.54.)\0", NULL, "Cave (AMI license)", "CA015",
-	L"Mushihime-Sama Futari Ver 1.5\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.5 (2006/12/8.MASTER VER. 1.54.)\0", NULL, NULL, NULL,
+	"Mushihime-Sama Futari Ver 1.5 (Japan, 2006/12/8.MASTER VER. 1.54.)\0", NULL, "Cave (AMI license)", "CA015",
+	L"Mushihime-Sama Futari Ver 1.5\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.5 (Japan, 2006/12/8.MASTER VER. 1.54.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futari15RomInfo, futari15RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -899,7 +899,7 @@ struct BurnDriver BurnDrvFutari15 = {
 };
 
 
-// Mushihime-Sama Futari Ver 1.5 (2006/12/8 MASTER VER 1.54)
+// Mushihime-Sama Futari Ver 1.5 (Japan, 2006/12/8 MASTER VER 1.54)
 
 static struct BurnRomInfo futari15aRomDesc[] = {
 	{ "futari15a_u4",	0x0200000, 0xa609cf89, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -915,8 +915,8 @@ STD_ROM_FN(futari15a)
 
 struct BurnDriver BurnDrvFutari15a = {
 	"futari15a", "futari15", NULL, NULL, "2006",
-	"Mushihime-Sama Futari Ver 1.5 (2006/12/8 MASTER VER 1.54)\0", NULL, "Cave (AMI license)", "CA015",
-	L"Mushihime-Sama Futari Ver 1.5\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.5 (2006/12/8 MASTER VER 1.54)\0", NULL, NULL, NULL,
+	"Mushihime-Sama Futari Ver 1.5 (Japan, 2006/12/8 MASTER VER 1.54)\0", NULL, "Cave (AMI license)", "CA015",
+	L"Mushihime-Sama Futari Ver 1.5\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.5 (Japan, 2006/12/8 MASTER VER 1.54)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futari15aRomInfo, futari15aRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -924,7 +924,7 @@ struct BurnDriver BurnDrvFutari15a = {
 };
 
 
-// Mushihime-Sama Futari Ver 1.0 (2006/10/23 MASTER VER.)
+// Mushihime-Sama Futari Ver 1.0 (Japan, 2006/10/23 MASTER VER.)
 
 static struct BurnRomInfo futari10RomDesc[] = {
 	{ "futari10_u4",	0x0200000, 0xb127dca7, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -940,8 +940,8 @@ STD_ROM_FN(futari10)
 
 struct BurnDriver BurnDrvFutari10 = {
 	"futari10", "futari15", NULL, NULL, "2006",
-	"Mushihime-Sama Futari Ver 1.0 (2006/10/23 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA015",
-	L"Mushihime-Sama Futari Ver 1.0\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.0 (2006/10/23 MASTER VER.)\0", NULL, NULL, NULL,
+	"Mushihime-Sama Futari Ver 1.0 (Japan, 2006/10/23 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA015",
+	L"Mushihime-Sama Futari Ver 1.0\0\u866b\u59eb\u3055\u307e\u3075\u305f\u308a Ver 1.0 (Japan, 2006/10/23 MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futari10RomInfo, futari10RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -949,7 +949,7 @@ struct BurnDriver BurnDrvFutari10 = {
 };
 
 
-// Mushihime-Sama Futari Black Label - Another Ver (2009/11/27 INTERNATIONAL BL)
+// Mushihime-Sama Futari Black Label - Another Ver (World, 2009/11/27 INTERNATIONAL BL)
 
 static struct BurnRomInfo futariblRomDesc[] = {
 	{ "futaribli_u4",	0x0200000, 0x1971dd16, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -965,7 +965,7 @@ STD_ROM_FN(futaribl)
 
 struct BurnDriver BurnDrvFutaribl = {
 	"futaribl", NULL, NULL, NULL, "2007",
-	"Mushihime-Sama Futari Black Label - Another Ver (2009/11/27 INTERNATIONAL BL)\0", NULL, "Cave (AMI license)", "CA015B",
+	"Mushihime-Sama Futari Black Label - Another Ver (World, 2009/11/27 INTERNATIONAL BL)\0", NULL, "Cave (AMI license)", "CA015B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futariblRomInfo, futariblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -974,7 +974,7 @@ struct BurnDriver BurnDrvFutaribl = {
 };
 
 
-// Mushihime-Sama Futari Black Label (2007/12/11 BLACK LABEL VER)
+// Mushihime-Sama Futari Black Label (Japan, 2007/12/11 BLACK LABEL VER)
 
 static struct BurnRomInfo futaribljRomDesc[] = {
 	{ "futariblk_u4",	0x0200000, 0xb9467b6d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -990,7 +990,7 @@ STD_ROM_FN(futariblj)
 
 struct BurnDriver BurnDrvFutariblj = {
 	"futariblj", "futaribl", NULL, NULL, "2007",
-	"Mushihime-Sama Futari Black Label (2007/12/11 BLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA015B",
+	"Mushihime-Sama Futari Black Label (Japan, 2007/12/11 BLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA015B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, futaribljRomInfo, futaribljRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -999,7 +999,7 @@ struct BurnDriver BurnDrvFutariblj = {
 };
 
 
-// Mushihime-Sama Matsuri Ver 1.5 (2011/5/23 CAVEMATSURI VER1.5)
+// Mushihime-Sama Matsuri Ver 1.5 (Japan, 2011/5/23 CAVEMATSURI VER1.5)
 
 static struct BurnRomInfo matsuri15RomDesc[] = {
 	{ "matsuri15_u4",	0x0200000, 0x6af99f0e, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1015,7 +1015,7 @@ STD_ROM_FN(matsuri15)
 
 struct BurnDriver BurnDrvMatsuri15 = {
 	"matsuri15", NULL, NULL, NULL, "2011",
-	"Mushihime-Sama Matsuri Ver 1.5 (2011/5/23 CAVEMATSURI VER1.5)\0", NULL, "Cave (AMI license)", "CA0??",
+	"Mushihime-Sama Matsuri Ver 1.5 (Japan, 2011/5/23 CAVEMATSURI VER1.5)\0", NULL, "Cave (AMI license)", "CA0??",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, matsuri15RomInfo, matsuri15RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -1023,7 +1023,7 @@ struct BurnDriver BurnDrvMatsuri15 = {
 	240, 320, 3, 4
 };
 
-// Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)
+// Ibara (Japan, 2005/03/22 MASTER VER.., '06. 3. 7 ver.)
 
 static struct BurnRomInfo ibaraRomDesc[] = {
 	{ "ibara_u4",		0x0200000, 0xd5fb6657, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1039,8 +1039,8 @@ STD_ROM_FN(ibara)
 
 struct BurnDriver BurnDrvIbara = {
 	"ibara", NULL, NULL, NULL, "2005",
-	"Ibara (2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, "Cave (AMI license)", "CA012",
-	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, NULL, NULL,
+	"Ibara (Japan, 2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, "Cave (AMI license)", "CA012",
+	L"Ibara\0\u92f3\u8594\u8587 (Japan, 2005/03/22 MASTER VER.., '06. 3. 7 ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibaraRomInfo, ibaraRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1048,7 +1048,7 @@ struct BurnDriver BurnDrvIbara = {
 };
 
 
-// Ibara (2005/03/22 MASTER VER..)
+// Ibara (Japan, 2005/03/22 MASTER VER..)
 
 static struct BurnRomInfo ibaraoRomDesc[] = {
 	{ "ibarao_u4",		0x0200000, 0x8e6c155d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1064,8 +1064,8 @@ STD_ROM_FN(ibarao)
 
 struct BurnDriver BurnDrvIbarao = {
 	"ibarao", "ibara", NULL, NULL, "2005",
-	"Ibara (2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
-	L"Ibara\0\u92f3\u8594\u8587 (2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
+	"Ibara (Japan, 2005/03/22 MASTER VER..)\0", NULL, "Cave (AMI license)", "CA012",
+	L"Ibara\0\u92f3\u8594\u8587 (Japan, 2005/03/22 MASTER VER..)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibaraoRomInfo, ibaraoRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1073,7 +1073,7 @@ struct BurnDriver BurnDrvIbarao = {
 };
 
 
-// Ibara Kuro Black Label (2006/02/06. MASTER VER.)
+// Ibara Kuro Black Label (Japan, 2006/02/06. MASTER VER.)
 
 static struct BurnRomInfo ibarablkRomDesc[] = {
 	{ "ibarablk_u4",	0x0200000, 0xee1f1f77, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1089,7 +1089,7 @@ STD_ROM_FN(ibarablk)
 
 struct BurnDriver BurnDrvIbarablk = {
 	"ibarablk", NULL, NULL, NULL, "2006",
-	"Ibara Kuro Black Label (2006/02/06. MASTER VER.)\0", NULL, "Cave (AMI license)", "CA012B",
+	"Ibara Kuro Black Label (Japan, 2006/02/06. MASTER VER.)\0", NULL, "Cave (AMI license)", "CA012B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibarablkRomInfo, ibarablkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
@@ -1098,7 +1098,7 @@ struct BurnDriver BurnDrvIbarablk = {
 };
 
 
-// Ibara Kuro Black Label (2006/02/06 MASTER VER.)
+// Ibara Kuro Black Label (Japan, 2006/02/06 MASTER VER.)
 
 static struct BurnRomInfo ibarablkaRomDesc[] = {
 	{ "ibarablka_u4",	0x0200000, 0xa9d43839, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1114,7 +1114,7 @@ STD_ROM_FN(ibarablka)
 
 struct BurnDriver BurnDrvIbarablka = {
 	"ibarablka", "ibarablk", NULL, NULL, "2006",
-	"Ibara Kuro Black Label (2006/02/06 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA012B",
+	"Ibara Kuro Black Label (Japan, 2006/02/06 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA012B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, ibarablkaRomInfo, ibarablkaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
@@ -1123,7 +1123,7 @@ struct BurnDriver BurnDrvIbarablka = {
 };
 
 
-// Deathsmiles (2007/10/09 MASTER VER)
+// Deathsmiles (Japan, 2007/10/09 MASTER VER)
 
 static struct BurnRomInfo deathsmlRomDesc[] = {
 	{ "u4",				0x0200000, 0x1a7b98bf, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1139,8 +1139,8 @@ STD_ROM_FN(deathsml)
 
 struct BurnDriver BurnDrvDeathsml = {
 	"deathsml", NULL, NULL, NULL, "2007",
-	"Deathsmiles (2007/10/09 MASTER VER)\0", NULL, "Cave (AMI license)", "CA017",
-	L"Deathsmiles\0\uc730\ub930\ub930\ua430\ueb30\uba30 (2007/10/09 MASTER VER)\0", NULL, NULL, NULL,
+	"Deathsmiles (Japan, 2007/10/09 MASTER VER)\0", NULL, "Cave (AMI license)", "CA017",
+	L"Deathsmiles\0\uc730\ub930\ub930\ua430\ueb30\uba30 (Japan, 2007/10/09 MASTER VER)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, deathsmlRomInfo, deathsmlRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1148,7 +1148,7 @@ struct BurnDriver BurnDrvDeathsml = {
 };
 
 
-// Muchi Muchi Pork! (2007/ 4/17 MASTER VER.)
+// Muchi Muchi Pork! (Japan, 2007/ 4/17 MASTER VER.)
 
 static struct BurnRomInfo mmporkRomDesc[] = {
 	{ "u4",				0x0200000, 0xd06cfa42, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1164,8 +1164,8 @@ STD_ROM_FN(mmpork)
 
 struct BurnDriver BurnDrvMmpork = {
 	"mmpork", NULL, NULL, NULL, "2007",
-	"Muchi Muchi Pork! (2007/ 4/17 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA016",
-	L"Muchi Muchi Pork!\0\u3080\u3061\u3080\u3061\u30dd\u30fc\u30af! (2007/ 4/17 MASTER VER.)\0", NULL, NULL, NULL,
+	"Muchi Muchi Pork! (Japan, 2007/ 4/17 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA016",
+	L"Muchi Muchi Pork!\0\u3080\u3061\u3080\u3061\u30dd\u30fc\u30af! (Japan, 2007/ 4/17 MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, mmporkRomInfo, mmporkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1173,7 +1173,7 @@ struct BurnDriver BurnDrvMmpork = {
 };
 
 
-// Medal Mahjong Moukari Bancho (2007/06/05 MASTER VER.)
+// Medal Mahjong Moukari Bancho (Japan, 2007/06/05 MASTER VER.)
 
 static struct BurnRomInfo mmmbancRomDesc[] = {
 	{ "u4",				0x0200000, 0x5589d8c6, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1189,7 +1189,7 @@ STD_ROM_FN(mmmbanc)
 
 struct BurnDriverD BurnDrvMmmbanc = {
 	"mmmbanc", NULL, NULL, NULL, "2007",
-	"Medal Mahjong Moukari Bancho (2007/06/05 MASTER VER.)\0", NULL, "Cave (AMI license)", "CMDL01",
+	"Medal Mahjong Moukari Bancho (Japan, 2007/06/05 MASTER VER.)\0", NULL, "Cave (AMI license)", "CMDL01",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_NOT_WORKING, 2, HARDWARE_CAVE_CV1000, GBF_MISC, 0,
 	NULL, mmmbancRomInfo, mmmbancRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -1198,7 +1198,7 @@ struct BurnDriverD BurnDrvMmmbanc = {
 };
 
 
-// Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER....)
+// Pink Sweets: Ibara Sorekara (Japan, 2006/04/06 MASTER VER....)
 
 static struct BurnRomInfo pinkswtsRomDesc[] = {
 	{ "pinkswts_u4",	0x0200000, 0x5d812c9e, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1214,8 +1214,8 @@ STD_ROM_FN(pinkswts)
 
 struct BurnDriver BurnDrvPinkswts = {
 	"pinkswts", NULL, NULL, NULL, "2006",
-	"Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER....)\0", NULL, "Cave (AMI license)", "CA014",
-	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/04/06 MASTER VER....)\0", NULL, NULL, NULL,
+	"Pink Sweets: Ibara Sorekara (Japan, 2006/04/06 MASTER VER....)\0", NULL, "Cave (AMI license)", "CA014",
+	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (Japan, 2006/04/06 MASTER VER....)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsRomInfo, pinkswtsRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1223,7 +1223,7 @@ struct BurnDriver BurnDrvPinkswts = {
 };
 
 
-// Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER...)
+// Pink Sweets: Ibara Sorekara (Japan, 2006/04/06 MASTER VER...)
 
 static struct BurnRomInfo pinkswtsaRomDesc[] = {
 	{ "pnkswtsa_u4",	0x0200000, 0xee3339b2, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1239,8 +1239,8 @@ STD_ROM_FN(pinkswtsa)
 
 struct BurnDriver BurnDrvPinkswtsa = {
 	"pinkswtsa", "pinkswts", NULL, NULL, "2006",
-	"Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER...)\0", NULL, "Cave (AMI license)", "CA014",
-	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/04/06 MASTER VER...)\0", NULL, NULL, NULL,
+	"Pink Sweets: Ibara Sorekara (Japan, 2006/04/06 MASTER VER...)\0", NULL, "Cave (AMI license)", "CA014",
+	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (Japan, 2006/04/06 MASTER VER...)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsaRomInfo, pinkswtsaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1248,7 +1248,7 @@ struct BurnDriver BurnDrvPinkswtsa = {
 };
 
 
-// Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER.)
+// Pink Sweets: Ibara Sorekara (Japan, 2006/04/06 MASTER VER.)
 
 static struct BurnRomInfo pinkswtsbRomDesc[] = {
 	{ "pnkswtsb_u4",	0x0200000, 0x68bcc009, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1264,8 +1264,8 @@ STD_ROM_FN(pinkswtsb)
 
 struct BurnDriver BurnDrvPinkswtsb = {
 	"pinkswtsb", "pinkswts", NULL, NULL, "2006",
-	"Pink Sweets: Ibara Sorekara (2006/04/06 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA014",
-	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/04/06 MASTER VER.)\0", NULL, NULL, NULL,
+	"Pink Sweets: Ibara Sorekara (Japan, 2006/04/06 MASTER VER.)\0", NULL, "Cave (AMI license)", "CA014",
+	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (Japan, 2006/04/06 MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsbRomInfo, pinkswtsbRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1273,7 +1273,7 @@ struct BurnDriver BurnDrvPinkswtsb = {
 };
 
 
-// Pink Sweets: Ibara Sorekara (2006/xx/xx MASTER VER.)
+// Pink Sweets: Ibara Sorekara (Japan, 2006/xx/xx MASTER VER.)
 
 static struct BurnRomInfo pinkswtsxRomDesc[] = {
 	{ "pnkswtsx_u4",	0x0200000, 0x8fe05bf0, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1289,8 +1289,8 @@ STD_ROM_FN(pinkswtsx)
 
 struct BurnDriver BurnDrvPinkswtsx = {
 	"pinkswtsx", "pinkswts", NULL, NULL, "2006",
-	"Pink Sweets: Ibara Sorekara (2006/xx/xx MASTER VER.)\0", NULL, "Cave (AMI license)", "CA014",
-	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (2006/xx/xx MASTER VER.)\0", NULL, NULL, NULL,
+	"Pink Sweets: Ibara Sorekara (Japan, 2006/xx/xx MASTER VER.)\0", NULL, "Cave (AMI license)", "CA014",
+	L"Pink Sweets: Ibara Sorekara\0\u30d4\u30f3\u30af\u30b9\u30a6\u30a3\u30fc\u30c4 \uff5e\u92f3\u8594\u8587\u305d\u308c\u304b\u3089\uff5e (Japan, 2006/xx/xx MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, 0,
 	NULL, pinkswtsxRomInfo, pinkswtsxRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1ksDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1323,7 +1323,7 @@ struct BurnDriver BurnDrvPinkswtssc = {
 };
 
 
-// DoDonPachi Dai-Fukkatsu Ver 1.5 (2008/06/23 MASTER VER 1.5)
+// DoDonPachi Dai-Fukkatsu Ver 1.5 (Japan, 2008/06/23 MASTER VER 1.5)
 
 static struct BurnRomInfo ddpdfkRomDesc[] = {
 	{ "ddpdfk_u4",		0x0400000, 0x9976d699, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1339,8 +1339,8 @@ STD_ROM_FN(ddpdfk)
 
 struct BurnDriver BurnDrvDdpdfk = {
 	"ddpdfk", NULL, NULL, NULL, "2008",
-	"DoDonPachi Dai-Fukkatsu Ver 1.5 (2008/06/23 MASTER VER 1.5)\0", NULL, "Cave (AMI license)", "CA019",
-	L"DoDonPachi Dai-Fukkatsu Ver 1.5\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.5 (2008/06/23 MASTER VER 1.5)\0", NULL, NULL, NULL,
+	"DoDonPachi Dai-Fukkatsu Ver 1.5 (Japan, 2008/06/23 MASTER VER 1.5)\0", NULL, "Cave (AMI license)", "CA019",
+	L"DoDonPachi Dai-Fukkatsu Ver 1.5\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.5 (Japan, 2008/06/23 MASTER VER 1.5)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpdfkRomInfo, ddpdfkRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1348,7 +1348,7 @@ struct BurnDriver BurnDrvDdpdfk = {
 };
 
 
-// DoDonPachi Dai-Fukkatsu Ver 1.0 (2008/05/16 MASTER VER)
+// DoDonPachi Dai-Fukkatsu Ver 1.0 (Japan, 2008/05/16 MASTER VER)
 
 static struct BurnRomInfo ddpdfk10RomDesc[] = {
 	{ "ddpdfk10_u4",	0x0400000, 0xa3d650b2, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1364,8 +1364,8 @@ STD_ROM_FN(ddpdfk10)
 
 struct BurnDriver BurnDrvDdpdfk10 = {
 	"ddpdfk10", "ddpdfk", NULL, NULL, "2008",
-	"DoDonPachi Dai-Fukkatsu Ver 1.0 (2008/05/16 MASTER VER)\0", NULL, "Cave (AMI license)", "CA019",
-	L"DoDonPachi Dai-Fukkatsu Ver 1.0\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.0 (2008/05/16 MASTER VER)\0", NULL, NULL, NULL,
+	"DoDonPachi Dai-Fukkatsu Ver 1.0 (Japan, 2008/05/16 MASTER VER)\0", NULL, "Cave (AMI license)", "CA019",
+	L"DoDonPachi Dai-Fukkatsu Ver 1.0\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b Ver 1.0 (Japan, 2008/05/16 MASTER VER)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpdfk10RomInfo, ddpdfk10RomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1373,7 +1373,7 @@ struct BurnDriver BurnDrvDdpdfk10 = {
 };
 
 
-// Deathsmiles MegaBlack Label (2008/10/06 MEGABLACK LABEL VER)
+// Deathsmiles MegaBlack Label (Japan, 2008/10/06 MEGABLACK LABEL VER)
 
 static struct BurnRomInfo dsmblRomDesc[] = {
 	{ "u4",				0x0400000, 0x77fc5ad1, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1389,7 +1389,7 @@ STD_ROM_FN(dsmbl)
 
 struct BurnDriver BurnDrvDsmbl = {
 	"dsmbl", NULL, NULL, NULL, "2008",
-	"Deathsmiles MegaBlack Label (2008/10/06 MEGABLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA017B",
+	"Deathsmiles MegaBlack Label (Japan, 2008/10/06 MEGABLACK LABEL VER)\0", NULL, "Cave (AMI license)", "CA017B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, dsmblRomInfo, dsmblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
@@ -1398,7 +1398,7 @@ struct BurnDriver BurnDrvDsmbl = {
 };
 
 
-// DoDonPachi Dai-Fukkatsu Black Label (2010/1/18 BLACK LABEL)
+// DoDonPachi Dai-Fukkatsu Black Label (Japan, 2010/1/18 BLACK LABEL)
 
 static struct BurnRomInfo dfkblRomDesc[] = {
 	{ "u4",				0x0400000, 0x8092ca9d, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1414,8 +1414,8 @@ STD_ROM_FN(dfkbl)
 
 struct BurnDriver BurnDrvDfkbl = {
 	"dfkbl", NULL, NULL, NULL, "2010",
-	"DoDonPachi Dai-Fukkatsu Black Label (2010/1/18 BLACK LABEL)\0", NULL, "Cave", "CA019B",
-	L"DoDonPachi Dai-Fukkatsu Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (2010/1/18 BLACK LABEL)\0", NULL, NULL, NULL,
+	"DoDonPachi Dai-Fukkatsu Black Label (Japan, 2010/1/18 BLACK LABEL)\0", NULL, "Cave", "CA019B",
+	L"DoDonPachi Dai-Fukkatsu Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5fa9\u6d3b (Japan, 2010/1/18 BLACK LABEL)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, dfkblRomInfo, dfkblRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1423,7 +1423,7 @@ struct BurnDriver BurnDrvDfkbl = {
 };
 
 
-// DoDonPachi SaiDaiOuJou (2012/ 4/20)
+// DoDonPachi SaiDaiOuJou (Japan, 2012/ 4/20)
 
 static struct BurnRomInfo ddpsdojRomDesc[] = {
 	{ "u4",				0x0400100, 0xe2a4411c, 2 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1439,8 +1439,8 @@ STD_ROM_FN(ddpsdoj)
 
 struct BurnDriver BurnDrvDdpsdoj = {
 	"ddpsdoj", NULL, NULL, NULL, "2012",
-	"DoDonPachi SaiDaiOuJou (2012/ 4/20)\0", NULL, "Cave", "CA???",
-	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f (2012/4/20)\0", NULL, NULL, NULL,
+	"DoDonPachi SaiDaiOuJou (Japan, 2012/ 4/20)\0", NULL, "Cave", "CA???",
+	L"DoDonPachi SaiDaiOuJou\0\u6012\u9996\u9818\u8702 \u6700\u5927\u5f80\u751f (Japan, 2012/4/20)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_VERSHOOT, FBF_DONPACHI,
 	NULL, ddpsdojRomInfo, ddpsdojRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
@@ -1473,7 +1473,7 @@ struct BurnDriver BurnDrvsdojak = {
 };
 
 
-// Akai Katana (2010/ 8/13 MASTER VER.)
+// Akai Katana (Japan, 2010/ 8/13 MASTER VER.)
 
 static struct BurnRomInfo akatanaRomDesc[] = {
 	{ "u4",				0x0400000, 0x613fd380, 1 | BRF_PRG | BRF_ESS }, //  0 SH3 Code
@@ -1489,8 +1489,8 @@ STD_ROM_FN(akatana)
 
 struct BurnDriver BurnDrvAkatana = {
 	"akatana", NULL, NULL, NULL, "2010",
-	"Akai Katana (2010/ 8/13 MASTER VER.)\0", NULL, "Cave", "CA021",
-	L"Akai Katana\0\u8d64\u3044\u5200 (2010/ 8/13 MASTER VER.)\0", NULL, NULL, NULL,
+	"Akai Katana (Japan, 2010/ 8/13 MASTER VER.)\0", NULL, "Cave", "CA021",
+	L"Akai Katana\0\u8d64\u3044\u5200 (Japan, 2010/ 8/13 MASTER VER.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_CV1000, GBF_HORSHOOT, 0,
 	NULL, akatanaRomInfo, akatanaRomName, NULL, NULL, NULL, NULL, Cv1kInputInfo, Cv1kDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,

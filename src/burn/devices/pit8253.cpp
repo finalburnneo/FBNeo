@@ -745,9 +745,10 @@ INT32 pit8253Idle(INT32 cycles)
 
 INT32 pit8253Run(INT32 cycles)
 {
-	simulate2(get_timer(0), cycles);
-	simulate2(get_timer(1), cycles);
-	simulate2(get_timer(2), cycles);
+	// timers with clockin == 0 are clocked externally via pit8253_set_clock_signal()
+	if (get_timer(0)->clockin) simulate2(get_timer(0), cycles);
+	if (get_timer(1)->clockin) simulate2(get_timer(1), cycles);
+	if (get_timer(2)->clockin) simulate2(get_timer(2), cycles);
 
 	total_cycles += cycles;
 

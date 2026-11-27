@@ -2879,9 +2879,23 @@ static int d3d11UploadArtwork(BurnArtworkLayers* pL)
 	}
 
 	if (pL->nSerial != nArtSerial) {
+	// what to send: only the layers that changed, and if we have the previous version,
+	// only the part that changed (a lamp blinking doesn't resend everything)
+	bool bPart = (nArtSerial == pL->nSerial - 1) && pL->nDirtyW > 0 && pL->nDirtyH > 0;
+	int nX = bPart ? pL->nDirtyX : 0, nY = bPart ? pL->nDirtyY : 0;
+	int nW = bPart ? pL->nDirtyW : pL->nWidth, nH = bPart ? pL->nDirtyH : pL->nHeight;
 		UINT32* pLayer[3] = { pL->pUnder, pL->pMul, pL->pAdd };
+		int nLayerSerial[3] = { pL->nSerialUnder, pL->nSerialOver, pL->nSerialOver };
 		for (int i = 0; i < 3; i++) {
-			pContext->UpdateSubresource(pArtTexture[i], 0, NULL, pLayer[i], pL->nPitch * 4, 0);
+			if (nArtSerial >= 0 && nLayerSerial[i] <= nArtSerial) {
+				continue;					// this one hasn't changed
+			}
+			if (nArtSerial < 0 || !bPart) {
+				pContext->UpdateSubresource(pArtTexture[i], 0, NULL, pLayer[i], pL->nPitch * 4, 0);
+			} else {
+				D3D11_BOX box = { (UINT)nX, (UINT)nY, 0, (UINT)(nX + nW), (UINT)(nY + nH), 1 };
+				pContext->UpdateSubresource(pArtTexture[i], 0, &box, pLayer[i] + nY * pL->nPitch + nX, pL->nPitch * 4, 0);
+			}
 		}
 		nArtSerial = pL->nSerial;
 	}

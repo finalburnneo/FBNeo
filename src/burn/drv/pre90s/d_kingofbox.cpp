@@ -100,104 +100,106 @@ STDINPUTINFO(Ringking)
 
 static struct BurnDIPInfo KingofbDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0x21, NULL					},
-	{0x13, 0xff, 0xff, 0x00, NULL					},
+	DIP_OFFSET(0x12)
+	{0x00, 0xff, 0xff, 0x21, NULL					},
+	{0x01, 0xff, 0xff, 0x00, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Rest Up Points"		},
-	{0x12, 0x01, 0x03, 0x02, "70000"				},
-	{0x12, 0x01, 0x03, 0x01, "100000"				},
-	{0x12, 0x01, 0x03, 0x03, "150000"				},
-	{0x12, 0x01, 0x03, 0x00, "No"					},
+	{0x00, 0x01, 0x03, 0x02, "70000"				},
+	{0x00, 0x01, 0x03, 0x01, "100000"				},
+	{0x00, 0x01, 0x03, 0x03, "150000"				},
+	{0x00, 0x01, 0x03, 0x00, "No"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x04, 0x04, "Off"					},
-	{0x12, 0x01, 0x04, 0x00, "On"					},
+	{0x00, 0x01, 0x04, 0x04, "Off"					},
+	{0x00, 0x01, 0x04, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x12, 0x01, 0x18, 0x00, "Easy"					},
-	{0x12, 0x01, 0x18, 0x08, "Medium"				},
-	{0x12, 0x01, 0x18, 0x10, "Hard"					},
-	{0x12, 0x01, 0x18, 0x18, "Hardest"				},
+	{0x00, 0x01, 0x18, 0x00, "Easy"					},
+	{0x00, 0x01, 0x18, 0x08, "Medium"				},
+	{0x00, 0x01, 0x18, 0x10, "Hard"					},
+	{0x00, 0x01, 0x18, 0x18, "Hardest"				},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x12, 0x01, 0x20, 0x20, "Upright"				},
-	{0x12, 0x01, 0x20, 0x00, "Cocktail"				},
+	{0x00, 0x01, 0x20, 0x20, "Upright"				},
+	{0x00, 0x01, 0x20, 0x00, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x12, 0x01, 0x80, 0x00, "Off"					},
-	{0x12, 0x01, 0x80, 0x80, "On"					},
+	{0x00, 0x01, 0x80, 0x00, "Off"					},
+	{0x00, 0x01, 0x80, 0x80, "On"					},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"				},
-	{0x13, 0x01, 0x07, 0x07, "4 Coins 1 Credits"	},
-	{0x13, 0x01, 0x07, 0x06, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0x07, 0x05, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x07, 0x04, "1 Coin  5 Credits"	},
+	{0x01, 0x01, 0x07, 0x07, "4 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x06, "3 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x05, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x01, 0x01, 0x07, 0x04, "1 Coin  5 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x13, 0x01, 0x80, 0x00, "Off"					},
-	{0x13, 0x01, 0x80, 0x80, "On"					},
+	{0x01, 0x01, 0x80, 0x00, "Off"					},
+	{0x01, 0x01, 0x80, 0x80, "On"					},
 };
 
 STDDIPINFO(Kingofb)
 
 static struct BurnDIPInfo RingkingDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xd7, NULL					},
-	{0x15, 0xff, 0xff, 0xdf, NULL					},
+	DIP_OFFSET(0x14)
+	{0x00, 0xff, 0xff, 0xd7, NULL					},
+	{0x01, 0xff, 0xff, 0xdf, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Replay"				},
-	{0x14, 0x01, 0x03, 0x01, "70000"				},
-	{0x14, 0x01, 0x03, 0x02, "100000"				},
-	{0x14, 0x01, 0x03, 0x00, "150000"				},
-	{0x14, 0x01, 0x03, 0x03, "No"					},
+	{0x00, 0x01, 0x03, 0x01, "70000"				},
+	{0x00, 0x01, 0x03, 0x02, "100000"				},
+	{0x00, 0x01, 0x03, 0x00, "150000"				},
+	{0x00, 0x01, 0x03, 0x03, "No"					},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x14, 0x01, 0x04, 0x00, "Off"					},
-	{0x14, 0x01, 0x04, 0x04, "On"					},
+	{0x00, 0x01, 0x04, 0x00, "Off"					},
+	{0x00, 0x01, 0x04, 0x04, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty (2P)"		},
-	{0x14, 0x01, 0x18, 0x18, "Easy"					},
-	{0x14, 0x01, 0x18, 0x10, "Medium"				},
-	{0x14, 0x01, 0x18, 0x08, "Hard"					},
-	{0x14, 0x01, 0x18, 0x00, "Hardest"				},
+	{0x00, 0x01, 0x18, 0x18, "Easy"					},
+	{0x00, 0x01, 0x18, 0x10, "Medium"				},
+	{0x00, 0x01, 0x18, 0x08, "Hard"					},
+	{0x00, 0x01, 0x18, 0x00, "Hardest"				},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x14, 0x01, 0x20, 0x00, "Upright"				},
-	{0x14, 0x01, 0x20, 0x20, "Cocktail"				},
+	{0x00, 0x01, 0x20, 0x00, "Upright"				},
+	{0x00, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x14, 0x01, 0x80, 0x80, "Off"					},
-	{0x14, 0x01, 0x80, 0x00, "On"					},
+	{0x00, 0x01, 0x80, 0x80, "Off"					},
+	{0x00, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
-	{0x15, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x15, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"				},
-	{0x15, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x15, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0x01, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
+	{0x01, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x01, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x01, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty (1P)"		},
-	{0x15, 0x01, 0x30, 0x30, "Easy"					},
-	{0x15, 0x01, 0x30, 0x10, "Medium"				},
-	{0x15, 0x01, 0x30, 0x20, "Hard"					},
-	{0x15, 0x01, 0x30, 0x00, "Hardest"				},
+	{0x01, 0x01, 0x30, 0x30, "Easy"					},
+	{0x01, 0x01, 0x30, 0x10, "Medium"				},
+	{0x01, 0x01, 0x30, 0x20, "Hard"					},
+	{0x01, 0x01, 0x30, 0x00, "Hardest"				},
 
 	{0   , 0xfe, 0   ,    2, "Boxing Match"			},
-	{0x15, 0x01, 0x40, 0x40, "2 Win, End"			},
-	{0x15, 0x01, 0x40, 0x00, "1 Win, End"			},
+	{0x01, 0x01, 0x40, 0x40, "2 Win, End"			},
+	{0x01, 0x01, 0x40, 0x00, "1 Win, End"			},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x15, 0x01, 0x80, 0x80, "Off"					},
-	{0x15, 0x01, 0x80, 0x00, "On"					},
+	{0x01, 0x01, 0x80, 0x80, "Off"					},
+	{0x01, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Ringking)
@@ -940,7 +942,7 @@ STD_ROM_FN(kingofb)
 
 struct BurnDriver BurnDrvKingofb = {
 	"kingofb", NULL, NULL, NULL, "1985",
-	"King of Boxer (World)\0", NULL, "Woodplace Inc.", "Miscellaneous",
+	"King of Boxer (World)\0", NULL, "Wood Place", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbRomInfo, kingofbRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -991,7 +993,7 @@ STD_ROM_FN(kingofbj)
 
 struct BurnDriver BurnDrvKingofbj = {
 	"kingofbj", "kingofb", NULL, NULL, "1985",
-	"King of Boxer (Japan)\0", NULL, "Woodplace Inc.", "Miscellaneous",
+	"King of Boxer (Japan)\0", NULL, "Wood Place", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, kingofbjRomInfo, kingofbjRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1000,7 +1002,7 @@ struct BurnDriver BurnDrvKingofbj = {
 };
 
 
-// Ring King (US, Woodplace Inc.)
+// Ring King (US, Wood Place)
 
 static struct BurnRomInfo ringkingwRomDesc[] = {
 	{ "15.d9",				0x4000, 0x8263f517, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 (Master) Code
@@ -1073,7 +1075,7 @@ static INT32 RingkingwInit()
 
 struct BurnDriver BurnDrvRingkingw = {
 	"ringkingw", "kingofb", NULL, NULL, "1985",
-	"Ring King (US, Woodplace Inc.)\0", NULL, "Woodplace Inc.", "Miscellaneous",
+	"Ring King (US, Wood Place)\0", NULL, "Wood Place", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingwRomInfo, ringkingwRomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1082,7 +1084,7 @@ struct BurnDriver BurnDrvRingkingw = {
 };
 
 
-// Ring King (US set 3)
+// Ring King (US, set 3)
 
 static struct BurnRomInfo ringking3RomDesc[] = {
 	{ "14.d9",				0x4000, 0x63627b8b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 (Master) Code
@@ -1133,7 +1135,7 @@ static INT32 Ringking3Init()
 
 struct BurnDriver BurnDrvRingking3 = {
 	"ringking3", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 3)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US, set 3)\0", NULL, "Wood Place (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking3RomInfo, ringking3RomName, NULL, NULL, NULL, NULL, KingofbInputInfo, KingofbDIPInfo,
@@ -1142,7 +1144,7 @@ struct BurnDriver BurnDrvRingking3 = {
 };
 
 
-// Ring King (US, Wood Place Inc.)
+// Ring King (US, set 1)
 
 static struct BurnRomInfo ringkingRomDesc[] = {
 	{ "cx13.9f",			0x8000, 0x93e38c02, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 (Master) Code
@@ -1176,7 +1178,7 @@ STD_ROM_FN(ringking)
 
 struct BurnDriver BurnDrvRingking = {
 	"ringking", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 1)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US, set 1)\0", NULL, "Wood Place (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringkingRomInfo, ringkingRomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,
@@ -1185,7 +1187,7 @@ struct BurnDriver BurnDrvRingking = {
 };
 
 
-// Ring King (US set 2)
+// Ring King (US, set 2)
 
 static struct BurnRomInfo ringking2RomDesc[] = {
 	{ "rkngm1.bin",			0x8000, 0x086921ea, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 (Master) Code
@@ -1219,7 +1221,7 @@ STD_ROM_FN(ringking2)
 
 struct BurnDriver BurnDrvRingking2 = {
 	"ringking2", "kingofb", NULL, NULL, "1985",
-	"Ring King (US set 2)\0", NULL, "Woodplace Inc. (Data East USA license)", "Miscellaneous",
+	"Ring King (US, set 2)\0", NULL, "Wood Place (Data East USA license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ringking2RomInfo, ringking2RomName, NULL, NULL, NULL, NULL, RingkingInputInfo, RingkingDIPInfo,

@@ -11,7 +11,7 @@ static UINT32 opINCB(void) /* TRUSTED */
 	else
 		appb=MemRead8(amOut);
 
-	ADDB(appb, 1);
+	ADDB(appb, 1, 0);
 
 	if (amFlag)
 		SETREG8(v60.reg[amOut], appb);
@@ -34,7 +34,7 @@ static UINT32 opINCH(void) /* TRUSTED */
 	else
 		apph=MemRead16(amOut);
 
-	ADDW(apph, 1);
+	ADDW(apph, 1, 0);
 
 	if (amFlag)
 		SETREG16(v60.reg[amOut], apph);
@@ -57,7 +57,7 @@ static UINT32 opINCW(void) /* TRUSTED */
 	else
 		appw=MemRead32(amOut);
 
-	ADDL(appw, 1);
+	ADDL(appw, 1, 0);
 
 	if (amFlag)
 		v60.reg[amOut]=appw;
@@ -80,7 +80,7 @@ static UINT32 opDECB(void) /* TRUSTED */
 	else
 		appb=MemRead8(amOut);
 
-	SUBB(appb, 1);
+	SUBB(appb, 1, 0);
 
 	if (amFlag)
 		SETREG8(v60.reg[amOut], appb);
@@ -103,7 +103,7 @@ static UINT32 opDECH(void) /* TRUSTED */
 	else
 		apph=MemRead16(amOut);
 
-	SUBW(apph, 1);
+	SUBW(apph, 1, 0);
 
 	if (amFlag)
 		SETREG16(v60.reg[amOut], apph);
@@ -126,7 +126,7 @@ static UINT32 opDECW(void) /* TRUSTED */
 	else
 		appw=MemRead32(amOut);
 
-	SUBL(appw, 1);
+	SUBL(appw, 1, 0);
 
 	if (amFlag)
 		v60.reg[amOut]=appw;
@@ -426,7 +426,7 @@ static UINT32 opTASI(void)
 		appb=MemRead8(amOut);
 
 	// Set the flags for SUB appb,FF
-	SUBB(appb, 0xff);
+	SUBB(appb, 0xff, 0);
 
 	// Write FF in the operand
 	if (amFlag)

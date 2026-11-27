@@ -134,7 +134,7 @@ STDINPUTINFO(Bradley)
 #define RESO_DIP
 #else
 #define RESO_DIP \
-	{0   , 0xfe, 0   ,    2, "Hires Mode"			}, \
+	{0   , 0xfd, 0   ,    2, "Hires Mode"			}, \
 	{0x03, 0x01, 0x01, 0x00, "No"					}, \
 	{0x03, 0x01, 0x01, 0x01, "Yes"					},
 #endif
@@ -1036,7 +1036,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Battle Zone (rev 2)
+// Battlezone (rev 2)
 
 static struct BurnRomInfo bzoneRomDesc[] = {
 	{ "036414-02.e1",	0x0800, 0x13de36d5, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1066,7 +1066,7 @@ STD_ROM_FN(bzone)
 
 struct BurnDriver BurnDrvBzone = {
 	"bzone", NULL, NULL, NULL, "1980",
-	"Battle Zone (rev 2)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
+	"Battlezone (rev 2)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, bzoneRomInfo, bzoneRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
@@ -1075,7 +1075,7 @@ struct BurnDriver BurnDrvBzone = {
 };
 
 
-// Battle Zone (rev 1)
+// Battlezone (rev 1)
 
 static struct BurnRomInfo bzoneaRomDesc[] = {
 	{ "036414-01.e1",	0x0800, 0xefbc3fa0, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1105,7 +1105,7 @@ STD_ROM_FN(bzonea)
 
 struct BurnDriver BurnDrvBzonea = {
 	"bzonea", "bzone", NULL, NULL, "1980",
-	"Battle Zone (rev 1)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
+	"Battlezone (rev 1)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, bzoneaRomInfo, bzoneaRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,
@@ -1114,7 +1114,7 @@ struct BurnDriver BurnDrvBzonea = {
 };
 
 
-// Battle Zone (cocktail)
+// Battlezone (cocktail)
 
 static struct BurnRomInfo bzonecRomDesc[] = {
 	{ "bz1g4800",		0x0800, 0xe228dd64, 1 | BRF_PRG | BRF_ESS }, //  0 M6502 Code
@@ -1145,7 +1145,7 @@ STD_ROM_FN(bzonec)
 
 struct BurnDriver BurnDrvBzonec = {
 	"bzonec", "bzone", NULL, NULL, "1980",
-	"Battle Zone (cocktail)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
+	"Battlezone (cocktail)\0", "GFX/Sound Issues", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_VECTOR, 0,
 	NULL, bzonecRomInfo, bzonecRomName, NULL, NULL, NULL, NULL, BzoneInputInfo, BzoneDIPInfo,

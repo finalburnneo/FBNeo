@@ -74,14 +74,28 @@ static UINT32 opCVTSW(void)
 
 	F2DecodeFirstOperand(ReadAM,2);
 
-	// Convert to UINT32
-	val = u2f(f2Op1);
-	modWriteValW = (INT32)val; // fix for arm, needs to be cast to signed! -dink
+	// rounding mode from the tkcw: nearest (ties to even, as ieee 754), down, up, toward zero
+	double v = u2f(f2Op1);
+	switch (TKCW & 7)
+	{
+		case 0: {
+			double f = floor(v), d = v - f;
+			v = (d > 0.5 || (d == 0.5 && fmod(f, 2.0) != 0.0)) ? f + 1.0 : f;
+			break;
+		}
+		case 1: v = floor(v); break;
+		case 2: v = ceil(v); break;
+		default: v = (v >= 0.0) ? floor(v) : ceil(v); break;
+	}
 
-	_OV=0;
-	_CY=(val < 0.0f);
+	// out of range (or nan) converts as x86 does, to the integer indefinite
+	INT64 iv = (v > -9.2e18 && v < 9.2e18) ? (INT64)v : (INT64)(((UINT64)1) << 63);
+	modWriteValW = (UINT32)iv;
+	val = (float)v;
+
 	_S=((modWriteValW & 0x80000000)!=0);
-	_Z=(val == 0.0f);
+	_OV=(_S && val >= 0.0f) || (!_S && val <= -1.0f);
+	_Z=(modWriteValW == 0);
 
 	F2WriteSecondOperand(2);
 	F2END();

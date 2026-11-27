@@ -5,13 +5,12 @@
 
 #include "mips3_intf.h"
 
-// physical address space handled by the memory map (kseg0/kseg1 only reach 512MB anyway)
-#ifndef MIPS3_PHYS_BITS
-#define MIPS3_PHYS_BITS		29
-#endif
+// physical address space handled by the memory map, set by Mips3Init from the cpu type
+// (kseg0/kseg1 only reach 512MB, the VR5500 maps the rest through its TLB)
+extern UINT32 Mips3PhysMask;
 
-#define MIPS3_PHYS_MASK		((UINT32)(((UINT64)1 << MIPS3_PHYS_BITS) - 1))
-#define MIPS3_PHYS_PAGES	(1 << (MIPS3_PHYS_BITS - 12))
+#define MIPS3_PHYS_MASK		Mips3PhysMask
+#define MIPS3_PHYS_PAGES	((Mips3PhysMask >> 12) + 1)
 #define MIPS3_MAXHANDLER	10
 
 // a page pointer below MIPS3_MAXHANDLER is a handler index
@@ -38,7 +37,7 @@ extern pMips3WriteWordHandler Mips3WriteWordH[MIPS3_MAXHANDLER];
 extern pMips3ReadDoubleHandler Mips3ReadDoubleH[MIPS3_MAXHANDLER];
 extern pMips3WriteDoubleHandler Mips3WriteDoubleH[MIPS3_MAXHANDLER];
 
-INT32 mips3_init();
+INT32 mips3_init(INT32 type);
 void mips3_exit();
 void mips3_reset();
 void mips3_scan(INT32 nAction);
@@ -53,10 +52,16 @@ UINT32 mips3_get_pc();
 
 // must be called after a Mips3Phys entry changed
 void mips3_page_mapped(UINT32 page);
+void mips3_map_changed();
+extern void (*pMips3CacheSync)();
 // drops cached code overlapping the physical range
 void mips3_invalidate(UINT32 nStart, UINT32 nEnd);
 
 UINT8 mips3_read_phys8(UINT32 pa);
+
+// before the first write through a direct map to physical page n (4KB, below nBytes) while map[n] is 0,
+// callback(n) runs (if not NULL) and map[n] is set
+void mips3_set_write_track(UINT8 *map, UINT32 nBytes, void (*callback)(UINT32 page));
 
 void mips3_burn_cycles(INT32 cycles);
 

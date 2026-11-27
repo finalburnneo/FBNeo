@@ -76,20 +76,25 @@ static INT32 OpenChd(BurnHDD* pDisk)
 	}
 
 	const chd_header* pHeader = chd_get_header(pDisk->pChd);
+	if (pHeader == NULL || pHeader->hunkbytes == 0) return 1;
+
 	char szMeta[256];
 	UINT32 nMetaLen = 0;
-
-	if (pHeader == NULL || pHeader->hunkbytes == 0 ||
-		chd_get_metadata(pDisk->pChd, HARD_DISK_METADATA_TAG, 0, szMeta, sizeof(szMeta) - 1, &nMetaLen, NULL, NULL) != CHDERR_NONE) {
-		bprintf(PRINT_ERROR, _T("HDD: the CHD is not a hard disk image\n"));
-		return 1;
-	}
-	szMeta[nMetaLen < sizeof(szMeta) ? nMetaLen : sizeof(szMeta) - 1] = 0;
-
 	INT32 nCyls = 0, nHeads = 0, nSecs = 0, nBps = 0;
-	if (sscanf(szMeta, HARD_DISK_METADATA_FORMAT, &nCyls, &nHeads, &nSecs, &nBps) != 4 || nBps <= 0 || pHeader->hunkbytes % nBps) {
-		bprintf(PRINT_ERROR, _T("HDD: bad CHD geometry\n"));
-		return 1;
+
+	if (chd_get_metadata(pDisk->pChd, HARD_DISK_METADATA_TAG, 0, szMeta, sizeof(szMeta) - 1, &nMetaLen, NULL, NULL) == CHDERR_NONE) {
+		szMeta[nMetaLen < sizeof(szMeta) ? nMetaLen : sizeof(szMeta) - 1] = 0;
+		if (sscanf(szMeta, HARD_DISK_METADATA_FORMAT, &nCyls, &nHeads, &nSecs, &nBps) != 4 || nBps <= 0 || pHeader->hunkbytes % nBps) {
+			bprintf(PRINT_ERROR, _T("HDD: bad CHD geometry\n"));
+			return 1;
+		}
+	} else {
+		// raw CHD (chdman createraw, e.g. NAND dumps): its unit is the sector, no geometry
+		if (pHeader->version < 5 || pHeader->unitbytes == 0 || pHeader->hunkbytes % pHeader->unitbytes) {
+			bprintf(PRINT_ERROR, _T("HDD: the CHD is neither a hard disk image nor a raw image\n"));
+			return 1;
+		}
+		nBps = pHeader->unitbytes;
 	}
 
 	pDisk->nCylinders = nCyls;
@@ -169,6 +174,10 @@ BurnHDD* BurnHDDOpen(INT32 nIndex)
 	for (INT32 i = 0; i < 2 && fp == NULL; i++) {
 		fp = OpenInDir(BurnDrvGetText(DRV_NAME), szName, szExts[i], szPath);
 		if (fp == NULL) fp = OpenInDir(BurnDrvGetText(DRV_PARENT), szName, szExts[i], szPath);
+	}
+	// a single disk may also be named after the romset (<romset>/<romset>.chd)
+	for (INT32 i = 0; i < 2 && fp == NULL && nIndex == 0 && BurnDrvGetTextA(DRV_NAME); i++) {
+		fp = OpenInDir(BurnDrvGetText(DRV_NAME), BurnDrvGetTextA(DRV_NAME), szExts[i], szPath);
 	}
 	if (fp == NULL) {
 		bprintf(PRINT_ERROR, _T("HDD: ") HDD_NARROW_FMT _T(".chd not found\n"), szName);
@@ -257,6 +266,11 @@ UINT32 BurnHDDGetSectorSize(BurnHDD* pDisk)
 	return pDisk ? pDisk->nSectorSize : 0;
 }
 
+UINT64 BurnHDDGetSize(BurnHDD* pDisk)
+{
+	return pDisk ? (UINT64)pDisk->nSectorCount * pDisk->nSectorSize : 0;
+}
+
 UINT32 BurnHDDGetSectorCount(BurnHDD* pDisk)
 {
 	return pDisk ? pDisk->nSectorCount : 0;
@@ -321,6 +335,55 @@ INT32 BurnHDDRead(BurnHDD* pDisk, UINT32 nLba, UINT32 nCount, void* pDest)
 	return nRet;
 }
 
+INT32 BurnHDDReadBytes(BurnHDD* pDisk, UINT64 nOffset, UINT32 nSize, void* pDest)
+{
+	if (pDisk == NULL || pDest == NULL) return 1;
+
+	UINT8* pDst = (UINT8*)pDest;
+	UINT64 nDiskSize = (UINT64)pDisk->nSectorCount * pDisk->nSectorSize;
+	INT32 nRet = 0;
+
+	if (nOffset >= nDiskSize) {
+		memset(pDst, 0, nSize);
+		return 1;
+	}
+	if (nSize > nDiskSize - nOffset) {
+		UINT32 nInside = (UINT32)(nDiskSize - nOffset);
+		memset(pDst + nInside, 0, nSize - nInside);
+		nSize = nInside;
+		nRet = 1;
+	}
+
+	// raw dump with nothing written: one read, whatever the alignment
+	if (pDisk->pChd == NULL && pDisk->Diff.empty()) {
+		if (hddFseek(pDisk->pFile, (INT64)nOffset, SEEK_SET) == 0 && fread(pDst, nSize, 1, pDisk->pFile) == 1) return nRet;
+		memset(pDst, 0, nSize);
+		return 1;
+	}
+
+	std::vector<UINT8> sector(pDisk->nSectorSize);
+
+	while (nSize) {
+		UINT32 nLba = (UINT32)(nOffset / pDisk->nSectorSize);
+		UINT32 nPos = (UINT32)(nOffset % pDisk->nSectorSize);
+		UINT32 nLen = pDisk->nSectorSize - nPos;
+		if (nLen > nSize) nLen = nSize;
+
+		if (nLen == pDisk->nSectorSize) {
+			nRet |= BurnHDDRead(pDisk, nLba, 1, pDst);
+		} else {
+			nRet |= BurnHDDRead(pDisk, nLba, 1, &sector[0]);
+			memcpy(pDst, &sector[nPos], nLen);
+		}
+
+		pDst += nLen;
+		nOffset += nLen;
+		nSize -= nLen;
+	}
+
+	return nRet;
+}
+
 INT32 BurnHDDWrite(BurnHDD* pDisk, UINT32 nLba, UINT32 nCount, const void* pSrc)
 {
 	if (pDisk == NULL || pSrc == NULL) return 1;
@@ -347,4 +410,16 @@ void BurnHDDDiscardWrites(BurnHDD* pDisk)
 	pDisk->Diff.clear();
 	pDisk->bDiffDirty = true;	// an empty diff file replaces the old one
 	BurnHDDFlush(pDisk);
+}
+
+INT32 BurnHDDGetMetadata(BurnHDD* pDisk, UINT32 nTag, UINT32 nIndex, void* pDest, UINT32 nLen, UINT32* pnResultLen)
+{
+	if (pnResultLen) *pnResultLen = 0;
+	if (pDisk == NULL || pDisk->pChd == NULL) return 1;
+
+	UINT32 nResultLen = 0;
+	if (chd_get_metadata(pDisk->pChd, nTag, nIndex, pDest, nLen, &nResultLen, NULL, NULL) != CHDERR_NONE) return 1;
+
+	if (pnResultLen) *pnResultLen = nResultLen;
+	return 0;
 }

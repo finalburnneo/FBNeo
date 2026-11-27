@@ -198,6 +198,11 @@ typedef struct ADSP2100STATE
 
 
 	int			chip_type;
+
+    /* ADSP-2181: overlay registers and the BDMA interrupt latch (scanned separately) */
+    UINT16		pmovlay;
+    UINT16		dmovlay;
+    UINT8		bdma_latch;
     int			mstat_mask;
     int			imask_mask;
 

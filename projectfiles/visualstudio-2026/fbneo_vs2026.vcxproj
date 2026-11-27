@@ -788,6 +788,7 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_bankp.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_dotrikun.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_hangon.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_model1.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_outrun.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segac2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_segae.cpp" />
@@ -802,6 +803,7 @@
     <ClCompile Include="..\..\src\burn\drv\sega\d_sys24.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_turbo.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_xbrd.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\d_y2.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_ybrd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\d_zaxxon.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\fd1089.cpp" />
@@ -809,8 +811,11 @@
     <ClCompile Include="..\..\src\burn\drv\sega\fd1094_intf.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\genesis_vid.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5195.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5292.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_fd1094.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\model1_io.cpp" />
+    <ClCompile Include="..\..\src\burn\drv\sega\model1_snd.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_gfx.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\sys16_run.cpp" />
     <ClCompile Include="..\..\src\burn\drv\sega\usb_snd.cpp" />
@@ -1027,6 +1032,7 @@
     <ClCompile Include="..\..\src\burn\snd\ymf278b.c" />
     <ClCompile Include="..\..\src\burn\snd\ymz280b.cpp" />
     <ClCompile Include="..\..\src\burn\snd\ymz770.cpp" />
+    <ClCompile Include="..\..\src\burn\snd\rpp324.cpp" />
     <ClCompile Include="..\..\src\burner\conc.cpp" />
     <ClCompile Include="..\..\src\burner\cong.cpp" />
     <ClCompile Include="..\..\src\burner\dat.cpp" />
@@ -1142,6 +1148,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\src\cpu\mb86233\mb86233.cpp" />
     <ClCompile Include="..\..\src\cpu\mb88xx\mb88xx.cpp" />
     <ClCompile Include="..\..\src\cpu\mips3\mips3.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>

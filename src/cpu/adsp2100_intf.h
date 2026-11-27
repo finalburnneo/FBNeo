@@ -14,6 +14,7 @@ typedef void  (*pAdsp2100TxCallback)(int port, int data);
 typedef void (*pAdsp2100TimerCallback)(int enable);
 
 int Adsp2100Init();
+int Adsp2181Init();		// ADSP-2181 (Acclaim RAX): PMOVLAY / DMOVLAY, BDMA interrupt, I/O space
 int Adsp2100Exit();
 void Adsp2100Reset();
 int Adsp2100Run(int cycles);
@@ -43,6 +44,10 @@ int Adsp2100SetReadDataWordHandler(int i, pAdsp2100ReadWordHandler pHandler);
 int Adsp2100SetWriteDataWordHandler(int i, pAdsp2100WriteWordHandler pHandler);
 
 void Adsp2100SetIRQLine(const int line, const int state);
+
+// ADSP-2181 only: the I/O space (IO(x) = reg, reg = IO(x)) and DMOVLAY writes
+void Adsp2100SetIOHandlers(UINT16 (*read)(UINT32 addr), void (*write)(UINT32 addr, UINT16 data));
+void Adsp2100SetDmovlayCallback(void (*cb)(INT32 data));
 
 adsp2100_state *Adsp2100GetState();
 

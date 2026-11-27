@@ -122,13 +122,24 @@ struct multi_chip {
 };
 
 // dink was here! feb 2020
-static multi_chip chip;
-static UINT8 *m_ROM = NULL;
-static INT16 *mixer_buffer_left = NULL;
-static INT16 *mixer_buffer_right = NULL;
-static INT32 samples_from; // "re"sampler
-static INT32 add_to_stream;
-static double volume;
+#define MULTIPCM_MAX_CHIPS	2
+
+static multi_chip chips[MULTIPCM_MAX_CHIPS];
+static multi_chip *pchip = &chips[0];
+#define chip (*pchip)
+
+static INT32 nNumChips = 0;
+static UINT8 *ROMs[MULTIPCM_MAX_CHIPS];
+static INT16 *mixer_buffer_lefts[MULTIPCM_MAX_CHIPS];
+static INT16 *mixer_buffer_rights[MULTIPCM_MAX_CHIPS];
+static INT32 samples_froms[MULTIPCM_MAX_CHIPS]; // "re"sampler
+static INT32 add_to_streams[MULTIPCM_MAX_CHIPS];
+static double volumes[MULTIPCM_MAX_CHIPS];
+
+static void select_chip(INT32 nChip)
+{
+	pchip = &chips[nChip];
+}
 
 /*******************************
         ENVELOPE SECTION
@@ -424,12 +435,25 @@ UINT8 MultiPCMRead()
 	return 0;
 }
 
+UINT8 MultiPCMRead(INT32 /*nChip*/)
+{
+	return 0;
+}
+
 void MultiPCMWrite(INT32 offset, UINT8 data)
 {
+	MultiPCMWrite(0, offset, data);
+}
+
+void MultiPCMWrite(INT32 nChip, INT32 offset, UINT8 data)
+{
+	select_chip(nChip);
+
 	switch(offset)
 	{
 		case 0:     //Data write
-			WriteSlot(chip.Slots+chip.CurSlot,chip.Address,data);
+			if (chip.CurSlot < 28)	// every 8th slot number maps to no channel (-1)
+				WriteSlot(chip.Slots+chip.CurSlot,chip.Address,data);
 			break;
 
 		case 1:
@@ -446,8 +470,13 @@ void MultiPCMWrite(INT32 offset, UINT8 data)
 
 void MultiPCMSetBank(UINT32 leftoffs, UINT32 rightoffs)
 {
-	chip.BankL = leftoffs;
-	chip.BankR = rightoffs;
+	MultiPCMSetBank(0, leftoffs, rightoffs);
+}
+
+void MultiPCMSetBank(INT32 nChip, UINT32 leftoffs, UINT32 rightoffs)
+{
+	chips[nChip].BankL = leftoffs;
+	chips[nChip].BankR = rightoffs;
 }
 
 //	AM_RANGE(0x000000, 0x3fffff) AM_ROM
@@ -458,12 +487,17 @@ void MultiPCMSetBank(UINT32 leftoffs, UINT32 rightoffs)
 
 void MultiPCMExit()
 {
-	if (mixer_buffer_left) {
-		BurnFree(mixer_buffer_left);
-		mixer_buffer_left = NULL;
-		mixer_buffer_right = NULL;
-		m_ROM = NULL;
+	for (INT32 i = 0; i < MULTIPCM_MAX_CHIPS; i++) {
+		if (mixer_buffer_lefts[i]) {
+			BurnFree(mixer_buffer_lefts[i]);
+		}
+		mixer_buffer_lefts[i] = NULL;
+		mixer_buffer_rights[i] = NULL;
+		ROMs[i] = NULL;
 	}
+
+	nNumChips = 0;
+	select_chip(0);
 }
 
 // The slot pointers (sample, LFO tables) are only valid in the process that set
@@ -497,40 +531,59 @@ static void RebuildSlotPointers()
 
 void MultiPCMScan(INT32 nAction, INT32 *pnMin)
 {
-	ClearSlotPointers();
-	SCAN_VAR(chip);
-	RebuildSlotPointers();
+	for (INT32 i = 0; i < nNumChips; i++) {
+		select_chip(i);
+		ClearSlotPointers();
+		SCAN_VAR(chip);
+		RebuildSlotPointers();
+	}
 }
 
 void MultiPCMReset()
 {
-	for(INT32 i=0; i < 28; i++) {
-		chip.Slots[i].Num = i;
-		chip.Slots[i].Playing = 0;
+	for (INT32 c = 0; c < nNumChips; c++) {
+		select_chip(c);
+		for(INT32 i=0; i < 28; i++) {
+			chip.Slots[i].Num = i;
+			chip.Slots[i].Playing = 0;
+		}
 	}
 }
 
 void MultiPCMSetVolume(double vol)
 {
-	volume = vol;
+	volumes[0] = vol;
+}
+
+void MultiPCMSetVolume(INT32 nChip, double vol)
+{
+	volumes[nChip] = vol;
 }
 
 void MultiPCMInit(INT32 clock, UINT8 *SndROM, INT32 bAdd)
 {
+	MultiPCMInit(0, clock, SndROM, bAdd);
+}
+
+void MultiPCMInit(INT32 nChip, INT32 clock, UINT8 *SndROM, INT32 bAdd)
+{
 	int i;
+
+	select_chip(nChip);
+	if (nChip >= nNumChips) nNumChips = nChip + 1;
 
 	memset(&chip, 0, sizeof(chip)); // start fresh
 
-	m_ROM = SndROM;
+	UINT8 *m_ROM = ROMs[nChip] = SndROM;
 	chip.Rate=(float) clock / MULTIPCM_CLOCKDIV;
-	samples_from = (INT32)((double)((chip.Rate * 100) / nBurnFPS) + 0.5);
+	samples_froms[nChip] = (INT32)((double)((chip.Rate * 100) / nBurnFPS) + 0.5);
 
-	add_to_stream = bAdd;
+	add_to_streams[nChip] = bAdd;
 
-	mixer_buffer_left = (INT16*)BurnMalloc(2 * sizeof(INT16) * chip.Rate);
-	mixer_buffer_right = mixer_buffer_left + ((INT32)chip.Rate);
+	mixer_buffer_lefts[nChip] = (INT16*)BurnMalloc(2 * sizeof(INT16) * chip.Rate);
+	mixer_buffer_rights[nChip] = mixer_buffer_lefts[nChip] + ((INT32)chip.Rate);
 
-	volume = 1.00;
+	volumes[nChip] = 1.00;
 
 	//Volume+pan table
 	for(i=0;i<0x800;++i)
@@ -641,20 +694,37 @@ void MultiPCMInit(INT32 clock, UINT8 *SndROM, INT32 bAdd)
 
 	LFO_Init();
 
-	MultiPCMReset();
+	for(i=0; i < 28; i++) {
+		chip.Slots[i].Num = i;
+		chip.Slots[i].Playing = 0;
+	}
 }
 
 void MultiPCMSetMonoMode(INT32 monomode)
 {
-	chip.mono = monomode & 3; // 0, 1, 2
+	MultiPCMSetMonoMode(0, monomode);
+}
+
+void MultiPCMSetMonoMode(INT32 nChip, INT32 monomode)
+{
+	chips[nChip].mono = monomode & 3; // 0, 1, 2
 }
 
 //-------------------------------------------------
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
-void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
+static void MultiPCMUpdateChip(INT32 nChip, INT16 *buffer, INT32 samples_len)
 {
+	select_chip(nChip);
+
+	UINT8 *m_ROM = ROMs[nChip];
+	INT16 *mixer_buffer_left = mixer_buffer_lefts[nChip];
+	INT16 *mixer_buffer_right = mixer_buffer_rights[nChip];
+	INT32 samples_from = samples_froms[nChip];
+	INT32 add_to_stream = add_to_streams[nChip];
+	double volume = volumes[nChip];
+
 	INT32 samples = (samples_from * samples_len) / nBurnSoundLen;
 
 	INT16 *lmix = mixer_buffer_left;
@@ -738,5 +808,12 @@ void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
 		buffer[0] = BURN_SND_CLIP(l);
 		buffer[1] = BURN_SND_CLIP(r);
 		buffer += 2;
+	}
+}
+
+void MultiPCMUpdate(INT16 *buffer, INT32 samples_len)
+{
+	for (INT32 i = 0; i < nNumChips; i++) {
+		MultiPCMUpdateChip(i, buffer, samples_len);
 	}
 }

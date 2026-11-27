@@ -392,6 +392,7 @@ static void wr_ifc(adsp2100_state *adsp, INT32 val)
 		if (val & 0x0002) adsp->irq_latch[ADSP2181_IRQ0] = 0;
 		if (val & 0x0004) adsp->irq_latch[ADSP2181_IRQ1] = 0;
 		/* clear BDMA */
+		if (val & 0x0008) adsp->bdma_latch = 0;
 		if (val & 0x0010) adsp->irq_latch[ADSP2181_IRQE] = 0;
 		if (val & 0x0020) adsp->irq_latch[ADSP2181_SPORT0_RX] = 0;
 		if (val & 0x0040) adsp->irq_latch[ADSP2181_SPORT0_TX] = 0;
@@ -400,6 +401,7 @@ static void wr_ifc(adsp2100_state *adsp, INT32 val)
 		if (val & 0x0200) adsp->irq_latch[ADSP2181_IRQ0] = 1;
 		if (val & 0x0400) adsp->irq_latch[ADSP2181_IRQ1] = 1;
 		/* force BDMA */
+		if (val & 0x0800) adsp->bdma_latch = 1;
 		if (val & 0x1000) adsp->irq_latch[ADSP2181_IRQE] = 1;
 		if (val & 0x2000) adsp->irq_latch[ADSP2181_SPORT0_RX] = 1;
 		if (val & 0x4000) adsp->irq_latch[ADSP2181_SPORT0_TX] = 1;
@@ -426,6 +428,9 @@ static void wr_tx0(adsp2100_state *adsp, INT32 val)	{ if (adsp->sport_tx_callbac
 static void wr_tx1(adsp2100_state *adsp, INT32 val)	{ if (adsp->sport_tx_callback) (*adsp->sport_tx_callback)(adsp, 1, val); }
 static void wr_owrctr(adsp2100_state *adsp, INT32 val) { adsp->cntr = val & 0x3fff; }
 static void wr_topstack(adsp2100_state *adsp, INT32 val) { pc_stack_push_val(adsp, val & 0x3fff); }
+extern void (*adsp21xx_dmovlay_cb)(INT32 data);
+static void wr_pmovlay(adsp2100_state *adsp, INT32 val) { if (adsp->chip_type == CHIP_TYPE_ADSP2181) adsp->pmovlay = val & 0x3fff; else wr_inval(adsp, val); }
+static void wr_dmovlay(adsp2100_state *adsp, INT32 val) { if (adsp->chip_type == CHIP_TYPE_ADSP2181) { adsp->dmovlay = val & 0x3fff; if (adsp21xx_dmovlay_cb) adsp21xx_dmovlay_cb(adsp->dmovlay); } else wr_inval(adsp, val); }
 
 #define WRITE_REG(adsp,grp,reg,val) ((*wr_reg[grp][reg])(adsp,val))
 
@@ -437,7 +442,7 @@ static void (*const wr_reg[4][16])(adsp2100_state*, INT32) =
 	},
 	{
 		wr_i0, wr_i1, wr_i2, wr_i3, wr_m0, wr_m1, wr_m2, wr_m3,
-		wr_l0, wr_l1, wr_l2, wr_l3, wr_inval, wr_inval, wr_inval, wr_inval
+		wr_l0, wr_l1, wr_l2, wr_l3, wr_inval, wr_inval, wr_pmovlay, wr_dmovlay
 	},
 	{
 		wr_i4, wr_i5, wr_i6, wr_i7, wr_m4, wr_m5, wr_m6, wr_m7,
@@ -508,6 +513,9 @@ static INT32 rd_rx0(adsp2100_state *adsp)	{ if (adsp->sport_rx_callback) return 
 static INT32 rd_rx1(adsp2100_state *adsp)	{ if (adsp->sport_rx_callback) return (*adsp->sport_rx_callback)(adsp, 1); else return 0; }
 static INT32 rd_stacktop(adsp2100_state *adsp)	{ return pc_stack_pop_val(adsp); }
 
+static INT32 rd_pmovlay(adsp2100_state *adsp) { return (adsp->chip_type == CHIP_TYPE_ADSP2181) ? adsp->pmovlay : rd_inval(adsp); }
+static INT32 rd_dmovlay(adsp2100_state *adsp) { return (adsp->chip_type == CHIP_TYPE_ADSP2181) ? adsp->dmovlay : rd_inval(adsp); }
+
 #define READ_REG(adsp,grp,reg) ((*rd_reg[grp][reg])(adsp))
 
 static INT32 (*const rd_reg[4][16])(adsp2100_state *adsp) =
@@ -518,7 +526,7 @@ static INT32 (*const rd_reg[4][16])(adsp2100_state *adsp) =
 	},
 	{
 		rd_i0, rd_i1, rd_i2, rd_i3, rd_m0, rd_m1, rd_m2, rd_m3,
-		rd_l0, rd_l1, rd_l2, rd_l3, rd_inval, rd_inval, rd_inval, rd_inval
+		rd_l0, rd_l1, rd_l2, rd_l3, rd_inval, rd_inval, rd_pmovlay, rd_dmovlay
 	},
 	{
 		rd_i4, rd_i5, rd_i6, rd_i7, rd_m4, rd_m5, rd_m6, rd_m7,

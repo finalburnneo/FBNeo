@@ -3212,6 +3212,7 @@ static INT32 A26Init_F6_BOOST() { ctrl_type = CTRL_BOOSTER; return A26Init_F6();
 static INT32 A26Init_omegarac() { screen_yofs = 7; return A26Init_FA_BOOST(); }	// long VBLANK (picture starts ~line 49), framed like Stella
 static INT32 A26Init_FE() { cart_type = CART_FE; return DrvInit(); }
 static INT32 A26Init_SB() { cart_type = CART_SB; return DrvInit(); }
+static INT32 A26Init_UA() { cart_type = CART_UA; return DrvInit(); }
 static INT32 A26Init_4K_PAD_range(INT32 min, INT32 max) { paddle_min = min; paddle_max = max; return A26Init_4K_PAD(); }
 static INT32 A26Init_4K_PAD_swap(INT32 a, INT32 b) { paddle_map[a] = b; paddle_map[b] = a; return A26Init_4K_PAD(); }	// players a, b (0 - 3) trade ports
 static INT32 A26Init_astrblst() { return A26Init_4K_PAD_swap(0, 1); }
@@ -3851,10 +3852,10 @@ STD_ROM_PICK(a26_bibi)
 STD_ROM_FN(a26_bibi)
 
 struct BurnDriver BurnDrva26_bibi = {
-	"a26_bibi", NULL, NULL, NULL, "1983",
+	"a26_bibi", "a26_scuba", NULL, NULL, "1983",
 	"Bi! Bi! (Australia)\0", NULL, "Starsoft", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_bibiRomInfo, a26_bibiRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K_PAL, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_PAL, 4, 3
@@ -4316,6 +4317,25 @@ struct BurnDriver BurnDrva26_casino = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Cat Trax (USA)
+
+static struct BurnRomInfo a26_cattraxRomDesc[] = {
+	{ "Cat Trax (USA)(1983)(UA Limited).bin", 0x01000, 0xc847e5ec, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_cattrax)
+STD_ROM_FN(a26_cattrax)
+
+struct BurnDriver BurnDrva26_cattrax = {
+	"a26_cattrax", NULL, NULL, NULL, "1983",
+	"Cat Trax (USA)\0", NULL, "UA Limited", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION | GBF_MAZE, 0,
+	A2600GetZipName, a26_cattraxRomInfo, a26_cattraxRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Centipede (USA)
 
 static struct BurnRomInfo a26_centipedRomDesc[] = {
@@ -4430,10 +4450,10 @@ struct BurnDriver BurnDrva26_checkers = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// China Syndrome
+// China Syndrome (USA)
 
 static struct BurnRomInfo a26_chinasynRomDesc[] = {
-	{ "China Syndrome (1982)(Spectravideo).bin", 0x01000, 0xa714e79c, BRF_PRG | BRF_ESS },
+	{ "China Syndrome (USA)(1982)(Spectravideo).bin", 0x01000, 0xa714e79c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_chinasyn)
@@ -4441,18 +4461,18 @@ STD_ROM_FN(a26_chinasyn)
 
 struct BurnDriver BurnDrva26_chinasyn = {
 	"a26_chinasyn", NULL, NULL, NULL, "1982",
-	"China Syndrome\0", NULL, "Spectravideo", "Atari 2600",
+	"China Syndrome (USA)\0", NULL, "Spectravideo", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_chinasynRomInfo, a26_chinasynRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Chopper Command
+// Chopper Command (USA)
 
 static struct BurnRomInfo a26_chopcommRomDesc[] = {
-	{ "Chopper Command (1982)(Activision).bin", 0x01000, 0x1dfa64df, BRF_PRG | BRF_ESS },
+	{ "Chopper Command (USA)(1982)(Activision).bin", 0x01000, 0x1dfa64df, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_chopcomm)
@@ -4460,18 +4480,18 @@ STD_ROM_FN(a26_chopcomm)
 
 struct BurnDriver BurnDrva26_chopcomm = {
 	"a26_chopcomm", NULL, NULL, NULL, "1982",
-	"Chopper Command\0", NULL, "Activision", "Atari 2600",
+	"Chopper Command (USA)\0", NULL, "Activision", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_HORSHOOT, 0,
 	A2600GetZipName, a26_chopcommRomInfo, a26_chopcommRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Chuck Norris Superkicks
+// Chuck Norris Superkicks (USA)
 
 static struct BurnRomInfo a26_chucknorRomDesc[] = {
-	{ "Chuck Norris Superkicks (1983)(Xonox).bin", 0x02000, 0x96210c6c, BRF_PRG | BRF_ESS },
+	{ "Chuck Norris Superkicks (USA)(1983)(Xonox).bin", 0x02000, 0x96210c6c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_chucknor)
@@ -4479,18 +4499,18 @@ STD_ROM_FN(a26_chucknor)
 
 struct BurnDriver BurnDrva26_chucknor = {
 	"a26_chucknor", NULL, NULL, NULL, "1983",
-	"Chuck Norris Superkicks\0", NULL, "Xonox", "Atari 2600",
+	"Chuck Norris Superkicks (USA)\0", NULL, "Xonox", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION | GBF_VSFIGHT, 0,
 	A2600GetZipName, a26_chucknorRomInfo, a26_chucknorRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Circus Atari - Circus
+// Circus Atari (USA)
 
 static struct BurnRomInfo a26_circusaRomDesc[] = {
-	{ "Circus Atari (1980)(Atari).bin", 0x01000, 0xd2a330a3, BRF_PRG | BRF_ESS },
+	{ "Circus Atari (USA)(1980)(Atari).bin", 0x01000, 0xd2a330a3, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_circusa)
@@ -4498,18 +4518,18 @@ STD_ROM_FN(a26_circusa)
 
 struct BurnDriver BurnDrva26_circusa = {
 	"a26_circusa", NULL, NULL, NULL, "1980",
-	"Circus Atari - Circus\0", NULL, "Atari", "Atari 2600",
+	"Circus Atari (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_BREAKOUT, 0,
 	A2600GetZipName, a26_circusaRomInfo, a26_circusaRomName, NULL, NULL, NULL, NULL, A2600PaddleInputInfo, A2600PaddleDIPInfo,
 	A26Init_circusa, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Coco Nuts
+// Coco Nuts (USA)
 
 static struct BurnRomInfo a26_coconutsRomDesc[] = {
-	{ "Coco Nuts (1982)(Telesys).bin", 0x01000, 0xb3e44e5c, BRF_PRG | BRF_ESS },
+	{ "Coco Nuts (USA)(1982)(Telesys).bin", 0x01000, 0xb3e44e5c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_coconuts)
@@ -4517,18 +4537,18 @@ STD_ROM_FN(a26_coconuts)
 
 struct BurnDriver BurnDrva26_coconuts = {
 	"a26_coconuts", NULL, NULL, NULL, "1982",
-	"Coco Nuts\0", NULL, "Telesys", "Atari 2600",
+	"Coco Nuts (USA)\0", NULL, "Telesys", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_coconutsRomInfo, a26_coconutsRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Color Bar Generator
+// Color Bar Generator (USA)
 
 static struct BurnRomInfo a26_colorbarRomDesc[] = {
-	{ "Color Bar Generator (1984)(Video Soft).bin", 0x01000, 0x19b52142, BRF_PRG | BRF_ESS },
+	{ "Color Bar Generator (USA)(1984)(Video Soft).bin", 0x01000, 0x19b52142, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_colorbar)
@@ -4536,37 +4556,37 @@ STD_ROM_FN(a26_colorbar)
 
 struct BurnDriver BurnDrva26_colorbar = {
 	"a26_colorbar", NULL, NULL, NULL, "1984",
-	"Color Bar Generator\0", NULL, "Video Soft", "Atari 2600",
+	"Color Bar Generator (USA)\0", NULL, "Video Soft", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_MISC, 0,
 	A2600GetZipName, a26_colorbarRomInfo, a26_colorbarRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Comando Suicida
+// Comando Suicida (Brazil, Unl)
 
 static struct BurnRomInfo a26_comandosRomDesc[] = {
-	{ "Comando Suicida (19xx)(Dismac).bin", 0x01000, 0xa56d1a00, BRF_PRG | BRF_ESS },
+	{ "Comando Suicida (Brazil, Unl)(19xx)(Dismac).bin", 0x01000, 0xa56d1a00, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_comandos)
 STD_ROM_FN(a26_comandos)
 
 struct BurnDriver BurnDrva26_comandos = {
-	"a26_comandos", NULL, NULL, NULL, "19??",
-	"Comando Suicida\0", NULL, "Dismac", "Atari 2600",
+	"a26_comandos", "a26_chopcomm", NULL, NULL, "19??",
+	"Comando Suicida (Brazil, Unl)\0", NULL, "Dismac", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_ATARI2600, GBF_HORSHOOT, 0,
 	A2600GetZipName, a26_comandosRomInfo, a26_comandosRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Combat - Tank-Plus
+// Combat (USA)
 
 static struct BurnRomInfo a26_combatRomDesc[] = {
-	{ "Combat (1977)(Atari).bin", 0x00800, 0x9c326a97, BRF_PRG | BRF_ESS },
+	{ "Combat (USA)(1977)(Atari).bin", 0x00800, 0x9c326a97, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_combat)
@@ -4574,18 +4594,37 @@ STD_ROM_FN(a26_combat)
 
 struct BurnDriver BurnDrva26_combat = {
 	"a26_combat", NULL, NULL, NULL, "1977",
-	"Combat - Tank-Plus\0", NULL, "Atari", "Atari 2600",
+	"Combat (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MULTISHOOT, 0,
 	A2600GetZipName, a26_combatRomInfo, a26_combatRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_2K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Commando
+// Combat Two ~ Super Combat (USA, Prototype)
+
+static struct BurnRomInfo a26_combat2RomDesc[] = {
+	{ "Combat Two (USA, Proto)(1982)(Atari).bin", 0x02000, 0x8cabe1fd, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_combat2)
+STD_ROM_FN(a26_combat2)
+
+struct BurnDriver BurnDrva26_combat2 = {
+	"a26_combat2", NULL, NULL, NULL, "1982",
+	"Combat Two ~ Super Combat (USA, Prototype)\0", NULL, "Atari", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_ATARI2600, GBF_MULTISHOOT, 0,
+	A2600GetZipName, a26_combat2RomInfo, a26_combat2RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Commando (USA)
 
 static struct BurnRomInfo a26_commandoRomDesc[] = {
-	{ "Commando (1988)(Activision).bin", 0x04000, 0x8d3025dc, BRF_PRG | BRF_ESS },
+	{ "Commando (USA)(1988)(Activision).bin", 0x04000, 0x8d3025dc, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_commando)
@@ -4593,18 +4632,18 @@ STD_ROM_FN(a26_commando)
 
 struct BurnDriver BurnDrva26_commando = {
 	"a26_commando", NULL, NULL, NULL, "1988",
-	"Commando\0", NULL, "Activision", "Atari 2600",
+	"Commando (USA)\0", NULL, "Activision", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_RUNGUN, 0,
 	A2600GetZipName, a26_commandoRomInfo, a26_commandoRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Commando Raid
+// Commando Raid (USA)
 
 static struct BurnRomInfo a26_commraidRomDesc[] = {
-	{ "Commando Raid (1982)(U.S. Games Corporation).bin", 0x01000, 0xe46583e6, BRF_PRG | BRF_ESS },
+	{ "Commando Raid (USA)(1982)(U.S. Games Corporation).bin", 0x01000, 0xe46583e6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_commraid)
@@ -4612,18 +4651,18 @@ STD_ROM_FN(a26_commraid)
 
 struct BurnDriver BurnDrva26_commraid = {
 	"a26_commraid", NULL, NULL, NULL, "1982",
-	"Commando Raid\0", NULL, "U.S. Games Corporation", "Atari 2600",
+	"Commando Raid (USA)\0", NULL, "U.S. Games Corporation", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_MULTISHOOT, 0,
 	A2600GetZipName, a26_commraidRomInfo, a26_commraidRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Condor Attack
+// Condor Attack (USA)
 
 static struct BurnRomInfo a26_condoratRomDesc[] = {
-	{ "Condor Attack (1982)(Ultravision).bin", 0x01000, 0xb6c582eb, BRF_PRG | BRF_ESS },
+	{ "Condor Attack (USA)(1982)(Ultravision).bin", 0x01000, 0xb6c582eb, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_condorat)
@@ -4631,9 +4670,9 @@ STD_ROM_FN(a26_condorat)
 
 struct BurnDriver BurnDrva26_condorat = {
 	"a26_condorat", NULL, NULL, NULL, "1982",
-	"Condor Attack\0", NULL, "Ultravision", "Atari 2600",
+	"Condor Attack (USA)\0", NULL, "Ultravision", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
 	A2600GetZipName, a26_condoratRomInfo, a26_condoratRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -4658,10 +4697,10 @@ struct BurnDriver BurnDrva26_congo = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Corrida da Matematica
+// Corrida da Matematica (Brazil, Unl)
 
 static struct BurnRomInfo a26_corridaRomDesc[] = {
-	{ "Corrida da Matematica (19xx)(CCE).bin", 0x01000, 0xff570220, BRF_PRG | BRF_ESS },
+	{ "Corrida da Matematica (Brazil, Unl)(19xx)(CCE).bin", 0x01000, 0xff570220, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_corrida)
@@ -4669,18 +4708,18 @@ STD_ROM_FN(a26_corrida)
 
 struct BurnDriver BurnDrva26_corrida = {
 	"a26_corrida", NULL, NULL, NULL, "19??",
-	"Corrida da Matematica\0", NULL, "CCE", "Atari 2600",
+	"Corrida da Matematica (Brazil, Unl)\0", NULL, "CCE", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_QUIZ, 0,
 	A2600GetZipName, a26_corridaRomInfo, a26_corridaRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Cosmic Ark (Imagic)
+// Cosmic Ark (USA)
 
 static struct BurnRomInfo a26_cosmarkRomDesc[] = {
-	{ "Cosmic Ark (1982)(Imagic).bin", 0x01000, 0xcb374f0e, BRF_PRG | BRF_ESS },
+	{ "Cosmic Ark (USA)(1982)(Imagic).bin", 0x01000, 0xcb374f0e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_cosmark)
@@ -4688,9 +4727,9 @@ STD_ROM_FN(a26_cosmark)
 
 struct BurnDriver BurnDrva26_cosmark = {
 	"a26_cosmark", NULL, NULL, NULL, "1982",
-	"Cosmic Ark (Imagic)\0", NULL, "Imagic", "Atari 2600",
+	"Cosmic Ark (USA)\0", NULL, "Imagic", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION | GBF_MULTISHOOT, 0,
 	A2600GetZipName, a26_cosmarkRomInfo, a26_cosmarkRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -5684,10 +5723,10 @@ struct BurnDriver BurnDrva26_fathom = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Final Approach
+// Final Approach (USA)
 
 static struct BurnRomInfo a26_finalappRomDesc[] = {
-	{ "Final Approach (1982)(Apollo).bin", 0x01000, 0xff23f469, BRF_PRG | BRF_ESS },
+	{ "Final Approach (USA)(1982)(Apollo).bin", 0x01000, 0xff23f469, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_finalapp)
@@ -5695,18 +5734,18 @@ STD_ROM_FN(a26_finalapp)
 
 struct BurnDriver BurnDrva26_finalapp = {
 	"a26_finalapp", NULL, NULL, NULL, "1982",
-	"Final Approach\0", NULL, "Apollo", "Atari 2600",
+	"Final Approach (USA)\0", NULL, "Apollo", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_STRATEGY, 0,
 	A2600GetZipName, a26_finalappRomInfo, a26_finalappRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Fire Fighter
+// Fire Fighter (USA)
 
 static struct BurnRomInfo a26_ffighterRomDesc[] = {
-	{ "Fire Fighter (1982)(Imagic).bin", 0x01000, 0xe361fb42, BRF_PRG | BRF_ESS },
+	{ "Fire Fighter (USA)(1982)(Imagic).bin", 0x01000, 0xe361fb42, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_ffighter)
@@ -5714,18 +5753,18 @@ STD_ROM_FN(a26_ffighter)
 
 struct BurnDriver BurnDrva26_ffighter = {
 	"a26_ffighter", NULL, NULL, NULL, "1982",
-	"Fire Fighter\0", NULL, "Imagic", "Atari 2600",
+	"Fire Fighter (USA)\0", NULL, "Imagic", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_ffighterRomInfo, a26_ffighterRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Fire Fly
+// Fire Fly (USA)
 
 static struct BurnRomInfo a26_fireflyRomDesc[] = {
-	{ "Fire Fly (1983)(Mythicon).bin", 0x01000, 0x7a8e4ec7, BRF_PRG | BRF_ESS },
+	{ "Fire Fly (USA)(1983)(Mythicon).bin", 0x01000, 0x7a8e4ec7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_firefly)
@@ -5733,37 +5772,37 @@ STD_ROM_FN(a26_firefly)
 
 struct BurnDriver BurnDrva26_firefly = {
 	"a26_firefly", NULL, NULL, NULL, "1983",
-	"Fire Fly\0", NULL, "Mythicon", "Atari 2600",
+	"Fire Fly (USA)\0", NULL, "Mythicon", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_fireflyRomInfo, a26_fireflyRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Fisher Price
+// Fisher Price (Brazil, Unl)
 
 static struct BurnRomInfo a26_fishpricRomDesc[] = {
-	{ "Fisher Price (1983)(CCE).bin", 0x01000, 0xe8295349, BRF_PRG | BRF_ESS },
+	{ "Fisher Price (Brazil, Unl)(1983)(CCE).bin", 0x01000, 0xe8295349, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_fishpric)
 STD_ROM_FN(a26_fishpric)
 
 struct BurnDriver BurnDrva26_fishpric = {
-	"a26_fishpric", NULL, NULL, NULL, "1983",
-	"Fisher Price\0", NULL, "CCE", "Atari 2600",
+	"a26_fishpric", "a26_scuba", NULL, NULL, "1983",
+	"Fisher Price (Brazil, Unl)\0", NULL, "CCE", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_fishpricRomInfo, a26_fishpricRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Fishing Derby
+// Fishing Derby (USA)
 
 static struct BurnRomInfo a26_fishdrbyRomDesc[] = {
-	{ "Fishing Derby (1980)(Activision).bin", 0x00800, 0x204c928f, BRF_PRG | BRF_ESS },
+	{ "Fishing Derby (USA)(1980)(Activision).bin", 0x00800, 0x204c928f, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_fishdrby)
@@ -5771,18 +5810,18 @@ STD_ROM_FN(a26_fishdrby)
 
 struct BurnDriver BurnDrva26_fishdrby = {
 	"a26_fishdrby", NULL, NULL, NULL, "1980",
-	"Fishing Derby\0", NULL, "Activision", "Atari 2600",
+	"Fishing Derby (USA)\0", NULL, "Activision", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_fishdrbyRomInfo, a26_fishdrbyRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_2K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Flag Capture - Capture
+// Flag Capture ~ Capture (USA)
 
 static struct BurnRomInfo a26_flagcapRomDesc[] = {
-	{ "Flag Capture (1978)(Atari).bin", 0x00800, 0x8aa1c41e, BRF_PRG | BRF_ESS },
+	{ "Flag Capture (USA)(1978)(Atari).bin", 0x00800, 0x8aa1c41e, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_flagcap)
@@ -5790,37 +5829,37 @@ STD_ROM_FN(a26_flagcap)
 
 struct BurnDriver BurnDrva26_flagcap = {
 	"a26_flagcap", NULL, NULL, NULL, "1978",
-	"Flag Capture - Capture\0", NULL, "Atari", "Atari 2600",
+	"Flag Capture ~ Capture (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_PUZZLE, 0,
 	A2600GetZipName, a26_flagcapRomInfo, a26_flagcapRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_2K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Football
+// Football (USA)
 
 static struct BurnRomInfo a26_footballRomDesc[] = {
-	{ "Football (1979)(Atari).bin", 0x00800, 0x3b73ee02, BRF_PRG | BRF_ESS },
+	{ "Football (USA)(1978)(Atari).bin", 0x00800, 0x3b73ee02, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_football)
 STD_ROM_FN(a26_football)
 
 struct BurnDriver BurnDrva26_football = {
-	"a26_football", NULL, NULL, NULL, "1979",
-	"Football\0", NULL, "Atari", "Atari 2600",
+	"a26_football", NULL, NULL, NULL, "1978",
+	"Football (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_SPORTSMISC, 0,
 	A2600GetZipName, a26_footballRomInfo, a26_footballRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_2K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Frankenstein's Monster
+// Frankenstein's Monster (USA)
 
 static struct BurnRomInfo a26_frankenmRomDesc[] = {
-	{ "Frankenstein's Monster (1983)(Data Age).bin", 0x01000, 0xad44dff9, BRF_PRG | BRF_ESS },
+	{ "Frankenstein's Monster (USA)(1983)(Data Age).bin", 0x01000, 0xad44dff9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_frankenm)
@@ -5828,9 +5867,9 @@ STD_ROM_FN(a26_frankenm)
 
 struct BurnDriver BurnDrva26_frankenm = {
 	"a26_frankenm", NULL, NULL, NULL, "1983",
-	"Frankenstein's Monster\0", NULL, "Data Age", "Atari 2600",
+	"Frankenstein's Monster (USA)\0", NULL, "Data Age", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_frankenmRomInfo, a26_frankenmRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -5988,6 +6027,25 @@ struct BurnDriver BurnDrva26_frostbit = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Funky Fish (USA, Prototype)
+
+static struct BurnRomInfo a26_funkfishRomDesc[] = {
+	{ "Funky Fish (USA, Proto)(1983)(UA Limited).bin", 0x02000, 0xb53b33f1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_funkfish)
+STD_ROM_FN(a26_funkfish)
+
+struct BurnDriver BurnDrva26_funkfish = {
+	"a26_funkfish", NULL, NULL, NULL, "1983",
+	"Funky Fish (USA, Prototype)\0", NULL, "UA Limited", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_ATARI2600, GBF_HORSHOOT, 0,
+	A2600GetZipName, a26_funkfishRomInfo, a26_funkfishRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_UA, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Fun with Numbers (USA)
 
 static struct BurnRomInfo a26_funnumbRomDesc[] = {
@@ -6007,10 +6065,10 @@ struct BurnDriver BurnDrva26_funnumb = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// G.I. Joe - Cobra Strike
+// G.I. Joe: Cobra Strike (USA)
 
 static struct BurnRomInfo a26_gijoeRomDesc[] = {
-	{ "G.I. Joe - Cobra Strike (1983)(Parker Brothers).bin", 0x01000, 0x6bcbcd37, BRF_PRG | BRF_ESS },
+	{ "G.I. Joe - Cobra Strike (USA)(1983)(Parker Brothers).bin", 0x01000, 0x6bcbcd37, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_gijoe)
@@ -6018,11 +6076,11 @@ STD_ROM_FN(a26_gijoe)
 
 struct BurnDriver BurnDrva26_gijoe = {
 	"a26_gijoe", NULL, NULL, NULL, "1983",
-	"G.I. Joe - Cobra Strike\0", NULL, "Parker Brothers", "Atari 2600",
+	"G.I. Joe: Cobra Strike (USA)\0", NULL, "Parker Brothers", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
-	A2600GetZipName, a26_gijoeRomInfo, a26_gijoeRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
-	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_SHOOT, 0,
+	A2600GetZipName, a26_gijoeRomInfo, a26_gijoeRomName, NULL, NULL, NULL, NULL, A2600PaddleInputInfo, A2600PaddleDIPInfo,
+	A26Init_4K_PAD, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -6862,6 +6920,25 @@ struct BurnDriver BurnDrva26_jungleh = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Kabobber (USA, Prototype)
+
+static struct BurnRomInfo a26_kabobberRomDesc[] = {
+	{ "Kabobber (USA, Proto)(1983)(Activision).bin", 0x01000, 0x9517ee0e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_kabobber)
+STD_ROM_FN(a26_kabobber)
+
+struct BurnDriver BurnDrva26_kabobber = {
+	"a26_kabobber", NULL, NULL, NULL, "1983",
+	"Kabobber (USA, Prototype)\0", NULL, "Activision", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_kabobberRomInfo, a26_kabobberRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Kaboom! (USA)
 
 static struct BurnRomInfo a26_kaboomRomDesc[] = {
@@ -7049,6 +7126,25 @@ struct BurnDriver BurnDrva26_laserbls = {
 	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_SHOOT, 0,
 	A2600GetZipName, a26_laserblsRomInfo, a26_laserblsRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_2K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Lasercade (USA, Prototype)
+
+static struct BurnRomInfo a26_lasrcadeRomDesc[] = {
+	{ "Lasercade (USA, Proto)(1983)(20th Century Fox).bin", 0x01000, 0xef4ff656, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_lasrcade)
+STD_ROM_FN(a26_lasrcade)
+
+struct BurnDriver BurnDrva26_lasrcade = {
+	"a26_lasrcade", NULL, NULL, NULL, "1983",
+	"Lasercade (USA, Prototype)\0", NULL, "20th Century Fox", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_ATARI2600, GBF_SHOOT, 0,
+	A2600GetZipName, a26_lasrcadeRomInfo, a26_lasrcadeRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -8211,10 +8307,10 @@ struct BurnDriver BurnDrva26_pengo = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Pepsi Invaders - Coke Wins
+// Pepsi Invaders ~ Coke Wins (USA)
 
 static struct BurnRomInfo a26_pepsiinvRomDesc[] = {
-	{ "Pepsi Invaders (1983)(Atari).bin", 0x01000, 0x7ac99b5c, BRF_PRG | BRF_ESS },
+	{ "Pepsi Invaders (USA)(1983)(Atari).bin", 0x01000, 0x7ac99b5c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_pepsiinv)
@@ -8222,18 +8318,18 @@ STD_ROM_FN(a26_pepsiinv)
 
 struct BurnDriver BurnDrva26_pepsiinv = {
 	"a26_pepsiinv", NULL, NULL, NULL, "1983",
-	"Pepsi Invaders - Coke Wins\0", NULL, "Atari", "Atari 2600",
+	"Pepsi Invaders ~ Coke Wins (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
 	A2600GetZipName, a26_pepsiinvRomInfo, a26_pepsiinvRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Pete Rose Baseball
+// Pete Rose Baseball (USA)
 
 static struct BurnRomInfo a26_peteroseRomDesc[] = {
-	{ "Pete Rose Baseball (1988)(Absolute Entertainment).bin", 0x04000, 0xd0c6fc32, BRF_PRG | BRF_ESS },
+	{ "Pete Rose Baseball (USA)(1988)(Absolute Entertainment).bin", 0x04000, 0xd0c6fc32, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_peterose)
@@ -8241,56 +8337,37 @@ STD_ROM_FN(a26_peterose)
 
 struct BurnDriver BurnDrva26_peterose = {
 	"a26_peterose", NULL, NULL, NULL, "1988",
-	"Pete Rose Baseball\0", NULL, "Absolute Entertainment", "Atari 2600",
+	"Pete Rose Baseball (USA)\0", NULL, "Absolute Entertainment", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_SPORTSMISC, 0,
 	A2600GetZipName, a26_peteroseRomInfo, a26_peteroseRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Phanton Tank (Digivision)
+// Phanton Tank (Brazil, Unl)
 
 static struct BurnRomInfo a26_phanttnkdvRomDesc[] = {
-	{ "Phanton Tank (19xx)(Digivision).bin", 0x01000, 0xa99dce32, BRF_PRG | BRF_ESS },
+	{ "Phanton Tank (Brazil, Unl)(19xx)(Digivision).bin", 0x01000, 0xa99dce32, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_phanttnkdv)
 STD_ROM_FN(a26_phanttnkdv)
 
 struct BurnDriver BurnDrva26_phanttnkdv = {
-	"a26_phanttnkdv", NULL, NULL, NULL, "19??",
-	"Phanton Tank (Digivision)\0", NULL, "Digivision", "Atari 2600",
+	"a26_phanttnkdv", "a26_tanksno", NULL, NULL, "19??",
+	"Phanton Tank (Brazil, Unl)\0", NULL, "Digivision", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_ATARI2600, GBF_MAZE | GBF_MULTISHOOT, 0,
 	A2600GetZipName, a26_phanttnkdvRomInfo, a26_phanttnkdvRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Pharaoh's Curse (unknown)
-
-static struct BurnRomInfo a26_pharaoh2RomDesc[] = {
-	{ "Pharaoh's Curse (19xx)(Unknown).bin", 0x01000, 0xc17c5f64, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(a26_pharaoh2)
-STD_ROM_FN(a26_pharaoh2)
-
-struct BurnDriver BurnDrva26_pharaoh2 = {
-	"a26_pharaoh2", NULL, NULL, NULL, "19??",
-	"Pharaoh's Curse (unknown)\0", NULL, "<unknown>", "Atari 2600",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
-	A2600GetZipName, a26_pharaoh2RomInfo, a26_pharaoh2RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
-	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
-	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
-};
-
-// Phoenix
+// Phoenix (USA)
 
 static struct BurnRomInfo a26_phoenixRomDesc[] = {
-	{ "Phoenix (1982)(Atari).bin", 0x02000, 0x6ae1b66c, BRF_PRG | BRF_ESS },
+	{ "Phoenix (USA)(1982)(Atari).bin", 0x02000, 0x6ae1b66c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_phoenix)
@@ -8298,18 +8375,18 @@ STD_ROM_FN(a26_phoenix)
 
 struct BurnDriver BurnDrva26_phoenix = {
 	"a26_phoenix", NULL, NULL, NULL, "1982",
-	"Phoenix\0", NULL, "Atari", "Atari 2600",
+	"Phoenix (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
 	A2600GetZipName, a26_phoenixRomInfo, a26_phoenixRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Picnic
+// Picnic (USA)
 
 static struct BurnRomInfo a26_picnicRomDesc[] = {
-	{ "Picnic (1982)(U.S. Games Corporation).bin", 0x01000, 0x1d507a61, BRF_PRG | BRF_ESS },
+	{ "Picnic (USA)(1982)(U.S. Games Corporation).bin", 0x01000, 0x1d507a61, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_picnic)
@@ -8317,18 +8394,18 @@ STD_ROM_FN(a26_picnic)
 
 struct BurnDriver BurnDrva26_picnic = {
 	"a26_picnic", NULL, NULL, NULL, "1982",
-	"Picnic\0", NULL, "U.S. Games Corporation", "Atari 2600",
+	"Picnic (USA)\0", NULL, "U.S. Games Corporation", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_picnicRomInfo, a26_picnicRomName, NULL, NULL, NULL, NULL, A2600PaddleInputInfo, A2600PaddleDIPInfo,
 	A26Init_picnic, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Piece o' Cake
+// Piece o' Cake (USA)
 
 static struct BurnRomInfo a26_piececakRomDesc[] = {
-	{ "Piece o' Cake (1982)(U.S. Games Corporation).bin", 0x01000, 0x40355166, BRF_PRG | BRF_ESS },
+	{ "Piece o' Cake (USA)(1982)(U.S. Games Corporation).bin", 0x01000, 0x40355166, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_piececak)
@@ -8336,9 +8413,9 @@ STD_ROM_FN(a26_piececak)
 
 struct BurnDriver BurnDrva26_piececak = {
 	"a26_piececak", NULL, NULL, NULL, "1982",
-	"Piece o' Cake\0", NULL, "U.S. Games Corporation", "Atari 2600",
+	"Piece o' Cake (USA)\0", NULL, "U.S. Games Corporation", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_piececakRomInfo, a26_piececakRomName, NULL, NULL, NULL, NULL, A2600PaddleInputInfo, A2600PaddleDIPInfo,
 	A26Init_piececak, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -8493,6 +8570,25 @@ struct BurnDriver BurnDrva26_plaqueat = {
 	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
 	A2600GetZipName, a26_plaqueatRomInfo, a26_plaqueatRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Pleiades (USA, Prototype)
+
+static struct BurnRomInfo a26_pleiadesRomDesc[] = {
+	{ "Pleiades (USA, Proto)(1983)(UA Limited).bin", 0x02000, 0xf394a9bb, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_pleiades)
+STD_ROM_FN(a26_pleiades)
+
+struct BurnDriver BurnDrva26_pleiades = {
+	"a26_pleiades", NULL, NULL, NULL, "1983",
+	"Pleiades (USA, Prototype)\0", NULL, "UA Limited", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
+	A2600GetZipName, a26_pleiadesRomInfo, a26_pleiadesRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_UA, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -8724,10 +8820,10 @@ struct BurnDriver BurnDrva26_quintana = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Quick Step!
+// Quick Step! (USA)
 
 static struct BurnRomInfo a26_quickstpRomDesc[] = {
-	{ "Quick Step! (1983)(Imagic).bin", 0x01000, 0x057440fe, BRF_PRG | BRF_ESS },
+	{ "Quick Step! (USA)(1983)(Imagic).bin", 0x01000, 0x057440fe, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_quickstp)
@@ -8735,18 +8831,37 @@ STD_ROM_FN(a26_quickstp)
 
 struct BurnDriver BurnDrva26_quickstp = {
 	"a26_quickstp", NULL, NULL, NULL, "1983",
-	"Quick Step!\0", NULL, "Imagic", "Atari 2600",
+	"Quick Step! (USA)\0", NULL, "Imagic", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_quickstpRomInfo, a26_quickstpRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Racing Car (unknown)
+// Rabbit Transit (USA, Prototype)
+
+static struct BurnRomInfo a26_rabbitRomDesc[] = {
+	{ "Rabbit Transit (USA, Proto)(1983)(Atari).bin", 0x02000, 0xdd1e5638, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_rabbit)
+STD_ROM_FN(a26_rabbit)
+
+struct BurnDriver BurnDrva26_rabbit = {
+	"a26_rabbit", NULL, NULL, NULL, "1983",
+	"Rabbit Transit (USA, Prototype)\0", NULL, "Atari", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_rabbitRomInfo, a26_rabbitRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Racing Car (Brazil, Unl)
 
 static struct BurnRomInfo a26_racing1RomDesc[] = {
-	{ "Racing Car (19xx)(Unknown).bin", 0x01000, 0xf78489b0, BRF_PRG | BRF_ESS },
+	{ "Racing Car (Brazil, Unl)(19xx)(Unknown).bin", 0x01000, 0xf78489b0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_racing1)
@@ -8754,18 +8869,18 @@ STD_ROM_FN(a26_racing1)
 
 struct BurnDriver BurnDrva26_racing1 = {
 	"a26_racing1", NULL, NULL, NULL, "19??",
-	"Racing Car (unknown)\0", NULL, "<unknown>", "Atari 2600",
+	"Racing Car (Brazil, Unl)\0", NULL, "<unknown>", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_racing1RomInfo, a26_racing1RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Racquetball
+// Racquetball (USA)
 
 static struct BurnRomInfo a26_racquetbRomDesc[] = {
-	{ "Racquetball (1981)(Apollo).bin", 0x01000, 0x7eef9ac0, BRF_PRG | BRF_ESS },
+	{ "Racquetball (USA)(1981)(Apollo).bin", 0x01000, 0x7eef9ac0, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_racquetb)
@@ -8773,9 +8888,9 @@ STD_ROM_FN(a26_racquetb)
 
 struct BurnDriver BurnDrva26_racquetb = {
 	"a26_racquetb", NULL, NULL, NULL, "1981",
-	"Racquetball\0", NULL, "Apollo", "Atari 2600",
+	"Racquetball (USA)\0", NULL, "Apollo", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_SPORTSMISC, 0,
 	A2600GetZipName, a26_racquetbRomInfo, a26_racquetbRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -9275,29 +9390,48 @@ struct BurnDriver BurnDrva26_roomdoom = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Rubik's Cube
+// Rubik's Cube (USA)
 
 static struct BurnRomInfo a26_rubikcubRomDesc[] = {
-	{ "Rubik's Cube (1984)(Atari).bin", 0x01000, 0x37f23cb8, BRF_PRG | BRF_ESS },
+	{ "Rubik's Cube (USA)(1982)(Atari).bin", 0x01000, 0x37f23cb8, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_rubikcub)
 STD_ROM_FN(a26_rubikcub)
 
 struct BurnDriver BurnDrva26_rubikcub = {
-	"a26_rubikcub", NULL, NULL, NULL, "1984",
-	"Rubik's Cube\0", NULL, "Atari", "Atari 2600",
+	"a26_rubikcub", NULL, NULL, NULL, "1982",
+	"Rubik's Cube (USA)\0", NULL, "Atari", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_PUZZLE, 0,
 	A2600GetZipName, a26_rubikcubRomInfo, a26_rubikcubRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Save Our Ship (unknown)
+// Save Mary! (USA, Prototype)
+
+static struct BurnRomInfo a26_savemaryRomDesc[] = {
+	{ "Save Mary! (USA, Proto)(1990)(Atari).bin", 0x04000, 0x01e18f53, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_savemary)
+STD_ROM_FN(a26_savemary)
+
+struct BurnDriver BurnDrva26_savemary = {
+	"a26_savemary", NULL, NULL, NULL, "1990",
+	"Save Mary! (USA, Prototype)\0", "SARA Superchip (128 bytes extra RAM)", "Atari", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_savemaryRomInfo, a26_savemaryRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6_SC, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Save Our Ship (Brazil, Unl)
 
 static struct BurnRomInfo a26_sos1RomDesc[] = {
-	{ "Save Our Ship (19xx)(Unknown).bin", 0x01000, 0xc15a66e7, BRF_PRG | BRF_ESS },
+	{ "Save Our Ship (Brazil, Unl)(19xx)(Unknown).bin", 0x01000, 0xc15a66e7, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_sos1)
@@ -9305,18 +9439,18 @@ STD_ROM_FN(a26_sos1)
 
 struct BurnDriver BurnDrva26_sos1 = {
 	"a26_sos1", NULL, NULL, NULL, "19??",
-	"Save Our Ship (unknown)\0", NULL, "<unknown>", "Atari 2600",
+	"Save Our Ship (Brazil, Unl)\0", NULL, "<unknown>", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_sos1RomInfo, a26_sos1RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Scuba Diver
+// Scuba Diver (Canada, Unl)
 
 static struct BurnRomInfo a26_scubaRomDesc[] = {
-	{ "Scuba Diver (1983)(Unknown).bin", 0x01000, 0x3869182c, BRF_PRG | BRF_ESS },
+	{ "Scuba Diver (Canada, Unl)(1983)(Zellers).bin", 0x01000, 0x3869182c, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_scuba)
@@ -9324,18 +9458,18 @@ STD_ROM_FN(a26_scuba)
 
 struct BurnDriver BurnDrva26_scuba = {
 	"a26_scuba", NULL, NULL, NULL, "1983",
-	"Scuba Diver\0", NULL, "<unknown>", "Atari 2600",
+	"Scuba Diver (Canada, Unl)\0", NULL, "Zellers", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_scubaRomInfo, a26_scubaRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Sea Battle
+// Sea Battle (USA)
 
 static struct BurnRomInfo a26_seabattlRomDesc[] = {
-	{ "Sea Battle (1983)(M Network).bin", 0x01000, 0x83b4eb19, BRF_PRG | BRF_ESS },
+	{ "Sea Battle (USA)(1983)(M Network).bin", 0x01000, 0x83b4eb19, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_seabattl)
@@ -9343,9 +9477,9 @@ STD_ROM_FN(a26_seabattl)
 
 struct BurnDriver BurnDrva26_seabattl = {
 	"a26_seabattl", NULL, NULL, NULL, "1983",
-	"Sea Battle\0", NULL, "M Network", "Atari 2600",
+	"Sea Battle (USA)\0", NULL, "M Network", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_STRATEGY, 0,
 	A2600GetZipName, a26_seabattlRomInfo, a26_seabattlRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -9380,10 +9514,10 @@ STD_ROM_PICK(a26_seahunt)
 STD_ROM_FN(a26_seahunt)
 
 struct BurnDriver BurnDrva26_seahunt = {
-	"a26_seahunt", NULL, NULL, NULL, "19??",
+	"a26_seahunt", "a26_scuba", NULL, NULL, "19??",
 	"Sea Hunt (Brazil, Unl)\0", NULL, "CCE", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_seahuntRomInfo, a26_seahuntRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -11137,10 +11271,10 @@ struct BurnDriver BurnDrva26_tankcity = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
-// Tanks But No Tanks
+// Tanks But No Tanks (USA)
 
 static struct BurnRomInfo a26_tanksnoRomDesc[] = {
-	{ "Tanks But No Tanks (1983)(ZiMAG).bin", 0x01000, 0x4adbb1f9, BRF_PRG | BRF_ESS },
+	{ "Tanks But No Tanks (USA)(1983)(ZiMAG).bin", 0x01000, 0x4adbb1f9, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(a26_tanksno)
@@ -11148,9 +11282,9 @@ STD_ROM_FN(a26_tanksno)
 
 struct BurnDriver BurnDrva26_tanksno = {
 	"a26_tanksno", NULL, NULL, NULL, "1983",
-	"Tanks But No Tanks\0", NULL, "ZiMAG", "Atari 2600",
+	"Tanks But No Tanks (USA)\0", NULL, "ZiMAG", "Atari 2600",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_MAZE | GBF_MULTISHOOT, 0,
 	A2600GetZipName, a26_tanksnoRomInfo, a26_tanksnoRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
@@ -11266,6 +11400,25 @@ struct BurnDriver BurnDrva26_taz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_ATARI2600, GBF_ACTION, 0,
 	A2600GetZipName, a26_tazRomInfo, a26_tazRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Tempest (USA, Prototype)
+
+static struct BurnRomInfo a26_tempestRomDesc[] = {
+	{ "Tempest (USA, Proto)(1984)(Atari).bin", 0x02000, 0x711647f6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_tempest)
+STD_ROM_FN(a26_tempest)
+
+struct BurnDriver BurnDrva26_tempest = {
+	"a26_tempest", NULL, NULL, NULL, "1984",
+	"Tempest (USA, Prototype)\0", NULL, "Atari", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 1, HARDWARE_ATARI2600, GBF_SHOOT, 0,
+	A2600GetZipName, a26_tempestRomInfo, a26_tempestRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F8, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
@@ -12131,6 +12284,44 @@ struct BurnDriver BurnDrva26_alienabduc = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Alien Holocaust (HB)
+
+static struct BurnRomInfo a26_alienholoRomDesc[] = {
+	{ "Alien Holocaust (2022)(Teknamic Software).bin", 32768, 0xa9ae14d9, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_alienholo)
+STD_ROM_FN(a26_alienholo)
+
+struct BurnDriver BurnDrva26_alienholo = {
+	"a26_alienholo", NULL, NULL, NULL, "2022",
+	"Alien Holocaust (HB)\0", NULL, "Teknamic Software", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_alienholoRomInfo, a26_alienholoRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Alien Holocaust II: Invasion Earth (HB)
+
+static struct BurnRomInfo a26_alienholo2RomDesc[] = {
+	{ "Alien Holocaust II - Invasion Earth (2023)(Teknamic Software).bin", 32768, 0xb4021927, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_alienholo2)
+STD_ROM_FN(a26_alienholo2)
+
+struct BurnDriver BurnDrva26_alienholo2 = {
+	"a26_alienholo2", NULL, NULL, NULL, "2023",
+	"Alien Holocaust II: Invasion Earth (HB)\0", NULL, "Teknamic Software", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_alienholo2RomInfo, a26_alienholo2RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Amoeba Jump (HB, v1.3)
 
 static struct BurnRomInfo a26_amoejumpRomDesc[] = {
@@ -12147,6 +12338,25 @@ struct BurnDriver BurnDrva26_amoejump = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
 	A2600GetZipName, a26_amoejumpRomInfo, a26_amoejumpRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Anguna (HB)
+
+static struct BurnRomInfo a26_angunaRomDesc[] = {
+	{ "Anguna (2014)(Nathan Tolbert).bin", 16384, 0xd18e91a1, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_anguna)
+STD_ROM_FN(a26_anguna)
+
+struct BurnDriver BurnDrva26_anguna = {
+	"a26_anguna", NULL, NULL, NULL, "2014",
+	"Anguna (HB)\0", NULL, "Nathan Tolbert", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION | GBF_ADV, 0,
+	A2600GetZipName, a26_angunaRomInfo, a26_angunaRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -12188,6 +12398,25 @@ struct BurnDriver BurnDrva26_avalanche = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Balloon Trip (HB, v3.2)
+
+static struct BurnRomInfo a26_balltripRomDesc[] = {
+	{ "Balloon Trip v3.2 (2018)(Bluswimmer).bin", 4096, 0x788e371c, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_balltrip)
+STD_ROM_FN(a26_balltrip)
+
+struct BurnDriver BurnDrva26_balltrip = {
+	"a26_balltrip", NULL, NULL, NULL, "2018",
+	"Balloon Trip (HB, v3.2)\0", NULL, "Bluswimmer", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_balltripRomInfo, a26_balltripRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Berzerk - Voice Enhanced (Hack)
 
 static struct BurnRomInfo a26_berzerkveRomDesc[] = {
@@ -12207,6 +12436,25 @@ struct BurnDriver BurnDrva26_berzerkve = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Blinky Goes Up (HB)
+
+static struct BurnRomInfo a26_blinkyRomDesc[] = {
+	{ "Blinky Goes Up (2012)(Jan Hermanns).bin", 4096, 0x80e0c3c5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_blinky)
+STD_ROM_FN(a26_blinky)
+
+struct BurnDriver BurnDrva26_blinky = {
+	"a26_blinky", NULL, NULL, NULL, "2012",
+	"Blinky Goes Up (HB)\0", NULL, "Jan Hermanns", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_blinkyRomInfo, a26_blinkyRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Bobby is Home (HB, v1.2)
 
 static struct BurnRomInfo a26_bobbyRomDesc[] = {
@@ -12223,6 +12471,25 @@ struct BurnDriver BurnDrva26_bobby = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
 	A2600GetZipName, a26_bobbyRomInfo, a26_bobbyRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Break Invade! (HB)
+
+static struct BurnRomInfo a26_breakinvRomDesc[] = {
+	{ "Break Invade! (2026)(KiKi).bin", 32768, 0x04195405, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_breakinv)
+STD_ROM_FN(a26_breakinv)
+
+struct BurnDriver BurnDrva26_breakinv = {
+	"a26_breakinv", NULL, NULL, NULL, "2026",
+	"Break Invade! (HB)\0", "Enhanced DPC coprocessor (DPC+)", "KiKi", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_BREAKOUT, 0,
+	A2600GetZipName, a26_breakinvRomInfo, a26_breakinvRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_DPCPLUS, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -12375,6 +12642,25 @@ struct BurnDriver BurnDrva26_conqmars = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
 	A2600GetZipName, a26_conqmarsRomInfo, a26_conqmarsRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Cosmic Custodian (HB)
+
+static struct BurnRomInfo a26_cosmcustRomDesc[] = {
+	{ "Cosmic Custodian (2026)(KiKi).bin", 32768, 0xaa2b42ae, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_cosmcust)
+STD_ROM_FN(a26_cosmcust)
+
+struct BurnDriver BurnDrva26_cosmcust = {
+	"a26_cosmcust", NULL, NULL, NULL, "2026",
+	"Cosmic Custodian (HB)\0", "Enhanced DPC coprocessor (DPC+)", "KiKi", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
+	A2600GetZipName, a26_cosmcustRomInfo, a26_cosmcustRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_DPCPLUS, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -12603,6 +12889,25 @@ struct BurnDriver BurnDrva26_gamebear2 = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
 	A2600GetZipName, a26_gamebear2RomInfo, a26_gamebear2RomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Gingerbread Man (HB)
+
+static struct BurnRomInfo a26_ginbremanRomDesc[] = {
+	{ "Gingerbread Man (2007)(Fred Quimby).bin", 8192, 0xfe54844e, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_ginbreman)
+STD_ROM_FN(a26_ginbreman)
+
+struct BurnDriver BurnDrva26_ginbreman = {
+	"a26_ginbreman", NULL, NULL, NULL, "2007",
+	"Gingerbread Man (HB)\0", NULL, "Fred Quimby", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_ginbremanRomInfo, a26_ginbremanRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_UA, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
@@ -13005,6 +13310,25 @@ struct BurnDriver BurnDrva26_pacman8k = {
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 
+// Panky the Panda (HB)
+
+static struct BurnRomInfo a26_pankypandaRomDesc[] = {
+	{ "Panky the Panda (2010-11)(Ben Larson).bin", 16384, 0xb5d54b5b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_pankypanda)
+STD_ROM_FN(a26_pankypanda)
+
+struct BurnDriver BurnDrva26_pankypanda = {
+	"a26_pankypanda", NULL, NULL, NULL, "2010-11",
+	"Panky the Panda (HB)\0", NULL, "Ben Larson", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_PLATFORM, 0,
+	A2600GetZipName, a26_pankypandaRomInfo, a26_pankypandaRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F6, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
 // Peril (HB, RC1)
 
 static struct BurnRomInfo a26_perilRomDesc[] = {
@@ -13173,6 +13497,44 @@ struct BurnDriver BurnDrva26_seawolf = {
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_VERSHOOT, 0,
 	A2600GetZipName, a26_seawolfRomInfo, a26_seawolfRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
 	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Sheep It Up (HB)
+
+static struct BurnRomInfo a26_sheepitupRomDesc[] = {
+	{ "Sheep It Up (2018)(Dr. Ludos).bin", 4096, 0x5be003ad, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_sheepitup)
+STD_ROM_FN(a26_sheepitup)
+
+struct BurnDriver BurnDrva26_sheepitup = {
+	"a26_sheepitup", NULL, NULL, NULL, "2018",
+	"Sheep It Up (HB)\0", NULL, "Dr. Ludos", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_ACTION, 0,
+	A2600GetZipName, a26_sheepitupRomInfo, a26_sheepitupRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_4K, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
+	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
+};
+
+// Slide Boy in Maze Land (HB)
+
+static struct BurnRomInfo a26_slideboyRomDesc[] = {
+	{ "Slide Boy in Maze Land (2023)(VHZC).bin", 32768, 0x1a7388ca, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(a26_slideboy)
+STD_ROM_FN(a26_slideboy)
+
+struct BurnDriver BurnDrva26_slideboy = {
+	"a26_slideboy", NULL, NULL, NULL, "2023",
+	"Slide Boy in Maze Land (HB)\0", NULL, "VHZC Games", "Atari 2600",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_ATARI2600, GBF_MAZE | GBF_PUZZLE, 0,
+	A2600GetZipName, a26_slideboyRomInfo, a26_slideboyRomName, NULL, NULL, NULL, NULL, A2600InputInfo, A2600DIPInfo,
+	A26Init_F4, DrvExit, DrvFrame, DrvDraw, DrvScan, &BurnRecalc, 0x80,
 	A26_WIDTH, A26_HEIGHT_NTSC, 4, 3
 };
 

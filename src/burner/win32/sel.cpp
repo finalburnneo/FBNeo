@@ -2425,6 +2425,9 @@ static void HwPresetButton(INT32 nBtn)
 	}
 
 	HwPresetSetActive(nBtn);
+
+	// give the game list focus (for type-to-search, arrow keys & enter etc.)
+	SendMessage(hSelDlg, WM_NEXTDLGCTL, (WPARAM)hSelList, TRUE);
 }
 
 // Rename dialog -----------------------------------

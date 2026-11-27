@@ -355,6 +355,23 @@ static inline UINT64 gba_swar_byte_eq(UINT64 w, UINT8 ch)
 	return (x - 0x0101010101010101ULL) & ~x & 0x8080808080808080ULL;
 }
 
+// Count trailing zero bits of a non-zero 64-bit value.
+static inline UINT32 gba_count_trailing_zeros(UINT64 value)
+{
+#if defined(__GNUC__) || defined(__clang__)
+	return (UINT32)__builtin_ctzll(value);
+#else
+	UINT32 count = 0;
+	if ((value & 0x00000000FFFFFFFFULL) == 0) { value >>= 32; count += 32; }
+	if ((value & 0x000000000000FFFFULL) == 0) { value >>= 16; count += 16; }
+	if ((value & 0x00000000000000FFULL) == 0) { value >>=  8; count +=  8; }
+	if ((value & 0x000000000000000FULL) == 0) { value >>=  4; count +=  4; }
+	if ((value & 0x0000000000000003ULL) == 0) { value >>=  2; count +=  2; }
+	if ((value & 0x0000000000000001ULL) == 0) { count +=  1; }
+	return count;
+#endif
+}
+
 // The cartridge declares its backup type through a signature string placed in the ROM image.
 // Signature prefixes are dispatched by lead byte: 'E' -> EEPROM_, 'S' -> SRAM_, 'F' -> FLASH*_.
 // Bulk 8-byte SWAR scanning skips most bytes without branching; only candidate bytes run memcmp.
@@ -391,7 +408,7 @@ INT32 gba_search_rom_for_backup_string(gba_t* gba)
 		}
 		// At least one lead byte hit; check each hit byte by dispatch.
 		while (m) {
-			UINT32 bit  = (UINT32)__builtin_ctzll(m);
+			UINT32 bit  = gba_count_trailing_zeros(m);
 			UINT32 byte = bit >> 3;
 			UINT32 pos  = offset + byte;
 			UINT8  c    = (UINT8)(w >> (byte * 8));

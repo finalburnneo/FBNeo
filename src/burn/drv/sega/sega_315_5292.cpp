@@ -11,9 +11,6 @@ static UINT16 *TileBitmap;	// 4 tilemaps, 512x512, bit 12 = category
 static UINT32 *TileCache;	// tile ram value each TileBitmap tile was drawn with, ~0 = redraw
 static UINT8 *CharDirty;	// chars written since they were last drawn
 static UINT8 *TileFlags;	// per TileBitmap tile: bit 0 = category, bit 1 = has non-zero pens
-static UINT16 *TileDst;
-static UINT8 *TilePrio;		// optional, the layer's priority bit is or-ed in where it draws
-static UINT8 TilePriMask;
 static INT32 CharRAMSize;
 static UINT16 TileMask;		// char number bits of a tile ram entry
 static INT32 NATIVE_W;
@@ -71,10 +68,18 @@ static void render_tilemap_bitmap(INT32 tmap)
 // copy a span of a tilemap bitmap to the screen
 // tpri: category to draw, opaque: 0 = transparent pen 0 and matching category only,
 // 1 = every pixel (normal mode), 2 = matching category, pen 0 included (special modes)
-static inline void draw_tile_span(UINT16 *src_line, INT32 srcx, INT32 y, INT32 x1, INT32 x2, INT32 tpri, INT32 opaque, const UINT16 *mask, INT32 win)
+// where a layer draws: prio is optional, primask is or-ed in where it draws (several threads can draw
+// different lines at once)
+struct tile_target {
+	UINT16 *dst;
+	UINT8 *prio;
+	UINT8 primask;
+};
+
+static inline void draw_tile_span(const tile_target &t, UINT16 *src_line, INT32 srcx, INT32 y, INT32 x1, INT32 x2, INT32 tpri, INT32 opaque, const UINT16 *mask, INT32 win)
 {
-	UINT16 *dst = TileDst + y * NATIVE_W;
-	UINT8 *pri = TilePrio ? (TilePrio + y * NATIVE_W) : NULL;
+	UINT16 *dst = t.dst + y * NATIVE_W;
+	UINT8 *pri = t.prio ? (t.prio + y * NATIVE_W) : NULL;
 	const UINT16 cat = tpri << 12;
 
 	// tiles of the other category (and without pens, when transparent) are skipped
@@ -111,7 +116,7 @@ static inline void draw_tile_span(UINT16 *src_line, INT32 srcx, INT32 y, INT32 x
 				UINT16 pix = src_line[(srcx + x) & 0x1ff];
 				if (opaque == 1 || ((pix & 0x1000) == cat && (opaque == 2 || (pix & 0xf)))) {
 					dst[x] = pix & 0xfff;
-					pri[x] |= TilePriMask;
+					pri[x] |= t.primask;
 				}
 			}
 			continue;
@@ -139,11 +144,12 @@ static inline void draw_tile_span(UINT16 *src_line, INT32 srcx, INT32 y, INT32 x
 	}
 }
 
-void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *prio, UINT8 primask)
+void sega_315_5292_draw_layer_lines(INT32 layer, INT32 opaque, UINT16 *dst, INT32 y0, INT32 y1, UINT8 *prio, UINT8 primask)
 {
-	TileDst = dst;
-	TilePrio = prio;
-	TilePriMask = primask;
+	tile_target t;
+	t.dst = dst;
+	t.prio = prio;
+	t.primask = primask;
 
 	UINT16 *tile_ram = (UINT16*)DrvTileRAM;
 	UINT16 hscr = BURN_ENDIAN_SWAP_INT16(tile_ram[0x5000 + (layer >> 1)]);
@@ -173,18 +179,18 @@ void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *pri
 					INT32 l = layer;
 					if (!((-vscr) & 0x200)) l ^= 1;
 
-					for (INT32 y = 0; y < NATIVE_H; y++) {
+					for (INT32 y = y0; y < y1; y++) {
 						INT32 l1 = (y >= v) ? (l ^ 1) : l;
 						INT32 h = BURN_ENDIAN_SWAP_INT16(hscrtb[y]) & 0x1ff;
 						UINT16 *src = TileBitmap + l1 * 512 * 512 + ((y + sy) & 0x1ff) * 512;
-						draw_tile_span(src, -h, y, 0, NATIVE_W, tpri, op, NULL, 0);
+						draw_tile_span(t, src, -h, y, 0, NATIVE_W, tpri, op, NULL, 0);
 					}
 					break;
 				}
 
 				case 2:
 				case 3: {
-					for (INT32 y = 0; y < NATIVE_H; y++) {
+					for (INT32 y = y0; y < y1; y++) {
 						UINT16 hv = BURN_ENDIAN_SWAP_INT16(hscrtb[y]);
 						INT32 h = hv & 0x1ff;
 						INT32 l1 = layer;
@@ -193,8 +199,8 @@ void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *pri
 						INT32 split = (h < NATIVE_W) ? h : NATIVE_W;
 						UINT16 *src1 = TileBitmap + l1 * 512 * 512 + ((y + sy) & 0x1ff) * 512;
 						UINT16 *src2 = TileBitmap + (l1 ^ 1) * 512 * 512 + ((y + sy) & 0x1ff) * 512;
-						draw_tile_span(src1, -h, y, 0, split, tpri, op, NULL, 0);
-						draw_tile_span(src2, -h, y, split, NATIVE_W, tpri, op, NULL, 0);
+						draw_tile_span(t, src1, -h, y, 0, split, tpri, op, NULL, 0);
+						draw_tile_span(t, src2, -h, y, split, NATIVE_W, tpri, op, NULL, 0);
 					}
 					break;
 				}
@@ -208,10 +214,10 @@ void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *pri
 					INT32 l = layer;
 					if (!((-vscr) & 0x200)) l ^= 1;
 
-					for (INT32 y = 0; y < NATIVE_H; y++) {
+					for (INT32 y = y0; y < y1; y++) {
 						INT32 l1 = (y >= v) ? (l ^ 1) : l;
 						UINT16 *src = TileBitmap + l1 * 512 * 512 + ((y + sy) & 0x1ff) * 512;
-						draw_tile_span(src, -h, y, 0, NATIVE_W, tpri, op, NULL, 0);
+						draw_tile_span(t, src, -h, y, 0, NATIVE_W, tpri, op, NULL, 0);
 					}
 					break;
 				}
@@ -222,11 +228,11 @@ void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *pri
 					if (!(hscr & 0x200)) l ^= 1;
 					INT32 split = (h < NATIVE_W) ? h : NATIVE_W;
 
-					for (INT32 y = 0; y < NATIVE_H; y++) {
+					for (INT32 y = y0; y < y1; y++) {
 						UINT16 *src1 = TileBitmap + l * 512 * 512 + ((y + sy) & 0x1ff) * 512;
 						UINT16 *src2 = TileBitmap + (l ^ 1) * 512 * 512 + ((y + sy) & 0x1ff) * 512;
-						draw_tile_span(src1, -h, y, 0, split, tpri, op, NULL, 0);
-						draw_tile_span(src2, -h, y, split, NATIVE_W, tpri, op, NULL, 0);
+						draw_tile_span(t, src1, -h, y, 0, split, tpri, op, NULL, 0);
+						draw_tile_span(t, src2, -h, y, split, NATIVE_W, tpri, op, NULL, 0);
 					}
 					break;
 				}
@@ -242,19 +248,24 @@ void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *pri
 			UINT16 *hscrtb = tile_ram + 0x4000 + 0x200 * layer;
 			INT32 sy = vscr & 0x1ff;
 
-			for (INT32 y = 0; y < NATIVE_H; y++) {
+			for (INT32 y = y0; y < y1; y++) {
 				INT32 h = (-BURN_ENDIAN_SWAP_INT16(hscrtb[y])) & 0x1ff;
-				draw_tile_span(bm + ((sy + y) & 0x1ff) * 512, h, y, 0, NATIVE_W, tpri, op, mask + y * 4, win);
+				draw_tile_span(t, bm + ((sy + y) & 0x1ff) * 512, h, y, 0, NATIVE_W, tpri, op, mask + y * 4, win);
 			}
 		} else {
 			INT32 h = (-hscr) & 0x1ff;
 			INT32 sy = vscr & 0x1ff;
 
-			for (INT32 y = 0; y < NATIVE_H; y++) {
-				draw_tile_span(bm + ((sy + y) & 0x1ff) * 512, h, y, 0, NATIVE_W, tpri, op, mask + y * 4, win);
+			for (INT32 y = y0; y < y1; y++) {
+				draw_tile_span(t, bm + ((sy + y) & 0x1ff) * 512, h, y, 0, NATIVE_W, tpri, op, mask + y * 4, win);
 			}
 		}
 	}
+}
+
+void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *prio, UINT8 primask)
+{
+	sega_315_5292_draw_layer_lines(layer, opaque, dst, 0, NATIVE_H, prio, primask);
 }
 
 void sega_315_5292_update()

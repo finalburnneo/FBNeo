@@ -15,5 +15,8 @@ void sega_315_5292_update();					// once a frame, before drawing the layers
 // layer 0-7: tilemap (layer >> 1), category (layer & 1); opaque: the lower layers are drawn opaque
 // prio (same pitch as dst): primask is or-ed in where the layer draws
 void sega_315_5292_draw_layer(INT32 layer, INT32 opaque, UINT16 *dst, UINT8 *prio = NULL, UINT8 primask = 0);
+// the same on lines y0 to y1 - 1 only, for drawing them as the beam reaches them; threads can draw
+// different lines at once, between two sega_315_5292_update()
+void sega_315_5292_draw_layer_lines(INT32 layer, INT32 opaque, UINT16 *dst, INT32 y0, INT32 y1, UINT8 *prio = NULL, UINT8 primask = 0);
 
 #endif

@@ -8637,6 +8637,7 @@ STD_ROM_FN(qzkklogy)
 
 static INT32 qzkklogyInit()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 	DrvSetColorOffsets(0, 0, 0);
 	DrvSetVideoOffsets(1, 1, -1, -1);
 
@@ -8712,6 +8713,7 @@ STD_ROM_FN(qzkklgy2)
 
 static INT32 qzkklgy2Init()
 {
+	refresh_rate = 8000000.0 / (512 * 272); // 57.4449 hz - https://github.com/finalburnneo/FBNeo/issues/2854
 	DrvSetColorOffsets(0, 0, 0);
 	DrvSetVideoOffsets(0, 0, -1, -3);
 

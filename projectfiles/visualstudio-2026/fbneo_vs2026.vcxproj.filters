@@ -2344,6 +2344,9 @@
     <ClCompile Include="..\..\src\burn\drv\sega\sega_315_5292.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\burn\drv\sega\sega_dsb.cpp">
+      <Filter>burn\drv\sega</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\burn\drv\sega\sega_speech.cpp">
       <Filter>burn\drv\sega</Filter>
     </ClCompile>

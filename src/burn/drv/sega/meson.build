@@ -14,6 +14,7 @@ group_srcs = [
     'model1_snd.cpp',
     'sega_315_5195.cpp',
     'sega_315_5292.cpp',
+    'sega_dsb.cpp',
     'sega_speech.cpp',
     'sys16_fd1094.cpp',
     'sys16_gfx.cpp',

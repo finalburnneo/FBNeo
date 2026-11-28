@@ -35,7 +35,7 @@
 #include "model1_io.h"
 #include "sega_315_5292.h"
 #include "eeprom.h"
-#include "mpeg_audio.h"
+#include "sega_dsb.h"
 #include <math.h>
 #define THREADY_NO_GLOBAL
 #include "thready.h"
@@ -78,15 +78,13 @@ static UINT8 *DrvDSBRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT16 *TileDst;		// where the tilemap layers are drawn, at the native resolution
-
 // high resolution rendering: the 3d is rasterized at the chosen size, the tilemaps are scaled up
 #define NATIVE_W		496
 #define NATIVE_H		384
 static INT32 nHiresMode;		// 0 = native
 static float fHiresScaleX, fHiresScaleY;
-static UINT16 *HiresBack;		// background tilemaps, native resolution
-static UINT16 *HiresHud;		// hud tilemaps, native resolution, 0xffff = transparent
+static UINT16 *TileBack;		// background tilemaps, native resolution
+static UINT16 *TileHud;			// hud tilemaps, native resolution, 0xffff = transparent
 static INT32 *HiresMapX;
 static INT32 *HiresMapY;
 static INT32 bHiresSharp;		// 2d layers: area filtered (sharp bilinear) instead of nearest
@@ -202,16 +200,6 @@ static UINT8 comm_fg;
 static INT32 usart_ticks_done;
 
 
-// digital sound board (z80 + mpeg decoder)
-#define DSB_RATE	32000
-static mpeg_audio *dsb_decoder = NULL;
-static UINT32 dsb_mp_start, dsb_mp_end, dsb_lp_start, dsb_lp_end, dsb_start, dsb_end;
-static INT32 dsb_mp_pos, dsb_mp_vol, dsb_mp_pan, dsb_mp_state;
-static INT32 dsb_audio_pos, dsb_audio_avail;
-static INT16 dsb_audio_buf[1152 * 2];
-static INT32 dsb_frac;
-static INT16 *dsb_stream;
-
 // inputs
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -231,7 +219,6 @@ static UINT8 analog_values[8];	// 4-7: secondary controls
 #define TGP_CLOCK		(40000000 / 3)
 #define SND_CLOCK		M1AUDIO_CLOCK
 #define IO_CLOCK		M1IO_CLOCK
-#define DSB_CLOCK		4000000
 #define IO2_CLOCK		M1IO2_CLOCK
 #define USART_CLOCK		500000
 
@@ -1126,13 +1113,63 @@ static void drive_board_rumble()
 	BurnRumble(0, strong, weak);
 }
 
+// the tilemaps are drawn as the beam reaches the lines: the games write them in the vblank
+static INT32 tile_lines_done;	// lines of TileBack/TileHud drawn this frame
+static INT32 tile_skip;			// the frame isn't shown: its tilemaps aren't drawn
+
+static void tile_draw_lines(INT32 y1)
+{
+	INT32 y0 = tile_lines_done;
+	if (y1 > NATIVE_H) y1 = NATIVE_H;
+	if (y1 <= y0 || tile_skip) return;
+
+	sega_315_5292_update();
+
+	memset(TileBack + y0 * NATIVE_W, 0, (y1 - y0) * NATIVE_W * sizeof(UINT16));	// pen 0
+	if (nBurnLayer & 1) {
+		sega_315_5292_draw_layer_lines(6, 1, TileBack, y0, y1);
+		sega_315_5292_draw_layer_lines(4, 1, TileBack, y0, y1);
+		sega_315_5292_draw_layer_lines(2, 0, TileBack, y0, y1);
+		sega_315_5292_draw_layer_lines(0, 0, TileBack, y0, y1);
+	}
+
+	memset(TileHud + y0 * NATIVE_W, 0xff, (y1 - y0) * NATIVE_W * sizeof(UINT16));
+	if (nBurnLayer & 4) {
+		sega_315_5292_draw_layer_lines(7, 0, TileHud, y0, y1);
+		sega_315_5292_draw_layer_lines(5, 0, TileHud, y0, y1);
+		sega_315_5292_draw_layer_lines(3, 0, TileHud, y0, y1);
+		sega_315_5292_draw_layer_lines(1, 0, TileHud, y0, y1);
+	}
+
+	tile_lines_done = y1;
+}
+
+// before a write to the tile or char ram: the lines the beam has passed use the old data
+static void tile_flush()
+{
+	if (tile_lines_done < NATIVE_H) {
+		INT32 cyc = v60TotalCycles();
+		if (cyc > 0) tile_draw_lines((INT32)(((INT64)cyc * VTOTAL) / V60_CYCLES_FRAME));
+	}
+}
+
 static void model1_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0xfffffe;
 
+	if ((address & 0xff0000) == 0x700000) {
+		UINT16 *p = (UINT16*)(DrvTileRAM + (address & 0xfffe));
+		if (BURN_ENDIAN_SWAP_INT16(*p) != data) {
+			tile_flush();
+			*p = BURN_ENDIAN_SWAP_INT16(data);
+		}
+		return;
+	}
+
 	if ((address & 0xf80000) == 0x780000) {
 		UINT16 *p = (UINT16*)(DrvCharRAM + (address & 0x7fffe));
 		if (BURN_ENDIAN_SWAP_INT16(*p) != data) {
+			tile_flush();
 			*p = BURN_ENDIAN_SWAP_INT16(data);
 			sega_315_5292_char_written(address & 0x7fffe);
 		}
@@ -1216,8 +1253,17 @@ static void model1_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xffffff;
 
+	if ((address & 0xff0000) == 0x700000) {
+		if (DrvTileRAM[address & 0xffff] != data) {
+			tile_flush();
+			DrvTileRAM[address & 0xffff] = data;
+		}
+		return;
+	}
+
 	if ((address & 0xf80000) == 0x780000) {
 		if (DrvCharRAM[address & 0x7ffff] != data) {
+			tile_flush();
 			DrvCharRAM[address & 0x7ffff] = data;
 			sega_315_5292_char_written(address & 0x7fffe);
 		}
@@ -1372,143 +1418,6 @@ static void io_port_out_hook(INT32 port, UINT8 data)
 // sound board
 
 // -----------------------------------------------------------------------------
-// digital sound board
-
-static void dsb_irq_update()
-{
-	ZetSetIRQLine(0, M1UsartRxRdy(2) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-}
-
-static void __fastcall dsb_write_port(UINT16 port, UINT8 data)
-{
-	port &= 0xff;
-
-	switch (port) {
-		case 0xe0:
-			dsb_mp_state = data;
-			if (data == 0) {
-				dsb_audio_pos = dsb_audio_avail = 0;
-			} else if (data == 1 || data == 2) {
-				dsb_mp_pos = dsb_mp_start * 8;
-			}
-			return;
-
-		// writes while playing are latched, used when the current stream ends
-		case 0xe2: case 0xe3: case 0xe4: {
-			INT32 shift = (0xe4 - port) * 8;
-			dsb_start = (dsb_start & ~(0xff << shift)) | (data << shift);
-			if (port == 0xe4) {
-				if (dsb_mp_state == 0) dsb_mp_start = dsb_start;
-				else dsb_lp_start = dsb_start;
-			}
-			return;
-		}
-
-		case 0xe5: case 0xe6: case 0xe7: {
-			INT32 shift = (0xe7 - port) * 8;
-			dsb_end = (dsb_end & ~(0xff << shift)) | (data << shift);
-			if (port == 0xe7) {
-				if (dsb_mp_state == 0) dsb_mp_end = dsb_end;
-				else dsb_lp_end = dsb_end;
-			}
-			return;
-		}
-
-		case 0xe8:
-			dsb_mp_vol = ~data & 0x7f;
-			return;
-
-		case 0xe9:
-			dsb_mp_pan = data & 3;
-			return;
-
-		case 0xf0:
-			M1UsartDataWrite(2, data);
-			return;
-
-		case 0xf1:
-			M1UsartControlWrite(2, data);
-			return;
-	}
-}
-
-static UINT8 __fastcall dsb_read_port(UINT16 port)
-{
-	port &= 0xff;
-
-	switch (port) {
-		case 0xe2: case 0xe3: case 0xe4:
-			return ((dsb_mp_pos >> 3) >> ((0xe4 - port) * 8)) & 0xff;
-
-		case 0xf0:
-		case 0xf1: {
-			UINT8 r = M1UsartRead(2, port & 1);
-			dsb_irq_update();
-			return r;
-		}
-	}
-
-	return 0;
-}
-
-static void dsb_stream_update(INT16 *out, INT32 samples)
-{
-	while (samples) {
-		while (samples && dsb_audio_pos < dsb_audio_avail) {
-			INT32 l = dsb_audio_buf[dsb_audio_pos * 2 + 0];
-			INT32 r = dsb_audio_buf[dsb_audio_pos * 2 + 1];
-			if (dsb_mp_pan == 1) r = l;
-			if (dsb_mp_pan == 2) l = r;
-			if (dsb_mp_pan == 3) l = r = 0;
-			out[0] = (l * dsb_mp_vol) >> 7;
-			out[1] = (r * dsb_mp_vol) >> 7;
-			out += 2;
-			dsb_audio_pos++;
-			samples--;
-		}
-
-		if (!samples) break;
-
-		if (dsb_mp_state == 0) {
-			memset(out, 0, samples * 2 * sizeof(INT16));
-			break;
-		}
-
-		INT32 sample_rate, channel_count;
-		if (dsb_decoder->decode_buffer(dsb_mp_pos, dsb_mp_end * 8, dsb_audio_buf, dsb_audio_avail, sample_rate, channel_count)) {
-			dsb_audio_pos = 0;
-		} else {
-			if (dsb_mp_state == 2) {
-				// looping on undecodable data, give up
-				if (dsb_mp_pos == (INT32)(dsb_lp_start * 8)) dsb_mp_state = 0;
-				dsb_mp_pos = dsb_lp_start * 8;
-				if (dsb_lp_end) dsb_mp_end = dsb_lp_end;
-			} else {
-				dsb_mp_state = 0;
-			}
-		}
-	}
-}
-
-// renders this frame's 32KHz samples (even without sound output, to stay deterministic) and mixes them in
-static void dsb_render(INT16 *out, INT32 len)
-{
-	INT32 total = dsb_frac + DSB_RATE * 100;
-	INT32 count = total / nBurnFPS;
-	dsb_frac = total % nBurnFPS;
-
-	dsb_stream_update(dsb_stream, count);
-
-	if (out == NULL || count == 0) return;
-
-	for (INT32 i = 0; i < len; i++) {
-		INT32 pos = (INT32)(((INT64)i * count) / len);
-		out[i * 2 + 0] = BURN_SND_CLIP(out[i * 2 + 0] + dsb_stream[pos * 2 + 0]);
-		out[i * 2 + 1] = BURN_SND_CLIP(out[i * 2 + 1] + dsb_stream[pos * 2 + 1]);
-	}
-}
-
-// -----------------------------------------------------------------------------
 // 3d rendering (the geometrizer and rasterizer are simulated)
 
 #define FRAC_SHIFT	16
@@ -1557,7 +1466,6 @@ struct m1_view {
 };
 
 static m1_view view;			// the geometrizer state, it persists between frames
-static m1_view view_prev;	// as it was before the last list, to rebuild the frame after a state load
 
 #define MAX_POINTS		0x40000
 #define MAX_QUADS		0x20000
@@ -1570,6 +1478,40 @@ static INT32 quad_count;
 static INT32 quad_segment_start;
 static m1_quad_segment *segments[2];
 static INT32 segment_count[2];
+
+// the polygons of the last two lists: the screen shows the list of two frames before (the
+// rasterizer draws a list in the frame after the flip, then the frame buffers swap). a frame's
+// list is built at the start of the next one, so the state holds what the build needs
+struct m1_frame3d {
+	m1_quad_out *quads;
+	m1_quad_segment *segs[2];
+	INT32 seg_count[2];
+	UINT32 serial;		// changes with the contents
+};
+
+static UINT32 frame3d_serials;
+
+// what a build read: to build the list again after a state load (the tgp and polygon rams are
+// the current ones, only lists that write them can come out differently)
+struct m1_build_input {
+	UINT16 *list;		// 0x8000 words
+	UINT16 *pal;		// 0x2000 words, the second half is used
+	UINT16 *xlat;		// 0x6000 words
+	m1_view view;
+	UINT16 listctl0;
+	UINT32 frame;
+	INT32 valid;
+};
+
+static m1_frame3d frames3d[2];
+static m1_build_input builds[2];
+static INT32 frame3d_new;		// the last list's frames3d[], the screen shows the other one
+static INT32 frame3d_lost[2];	// to build again (state load)
+static INT32 build_pending;		// a frame ended: its list is built at the start of the next one
+static const m1_frame3d *draw3d;
+static UINT16 *Dst3D;			// where the polygons are drawn
+static UINT16 *Frame3D;			// the 3d under the hud, F3D_NONE where it doesn't draw
+#define F3D_NONE		0x7d7d	// an unused pen
 static INT32 render_pass;
 
 static UINT16 *dlist_current;
@@ -2195,8 +2137,12 @@ static void draw_objects()
 	point_count = 0;
 }
 
+static UINT16 *dlist_override;	// building again from a copy
+
 static UINT16 *get_current_list()
 {
+	if (dlist_override) return dlist_override;
+
 	if (!(listctl[0] & 4))
 		listctl[0] = (listctl[0] & ~0x40) | ((listctl[0] & 8) ? 0x40 : 0);
 
@@ -2353,18 +2299,115 @@ static void tgp_render(INT32 pass)
 	draw_objects();
 }
 
-// build the polygons of the frame, from the current display list
-static void build_frame()
+// build the polygons of a list into frames3d[n]
+static void build_list(INT32 n)
 {
+	m1_frame3d *f = &frames3d[n];
+	quaddb = f->quads;
+	segments[0] = f->segs[0];
+	segments[1] = f->segs[1];
+
 	quad_count = 0;
 	quad_segment_start = 0;
 	point_count = 0;
 	segment_count[0] = segment_count[1] = 0;
 
-	memcpy(&view_prev, &view, sizeof(view));
-
 	tgp_render(RENDER_BELOW_HUD);
 	tgp_render(RENDER_ABOVE_HUD);
+
+	f->seg_count[0] = segment_count[0];
+	f->seg_count[1] = segment_count[1];
+	f->serial = ++frame3d_serials;
+}
+
+static void build_input_take(m1_build_input *b)
+{
+	UINT16 c = listctl[0];
+	UINT16 *list = get_current_list();
+	listctl[0] = c;
+
+	memcpy(b->list, list, 0x10000);
+	memcpy(b->pal, DrvPalRAM, 0x4000);
+	memcpy(b->xlat, DrvXlatRAM, 0xc000);
+	b->view = view;
+	b->listctl0 = listctl[0];
+	b->frame = frame_number - 1;
+	b->valid = 1;
+}
+
+// the last frame's list, at the start of the next one (nothing runs in between)
+static void build_frame()
+{
+	if (!build_pending) return;
+	build_pending = 0;
+
+	INT32 n = frame3d_new ^ 1;
+	build_input_take(&builds[n]);
+
+	frame_number--;	// the frame of the list
+	build_list(n);
+	frame_number++;
+
+	frame3d_new = n;
+	frame3d_lost[n] = 0;
+}
+
+// after a state load: a list built again from what its build read, without changing the state
+static void build_again(INT32 n)
+{
+	m1_build_input *b = &builds[n];
+	frame3d_lost[n] = 0;
+
+	if (!b->valid) {	// not in the state (runahead, netplay): from the current list
+		build_input_take(b);
+		b->frame = frame_number;
+	}
+
+	static UINT16 *tgp_copy = NULL;
+	static UINT32 *poly_copy = NULL;
+	if (!tgp_copy) {
+		tgp_copy = (UINT16*)BurnMalloc(TGP_RAM_SIZE * sizeof(UINT16));
+		poly_copy = (UINT32*)BurnMalloc(POLY_RAM_SIZE * sizeof(UINT32));
+	}
+
+	m1_view live_view = view;
+	UINT16 live_listctl[2] = { listctl[0], listctl[1] };
+	UINT32 live_frame = frame_number;
+	UINT16 *live_tgp = DrvTGPRAM;
+	UINT32 *live_poly = DrvPolyRAM;
+	UINT8 *live_pal = DrvPalRAM;
+	UINT8 *live_xlat = DrvXlatRAM;
+
+	memcpy(tgp_copy, DrvTGPRAM, TGP_RAM_SIZE * sizeof(UINT16));
+	memcpy(poly_copy, DrvPolyRAM, POLY_RAM_SIZE * sizeof(UINT32));
+	DrvTGPRAM = tgp_copy;
+	DrvPolyRAM = poly_copy;
+	DrvPalRAM = (UINT8*)b->pal;
+	DrvXlatRAM = (UINT8*)b->xlat;
+	dlist_override = b->list;
+	view = b->view;
+	listctl[0] = b->listctl0;
+	frame_number = b->frame;
+
+	build_list(n);
+
+	DrvTGPRAM = live_tgp;
+	DrvPolyRAM = live_poly;
+	DrvPalRAM = live_pal;
+	DrvXlatRAM = live_xlat;
+	dlist_override = NULL;
+	view = live_view;
+	listctl[0] = live_listctl[0];
+	listctl[1] = live_listctl[1];
+	frame_number = live_frame;
+}
+
+// the list the screen shows: of two frames before
+static void draw3d_pick()
+{
+	INT32 n = frame3d_new ^ 1;
+	if (frame3d_lost[n]) build_again(n);
+	draw3d = &frames3d[n];
 }
 
 static void end_frame()
@@ -2377,7 +2420,7 @@ static void end_frame()
 
 static void draw_hline(INT32 x1, INT32 x2, INT32 y, INT32 color, INT32 moire)
 {
-	UINT16 *base = pTransDraw + y * nScreenWidth;
+	UINT16 *base = Dst3D + y * nScreenWidth;
 
 	if (moire) {
 		for (; x1 <= x2; x1++) {
@@ -2506,7 +2549,7 @@ static void draw_wireframe_line(m1_quad_segment *v, INT32 x1, INT32 y1, INT32 x2
 	for (;;) {
 		if (x1 >= 0 && x1 < nScreenWidth && y1 >= 0 && y1 < nScreenHeight && (y1 % nRenderParts) == part)
 			if (!moire || !((x1 ^ y1) & 1))
-				pTransDraw[y1 * nScreenWidth + x1] = color;
+				Dst3D[y1 * nScreenWidth + x1] = color;
 		if (x1 == x2 && y1 == y2)
 			break;
 		INT32 e2 = 2 * err;
@@ -2626,8 +2669,8 @@ static void fill_quad(m1_quad_segment *v, m1_quad_out *q, INT32 part)
 
 static void draw_pass_part(INT32 pass, INT32 part)
 {
-	for (INT32 s = 0; s < segment_count[pass]; s++) {
-		m1_quad_segment v = segments[pass][s];
+	for (INT32 s = 0; s < draw3d->seg_count[pass]; s++) {
+		m1_quad_segment v = draw3d->segs[pass][s];
 
 		if (nHiresMode) {
 			// same rasterizer, on vertices projected at the high resolution
@@ -2643,7 +2686,7 @@ static void draw_pass_part(INT32 pass, INT32 part)
 			if (hv.x1 > hv.x2 || hv.y1 > hv.y2) continue;
 
 			for (INT32 i = 0; i < v.count; i++) {
-				m1_quad_out q = quaddb[v.start + i];
+				m1_quad_out q = draw3d->quads[v.start + i];
 				for (INT32 k = 0; k < 4; k++) {
 					// a native pixel is several high resolution ones: a vertex on a viewport edge covers it all
 					INT32 nx = q.sx[k], ny = q.sy[k];
@@ -2665,7 +2708,7 @@ static void draw_pass_part(INT32 pass, INT32 part)
 		if (v.x1 > v.x2 || v.y1 > v.y2) continue;
 
 		for (INT32 i = 0; i < v.count; i++)
-			fill_quad(&v, &quaddb[v.start + i], part);
+			fill_quad(&v, &draw3d->quads[v.start + i], part);
 	}
 }
 
@@ -2675,10 +2718,13 @@ static threadystruct M1Workers[M1_MAX_PARTS - 1];
 static INT32 nM1Workers = 0;
 static void (*RenderJob)(INT32 part);
 
+static INT32 RenderBase = 1;	// 1: the main thread does part 0, 0: only the workers draw
+static INT32 render_busy;
+
 template <INT32 N>
 static void RenderWorker()
 {
-	RenderJob(N + 1);
+	RenderJob(N + RenderBase);
 }
 
 static void (*const RenderWorkers[M1_MAX_PARTS - 1])() = {
@@ -2687,9 +2733,6 @@ static void (*const RenderWorkers[M1_MAX_PARTS - 1])() = {
 
 static void render_threads_init()
 {
-	nM1Workers = 0;
-	if (!nHiresMode) return;	// native frames are too small to gain from it
-
 	nM1Workers = thready_cpu_count() - 1;
 	if (nM1Workers > M1_MAX_PARTS - 1) nM1Workers = M1_MAX_PARTS - 1;
 	if (nM1Workers < 0) nM1Workers = 0;
@@ -2701,22 +2744,47 @@ static void render_threads_init()
 			break;
 		}
 	}
+	render_busy = 0;
 }
+
+static void render_finish();
 
 static void render_threads_exit()
 {
+	render_finish();
 	for (INT32 i = 0; i < nM1Workers; i++) M1Workers[i].exit();
 	nM1Workers = 0;
 }
 
+static void render_finish()
+{
+	if (!render_busy) return;
+	for (INT32 i = 0; i < nM1Workers; i++) M1Workers[i].notify_wait();
+	render_busy = 0;
+}
+
 static void render_run(void (*job)(INT32 part))
 {
+	render_finish();
+
 	RenderJob = job;
+	RenderBase = 1;
 	nRenderParts = nM1Workers + 1;
 
 	for (INT32 i = 0; i < nM1Workers; i++) M1Workers[i].notify();
 	job(0);
 	for (INT32 i = 0; i < nM1Workers; i++) M1Workers[i].notify_wait();
+}
+
+// the workers alone, while the main thread goes on
+static void render_start(void (*job)(INT32 part))
+{
+	RenderJob = job;
+	RenderBase = 0;
+	nRenderParts = nM1Workers;
+
+	for (INT32 i = 0; i < nM1Workers; i++) M1Workers[i].notify();
+	render_busy = 1;
 }
 
 // band of rows of a part, for the 2d jobs (better locality than interleaved rows)
@@ -2735,9 +2803,55 @@ static void draw_pass_job(INT32 part)
 
 static void draw_pass(INT32 pass)
 {
-	if (segment_count[pass] == 0) return;
+	if (draw3d->seg_count[pass] == 0) return;
 	nPassToDraw = pass;
+	Dst3D = pTransDraw;
 	render_run(draw_pass_job);
+}
+
+// the 3d under the hud goes to Frame3D, drawn by the workers while the frame runs
+static UINT32 frame3d_serial;	// the list in Frame3D (0: none)
+static UINT32 async_serial;
+
+static void draw_below_job(INT32 part)
+{
+	for (INT32 y = part; y < nScreenHeight; y += nRenderParts) {
+		UINT16 *d = Frame3D + y * nScreenWidth;
+		for (INT32 x = 0; x < nScreenWidth; x++) d[x] = F3D_NONE;
+	}
+	draw_pass_part(RENDER_BELOW_HUD, part);
+}
+
+static void draw_below_kick()
+{
+	if (render_busy || nM1Workers == 0 || !(nBurnLayer & 2)) return;
+
+	draw3d_pick();
+	if (frame3d_serial == draw3d->serial) return;
+
+	Dst3D = Frame3D;
+	async_serial = draw3d->serial;
+	render_start(draw_below_job);
+}
+
+static void draw_below()
+{
+	if (render_busy) {
+		render_finish();
+		frame3d_serial = async_serial;
+	}
+
+	if (!(nBurnLayer & 2)) {
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) Frame3D[i] = F3D_NONE;
+		frame3d_serial = 0;
+		return;
+	}
+
+	if (frame3d_serial != draw3d->serial) {
+		Dst3D = Frame3D;
+		render_run(draw_below_job);
+		frame3d_serial = draw3d->serial;
+	}
 }
 
 // -----------------------------------------------------------------------------
@@ -2791,7 +2905,7 @@ static UINT32 *back_row(hires_rows *r, INT32 sy)
 	if (r->back_tag[slot] == sy) return out;
 	r->back_tag[slot] = sy;
 
-	UINT16 *src = HiresBack + sy * NATIVE_W;
+	UINT16 *src = TileBack + sy * NATIVE_W;
 	for (INT32 x = 0; x < nScreenWidth; x++) {
 		UINT16 *s = src + HiresMapX[x];
 		UINT32 wx = HiresWX[x];
@@ -2804,7 +2918,7 @@ static UINT32 *back_row(hires_rows *r, INT32 sy)
 static UINT32 hires_back_pixel(INT32 x, INT32 y)
 {
 	UINT32 wx = HiresWX[x], wy = HiresWY[y];
-	UINT16 *src = HiresBack + HiresMapY[y] * NATIVE_W + HiresMapX[x];
+	UINT16 *src = TileBack + HiresMapY[y] * NATIVE_W + HiresMapX[x];
 
 	UINT32 top = (wx == 256) ? DrvPalRGB[src[0]] : rgb_lerp(DrvPalRGB[src[0]], DrvPalRGB[src[1]], wx);
 	if (wy == 256) return top;
@@ -2836,7 +2950,7 @@ static UINT32 *hud_row(hires_rows *r, INT32 sy, UINT16 **alpha, UINT32 *mask)
 	if (r->hud_tag[slot] != sy) {
 		r->hud_tag[slot] = sy;
 
-		UINT16 *src = HiresHud + sy * NATIVE_W;
+		UINT16 *src = TileHud + sy * NATIVE_W;
 		UINT32 m = 0;
 		for (INT32 c = 0; c < NATIVE_W / 16; c++) {
 			const UINT16 *t = src + c * 16;
@@ -2886,7 +3000,7 @@ static void hires_hud_blend_job(INT32 part)
 		UINT32 *pbr = (wy != 256) ? hud_row(r, sy + 1, &ab, &mb) : NULL;
 		if ((mt | mb) == 0) continue;
 
-		UINT16 *native = HiresHud + sy * NATIVE_W;
+		UINT16 *native = TileHud + sy * NATIVE_W;
 		UINT16 *dst = pTransDraw + y * nScreenWidth;
 		UINT32 *rgb = HiresRGB + y * nScreenWidth;
 
@@ -2985,15 +3099,14 @@ static void hires_back_job(INT32 part)
 	INT32 ys, ye;
 	render_band(part, &ys, &ye);
 
-	if (bHiresSharp) {
-		memset(pTransDraw + ys * nScreenWidth, HIRES_BACK & 0xff, (ye - ys) * nScreenWidth * sizeof(UINT16));
-		return;
-	}
-
 	for (INT32 y = ys; y < ye; y++) {
-		UINT16 *src = HiresBack + HiresMapY[y] * NATIVE_W;
+		UINT16 *src = TileBack + HiresMapY[y] * NATIVE_W;
+		UINT16 *f3d = Frame3D + y * nScreenWidth;
 		UINT16 *dst = pTransDraw + y * nScreenWidth;
-		for (INT32 x = 0; x < nScreenWidth; x++) dst[x] = src[HiresMapX[x]];
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			if (f3d[x] != F3D_NONE) dst[x] = f3d[x];
+			else dst[x] = bHiresSharp ? HIRES_BACK : src[HiresMapX[x]];
+		}
 	}
 }
 
@@ -3003,7 +3116,7 @@ static void hires_hud_nearest_job(INT32 part)
 	render_band(part, &ys, &ye);
 
 	for (INT32 y = ys; y < ye; y++) {
-		UINT16 *src = HiresHud + HiresMapY[y] * NATIVE_W;
+		UINT16 *src = TileHud + HiresMapY[y] * NATIVE_W;
 		UINT16 *dst = pTransDraw + y * nScreenWidth;
 		for (INT32 x = 0; x < nScreenWidth; x++) {
 			UINT16 c = src[HiresMapX[x]];
@@ -3015,7 +3128,7 @@ static void hires_hud_nearest_job(INT32 part)
 // objects drawn over the hud, only through its dark/transparent pixels
 static void draw_above_hud()
 {
-	if ((nBurnLayer & 8) && segment_count[RENDER_ABOVE_HUD]) {
+	if ((nBurnLayer & 8) && draw3d->seg_count[RENDER_ABOVE_HUD]) {
 		INT32 len = nScreenWidth * nScreenHeight;
 		UINT16 *snapshot = (UINT16*)BurnMalloc(len * sizeof(UINT16));
 
@@ -3048,33 +3161,12 @@ static void draw_above_hud()
 
 static INT32 DrvDrawHires()
 {
-	sega_315_5292_update();
-
-	// background tilemaps, scaled up
-	TileDst = HiresBack;
-	memset(HiresBack, 0, NATIVE_W * NATIVE_H * sizeof(UINT16));
-	if (nBurnLayer & 1) {
-		sega_315_5292_draw_layer(6, 1, TileDst);
-		sega_315_5292_draw_layer(4, 1, TileDst);
-		sega_315_5292_draw_layer(2, 0, TileDst);
-		sega_315_5292_draw_layer(0, 0, TileDst);
-	}
-
+	// background tilemaps scaled up, 3d objects and direct polys
+	draw_below();
 	render_run(hires_back_job);
 
-	if (nBurnLayer & 2) draw_pass(RENDER_BELOW_HUD);
-
 	// hud tilemaps, only their opaque pixels
-	if (nBurnLayer & 4) {
-		TileDst = HiresHud;
-		memset(HiresHud, 0xff, NATIVE_W * NATIVE_H * sizeof(UINT16));
-		sega_315_5292_draw_layer(7, 0, TileDst);
-		sega_315_5292_draw_layer(5, 0, TileDst);
-		sega_315_5292_draw_layer(3, 0, TileDst);
-		sega_315_5292_draw_layer(1, 0, TileDst);
-
-		render_run(bHiresSharp ? hires_hud_blend_job : hires_hud_nearest_job);
-	}
+	if (nBurnLayer & 4) render_run(bHiresSharp ? hires_hud_blend_job : hires_hud_nearest_job);
 
 	draw_above_hud();
 
@@ -3095,32 +3187,30 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	// not drawn by the last frame (state load, frame not shown): from the current tile ram
+	if (tile_lines_done < NATIVE_H) {
+		tile_lines_done = 0;
+		tile_skip = 0;
+		tile_draw_lines(NATIVE_H);
+	}
+
+	draw3d_pick();
+
 	if (nHiresMode) {
 		return DrvDrawHires();
 	}
 
-	TileDst = pTransDraw;
-	memset(pTransDraw, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));	// pen 0
-
-	sega_315_5292_update();
-
-	// background tilemaps
-	if (nBurnLayer & 1) {
-		sega_315_5292_draw_layer(6, 1, TileDst);
-		sega_315_5292_draw_layer(4, 1, TileDst);
-		sega_315_5292_draw_layer(2, 0, TileDst);
-		sega_315_5292_draw_layer(0, 0, TileDst);
+	// background tilemaps, 3d objects and direct polys
+	draw_below();
+	for (INT32 i = 0; i < NATIVE_W * NATIVE_H; i++) {
+		pTransDraw[i] = (Frame3D[i] != F3D_NONE) ? Frame3D[i] : TileBack[i];
 	}
-
-	// 3d objects and direct polys
-	if (nBurnLayer & 2) draw_pass(RENDER_BELOW_HUD);
 
 	// hud tilemaps
 	if (nBurnLayer & 4) {
-		sega_315_5292_draw_layer(7, 0, TileDst);
-		sega_315_5292_draw_layer(5, 0, TileDst);
-		sega_315_5292_draw_layer(3, 0, TileDst);
-		sega_315_5292_draw_layer(1, 0, TileDst);
+		for (INT32 i = 0; i < NATIVE_W * NATIVE_H; i++) {
+			if (TileHud[i] != 0xffff) pTransDraw[i] = TileHud[i];
+		}
 	}
 
 	draw_above_hud();
@@ -3135,12 +3225,7 @@ static INT32 DrvDraw()
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
-		// keep the battery backed ram
-		UINT8 *nv = (UINT8*)BurnMalloc(0x10000);
-		memcpy(nv, DrvNVRAM, 0x10000);
 		memset(AllRam, 0, RamEnd - AllRam);
-		memcpy(DrvNVRAM, nv, 0x10000);
-		BurnFree(nv);
 
 		sega_315_5292_reset();
 	}
@@ -3207,22 +3292,20 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		ZetReset();
 		ZetClose();
 
-		dsb_decoder->clear();
-		dsb_mp_start = dsb_mp_end = dsb_lp_start = dsb_lp_end = dsb_start = dsb_end = 0;
-		dsb_mp_pos = 0;
-		dsb_mp_vol = 0x7f;
-		dsb_mp_pan = 0;
-		dsb_mp_state = 0;
-		dsb_audio_pos = dsb_audio_avail = 0;
-		memset(dsb_audio_buf, 0, sizeof(dsb_audio_buf));
-		dsb_frac = 0;
+		DsbReset();
 	}
 	usart_ticks_done = 0;
 
 	memset(&view, 0, sizeof(view));
-	memcpy(&view_prev, &view, sizeof(view));
-	quad_count = 0;
-	segment_count[0] = segment_count[1] = 0;
+	for (INT32 i = 0; i < 2; i++) {
+		frames3d[i].seg_count[0] = frames3d[i].seg_count[1] = 0;
+		frames3d[i].serial = ++frame3d_serials;
+		frame3d_lost[i] = 0;
+		builds[i].valid = 0;
+	}
+	frame3d_new = 0;
+	build_pending = 0;
+	draw3d = &frames3d[1];
 
 	return 0;
 }
@@ -3245,7 +3328,6 @@ static INT32 MemIndex()
 	if (bHasDSB) {
 		DrvDSBROM	= Next; Next += 0x020000;
 		DrvDSBMPEG	= Next; Next += 0x800000;
-		dsb_stream	= (INT16*)Next; Next += 2048 * 2 * sizeof(INT16);
 	}
 
 
@@ -3253,9 +3335,10 @@ static INT32 MemIndex()
 	DrvPalRGB		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
 
+	TileBack		= (UINT16*)Next; Next += NATIVE_W * NATIVE_H * sizeof(UINT16);
+	TileHud			= (UINT16*)Next; Next += NATIVE_W * NATIVE_H * sizeof(UINT16);
+
 	if (nHiresMode) {
-		HiresBack	= (UINT16*)Next; Next += NATIVE_W * NATIVE_H * sizeof(UINT16);
-		HiresHud	= (UINT16*)Next; Next += NATIVE_W * NATIVE_H * sizeof(UINT16);
 		HiresMapX	= (INT32*)Next; Next += HIRES_MAX_W * sizeof(INT32);
 		HiresMapY	= (INT32*)Next; Next += HIRES_MAX_H * sizeof(INT32);
 		HiresWX		= (UINT16*)Next; Next += HIRES_MAX_W * sizeof(UINT16);
@@ -3265,13 +3348,19 @@ static INT32 MemIndex()
 	}
 
 	pointdb			= (m1_point*)Next; Next += (MAX_POINTS + 1) * sizeof(m1_point);
-	quaddb			= (m1_quad_out*)Next; Next += MAX_QUADS * sizeof(m1_quad_out);
-	segments[0]		= (m1_quad_segment*)Next; Next += MAX_SEGMENTS * sizeof(m1_quad_segment);
-	segments[1]		= (m1_quad_segment*)Next; Next += MAX_SEGMENTS * sizeof(m1_quad_segment);
+	for (INT32 i = 0; i < 2; i++) {
+		frames3d[i].quads	= (m1_quad_out*)Next; Next += MAX_QUADS * sizeof(m1_quad_out);
+		frames3d[i].segs[0]	= (m1_quad_segment*)Next; Next += MAX_SEGMENTS * sizeof(m1_quad_segment);
+		frames3d[i].segs[1]	= (m1_quad_segment*)Next; Next += MAX_SEGMENTS * sizeof(m1_quad_segment);
+		builds[i].list		= (UINT16*)Next; Next += 0x10000;
+		builds[i].pal		= (UINT16*)Next; Next += 0x4000;
+		builds[i].xlat		= (UINT16*)Next; Next += 0xc000;
+	}
+
+	DrvNVRAM		= Next; Next += 0x010000;	// saved as nvram
 
 	AllRam			= Next;
 
-	DrvNVRAM		= Next; Next += 0x010000;
 	DrvMainRAM		= Next; Next += 0x040000;
 	DrvDispList0	= Next; Next += 0x010000;
 	DrvDispList1	= Next; Next += 0x010000;
@@ -3479,7 +3568,7 @@ static INT32 DrvInit(INT32 io_bios, INT32 has_comm, INT32 boot_mirror)
 	v60MapMemory(DrvMainRAM,			0x500000, 0x53ffff, MAP_RAM);
 	v60MapMemory(DrvDispList0,			0x600000, 0x60ffff, MAP_RAM);
 	v60MapMemory(DrvDispList1,			0x610000, 0x61ffff, MAP_RAM);
-	v60MapMemory(DrvTileRAM,			0x700000, 0x70ffff, MAP_RAM);
+	v60MapMemory(DrvTileRAM,			0x700000, 0x70ffff, MAP_ROM);	// writes are drawn up to the beam first
 	v60MapMemory(DrvCharRAM,			0x780000, 0x7fffff, MAP_ROM);	// writes expand the tiles
 	v60MapMemory(DrvPalRAM,				0x900000, 0x903fff, MAP_ROM);	// writes update the palette
 	v60MapMemory(DrvXlatRAM,			0x910000, 0x91bfff, MAP_RAM);
@@ -3509,15 +3598,7 @@ static INT32 DrvInit(INT32 io_bios, INT32 has_comm, INT32 boot_mirror)
 	M1IOSetHooks(io_port_in_hook, io_port_out_hook);
 
 	if (bHasDSB) {
-		ZetInit(1);
-		ZetOpen(1);
-		ZetMapMemory(DrvDSBROM,			0x0000, 0x7fff, MAP_ROM);
-		ZetMapMemory(DrvDSBRAM,			0x8000, 0xffff, MAP_RAM);
-		ZetSetOutHandler(dsb_write_port);
-		ZetSetInHandler(dsb_read_port);
-		ZetClose();
-
-		dsb_decoder = new mpeg_audio(DrvDSBMPEG, mpeg_audio::L2, false, 0);
+		DsbInit(1, DrvDSBROM, DrvDSBRAM, DrvDSBMPEG);
 	}
 
 	EEPROMInit(&eeprom_interface_93C46);
@@ -3566,6 +3647,7 @@ static INT32 DrvInit(INT32 io_bios, INT32 has_comm, INT32 boot_mirror)
 	}
 
 	GenericTilesInit();
+	Frame3D = (UINT16*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(UINT16));
 	sega_315_5292_init(DrvTileRAM, DrvCharRAM, 0x80000, 0x3fff, NATIVE_W, NATIVE_H);
 	render_threads_init();
 	BurnTransferInit();
@@ -3578,6 +3660,7 @@ static INT32 DrvInit(INT32 io_bios, INT32 has_comm, INT32 boot_mirror)
 static INT32 DrvExit()
 {
 	render_threads_exit();
+	BurnFree(Frame3D);
 	GenericTilesExit();
 	sega_315_5292_exit();
 
@@ -3589,10 +3672,7 @@ static INT32 DrvExit()
 	M1AudioExit();
 	EEPROMExit();
 
-	if (dsb_decoder) {
-		delete dsb_decoder;
-		dsb_decoder = NULL;
-	}
+	if (bHasDSB) DsbExit();
 
 	bHasDSB = 0;
 	bIOBoard2 = 0;
@@ -3699,9 +3779,16 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	ZetOpen(0);
 
+	build_frame();
+	if (pBurnDraw) draw_below_kick();
+
+	tile_lines_done = 0;
+	tile_skip = (pBurnDraw == NULL);
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (i == VBLANK_LINE) {
+			tile_draw_lines(NATIVE_H);
 			end_frame();
 			if (!(irq_mask & 0x02)) irq_raise(1);
 		}
@@ -3727,7 +3814,7 @@ static INT32 DrvFrame()
 			M1UsartAdvance(2, ticks);
 			ZetClose();
 			ZetOpen(1);
-			dsb_irq_update();
+			DsbIRQUpdate();
 			CPU_RUN(3, Zet);
 			ZetClose();
 			ZetOpen(0);
@@ -3749,7 +3836,7 @@ static INT32 DrvFrame()
 	}
 
 	if (bHasDSB) {
-		dsb_render(pBurnSoundOut, nBurnSoundLen);
+		DsbRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (bHasDriveBoard) {
@@ -3760,8 +3847,7 @@ static INT32 DrvFrame()
 	SekClose();
 	v60Close();
 
-	// the screen is updated at the end of the vblank
-	build_frame();
+	build_pending = 1;
 	frame_number++;
 
 	if (pBurnDraw) {
@@ -3846,27 +3932,31 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(comm_fg);
 
 
-		if (bHasDSB) {
-			dsb_decoder->scan();
-			SCAN_VAR(dsb_mp_start);
-			SCAN_VAR(dsb_mp_end);
-			SCAN_VAR(dsb_lp_start);
-			SCAN_VAR(dsb_lp_end);
-			SCAN_VAR(dsb_start);
-			SCAN_VAR(dsb_end);
-			SCAN_VAR(dsb_mp_pos);
-			SCAN_VAR(dsb_mp_vol);
-			SCAN_VAR(dsb_mp_pan);
-			SCAN_VAR(dsb_mp_state);
-			SCAN_VAR(dsb_audio_pos);
-			SCAN_VAR(dsb_audio_avail);
-			SCAN_VAR(dsb_audio_buf);
-			SCAN_VAR(dsb_frac);
-		}
+		if (bHasDSB) DsbScan(nAction);
 		SCAN_VAR(usart_ticks_done);
 
 		SCAN_VAR(view);
-		SCAN_VAR(view_prev);
+		SCAN_VAR(build_pending);
+		SCAN_VAR(frame3d_new);
+
+		// for a redraw or the frame right after a load only
+		if (!(nAction & (ACB_RUNAHEAD | ACB_NET_OPT))) {
+			for (INT32 i = 0; i < 2; i++) {
+				m1_build_input *b = &builds[i];
+				ScanVar(b->list, 0x10000, (char*)"build list");
+				ScanVar(b->pal + 0x1000, 0x2000, (char*)"build palette");
+				ScanVar(b->xlat, 0xc000, (char*)"build color tables");
+				ScanVar(&b->view, sizeof(m1_view), (char*)"build view");
+				SCAN_VAR(b->listctl0);
+				SCAN_VAR(b->frame);
+				SCAN_VAR(b->valid);
+			}
+		}
+		if (!(nAction & (ACB_RUNAHEAD | ACB_2RUNAHEAD | ACB_NET_OPT))) {
+			ScanVar(TileBack, NATIVE_W * NATIVE_H * sizeof(UINT16), (char*)"tilemaps back");
+			ScanVar(TileHud, NATIVE_W * NATIVE_H * sizeof(UINT16), (char*)"tilemaps hud");
+			SCAN_VAR(tile_lines_done);
+		}
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -3886,12 +3976,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		DrvRecalc = 1;
 
-		// rebuild the polygons of the last frame, for BurnDrvRedraw
 		if (nAction & ACB_DRIVER_DATA) {
-			memcpy(&view, &view_prev, sizeof(view));
-			frame_number--;
-			build_frame();
-			frame_number++;
+			frame3d_lost[0] = frame3d_lost[1] = 1;
+			if (nAction & (ACB_RUNAHEAD | ACB_NET_OPT)) builds[0].valid = builds[1].valid = 0;
+			if (nAction & (ACB_RUNAHEAD | ACB_2RUNAHEAD | ACB_NET_OPT)) tile_lines_done = 0;
 		}
 	}
 

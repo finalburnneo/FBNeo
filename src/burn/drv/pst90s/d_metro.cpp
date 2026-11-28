@@ -4236,7 +4236,7 @@ static INT32 msgogoInit()
 	ymf278bint = 1;
 
 	if (nRet == 0) {
-		i4220_set_crtc_timing(414, 267); // 59.3527 hz (not verified)
+		i4220_set_crtc_timing(414, 267); // 59.3527 hz (daitorida 59.35 measured with scaler)
 	}
 
 	return nRet;

@@ -56,6 +56,20 @@ static inline INT32 thready_cpu_count()
 #endif
 }
 
+// atomically adds v to *p, returns the previous value: lets threads share out work
+static inline INT32 thready_fetch_add(volatile INT32 *p, INT32 v)
+{
+#if (THREADY == THREADY_WINDOWS) || (THREADY == THREADY_WINDOWSVC)
+	return (INT32)InterlockedExchangeAdd((volatile LONG*)p, (LONG)v);
+#elif (THREADY == THREADY_PTHREAD) || (THREADY == THREADY_PTHREADAPL)
+	return __sync_fetch_and_add(p, v);
+#else
+	INT32 r = *p;
+	*p += v;
+	return r;
+#endif
+}
+
 #if (THREADY == THREADY_WINDOWS)
 static long unsigned int __stdcall ThreadyProc(void*);
 
